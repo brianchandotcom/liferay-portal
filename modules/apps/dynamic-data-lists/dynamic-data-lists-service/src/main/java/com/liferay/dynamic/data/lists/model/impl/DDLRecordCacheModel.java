@@ -22,6 +22,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -39,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +53,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		DDLRecordCacheModel ddlRecordCacheModel = (DDLRecordCacheModel)obj;
 
-		if (recordId == ddlRecordCacheModel.recordId) {
+		if ((recordId == ddlRecordCacheModel.recordId) &&
+				(mvccVersion == ddlRecordCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -61,14 +63,28 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, recordId);
+		int hashCode = HashUtil.hash(0, recordId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", recordId=");
 		sb.append(recordId);
@@ -108,6 +124,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	@Override
 	public DDLRecord toEntityModel() {
 		DDLRecordImpl ddlRecordImpl = new DDLRecordImpl();
+
+		ddlRecordImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			ddlRecordImpl.setUuid("");
@@ -184,6 +202,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		recordId = objectInput.readLong();
@@ -213,6 +232,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -269,6 +290,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long recordId;
 	public long groupId;

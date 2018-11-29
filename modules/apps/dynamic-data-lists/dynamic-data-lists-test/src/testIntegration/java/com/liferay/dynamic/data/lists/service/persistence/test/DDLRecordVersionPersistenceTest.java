@@ -124,6 +124,8 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion newDDLRecordVersion = _persistence.create(pk);
 
+		newDDLRecordVersion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDLRecordVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDLRecordVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -158,6 +160,8 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecordVersion.getMvccVersion(),
+			newDDLRecordVersion.getMvccVersion());
 		Assert.assertEquals(existingDDLRecordVersion.getRecordVersionId(),
 			newDDLRecordVersion.getRecordVersionId());
 		Assert.assertEquals(existingDDLRecordVersion.getGroupId(),
@@ -261,12 +265,12 @@ public class DDLRecordVersionPersistenceTest {
 
 	protected OrderByComparator<DDLRecordVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDLRecordVersion",
-			"recordVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"DDMStorageId", true, "recordSetId", true, "recordSetVersion",
-			true, "recordId", true, "version", true, "displayIndex", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"mvccVersion", true, "recordVersionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "DDMStorageId", true, "recordSetId", true,
+			"recordSetVersion", true, "recordId", true, "version", true,
+			"displayIndex", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -484,6 +488,8 @@ public class DDLRecordVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDLRecordVersion ddlRecordVersion = _persistence.create(pk);
+
+		ddlRecordVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddlRecordVersion.setGroupId(RandomTestUtil.nextLong());
 

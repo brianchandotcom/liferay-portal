@@ -58,6 +58,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("recordVersionId", getRecordVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -80,6 +81,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long recordVersionId = (Long)attributes.get("recordVersionId");
 
 		if (recordVersionId != null) {
@@ -246,6 +253,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	@Override
 	public long getGroupId() {
 		return _ddlRecordVersion.getGroupId();
+	}
+
+	/**
+	* Returns the mvcc version of this ddl record version.
+	*
+	* @return the mvcc version of this ddl record version
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _ddlRecordVersion.getMvccVersion();
 	}
 
 	/**
@@ -579,6 +596,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	@Override
 	public void setGroupId(long groupId) {
 		_ddlRecordVersion.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the mvcc version of this ddl record version.
+	*
+	* @param mvccVersion the mvcc version of this ddl record version
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_ddlRecordVersion.setMvccVersion(mvccVersion);
 	}
 
 	@Override

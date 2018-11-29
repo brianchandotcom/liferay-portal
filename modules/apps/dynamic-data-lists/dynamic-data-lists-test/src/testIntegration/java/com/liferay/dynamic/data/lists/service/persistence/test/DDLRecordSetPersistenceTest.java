@@ -124,6 +124,8 @@ public class DDLRecordSetPersistenceTest {
 
 		DDLRecordSet newDDLRecordSet = _persistence.create(pk);
 
+		newDDLRecordSet.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDLRecordSet.setUuid(RandomTestUtil.randomString());
 
 		newDDLRecordSet.setGroupId(RandomTestUtil.nextLong());
@@ -164,6 +166,8 @@ public class DDLRecordSetPersistenceTest {
 
 		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecordSet.getMvccVersion(),
+			newDDLRecordSet.getMvccVersion());
 		Assert.assertEquals(existingDDLRecordSet.getUuid(),
 			newDDLRecordSet.getUuid());
 		Assert.assertEquals(existingDDLRecordSet.getRecordSetId(),
@@ -284,13 +288,13 @@ public class DDLRecordSetPersistenceTest {
 	}
 
 	protected OrderByComparator<DDLRecordSet> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DDLRecordSet", "uuid",
-			true, "recordSetId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "versionUserId", true,
-			"versionUserName", true, "createDate", true, "modifiedDate", true,
-			"DDMStructureId", true, "recordSetKey", true, "version", true,
-			"name", true, "description", true, "minDisplayRows", true, "scope",
-			true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("DDLRecordSet",
+			"mvccVersion", true, "uuid", true, "recordSetId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"versionUserId", true, "versionUserName", true, "createDate", true,
+			"modifiedDate", true, "DDMStructureId", true, "recordSetKey", true,
+			"version", true, "name", true, "description", true,
+			"minDisplayRows", true, "scope", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -513,6 +517,8 @@ public class DDLRecordSetPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDLRecordSet ddlRecordSet = _persistence.create(pk);
+
+		ddlRecordSet.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddlRecordSet.setUuid(RandomTestUtil.randomString());
 

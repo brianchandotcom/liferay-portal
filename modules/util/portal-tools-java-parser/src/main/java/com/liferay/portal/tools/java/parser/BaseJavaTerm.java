@@ -290,13 +290,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		sb.append(indent);
 
-		String newLinePrefix = prefix;
-
 		for (int i = 0;; i++) {
 			JavaTerm javaTerm = list.get(i);
 
 			if (i == 1) {
-				newLinePrefix = _convertToWhitespace(prefix);
+				indent += _convertToWhitespace(prefix);
 
 				prefix = StringPool.BLANK;
 			}
@@ -307,17 +305,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 					delimeter = StringUtil.trim(delimeter);
 
-					if ((i > 0) &&
-						(delimeter.endsWith("|") || delimeter.endsWith("&"))) {
-
-						appendNewLine(
-							sb, javaTerm, indent, "", suffix, maxLineLength);
-					}
-					else {
-						appendNewLine(
-							sb, javaTerm, indent, newLinePrefix, suffix,
-							maxLineLength);
-					}
+					appendNewLine(
+						sb, javaTerm, indent, prefix, suffix, maxLineLength);
 				}
 
 				return;
@@ -333,18 +322,16 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append("\n");
 			sb.append(indent);
-			sb.append(newLinePrefix);
 
 			if (!appendSingleLine(
 					sb, javaTerm, prefix, delimeter, maxLineLength)) {
 
 				appendNewLine(
-					sb, javaTerm, indent, newLinePrefix,
+					sb, javaTerm, indent, prefix,
 					StringUtil.trimTrailing(delimeter), maxLineLength);
 
 				sb.append("\n");
 				sb.append(indent);
-				sb.append(newLinePrefix);
 			}
 		}
 	}

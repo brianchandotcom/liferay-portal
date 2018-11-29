@@ -14,4 +14,12 @@
 	<command name="uninstallPatches" summary="Uninstall all patches from Liferay Portal.">
 		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches" />
 	</command>
+
+	<command name="uninstallPatchOnSpecificServer" summary="Uninstall the following patch onto Liferay Portal server with port ${nodePort}">
+		<var method="StringUtil#replace('${nodePort}', '080', '')" name="leadingPortNumber" />
+
+		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}" />
+	</command>
 </definition>

@@ -14,9 +14,6 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer;
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
-
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
@@ -32,6 +29,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.tasks.Copy;
 
@@ -110,21 +108,20 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		copy.setDescription(
 			"Assembles the project and deploys it to the Liferay Docker " +
 				"container.");
-		copy.setGroup("docker");
 
-		DockerBuildImage dockerBuildImage =
-			(DockerBuildImage)GradleUtil.getTask(
-				project.getRootProject(),
-				RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
+		copy.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
-		dockerBuildImage.dependsOn(copy);
+		Task buildDockerImageTask = GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
 
-		DockerCreateContainer dockerCreateContainer =
-			(DockerCreateContainer)GradleUtil.getTask(
-				project.getRootProject(),
-				RootProjectConfigurator.CREATE_DOCKER_CONTAINER_TASK_NAME);
+		buildDockerImageTask.dependsOn(copy);
 
-		dockerCreateContainer.dependsOn(copy);
+		Task createDockerContainerTask = GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.CREATE_DOCKER_CONTAINER_TASK_NAME);
+
+		createDockerContainerTask.dependsOn(copy);
 
 		return copy;
 	}

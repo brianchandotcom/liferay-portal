@@ -215,19 +215,21 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		warPluginConvention.setWebAppDirName("src");
 	}
 
+	@SuppressWarnings({"rawtypes", "serial", "unused"})
 	private Closure _copyWarClosure(Project project, final Task assembleTask) {
 		return new Closure<Void>(project) {
 
-			@SuppressWarnings("unused")
 			public void doCall(CopySpec copySpec) {
 				Project project = assembleTask.getProject();
 
+				File warFile = _getWarFile(project);
+
 				ConfigurableFileCollection configurableFileCollection =
-					project.files(_getWarFile(project));
+					project.files(warFile);
 
 				configurableFileCollection.builtBy(assembleTask);
 
-				copySpec.from(_getWarFile(project));
+				copySpec.from(warFile);
 			}
 
 		};

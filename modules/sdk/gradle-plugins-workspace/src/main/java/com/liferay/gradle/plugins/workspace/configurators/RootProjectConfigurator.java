@@ -235,11 +235,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerBuildImage.dependsOn(dockerfile, PULL_DOCKER_IMAGE_TASK_NAME);
 
 		dockerBuildImage.setDescription(
-			"Builds a docker image with all modules/configs deployed");
-
-		dockerBuildImage.setInputDir(workspaceExtension.getDockerDir());
-
+			"Builds the Docker image with all modules/configs deployed.");
 		dockerBuildImage.setGroup(DOCKER_GROUP);
+		dockerBuildImage.setInputDir(workspaceExtension.getDockerDir());
 
 		return dockerBuildImage;
 	}
@@ -315,10 +313,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private DockerCreateContainer _addTaskCreateDockerContainer(
 		Project project, WorkspaceExtension workspaceExtension) {
 
-		DockerCreateContainer dockerCreateContainer =
-			(DockerCreateContainer)GradleUtil.addTask(
-				project, CREATE_DOCKER_CONTAINER_TASK_NAME,
-				DockerCreateContainer.class);
+		DockerCreateContainer dockerCreateContainer = GradleUtil.addTask(
+			project, CREATE_DOCKER_CONTAINER_TASK_NAME,
+			DockerCreateContainer.class);
 
 		dockerCreateContainer.dependsOn(
 			REMOVE_DOCKER_CONTAINER_TASK_NAME, DOCKER_DEPLOY_TASK_NAME,
@@ -336,10 +333,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project.getName() + "-liferayapp");
 
 		dockerCreateContainer.setDescription(
-			"Creates a container from your liferay image and mounts " +
+			"Creates a Docker container from your liferay image and mounts " +
 				dockerDir.toString() + " to /etc/liferay.");
 
-		ArrayList<String> ports = new ArrayList<>();
+		List<String> ports = new ArrayList<>();
 
 		ports.add("8080:8080");
 		ports.add("11311:11311");
@@ -362,23 +359,23 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private Dockerfile _addTaskCreateDockerfile(
 		Project project, final WorkspaceExtension workspaceExtension) {
 
-		Dockerfile dockerfileTask = GradleUtil.addTask(
+		Dockerfile dockerfile = GradleUtil.addTask(
 			project, CREATE_DOCKERFILE_TASK_NAME, Dockerfile.class);
 
-		dockerfileTask.dependsOn(DOCKER_DEPLOY_TASK_NAME);
+		dockerfile.dependsOn(DOCKER_DEPLOY_TASK_NAME);
 
-		dockerfileTask.setDescription(
-			"Creates a dockerfile to build the project Docker image.");
-		dockerfileTask.setGroup(DOCKER_GROUP);
+		dockerfile.from(workspaceExtension.getDockerImageLiferay());
 
-		dockerfileTask.from(workspaceExtension.getDockerImageLiferay());
-
-		dockerfileTask.instruction(
+		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /etc/liferay/mount/deploy");
-		dockerfileTask.instruction(
+		dockerfile.instruction(
 			"COPY --chown=liferay:liferay files /etc/liferay/mount/files");
 
-		dockerfileTask.doFirst(
+		dockerfile.setDescription(
+			"Creates a dockerfile to build the Docker image.");
+		dockerfile.setGroup(DOCKER_GROUP);
+
+		dockerfile.doFirst(
 			new Action<Task>() {
 
 				@Override
@@ -407,15 +404,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						file.createNewFile();
 					}
 					catch (IOException ioe) {
-						Logger logger = dockerfileTask.getLogger();
+						Logger logger = dockerfile.getLogger();
 
 						if (logger.isWarnEnabled()) {
 							StringBuilder sb = new StringBuilder();
 
 							sb.append("Could not create a placeholder file. ");
 							sb.append("Please make sure you have at least ");
-							sb.append("one config or the buildImage task ");
-							sb.append("will fail.");
+							sb.append("one config or the buildDockerImage ");
+							sb.append("task will fail.");
 
 							logger.warn(sb.toString());
 						}
@@ -424,7 +421,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		return dockerfileTask;
+		return dockerfile;
 	}
 
 	private CreateTokenTask _addTaskCreateToken(
@@ -556,7 +553,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
 
 		copy.setDescription(
-			"Copy docker configs and provided configurations to docker dir");
+			"Copy the Docker configs and provided configurations to the " +
+				"docker directory.");
 
 		copy.setDestinationDir(workspaceExtension.getDockerDir());
 
@@ -737,12 +735,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerLogsContainer _addTaskLogsDockerContainer(Project project) {
-		DockerLogsContainer dockerLogsContainer =
-			(DockerLogsContainer)GradleUtil.addTask(
-				project, LOGS_DOCKER_CONTAINER_TASK_NAME,
-				DockerLogsContainer.class);
+		DockerLogsContainer dockerLogsContainer = GradleUtil.addTask(
+			project, LOGS_DOCKER_CONTAINER_TASK_NAME,
+			DockerLogsContainer.class);
 
-		dockerLogsContainer.setDescription("Logs the project docker container");
+		dockerLogsContainer.setDescription("Logs the Docker container.");
 		dockerLogsContainer.setFollow(true);
 		dockerLogsContainer.setTailAll(true);
 
@@ -762,22 +759,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private DockerPullImage _addTaskPullDockerImage(
 		Project project, WorkspaceExtension workspaceExtension) {
 
-		DockerPullImage dockerPullImage = (DockerPullImage)GradleUtil.addTask(
+		DockerPullImage dockerPullImage = GradleUtil.addTask(
 			project, PULL_DOCKER_IMAGE_TASK_NAME, DockerPullImage.class);
 
-		dockerPullImage.setDescription("Pull the docker image");
+		dockerPullImage.setDescription("Pull the Docker image.");
 
 		String dockerImageLiferay = workspaceExtension.getDockerImageLiferay();
 
-		int i = dockerImageLiferay.indexOf(":");
+		int index = dockerImageLiferay.indexOf(":");
 
-		String repository = dockerImageLiferay.substring(0, i);
-
-		dockerPullImage.setRepository(repository);
-
-		String tag = dockerImageLiferay.substring(i + 1);
-
-		dockerPullImage.setTag(tag);
+		dockerPullImage.setRepository(dockerImageLiferay.substring(0, index));
+		dockerPullImage.setTag(dockerImageLiferay.substring(index + 1));
 
 		return dockerPullImage;
 	}
@@ -789,8 +781,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, REMOVE_DOCKER_CONTAINER_TASK_NAME,
 			DockerRemoveContainer.class);
 
-		dockerRemoveContainer.setDescription(
-			"Removes the project docker container");
+		dockerRemoveContainer.setDescription("Removes the Docker container.");
 		dockerRemoveContainer.setForce(true);
 		dockerRemoveContainer.setRemoveVolumes(true);
 
@@ -824,13 +815,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerStartContainer _addTaskStartDockerContainer(Project project) {
-		DockerStartContainer dockerStartContainer =
-			(DockerStartContainer)GradleUtil.addTask(
-				project, START_DOCKER_CONTAINER_TASK_NAME,
-				DockerStartContainer.class);
+		DockerStartContainer dockerStartContainer = GradleUtil.addTask(
+			project, START_DOCKER_CONTAINER_TASK_NAME,
+			DockerStartContainer.class);
 
-		dockerStartContainer.setDescription(
-			"Starts the project docker container");
+		dockerStartContainer.setDescription("Starts the Docker container.");
 
 		dockerStartContainer.targetContainerId(
 			new Callable<String>() {
@@ -846,13 +835,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerStopContainer _addTaskStopDockerContainer(Project project) {
-		DockerStopContainer dockerStopContainer =
-			(DockerStopContainer)GradleUtil.addTask(
-				project, STOP_DOCKER_CONTAINER_TASK_NAME,
-				DockerStopContainer.class);
+		DockerStopContainer dockerStopContainer = GradleUtil.addTask(
+			project, STOP_DOCKER_CONTAINER_TASK_NAME,
+			DockerStopContainer.class);
 
-		dockerStopContainer.setDescription(
-			"Stops the project docker container");
+		dockerStopContainer.setDescription("Stops the Docker container.");
 
 		dockerStopContainer.targetContainerId(
 			new Callable<String>() {

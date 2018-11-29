@@ -229,10 +229,32 @@ const getChildNodeTypeName = query =>
 const getTypeName = type => oDataTransformationMap[type].name;
 
 const translateToCriteria = query => {
-	const queryAST = window.oDataParser.filter(query);
+	let returnValue;
 
-	return toCriteriaMap({queryAST})[0];
+	try {
+		const queryAST = window.oDataParser.filter(query);
+
+		const criteriaMapArray = toCriteriaMap({queryAST});
+
+		returnValue = isCriteriaMapGroup(criteriaMapArray) ?
+			criteriaMapArray[0] :
+			wrapInCriteriaMapGroup(criteriaMapArray);
+	}
+	catch (error) {
+		returnValue = null;
+	}
+
+	return returnValue;
 };
+
+const isCriteriaMapGroup = criteriaMapArray => criteriaMapArray[0].items;
+
+const wrapInCriteriaMapGroup = criteriaMapArray => (
+	{
+		conjunctionName: AND,
+		items: criteriaMapArray
+	}
+);
 
 const buildQueryString = (queryItems, queryConjunction) => {
 	let queryString = '';
@@ -318,7 +340,7 @@ class ClayODataQueryBuilder extends React.Component {
 		const {query} = props;
 
 		this.state = {
-			criteriaMap: query ? translateToCriteria(query) : null,
+			criteriaMap: query && query !== '()' ? translateToCriteria(query) : null,
 			initialQuery: query,
 			query
 		};

@@ -812,6 +812,11 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.countByG_CPK(groupId, classPK);
 	}
 
+	@Override
+	public List<DDMTemplate> getTemplatesByGroupId(long groupId) {
+		return ddmTemplatePersistence.findByGroupId(groupId);
+	}
+
 	/**
 	 * Returns an ordered range of all the templates matching the group,
 	 * structure class name ID, and status.

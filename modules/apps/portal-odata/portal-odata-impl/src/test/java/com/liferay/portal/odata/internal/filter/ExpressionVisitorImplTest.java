@@ -324,8 +324,8 @@ public class ExpressionVisitorImplTest {
 				memberExpression);
 
 		Assert.assertNotNull(entityField);
-		Assert.assertEquals("values", entityField.getName());
-		Assert.assertEquals(EntityField.Type.COMPLEX, entityField.getType());
+		Assert.assertEquals("value1", entityField.getName());
+		Assert.assertEquals(EntityField.Type.STRING, entityField.getType());
 	}
 
 	@Test

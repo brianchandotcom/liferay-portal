@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.InvalidFilterException;
@@ -42,6 +43,7 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.text.Format;
@@ -109,7 +111,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		Map<String, EntityField> entityFieldsMap =
 			_entityModel.getEntityFieldsMap();
 
-		return entityFieldsMap.get(complexPropertyExpression.getName());
+		ComplexEntityField complexEntityField =
+			(ComplexEntityField)entityFieldsMap.get(
+				complexPropertyExpression.getName());
+
+		PropertyExpression propertyExpression =
+			complexPropertyExpression.getPropertyExpression();
+
+		Map<String, EntityField> complexEntityFieldEntityFieldsMap =
+			complexEntityField.getEntityFieldsMap();
+
+		return complexEntityFieldEntityFieldsMap.get(
+			propertyExpression.getName());
 	}
 
 	@Override

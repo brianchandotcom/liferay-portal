@@ -10960,7 +10960,18 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 	</target>
 
 	<target name="uninstall-patches">
-		<uninstall-patches patching.tool.dir="${app.server.parent.dir}/patching-tool" />
+		<local name="patching.tool.dir" />
+
+		<condition else="${app.server.parent.dir}-${uninstall.patch.cluster.node.index}/patching-tool" property="patching.tool.dir" value="${app.server.parent.dir}/patching-tool">
+			<or>
+				<not>
+					<isset property="uninstall.patch.cluster.node.index" />
+				</not>
+				<equals arg1="${uninstall.patch.cluster.node.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<uninstall-patches patching.tool.dir="${patching.tool.dir}" />
 	</target>
 
 	<target name="upgrade-legacy-database">

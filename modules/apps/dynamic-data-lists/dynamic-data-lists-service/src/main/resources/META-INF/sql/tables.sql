@@ -1,4 +1,5 @@
 create table DDLRecord (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	recordId LONG not null primary key,
 	groupId LONG,
@@ -18,6 +19,7 @@ create table DDLRecord (
 );
 
 create table DDLRecordSet (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	recordSetId LONG not null primary key,
 	groupId LONG,
@@ -40,6 +42,7 @@ create table DDLRecordSet (
 );
 
 create table DDLRecordSetVersion (
+	mvccVersion LONG default 0 not null,
 	recordSetVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -59,6 +62,7 @@ create table DDLRecordSetVersion (
 );
 
 create table DDLRecordVersion (
+	mvccVersion LONG default 0 not null,
 	recordVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

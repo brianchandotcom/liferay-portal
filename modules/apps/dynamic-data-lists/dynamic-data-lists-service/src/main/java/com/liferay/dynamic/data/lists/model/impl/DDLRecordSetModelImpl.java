@@ -81,6 +81,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	 */
 	public static final String TABLE_NAME = "DDLRecordSet";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "recordSetId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
@@ -104,6 +105,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("recordSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -125,7 +127,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,settings_ TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,settings_ TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSet";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSet.recordSetId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSet.recordSetId ASC";
@@ -160,6 +162,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		DDLRecordSet model = new DDLRecordSetImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setRecordSetId(soapModel.getRecordSetId());
 		model.setGroupId(soapModel.getGroupId());
@@ -243,6 +246,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("recordSetId", getRecordSetId());
 		attributes.put("groupId", getGroupId());
@@ -271,6 +275,12 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -384,6 +394,17 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1012,6 +1033,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public Object clone() {
 		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
 
+		ddlRecordSetImpl.setMvccVersion(getMvccVersion());
 		ddlRecordSetImpl.setUuid(getUuid());
 		ddlRecordSetImpl.setRecordSetId(getRecordSetId());
 		ddlRecordSetImpl.setGroupId(getGroupId());
@@ -1115,6 +1137,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	@Override
 	public CacheModel<DDLRecordSet> toCacheModel() {
 		DDLRecordSetCacheModel ddlRecordSetCacheModel = new DDLRecordSetCacheModel();
+
+		ddlRecordSetCacheModel.mvccVersion = getMvccVersion();
 
 		ddlRecordSetCacheModel.uuid = getUuid();
 
@@ -1230,9 +1254,11 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", recordSetId=");
 		sb.append(getRecordSetId());
@@ -1277,12 +1303,16 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordSet");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
@@ -1369,6 +1399,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDLRecordSet.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _recordSetId;

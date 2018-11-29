@@ -22,6 +22,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -39,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +53,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 		DDLRecordVersionCacheModel ddlRecordVersionCacheModel = (DDLRecordVersionCacheModel)obj;
 
-		if (recordVersionId == ddlRecordVersionCacheModel.recordVersionId) {
+		if ((recordVersionId == ddlRecordVersionCacheModel.recordVersionId) &&
+				(mvccVersion == ddlRecordVersionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -61,14 +63,28 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, recordVersionId);
+		int hashCode = HashUtil.hash(0, recordVersionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{recordVersionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", recordVersionId=");
 		sb.append(recordVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -109,6 +125,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public DDLRecordVersion toEntityModel() {
 		DDLRecordVersionImpl ddlRecordVersionImpl = new DDLRecordVersionImpl();
 
+		ddlRecordVersionImpl.setMvccVersion(mvccVersion);
 		ddlRecordVersionImpl.setRecordVersionId(recordVersionId);
 		ddlRecordVersionImpl.setGroupId(groupId);
 		ddlRecordVersionImpl.setCompanyId(companyId);
@@ -172,6 +189,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		recordVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -202,6 +221,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(recordVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -255,6 +276,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public long recordVersionId;
 	public long groupId;
 	public long companyId;

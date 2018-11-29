@@ -124,6 +124,8 @@ public class DDLRecordPersistenceTest {
 
 		DDLRecord newDDLRecord = _persistence.create(pk);
 
+		newDDLRecord.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDLRecord.setUuid(RandomTestUtil.randomString());
 
 		newDDLRecord.setGroupId(RandomTestUtil.nextLong());
@@ -158,6 +160,8 @@ public class DDLRecordPersistenceTest {
 
 		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecord.getMvccVersion(),
+			newDDLRecord.getMvccVersion());
 		Assert.assertEquals(existingDDLRecord.getUuid(), newDDLRecord.getUuid());
 		Assert.assertEquals(existingDDLRecord.getRecordId(),
 			newDDLRecord.getRecordId());
@@ -275,12 +279,12 @@ public class DDLRecordPersistenceTest {
 	}
 
 	protected OrderByComparator<DDLRecord> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DDLRecord", "uuid", true,
-			"recordId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "versionUserId", true, "versionUserName",
-			true, "createDate", true, "modifiedDate", true, "DDMStorageId",
-			true, "recordSetId", true, "recordSetVersion", true, "version",
-			true, "displayIndex", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("DDLRecord", "mvccVersion",
+			true, "uuid", true, "recordId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"DDMStorageId", true, "recordSetId", true, "recordSetVersion",
+			true, "version", true, "displayIndex", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -495,6 +499,8 @@ public class DDLRecordPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDLRecord ddlRecord = _persistence.create(pk);
+
+		ddlRecord.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddlRecord.setUuid(RandomTestUtil.randomString());
 

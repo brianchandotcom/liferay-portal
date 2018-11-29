@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
-	ShardedModel, WorkflowedModel {
+	MVCCModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,22 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 * @param primaryKey the primary key of this ddl record version
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddl record version.
+	 *
+	 * @return the mvcc version of this ddl record version
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddl record version.
+	 *
+	 * @param mvccVersion the mvcc version of this ddl record version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the record version ID of this ddl record version.

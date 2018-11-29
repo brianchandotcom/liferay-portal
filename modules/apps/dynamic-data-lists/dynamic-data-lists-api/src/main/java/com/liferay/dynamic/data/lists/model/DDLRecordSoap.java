@@ -34,6 +34,7 @@ public class DDLRecordSoap implements Serializable {
 	public static DDLRecordSoap toSoapModel(DDLRecord model) {
 		DDLRecordSoap soapModel = new DDLRecordSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRecordId(model.getRecordId());
 		soapModel.setGroupId(model.getGroupId());
@@ -100,6 +101,14 @@ public class DDLRecordSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setRecordId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -230,6 +239,7 @@ public class DDLRecordSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _recordId;
 	private long _groupId;

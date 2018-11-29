@@ -19,8 +19,8 @@ import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -57,12 +57,16 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListDisplayContext {
 
 	public AssetListDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		AssetListEntryLocalService assetListEntryLocalService,
+		AssetListEntryService assetListEntryService) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_assetListEntryLocalService = assetListEntryLocalService;
+		_assetListEntryService = assetListEntryService;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
@@ -117,7 +121,7 @@ public class AssetListDisplayContext {
 		}
 
 		_assetListEntriesCount =
-			AssetListEntryServiceUtil.getAssetListEntriesCount(
+			_assetListEntryService.getAssetListEntriesCount(
 				_themeDisplay.getScopeGroupId());
 
 		return _assetListEntriesCount;
@@ -148,17 +152,17 @@ public class AssetListDisplayContext {
 		int assetListEntriesCount = 0;
 
 		if (_isSearch()) {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+			assetListEntries = _assetListEntryService.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(), _getKeywords(),
 				assetListEntriesSearchContainer.getStart(),
 				assetListEntriesSearchContainer.getEnd(), orderByComparator);
 
 			assetListEntriesCount =
-				AssetListEntryServiceUtil.getAssetListEntriesCount(
+				_assetListEntryService.getAssetListEntriesCount(
 					_themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
+			assetListEntries = _assetListEntryService.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(),
 				assetListEntriesSearchContainer.getStart(),
 				assetListEntriesSearchContainer.getEnd(), orderByComparator);
@@ -180,7 +184,7 @@ public class AssetListDisplayContext {
 			return _assetListEntry;
 		}
 
-		_assetListEntry = AssetListEntryLocalServiceUtil.fetchAssetListEntry(
+		_assetListEntry = _assetListEntryLocalService.fetchAssetListEntry(
 			getAssetListEntryId());
 
 		return _assetListEntry;
@@ -495,6 +499,8 @@ public class AssetListDisplayContext {
 	private SearchContainer _assetListEntriesSearchContainer;
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
+	private final AssetListEntryLocalService _assetListEntryLocalService;
+	private final AssetListEntryService _assetListEntryService;
 	private Integer _assetListEntryType;
 	private String _keywords;
 	private String _orderByCol;

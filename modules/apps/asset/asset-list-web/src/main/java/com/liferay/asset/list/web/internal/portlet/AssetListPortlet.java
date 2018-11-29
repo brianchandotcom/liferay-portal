@@ -14,9 +14,19 @@
 
 package com.liferay.asset.list.web.internal.portlet;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
+import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
+import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -24,12 +34,14 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -41,10 +53,13 @@ import java.util.Date;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -160,6 +175,46 @@ public class AssetListPortlet extends MVCPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		AssetListDisplayContext assetListDisplayContext =
+			new AssetListDisplayContext(
+				renderRequest, renderResponse, _assetListEntryLocalService,
+				_assetListEntryService);
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT,
+			assetListDisplayContext);
+
+		UnicodeProperties properties = new UnicodeProperties();
+
+		AssetListEntry curAssetListEntry =
+			assetListDisplayContext.getAssetListEntry();
+
+		if (curAssetListEntry != null) {
+			properties.load(curAssetListEntry.getTypeSettings());
+		}
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.ASSET_LIST_ENTRY_PROPERTIES, properties);
+
+		EditAssetListDisplayContext editAssetListDisplayContext =
+			new EditAssetListDisplayContext(
+				renderRequest, renderResponse, properties,
+				_assetCategoryLocalService,
+				_assetListEntryAssetEntryRelLocalService, _assetTagLocalService,
+				_assetVocabularyService, _groupLocalService);
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
+			editAssetListDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
@@ -187,5 +242,27 @@ public class AssetListPortlet extends MVCPortlet {
 
 		return super.isSessionErrorException(cause);
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

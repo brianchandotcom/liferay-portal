@@ -41,6 +41,7 @@ page import="com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNa
 page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
+page import="com.liferay.asset.list.web.internal.constants.AssetListWebKeys" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesManagementToolbarDisplayContext" %><%@
@@ -95,15 +96,9 @@ page import="java.util.Set" %>
 <portlet:defineObjects />
 
 <%
-AssetListDisplayContext assetListDisplayContext = new AssetListDisplayContext(renderRequest, renderResponse);
+AssetListDisplayContext assetListDisplayContext = (AssetListDisplayContext)renderRequest.getAttribute(AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT);
 
-UnicodeProperties properties = new UnicodeProperties();
+UnicodeProperties properties = (UnicodeProperties)renderRequest.getAttribute(AssetListWebKeys.ASSET_LIST_ENTRY_PROPERTIES);
 
-AssetListEntry curAssetListEntry = assetListDisplayContext.getAssetListEntry();
-
-if (curAssetListEntry != null) {
-	properties.load(curAssetListEntry.getTypeSettings());
-}
-
-EditAssetListDisplayContext editAssetListDisplayContext = new EditAssetListDisplayContext(renderRequest, renderResponse, properties);
+EditAssetListDisplayContext editAssetListDisplayContext = (EditAssetListDisplayContext)renderRequest.getAttribute(AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT);
 %>

@@ -22,13 +22,13 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -85,12 +85,24 @@ public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		UnicodeProperties properties) {
+		UnicodeProperties properties,
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetListEntryAssetEntryRelLocalService
+			assetListEntryAssetEntryRelLocalService,
+		AssetTagLocalService assetTagLocalService,
+		AssetVocabularyService assetVocabularyService,
+		GroupLocalService groupLocalService) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetListEntryAssetEntryRelLocalService =
+			assetListEntryAssetEntryRelLocalService;
+		_assetTagLocalService = assetTagLocalService;
+		_assetVocabularyService = assetVocabularyService;
+		_groupLocalService = groupLocalService;
 	}
 
 	public long getAssetListEntryId() {
@@ -634,11 +646,11 @@ public class EditAssetListDisplayContext {
 			"there-are-no-asset-entries");
 
 		searchContainer.setTotal(
-			AssetListEntryAssetEntryRelLocalServiceUtil.
+			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId()));
 
 		searchContainer.setResults(
-			AssetListEntryAssetEntryRelLocalServiceUtil.
+			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
 					getAssetListEntryId(), searchContainer.getStart(),
 					searchContainer.getEnd()));
@@ -661,7 +673,7 @@ public class EditAssetListDisplayContext {
 			return Collections.singletonList(themeDisplay.getScopeGroup());
 		}
 
-		return GroupLocalServiceUtil.getGroups(groupIds);
+		return _groupLocalService.getGroups(groupIds);
 	}
 
 	public String getSelectGroupEventName() {
@@ -702,7 +714,7 @@ public class EditAssetListDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupsVocabularies(
+			_assetVocabularyService.getGroupsVocabularies(
 				new long[] {themeDisplay.getScopeGroupId()});
 
 		return ListUtil.toString(
@@ -791,7 +803,7 @@ public class EditAssetListDisplayContext {
 
 		for (long categoryId : categoryIds) {
 			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(categoryId);
+				_assetCategoryLocalService.fetchAssetCategory(categoryId);
 
 			if (category == null) {
 				continue;
@@ -808,12 +820,11 @@ public class EditAssetListDisplayContext {
 
 		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
 
-		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] assetTagIds = _assetTagLocalService.getTagIds(
 			groupId, assetTagNamesArray);
 
 		for (long assetTagId : assetTagIds) {
-			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
-				assetTagId);
+			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(assetTagId);
 
 			if (assetTag != null) {
 				filteredAssetTagNames.add(assetTag.getName());
@@ -854,7 +865,12 @@ public class EditAssetListDisplayContext {
 	}
 
 	private Boolean _anyAssetType;
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
 	private Long _assetListEntryId;
+	private final AssetTagLocalService _assetTagLocalService;
+	private final AssetVocabularyService _assetVocabularyService;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;
@@ -862,6 +878,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
+	private final GroupLocalService _groupLocalService;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;

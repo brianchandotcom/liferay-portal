@@ -4,16 +4,6 @@
 		"@babel/preset-react"
 	],
 	"plugins": [
-		"@babel/plugin-proposal-class-properties",
-		[
-			"react-css-modules",
-			{
-				"filetypes": {
-					".scss": {
-						"syntax": "postcss-scss"
-					}
-				}
-			}
-		]
+		"@babel/plugin-proposal-class-properties"
 	]
 }

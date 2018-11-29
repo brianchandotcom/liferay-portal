@@ -16,6 +16,7 @@ package com.liferay.sharing.document.library.internal.security.permission;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -39,6 +40,10 @@ public class SharingPermissionHelper {
 	public boolean isShareable(
 			PermissionChecker permissionChecker, long fileEntryId)
 		throws PortalException {
+
+		if (_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId) == null) {
+			return false;
+		}
 
 		if (_dlFileEntryModelResourcePermission.contains(
 				permissionChecker, fileEntryId, ActionKeys.VIEW)) {
@@ -73,5 +78,8 @@ public class SharingPermissionHelper {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

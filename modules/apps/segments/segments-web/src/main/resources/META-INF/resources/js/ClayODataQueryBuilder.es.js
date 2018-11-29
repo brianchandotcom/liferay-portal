@@ -33,43 +33,43 @@ const STRING = 'string';
 
 const conjunctions = [
 	{
-		label: 'and',
+		label: Liferay.Language.get('and'),
 		name: AND
 	},
 	{
-		label: 'or',
+		label: Liferay.Language.get('or'),
 		name: OR
 	}
 ];
 
 const operators = [
 	{
-		label: 'equals',
+		label: Liferay.Language.get('equals'),
 		name: EQ,
 		supportedTypes: [BOOLEAN, DATE, NUMBER, STRING]
 	},
 	{
-		label: 'greater-than-or-equals',
+		label: Liferay.Language.get('greater-than-or-equals'),
 		name: GE,
 		supportedTypes: [DATE, NUMBER]
 	},
 	{
-		label: 'greater-than',
+		label: Liferay.Language.get('greater-than'),
 		name: GT,
 		supportedTypes: [DATE, NUMBER]
 	},
 	{
-		label: 'less-than-or-equals',
+		label: Liferay.Language.get('less-than-or-equals'),
 		name: LE,
 		supportedTypes: [DATE, NUMBER]
 	},
 	{
-		label: 'less-than',
+		label: Liferay.Language.get('less-than'),
 		name: LT,
 		supportedTypes: [DATE, NUMBER]
 	},
 	{
-		label: 'not-equals',
+		label: Liferay.Language.get('not-equals'),
 		name: NE,
 		supportedTypes: [BOOLEAN, DATE, NUMBER, STRING]
 	}

@@ -1011,6 +1011,80 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	}
 
 	@Test
+	public void testGetPageItemsFilterByLambdaAnyOnKeywordsFieldWithEq()
+		throws Exception {
+
+		Map<Locale, String> stringMap1 = new HashMap<>();
+
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
+			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = TestPropsValues.getUser();
+
+		String keyword1 = "keyword1";
+
+		String keyword2 = "keyword2";
+
+		addAssetTagNames(
+			user.getUserId(), journalArticle1,
+			new String[] {keyword1, keyword2});
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		String keyword3 = "keyword3";
+
+		addAssetTagNames(
+			user.getUserId(), journalArticle2,
+			new String[] {keyword2, keyword3});
+
+		FilterParser filterParser = _getFilterParser();
+
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(
+				filterParser.parse(
+					"(keywords/any(k:k eq '" + keyword1 + "'))")),
+			Sort.emptySort());
+
+		Assert.assertEquals(1, pageItems.getTotalCount());
+
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
+
+		JournalArticle journalArticle = journalArticles.get(0);
+
+		Assert.assertEquals(journalArticle1, journalArticle);
+
+		List<String> tagNames = getJournalArticleAssetTags(journalArticle);
+
+		Assert.assertEquals(tagNames.toString(), 2, tagNames.size());
+		Assert.assertTrue(tagNames.toString(), tagNames.contains(keyword1));
+		Assert.assertTrue(tagNames.toString(), tagNames.contains(keyword2));
+		Assert.assertFalse(tagNames.toString(), tagNames.contains(keyword3));
+	}
+
+	@Test
 	public void testGetPageItemsFilterByNumberStructureField()
 		throws Exception {
 

@@ -1,6 +1,4 @@
 dependencies {
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-string")
 	testCompile project(":core:petra:petra-test-util")
 }
 

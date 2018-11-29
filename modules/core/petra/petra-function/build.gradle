@@ -1,7 +1,4 @@
 dependencies {
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-process")
-	testCompile project(":core:petra:petra-string")
 }
 
 liferay {

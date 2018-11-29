@@ -22,7 +22,7 @@ class ClayCriteriaBuilder extends React.Component {
 			<div className="clay-query-builder-root criteria-builder">
 				<div className="toolbar">
 					<ClayButton
-						label="Edit"
+						label={Liferay.Language.get('edit')}
 						onClick={this._handleToggleEdit}
 					/>
 				</div>
@@ -45,7 +45,7 @@ class ClayCriteriaBuilder extends React.Component {
 						className="empty-state"
 						onClick={this._handleNewCriteria}
 					>
-						{'Click to start editing'}
+						{Liferay.Language.get('click-to-start-editing')}
 					</div>
 				)}
 			</div>

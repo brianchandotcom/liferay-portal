@@ -1,5 +1,6 @@
-import {ADD_SECTION, REMOVE_SECTION} from '../actions/actions.es';
+import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION} from '../actions/actions.es';
 import {
+	add,
 	getDropSectionPosition,
 	getSectionFragmentEntryLinkIds,
 	getSectionIndex,
@@ -33,6 +34,58 @@ function addSectionReducer(state, actionType, payload) {
 					payload.layoutColumns,
 					state.layoutData,
 					position
+				);
+
+				updateLayoutData(
+					state.updateLayoutPageTemplateDataURL,
+					state.portletNamespace,
+					state.classNameId,
+					state.classPK,
+					nextData
+				)
+					.then(
+						() => {
+							nextState = setIn(
+								nextState,
+								['layoutData'],
+								nextData
+							);
+
+							resolve(nextState);
+						}
+					)
+					.catch(
+						() => {
+							resolve(nextState);
+						}
+					);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
+
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!string} payload.sectionId
+ * @return {object}
+ * @review
+ */
+function moveSectionReducer(state, actionType, payload) {
+	let nextState = state;
+
+	return new Promise(
+		resolve => {
+			if (actionType === MOVE_SECTION) {
+				const nextData = _moveSection(
+					payload.sectionId,
+					state.layoutData,
+					state.dropTargetItemId,
+					state.dropTargetBorder
 				);
 
 				updateLayoutData(
@@ -215,4 +268,4 @@ function _removeSection(layoutData, sectionId) {
 	);
 }
 
-export {addSectionReducer, removeSectionReducer};
+export {addSectionReducer, moveSectionReducer, removeSectionReducer};

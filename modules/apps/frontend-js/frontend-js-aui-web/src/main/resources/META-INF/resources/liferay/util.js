@@ -979,7 +979,7 @@
 
 			return string.replace ? string.replace(
 				REGEX_SUB,
-				function (match, key) {
+				function(match, key) {
 					return data[key] === undefined ? match : data[key];
 				}
 			) : string;

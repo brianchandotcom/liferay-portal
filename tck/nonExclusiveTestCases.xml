@@ -2,7 +2,22 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 
 <properties>
-
+<entry key="TestModule1_PortletCanBeRendered"></entry>
+<entry key="TestModule1_PortletConfigTest"></entry>
+<entry key="TestModule1_GetInitParameterNamesTest1"></entry>
+<entry key="TestModule1_GetInitParameterNamesTest"></entry>
+<entry key="TestModule1_GetSupportedLocalesTest"></entry>
+<entry key="TestModule1_GetDefaultNamespaceTest"></entry>
+<entry key="TestModule1_GetPortletNameTest"></entry>
+<entry key="TestModule1_GetSupportedLocalesTest1"></entry>
+<entry key="TestModule2_CanCreateRenderURL"></entry>
+<entry key="TestModule2_CanGetPortletSession"></entry>
+<entry key="TestModule2_CanSetAttributeInPortletSession"></entry>
+<entry key="TestModule2_RenderURLWithParameterCanBeClicked"></entry>
+<entry key="TestModule2_PublicRenderParameterCanBeSetThroughUrl"></entry>
+<entry key="TestModule3_PublicRenderParameterTestDifferentPortletApplications"></entry>
+<entry key="TestModule3_PublicRenderParameterTestDifferentQName"></entry>
+<entry key="TestModule3_PublicRenderParameterTestDifferentIdentifier"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSAction_Action1"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSAction_Action2"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSAction_Action3"></entry>

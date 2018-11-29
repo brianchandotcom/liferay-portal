@@ -91,6 +91,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -858,9 +859,14 @@ public class DocumentumRepository
 					idfSysObjectToMove = latestIDfDocument;
 				}
 
-				idfSysObjectToMove.unlink(idfFolderOld.getFolderPath(0));
+				if (!Objects.equals(
+						idfFolderOld.getObjectId(),
+						idfFolderNew.getObjectId())) {
 
-				idfSysObjectToMove.link(idfFolderNew.getFolderPath(0));
+					idfSysObjectToMove.unlink(idfFolderOld.getFolderPath(0));
+
+					idfSysObjectToMove.link(idfFolderNew.getFolderPath(0));
+				}
 
 				idfSysObjectToMove.setObjectName(newTitle);
 

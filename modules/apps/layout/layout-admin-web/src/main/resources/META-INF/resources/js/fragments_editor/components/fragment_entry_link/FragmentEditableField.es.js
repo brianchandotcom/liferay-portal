@@ -25,6 +25,13 @@ import {
 const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 /**
+ * Delay to save changes of an editable field
+ * @review
+ * @type {!number}
+ */
+const SAVE_CHANGES_DELAY = 2000;
+
+/**
  * Buttons rendered inside the tooltip
  * @review
  */
@@ -284,8 +291,15 @@ class FragmentEditableField extends Component {
 	 * @private
 	 */
 	_handleEditableChanged(newValue) {
-		this._saveChanges(newValue);
-				}
+		clearTimeout(this._saveChangesTimeout);
+
+		this._saveChangesTimeout = setTimeout(
+			() => {
+				this._saveChanges(newValue);
+			},
+			SAVE_CHANGES_DELAY
+		);
+	}
 
 	/**
 	 * Handle clicks outside tooltip element
@@ -346,7 +360,7 @@ class FragmentEditableField extends Component {
 					editableValue: newValue,
 					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 					fragmentEntryLinkId: this.fragmentEntryLinkId
-}
+				}
 			)
 			.dispatchAction(
 				UPDATE_TRANSLATION_STATUS
@@ -494,6 +508,17 @@ FragmentEditableField.STATE = {
 	 * @type {boolean}
 	 */
 	_editing: Config.internal().bool().value(false),
+
+	/**
+	 * Id of the timeout to save changes
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {number}
+	 */
+
+	_saveChangesTimeout: Config.number().internal(),
 
 	/**
 	 * Flag indicating if the editable editor should be enabled.

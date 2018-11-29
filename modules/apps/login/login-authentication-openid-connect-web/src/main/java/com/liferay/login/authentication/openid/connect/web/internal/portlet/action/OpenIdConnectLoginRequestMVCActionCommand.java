@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
  * <ol>
  * <li>
  * Discover the OpenID provider's XRDS document by performing HTTP GET on
- * the user's OpenID URL. This document tells Liferay the OpenId provider's
- * URL.
+ * the user's OpenID URL. This document tells Liferay Portal the OpenID
+ * provider's URL.
  * </li>
  * <li>
  * Retrieve the OpenID provider's authentication URL which is provided by

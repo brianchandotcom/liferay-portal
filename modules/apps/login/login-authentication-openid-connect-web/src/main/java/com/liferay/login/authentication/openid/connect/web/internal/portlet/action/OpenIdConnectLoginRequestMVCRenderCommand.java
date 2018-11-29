@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Enables the Sign In portlet to render a prompt for users to enter their
- * OpenID Connect Ids.
+ * OpenID Connect IDs.
  *
  * @author Michael C. Han
  */

@@ -62,6 +62,17 @@ public class ComplexEntityField extends EntityField {
 	}
 
 	/**
+	 * Returns a entity fields by its name.
+	 *
+	 * @return the entity field
+	 * @return the name
+	 * @review
+	 */
+	public EntityField getEntityField(String name) {
+		return _entityFieldsMap.get(name);
+	}
+
+	/**
 	 * Returns a Map with all the entity fields of this entity fields.
 	 *
 	 * @return the entity field map

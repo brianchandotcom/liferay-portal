@@ -85,7 +85,10 @@ public class EntityModelFieldMapper {
 	}
 
 	protected String getType(EntityField.Type entityFieldType) {
-		if (entityFieldType == EntityField.Type.DATE) {
+		if (entityFieldType == EntityField.Type.BOOLEAN) {
+			return "boolean";
+		}
+		else if (entityFieldType == EntityField.Type.DATE) {
 			return "date";
 		}
 		else if (entityFieldType == EntityField.Type.DOUBLE) {

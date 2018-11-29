@@ -14,16 +14,16 @@
 
 package com.liferay.data.engine.io;
 
-import com.liferay.data.engine.exception.DataDefinitionColumnsSerializerException;
+import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException;
 
 /**
  * @author Leonardo Barros
  */
-public interface DataDefinitionColumnsSerializer {
+public interface DataDefinitionFieldsSerializer {
 
-	public DataDefinitionColumnsSerializerApplyResponse apply(
-			DataDefinitionColumnsSerializerApplyRequest
-				dataDefinitionColumnsSerializerApplyRequest)
-		throws DataDefinitionColumnsSerializerException;
+	public DataDefinitionFieldsSerializerApplyResponse apply(
+			DataDefinitionFieldsSerializerApplyRequest
+				dataDefinitionFieldsSerializerApplyRequest)
+		throws DataDefinitionFieldsSerializerException;
 
 }

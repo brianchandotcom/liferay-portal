@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.internal.io;
 
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializer;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializer;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
@@ -31,14 +31,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, service = DataDefinitionColumnsDeserializerTracker.class
+	immediate = true, service = DataDefinitionFieldsDeserializerTracker.class
 )
-public class DataDefinitionColumnsDeserializerTracker {
+public class DataDefinitionFieldsDeserializerTracker {
 
-	public DataDefinitionColumnsDeserializer
-		getDataDefinitionColumnsDeserializer(String type) {
+	public DataDefinitionFieldsDeserializer getDataDefinitionFieldsDeserializer(
+		String type) {
 
-		return _dataDefinitionColumnsDeserializers.get(type);
+		return _dataDefinitionFieldsDeserializers.get(type);
 	}
 
 	@Reference(
@@ -46,33 +46,33 @@ public class DataDefinitionColumnsDeserializerTracker {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void addDataDefinitionColumnsDeserializer(
-		DataDefinitionColumnsDeserializer dataDefinitionColumnsDeserializer,
+	protected void addDataDefinitionFieldsDeserializer(
+		DataDefinitionFieldsDeserializer dataDefinitionFieldsDeserializer,
 		Map<String, Object> properties) {
 
 		String type = MapUtil.getString(
 			properties, "data.definition.deserializer.type");
 
-		_dataDefinitionColumnsDeserializers.put(
-			type, dataDefinitionColumnsDeserializer);
+		_dataDefinitionFieldsDeserializers.put(
+			type, dataDefinitionFieldsDeserializer);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dataDefinitionColumnsDeserializers.clear();
+		_dataDefinitionFieldsDeserializers.clear();
 	}
 
-	protected void removeDataDefinitionColumnsDeserializer(
-		DataDefinitionColumnsDeserializer dataDefinitionColumnsDeserializer,
+	protected void removeDataDefinitionFieldsDeserializer(
+		DataDefinitionFieldsDeserializer dataDefinitionFieldsDeserializer,
 		Map<String, Object> properties) {
 
 		String type = MapUtil.getString(
 			properties, "data.definition.deserializer.type");
 
-		_dataDefinitionColumnsDeserializers.remove(type);
+		_dataDefinitionFieldsDeserializers.remove(type);
 	}
 
-	private final Map<String, DataDefinitionColumnsDeserializer>
-		_dataDefinitionColumnsDeserializers = new TreeMap<>();
+	private final Map<String, DataDefinitionFieldsDeserializer>
+		_dataDefinitionFieldsDeserializers = new TreeMap<>();
 
 }

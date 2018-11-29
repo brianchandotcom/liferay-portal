@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.io;
 
-import com.liferay.data.engine.model.DataDefinitionColumn;
+import com.liferay.data.engine.model.DataDefinitionField;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,47 +23,46 @@ import java.util.List;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionColumnsSerializerApplyRequest {
+public final class DataDefinitionFieldsSerializerApplyRequest {
 
-	public List<DataDefinitionColumn> getDataDefinitionColumns() {
-		return Collections.unmodifiableList(_dataDefinitionColumns);
+	public List<DataDefinitionField> getDataDefinitionFields() {
+		return Collections.unmodifiableList(_dataDefinitionFields);
 	}
 
 	public static final class Builder {
 
 		public static Builder newBuilder(
-			List<DataDefinitionColumn> dataDefinitionColumns) {
+			List<DataDefinitionField> dataDefinitionFields) {
 
-			return new Builder(dataDefinitionColumns);
+			return new Builder(dataDefinitionFields);
 		}
 
-		public static DataDefinitionColumnsSerializerApplyRequest of(
-			List<DataDefinitionColumn> dataDefinitionColumns) {
+		public static DataDefinitionFieldsSerializerApplyRequest of(
+			List<DataDefinitionField> dataDefinitionFields) {
 
 			return newBuilder(
-				dataDefinitionColumns
+				dataDefinitionFields
 			).build();
 		}
 
-		public DataDefinitionColumnsSerializerApplyRequest build() {
+		public DataDefinitionFieldsSerializerApplyRequest build() {
 			return _dataDefinitionSerializerApplyRequest;
 		}
 
-		private Builder(List<DataDefinitionColumn> dataDefinitionColumns) {
-			_dataDefinitionSerializerApplyRequest._dataDefinitionColumns.addAll(
-				dataDefinitionColumns);
+		private Builder(List<DataDefinitionField> dataDefinitionFields) {
+			_dataDefinitionSerializerApplyRequest._dataDefinitionFields.addAll(
+				dataDefinitionFields);
 		}
 
-		private DataDefinitionColumnsSerializerApplyRequest
+		private DataDefinitionFieldsSerializerApplyRequest
 			_dataDefinitionSerializerApplyRequest =
-				new DataDefinitionColumnsSerializerApplyRequest();
+				new DataDefinitionFieldsSerializerApplyRequest();
 
 	}
 
-	private DataDefinitionColumnsSerializerApplyRequest() {
+	private DataDefinitionFieldsSerializerApplyRequest() {
 	}
 
-	private List<DataDefinitionColumn> _dataDefinitionColumns =
-		new ArrayList<>();
+	private List<DataDefinitionField> _dataDefinitionFields = new ArrayList<>();
 
 }

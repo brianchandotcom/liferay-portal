@@ -51,16 +51,12 @@ public final class DataDefinition implements ClassedModel, Serializable {
 			Objects.equals(
 				_dataDefinitionId, dataDefinition._dataDefinitionId) &&
 			Objects.equals(_storageType, dataDefinition._storageType) &&
-			Objects.equals(_columns, dataDefinition._columns)) {
+			Objects.equals(_fields, dataDefinition._fields)) {
 
 			return true;
 		}
 
 		return false;
-	}
-
-	public List<DataDefinitionColumn> getColumns() {
-		return Collections.unmodifiableList(_columns);
 	}
 
 	public long getDataDefinitionId() {
@@ -74,6 +70,10 @@ public final class DataDefinition implements ClassedModel, Serializable {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		throw new UnsupportedOperationException();
+	}
+
+	public List<DataDefinitionField> getFields() {
+		return Collections.unmodifiableList(_fields);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 		hash = HashUtil.hash(hash, _storageType.hashCode());
 
-		return HashUtil.hash(hash, _columns.hashCode());
+		return HashUtil.hash(hash, _fields.hashCode());
 	}
 
 	@Override
@@ -119,8 +119,8 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 	public static final class Builder {
 
-		public static Builder newBuilder(List<DataDefinitionColumn> columns) {
-			return new Builder(columns);
+		public static Builder newBuilder(List<DataDefinitionField> fields) {
+			return new Builder(fields);
 		}
 
 		public DataDefinition build() {
@@ -170,8 +170,8 @@ public final class DataDefinition implements ClassedModel, Serializable {
 			return this;
 		}
 
-		private Builder(List<DataDefinitionColumn> columns) {
-			_dataDefinition._columns.addAll(columns);
+		private Builder(List<DataDefinitionField> fields) {
+			_dataDefinition._fields.addAll(fields);
 		}
 
 		private final DataDefinition _dataDefinition = new DataDefinition();
@@ -181,9 +181,9 @@ public final class DataDefinition implements ClassedModel, Serializable {
 	private DataDefinition() {
 	}
 
-	private final List<DataDefinitionColumn> _columns = new ArrayList<>();
 	private long _dataDefinitionId;
 	private final Map<String, String> _description = new HashMap<>();
+	private final List<DataDefinitionField> _fields = new ArrayList<>();
 	private final Map<String, String> _name = new HashMap<>();
 	private String _storageType = "json";
 

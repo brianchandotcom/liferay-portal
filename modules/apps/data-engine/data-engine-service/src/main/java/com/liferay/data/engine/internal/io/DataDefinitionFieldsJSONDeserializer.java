@@ -14,12 +14,12 @@
 
 package com.liferay.data.engine.internal.io;
 
-import com.liferay.data.engine.exception.DataDefinitionColumnsDeserializerException;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializer;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumn;
+import com.liferay.data.engine.exception.DataDefinitionFieldsDeserializerException;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializer;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyRequest;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyResponse;
 import com.liferay.data.engine.model.DataDefinitionColumnType;
+import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -39,46 +39,46 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "data.definition.deserializer.type=json",
-	service = DataDefinitionColumnsDeserializer.class
+	service = DataDefinitionFieldsDeserializer.class
 )
-public class DataDefinitionColumnsJSONDeserializer
-	implements DataDefinitionColumnsDeserializer {
+public class DataDefinitionFieldsJSONDeserializer
+	implements DataDefinitionFieldsDeserializer {
 
 	@Override
-	public DataDefinitionColumnsDeserializerApplyResponse apply(
-			DataDefinitionColumnsDeserializerApplyRequest
-				dataDefinitionColumnsDeserializerApplyRequest)
-		throws DataDefinitionColumnsDeserializerException {
+	public DataDefinitionFieldsDeserializerApplyResponse apply(
+			DataDefinitionFieldsDeserializerApplyRequest
+				dataDefinitionFieldsDeserializerApplyRequest)
+		throws DataDefinitionFieldsDeserializerException {
 
-		List<DataDefinitionColumn> dataDefinitionColumns = new ArrayList<>();
+		List<DataDefinitionField> dataDefinitionFields = new ArrayList<>();
 
 		try {
 			JSONArray jsonArray = jsonFactory.createJSONArray(
-				dataDefinitionColumnsDeserializerApplyRequest.getContent());
+				dataDefinitionFieldsDeserializerApplyRequest.getContent());
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				DataDefinitionColumn dataDefinitionColumn =
-					createDataDefinitionColumn(jsonArray.getJSONObject(i));
+				DataDefinitionField dataDefinitionField =
+					createDataDefinitionField(jsonArray.getJSONObject(i));
 
-				dataDefinitionColumns.add(dataDefinitionColumn);
+				dataDefinitionFields.add(dataDefinitionField);
 			}
 
-			return DataDefinitionColumnsDeserializerApplyResponse.Builder.of(
-				dataDefinitionColumns);
+			return DataDefinitionFieldsDeserializerApplyResponse.Builder.of(
+				dataDefinitionFields);
 		}
 		catch (JSONException e)
 		{
-			throw new DataDefinitionColumnsDeserializerException(
+			throw new DataDefinitionFieldsDeserializerException(
 				"Invalid JSON format");
 		}
-		catch (DataDefinitionColumnsDeserializerException ddcde) {
-			throw ddcde;
+		catch (DataDefinitionFieldsDeserializerException ddfde) {
+			throw ddfde;
 		}
 	}
 
-	protected DataDefinitionColumn createDataDefinitionColumn(
+	protected DataDefinitionField createDataDefinitionField(
 			JSONObject jsonObject)
-		throws DataDefinitionColumnsDeserializerException {
+		throws DataDefinitionFieldsDeserializerException {
 
 		Map<String, String> labels = new TreeMap<>();
 
@@ -86,7 +86,7 @@ public class DataDefinitionColumnsJSONDeserializer
 			JSONObject labelJSONObject = jsonObject.getJSONObject("label");
 
 			if (labelJSONObject == null) {
-				throw new DataDefinitionColumnsDeserializerException(
+				throw new DataDefinitionFieldsDeserializerException(
 					"Label property must contain localized values");
 			}
 
@@ -100,12 +100,12 @@ public class DataDefinitionColumnsJSONDeserializer
 		}
 
 		if (!jsonObject.has("name")) {
-			throw new DataDefinitionColumnsDeserializerException(
+			throw new DataDefinitionFieldsDeserializerException(
 				"Name property is required");
 		}
 
 		if (!jsonObject.has("type")) {
-			throw new DataDefinitionColumnsDeserializerException(
+			throw new DataDefinitionFieldsDeserializerException(
 				"Type property is required");
 		}
 
@@ -115,7 +115,7 @@ public class DataDefinitionColumnsJSONDeserializer
 			JSONObject tipJSONObject = jsonObject.getJSONObject("tip");
 
 			if (tipJSONObject == null) {
-				throw new DataDefinitionColumnsDeserializerException(
+				throw new DataDefinitionFieldsDeserializerException(
 					"Tip property must contain localized values");
 			}
 
@@ -128,7 +128,7 @@ public class DataDefinitionColumnsJSONDeserializer
 			}
 		}
 
-		return DataDefinitionColumn.Builder.newBuilder(
+		return DataDefinitionField.Builder.newBuilder(
 			jsonObject.getString("name"),
 			DataDefinitionColumnType.parse(jsonObject.getString("type"))
 		).defaultValue(

@@ -12,18 +12,30 @@
  * details.
  */
 
-package com.liferay.data.engine.io;
+package com.liferay.data.engine.exception;
 
-import com.liferay.data.engine.exception.DataDefinitionColumnsDeserializerException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Leonardo Barros
  */
-public interface DataDefinitionColumnsDeserializer {
+public class DataDefinitionFieldsSerializerException extends PortalException {
 
-	public DataDefinitionColumnsDeserializerApplyResponse apply(
-			DataDefinitionColumnsDeserializerApplyRequest
-				dataDefinitionColumnsDeserializerApplyRequest)
-		throws DataDefinitionColumnsDeserializerException;
+	public DataDefinitionFieldsSerializerException() {
+	}
+
+	public DataDefinitionFieldsSerializerException(String msg) {
+		super(msg);
+	}
+
+	public DataDefinitionFieldsSerializerException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public DataDefinitionFieldsSerializerException(Throwable cause) {
+		super(cause);
+	}
 
 }

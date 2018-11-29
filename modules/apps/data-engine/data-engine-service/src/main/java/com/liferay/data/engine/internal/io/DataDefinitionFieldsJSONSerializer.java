@@ -14,12 +14,12 @@
 
 package com.liferay.data.engine.internal.io;
 
-import com.liferay.data.engine.exception.DataDefinitionColumnsSerializerException;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializer;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumn;
+import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializer;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyRequest;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyResponse;
 import com.liferay.data.engine.model.DataDefinitionColumnType;
+import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,78 +38,76 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "data.definition.serializer.type=json",
-	service = DataDefinitionColumnsSerializer.class
+	service = DataDefinitionFieldsSerializer.class
 )
-public class DataDefinitionColumnsJSONSerializer
-	implements DataDefinitionColumnsSerializer {
+public class DataDefinitionFieldsJSONSerializer
+	implements DataDefinitionFieldsSerializer {
 
 	@Override
-	public DataDefinitionColumnsSerializerApplyResponse apply(
-			DataDefinitionColumnsSerializerApplyRequest
-				dataDefinitionColumnsSerializerApplyRequest)
-		throws DataDefinitionColumnsSerializerException {
+	public DataDefinitionFieldsSerializerApplyResponse apply(
+			DataDefinitionFieldsSerializerApplyRequest
+				dataDefinitionFieldsSerializerApplyRequest)
+		throws DataDefinitionFieldsSerializerException {
 
-		List<DataDefinitionColumn> dataDefinitionColumns =
-			dataDefinitionColumnsSerializerApplyRequest.
-				getDataDefinitionColumns();
+		List<DataDefinitionField> dataDefinitionFields =
+			dataDefinitionFieldsSerializerApplyRequest.
+				getDataDefinitionFields();
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		for (DataDefinitionColumn dataDefinitionColumn :
-				dataDefinitionColumns) {
-
-			jsonArray.put(mapColumn(dataDefinitionColumn));
+		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
+			jsonArray.put(mapField(dataDefinitionField));
 		}
 
-		return DataDefinitionColumnsSerializerApplyResponse.Builder.of(
+		return DataDefinitionFieldsSerializerApplyResponse.Builder.of(
 			jsonArray.toJSONString());
 	}
 
-	protected JSONObject mapColumn(DataDefinitionColumn dataDefinitionColumn)
-		throws DataDefinitionColumnsSerializerException {
+	protected JSONObject mapField(DataDefinitionField dataDefinitionField)
+		throws DataDefinitionFieldsSerializerException {
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Object defaultValue = dataDefinitionColumn.getDefaultValue();
+		Object defaultValue = dataDefinitionField.getDefaultValue();
 
 		if (defaultValue != null) {
 			jsonObject.put("defaultValue", defaultValue);
 		}
 
-		jsonObject.put("indexable", dataDefinitionColumn.isIndexable());
+		jsonObject.put("indexable", dataDefinitionField.isIndexable());
 
-		Map<String, String> label = dataDefinitionColumn.getLabel();
+		Map<String, String> label = dataDefinitionField.getLabel();
 
 		if (!label.isEmpty()) {
 			setProperty("label", jsonObject, label);
 		}
 
-		jsonObject.put("localizable", dataDefinitionColumn.isLocalizable());
+		jsonObject.put("localizable", dataDefinitionField.isLocalizable());
 
-		String name = dataDefinitionColumn.getName();
+		String name = dataDefinitionField.getName();
 
 		if (Validator.isNull(name)) {
-			throw new DataDefinitionColumnsSerializerException(
+			throw new DataDefinitionFieldsSerializerException(
 				"Name property is required");
 		}
 		else {
 			jsonObject.put("name", name);
 		}
 
-		jsonObject.put("repeatable", dataDefinitionColumn.isRepeatable());
-		jsonObject.put("required", dataDefinitionColumn.isRequired());
+		jsonObject.put("repeatable", dataDefinitionField.isRepeatable());
+		jsonObject.put("required", dataDefinitionField.isRequired());
 
-		Map<String, String> tip = dataDefinitionColumn.getTip();
+		Map<String, String> tip = dataDefinitionField.getTip();
 
 		if (!tip.isEmpty()) {
 			setProperty("tip", jsonObject, tip);
 		}
 
 		DataDefinitionColumnType dataDefinitionColumnType =
-			dataDefinitionColumn.getType();
+			dataDefinitionField.getType();
 
 		if (dataDefinitionColumnType == null) {
-			throw new DataDefinitionColumnsSerializerException(
+			throw new DataDefinitionFieldsSerializerException(
 				"Type property is required");
 		}
 		else {

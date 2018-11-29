@@ -14,19 +14,19 @@
 
 package com.liferay.data.engine.internal.service;
 
-import com.liferay.data.engine.exception.DataDefinitionColumnsDeserializerException;
-import com.liferay.data.engine.exception.DataDefinitionColumnsSerializerException;
 import com.liferay.data.engine.exception.DataDefinitionException;
-import com.liferay.data.engine.internal.io.DataDefinitionColumnsDeserializerTracker;
-import com.liferay.data.engine.internal.io.DataDefinitionColumnsSerializerTracker;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializer;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionColumnsDeserializerApplyResponse;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializer;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionColumnsSerializerApplyResponse;
+import com.liferay.data.engine.exception.DataDefinitionFieldsDeserializerException;
+import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException;
+import com.liferay.data.engine.internal.io.DataDefinitionFieldsDeserializerTracker;
+import com.liferay.data.engine.internal.io.DataDefinitionFieldsSerializerTracker;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializer;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyRequest;
+import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyResponse;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializer;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyRequest;
+import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyResponse;
 import com.liferay.data.engine.model.DataDefinition;
-import com.liferay.data.engine.model.DataDefinitionColumn;
+import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.data.engine.service.DataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DataDefinitionDeleteResponse;
 import com.liferay.data.engine.service.DataDefinitionGetRequest;
@@ -204,37 +204,36 @@ public class DataDefinitionLocalServiceImpl
 				ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet));
 	}
 
-	protected List<DataDefinitionColumn> deserialize(String content)
-		throws DataDefinitionColumnsDeserializerException {
+	protected List<DataDefinitionField> deserialize(String content)
+		throws DataDefinitionFieldsDeserializerException {
 
-		DataDefinitionColumnsDeserializer dataDefinitionColumnsDeserializer =
-			dataDefinitionColumnsDeserializerTracker.
-				getDataDefinitionColumnsDeserializer("json");
+		DataDefinitionFieldsDeserializer dataDefinitionFieldsDeserializer =
+			dataDefinitionFieldsDeserializerTracker.
+				getDataDefinitionFieldsDeserializer("json");
 
-		DataDefinitionColumnsDeserializerApplyRequest
-			dataDefinitionColumnsDeserializerApplyRequest =
-				DataDefinitionColumnsDeserializerApplyRequest.Builder.
-					newBuilder(
-						content
-					).build();
+		DataDefinitionFieldsDeserializerApplyRequest
+			dataDefinitionFieldsDeserializerApplyRequest =
+				DataDefinitionFieldsDeserializerApplyRequest.Builder.newBuilder(
+					content
+				).build();
 
-		DataDefinitionColumnsDeserializerApplyResponse
-			dataDefinitionColumnsDeserializerApplyResponse =
-				dataDefinitionColumnsDeserializer.apply(
-					dataDefinitionColumnsDeserializerApplyRequest);
+		DataDefinitionFieldsDeserializerApplyResponse
+			dataDefinitionFieldsDeserializerApplyResponse =
+				dataDefinitionFieldsDeserializer.apply(
+					dataDefinitionFieldsDeserializerApplyRequest);
 
-		return dataDefinitionColumnsDeserializerApplyResponse.
-			getDataDefinitionColumns();
+		return dataDefinitionFieldsDeserializerApplyResponse.
+			getDataDefinitionFields();
 	}
 
 	protected DataDefinition map(DDMStructure ddmStructure)
-		throws DataDefinitionColumnsDeserializerException {
+		throws DataDefinitionFieldsDeserializerException {
 
-		List<DataDefinitionColumn> dataDefinitionColumns = deserialize(
+		List<DataDefinitionField> dataDefinitionFields = deserialize(
 			ddmStructure.getDefinition());
 
 		return DataDefinition.Builder.newBuilder(
-			dataDefinitionColumns
+			dataDefinitionFields
 		).dataDefinitionId(
 			ddmStructure.getStructureId()
 		).description(
@@ -247,23 +246,23 @@ public class DataDefinitionLocalServiceImpl
 	}
 
 	protected String serialize(DataDefinition dataDefinition)
-		throws DataDefinitionColumnsSerializerException {
+		throws DataDefinitionFieldsSerializerException {
 
-		DataDefinitionColumnsSerializer dataDefinitionColumnsSerializer =
-			dataDefinitionColumnsSerializerTracker.
-				getDataDefinitionColumnsSerializer("json");
+		DataDefinitionFieldsSerializer dataDefinitionFieldsSerializer =
+			dataDefinitionFieldsSerializerTracker.
+				getDataDefinitionFieldsSerializer("json");
 
-		DataDefinitionColumnsSerializerApplyRequest
-			dataDefinitionColumnsSerializerApplyRequest =
-				DataDefinitionColumnsSerializerApplyRequest.Builder.of(
-					dataDefinition.getColumns());
+		DataDefinitionFieldsSerializerApplyRequest
+			dataDefinitionFieldsSerializerApplyRequest =
+				DataDefinitionFieldsSerializerApplyRequest.Builder.of(
+					dataDefinition.getFields());
 
-		DataDefinitionColumnsSerializerApplyResponse
-			dataDefinitionColumnsSerializerApplyResponse =
-				dataDefinitionColumnsSerializer.apply(
-					dataDefinitionColumnsSerializerApplyRequest);
+		DataDefinitionFieldsSerializerApplyResponse
+			dataDefinitionFieldsSerializerApplyResponse =
+				dataDefinitionFieldsSerializer.apply(
+					dataDefinitionFieldsSerializerApplyRequest);
 
-		return dataDefinitionColumnsSerializerApplyResponse.getContent();
+		return dataDefinitionFieldsSerializerApplyResponse.getContent();
 	}
 
 	protected void updateDDMStructure(
@@ -284,12 +283,12 @@ public class DataDefinitionLocalServiceImpl
 	}
 
 	@Reference
-	protected DataDefinitionColumnsDeserializerTracker
-		dataDefinitionColumnsDeserializerTracker;
+	protected DataDefinitionFieldsDeserializerTracker
+		dataDefinitionFieldsDeserializerTracker;
 
 	@Reference
-	protected DataDefinitionColumnsSerializerTracker
-		dataDefinitionColumnsSerializerTracker;
+	protected DataDefinitionFieldsSerializerTracker
+		dataDefinitionFieldsSerializerTracker;
 
 	@Reference
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;

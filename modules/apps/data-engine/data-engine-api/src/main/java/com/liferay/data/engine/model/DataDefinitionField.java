@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionColumn implements Serializable {
+public final class DataDefinitionField implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -34,21 +34,21 @@ public final class DataDefinitionColumn implements Serializable {
 			return true;
 		}
 
-		if (!(obj instanceof DataDefinitionColumn)) {
+		if (!(obj instanceof DataDefinitionField)) {
 			return false;
 		}
 
-		DataDefinitionColumn dataDefinitionColumn = (DataDefinitionColumn)obj;
+		DataDefinitionField dataDefinitionField = (DataDefinitionField)obj;
 
-		if (Objects.equals(_defaultValue, dataDefinitionColumn._defaultValue) &&
-			Objects.equals(_indexable, dataDefinitionColumn._indexable) &&
-			Objects.equals(_label, dataDefinitionColumn._label) &&
-			Objects.equals(_localizable, dataDefinitionColumn._localizable) &&
-			Objects.equals(_name, dataDefinitionColumn._name) &&
-			Objects.equals(_repeatable, dataDefinitionColumn._repeatable) &&
-			Objects.equals(_required, dataDefinitionColumn._required) &&
-			Objects.equals(_tip, dataDefinitionColumn._tip) &&
-			Objects.equals(_type, dataDefinitionColumn._type)) {
+		if (Objects.equals(_defaultValue, dataDefinitionField._defaultValue) &&
+			Objects.equals(_indexable, dataDefinitionField._indexable) &&
+			Objects.equals(_label, dataDefinitionField._label) &&
+			Objects.equals(_localizable, dataDefinitionField._localizable) &&
+			Objects.equals(_name, dataDefinitionField._name) &&
+			Objects.equals(_repeatable, dataDefinitionField._repeatable) &&
+			Objects.equals(_required, dataDefinitionField._required) &&
+			Objects.equals(_tip, dataDefinitionField._tip) &&
+			Objects.equals(_type, dataDefinitionField._type)) {
 
 			return true;
 		}
@@ -125,63 +125,63 @@ public final class DataDefinitionColumn implements Serializable {
 			return new Builder(name, type);
 		}
 
-		public DataDefinitionColumn build() {
-			return _dataDefinitionColumn;
+		public DataDefinitionField build() {
+			return _dataDefinitionField;
 		}
 
 		public Builder defaultValue(Object defaultValue) {
-			_dataDefinitionColumn._defaultValue = defaultValue;
+			_dataDefinitionField._defaultValue = defaultValue;
 
 			return this;
 		}
 
 		public Builder indexable(boolean indexable) {
-			_dataDefinitionColumn._indexable = indexable;
+			_dataDefinitionField._indexable = indexable;
 
 			return this;
 		}
 
 		public Builder label(Map<String, String> label) {
-			_dataDefinitionColumn._label.putAll(label);
+			_dataDefinitionField._label.putAll(label);
 
 			return this;
 		}
 
 		public Builder localizable(boolean localizable) {
-			_dataDefinitionColumn._localizable = localizable;
+			_dataDefinitionField._localizable = localizable;
 
 			return this;
 		}
 
 		public Builder repeatable(boolean repeatable) {
-			_dataDefinitionColumn._repeatable = repeatable;
+			_dataDefinitionField._repeatable = repeatable;
 
 			return this;
 		}
 
 		public Builder required(boolean required) {
-			_dataDefinitionColumn._required = required;
+			_dataDefinitionField._required = required;
 
 			return this;
 		}
 
 		public Builder tip(Map<String, String> tip) {
-			_dataDefinitionColumn._tip.putAll(tip);
+			_dataDefinitionField._tip.putAll(tip);
 
 			return this;
 		}
 
 		private Builder(String name, DataDefinitionColumnType type) {
-			_dataDefinitionColumn._name = name;
-			_dataDefinitionColumn._type = type;
+			_dataDefinitionField._name = name;
+			_dataDefinitionField._type = type;
 		}
 
-		private final DataDefinitionColumn _dataDefinitionColumn =
-			new DataDefinitionColumn();
+		private final DataDefinitionField _dataDefinitionField =
+			new DataDefinitionField();
 
 	}
 
-	private DataDefinitionColumn() {
+	private DataDefinitionField() {
 	}
 
 	private Object _defaultValue;

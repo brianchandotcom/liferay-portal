@@ -473,8 +473,8 @@ public class SyncHelperImpl implements SyncHelper {
 			WritableByteChannel patchedWritableByteChannel =
 				Channels.newChannel(patchedFileOutputStream);
 			FileInputStream deltaInputStream = new FileInputStream(deltaFile);
-			ReadableByteChannel deltaReadableByteChannel =
-				Channels.newChannel(deltaInputStream)) {
+			ReadableByteChannel deltaReadableByteChannel = Channels.newChannel(
+				deltaInputStream)) {
 
 			ByteChannelReader deltaByteChannelReader = new ByteChannelReader(
 				deltaReadableByteChannel);

@@ -103,8 +103,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -131,8 +131,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -152,8 +152,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -172,8 +172,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -204,8 +204,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.deleteEntry(entry.getEntryId());
 		}
@@ -223,8 +223,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.deleteEntry(entry.getEntryId());
 		}
@@ -249,8 +249,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -271,8 +271,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -296,8 +296,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
@@ -332,8 +332,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
@@ -381,8 +381,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
 				_company.getCompanyId(), new Date(),
@@ -440,8 +440,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			calendar = Calendar.getInstance();
 
@@ -496,8 +496,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
 				_company.getCompanyId(), new Date(),
@@ -530,8 +530,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
 				_company.getCompanyId(), new Date(),
@@ -575,8 +575,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			calendar = Calendar.getInstance();
 
@@ -617,8 +617,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
 				_company.getCompanyId(), new Date(),
@@ -778,8 +778,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.getEntriesPrevAndNext(entry2.getEntryId());
 		}
@@ -818,8 +818,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntry[] prevAndNext =
 				BlogsEntryServiceUtil.getEntriesPrevAndNext(
@@ -876,8 +876,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntry[] prevAndNext =
 				BlogsEntryServiceUtil.getEntriesPrevAndNext(
@@ -925,8 +925,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.getEntry(entry.getEntryId());
 		}
@@ -959,8 +959,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.getEntry(
 				entry.getGroupId(), entry.getUrlTitle());
@@ -979,8 +979,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.getEntry(entry.getEntryId());
 		}
@@ -998,8 +998,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.getEntry(
 				entry.getGroupId(), entry.getUrlTitle());
@@ -1041,8 +1041,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupEntries(
 				_group.getGroupId(), new Date(),
@@ -1100,8 +1100,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			calendar = Calendar.getInstance();
 
@@ -1156,8 +1156,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupEntries(
 				_group.getGroupId(), new Date(),
@@ -1190,8 +1190,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupEntries(
 				_group.getGroupId(), new Date(),
@@ -1235,8 +1235,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			calendar = Calendar.getInstance();
 
@@ -1275,8 +1275,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupEntries(
 				_group.getGroupId(), new Date(),
@@ -1309,8 +1309,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.moveEntryToTrash(entry.getEntryId());
 		}
@@ -1328,8 +1328,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.moveEntryToTrash(entry.getEntryId());
 		}
@@ -1348,8 +1348,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.deleteEntry(entry.getEntryId());
 		}
@@ -1368,8 +1368,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.moveEntryToTrash(entry.getEntryId());
 		}
@@ -1391,8 +1391,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.restoreEntryFromTrash(entry.getEntryId());
 		}
@@ -1414,8 +1414,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.updateEntry(
 				entry.getEntryId(), RandomTestUtil.randomString(),
@@ -1450,8 +1450,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.restoreEntryFromTrash(entry.getEntryId());
 		}
@@ -1473,8 +1473,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.restoreEntryFromTrash(entry.getEntryId());
 		}
@@ -1489,8 +1489,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			BlogsEntryServiceUtil.subscribe(_group.getGroupId());
 		}
@@ -1501,8 +1501,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.subscribe(_group.getGroupId());
 		}
@@ -1517,8 +1517,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			BlogsEntryServiceUtil.unsubscribe(_group.getGroupId());
 		}
@@ -1529,8 +1529,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.unsubscribe(_group.getGroupId());
 		}
@@ -1548,8 +1548,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
@@ -1575,8 +1575,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
@@ -1610,8 +1610,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
@@ -1645,8 +1645,8 @@ public class BlogsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());

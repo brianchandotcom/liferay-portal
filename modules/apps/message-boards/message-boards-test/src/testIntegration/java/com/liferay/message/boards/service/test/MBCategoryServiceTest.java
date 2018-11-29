@@ -501,8 +501,8 @@ public class MBCategoryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_ANY);

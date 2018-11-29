@@ -109,8 +109,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(
@@ -125,8 +125,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(
@@ -141,8 +141,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(
@@ -162,8 +162,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.ADD_DISCUSSION);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -183,8 +183,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.ADD_DISCUSSION);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -204,8 +204,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.ADD_DISCUSSION);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(
@@ -222,8 +222,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -240,8 +240,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -258,8 +258,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -279,8 +279,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.UPDATE);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -300,8 +300,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.UPDATE);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -321,8 +321,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.UPDATE);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(
@@ -342,8 +342,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.VIEW);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -363,8 +363,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.VIEW);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_sharingPermissionChecker.hasPermission(
@@ -382,8 +382,8 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (AddDLFileEntryResourcePermission addDLFileEntryResourcePermission =
 				new AddDLFileEntryResourcePermission(
 					_powerUserRole, ActionKeys.VIEW);
-			ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+			ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_sharingPermissionChecker.hasPermission(

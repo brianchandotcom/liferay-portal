@@ -441,8 +441,8 @@ public class MBCategoryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
 				_group.getGroupId(),

@@ -37,8 +37,8 @@ public abstract class BaseDataPartitioningExporterTestCase {
 		throws SQLException {
 
 		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement =
-				connection.prepareStatement(sql)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
 			return preparedStatement.executeUpdate();
 		}

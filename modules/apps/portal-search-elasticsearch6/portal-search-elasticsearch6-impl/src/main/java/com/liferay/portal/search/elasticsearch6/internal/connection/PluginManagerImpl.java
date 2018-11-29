@@ -52,8 +52,8 @@ public class PluginManagerImpl implements PluginManager {
 			return new Path[0];
 		}
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(_environment.pluginsFile())) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				_environment.pluginsFile())) {
 
 			return (Path[])IteratorUtils.toArray(
 				directoryStream.iterator(), Path.class);

@@ -98,8 +98,8 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 		ApnsServiceBuilder appleServiceBuilder = APNS.newService();
 
-		try (InputStream inputStream =
-				_getCertificateInputStream(certificatePath)) {
+		try (InputStream inputStream = _getCertificateInputStream(
+				certificatePath)) {
 
 			if (inputStream == null) {
 				throw new IllegalArgumentException(

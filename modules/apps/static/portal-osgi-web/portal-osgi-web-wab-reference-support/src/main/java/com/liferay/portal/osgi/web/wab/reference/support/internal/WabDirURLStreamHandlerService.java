@@ -175,8 +175,8 @@ public class WabDirURLStreamHandlerService
 			return StringPool.BLANK;
 		}
 
-		try (FileInputStream fileInputStream =
-				new FileInputStream(liferayPluginPackagePropertiesFile)) {
+		try (FileInputStream fileInputStream = new FileInputStream(
+				liferayPluginPackagePropertiesFile)) {
 
 			Properties properties = new Properties();
 

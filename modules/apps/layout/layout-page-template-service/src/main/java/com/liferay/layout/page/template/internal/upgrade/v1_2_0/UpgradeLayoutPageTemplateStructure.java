@@ -76,8 +76,8 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 		sb.append(LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
 		sb.append(")");
 
-		try (PreparedStatement ps =
-				connection.prepareStatement(sb.toString())) {
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {

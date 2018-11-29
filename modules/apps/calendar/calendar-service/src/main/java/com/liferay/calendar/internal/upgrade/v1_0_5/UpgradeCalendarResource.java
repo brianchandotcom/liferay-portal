@@ -131,8 +131,8 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 		sb.append("CalendarResource.classNameId = ? and ");
 		sb.append("CalendarResource.userId = ?");
 
-		try (PreparedStatement ps =
-				connection.prepareStatement(sb.toString())) {
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setLong(1, groupClassNameId);
 			ps.setLong(2, defaultUserId);

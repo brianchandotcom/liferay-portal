@@ -347,8 +347,8 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 
 		parentFile.mkdirs();
 
-		try (FileOutputStream fileOutputStream =
-				new FileOutputStream(file, append)) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				file, append)) {
 
 			fileOutputStream.write(bytes);
 		}

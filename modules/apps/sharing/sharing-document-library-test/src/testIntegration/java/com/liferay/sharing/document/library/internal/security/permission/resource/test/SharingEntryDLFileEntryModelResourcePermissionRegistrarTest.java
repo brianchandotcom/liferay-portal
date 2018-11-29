@@ -116,8 +116,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_fileEntryModelResourcePermission.contains(
@@ -143,8 +143,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -159,8 +159,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -175,8 +175,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -191,8 +191,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -207,8 +207,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -233,8 +233,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertFalse(
 				_fileEntryModelResourcePermission.contains(
@@ -259,8 +259,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_fileEntryModelResourcePermission.contains(
@@ -284,8 +284,8 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			Assert.assertTrue(
 				_fileEntryModelResourcePermission.contains(

@@ -105,8 +105,8 @@ public class WabBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 		File file = FileUtil.createTempFile("war");
 
 		try (OutputStream outputStream = new FileOutputStream(file);
-			JarOutputStream jarOutputStream =
-				new JarOutputStream(outputStream)) {
+			JarOutputStream jarOutputStream = new JarOutputStream(
+				outputStream)) {
 
 			String createSQL = toCreateSQL(tableColumns);
 

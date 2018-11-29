@@ -883,8 +883,8 @@ public class PDFProcessorImpl
 			StringPool.BLANK);
 
 		for (String decryptPassword : decryptPasswords) {
-			try (PDDocument pdDocument =
-					PDDocument.load(encryptedFile, decryptPassword)) {
+			try (PDDocument pdDocument = PDDocument.load(
+					encryptedFile, decryptPassword)) {
 
 				pdDocument.setAllSecurityToBeRemoved(true);
 

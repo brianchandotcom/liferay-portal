@@ -137,8 +137,8 @@ public class RawMetadataProcessorImpl
 		}
 
 		if (rawMetadataMap == null) {
-			try (InputStream inputStream =
-					fileVersion.getContentStream(false)) {
+			try (InputStream inputStream = fileVersion.getContentStream(
+					false)) {
 
 				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {

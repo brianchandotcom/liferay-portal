@@ -264,8 +264,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("file")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"file")) {
 
 			String tempFileName = TempFileEntryUtil.getTempFileName(
 				sourceFileName);
@@ -907,8 +907,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			title = uploadPortletRequest.getFileName("file");
 		}
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("file")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"file")) {
 
 			String contentType = uploadPortletRequest.getContentType("file");
 			long size = uploadPortletRequest.getSize("file");

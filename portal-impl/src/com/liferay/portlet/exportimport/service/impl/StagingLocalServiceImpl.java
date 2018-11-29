@@ -974,8 +974,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		File tempFile = FileUtil.createTempFile("lar");
 
-		try (FileOutputStream fileOutputStream =
-				new FileOutputStream(tempFile)) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				tempFile)) {
 
 			List<FileEntry> fileEntries =
 				PortletFileRepositoryUtil.getPortletFileEntries(

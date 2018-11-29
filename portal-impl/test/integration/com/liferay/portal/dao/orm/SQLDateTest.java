@@ -132,8 +132,8 @@ public class SQLDateTest {
 
 	protected void writeTimeJDBC(long time) throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement =
-				connection.prepareStatement(_WRITE_RELEASE_MODIFIED_DATE)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_WRITE_RELEASE_MODIFIED_DATE)) {
 
 			preparedStatement.setTimestamp(1, new Timestamp(time));
 

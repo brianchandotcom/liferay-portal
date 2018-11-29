@@ -145,8 +145,8 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			PageItems<JournalArticle> pageItems = getPageItems(
 				PaginationRequest.of(10, 1), _group.getGroupId(),

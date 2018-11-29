@@ -36,10 +36,9 @@ public class ConfigurationTemporarySwapperTest
 			String.valueOf(persistenceManager.load(configurationPid)),
 			testConfigurationExists());
 
-		try (ConfigurationTemporarySwapper
-				configurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						configurationPid, new HashMapDictionary<>())) {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					configurationPid, new HashMapDictionary<>())) {
 
 			Assert.assertTrue(testConfigurationExists());
 		}
@@ -65,10 +64,9 @@ public class ConfigurationTemporarySwapperTest
 
 		temporaryValues.put(testKey, temporaryValue);
 
-		try (ConfigurationTemporarySwapper
-				configurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						configurationPid, temporaryValues)) {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					configurationPid, temporaryValues)) {
 		}
 
 		Assert.assertTrue(testConfigurationExists());

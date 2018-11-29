@@ -199,8 +199,8 @@ public class KBArticleImporter {
 	protected Map<String, String> getMetadata(ZipReader zipReader)
 		throws KBArticleImportException {
 
-		try (InputStream inputStream =
-				zipReader.getEntryAsInputStream(".METADATA")) {
+		try (InputStream inputStream = zipReader.getEntryAsInputStream(
+				".METADATA")) {
 
 			if (inputStream == null) {
 				return Collections.emptyMap();

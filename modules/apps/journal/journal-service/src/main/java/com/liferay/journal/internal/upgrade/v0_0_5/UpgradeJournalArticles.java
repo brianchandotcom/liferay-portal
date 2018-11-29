@@ -258,8 +258,7 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update PortletPreferences set preferences = ?, portletId = " +
-					"? where portletPreferencesId = " +
-						portletPreferencesId)) {
+					"? where portletPreferencesId = " + portletPreferencesId)) {
 
 			ps.setString(1, newPreferences);
 			ps.setString(2, newPortletId);

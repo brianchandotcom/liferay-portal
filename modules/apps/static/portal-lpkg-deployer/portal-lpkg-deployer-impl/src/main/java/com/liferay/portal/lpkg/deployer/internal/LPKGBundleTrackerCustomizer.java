@@ -244,8 +244,8 @@ public class LPKGBundleTrackerCustomizer
 					continue;
 				}
 
-				try (InputStream inputStream =
-						zipFile.getInputStream(zipEntry)) {
+				try (InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
 
 					if (name.endsWith("jar")) {
 						if (_isBundleInstalled(bundle, url, location)) {

@@ -107,8 +107,8 @@ public class DirectoryComparator extends SimpleFileVisitor<Path> {
 	private Set<String> _getFileNames(Path dirPath) throws IOException {
 		Set<String> fileNames = new HashSet<>();
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(dirPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
 
 			for (Path path : directoryStream) {
 				String fileName = String.valueOf(path.getFileName());

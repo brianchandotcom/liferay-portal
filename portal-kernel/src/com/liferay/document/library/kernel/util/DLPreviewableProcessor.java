@@ -1044,8 +1044,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String binPath = fileEntryElement.attributeValue(binPathName);
 
-		try (InputStream is =
-				portletDataContext.getZipEntryAsInputStream(binPath)) {
+		try (InputStream is = portletDataContext.getZipEntryAsInputStream(
+				binPath)) {
 
 			if (is == null) {
 				return;
@@ -1113,8 +1113,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String binPath = fileEntryElement.attributeValue(binPathName);
 
-		try (InputStream is =
-				portletDataContext.getZipEntryAsInputStream(binPath)) {
+		try (InputStream is = portletDataContext.getZipEntryAsInputStream(
+				binPath)) {
 
 			if (is == null) {
 				return;

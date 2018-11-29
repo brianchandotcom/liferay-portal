@@ -130,8 +130,8 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 	private void _deleteReleaseRows(Connection connection) throws SQLException {
 		String sql = "delete from Release_ where servletContextName = ?";
 
-		try (PreparedStatement preparedStatement =
-				connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
 			preparedStatement.setString(1, _servletContextName);
 
@@ -145,8 +145,8 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 
 		String sql = "delete from ServiceComponent where buildNamespace = ?";
 
-		try (PreparedStatement preparedStatement =
-				connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
 			preparedStatement.setString(1, namespace);
 

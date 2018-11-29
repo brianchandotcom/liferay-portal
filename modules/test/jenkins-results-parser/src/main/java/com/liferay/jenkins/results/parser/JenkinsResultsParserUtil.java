@@ -164,11 +164,11 @@ public class JenkinsResultsParserUtil {
 				parentFile.mkdirs();
 			}
 
-			try (FileInputStream fileInputStream =
-					new FileInputStream(source)) {
+			try (FileInputStream fileInputStream = new FileInputStream(
+					source)) {
 
-				try (FileOutputStream fileOutputStream =
-						new FileOutputStream(target)) {
+				try (FileOutputStream fileOutputStream = new FileOutputStream(
+						target)) {
 
 					Files.copy(Paths.get(source.toURI()), fileOutputStream);
 

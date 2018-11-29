@@ -126,8 +126,8 @@ public class LPKGIndexer implements Indexer {
 			ZipEntry zipEntry = zipFile.getEntry("index.xml");
 
 			if (zipEntry != null) {
-				try (InputStream inputStream =
-						zipFile.getInputStream(zipEntry)) {
+				try (InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
 
 					_transfer(inputStream, outputStream);
 				}

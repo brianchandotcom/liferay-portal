@@ -113,8 +113,8 @@ public class ThemeContributorExtender extends AbstractExtender {
 			URL entryURL = bundle.getEntry("/package.json");
 
 			if (entryURL != null) {
-				try (Reader reader =
-						new InputStreamReader(entryURL.openStream())) {
+				try (Reader reader = new InputStreamReader(
+						entryURL.openStream())) {
 
 					JSONTokener jsonTokener = new JSONTokener(reader);
 

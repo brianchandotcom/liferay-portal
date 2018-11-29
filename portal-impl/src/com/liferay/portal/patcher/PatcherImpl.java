@@ -257,8 +257,8 @@ public class PatcherImpl implements Patcher {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		try (InputStream inputStream =
-				classLoader.getResourceAsStream(fileName)) {
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				fileName)) {
 
 			if (inputStream == null) {
 				if (_log.isDebugEnabled()) {

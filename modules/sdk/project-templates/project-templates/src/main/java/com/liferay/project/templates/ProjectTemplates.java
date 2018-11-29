@@ -146,8 +146,8 @@ public class ProjectTemplates {
 				try (InputStream inputStream =
 						ProjectTemplates.class.getResourceAsStream(
 							projectTemplateJarName);
-					JarInputStream jarInputStream =
-						new JarInputStream(inputStream)) {
+					JarInputStream jarInputStream = new JarInputStream(
+						inputStream)) {
 
 					Manifest manifest = jarInputStream.getManifest();
 

@@ -118,8 +118,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("file")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"file")) {
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 

@@ -224,8 +224,8 @@ public class DefaultIndexValidator implements IndexValidator {
 				identities.add(identity);
 			}
 
-			try (XMLResourceParser xmlResourceParser =
-					new XMLResourceParser(uri)) {
+			try (XMLResourceParser xmlResourceParser = new XMLResourceParser(
+					uri)) {
 
 				List<Resource> resources = xmlResourceParser.parse();
 

@@ -95,8 +95,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		deleteTempFileEntry(groupId, folderName);
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("file")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"file")) {
 
 			String sourceFileName = uploadPortletRequest.getFileName("file");
 

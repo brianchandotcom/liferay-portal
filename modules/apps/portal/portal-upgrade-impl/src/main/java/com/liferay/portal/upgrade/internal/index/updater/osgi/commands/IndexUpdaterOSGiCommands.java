@@ -106,8 +106,8 @@ public class IndexUpdaterOSGiCommands {
 				String loggingTimerName =
 					"Updating database indexes for " + bundle.getSymbolicName();
 
-				try (LoggingTimer loggingTimer =
-						new LoggingTimer(loggingTimerName)) {
+				try (LoggingTimer loggingTimer = new LoggingTimer(
+						loggingTimerName)) {
 
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}

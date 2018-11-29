@@ -139,8 +139,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			return;
 		}
 
-		try (LoggingTimer loggingTimer =
-				new LoggingTimer(getClass(), tableName)) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				getClass(), tableName)) {
 
 			StringBundler updateSB = new StringBundler(7);
 
@@ -209,8 +209,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode, boolean preventDuplicates)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer =
-				new LoggingTimer(getClass(), tableName)) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				getClass(), tableName)) {
 
 			if (preventDuplicates) {
 				_executeDelete(tableName, columnName, names, wildcardMode);

@@ -175,8 +175,8 @@ public class WabGenerator
 
 		Set<String> contextPaths = new HashSet<>();
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(path.toRealPath(), "*.war")) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				path.toRealPath(), "*.war")) {
 
 			for (Path warPath : directoryStream) {
 				URI uri = warPath.toUri();

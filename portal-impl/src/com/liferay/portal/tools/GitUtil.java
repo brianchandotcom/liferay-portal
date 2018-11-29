@@ -248,8 +248,8 @@ public class GitUtil {
 		String gitCommand = StringBundler.concat(
 			"git show ", committish, ":", fileName);
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				getGitCommandReader(gitCommand)) {
+		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+				gitCommand)) {
 
 			String line = null;
 

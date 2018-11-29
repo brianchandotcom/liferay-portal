@@ -658,8 +658,8 @@ public class ModulesStructureTest {
 		Set<String> buildExtGradleFileNames = new TreeSet<>(
 			String.CASE_INSENSITIVE_ORDER);
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(dirPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
 
 			for (Path path : directoryStream) {
 				if (Files.isDirectory(path)) {

@@ -98,8 +98,8 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 		Class<?> clazz = getClass();
 
-		try (InputStream inputStream =
-				clazz.getResourceAsStream("dependencies/main.rb")) {
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/main.rb")) {
 
 			Scanner scanner = new Scanner(inputStream, "UTF-8");
 

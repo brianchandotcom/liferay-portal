@@ -167,8 +167,8 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			String uniqueFileName = getUniqueFileName(
 				themeDisplay, fileName, folderId);
 
-			try (InputStream inputStream =
-					uploadPortletRequest.getFileAsStream(parameterName)) {
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					parameterName)) {
 
 				FileEntry fileEntry = addFileEntry(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),

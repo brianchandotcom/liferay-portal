@@ -66,8 +66,8 @@ public class SQLSubstrTest {
 		sql = SQLTransformer.transform(sql);
 
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement =
-				connection.prepareStatement(sql)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

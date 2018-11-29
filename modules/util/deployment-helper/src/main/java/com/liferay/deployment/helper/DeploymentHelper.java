@@ -190,8 +190,8 @@ public class DeploymentHelper {
 
 		ClassLoader classLoader = DeploymentHelper.class.getClassLoader();
 
-		try (InputStream inputStream =
-				classLoader.getResourceAsStream(fileName)) {
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				fileName)) {
 
 			byte[] bytes = new byte[1024];
 			int length = 0;

@@ -153,8 +153,8 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
@@ -185,8 +185,8 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);
@@ -244,8 +244,8 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_ANY);
@@ -331,8 +331,8 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
@@ -364,8 +364,8 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);

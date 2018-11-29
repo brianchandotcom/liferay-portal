@@ -162,8 +162,8 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("and DDMStructure.structureKey = JournalArticle.");
 			sb.append("DDMStructureKey and JournalArticle.classNameId != ?)");
 
-			try (PreparedStatement ps =
-					connection.prepareStatement(sb.toString())) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
 				ps.setString(1, GroupConstants.GLOBAL_FRIENDLY_URL);
 				ps.setLong(

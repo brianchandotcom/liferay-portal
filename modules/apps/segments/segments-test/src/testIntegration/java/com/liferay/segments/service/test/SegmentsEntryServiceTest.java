@@ -100,8 +100,8 @@ public class SegmentsEntryServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(_groupUser, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
 
 			_segmentsEntryService.addSegmentsEntry(
 				RandomTestUtil.randomLocaleStringMap(),

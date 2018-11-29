@@ -22,10 +22,16 @@ public class TestPropertiesValues {
 	public static final String REPOSITORY_DIR = TestPropertiesUtil.get(
 		"repository.dir");
 
+	public static final String REPOSITORY_HOSTNAME = TestPropertiesUtil.get(
+		"repository.hostname");
+
 	public static final String REPOSITORY_NAME = TestPropertiesUtil.get(
 		"repository.name");
 
 	public static final String REPOSITORY_UPSTREAM_BRANCH_NAME =
 		TestPropertiesUtil.get("repository.upstream.branch.name");
+
+	public static final String REPOSITORY_USERNAME = TestPropertiesUtil.get(
+		"repository.username");
 
 }

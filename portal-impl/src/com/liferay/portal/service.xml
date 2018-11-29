@@ -1772,6 +1772,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="OwnerId" return-type="Collection">
+			<finder-column name="ownerId" />
+		</finder>
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
 		</finder>

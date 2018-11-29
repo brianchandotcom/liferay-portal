@@ -279,43 +279,13 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
-	 * Handle image editor select event
+	 * Callback executed when an editable value changes
 	 * @param {string} newValue
 	 * @private
 	 */
 	_handleEditableChanged(newValue) {
-		this.store
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
+		this._saveChanges(newValue);
 				}
-			)
-			.dispatchAction(
-				UPDATE_EDITABLE_VALUE,
-				{
-					editableId: this.editableId,
-					editableValue: newValue,
-					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-					fragmentEntryLinkId: this.fragmentEntryLinkId
-				}
-			)
-			.dispatchAction(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatchAction(
-				UPDATE_LAST_SAVE_DATE,
-				{
-					lastSaveDate: new Date()
-				}
-			)
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: false
-				}
-			);
-	}
 
 	/**
 	 * Handle clicks outside tooltip element
@@ -355,6 +325,44 @@ class FragmentEditableField extends Component {
 		}
 
 		this._showTooltip = false;
+	}
+
+	/**
+	 * Saves editable value changes
+	 * @param {string} newValue
+	 */
+	_saveChanges(newValue) {
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: true
+				}
+			)
+			.dispatchAction(
+				UPDATE_EDITABLE_VALUE,
+				{
+					editableId: this.editableId,
+					editableValue: newValue,
+					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+					fragmentEntryLinkId: this.fragmentEntryLinkId
+}
+			)
+			.dispatchAction(
+				UPDATE_TRANSLATION_STATUS
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{
+					lastSaveDate: new Date()
+				}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: false
+				}
+			);
 	}
 }
 

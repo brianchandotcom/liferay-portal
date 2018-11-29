@@ -33,75 +33,73 @@ class ClayCriteriaRow extends React.Component {
 		);
 
 		return (
-			<div className="criterion-container">
-				<div
-					className={`criterion-row ${editing ? 'editing' : ''}`}
-				>
-					{editing ? (
-						<div className="edit-container">
-							<ClaySelect
-								className="criterion-input form-control"
-								key="property"
-								onChange={this._handleInputChange(
-									'propertyName'
-								)}
-								options={properties.map(
-									({label, name}) => ({
-										label,
-										value: name
-									})
-								)}
-								selected={selectedProperty && selectedProperty.name}
-							/>
+			<div
+				className={`criterion-row ${editing ? 'editing' : ''}`}
+			>
+				{editing ? (
+					<div className="edit-container">
+						<ClaySelect
+							className="criterion-input form-control"
+							key="property"
+							onChange={this._handleInputChange(
+								'propertyName'
+							)}
+							options={properties.map(
+								({label, name}) => ({
+									label,
+									value: name
+								})
+							)}
+							selected={selectedProperty && selectedProperty.name}
+						/>
 
-							<ClaySelect
-								className="criterion-input operator-input form-control"
-								key="operator"
-								onChange={this._handleInputChange(
-									'operatorName'
-								)}
-								options={operators.map(
-									({label, name}) => ({
-										label,
-										value: name
-									})
-								)}
-								selected={selectedOperator && selectedOperator.name}
-							/>
+						<ClaySelect
+							className="criterion-input operator-input form-control"
+							key="operator"
+							onChange={this._handleInputChange(
+								'operatorName'
+							)}
+							options={operators.map(
+								({label, name}) => ({
+									label,
+									value: name
+								})
+							)}
+							selected={selectedOperator && selectedOperator.name}
+						/>
 
-							<input
-								className="criterion-input form-control"
-								id="queryRowValue"
-								key="value"
-								onChange={this._handleInputChange('value')}
-								type="text"
-								value={criterion && criterion.value}
-							/>
+						<input
+							className="criterion-input form-control"
+							id="queryRowValue"
+							key="value"
+							onChange={this._handleInputChange('value')}
+							type="text"
+							value={criterion && criterion.value}
+						/>
 
-							<ClayButton
-								className="btn-monospaced delete-button"
-								iconName="trash"
-								key="delete"
-								onClick={this._handleDelete}
-							/>
-						</div>
-					) : (
-						<div className="read-only-container">
-							<span className="criteria-string">
-								{'Property '}
-								<strong className="property-string">
-									{`${selectedProperty && selectedProperty.label} `}
-								</strong>
+						<ClayButton
+							className="btn-monospaced delete-button"
+							iconName="trash"
+							key="delete"
+							onClick={this._handleDelete}
+						/>
+					</div>
+				) : (
+					<div className="read-only-container">
+						<span className="criteria-string">
+							{'Property '}
+							<strong className="property-string">
+								{`${selectedProperty && selectedProperty.label} `}
+							</strong>
 
-								{`${selectedOperator && selectedOperator.label} `}
+							{`${selectedOperator && selectedOperator.label} `}
 
-								<strong className="value-string">
-									{`${criterion && criterion.value}.`}
-								</strong>
-							</span>
-						</div>
-					)}
-				</div>
+							<strong className="value-string">
+								{`${criterion && criterion.value}.`}
+							</strong>
+						</span>
+					</div>
+				)}
 			</div>
 		);
 	}

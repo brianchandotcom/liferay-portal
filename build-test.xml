@@ -5413,17 +5413,9 @@ go]]></replacevalue>
 					</then>
 				</if>
 
-				<if>
-					<not>
-						<equals arg1="${jsp.precompile}" arg2="on" />
-					</not>
-					<then>
-						<delete dir="${test.app.server.liferay.home}/work" />
-					</then>
-				</if>
-
 				<delete dir="${test.app.server.liferay.home}/logs" />
 				<delete dir="${test.app.server.liferay.home}/osgi/state" />
+				<delete dir="${test.app.server.liferay.home}/work" />
 
 				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>

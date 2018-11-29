@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,6 +40,30 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
 public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public void portalInstancePreunregistered(Company company)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			User.class.getName());
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			company.getCompanyId(), classNameId,
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		_expandoColumnLocalService.deleteColumn(
+			expandoTable.getTableId(), "googleAccessToken");
+		_expandoColumnLocalService.deleteColumn(
+			expandoTable.getTableId(), "googleRefreshToken");
+
+		List<ExpandoColumn> expandoColumns =
+			_expandoColumnLocalService.getColumns(expandoTable.getTableId());
+
+		if (expandoColumns.isEmpty()) {
+			_expandoTableLocalService.deleteExpandoTable(expandoTable);
+		}
+	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

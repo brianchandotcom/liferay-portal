@@ -120,6 +120,12 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return _getLeadingWhitespace(lastLine) + "\t\t";
 		}
 
+		if (trimmedLastLine.startsWith("try (") &&
+			!trimmedLastLine.endsWith(";")) {
+
+			return _getLeadingWhitespace(lastLine) + "\t\t";
+		}
+
 		if (trimmedLastLine.startsWith("while (")) {
 			return _getLeadingWhitespace(lastLine) + "\t\t\t";
 		}
@@ -294,7 +300,12 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			JavaTerm javaTerm = list.get(i);
 
 			if (i == 1) {
-				indent += _convertToWhitespace(prefix);
+				if (prefix.equals("try (")) {
+					indent += "\t";
+				}
+				else {
+					indent += _convertToWhitespace(prefix);
+				}
 
 				prefix = StringPool.BLANK;
 			}

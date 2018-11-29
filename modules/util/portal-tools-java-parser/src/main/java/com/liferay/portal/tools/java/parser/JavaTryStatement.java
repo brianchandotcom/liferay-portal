@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -31,7 +33,21 @@ public class JavaTryStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		if (_resourceJavaVariableDefinitions == null) {
+			return StringBundler.concat(indent, prefix, "try", suffix);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		append(
+			sb, _resourceJavaVariableDefinitions, "; ", indent,
+			prefix + "try (", ")" + suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	private List<JavaVariableDefinition> _resourceJavaVariableDefinitions;

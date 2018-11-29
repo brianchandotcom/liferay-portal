@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.sort.Sort;
@@ -153,6 +154,431 @@ public class StructuredContentNestedCollectionResourceTest
 			createStructuredContentField(ddmFormFieldValue, ddmStructure);
 
 		Assert.assertEquals("url", structuredContentField.getDataType());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithBoolean() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyBoolean");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()),
+				"_MyBoolean"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithColor() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyColor");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithDate() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyDate");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()), "_MyDate"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithDecimal() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyDecimal");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()),
+				"_MyDecimal"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithDocumentsAndMedia()
+		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyDocumentsAndMedia");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithGeolocation()
+		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyGeolocation");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithHTML() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyHTML");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithInteger() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyInteger");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()),
+				"_MyInteger"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithNumber() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyNumber");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()),
+				"_MyNumber"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithRadio() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyRadio");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()), "_MyRadio"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithSelect() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MySelect");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithText() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyText");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"_", String.valueOf(ddmStructure.getStructureId()), "_MyText"),
+			structuredContentField.getFilterAndSortIdentifier());
+	}
+
+	@Test
+	public void testGetFilterAndSortIdentifierWithTextBox() throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("MyTextBox");
+
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
+
+		Assert.assertEquals(
+			null, structuredContentField.getFilterAndSortIdentifier());
 	}
 
 	@Test

@@ -6668,6 +6668,21 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
+		<get-testcase-property property.name="database.bare.enabled" />
+		<get-testcase-property property.name="portal.smoke" />
+
+		<var name="release.local.service.impl.log.level" value="WARN" />
+
+		<if>
+			<and>
+				<equals arg1="${database.bare.enabled}" arg2="true" />
+				<equals arg1="${portal.smoke}" arg2="true" />
+			</and>
+			<then>
+				<var name="release.local.service.impl.log.level" value="ERROR" />
+			</then>
+		</if>
+
 		<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
@@ -6712,6 +6727,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
 		<priority value="${dialect.detector.log.level}" />
+	</category>
+
+	<category name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl">
+		<priority value="${release.local.service.impl.log.level}" />
 	</category>
 
 	<category name="com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper">

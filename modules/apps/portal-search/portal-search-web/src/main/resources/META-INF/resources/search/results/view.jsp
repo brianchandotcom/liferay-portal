@@ -27,7 +27,6 @@ page import="com.liferay.portal.search.web.internal.search.results.portlet.Searc
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <portlet:defineObjects />
@@ -94,7 +93,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 			<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
 				<liferay-ui:search-container-column-text>
 					<c:if test="<%= searchResultSummaryDisplayContext.isUserPortraitVisible() %>">
-						<liferay-frontend:user-portrait
+						<liferay-ui:user-portrait
 							userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
 						/>
 					</c:if>

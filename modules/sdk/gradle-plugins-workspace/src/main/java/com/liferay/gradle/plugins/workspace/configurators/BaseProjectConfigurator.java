@@ -115,14 +115,14 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		DockerBuildImage dockerBuildImage =
 			(DockerBuildImage)GradleUtil.getTask(
 				project.getRootProject(),
-				RootProjectConfigurator.BUILD_IMAGE_TASK_NAME);
+				RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
 
 		dockerBuildImage.dependsOn(copy);
 
 		DockerCreateContainer dockerCreateContainer =
 			(DockerCreateContainer)GradleUtil.getTask(
 				project.getRootProject(),
-				RootProjectConfigurator.CREATE_CONTAINER_TASK_NAME);
+				RootProjectConfigurator.CREATE_DOCKER_CONTAINER_TASK_NAME);
 
 		dockerCreateContainer.dependsOn(copy);
 

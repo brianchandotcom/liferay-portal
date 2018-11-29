@@ -84,7 +84,8 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  */
 public class RootProjectConfigurator implements Plugin<Project> {
 
-	public static final String BUILD_IMAGE_TASK_NAME = "buildImage";
+	public static final String BUILD_DOCKER_IMAGE_TASK_NAME =
+		"buildDockerImage";
 
 	public static final String BUNDLE_CONFIGURATION_NAME = "bundle";
 
@@ -93,7 +94,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String CLEAN_TASK_NAME =
 		LifecycleBasePlugin.CLEAN_TASK_NAME;
 
-	public static final String CREATE_CONTAINER_TASK_NAME = "createContainer";
+	public static final String CREATE_DOCKER_CONTAINER_TASK_NAME =
+		"createDockerContainer";
 
 	public static final String CREATE_DOCKERFILE_TASK_NAME = "createDockerfile";
 
@@ -113,18 +115,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
-	public static final String LOGS_CONTAINER_TASK_NAME = "logsContainer";
+	public static final String LOGS_DOCKER_CONTAINER_TASK_NAME =
+		"logsDockerContainer";
 
 	public static final String PROVIDED_MODULES_CONFIGURATION_NAME =
 		"providedModules";
 
-	public static final String PULL_IMAGE_TASK_NAME = "pullImage";
+	public static final String PULL_DOCKER_IMAGE_TASK_NAME = "pullDockerImage";
 
-	public static final String REMOVE_CONTAINER_TASK_NAME = "removeContainer";
+	public static final String REMOVE_DOCKER_CONTAINER_TASK_NAME =
+		"removeDockerContainer";
 
-	public static final String START_CONTAINER_TASK_NAME = "startContainer";
+	public static final String START_DOCKER_CONTAINER_TASK_NAME =
+		"startDockerContainer";
 
-	public static final String STOP_CONTAINER_TASK_NAME = "stopContainer";
+	public static final String STOP_DOCKER_CONTAINER_TASK_NAME =
+		"stopDockerContainer";
 
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
@@ -186,16 +192,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
 			project, workspaceExtension);
 
-		_addTaskBuildImage(dockerfile, workspaceExtension);
+		_addTaskBuildDockerImage(dockerfile, workspaceExtension);
 
-		_addTaskCreateContainer(project, workspaceExtension);
-		_addTaskDeployToDocker(
+		_addTaskCreateDockerContainer(project, workspaceExtension);
+		_addTaskDockerDeploy(
 			project, workspaceExtension, providedModulesConfiguration);
-		_addTaskLogsContainer(project);
-		_addTaskPullImage(project, workspaceExtension);
-		_addTaskRemoveContainer(project);
-		_addTaskStartContainer(project);
-		_addTaskStopContainer(project);
+		_addTaskLogsDockerContainer(project);
+		_addTaskPullDockerImage(project, workspaceExtension);
+		_addTaskRemoveDockerContainer(project);
+		_addTaskStartDockerContainer(project);
+		_addTaskStopDockerContainer(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -218,15 +224,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return configuration;
 	}
 
-	private DockerBuildImage _addTaskBuildImage(
+	private DockerBuildImage _addTaskBuildDockerImage(
 		Dockerfile dockerfile, WorkspaceExtension workspaceExtension) {
 
 		Project project = dockerfile.getProject();
 
 		DockerBuildImage dockerBuildImage = GradleUtil.addTask(
-			project, BUILD_IMAGE_TASK_NAME, DockerBuildImage.class);
+			project, BUILD_DOCKER_IMAGE_TASK_NAME, DockerBuildImage.class);
 
-		dockerBuildImage.dependsOn(dockerfile, PULL_IMAGE_TASK_NAME);
+		dockerBuildImage.dependsOn(dockerfile, PULL_DOCKER_IMAGE_TASK_NAME);
 
 		dockerBuildImage.setDescription(
 			"Builds a docker image with all modules/configs deployed");
@@ -306,17 +312,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
-	private DockerCreateContainer _addTaskCreateContainer(
+	private DockerCreateContainer _addTaskCreateDockerContainer(
 		Project project, WorkspaceExtension workspaceExtension) {
 
 		DockerCreateContainer dockerCreateContainer =
 			(DockerCreateContainer)GradleUtil.addTask(
-				project, CREATE_CONTAINER_TASK_NAME,
+				project, CREATE_DOCKER_CONTAINER_TASK_NAME,
 				DockerCreateContainer.class);
 
 		dockerCreateContainer.dependsOn(
-			REMOVE_CONTAINER_TASK_NAME, DEPLOY_TO_CONTAINER_TASK_NAME,
-			PULL_IMAGE_TASK_NAME);
+			REMOVE_DOCKER_CONTAINER_TASK_NAME, DOCKER_DEPLOY_TASK_NAME,
+			PULL_DOCKER_IMAGE_TASK_NAME);
 
 		Map<String, String> binds = new HashMap<>();
 
@@ -359,7 +365,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Dockerfile dockerfileTask = GradleUtil.addTask(
 			project, CREATE_DOCKERFILE_TASK_NAME, Dockerfile.class);
 
-		dockerfileTask.dependsOn(DEPLOY_TO_CONTAINER_TASK_NAME);
+		dockerfileTask.dependsOn(DOCKER_DEPLOY_TASK_NAME);
 
 		dockerfileTask.setDescription(
 			"Creates a dockerfile to build the project Docker image.");
@@ -474,12 +480,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return createTokenTask;
 	}
 
-	private Copy _addTaskDeployToDocker(
+	private Copy _addTaskDockerDeploy(
 		Project project, final WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
 
 		Copy copy = GradleUtil.addTask(
-			project, DEPLOY_TO_CONTAINER_TASK_NAME, Copy.class);
+			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
 
 		copy.setDescription(
 			"Copy docker configs and provided configurations to docker dir");
@@ -730,10 +736,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
-	private DockerLogsContainer _addTaskLogsContainer(Project project) {
+	private DockerLogsContainer _addTaskLogsDockerContainer(Project project) {
 		DockerLogsContainer dockerLogsContainer =
 			(DockerLogsContainer)GradleUtil.addTask(
-				project, LOGS_CONTAINER_TASK_NAME, DockerLogsContainer.class);
+				project, LOGS_DOCKER_CONTAINER_TASK_NAME,
+				DockerLogsContainer.class);
 
 		dockerLogsContainer.setDescription("Logs the project docker container");
 		dockerLogsContainer.setFollow(true);
@@ -752,11 +759,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerLogsContainer;
 	}
 
-	private DockerPullImage _addTaskPullImage(
+	private DockerPullImage _addTaskPullDockerImage(
 		Project project, WorkspaceExtension workspaceExtension) {
 
 		DockerPullImage dockerPullImage = (DockerPullImage)GradleUtil.addTask(
-			project, PULL_IMAGE_TASK_NAME, DockerPullImage.class);
+			project, PULL_DOCKER_IMAGE_TASK_NAME, DockerPullImage.class);
 
 		dockerPullImage.setDescription("Pull the docker image");
 
@@ -775,9 +782,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerPullImage;
 	}
 
-	private DockerRemoveContainer _addTaskRemoveContainer(Project project) {
+	private DockerRemoveContainer _addTaskRemoveDockerContainer(
+		Project project) {
+
 		DockerRemoveContainer dockerRemoveContainer = GradleUtil.addTask(
-			project, REMOVE_CONTAINER_TASK_NAME, DockerRemoveContainer.class);
+			project, REMOVE_DOCKER_CONTAINER_TASK_NAME,
+			DockerRemoveContainer.class);
 
 		dockerRemoveContainer.setDescription(
 			"Removes the project docker container");
@@ -813,10 +823,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerRemoveContainer;
 	}
 
-	private DockerStartContainer _addTaskStartContainer(Project project) {
+	private DockerStartContainer _addTaskStartDockerContainer(Project project) {
 		DockerStartContainer dockerStartContainer =
 			(DockerStartContainer)GradleUtil.addTask(
-				project, START_CONTAINER_TASK_NAME, DockerStartContainer.class);
+				project, START_DOCKER_CONTAINER_TASK_NAME,
+				DockerStartContainer.class);
 
 		dockerStartContainer.setDescription(
 			"Starts the project docker container");
@@ -834,10 +845,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStartContainer;
 	}
 
-	private DockerStopContainer _addTaskStopContainer(Project project) {
+	private DockerStopContainer _addTaskStopDockerContainer(Project project) {
 		DockerStopContainer dockerStopContainer =
 			(DockerStopContainer)GradleUtil.addTask(
-				project, STOP_CONTAINER_TASK_NAME, DockerStopContainer.class);
+				project, STOP_DOCKER_CONTAINER_TASK_NAME,
+				DockerStopContainer.class);
 
 		dockerStopContainer.setDescription(
 			"Stops the project docker container");

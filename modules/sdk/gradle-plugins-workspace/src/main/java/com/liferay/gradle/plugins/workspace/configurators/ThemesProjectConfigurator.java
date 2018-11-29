@@ -99,7 +99,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			_configureRootTaskDistBundle(assembleTask);
 
 			addTaskDockerDeploy(
-				project, _copyWar(project, assembleTask), workspaceExtension);
+				project, _copyWarClosure(project, assembleTask),
+				workspaceExtension);
 		}
 	}
 
@@ -174,7 +175,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		copy.dependsOn(assembleTask);
 
-		copy.into("osgi/war", _copyWar(project, assembleTask));
+		copy.into("osgi/war", _copyWarClosure(project, assembleTask));
 	}
 
 	private void _configureTaskBuildTheme(Project project) {
@@ -214,7 +215,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		warPluginConvention.setWebAppDirName("src");
 	}
 
-	private Closure _copyWar(Project project, final Task assembleTask) {
+	private Closure _copyWarClosure(Project project, final Task assembleTask) {
 		return new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")

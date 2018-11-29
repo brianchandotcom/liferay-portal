@@ -6,9 +6,6 @@
 {template .render}
 	{@param fragmentEntryLinkId: string}
 	{@param spritemap: string}
-	{@param? _handleFragmentKeyUp: any}
-	{@param? _handleFragmentMoveDownButtonClick: any}
-	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? styleModifier: string}
 	{@param? name: string}
@@ -27,7 +24,6 @@
 	<div
 		class="{$wrapperClasses}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
-		data-onkeyup="{$_handleFragmentKeyUp}"
 		ref="fragmentEntryLinkWrapper"
 		tabindex="0"
 	>
@@ -36,20 +32,6 @@
 				<ul class="tbar-nav">
 					<li class="drag-handler fragment-entry-link-control__fragment-name tbar-item tbar-item-expand">
 						{$name ?: ''}
-					</li>
-					<li class="tbar-item">
-						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveUpButtonClick}">
-							<svg class="lexicon-icon">
-								<use xlink:href="{$spritemap}#angle-up"></use>
-							</svg>
-						</button>
-					</li>
-					<li class="tbar-item">
-						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveDownButtonClick}">
-							<svg class="lexicon-icon">
-								<use xlink:href="{$spritemap}#angle-down"></use>
-							</svg>
-						</button>
 					</li>
 					<li class="tbar-item">
 						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">

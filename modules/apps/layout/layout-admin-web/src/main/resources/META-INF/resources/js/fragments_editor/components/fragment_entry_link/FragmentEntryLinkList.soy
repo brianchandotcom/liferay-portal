@@ -147,8 +147,9 @@
 	{/let}
 
 	{let $sectionClasses kind="text"}
-		fragment-entry-link-list__row-section
-		fragment-entry-link-drop-target
+		drag-section
+		{sp}fragment-entry-link-list__row-section
+		{sp}fragment-entry-link-drop-target
 		{sp}layouts-drop-target
 		{sp}{$styleModifier}
 
@@ -168,7 +169,7 @@
 	>
 		<nav class="section-control tbar">
 			<ul class="tbar-nav">
-				<li class="tbar-item tbar-item-expand"></li>
+				<li class="drag-handler tbar-item tbar-item-expand"></li>
 				<li class="tbar-item">
 					<button
 						class="btn btn-small btn-unstyled"

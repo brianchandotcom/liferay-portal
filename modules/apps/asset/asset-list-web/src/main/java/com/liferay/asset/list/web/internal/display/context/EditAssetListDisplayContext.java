@@ -838,11 +838,11 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties properties, String className,
 		Long[] availableClassTypeIds) {
 
-		boolean anyAssetType = GetterUtil.getBoolean(
+		boolean anyClassType = GetterUtil.getBoolean(
 			properties.getProperty(
 				"anyClassType" + className, Boolean.TRUE.toString()));
 
-		if (anyAssetType) {
+		if (anyClassType) {
 			return availableClassTypeIds;
 		}
 

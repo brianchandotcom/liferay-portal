@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
-	LocalizedModel, ShardedModel, StagedGroupedModel {
+	LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,6 +69,22 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 * @param primaryKey the primary key of this ddl record set
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddl record set.
+	 *
+	 * @return the mvcc version of this ddl record set
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddl record set.
+	 *
+	 * @param mvccVersion the mvcc version of this ddl record set
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ddl record set.

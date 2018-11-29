@@ -79,6 +79,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	 */
 	public static final String TABLE_NAME = "DDLRecordSetVersion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "recordSetVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -99,6 +100,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("recordSetVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -117,7 +119,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (mvccVersion LONG default 0 not null,recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSetVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSetVersion.recordSetVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSetVersion.recordSetVersionId ASC";
@@ -151,6 +153,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 		DDLRecordSetVersion model = new DDLRecordSetVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setRecordSetVersionId(soapModel.getRecordSetVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -232,6 +235,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("recordSetVersionId", getRecordSetVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -257,6 +261,12 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long recordSetVersionId = (Long)attributes.get("recordSetVersionId");
 
 		if (recordSetVersionId != null) {
@@ -353,6 +363,17 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -990,6 +1011,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	public Object clone() {
 		DDLRecordSetVersionImpl ddlRecordSetVersionImpl = new DDLRecordSetVersionImpl();
 
+		ddlRecordSetVersionImpl.setMvccVersion(getMvccVersion());
 		ddlRecordSetVersionImpl.setRecordSetVersionId(getRecordSetVersionId());
 		ddlRecordSetVersionImpl.setGroupId(getGroupId());
 		ddlRecordSetVersionImpl.setCompanyId(getCompanyId());
@@ -1085,6 +1107,8 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	public CacheModel<DDLRecordSetVersion> toCacheModel() {
 		DDLRecordSetVersionCacheModel ddlRecordSetVersionCacheModel = new DDLRecordSetVersionCacheModel();
 
+		ddlRecordSetVersionCacheModel.mvccVersion = getMvccVersion();
+
 		ddlRecordSetVersionCacheModel.recordSetVersionId = getRecordSetVersionId();
 
 		ddlRecordSetVersionCacheModel.groupId = getGroupId();
@@ -1172,9 +1196,11 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{recordSetVersionId=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", recordSetVersionId=");
 		sb.append(getRecordSetVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -1213,12 +1239,16 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordSetVersion");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>recordSetVersionId</column-name><column-value><![CDATA[");
 		sb.append(getRecordSetVersionId());
@@ -1293,6 +1323,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDLRecordSetVersion.class, ModelWrapper.class
 		};
+	private long _mvccVersion;
 	private long _recordSetVersionId;
 	private long _groupId;
 	private long _companyId;

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDLRecordSetVersionModel extends BaseModel<DDLRecordSetVersion>,
-	LocalizedModel, ShardedModel, WorkflowedModel {
+	LocalizedModel, MVCCModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,6 +69,22 @@ public interface DDLRecordSetVersionModel extends BaseModel<DDLRecordSetVersion>
 	 * @param primaryKey the primary key of this ddl record set version
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddl record set version.
+	 *
+	 * @return the mvcc version of this ddl record set version
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddl record set version.
+	 *
+	 * @param mvccVersion the mvcc version of this ddl record set version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the record set version ID of this ddl record set version.

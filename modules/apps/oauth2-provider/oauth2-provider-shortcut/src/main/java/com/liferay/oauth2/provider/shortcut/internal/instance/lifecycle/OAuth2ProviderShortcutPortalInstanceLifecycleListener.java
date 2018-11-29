@@ -72,6 +72,14 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public void portalInstancePreunregistered(Company company)
+		throws Exception {
+
+		_oAuth2ApplicationLocalService.deleteOAuth2Applications(
+			company.getCompanyId());
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (_hasOAuth2Application(company.getCompanyId())) {
 			return;

@@ -86,13 +86,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
-			addTaskDeploy(
-				project, war,
-				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
-				workspaceExtension.getDockerDir(),
-				"Assembles the project and deploys it to Liferay docker " +
-					"container.",
-				RootProjectConfigurator.DOCKER_GROUP);
+			addTaskDockerDeploy(project, war, workspaceExtension);
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
@@ -104,13 +98,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(assembleTask);
 
-			addTaskDeploy(
-				project, _copyWar(project, assembleTask),
-				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
-				workspaceExtension.getDockerDir(),
-				"Assembles the project and deploys it to Liferay docker " +
-					"container.",
-				RootProjectConfigurator.DOCKER_GROUP);
+			addTaskDockerDeploy(
+				project, _copyWar(project, assembleTask), workspaceExtension);
 		}
 	}
 

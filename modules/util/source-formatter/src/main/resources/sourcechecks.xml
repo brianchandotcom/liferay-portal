@@ -343,6 +343,7 @@
 		<check name="SubstringCheck" />
 	</source-processor>
 	<source-processor name="JSSourceProcessor">
+		<check name="JSLodashDependencyCheck" />
 		<check name="JSStylingCheck" />
 		<check name="JSWhitespaceCheck" />
 

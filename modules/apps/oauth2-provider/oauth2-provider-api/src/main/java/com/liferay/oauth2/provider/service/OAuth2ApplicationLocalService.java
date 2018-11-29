@@ -112,6 +112,9 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	public OAuth2Application deleteOAuth2Application(
 		OAuth2Application oAuth2Application);
 
+	public void deleteOAuth2Applications(long companyId)
+		throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -225,6 +228,9 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2Application> getOAuth2Applications(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2Application> getOAuth2Applications(long companyId);
 
 	/**
 	* Returns the number of o auth2 applications.

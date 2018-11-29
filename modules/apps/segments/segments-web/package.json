@@ -39,7 +39,7 @@
 	"scripts": {
 		"build": "babel --source-maps --verbose -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js",
+		"csf": "csf src/**/*.es.js",
 		"format": "npm run csf -- -i"
 	},
 	"author": "",

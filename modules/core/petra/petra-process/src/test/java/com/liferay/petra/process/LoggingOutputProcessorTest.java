@@ -15,17 +15,14 @@
 package com.liferay.petra.process;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.nio.charset.Charset;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,70 +44,44 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 
 	@Test
 	public void testLoggingSuccess() throws Exception {
+		List<Map.Entry<Boolean, String>> logRecords = new ArrayList<>();
+
 		LoggingOutputProcessor loggingOutputProcessor =
 			new LoggingOutputProcessor(
-				(stdErr, line) -> {
-					if (stdErr) {
-						_log.error(line);
-					}
-					else if (_log.isInfoEnabled()) {
-						_log.info(line);
-					}
-				});
+				(stdErr, line) -> logRecords.add(
+					new AbstractMap.SimpleEntry<>(stdErr, line)));
 
 		String stdErrString = "This is standard error message.";
 
 		byte[] stdErrBytes = stdErrString.getBytes(Charset.defaultCharset());
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LoggingOutputProcessorTest.class.getName(), Level.OFF)) {
+		Assert.assertNull(
+			loggingOutputProcessor.processStdErr(
+				new UnsyncByteArrayInputStream(stdErrBytes)));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
-			Assert.assertNull(
-				loggingOutputProcessor.processStdErr(
-					new UnsyncByteArrayInputStream(stdErrBytes)));
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+		Map.Entry<Boolean, String> logRecord = logRecords.get(0);
 
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
+		Assert.assertTrue(logRecord.toString(), logRecord.getKey());
+		Assert.assertEquals(stdErrString, logRecord.getValue());
 
-			Assert.assertNull(
-				loggingOutputProcessor.processStdErr(
-					new UnsyncByteArrayInputStream(stdErrBytes)));
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+		logRecords.clear();
 
-			LogRecord logRecord = logRecords.get(0);
+		String stdOutString = "This is standard out message.";
 
-			Assert.assertEquals(stdErrString, logRecord.getMessage());
+		byte[] stdOutBytes = stdOutString.getBytes(Charset.defaultCharset());
 
-			String stdOutString = "This is standard out message.";
+		Assert.assertNull(
+			loggingOutputProcessor.processStdOut(
+				new UnsyncByteArrayInputStream(stdOutBytes)));
 
-			byte[] stdOutBytes = stdOutString.getBytes(
-				Charset.defaultCharset());
+		Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
-			Assert.assertNull(
-				loggingOutputProcessor.processStdOut(
-					new UnsyncByteArrayInputStream(stdOutBytes)));
+		logRecord = logRecords.get(0);
 
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
-
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
-
-			logRecords = captureHandler.resetLogLevel(Level.INFO);
-
-			Assert.assertNull(
-				loggingOutputProcessor.processStdOut(
-					new UnsyncByteArrayInputStream(stdOutBytes)));
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			logRecord = logRecords.get(0);
-
-			Assert.assertEquals(stdOutString, logRecord.getMessage());
-		}
+		Assert.assertFalse(logRecord.toString(), logRecord.getKey());
+		Assert.assertEquals(stdOutString, logRecord.getValue());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LoggingOutputProcessorTest.class);
 
 }

@@ -15,9 +15,9 @@
 package com.liferay.petra.concurrent;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.test.util.ThreadTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -400,7 +400,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		Thread dispatcherThread = null;
 
-		for (Thread thread : ThreadUtil.getThreads()) {
+		for (Thread thread : ThreadTestUtil.getThreads()) {
 			if (thread == null) {
 				continue;
 			}

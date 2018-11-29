@@ -14,13 +14,13 @@
 
 package com.liferay.petra.memory;
 
+import com.liferay.petra.test.util.ThreadTestUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.Constructor;
@@ -263,7 +263,7 @@ public class FinalizeManagerTest {
 	private void _checkThreadState() {
 		Thread finalizeThread = null;
 
-		for (Thread thread : ThreadUtil.getThreads()) {
+		for (Thread thread : ThreadTestUtil.getThreads()) {
 			String name = thread.getName();
 
 			if (name.equals("Finalize Thread")) {

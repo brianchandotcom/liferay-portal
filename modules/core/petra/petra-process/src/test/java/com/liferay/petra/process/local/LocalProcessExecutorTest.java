@@ -27,13 +27,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.test.util.ThreadTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.ThreadUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.EOFException;
 import java.io.File;
@@ -51,6 +47,8 @@ import java.io.WriteAbortedException;
 
 import java.lang.reflect.Constructor;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -996,8 +994,7 @@ public class LocalProcessExecutorTest {
 	private static List<String> _createArguments(String jpdaOptions) {
 		List<String> arguments = new ArrayList<>();
 
-		arguments.add(
-			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
+		arguments.add("-D" + _SYSTEM_PROPERTIES_QUIET + "=true");
 
 		if (Boolean.getBoolean("jvm.debug")) {
 			arguments.add(jpdaOptions);
@@ -1009,7 +1006,7 @@ public class LocalProcessExecutorTest {
 
 		String whipAgentLine = System.getProperty("whip.agent");
 
-		if (Validator.isNotNull(whipAgentLine)) {
+		if ((whipAgentLine != null) && !whipAgentLine.isEmpty()) {
 			arguments.add(whipAgentLine);
 			arguments.add("-Dwhip.agent=" + whipAgentLine);
 		}
@@ -1052,8 +1049,33 @@ public class LocalProcessExecutorTest {
 		return builder.build();
 	}
 
+	private static ServerSocketChannel _createServerSocketChannel()
+		throws IOException {
+
+		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
+		int port = 12342;
+
+		while (true) {
+			try {
+				ServerSocket serverSocket = serverSocketChannel.socket();
+
+				serverSocket.setReuseAddress(true);
+
+				serverSocket.bind(
+					new InetSocketAddress(
+						InetAddress.getByName("127.0.0.1"), port));
+
+				return serverSocketChannel;
+			}
+			catch (IOException ioe) {
+				port++;
+			}
+		}
+	}
+
 	private static Serializable _shutdown() {
-		for (Thread thread : ThreadUtil.getThreads()) {
+		for (Thread thread : ThreadTestUtil.getThreads()) {
 			if ((thread != null) && "main".equals(thread.getName())) {
 				thread.interrupt();
 
@@ -1194,6 +1216,9 @@ public class LocalProcessExecutorTest {
 	private static final String _JPDA_OPTIONS2 =
 		"-agentlib:jdwp=transport=dt_socket,address=8002,server=y,suspend=y";
 
+	private static final String _SYSTEM_PROPERTIES_QUIET =
+		"system.properties.quiet";
+
 	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();
 
@@ -1203,7 +1228,7 @@ public class LocalProcessExecutorTest {
 			ProcessCallable<T> processCallable) {
 
 			try (Socket socket = new Socket(
-					InetAddressUtil.getLoopbackInetAddress(), _serverPort)) {
+					InetAddress.getByName("127.0.0.1"), _serverPort)) {
 
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 					socket.getOutputStream());
@@ -1585,9 +1610,7 @@ public class LocalProcessExecutorTest {
 
 				try {
 					ServerSocketChannel serverSocketChannel =
-						SocketUtil.createServerSocketChannel(
-							InetAddressUtil.getLoopbackInetAddress(), 12342,
-							serverSocket -> serverSocket.setReuseAddress(true));
+						_createServerSocketChannel();
 
 					ServerSocket serverSocket = serverSocketChannel.socket();
 

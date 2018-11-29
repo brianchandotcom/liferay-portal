@@ -15,33 +15,29 @@
 package com.liferay.petra.process;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.petra.test.util.ThreadTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -66,47 +62,38 @@ public class ProcessUtilTest {
 
 		// Logging
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ProcessUtilTest.class.getName(), Level.INFO)) {
+		List<Map.Entry<Boolean, String>> logRecords =
+			new CopyOnWriteArrayList<>();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Future<Map.Entry<Void, Void>> loggingFuture = ProcessUtil.execute(
+			new LoggingOutputProcessor(
+				(stdErr, line) ->
+					logRecords.add(
+						new AbstractMap.SimpleEntry<>(stdErr, line))),
+			_buildArguments(Echo.class, "2"));
 
-			Future<Map.Entry<Void, Void>> loggingFuture = ProcessUtil.execute(
-				new LoggingOutputProcessor(
-					(stdErr, line) -> {
-						if (stdErr) {
-							_log.error(line);
-						}
-						else if (_log.isInfoEnabled()) {
-							_log.info(line);
-						}
-					}),
-				_buildArguments(Echo.class, "2"));
+		loggingFuture.get();
 
-			loggingFuture.get();
+		loggingFuture.cancel(true);
 
-			loggingFuture.cancel(true);
+		List<String> messageRecords = new ArrayList<>();
 
-			List<String> messageRecords = new ArrayList<>();
-
-			for (LogRecord logRecord : logRecords) {
-				messageRecords.add(logRecord.getMessage());
-			}
-
-			Assert.assertTrue(
-				messageRecords.toString(),
-				messageRecords.contains(Echo.buildMessage(false, 0)));
-			Assert.assertTrue(
-				messageRecords.toString(),
-				messageRecords.contains(Echo.buildMessage(false, 1)));
-			Assert.assertTrue(
-				messageRecords.toString(),
-				messageRecords.contains(Echo.buildMessage(true, 0)));
-			Assert.assertTrue(
-				messageRecords.toString(),
-				messageRecords.contains(Echo.buildMessage(true, 1)));
+		for (Map.Entry<Boolean, String> logRecord : logRecords) {
+			messageRecords.add(logRecord.getValue());
 		}
+
+		Assert.assertTrue(
+			messageRecords.toString(),
+			messageRecords.contains(Echo.buildMessage(false, 0)));
+		Assert.assertTrue(
+			messageRecords.toString(),
+			messageRecords.contains(Echo.buildMessage(false, 1)));
+		Assert.assertTrue(
+			messageRecords.toString(),
+			messageRecords.contains(Echo.buildMessage(true, 0)));
+		Assert.assertTrue(
+			messageRecords.toString(),
+			messageRecords.contains(Echo.buildMessage(true, 1)));
 
 		// Collector
 
@@ -269,7 +256,7 @@ public class ProcessUtilTest {
 			new SyncThrowableThread<>(
 				() -> {
 					while (true) {
-						for (Thread thread : ThreadUtil.getThreads()) {
+						for (Thread thread : ThreadTestUtil.getThreads()) {
 							if ((thread != null) &&
 								threadName.equals(thread.getName())) {
 
@@ -367,9 +354,6 @@ public class ProcessUtilTest {
 	}
 
 	private static final String _CLASS_PATH;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProcessUtilTest.class);
 
 	private static class DummyJob implements Callable<Void> {
 

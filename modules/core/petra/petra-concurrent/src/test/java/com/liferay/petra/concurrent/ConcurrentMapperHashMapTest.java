@@ -14,18 +14,18 @@
 
 package com.liferay.petra.concurrent;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.SetUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -469,7 +469,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
 		Assert.assertEquals(keySetString, 1, keySet.size());
-		Assert.assertEquals(SetUtil.fromArray(new Key[] {_testKey}), keySet);
+		Assert.assertEquals(Collections.singleton(_testKey), keySet);
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
@@ -865,19 +865,17 @@ public class ConcurrentMapperHashMapTest {
 
 		_concurrentMap.putAll(map);
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
 
 		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream)) {
+				byteArrayOutputStream)) {
 
 			objectOutputStream.writeObject(_concurrentMap);
 		}
 
 		ObjectInputStream objectInputStream = new ObjectInputStream(
-			new UnsyncByteArrayInputStream(
-				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-				unsyncByteArrayOutputStream.size()));
+			new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
 
 		Assert.assertEquals(_concurrentMap, objectInputStream.readObject());
 	}

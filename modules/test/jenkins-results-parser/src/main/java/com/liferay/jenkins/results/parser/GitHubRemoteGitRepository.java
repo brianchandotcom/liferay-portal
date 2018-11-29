@@ -48,7 +48,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 			jsonObject.put("description", description);
 		}
 
-		String labelsRequestURL = _getLabelRequestURL();
+		String labelsRequestURL = getLabelRequestURL();
 
 		try {
 			JenkinsResultsParserUtil.toString(
@@ -82,7 +82,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 	}
 
 	public List<Label> getLabels() {
-		String labelRequestURL = _getLabelRequestURL();
+		String labelRequestURL = getLabelRequestURL();
 
 		if (_labelsLists.containsKey(labelRequestURL)) {
 			return _labelsLists.get(labelRequestURL);
@@ -158,7 +158,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 		}
 
 		String labelRequestURL = JenkinsResultsParserUtil.combine(
-			_getLabelRequestURL(), "/", oldLabel.getName());
+			getLabelRequestURL(), "/", oldLabel.getName());
 
 		try {
 			if (jsonObject == null) {
@@ -171,7 +171,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 					jsonObject.toString());
 			}
 
-			_labelsLists.remove(_getLabelRequestURL());
+			_labelsLists.remove(getLabelRequestURL());
 		}
 		catch (IOException ioe) {
 			if (jsonObject == null) {
@@ -271,14 +271,26 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 		super("github.com", gitHubRemoteGitRepositoryName, username);
 	}
 
-	private String _getLabelRequestURL() {
-		return JenkinsResultsParserUtil.getGitHubApiUrl(
+	protected String getLabelRequestURL() {
+		if (_labelRequestURL != null) {
+			return _labelRequestURL;
+		}
+
+		_labelRequestURL = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getName(), getUsername(), "/labels");
+
+		return _labelRequestURL;
+	}
+
+	protected void setLabelRequestURL(String labelRequestURL) {
+		_labelRequestURL = labelRequestURL;
 	}
 
 	private static final int _MAX_LABEL_PAGES = 10;
 
 	private static final Map<String, List<Label>> _labelsLists =
 		new ConcurrentHashMap<>();
+
+	private String _labelRequestURL;
 
 }

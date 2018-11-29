@@ -120,8 +120,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									<div class="lfr-discussion-reply-container">
 										<div class="autofit-padded-no-gutters autofit-row">
 											<div class="autofit-col lfr-discussion-details">
-												<liferay-frontend:user-portrait
-													size="lg"
+												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
 													user="<%= user %>"
 												/>
 											</div>

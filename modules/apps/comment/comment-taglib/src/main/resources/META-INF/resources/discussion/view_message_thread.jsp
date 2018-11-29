@@ -45,9 +45,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		<div class="comment-container">
 			<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
 				<div class="autofit-col">
-					<liferay-frontend:user-portrait
-						size="lg"
+					<liferay-ui:user-portrait
+						cssClass="user-icon-lg"
 						userId="<%= discussionComment.getUserId() %>"
+						userName="<%= discussionComment.getUserName() %>"
 					/>
 				</div>
 
@@ -94,8 +95,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 										<div class="autofit-padded-no-gutters-x autofit-row">
 											<div class="autofit-col">
-												<liferay-frontend:user-portrait
-													size="lg"
+												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
 													user="<%= parentMessageUser %>"
 												/>
 											</div>
@@ -266,8 +267,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<div class="lfr-discussion-reply-container">
 				<div class="autofit-padded-no-gutters autofit-row">
 					<div class="autofit-col lfr-discussion-details">
-						<liferay-frontend:user-portrait
-							size="lg"
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
 							user="<%= user %>"
 						/>
 					</div>

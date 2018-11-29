@@ -255,9 +255,10 @@ public class SharepointWSRepository
 
 	@Override
 	public <T extends ExtRepositoryObject> T copyExtRepositoryObject(
-		ExtRepositoryObjectType<T> extRepositoryObjectType,
-		String extRepositoryFileEntryKey, String newExtRepositoryFolderKey,
-		String newTitle) {
+			ExtRepositoryObjectType<T> extRepositoryObjectType,
+			String extRepositoryFileEntryKey, String newExtRepositoryFolderKey,
+			String newTitle)
+		throws PortalException {
 
 		try {
 			SharepointConnection sharepointConnection =
@@ -541,8 +542,9 @@ public class SharepointWSRepository
 
 	@Override
 	public <T extends ExtRepositoryObject> List<T> getExtRepositoryObjects(
-		ExtRepositoryObjectType<T> extRepositoryObjectType,
-		String extRepositoryFolderKey) {
+			ExtRepositoryObjectType<T> extRepositoryObjectType,
+			String extRepositoryFolderKey)
+		throws PortalException {
 
 		try {
 			SharepointConnection sharepointConnection =
@@ -984,12 +986,13 @@ public class SharepointWSRepository
 	}
 
 	protected <T extends ExtRepositoryObject> T toExtRepositoryObject(
-		ExtRepositoryObjectType<T> extRepositoryObjectType,
-		SharepointObject sharepointObject) {
+			ExtRepositoryObjectType<T> extRepositoryObjectType,
+			SharepointObject sharepointObject)
+		throws PortalException {
 
 		if (sharepointObject.isFile()) {
 			if (extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) {
-				throw new IllegalArgumentException(
+				throw new NoSuchFolderException(
 					"Invalid external repository object type " +
 						extRepositoryObjectType + " for Sharepoint object " +
 							sharepointObject);
@@ -999,7 +1002,7 @@ public class SharepointWSRepository
 		}
 		else {
 			if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
-				throw new IllegalArgumentException(
+				throw new NoSuchFileEntryException(
 					"Invalid external repository object type " +
 						extRepositoryObjectType + " for Sharepoint object " +
 							sharepointObject);

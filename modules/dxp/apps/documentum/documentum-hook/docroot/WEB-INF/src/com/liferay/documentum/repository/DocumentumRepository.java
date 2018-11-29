@@ -313,7 +313,9 @@ public class DocumentumRepository
 		DocumentumAction documentumAction = new DocumentumAction() {
 
 			@Override
-			public Object run(IDfSession idfSession) throws DfException {
+			public Object run(IDfSession idfSession)
+				throws DfException, PortalException {
+
 				IDfDocument idfDocument = getIDfSysObject(
 					IDfDocument.class, idfSession, extRepositoryFileEntryKey);
 
@@ -657,7 +659,9 @@ public class DocumentumRepository
 		DocumentumAction documentumAction = new DocumentumAction() {
 
 			@Override
-			public Object run(IDfSession idfSession) throws DfException {
+			public Object run(IDfSession idfSession)
+				throws DfException, PortalException {
+
 				DocumentumQuery documentumQuery = new DocumentumQuery(
 					_idfClientX, idfSession);
 
@@ -705,7 +709,9 @@ public class DocumentumRepository
 		DocumentumAction documentumAction = new DocumentumAction() {
 
 			@Override
-			public Object run(IDfSession idfSession) throws DfException {
+			public Object run(IDfSession idfSession)
+				throws DfException, PortalException {
+
 				DocumentumObject documentumObject =
 					(DocumentumObject)extRepositoryObject;
 
@@ -1180,7 +1186,7 @@ public class DocumentumRepository
 	protected IDfId getIDfId(
 			IDfSession idfSession, String extRepositoryParentFolderKey,
 			ExtRepositoryObjectType<?> extRepositoryObjectType, String name)
-		throws DfException {
+		throws DfException, PortalException {
 
 		IDfId idfId = getIDfId(idfSession, extRepositoryParentFolderKey);
 
@@ -1361,11 +1367,11 @@ public class DocumentumRepository
 			IDfSession idfSession,
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
 			IDfSysObject idfSysObject)
-		throws DfException {
+		throws DfException, PortalException {
 
 		if (idfSysObject instanceof IDfDocument) {
 			if (extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) {
-				throw new IllegalArgumentException(
+				throw new NoSuchFolderException(
 					"Invalid external repository object type " +
 						extRepositoryObjectType + " for Documentum object " +
 							idfSysObject);
@@ -1383,7 +1389,7 @@ public class DocumentumRepository
 		}
 		else if (idfSysObject instanceof IDfFolder) {
 			if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
-				throw new IllegalArgumentException(
+				throw new NoSuchFileEntryException(
 					"Invalid external repository object type " +
 						extRepositoryObjectType + " for Documentum object " +
 							idfSysObject);
@@ -1411,7 +1417,7 @@ public class DocumentumRepository
 			IDfSession idfSession,
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
 			List<IDfSysObject> idfSysObjects)
-		throws DfException {
+		throws DfException, PortalException {
 
 		List<T> extRepositoryObjects = new ArrayList<>();
 

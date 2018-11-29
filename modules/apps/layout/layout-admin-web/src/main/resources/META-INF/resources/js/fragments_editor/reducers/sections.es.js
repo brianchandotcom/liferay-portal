@@ -169,6 +169,33 @@ function _addSection(layoutColumns, layoutData, position) {
 }
 
 /**
+ * Returns a new layoutData with the given section moved to the position
+ * calculated with targetItemId and targetItemBorder
+ * @param {string} sectionId
+ * @param {object} layoutData
+ * @param {string} targetItemId
+ * @param {string} targetItemBorder
+ * @private
+ * @review
+ */
+function _moveSection(sectionId, layoutData, targetItemId, targetItemBorder) {
+	const index = getSectionIndex(layoutData.structure, sectionId);
+	const section = layoutData.structure[index];
+
+	let nextStructure = remove(layoutData.structure, index);
+
+	const position = getDropSectionPosition(
+		nextStructure,
+		targetItemId,
+		targetItemBorder
+	);
+
+	nextStructure = add(nextStructure, section, position);
+
+	return setIn(layoutData, ['structure'], nextStructure);
+}
+
+/**
  * Returns a new layoutData with the section with the given sectionId removed
  * @param {object} layoutData
  * @param {string} sectionId

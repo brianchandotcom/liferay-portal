@@ -14,97 +14,61 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.util.TestPropertiesUtil;
-import com.liferay.jenkins.results.parser.util.TestPropertiesValues;
-
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Properties;
-
 import org.json.JSONObject;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Michael Hashimoto
  */
-public class LocalGitRepositoryTest
-	extends com.liferay.jenkins.results.parser.Test {
-
-	@BeforeClass
-	public static void setUpClass() {
-		TestPropertiesUtil.printProperties();
-
-		Properties repositoryProperties = new Properties();
-
-		repositoryProperties.put(
-			JenkinsResultsParserUtil.combine(
-				"repository.dir[", _REPOSITORY_NAME, "][",
-				_REPOSITORY_UPSTREAM_BRANCH_NAME, "]"),
-			_REPOSITORY_DIR);
-
-		BaseGitRepository.setRepositoryProperties(repositoryProperties);
-	}
+public class LocalGitRepositoryTest extends GitRepositoryTest {
 
 	@Test
-	public void testLocalGitRepository() {
+	public void testGetDirectory() {
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
-
-		if (!(localGitRepository instanceof DefaultLocalGitRepository)) {
-			errorCollector.addError(
-				new Throwable("Invalid LocalGitRepository instance"));
-		}
-
-		GitWorkingDirectory gitWorkingDirectory =
-			localGitRepository.getGitWorkingDirectory();
-
-		System.out.println(gitWorkingDirectory);
-
-		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			errorCollector.addError(
-				new Throwable("Invalid GitWorkingDirectory instance"));
-		}
 
 		File directory = localGitRepository.getDirectory();
 
 		try {
-			if (!_REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
+			if (!REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
 				errorCollector.addError(
 					new Throwable(
-						"The repository directory should be " +
-							_REPOSITORY_DIR));
+						"The repository directorydirectory should be " + REPOSITORY_DIR));
 			}
 		}
 		catch (IOException ioe) {
 			errorCollector.addError(
 				new Throwable(
-					"The repository directory should be " + _REPOSITORY_DIR));
+					"The repository directory should be " + REPOSITORY_DIR));
 		}
+	}
 
-		if (!_REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
-				localGitRepository.getUpstreamBranchName())) {
+	@Test
+	public void testGetGitWorkingDirectory() {
+		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
+		GitWorkingDirectory gitWorkingDirectory =
+			localGitRepository.getGitWorkingDirectory();
+
+		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
 			errorCollector.addError(
-				new Throwable(
-					JenkinsResultsParserUtil.combine(
-						"The upstream branch name should be ",
-						_REPOSITORY_UPSTREAM_BRANCH_NAME)));
+				new Throwable("Invalid GitWorkingDirectory instance"));
 		}
+	}
 
-		if (!_REPOSITORY_NAME.equals(localGitRepository.getName())) {
-			errorCollector.addError(
-				new Throwable(
-					"The repository name should be " + _REPOSITORY_NAME));
-		}
+	@Test
+	public void testGetJSONObject() {
+		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("directory", _REPOSITORY_DIR);
-		expectedJSONObject.put("name", _REPOSITORY_NAME);
+		expectedJSONObject.put("directory", REPOSITORY_DIR);
+		expectedJSONObject.put("name", REPOSITORY_NAME);
 		expectedJSONObject.put(
-			"upstream_branch_name", _REPOSITORY_UPSTREAM_BRANCH_NAME);
+			"upstream_branch_name", REPOSITORY_UPSTREAM_BRANCH_NAME);
 
 		JSONObject actualJSONObject = localGitRepository.getJSONObject();
 
@@ -120,18 +84,35 @@ public class LocalGitRepositoryTest
 		}
 	}
 
-	private LocalGitRepository _getLocalGitRepository() {
-		return GitRepositoryFactory.getLocalGitRepository(
-			_REPOSITORY_NAME, _REPOSITORY_UPSTREAM_BRANCH_NAME);
+	@Test
+	public void testGetName() {
+		LocalGitRepository localGitRepository = _getLocalGitRepository();
+
+		if (!REPOSITORY_NAME.equals(localGitRepository.getName())) {
+			errorCollector.addError(
+				new Throwable(
+					"The repository name should be " + REPOSITORY_NAME));
+		}
 	}
 
-	private static final String _REPOSITORY_DIR =
-		TestPropertiesValues.REPOSITORY_DIR;
+	@Test
+	public void testGetUpstreamBranchName() {
+		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
-	private static final String _REPOSITORY_NAME =
-		TestPropertiesValues.REPOSITORY_NAME;
+		if (!REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
+				localGitRepository.getUpstreamBranchName())) {
 
-	private static final String _REPOSITORY_UPSTREAM_BRANCH_NAME =
-		TestPropertiesValues.REPOSITORY_UPSTREAM_BRANCH_NAME;
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"The upstream branch name should be ",
+						REPOSITORY_UPSTREAM_BRANCH_NAME)));
+		}
+	}
+
+	private LocalGitRepository _getLocalGitRepository() {
+		return GitRepositoryFactory.getLocalGitRepository(
+			REPOSITORY_NAME, REPOSITORY_UPSTREAM_BRANCH_NAME);
+	}
 
 }

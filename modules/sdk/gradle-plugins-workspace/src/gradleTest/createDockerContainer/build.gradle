@@ -1,0 +1,41 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
+
+task runGradleTest(type: DockerRemoveContainer)
+
+runGradleTest {
+	dependsOn createDockerContainer
+
+	doLast {
+		File inputDir = new File(buildDir, "docker")
+
+		String[] inputDirFileNames = inputDir.list()
+
+		assert inputDirFileNames.length == 2
+
+		assert inputDirFileNames.contains("deploy")
+		assert !inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("files")
+
+		File filesDir = new File(inputDir, "files")
+
+		String[] filesDirFileNames = filesDir.list()
+
+		assert filesDirFileNames.length == 1
+
+		assert !filesDirFileNames.contains(".touch")
+		assert filesDirFileNames.contains("portal-ext.properties")
+
+		File deployDir = new File(inputDir, "deploy")
+
+		String[] deployDirFileNames = deployDir.list()
+
+		assert deployDirFileNames.length == 1
+
+		assert !deployDirFileNames.contains(".touch")
+		assert deployDirFileNames.contains("com.liferay.foo.web-1.0.0.jar")
+	}
+
+	targetContainerId {
+		createDockerContainer.containerId
+	}
+}

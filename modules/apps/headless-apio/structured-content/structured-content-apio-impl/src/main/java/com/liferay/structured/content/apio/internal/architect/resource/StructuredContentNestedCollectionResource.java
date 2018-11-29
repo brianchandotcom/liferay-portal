@@ -82,6 +82,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.ComplexEntityField;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.Filter;
@@ -105,6 +107,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -127,6 +130,8 @@ public class StructuredContentNestedCollectionResource
 	implements NestedCollectionResource
 		<JournalArticleWrapper, Long, StructuredContentIdentifier, Long,
 		 ContentSpaceIdentifier> {
+
+	public static final String VALUES_NAME = "values";
 
 	public static String encodeFilterAndSortIdentifier(
 		DDMStructure ddmStructure, String name) {
@@ -214,7 +219,7 @@ public class StructuredContentNestedCollectionResource
 				"renderedContent", RenderedJournalArticle::getRenderedContent
 			).build()
 		).addNestedList(
-			"values", this::_getStructuredContentFields,
+			VALUES_NAME, this::_getStructuredContentFields,
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
 			).addLinkedModel(
@@ -865,8 +870,24 @@ public class StructuredContentNestedCollectionResource
 
 		@Override
 		public String getFilterAndSortIdentifier() {
-			return encodeFilterAndSortIdentifier(
-				_ddmStructure, _ddmFormFieldValue.getName());
+			Map<String, EntityField> entityFieldsMap =
+				_entityModel.getEntityFieldsMap();
+
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityFieldsMap.get(VALUES_NAME);
+
+			Map<String, EntityField> complexEntityFieldEntityFieldsMap =
+				complexEntityField.getEntityFieldsMap();
+
+			EntityField entityField = complexEntityFieldEntityFieldsMap.get(
+				encodeFilterAndSortIdentifier(
+					_ddmStructure, _ddmFormFieldValue.getName()));
+
+			if (entityField != null) {
+				return entityField.getName();
+			}
+
+			return null;
 		}
 
 		@Override

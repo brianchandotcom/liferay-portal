@@ -23,6 +23,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.structured.content.apio.internal.architect.resource.StructuredContentNestedCollectionResource;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,9 @@ public class StructuredContentEntityModel implements EntityModel {
 
 	public StructuredContentEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = Stream.of(
-			new ComplexEntityField("values", entityFields),
+			new ComplexEntityField(
+				StructuredContentNestedCollectionResource.VALUES_NAME,
+				entityFields),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

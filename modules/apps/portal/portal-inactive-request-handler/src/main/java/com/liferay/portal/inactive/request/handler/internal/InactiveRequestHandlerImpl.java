@@ -116,7 +116,7 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 			return;
 		}
 
-		try (InputStream inputStream = url.openStream();) {
+		try (InputStream inputStream = url.openStream()) {
 			_content = StringUtil.read(inputStream);
 		}
 		catch (IOException ioe) {

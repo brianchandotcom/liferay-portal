@@ -379,7 +379,7 @@ public class SyncHelperImpl implements SyncHelper {
 				Channels.newChannel(checksumsInputStream);
 			OutputStream deltaOutputStream = new FileOutputStream(deltaFile);
 			WritableByteChannel deltaOutputStreamWritableByteChannel =
-				Channels.newChannel(deltaOutputStream);) {
+				Channels.newChannel(deltaOutputStream)) {
 
 			ByteChannelReader checksumsByteChannelReader =
 				new ByteChannelReader(checksumsReadableByteChannel);

@@ -161,7 +161,7 @@ public class MBMessageServiceTest {
 					JDBCExceptionReporter.class.getName(), Level.ERROR);
 			CaptureAppender captureAppender5 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					SynchronousDestination.class.getName(), Level.ERROR);) {
+					SynchronousDestination.class.getName(), Level.ERROR)) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();

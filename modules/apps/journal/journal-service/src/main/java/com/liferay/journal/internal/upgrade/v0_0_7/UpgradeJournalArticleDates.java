@@ -49,7 +49,7 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update JournalArticle set createDate = ? where " +
-						"resourcePrimKey = ?");) {
+						"resourcePrimKey = ?")) {
 
 			try (ResultSet rs = s.executeQuery(sb.toString())) {
 				while (rs.next()) {
@@ -89,7 +89,7 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update JournalArticle set modifiedDate = ? where " +
-						"resourcePrimKey = ? and version = ?");) {
+						"resourcePrimKey = ? and version = ?")) {
 
 			ps1.setInt(1, WorkflowConstants.STATUS_APPROVED);
 			ps1.setLong(

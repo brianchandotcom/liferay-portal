@@ -392,7 +392,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 	protected int addReleaseInfo() throws Exception {
 		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(_SQL_INSERT_RELEASE);) {
+			PreparedStatement ps = con.prepareStatement(_SQL_INSERT_RELEASE)) {
 
 			java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
 

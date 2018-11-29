@@ -52,7 +52,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 	}
 
 	private void _upgradeTable(Class<?> tableClass) throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			String catalog = dbInspector.getCatalog();

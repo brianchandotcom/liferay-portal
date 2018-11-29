@@ -53,7 +53,7 @@ public class SerializableUtil {
 	public static Object deserialize(byte[] bytes, ClassLoader classLoader) {
 		try (ObjectInputStream objectInputStream =
 				new ProtectedClassLoaderObjectInputStream(
-					new UnsyncByteArrayInputStream(bytes), classLoader);) {
+					new UnsyncByteArrayInputStream(bytes), classLoader)) {
 
 			return objectInputStream.readObject();
 		}

@@ -100,7 +100,7 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps1.executeQuery();) {
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				String preferences = rs.getString("preferences");

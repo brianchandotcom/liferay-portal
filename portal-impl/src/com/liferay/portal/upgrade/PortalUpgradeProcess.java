@@ -43,7 +43,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select schemaVersion from Release_ where servletContextName " +
-					"= ?");) {
+					"= ?")) {
 
 			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 

@@ -29,7 +29,7 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select kaleoDefinitionId, content from KaleoDefinition " +
 					"where content like '%WorkflowConstants.toStatus(%'");
-			ResultSet rs = ps.executeQuery();) {
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long kaleoDefinitionId = rs.getLong(1);

@@ -127,7 +127,12 @@ AUI.add(
 				'<h4>{[ this.strings.uploadsCompleteText ]}</h4>',
 			'</div>',
 
-			'<div class="alert alert-warning hide pending-files-info">{[ this.strings.pendingFileText ]}</div>',
+			'<div class="alert alert-warning hide pending-files-info" role="alert">',
+				'<span class="alert-indicator">',
+					'<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#warning" /></svg>',
+				'</span>',
+				'<strong class="lead">{[ this.strings.warningTitle ]}</strong>{[ this.strings.pendingFileText ]}',
+			'</div>',
 
 			'<div class="float-container hide manage-upload-target" id="{$ns}manageUploadTarget">',
 				'<tpl if="multipleFiles">',
@@ -252,6 +257,7 @@ AUI.add(
 							uploadsCompleteText: Liferay.Language.get('all-files-ready-to-be-saved'),
 							warningFailureText: Liferay.Language.get('consider-that-the-following-data-would-not-have-been-imported-either'),
 							warningText: Liferay.Language.get('the-following-data-will-not-be-imported'),
+							warningTitle: Liferay.Language.get('warning-colon'),
 							xFilesReadyText: Liferay.Language.get('x-files-ready-to-be-uploaded'),
 							xFilesSelectedText: Liferay.Language.get('x-files-selected'),
 							zeroByteSizeText: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')

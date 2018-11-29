@@ -9,6 +9,7 @@ import {
 	CLEAR_DROP_TARGET,
 	CLEAR_HOVERED_ITEM,
 	MOVE_FRAGMENT_ENTRY_LINK,
+	MOVE_SECTION,
 	REMOVE_SECTION,
 	UPDATE_DROP_TARGET,
 	UPDATE_HOVERED_ITEM,
@@ -247,6 +248,26 @@ class FragmentEntryLinkList extends Component {
 				}
 			);
 
+			const itemData = FragmentEntryLinkList._getItemData(
+				data.source.dataset
+			);
+
+			let moveItemAction = null;
+			let moveItemPayload = null;
+
+			if (itemData.itemType === DROP_TARGET_ITEM_TYPES.section) {
+				moveItemAction = MOVE_SECTION;
+				moveItemPayload = {
+					sectionId: itemData.itemId
+				};
+			}
+			else if (itemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;
+				moveItemPayload = {
+					fragmentEntryLinkId: itemData.itemId
+				};
+			}
+
 			this.store
 				.dispatchAction(
 					UPDATE_SAVING_CHANGES_STATUS,
@@ -255,11 +276,8 @@ class FragmentEntryLinkList extends Component {
 					}
 				)
 				.dispatchAction(
-					MOVE_FRAGMENT_ENTRY_LINK,
-					{
-						fragmentEntryLinkId:
-							data.source.dataset.fragmentEntryLinkId
-					}
+					moveItemAction,
+					moveItemPayload
 				)
 				.dispatchAction(
 					UPDATE_LAST_SAVE_DATE,

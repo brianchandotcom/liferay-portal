@@ -22,9 +22,6 @@ public class AssetListWebKeys {
 	public static final String ASSET_LIST_DISPLAY_CONTEXT =
 		"ASSET_LIST_DISPLAY_CONTEXT";
 
-	public static final String ASSET_LIST_ENTRY_PROPERTIES =
-		"ASSET_LIST_ENTRY_PROPERTIES";
-
 	public static final String EDIT_ASSET_LIST_DISPLAY_CONTEXT =
 		"EDIT_ASSET_LIST_DISPLAY_CONTEXT";
 

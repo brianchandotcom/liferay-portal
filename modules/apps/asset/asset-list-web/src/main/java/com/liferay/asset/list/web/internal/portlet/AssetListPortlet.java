@@ -197,9 +197,6 @@ public class AssetListPortlet extends MVCPortlet {
 			properties.load(curAssetListEntry.getTypeSettings());
 		}
 
-		renderRequest.setAttribute(
-			AssetListWebKeys.ASSET_LIST_ENTRY_PROPERTIES, properties);
-
 		EditAssetListDisplayContext editAssetListDisplayContext =
 			new EditAssetListDisplayContext(
 				renderRequest, renderResponse, properties,

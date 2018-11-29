@@ -81,6 +81,50 @@ const FUNCTIONAL_OPERATORS = [CONTAINS];
 
 const RELATIONAL_OPERATORS = [EQ, GE, GT, LE, LT, NE];
 
+const addNewGroup = (queryAST, prevConjunction) => ({
+	lastNodeWasGroup: false,
+	prevConjunction,
+	queryAST: {type: 'BoolParenExpression', value: queryAST}
+});
+
+const buildQueryString = (queryItems, queryConjunction) => {
+	let queryString = '';
+
+	queryItems.forEach(
+		(item, index) => {
+			const {
+				conjunctionName,
+				items,
+				operatorName,
+				propertyName,
+				value
+			} = item;
+
+			if (index > 0) {
+				queryString = queryString.concat(` ${queryConjunction} `);
+			}
+
+			if (conjunctionName) {
+				queryString = queryString.concat(
+					`(${buildQueryString(items, conjunctionName)})`
+				);
+			}
+			else if (RELATIONAL_OPERATORS.includes(operatorName)) {
+				queryString = queryString.concat(
+					`${propertyName} ${operatorName} '${value}'`
+				);
+			}
+			else if (FUNCTIONAL_OPERATORS.includes(operatorName)) {
+				queryString = queryString.concat(
+					`${operatorName} (${propertyName}, '${value}')`
+				);
+			}
+		}
+	);
+
+	return queryString;
+};
+
 const comparatorTransformation = ({
 	lastNodeWasGroup,
 	prevConjunction,
@@ -103,18 +147,6 @@ const comparatorTransformation = ({
 		] :
 		toCriteriaMap(addNewGroup(queryAST, prevConjunction));
 };
-
-const addNewGroup = (queryAST, prevConjunction) => ({
-	lastNodeWasGroup: false,
-	prevConjunction,
-	queryAST: {type: 'BoolParenExpression', value: queryAST}
-});
-
-const skipGroup = (queryAST, prevConjunction) => ({
-	lastNodeWasGroup: true,
-	prevConjunction,
-	queryAST: queryAST.value
-});
 
 const groupTransformation = ({lastNodeWasGroup, prevConjunction, queryAST}) => {
 	const nextNodeType = getNextNonGroupNodeType(queryAST);
@@ -179,6 +211,10 @@ const groupTransformation = ({lastNodeWasGroup, prevConjunction, queryAST}) => {
 	return returnValue;
 };
 
+function isCriteriaMapGroup(criteriaMapArray) {
+	return !!criteriaMapArray[0].items;
+}
+
 function isNotConjunction(nodeType) {
 	return !CONJUNCTIONS.includes(getTypeName(nodeType));
 }
@@ -198,6 +234,11 @@ const getNextNonGroupNodeType = queryAST => {
 	return returnValue;
 };
 
+const getChildNodeTypeName = query =>
+	oDataTransformationMap[query.value.type].name;
+
+const getTypeName = type => oDataTransformationMap[type].name;
+
 const operatorTransformation = ({queryAST}) => {
 	return [
 		{
@@ -207,6 +248,12 @@ const operatorTransformation = ({queryAST}) => {
 		}
 	];
 };
+
+const skipGroup = (queryAST, prevConjunction) => ({
+	lastNodeWasGroup: true,
+	prevConjunction,
+	queryAST: queryAST.value
+});
 
 const toCriteriaMap = ({
 	lastNodeWasGroup = false,
@@ -224,10 +271,6 @@ const toCriteriaMap = ({
 	);
 };
 
-const getChildNodeTypeName = query =>
-	oDataTransformationMap[query.value.type].name;
-const getTypeName = type => oDataTransformationMap[type].name;
-
 const translateToCriteria = query => {
 	let returnValue;
 
@@ -240,14 +283,12 @@ const translateToCriteria = query => {
 			criteriaMapArray[0] :
 			wrapInCriteriaMapGroup(criteriaMapArray);
 	}
-	catch (error) {
+	catch (e) {
 		returnValue = null;
 	}
 
 	return returnValue;
 };
-
-const isCriteriaMapGroup = criteriaMapArray => criteriaMapArray[0].items;
 
 const wrapInCriteriaMapGroup = criteriaMapArray => (
 	{
@@ -255,44 +296,6 @@ const wrapInCriteriaMapGroup = criteriaMapArray => (
 		items: criteriaMapArray
 	}
 );
-
-const buildQueryString = (queryItems, queryConjunction) => {
-	let queryString = '';
-
-	queryItems.forEach(
-		(item, index) => {
-			const {
-				conjunctionName,
-				items,
-				operatorName,
-				propertyName,
-				value
-			} = item;
-
-			if (index > 0) {
-				queryString = queryString.concat(` ${queryConjunction} `);
-			}
-
-			if (conjunctionName) {
-				queryString = queryString.concat(
-					`(${buildQueryString(items, conjunctionName)})`
-				);
-			}
-			else if (RELATIONAL_OPERATORS.includes(operatorName)) {
-				queryString = queryString.concat(
-					`${propertyName} ${operatorName} '${value}'`
-				);
-			}
-			else if (FUNCTIONAL_OPERATORS.includes(operatorName)) {
-				queryString = queryString.concat(
-					`${operatorName} (${propertyName}, '${value}')`
-				);
-			}
-		}
-	);
-
-	return queryString;
-};
 
 const oDataTransformationMap = {
 	AndExpression: {

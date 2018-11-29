@@ -99,8 +99,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
-	public static final String DEPLOY_TO_CONTAINER_TASK_NAME =
-		"deployToContainer";
+	public static final String DOCKER_DEPLOY_TASK_NAME = "dockerDeploy";
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 

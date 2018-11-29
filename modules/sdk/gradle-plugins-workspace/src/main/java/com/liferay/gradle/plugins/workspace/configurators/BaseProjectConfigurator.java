@@ -85,26 +85,32 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		}
 	}
 
-	protected Copy addTaskDeploy(
-		Project project, Object object, String name, File dir,
-		String description, String group) {
+	protected Copy addTaskDockerDeploy(
+		Project project, Object sourcePath,
+		WorkspaceExtension workspaceExtension) {
 
-		Copy copy = GradleUtil.addTask(project, name, Copy.class);
+		Copy copy = GradleUtil.addTask(
+			project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME,
+			Copy.class);
 
-		copy.from(object);
+		copy.from(sourcePath);
+
+		final File dockerDir = workspaceExtension.getDockerDir();
 
 		copy.into(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return new File(dir, "deploy");
+					return new File(dockerDir, "deploy");
 				}
 
 			});
 
-		copy.setDescription(description);
-		copy.setGroup(group);
+		copy.setDescription(
+			"Assembles the project and deploys it to the Liferay Docker " +
+				"container.");
+		copy.setGroup("docker");
 
 		DockerBuildImage dockerBuildImage =
 			(DockerBuildImage)GradleUtil.getTask(

@@ -46,8 +46,8 @@ String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-frontend:user-portrait
-			position="bottom"
+		<liferay-ui:user-portrait
+			cssClass="sticker sticker-bottom-left"
 			userId="<%= assetRenderer.getUserId() %>"
 		/>
 	</div>

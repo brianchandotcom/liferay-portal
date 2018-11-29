@@ -80,7 +80,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -143,7 +143,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -181,7 +181,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria1 = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria1,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -198,7 +198,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria2 = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria2,
 			String.format("(firstName eq '%s')", _user2.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -227,7 +227,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria1 = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria1,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -240,7 +240,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria2 = new Criteria();
 
-		_entityModelSegmentsCriteriaContributor.contribute(
+		_userSegmentsCriteriaContributor.contribute(
 			criteria2,
 			String.format("(firstName eq '%s')", _user2.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -261,12 +261,6 @@ public class SegmentsEntryProviderTest {
 		ArrayUtil.contains(
 			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
 	}
-
-	@Inject(
-		filter = "segments.criteria.contributor.key=entity-model",
-		type = SegmentsCriteriaContributor.class
-	)
-	private SegmentsCriteriaContributor _entityModelSegmentsCriteriaContributor;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -298,5 +292,11 @@ public class SegmentsEntryProviderTest {
 
 	@DeleteAfterTestRun
 	private User _user2;
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=user",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

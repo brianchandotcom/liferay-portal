@@ -127,7 +127,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 			Criteria criteria = new Criteria();
 
 			criteria.addCriterion(
-				"entity-model",
+				"user",
 				StringUtil.read(clazz.getClassLoader(), contentPath, false),
 				Criteria.Conjunction.AND);
 

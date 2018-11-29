@@ -54,6 +54,7 @@ import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
 import com.liferay.portal.tools.java.parser.JavaTerm;
 import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
 import com.liferay.portal.tools.java.parser.JavaThrowStatement;
+import com.liferay.portal.tools.java.parser.JavaTryStatement;
 import com.liferay.portal.tools.java.parser.JavaType;
 import com.liferay.portal.tools.java.parser.JavaTypeCast;
 import com.liferay.portal.tools.java.parser.JavaVariableDefinition;
@@ -423,14 +424,47 @@ public class JavaParserUtil {
 			parseJavaExpression(literalThrowDetailAST.getFirstChild()));
 	}
 
+	public static JavaTryStatement parseJavaTryStatement(
+		DetailAST literalTryDetailAST) {
+
+		JavaTryStatement javaTryStatement = new JavaTryStatement();
+
+		DetailAST firstChildDetailAST = literalTryDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() !=
+				TokenTypes.RESOURCE_SPECIFICATION) {
+
+			return javaTryStatement;
+		}
+
+		List<JavaVariableDefinition> resourceJavaVariableDefinitions =
+			new ArrayList<>();
+
+		DetailAST resourcesDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.RESOURCES);
+
+		List<DetailAST> resourceDetailASTList = DetailASTUtil.getAllChildTokens(
+			resourcesDetailAST, false, TokenTypes.RESOURCE);
+
+		for (DetailAST resourceDetailAST : resourceDetailASTList) {
+			resourceJavaVariableDefinitions.add(
+				parseJavaVariableDefinition(resourceDetailAST));
+		}
+
+		javaTryStatement.setResourceJavaVariableDefinitions(
+			resourceJavaVariableDefinitions);
+
+		return javaTryStatement;
+	}
+
 	public static JavaVariableDefinition parseJavaVariableDefinition(
-		DetailAST variableDefinitionDetailAST) {
+		DetailAST detailAST) {
 
 		JavaVariableDefinition javaVariableDefinition =
-			new JavaVariableDefinition(_getName(variableDefinitionDetailAST));
+			new JavaVariableDefinition(_getName(detailAST));
 
-		DetailAST modifiersDetailAST =
-			variableDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
 		javaVariableDefinition.setJavaAnnotations(
 			_parseJavaAnnotations(modifiersDetailAST));
@@ -438,11 +472,9 @@ public class JavaParserUtil {
 			_parseModifiers(modifiersDetailAST));
 
 		javaVariableDefinition.setJavaType(
-			_parseJavaType(
-				variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE)));
+			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)));
 
-		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
-			TokenTypes.ASSIGN);
+		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
 
 		if (assignDetailAST != null) {
 			javaVariableDefinition.setAssignValueJavaExpression(

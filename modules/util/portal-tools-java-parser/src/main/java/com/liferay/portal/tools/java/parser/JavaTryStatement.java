@@ -14,10 +14,18 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaTryStatement extends BaseJavaTerm {
+
+	public void setResourceJavaVariableDefinitions(
+		List<JavaVariableDefinition> resourceJavaVariableDefinitions) {
+
+		_resourceJavaVariableDefinitions = resourceJavaVariableDefinitions;
+	}
 
 	@Override
 	public String toString(
@@ -25,5 +33,7 @@ public class JavaTryStatement extends BaseJavaTerm {
 
 		return "TODO";
 	}
+
+	private List<JavaVariableDefinition> _resourceJavaVariableDefinitions;
 
 }

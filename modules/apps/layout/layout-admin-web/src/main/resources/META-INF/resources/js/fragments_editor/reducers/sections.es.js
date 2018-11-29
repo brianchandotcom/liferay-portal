@@ -74,7 +74,6 @@ function addSectionReducer(state, actionType, payload) {
 function _addSection(layoutColumns, layoutData, position) {
 	let nextColumnId = layoutData.nextColumnId || 0;
 	const nextRowId = layoutData.nextRowId || 0;
-	const nextStructure = [...layoutData.structure];
 
 	const columns = [];
 
@@ -92,13 +91,13 @@ function _addSection(layoutColumns, layoutData, position) {
 		}
 	);
 
-	nextStructure.splice(
-		position,
-		0,
+	const nextStructure = add(
+		layoutData.structure,
 		{
 			columns,
 			rowId: `${nextRowId}`
-		}
+		},
+		position
 	);
 
 	let nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);

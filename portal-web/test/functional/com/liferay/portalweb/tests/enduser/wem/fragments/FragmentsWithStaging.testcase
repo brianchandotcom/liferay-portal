@@ -50,7 +50,7 @@
 			<var name="site" value="false" />
 		</execute>
 
-		<execute macro="JSONFragment#addFragment">
+		<execute macro="JSONFragment#addSection">
 			<var name="collectionName" value="Collection Name" />
 			<var name="groupKey" value="Test Site Name-staging" />
 			<var name="name" value="Fragment Name" />

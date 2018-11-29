@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addFragment" summary="Directly calls the JSON WS API to add a fragment">
+	<command name="_addSection" summary="Directly calls the JSON WS API to add a fragment (default type is section)">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -143,7 +143,7 @@
 		<return value="${fragmentNameResult}" />
 	</command>
 
-	<command name="addFragment" summary="Add a basic fragment to a fragment collection.">
+	<command name="addSection" summary="Add a section to a fragment collection.">
 		<if>
 			<isset var="groupName" />
 			<then>
@@ -230,7 +230,7 @@
 
 		<echo message="## * Group Id: ${groupId}" />
 
-		<execute macro="JSONFragment#_addFragment">
+		<execute macro="JSONFragment#_addSection">
 			<var name="collectionId" value="${collectionId}" />
 			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />

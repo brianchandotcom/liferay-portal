@@ -314,7 +314,7 @@
 			<var name="collectionName" value="New Collection" />
 		</execute>
 
-		<execute macro="FragmentsAdmin#addFragment">
+		<execute macro="FragmentsAdmin#addSection">
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 

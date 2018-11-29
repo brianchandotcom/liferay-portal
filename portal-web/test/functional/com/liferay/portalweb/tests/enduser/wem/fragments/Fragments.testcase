@@ -17,7 +17,7 @@
 			<var name="name" value="Collection Name" />
 		</execute>
 
-		<execute macro="JSONFragment#addFragment">
+		<execute macro="JSONFragment#addSection">
 			<var name="collectionName" value="Collection Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="name" value="Fragment Name" />
@@ -158,7 +158,7 @@
 			<var name="navNested" value="Collection Name" />
 		</execute>
 
-		<execute macro="FragmentsAdmin#addFragment">
+		<execute macro="FragmentsAdmin#addSection">
 			<var name="fragmentName" value="Fragment Name 2" />
 		</execute>
 

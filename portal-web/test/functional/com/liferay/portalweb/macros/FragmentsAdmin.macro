@@ -28,10 +28,12 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
-	<command name="addFragment">
-		<execute macro="LexiconEntry#gotoAdd" />
+	<command name="addSection">
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Section" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Modal#HEADER" value1="Add Fragment" />
+		<execute function="AssertTextEquals" locator1="Modal#HEADER" value1="Add Section" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${fragmentName}" />

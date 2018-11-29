@@ -342,8 +342,7 @@ public class EditAssetListDisplayContext {
 	}
 
 	public Long[] getClassTypeIds(
-		UnicodeProperties properties, String className,
-		List<ClassType> availableClassTypes) {
+		String className, List<ClassType> availableClassTypes) {
 
 		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
 
@@ -353,7 +352,7 @@ public class EditAssetListDisplayContext {
 			availableClassTypeIds[i] = classType.getClassTypeId();
 		}
 
-		return _getClassTypeIds(properties, className, availableClassTypeIds);
+		return _getClassTypeIds(className, availableClassTypeIds);
 	}
 
 	public String getDDMStructureDisplayFieldValue() throws Exception {
@@ -835,11 +834,10 @@ public class EditAssetListDisplayContext {
 	}
 
 	private Long[] _getClassTypeIds(
-		UnicodeProperties properties, String className,
-		Long[] availableClassTypeIds) {
+		String className, Long[] availableClassTypeIds) {
 
 		boolean anyClassType = GetterUtil.getBoolean(
-			properties.getProperty(
+			_properties.getProperty(
 				"anyClassType" + className, Boolean.TRUE.toString()));
 
 		if (anyClassType) {
@@ -847,7 +845,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		long defaultClassTypeId = GetterUtil.getLong(
-			properties.getProperty("anyClassType" + className, null), -1);
+			_properties.getProperty("anyClassType" + className, null), -1);
 
 		if (defaultClassTypeId > -1) {
 			return new Long[] {defaultClassTypeId};
@@ -855,7 +853,7 @@ public class EditAssetListDisplayContext {
 
 		Long[] classTypeIds = ArrayUtil.toArray(
 			StringUtil.split(
-				properties.getProperty("classTypeIds" + className, null), 0L));
+				_properties.getProperty("classTypeIds" + className, null), 0L));
 
 		if (classTypeIds != null) {
 			return classTypeIds;

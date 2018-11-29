@@ -121,7 +121,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 					String className = editAssetListDisplayContext.getClassName(assetRendererFactory);
 
-					Long[] assetSelectedClassTypeIds = editAssetListDisplayContext.getClassTypeIds(properties, className, classTypes);
+					Long[] assetSelectedClassTypeIds = editAssetListDisplayContext.getClassTypeIds(className, classTypes);
 
 					// Left list
 

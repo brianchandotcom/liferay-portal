@@ -1,0 +1,51 @@
+[
+	{
+		"color": "fccdcc",
+		"default": false,
+		"id": 871980401,
+		"name": "ci:test - failure",
+		"node_id": "MDU6TGFiZWw4NzE5ODA0MDE=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test%20-%20failure"
+	},
+	{
+		"color": "fff4c9",
+		"default": false,
+		"id": 871960949,
+		"name": "ci:test - pending",
+		"node_id": "MDU6TGFiZWw4NzE5NjA5NDk=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test%20-%20pending"
+	},
+	{
+		"color": "c7e8cb",
+		"default": false,
+		"description": "This is a description",
+		"id": 884437936,
+		"name": "ci:test - success",
+		"node_id": "MDU6TGFiZWw4ODQ0Mzc5MzY=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test%20-%20success"
+	},
+	{
+		"color": "fccdcc",
+		"default": false,
+		"id": 936379445,
+		"name": "ci:test:relevant - failure",
+		"node_id": "MDU6TGFiZWw5MzYzNzk0NDU=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test:relevant%20-%20failure"
+	},
+	{
+		"color": "fff4c9",
+		"default": false,
+		"id": 936328097,
+		"name": "ci:test:relevant - pending",
+		"node_id": "MDU6TGFiZWw5MzYzMjgwOTc=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test:relevant%20-%20pending"
+	},
+	{
+		"color": "c7e8cb",
+		"default": false,
+		"id": 936676218,
+		"name": "ci:test:relevant - success",
+		"node_id": "MDU6TGFiZWw5MzY2NzYyMTg=",
+		"url": "https://api.github.com/repos/liferay/liferay-portal/labels/ci:test:relevant%20-%20success"
+	}
+]

@@ -75,6 +75,8 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 						Criteria.Criterion criterion = segmentsCriteriaContributor.getCriterion(editSegmentsEntryDisplayContext.getCriteria());
 
+						String criteriaBuilderId = renderResponse.getNamespace() + "-query-builder-root-" + segmentsCriteriaContributor.getKey();
+
 						if (i > 0) {
 					%>
 
@@ -96,8 +98,40 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 						}
 						%>
 
-						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilter" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilterString() : StringPool.BLANK %>" />
+						<label class="control-label"><%= segmentsCriteriaContributor.getLabel(locale) %></label>
 
+						<div id="<%= criteriaBuilderId %>"></div>
+
+						<aui:script position="inline" require="<%= segmentsJsRequire %>">
+							segmentsJsRequire.default('<%= criteriaBuilderId %>', {
+								inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
+								properties: [
+									{
+										label: 'First Name',
+										type: 'string',
+										name: 'firstName'
+									},
+									{
+										label: 'Last Name',
+										type: 'string',
+										name: 'lastName'
+									},
+									{
+										label: 'Email Address',
+										type: 'string',
+										name: 'emailAddress'
+									},
+									{
+										label: 'Age',
+										type: 'number',
+										name: 'age'
+									}
+								],
+								query: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>'
+							}, {
+								spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+							});
+						</aui:script>
 					<%
 					}
 					%>

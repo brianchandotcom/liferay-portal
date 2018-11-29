@@ -15,5 +15,5 @@ dependencies {
 }
 
 test {
-	systemProperties = System.getProperties();
+	systemProperty "repository.dir", System.getProperty("repository.dir")
 }

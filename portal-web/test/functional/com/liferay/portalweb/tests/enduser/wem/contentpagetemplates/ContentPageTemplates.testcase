@@ -237,7 +237,7 @@
 
 	<command name="ReorderFragments" priority="5">
 		<description message="Change the ordering of fragments in the page editor." />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="PageTemplatesAdmin#addCollection">
 			<var name="collectionName" value="Page Template Collection" />

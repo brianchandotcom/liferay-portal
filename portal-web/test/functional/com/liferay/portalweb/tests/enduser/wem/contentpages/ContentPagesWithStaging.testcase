@@ -176,22 +176,17 @@
 			<var name="text" value="New editable fragment text" />
 		</execute>
 
-		<execute macro="PageEditor#moveFragment">
-			<var name="direction" value="down" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
 		<execute macro="ContentPages#gotoViewMode" />
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="1" />
-		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Lorem ipsum dolor sit amet" />
 			<var name="key_fragmentClass" value="header" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="New editable fragment text" />
+			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="2" />
 		</execute>
 
@@ -234,14 +229,14 @@
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_content" value="Lorem ipsum dolor sit amet" />
+			<var name="key_fragmentClass" value="header" />
 			<var name="key_position" value="1" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
+			<var name="key_content" value="New editable fragment text" />
+			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="2" />
 		</execute>
 

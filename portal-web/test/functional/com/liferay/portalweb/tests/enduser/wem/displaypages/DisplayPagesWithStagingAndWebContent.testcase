@@ -301,11 +301,6 @@
 			<var name="rowEntry" value="Display Page Name" />
 		</execute>
 
-		<execute macro="PageEditor#moveFragment">
-			<var name="direction" value="down" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
 			<var name="fragmentName" value="Content" />
@@ -324,14 +319,14 @@
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_content" value="Webcontent Title" />
+			<var name="key_fragmentClass" value="header" />
 			<var name="key_position" value="1" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
+			<var name="key_content" value="Webcontent Content" />
+			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="2" />
 		</execute>
 
@@ -357,6 +352,12 @@
 			<var name="key_position" value="2" />
 		</execute>
 
+		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Webcontent Title" />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="3" />
+		</execute>
+
 		<execute macro="Staging#openStagingAdmin">
 			<var name="siteURLKey" value="test-site-name-staging" />
 		</execute>
@@ -368,14 +369,14 @@
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_content" value="Webcontent Title" />
+			<var name="key_fragmentClass" value="header" />
 			<var name="key_position" value="1" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
+			<var name="key_content" value="Webcontent Content" />
+			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="2" />
 		</execute>
 

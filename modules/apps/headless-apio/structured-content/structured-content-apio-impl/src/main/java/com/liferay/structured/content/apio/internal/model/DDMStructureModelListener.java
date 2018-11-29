@@ -231,7 +231,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		else if (Objects.equals(
 					ddmFormField.getDataType(), DDMFormFieldType.RADIO) ||
 				 (Objects.equals(
-					 ddmFormField.getDataType(), FieldConstants.STRING) &&
+					 ddmFormField.getType(), DDMFormFieldType.TEXT) &&
 				  Objects.equals(ddmFormField.getIndexType(), "keyword"))) {
 
 			return Optional.of(

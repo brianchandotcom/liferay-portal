@@ -106,23 +106,19 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		copy.setDescription(description);
 		copy.setGroup(group);
 
-		if (name.equals(
-				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME)) {
+		DockerBuildImage dockerBuildImage =
+			(DockerBuildImage)GradleUtil.getTask(
+				project.getRootProject(),
+				RootProjectConfigurator.BUILD_IMAGE_TASK_NAME);
 
-			DockerBuildImage dockerBuildImage =
-				(DockerBuildImage)GradleUtil.getTask(
-					project.getRootProject(),
-					RootProjectConfigurator.BUILD_IMAGE_TASK_NAME);
+		dockerBuildImage.dependsOn(copy);
 
-			dockerBuildImage.dependsOn(copy);
+		DockerCreateContainer dockerCreateContainer =
+			(DockerCreateContainer)GradleUtil.getTask(
+				project.getRootProject(),
+				RootProjectConfigurator.CREATE_CONTAINER_TASK_NAME);
 
-			DockerCreateContainer dockerCreateContainer =
-				(DockerCreateContainer)GradleUtil.getTask(
-					project.getRootProject(),
-					RootProjectConfigurator.CREATE_CONTAINER_TASK_NAME);
-
-			dockerCreateContainer.dependsOn(copy);
-		}
+		dockerCreateContainer.dependsOn(copy);
 
 		return copy;
 	}

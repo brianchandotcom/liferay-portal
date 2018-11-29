@@ -94,15 +94,15 @@ if (comment) {
 					<c:choose>
 						<c:when test="<%= (receiverUser != null) && receiverUser.isActive() %>">
 							<a href="<%= receiverUser.getDisplayURL(themeDisplay) %>">
-								<liferay-frontend:user-portrait
-									size="sm"
+								<liferay-ui:user-portrait
+									cssClass="user-icon-xs"
 									userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
 								/>
 							</a>
 						</c:when>
 						<c:otherwise>
-							<liferay-frontend:user-portrait
-								size="sm"
+							<liferay-ui:user-portrait
+								cssClass="user-icon-xs"
 								userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
 							/>
 						</c:otherwise>
@@ -155,8 +155,8 @@ if (comment) {
 	<c:if test="<%= !repost %>">
 		<c:if test="<%= comment %>">
 			<span class="thumbnail">
-				<liferay-frontend:user-portrait
-					size="sm"
+				<liferay-ui:user-portrait
+					cssClass="user-icon-xs"
 					user="<%= user %>"
 				/>
 			</span>

@@ -102,6 +102,12 @@ public class OAuth2ApplicationLocalServiceWrapper
 		return _oAuth2ApplicationLocalService.deleteOAuth2Application(oAuth2Application);
 	}
 
+	@Override
+	public void deleteOAuth2Applications(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_oAuth2ApplicationLocalService.deleteOAuth2Applications(companyId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -258,6 +264,12 @@ public class OAuth2ApplicationLocalServiceWrapper
 	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Application> getOAuth2Applications(
 		int start, int end) {
 		return _oAuth2ApplicationLocalService.getOAuth2Applications(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Application> getOAuth2Applications(
+		long companyId) {
+		return _oAuth2ApplicationLocalService.getOAuth2Applications(companyId);
 	}
 
 	/**

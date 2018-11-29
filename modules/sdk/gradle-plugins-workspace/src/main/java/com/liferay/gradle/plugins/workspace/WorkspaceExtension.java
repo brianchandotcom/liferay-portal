@@ -75,7 +75,13 @@ public class WorkspaceExtension {
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _DOCKER_IMAGE_LIFERAY);
-		_dockerDir = _getProperty(settings, "docker.dir", "build/docker");
+
+		Project rootProject = _gradle.getRootProject();
+
+		_dockerDir = _getProperty(
+			settings, "docker.dir",
+			new File(rootProject.getBuildDir(), _DOCKER_DIR_NAME));
+
 		_environment = _getProperty(
 			settings, "environment",
 			BundleSupportConstants.DEFAULT_ENVIRONMENT);
@@ -265,6 +271,8 @@ public class WorkspaceExtension {
 	private static final String _BUNDLE_TOKEN_PASSWORD = null;
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
+
+	private static final String _DOCKER_DIR_NAME = "docker";
 
 	private static final String _DOCKER_IMAGE_LIFERAY =
 		"liferay/portal:7.1.1-ga2";

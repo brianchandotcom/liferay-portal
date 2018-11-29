@@ -870,7 +870,12 @@ public class DocumentumRepository
 
 				idfSysObjectToMove.setObjectName(newTitle);
 
-				idfSysObjectToMove.save();
+				if (idfSysObjectToMove.isCheckedOut()) {
+					idfSysObjectToMove.saveLock();
+				}
+				else {
+					idfSysObjectToMove.save();
+				}
 
 				return toExtRepositoryObject(
 					idfSession, extRepositoryObjectType, idfSysObject);

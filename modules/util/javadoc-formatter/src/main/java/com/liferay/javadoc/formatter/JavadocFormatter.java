@@ -1170,7 +1170,7 @@ public class JavadocFormatter {
 
 		// Capitalize ID
 
-		text = text.replaceAll("[?@param id](?i)\\bid(s)?\\b", " ID$1");
+		text = text.replaceAll("(?i) id(s)?\\b", " ID$1");
 
 		// Wrap special constants in code tags
 

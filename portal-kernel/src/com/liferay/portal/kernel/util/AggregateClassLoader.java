@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.memory.EqualityWeakReference;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
@@ -218,7 +219,9 @@ public class AggregateClassLoader extends ClassLoader {
 
 	@Override
 	public int hashCode() {
-		return _classLoaderReferences.hashCode();
+		int hash = HashUtil.hash(0, _classLoaderReferences);
+
+		return HashUtil.hash(hash, getParent());
 	}
 
 	@Override

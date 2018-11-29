@@ -61,7 +61,6 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
@@ -70,7 +69,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
@@ -97,8 +95,6 @@ page import="java.util.Set" %>
 
 <%
 AssetListDisplayContext assetListDisplayContext = (AssetListDisplayContext)renderRequest.getAttribute(AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT);
-
-UnicodeProperties properties = (UnicodeProperties)renderRequest.getAttribute(AssetListWebKeys.ASSET_LIST_ENTRY_PROPERTIES);
 
 EditAssetListDisplayContext editAssetListDisplayContext = (EditAssetListDisplayContext)renderRequest.getAttribute(AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT);
 %>

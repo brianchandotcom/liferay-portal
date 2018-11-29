@@ -731,6 +731,12 @@ public class EditAssetListDisplayContext {
 		return _anyAssetType;
 	}
 
+	public boolean isAnyClassType(String className) {
+		return GetterUtil.getBoolean(
+			_properties.getProperty(
+				"anyClassType" + className, Boolean.TRUE.toString()));
+	}
+
 	public boolean isShowSubtypeFieldsFilter() {
 		return true;
 	}
@@ -836,11 +842,7 @@ public class EditAssetListDisplayContext {
 	private Long[] _getClassTypeIds(
 		String className, Long[] availableClassTypeIds) {
 
-		boolean anyClassType = GetterUtil.getBoolean(
-			_properties.getProperty(
-				"anyClassType" + className, Boolean.TRUE.toString()));
-
-		if (anyClassType) {
+		if (isAnyClassType(className)) {
 			return availableClassTypeIds;
 		}
 

@@ -143,7 +143,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 					List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();
 
-					boolean anyAssetSubtype = GetterUtil.getBoolean(properties.getProperty("anyClassType" + className, Boolean.TRUE.toString()));
+					boolean anyAssetSubtype = editAssetListDisplayContext.isAnyClassType(className);
 				%>
 
 					<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">

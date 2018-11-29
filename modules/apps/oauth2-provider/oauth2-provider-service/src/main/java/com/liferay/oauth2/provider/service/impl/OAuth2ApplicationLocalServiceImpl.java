@@ -203,6 +203,17 @@ public class OAuth2ApplicationLocalServiceImpl
 	}
 
 	@Override
+	public void deleteOAuth2Applications(long companyId)
+		throws PortalException {
+
+		for (OAuth2Application oAuth2Application :
+				oAuth2ApplicationPersistence.findByC(companyId)) {
+
+			deleteOAuth2Application(oAuth2Application.getOAuth2ApplicationId());
+		}
+	}
+
+	@Override
 	public OAuth2Application fetchOAuth2Application(
 		long companyId, String clientId) {
 
@@ -215,6 +226,11 @@ public class OAuth2ApplicationLocalServiceImpl
 		throws NoSuchOAuth2ApplicationException {
 
 		return oAuth2ApplicationPersistence.findByC_C(companyId, clientId);
+	}
+
+	@Override
+	public List<OAuth2Application> getOAuth2Applications(long companyId) {
+		return oAuth2ApplicationPersistence.findByC(companyId);
 	}
 
 	@Override

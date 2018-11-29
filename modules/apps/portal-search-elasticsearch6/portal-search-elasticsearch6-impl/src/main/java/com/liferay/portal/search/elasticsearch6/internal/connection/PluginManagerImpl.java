@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import org.apache.commons.collections.IteratorUtils;
 
+import org.elasticsearch.Version;
 import org.elasticsearch.cli.Terminal;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
@@ -88,9 +89,11 @@ public class PluginManagerImpl implements PluginManager {
 	@Override
 	public boolean isCurrentVersion(Path path) throws IOException {
 		try {
-			PluginInfo.readFromProperties(path);
+			PluginInfo pluginInfo = PluginInfo.readFromProperties(path);
 
-			return true;
+			Version pluginVersion = pluginInfo.getElasticsearchVersion();
+
+			return pluginVersion.equals(Version.CURRENT);
 		}
 		catch (IllegalArgumentException iae) {
 			String message = iae.getMessage();

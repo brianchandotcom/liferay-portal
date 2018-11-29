@@ -352,7 +352,7 @@ class ClayODataQueryBuilder extends React.Component {
 		const {criteriaMap} = this.state;
 
 		return (
-			<div>
+			<div className="clay-query-builder-root">
 				<div className="form-group">
 					<ClayCriteriaBuilder
 						conjunctions={conjunctions}

@@ -21,7 +21,7 @@ class ClayCriteriaGroup extends React.Component {
 
 		return (
 			<div
-				className={root ? 'root-criteria-group query-group' : ' criteria-group query-group'}
+				className={root ? 'root-criteria-group' : ' criteria-group'}
 			>
 				{criteria.items && criteria.items.map(
 					(criterion, index) => {
@@ -38,36 +38,38 @@ class ClayCriteriaGroup extends React.Component {
 									/>
 								)}
 
-								{criterion.items ? (
-									<ClayCriteriaGroup
-										conjunctions={conjunctions}
-										criteria={criterion}
-										criteriaTypes={criteriaTypes}
-										editing={editing}
-										onChange={this._updateCriteria(index, criterion)}
-										operators={operators}
-										properties={properties}
-									/>
-								) : (
-									<ClayCriteriaRow
-										conjunctions={conjunctions}
-										criteriaTypes={criteriaTypes}
-										criterion={criterion}
-										editing={editing}
-										onChange={this._updateCriterion(index)}
-										operators={operators}
-										properties={properties}
-										root={root}
-									/>
-								)}
+								<div className="criterion-container">
+									{criterion.items ? (
+										<ClayCriteriaGroup
+											conjunctions={conjunctions}
+											criteria={criterion}
+											criteriaTypes={criteriaTypes}
+											editing={editing}
+											onChange={this._updateCriteria(index, criterion)}
+											operators={operators}
+											properties={properties}
+										/>
+									) : (
+										<ClayCriteriaRow
+											conjunctions={conjunctions}
+											criteriaTypes={criteriaTypes}
+											criterion={criterion}
+											editing={editing}
+											onChange={this._updateCriterion(index)}
+											operators={operators}
+											properties={properties}
+											root={root}
+										/>
+									)}
 
-								{editing &&
-									<ClayButton
-										className="add btn-sm btn btn-secondary"
-										iconName="plus"
-										onClick={this._handleAddCriteria(index)}
-									/>
-								}
+									{editing &&
+										<ClayButton
+											className="btn btn-secondary btn-monospaced"
+											iconName="plus"
+											onClick={this._handleAddCriteria(index)}
+										/>
+									}
+								</div>
 							</div>
 						);
 					}

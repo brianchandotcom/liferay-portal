@@ -19,8 +19,8 @@ class ClayCriteriaBuilder extends React.Component {
 		const {editing} = this.state;
 
 		return (
-			<div className="clay-query-builder-root criteria-builder">
-				<div className="toolbar">
+			<div className="criteria-builder">
+				<div className="criteria-builder-toolbar">
 					<ClayButton
 						label={Liferay.Language.get('edit')}
 						onClick={this._handleToggleEdit}

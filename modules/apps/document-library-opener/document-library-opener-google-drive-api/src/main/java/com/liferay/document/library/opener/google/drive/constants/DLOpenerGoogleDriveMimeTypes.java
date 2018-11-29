@@ -32,11 +32,6 @@ import java.util.Map;
 public class DLOpenerGoogleDriveMimeTypes {
 
 	/**
-	 * The MIME type for EPub files.
-	 */
-	public static final String APPLICATION_EPUB = "application/epub+zip";
-
-	/**
 	 * The MIME type for Rich Text files.
 	 */
 	public static final String APPLICATION_RTF = "application/rtf";
@@ -53,12 +48,6 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 */
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
 		"application/vnd.google-apps.document";
-
-	/**
-	 * The MIME type for Google Drawings.
-	 */
-	public static final String APPLICATION_VND_GOOGLE_APPS_DRAWING =
-		"application/vnd.google-apps.drawing";
 
 	/**
 	 * The MIME type for Google Slides.
@@ -102,11 +91,6 @@ public class DLOpenerGoogleDriveMimeTypes {
 	 */
 	public static final String APPLICATION_VND_XSLX =
 		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-	/**
-	 * The MIME type for SVG.
-	 */
-	public static final String IMAGE_SVG_XML = "image/svg+xml";
 
 	/**
 	 * The MIME type for Tab Separated Values files.
@@ -177,18 +161,16 @@ public class DLOpenerGoogleDriveMimeTypes {
 	}
 
 	private static final Map<String, String> _extensions = MapUtil.fromArray(
-		APPLICATION_EPUB, ".epub", ContentTypes.APPLICATION_PDF, ".pdf",
-		APPLICATION_RTF, ".rtf", ContentTypes.APPLICATION_TEXT, ".txt",
-		APPLICATION_VND_DOCX, ".docx", APPLICATION_VND_ODP, ".odp",
-		APPLICATION_VND_ODS, ".ods", APPLICATION_VND_ODT, ".odt",
-		APPLICATION_VND_PPTX, ".pptx", APPLICATION_VND_XSLX, ".xslx",
-		ContentTypes.IMAGE_JPEG, ".jpeg", ContentTypes.IMAGE_PNG, ".png",
-		IMAGE_SVG_XML, ".svg", ContentTypes.TEXT, ".txt", ContentTypes.TEXT_CSV,
-		".csv", ContentTypes.TEXT_PLAIN, ".txt", ContentTypes.TEXT_HTML,
-		".html", TEXT_TAB_SEPARATED_VALUES, ".tsv");
+		ContentTypes.APPLICATION_PDF, ".pdf", APPLICATION_RTF, ".rtf",
+		ContentTypes.APPLICATION_TEXT, ".txt", APPLICATION_VND_DOCX, ".docx",
+		APPLICATION_VND_ODP, ".odp", APPLICATION_VND_ODS, ".ods",
+		APPLICATION_VND_ODT, ".odt", APPLICATION_VND_PPTX, ".pptx",
+		APPLICATION_VND_XSLX, ".xslx", ContentTypes.IMAGE_PNG, ".png",
+		ContentTypes.TEXT, ".txt", ContentTypes.TEXT_CSV, ".csv",
+		ContentTypes.TEXT_PLAIN, ".txt", ContentTypes.TEXT_HTML, ".html",
+		TEXT_TAB_SEPARATED_VALUES, ".tsv");
 	private static final Map<String, String> _googleDocsMimeTypes =
 		MapUtil.fromArray(
-			APPLICATION_EPUB, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
 			ContentTypes.APPLICATION_PDF, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
 			APPLICATION_RTF, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
 			ContentTypes.APPLICATION_TEXT, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
@@ -198,9 +180,6 @@ public class DLOpenerGoogleDriveMimeTypes {
 			APPLICATION_VND_ODT, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
 			APPLICATION_VND_PPTX, APPLICATION_VND_GOOGLE_APPS_PRESENTATION,
 			APPLICATION_VND_XSLX, APPLICATION_VND_GOOGLE_APPS_SPREADSHEET,
-			ContentTypes.IMAGE_JPEG, APPLICATION_VND_GOOGLE_APPS_DRAWING,
-			ContentTypes.IMAGE_PNG, APPLICATION_VND_GOOGLE_APPS_DRAWING,
-			IMAGE_SVG_XML, APPLICATION_VND_GOOGLE_APPS_DRAWING,
 			ContentTypes.TEXT, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
 			ContentTypes.TEXT_CSV, APPLICATION_VND_GOOGLE_APPS_SPREADSHEET,
 			ContentTypes.TEXT_HTML, APPLICATION_VND_GOOGLE_APPS_DOCUMENT,

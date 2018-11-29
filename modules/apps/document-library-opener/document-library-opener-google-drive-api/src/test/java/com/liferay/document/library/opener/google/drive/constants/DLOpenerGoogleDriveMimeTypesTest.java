@@ -36,14 +36,6 @@ public class DLOpenerGoogleDriveMimeTypesTest {
 			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
 				"document",
 			"docx");
-		_assertIsSupportedGoogleDocsDocument("application/epub+zip", "epub");
-	}
-
-	@Test
-	public void testSupportsDrawingsMimeTypes() {
-		_assertIsSupportedGoogleDocsDrawing("image/jpeg", "jpeg");
-		_assertIsSupportedGoogleDocsDrawing("image/png", "png");
-		_assertIsSupportedGoogleDocsDrawing("image/svg+xml", "svg");
 	}
 
 	@Test
@@ -73,14 +65,6 @@ public class DLOpenerGoogleDriveMimeTypesTest {
 
 		_assertMimeTypeSupported(
 			DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_GOOGLE_APPS_DOCUMENT,
-			mimeType, extension);
-	}
-
-	private void _assertIsSupportedGoogleDocsDrawing(
-		String mimeType, String extension) {
-
-		_assertMimeTypeSupported(
-			DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_GOOGLE_APPS_DRAWING,
 			mimeType, extension);
 	}
 

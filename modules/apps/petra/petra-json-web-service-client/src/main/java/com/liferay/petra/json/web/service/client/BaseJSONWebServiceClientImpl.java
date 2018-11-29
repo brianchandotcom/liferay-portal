@@ -947,7 +947,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		return new SSLIOSessionStrategy(
-			sslContext, new String[] {"TLSv1"}, null,
+			sslContext, new String[] {"TLSv1.1", "TLSv1.2"}, null,
 			SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
 	}
 

@@ -426,8 +426,7 @@ public class WatchTask extends DefaultTask {
 
 			sb.append("webbundledir:%s");
 			sb.append("?Bundle-SymbolicName=%s");
-			sb.append("&amp\\;");
-			sb.append("Web-ContextPath=/%s");
+			sb.append("&Web-ContextPath=/%s");
 
 			return String.format(
 				sb.toString(), uri.toASCIIString(), getBundleSymbolicName(),
@@ -445,8 +444,9 @@ public class WatchTask extends DefaultTask {
 
 		String url = _getReferenceInstallURL(file);
 
-		String response = _sendGogoShellCommand(
-			gogoShellClient, "install " + url);
+		String command = String.format("install '%s'", url);
+
+		String response = _sendGogoShellCommand(gogoShellClient, command);
 
 		Matcher matcher = _installResponsePattern.matcher(response);
 
@@ -504,11 +504,13 @@ public class WatchTask extends DefaultTask {
 			Set<File> files = fileCollection.getFiles();
 
 			for (File file : files) {
-				long fragmentBundleId = _installBundle(
-					file, gogoShellClient, false);
+				if (file.exists()) {
+					long fragmentBundleId = _installBundle(
+						file, gogoShellClient, false);
 
-				if (fragmentBundleId > 0) {
-					installedFragment = true;
+					if (fragmentBundleId > 0) {
+						installedFragment = true;
+					}
 				}
 			}
 		}
@@ -597,9 +599,11 @@ public class WatchTask extends DefaultTask {
 	private void _refreshBundle(long bundleId, GogoShellClient gogoShellClient)
 		throws IOException {
 
-		Logger logger = getLogger();
+		String command = String.format("refresh %s", bundleId);
 
-		_sendGogoShellCommand(gogoShellClient, "refresh " + bundleId);
+		_sendGogoShellCommand(gogoShellClient, command);
+
+		Logger logger = getLogger();
 
 		if (logger.isQuietEnabled()) {
 			logger.quiet("Refreshed bundle {}", bundleId);
@@ -632,7 +636,7 @@ public class WatchTask extends DefaultTask {
 
 		String url = _getReferenceInstallURL(bundleDir);
 
-		String command = String.format("update %s %s", bundleId, url);
+		String command = String.format("update %s '%s'", bundleId, url);
 
 		String response = _sendGogoShellCommand(gogoShellClient, command);
 

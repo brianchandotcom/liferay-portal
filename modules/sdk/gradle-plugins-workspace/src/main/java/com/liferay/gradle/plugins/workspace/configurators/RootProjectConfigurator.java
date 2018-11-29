@@ -101,13 +101,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
-	public static final String DOCKER_DEPLOY_TASK_NAME = "dockerDeploy";
-
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
 	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
 
 	public static final String DIST_BUNDLE_ZIP_TASK_NAME = "distBundleZip";
+
+	public static final String DOCKER_DEPLOY_TASK_NAME = "dockerDeploy";
 
 	public static final String DOCKER_GROUP = "docker";
 
@@ -480,51 +480,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return createTokenTask;
 	}
 
-	private Copy _addTaskDockerDeploy(
-		Project project, final WorkspaceExtension workspaceExtension,
-		Configuration providedModulesConfiguration) {
-
-		Copy copy = GradleUtil.addTask(
-			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
-
-		copy.setDescription(
-			"Copy docker configs and provided configurations to docker dir");
-
-		copy.setDestinationDir(workspaceExtension.getDockerDir());
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						workspaceExtension.getConfigsDir(), "docker");
-				}
-
-			},
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("files");
-				}
-
-			});
-
-		copy.from(
-			providedModulesConfiguration,
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("deploy");
-				}
-
-			});
-
-		return copy;
-	}
-
 	private Copy _addTaskDistBundle(
 		final Project project, Download downloadBundleTask,
 		WorkspaceExtension workspaceExtension,
@@ -591,6 +546,51 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		task.setGroup(BUNDLE_GROUP);
 
 		return task;
+	}
+
+	private Copy _addTaskDockerDeploy(
+		Project project, final WorkspaceExtension workspaceExtension,
+		Configuration providedModulesConfiguration) {
+
+		Copy copy = GradleUtil.addTask(
+			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
+
+		copy.setDescription(
+			"Copy docker configs and provided configurations to docker dir");
+
+		copy.setDestinationDir(workspaceExtension.getDockerDir());
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						workspaceExtension.getConfigsDir(), "docker");
+				}
+
+			},
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("files");
+				}
+
+			});
+
+		copy.from(
+			providedModulesConfiguration,
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("deploy");
+				}
+
+			});
+
+		return copy;
 	}
 
 	private Download _addTaskDownloadBundle(

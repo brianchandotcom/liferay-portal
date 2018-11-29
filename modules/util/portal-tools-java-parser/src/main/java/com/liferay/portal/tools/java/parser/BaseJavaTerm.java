@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -310,6 +311,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				prefix = StringPool.BLANK;
 			}
 
+			if (Objects.equals(sb.stringAt(sb.index() - 1), "\n")) {
+				sb.append(indent);
+			}
+
 			if (i == (list.size() - 1)) {
 				if (!appendSingleLine(
 						sb, javaTerm, prefix, suffix, maxLineLength)) {
@@ -342,7 +347,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					StringUtil.trimTrailing(delimeter), maxLineLength);
 
 				sb.append("\n");
-				sb.append(indent);
 			}
 		}
 	}

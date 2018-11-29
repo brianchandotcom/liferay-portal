@@ -158,6 +158,11 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public void deletePortletPreferencesByOwnerId(long ownerId) {
+		portletPreferencesPersistence.removeByOwnerId(ownerId);
+	}
+
+	@Override
 	public void deletePortletPreferencesByPlid(long plid) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete {plid=" + plid + "}");
@@ -342,6 +347,13 @@ public class PortletPreferencesLocalServiceImpl
 
 		return portletPreferencesPersistence.findByP_P(
 			_swapPlidForPortletPreferences(plid), portletId);
+	}
+
+	@Override
+	public List<PortletPreferences> getPortletPreferencesByOwnerId(
+		long ownerId) {
+
+		return portletPreferencesPersistence.findByOwnerId(ownerId);
 	}
 
 	@Override

@@ -105,28 +105,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 						<aui:script position="inline" require="<%= segmentsJsRequire %>">
 							segmentsJsRequire.default('<%= criteriaBuilderId %>', {
 								inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
-								properties: [
-									{
-										label: 'First Name',
-										type: 'string',
-										name: 'firstName'
-									},
-									{
-										label: 'Last Name',
-										type: 'string',
-										name: 'lastName'
-									},
-									{
-										label: 'Email Address',
-										type: 'string',
-										name: 'emailAddress'
-									},
-									{
-										label: 'Age',
-										type: 'number',
-										name: 'age'
-									}
-								],
+								properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>,
 								query: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>'
 							}, {
 								spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'

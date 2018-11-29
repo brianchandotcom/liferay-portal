@@ -116,6 +116,11 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public void deletePortletPreferencesByOwnerId(long ownerId) {
+		_portletPreferencesLocalService.deletePortletPreferencesByOwnerId(ownerId);
+	}
+
+	@Override
 	public void deletePortletPreferencesByPlid(long plid) {
 		_portletPreferencesLocalService.deletePortletPreferencesByPlid(plid);
 	}
@@ -338,6 +343,12 @@ public class PortletPreferencesLocalServiceWrapper
 		long plid, String portletId) {
 		return _portletPreferencesLocalService.getPortletPreferences(plid,
 			portletId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.PortletPreferences> getPortletPreferencesByOwnerId(
+		long ownerId) {
+		return _portletPreferencesLocalService.getPortletPreferencesByOwnerId(ownerId);
 	}
 
 	@Override

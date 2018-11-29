@@ -122,6 +122,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public PortletPreferences deletePortletPreferences(
 		PortletPreferences portletPreferences);
 
+	public void deletePortletPreferencesByOwnerId(long ownerId);
+
 	public void deletePortletPreferencesByPlid(long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -271,6 +273,9 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferences(long plid,
 		String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortletPreferences> getPortletPreferencesByOwnerId(long ownerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferencesByPlid(long plid);

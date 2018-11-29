@@ -153,6 +153,13 @@ public class PortletPreferencesPersistenceTest {
 	}
 
 	@Test
+	public void testCountByOwnerId() throws Exception {
+		_persistence.countByOwnerId(RandomTestUtil.nextLong());
+
+		_persistence.countByOwnerId(0L);
+	}
+
+	@Test
 	public void testCountByPlid() throws Exception {
 		_persistence.countByPlid(RandomTestUtil.nextLong());
 

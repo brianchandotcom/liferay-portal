@@ -31,7 +31,6 @@ AUI.add(
 					strings: {
 						validator: Lang.isObject,
 						value: {
-							addTemplate: Liferay.Language.get('please-add-a-template-to-render-this-structure'),
 							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft')
 						}
 					}
@@ -83,14 +82,6 @@ AUI.add(
 						instance._eventHandles = eventHandles;
 					},
 
-					_displayTemplateMessage: function() {
-						var instance = this;
-
-						var strings = instance.get(STR_STRINGS);
-
-						alert(strings.addTemplate);
-					},
-
 					_getByName: function(currentForm, name, withoutNamespace) {
 						var instance = this;
 
@@ -105,26 +96,6 @@ AUI.add(
 						var instance = this;
 
 						return instance.one('form[name=' + instance.ns(formName || 'fm1') + ']');
-					},
-
-					_hasStructure: function() {
-						var instance = this;
-
-						var form = instance._getPrincipalForm();
-
-						var ddmStructureKey = instance._getByName(form, 'ddmStructureKey');
-
-						return ddmStructureKey && ddmStructureKey.val();
-					},
-
-					_hasTemplate: function() {
-						var instance = this;
-
-						var form = instance._getPrincipalForm();
-
-						var ddmTemplateKey = instance._getByName(form, 'ddmTemplateKey');
-
-						return ddmTemplateKey && ddmTemplateKey.val();
 					},
 
 					_hasUnsavedChanges: function() {
@@ -201,22 +172,11 @@ AUI.add(
 							);
 						}
 						else if (confirm(strings.saveAsDraftBeforePreview)) {
-							var hasStructure = instance._hasStructure();
+							var form = instance._getPrincipalForm();
 
-							var hasTemplate = instance._hasTemplate();
+							instance.one(SELECTOR_ACTION_NAME, form).val('previewArticle');
 
-							var updateStructureDefaultValues = instance._updateStructureDefaultValues();
-
-							if (hasStructure && !hasTemplate && !updateStructureDefaultValues) {
-								instance._displayTemplateMessage();
-							}
-							else {
-								var form = instance._getPrincipalForm();
-
-								instance.one(SELECTOR_ACTION_NAME, form).val('previewArticle');
-
-								submitForm(form);
-							}
+							submitForm(form);
 						}
 					},
 
@@ -225,41 +185,34 @@ AUI.add(
 
 						var form = instance._getPrincipalForm();
 
-						if (instance._hasStructure() && !instance._hasTemplate() && !instance._updateStructureDefaultValues()) {
-							instance.one(SELECTOR_ACTION_NAME, form).val('');
+						var article = instance.get(STR_ARTICLE);
 
-							instance._displayTemplateMessage();
+						var articleId = article.id;
+
+						if (actionName === 'publish') {
+							var workflowActionInput = instance._getByName(form, 'workflowAction');
+
+							workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
+
+							actionName = null;
 						}
-						else {
-							var article = instance.get(STR_ARTICLE);
 
-							var articleId = article.id;
-
-							if (actionName === 'publish') {
-								var workflowActionInput = instance._getByName(form, 'workflowAction');
-
-								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
-
-								actionName = null;
-							}
-
-							if (!actionName) {
-								actionName = articleId ? STR_UPDATE_ARTICLE : STR_ADD_ARTICLE;
-							}
-
-							var actionNameInput = instance._getByName(form, STR_ACTION_NAME);
-
-							actionNameInput.val(actionName);
-
-							if (!articleId) {
-								var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
-								var newArticleIdInput = instance._getByName(form, 'newArticleId');
-
-								articleIdInput.val(newArticleIdInput.val());
-							}
-
-							submitForm(form);
+						if (!actionName) {
+							actionName = articleId ? STR_UPDATE_ARTICLE : STR_ADD_ARTICLE;
 						}
+
+						var actionNameInput = instance._getByName(form, STR_ACTION_NAME);
+
+						actionNameInput.val(actionName);
+
+						if (!articleId) {
+							var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
+							var newArticleIdInput = instance._getByName(form, 'newArticleId');
+
+							articleIdInput.val(newArticleIdInput.val());
+						}
+
+						submitForm(form);
 					},
 
 					_updateStructureDefaultValues: function() {

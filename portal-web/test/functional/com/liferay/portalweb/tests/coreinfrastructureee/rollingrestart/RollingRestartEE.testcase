@@ -553,4 +553,375 @@
 			<var name="webContentTitle" value="WC WebContent Title Cluster3" />
 		</execute>
 	</command>
+
+	<command name="RevertFixPackWithMultipleClusters" priority="5">
+		<property name="app.server.bundles.size" value="2" />
+		<property name="portal.fixpack.release" value="true" />
+		<property name="skip.install-patch" value="true" />
+		<property name="test.name.skip.portal.instance" value="RollingRestartEE#RevertFixPackWithMultipleClusters" />
+
+		<execute macro="Clustering#viewClusterStatusInConsole" />
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="8080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="10080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="10080" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="10080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<!-- Install the latest FP on all 3 servers -->
+
+		<for list="8080,9080,10080" param="nodePort">
+			<execute macro="Portlet#shutdownSpecificServer">
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
+
+			<execute macro="PatchingTool#installPatchOnSpecificServer">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="patchFileZipURL" value="${testBuildFixPackZipURL}" />
+			</execute>
+
+			<execute macro="Portlet#startSpecificServer">
+				<var name="deleteLiferayHome" value="true" />
+				<var name="keepCachedAppServerData" value="true" />
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Page#assertNodePortPG">
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<!-- Take down cluster2, revert the latest FP and install FP3 -->
+
+		<execute macro="Portlet#shutdownSpecificServer">
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<execute macro="PatchingTool#uninstallPatchOnSpecificServer">
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<execute macro="PatchingTool#installPatchOnSpecificServer">
+			<var name="nodePort" value="9080" />
+			<var name="patchFileZipURL" value="https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-3-7110.zip" />
+		</execute>
+
+		<execute macro="Portlet#startSpecificServer">
+			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<for list="8080,9080,10080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Page#assertNodePortPG">
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content Cluster2" />
+			<var name="webContentTitle" value="WC WebContent Title Cluster2" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title Cluster2" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<for list="8080,10080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContent#viewTitle">
+				<var name="webContentTitle" value="WC WebContent Title Cluster2" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<!-- Take down cluster1, revert the latest FP and install FP3 -->
+
+		<execute macro="Portlet#shutdownSpecificServer">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="PatchingTool#uninstallPatchOnSpecificServer">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="PatchingTool#installPatchOnSpecificServer">
+			<var name="nodePort" value="8080" />
+			<var name="patchFileZipURL" value="https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-3-7110.zip" />
+		</execute>
+
+		<execute macro="Portlet#startSpecificServer">
+			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<for list="8080,9080,10080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Page#assertNodePortPG">
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="8080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="privacy" value="Public Pages" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="8080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<for list="9080,10080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Navigator#gotoSpecificURLPage">
+				<var name="pageName" value="Documents and Media Page" />
+				<var name="url" value="http://localhost:${nodePort}" />
+			</execute>
+
+			<execute macro="Portlet#viewPG">
+				<var name="portletName" value="Documents and Media" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<!-- Take down cluster3, revert the latest FP and install FP3 -->
+
+		<execute macro="Portlet#shutdownSpecificServer">
+			<var name="nodePort" value="10080" />
+		</execute>
+
+		<execute macro="PatchingTool#uninstallPatchOnSpecificServer">
+			<var name="nodePort" value="10080" />
+		</execute>
+
+		<execute macro="PatchingTool#installPatchOnSpecificServer">
+			<var name="nodePort" value="10080" />
+			<var name="patchFileZipURL" value="https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-3-7110.zip" />
+		</execute>
+
+		<execute macro="Portlet#startSpecificServer">
+			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
+			<var name="nodePort" value="10080" />
+		</execute>
+
+		<for list="8080,9080,10080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Page#assertNodePortPG">
+				<var name="nodePort" value="${nodePort}" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="10080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="url" value="http://localhost:10080" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title Cluster3" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="DM Document Title Cluster3" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="10080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<for list="8080,9080" param="nodePort">
+			<execute macro="User#loginPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+
+			<execute macro="Navigator#gotoSpecificURLPage">
+				<var name="pageName" value="Documents and Media Page" />
+				<var name="url" value="http://localhost:${nodePort}" />
+			</execute>
+
+			<execute macro="DMDocument#viewPG">
+				<var name="dmDocumentTitle" value="DM Document Title Cluster3" />
+			</execute>
+
+			<execute macro="User#logoutPG">
+				<var name="nodePort" value="${nodePort}" />
+				<var name="password" value="test" />
+				<var name="userEmailAddress" value="test@liferay.com" />
+			</execute>
+		</for>
+	</command>
 </definition>

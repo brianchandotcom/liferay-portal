@@ -17,7 +17,6 @@ package com.liferay.data.engine.internal.io;
 import com.liferay.data.engine.exception.DataDefinitionFieldsDeserializerException;
 import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyRequest;
 import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumnType;
 import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.json.JSONFactoryImpl;
 
@@ -66,8 +65,7 @@ public class DataDefinitionFieldsJSONDeserializerTest extends BaseTestCase {
 		Assert.assertEquals(false, dataDefinitionField.isRepeatable());
 		Assert.assertEquals("name", dataDefinitionField.getName());
 
-		Assert.assertEquals(
-			DataDefinitionColumnType.STRING, dataDefinitionField.getType());
+		Assert.assertEquals("string", dataDefinitionField.getType());
 
 		Map<String, String> labels = dataDefinitionField.getLabel();
 
@@ -81,8 +79,7 @@ public class DataDefinitionFieldsJSONDeserializerTest extends BaseTestCase {
 		Assert.assertEquals(true, dataDefinitionField.isRepeatable());
 		Assert.assertEquals("email", dataDefinitionField.getName());
 
-		Assert.assertEquals(
-			DataDefinitionColumnType.STRING, dataDefinitionField.getType());
+		Assert.assertEquals("string", dataDefinitionField.getType());
 
 		labels = dataDefinitionField.getLabel();
 

@@ -17,7 +17,6 @@ package com.liferay.data.engine.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.exception.DataDefinitionException;
 import com.liferay.data.engine.model.DataDefinition;
-import com.liferay.data.engine.model.DataDefinitionColumnType;
 import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.data.engine.service.DataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DataDefinitionGetRequest;
@@ -85,7 +84,7 @@ public class DataDefinitionLocalServiceTest {
 
 		DataDefinitionField dataDefinitionField =
 			DataDefinitionField.Builder.newBuilder(
-				"name", DataDefinitionColumnType.STRING
+				"name", "string"
 			).label(
 				expectedNameLabels
 			).build();
@@ -232,7 +231,7 @@ public class DataDefinitionLocalServiceTest {
 
 		DataDefinitionField expectedDataDefinitionField1 =
 			DataDefinitionField.Builder.newBuilder(
-				"name", DataDefinitionColumnType.STRING
+				"name", "string"
 			).label(
 				expectedNameLabels
 			).build();
@@ -246,7 +245,7 @@ public class DataDefinitionLocalServiceTest {
 
 		DataDefinitionField expectedDataDefinitionField2 =
 			DataDefinitionField.Builder.newBuilder(
-				"email", DataDefinitionColumnType.STRING
+				"email", "string"
 			).label(
 				expectedEmailLabels
 			).build();
@@ -329,7 +328,7 @@ public class DataDefinitionLocalServiceTest {
 
 		DataDefinitionField dataDefinitionField1 =
 			DataDefinitionField.Builder.newBuilder(
-				"title", DataDefinitionColumnType.STRING
+				"title", "string"
 			).label(
 				expectedTitleLabels
 			).localizable(
@@ -375,7 +374,7 @@ public class DataDefinitionLocalServiceTest {
 
 			DataDefinitionField dataDefinitionField2 =
 				DataDefinitionField.Builder.newBuilder(
-					"description", DataDefinitionColumnType.STRING
+					"description", "string"
 				).label(
 					expectedDescriptionLabels
 				).localizable(

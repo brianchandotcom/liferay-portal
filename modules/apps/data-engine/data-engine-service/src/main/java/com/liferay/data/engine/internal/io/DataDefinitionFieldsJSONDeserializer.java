@@ -18,7 +18,6 @@ import com.liferay.data.engine.exception.DataDefinitionFieldsDeserializerExcepti
 import com.liferay.data.engine.io.DataDefinitionFieldsDeserializer;
 import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyRequest;
 import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumnType;
 import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -129,8 +128,7 @@ public class DataDefinitionFieldsJSONDeserializer
 		}
 
 		return DataDefinitionField.Builder.newBuilder(
-			jsonObject.getString("name"),
-			DataDefinitionColumnType.parse(jsonObject.getString("type"))
+			jsonObject.getString("name"), jsonObject.getString("type")
 		).defaultValue(
 			jsonObject.get("defaultValue")
 		).indexable(

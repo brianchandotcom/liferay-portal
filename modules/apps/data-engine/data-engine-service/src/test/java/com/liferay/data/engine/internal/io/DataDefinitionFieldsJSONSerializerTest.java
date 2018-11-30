@@ -17,7 +17,6 @@ package com.liferay.data.engine.internal.io;
 import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException;
 import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyRequest;
 import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumnType;
 import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.json.JSONFactoryImpl;
 
@@ -45,7 +44,7 @@ public class DataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DataDefinitionField dataDefinitionField1 =
 			DataDefinitionField.Builder.newBuilder(
-				"name", DataDefinitionColumnType.STRING
+				"name", "string"
 			).required(
 				true
 			).label(
@@ -68,7 +67,7 @@ public class DataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DataDefinitionField dataDefinitionField2 =
 			DataDefinitionField.Builder.newBuilder(
-				"email", DataDefinitionColumnType.STRING
+				"email", "string"
 			).defaultValue(
 				"test@liferay.com"
 			).indexable(
@@ -106,7 +105,7 @@ public class DataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DataDefinitionField dataDefinitionField1 =
 			DataDefinitionField.Builder.newBuilder(
-				null, DataDefinitionColumnType.BOOLEAN
+				null, "boolean"
 			).build();
 
 		DataDefinitionFieldsSerializerApplyRequest.Builder builder =

@@ -18,7 +18,6 @@ import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException
 import com.liferay.data.engine.io.DataDefinitionFieldsSerializer;
 import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyRequest;
 import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionColumnType;
 import com.liferay.data.engine.model.DataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -103,15 +102,14 @@ public class DataDefinitionFieldsJSONSerializer
 			setProperty("tip", jsonObject, tip);
 		}
 
-		DataDefinitionColumnType dataDefinitionColumnType =
-			dataDefinitionField.getType();
+		String type = dataDefinitionField.getType();
 
-		if (dataDefinitionColumnType == null) {
+		if ((type == null) || type.isEmpty()) {
 			throw new DataDefinitionFieldsSerializerException(
 				"Type property is required");
 		}
 		else {
-			jsonObject.put("type", dataDefinitionColumnType.getValue());
+			jsonObject.put("type", type);
 		}
 
 		return jsonObject;

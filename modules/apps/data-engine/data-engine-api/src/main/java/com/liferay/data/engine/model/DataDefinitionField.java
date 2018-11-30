@@ -72,7 +72,7 @@ public final class DataDefinitionField implements Serializable {
 		return Collections.unmodifiableMap(_tip);
 	}
 
-	public DataDefinitionColumnType getType() {
+	public String getType() {
 		return _type;
 	}
 
@@ -119,9 +119,7 @@ public final class DataDefinitionField implements Serializable {
 
 	public static final class Builder {
 
-		public static Builder newBuilder(
-			String name, DataDefinitionColumnType type) {
-
+		public static Builder newBuilder(String name, String type) {
 			return new Builder(name, type);
 		}
 
@@ -171,7 +169,7 @@ public final class DataDefinitionField implements Serializable {
 			return this;
 		}
 
-		private Builder(String name, DataDefinitionColumnType type) {
+		private Builder(String name, String type) {
 			_dataDefinitionField._name = name;
 			_dataDefinitionField._type = type;
 		}
@@ -192,6 +190,6 @@ public final class DataDefinitionField implements Serializable {
 	private boolean _repeatable;
 	private boolean _required;
 	private final Map<String, String> _tip = new HashMap<>();
-	private DataDefinitionColumnType _type;
+	private String _type;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 /**
  * @author Cristina González
  * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.portal.upgrade.v7_0_0.UpgradeModulePortletId}
+ *             UpgradeModulePortletId}
  */
 @Deprecated
 public class UpgradePortletId

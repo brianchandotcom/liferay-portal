@@ -44,7 +44,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
-import com.liferay.portal.upgrade.v7_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePostgreSQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;

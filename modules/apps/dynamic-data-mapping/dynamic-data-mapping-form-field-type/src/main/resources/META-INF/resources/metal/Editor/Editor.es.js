@@ -191,6 +191,20 @@ class Editor extends Component {
 				textMode: false
 			}
 		).render();
+
+		this._alloyEditor.getNativeEditor().on('actionPerformed', this._onActionPerformed.bind(this));
+	}
+
+	_onActionPerformed(e) {
+		const {
+			data: {
+				props
+			}
+		} = e;
+
+		if (!props.command) {
+			this._onChangeEditor(e);
+		}
 	}
 
 	_onChangeEditor(event) {

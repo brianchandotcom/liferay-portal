@@ -69,7 +69,7 @@ public class ProcessUtilTest {
 			new LoggingOutputProcessor(
 				(stdErr, line) ->
 					logRecords.add(
-						new AbstractMap.SimpleEntry<>(stdErr, line))),
+						new AbstractMap.SimpleImmutableEntry<>(stdErr, line))),
 			_buildArguments(Echo.class, "2"));
 
 		loggingFuture.get();

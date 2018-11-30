@@ -49,7 +49,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 		LoggingOutputProcessor loggingOutputProcessor =
 			new LoggingOutputProcessor(
 				(stdErr, line) -> logRecords.add(
-					new AbstractMap.SimpleEntry<>(stdErr, line)));
+					new AbstractMap.SimpleImmutableEntry<>(stdErr, line)));
 
 		String stdErrString = "This is standard error message.";
 

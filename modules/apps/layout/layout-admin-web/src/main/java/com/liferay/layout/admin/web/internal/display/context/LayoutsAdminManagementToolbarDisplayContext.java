@@ -151,7 +151,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					getPortletURL(), "displayStyle", "miller-columns");
 				viewTypeItem.setLabel(
 					LanguageUtil.get(
-						LocaleUtil.getMostRelevantLocale(), "miller-columns"));
+						LocaleUtil.getMostRelevantLocale(), "columns"));
 
 				add(viewTypeItem);
 			}

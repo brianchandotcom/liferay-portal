@@ -79,10 +79,14 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 			startDate, endDate, publishDate, expirationDate, mimeType, title,
 			description, summary, url, layoutUuid, height, width, priority);
 
-		_assetEntryAssetCategoryRelLocalService.
-			deleteAssetEntryAssetCategoryRelByAssetEntryId(entry.getEntryId());
 
-		if (categoryIds != null) {
+		if ((categoryIds != null) &&
+			(!entry.isNew() || (categoryIds.length > 0))) {
+
+			_assetEntryAssetCategoryRelLocalService.
+				deleteAssetEntryAssetCategoryRelByAssetEntryId(
+					entry.getEntryId());
+
 			categoryIds = _assetCategoryLocalService.getViewableCategoryIds(
 				className, classPK, categoryIds);
 

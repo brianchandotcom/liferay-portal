@@ -90,11 +90,19 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			_localAddress = new AddressImpl(_jChannel.getAddress());
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Create a new JGroups channel with properties " +
-						_getJChannelProperties(
-							clusterExecutorConfiguration.
-								excludedPropertyKeys()));
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Create a new JGroups channel {channel name: ");
+				sb.append(_clusterName);
+				sb.append(", local address: ");
+				sb.append(_localAddress.getDescription());
+				sb.append(", properties: ");
+				sb.append(
+					_getJChannelProperties(
+						clusterExecutorConfiguration.excludedPropertyKeys()));
+				sb.append("}");
+
+				_log.info(sb.toString());
 			}
 		}
 		catch (Exception e) {

@@ -111,6 +111,64 @@
 		</execute>
 	</command>
 
+	<command name="ViewDisplayPageMetadata" priority="4">
+		<description message="This is a test for LPS-86190. Asset metadata should appear in page source." />
+
+		<echo message="## Add a vocabulary and category." />
+
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<echo message="## Add a web content article with a category and tag." />
+
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Webcontent Content" />
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Metadata" />
+		</execute>
+
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="AssetCategorization#addTag">
+			<var name="tagName" value="test tag" />
+		</execute>
+
+		<execute macro="WebContent#editDisplayPage">
+			<var name="pageName" value="Display Page Name" />
+			<var name="pageType" value="Display Pages" />
+		</execute>
+
+		<echo message="## View page source and assert category and tag appear in the metadata." />
+
+		<var method="PropsUtil#get('portal.url')" name="baseURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="view-source:${baseURL}/web/test-site-name/-/webcontent-title" />
+		</execute>
+
+		<execute function="AssertTextPresent" value1="meta content=&quot;test tag,category name&quot;" />
+	</command>
+
 	<command name="ViewDisplayPageViaAssetPublisher" priority="5">
 		<description message="Display pages can be viewed through the asset publisher widget." />
 		<property name="portal.acceptance" value="true" />

@@ -6099,7 +6099,7 @@ to version 2.3.286.
 ## 3.13.26 - 2018-11-29
 
 ### Fixed
-- [LPS-87978]: use quote literal strings when sending commands to gogo shell 
+- [LPS-87978]: Quote URL arguments in Gogo shell commands.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

@@ -59,4 +59,44 @@
 
 		<execute macro="Upgrade#addOrganization" />
 	</command>
+
+	<command name="AddUserandSuborganizationAfterUpgrade612" priority="5">
+		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
+		<property name="database.types" value="mysql" />
+		<property name="portal.version" value="6.1.2" />
+
+		<execute macro="Upgrade#addUserAndSuborganization" />
+	</command>
+
+	<command name="AddUserandSuborganizationAfterUpgrade6130" priority="5">
+		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
+		<property name="database.types" value="db2,mysql,oracle,sybase" />
+		<property name="portal.version" value="6.1.30" />
+
+		<execute macro="Upgrade#addUserAndSuborganization" />
+	</command>
+
+	<command name="AddUserandSuborganizationAfterUpgrade621015" priority="5">
+		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
+		<property name="database.types" value="db2,mysql,oracle,sybase" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#addUserAndSuborganization" />
+	</command>
+
+	<command name="AddUserandSuborganizationAfterUpgrade621021" priority="5">
+		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
+		<property name="database.types" value="db2,mysql,oracle,postgresql,sybase" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Upgrade#addUserAndSuborganization" />
+	</command>
+
+	<command name="AddUserandSuborganizationAfterUpgrade625" priority="5">
+		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
+		<property name="database.types" value="mysql" />
+		<property name="portal.version" value="6.2.5" />
+
+		<execute macro="Upgrade#addUserAndSuborganization" />
+	</command>
 </definition>

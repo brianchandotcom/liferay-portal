@@ -260,7 +260,9 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return;
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (indent.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		sb.append(javaTerm.toString(indent, prefix, suffix, maxLineLength));
 	}
@@ -311,7 +313,9 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				prefix = StringPool.BLANK;
 			}
 
-			if (Objects.equals(sb.stringAt(sb.index() - 1), "\n")) {
+			if ((sb.index() == 0) ||
+				Objects.equals(sb.stringAt(sb.index() - 1), "\n")) {
+
 				sb.append(indent);
 			}
 

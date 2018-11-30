@@ -14,16 +14,13 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
- * @author Cristina González
- * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.portal.upgrade.v7_0_0.UpgradeModulePortletId}
+ * @author Alberto Chaparro
  */
-@Deprecated
-public class UpgradePortletId
-	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+public class UpgradeModulePortletId extends BaseUpgradePortletId {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -101,5 +98,6 @@ public class UpgradePortletId
 	private static final String _SITE_TEMPLATE_SETTINGS =
 		"com_liferay_layout_set_prototype_web_portlet_" +
 			"SiteTemplateSettingsPortlet";
+
 
 }

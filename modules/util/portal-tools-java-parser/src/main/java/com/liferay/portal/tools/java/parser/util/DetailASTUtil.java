@@ -43,6 +43,13 @@ public class DetailASTUtil {
 			return slistDetailAST;
 		}
 
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
+		if (objBlockDetailAST != null) {
+			return objBlockDetailAST;
+		}
+
 		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
 
 		if (semiDetailAST != null) {

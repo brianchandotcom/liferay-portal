@@ -36,6 +36,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMobileDeviceRules;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeModulePortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMySQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeOrgLabor;
@@ -103,7 +104,9 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradePhone());
 		upgrade(new UpgradePortalPreferences());
 		upgrade(new UpgradePortletDisplayTemplatePreferences());
-		upgrade(new UpgradePortletId());
+
+		upgrade(new UpgradeModulePortletId());
+
 		upgrade(new UpgradePostgreSQL());
 		upgrade(new UpgradeRatings());
 		upgrade(new UpgradeRelease());

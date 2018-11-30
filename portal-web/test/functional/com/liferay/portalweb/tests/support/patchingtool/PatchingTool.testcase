@@ -14,7 +14,6 @@
 	<command name="RevertFixPack" priority="5">
 		<description message="Ensures that a fix pack can be reverted." />
 
-		<property name="custom.properties" value="module.framework.properties.initial.system.check.enabled=true" />
 		<property name="skip.install-patch" value="true" />
 		<property name="test.name.skip.portal.instance" value="PatchingTool#RevertFixPack" />
 
@@ -50,8 +49,16 @@
 
 		<execute macro="SignIn#signIn" />
 
-		<execute function="AssertConsoleTextPresent" value1="Declarative Service Soft Circular Dependency Checker check result: No issues were found." />
-		<execute function="AssertConsoleTextPresent" value1="Declarative Service Unsatisfied Component Checker check result: No issues were found." />
-		<execute function="AssertConsoleTextPresent" value1="Spring Extender Unavailable Component Checker check result: No issues were found." />
+		<execute macro="GogoShell#openGogoShellAdmin" />
+
+		<execute macro="GogoShell#executeCommand">
+			<var name="commandName" value="system:check" />
+		</execute>
+
+		<for list="Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found" param="outputContent">
+			<execute macro="GogoShell#viewOutPut">
+				<var name="outputContent" value="${outputContent}" />
+			</execute>
+		</for>
 	</command>
 </definition>

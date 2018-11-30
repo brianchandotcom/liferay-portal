@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,7 +90,11 @@ public class CheckinFileEntryPortletConfigurationIcon
 		throws IOException {
 
 		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(request);
+			PortletRequest portletRequest =
+				(PortletRequest)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
 			FileVersion fileVersion = ActionUtil.getFileVersion(
 				request, fileEntry);

@@ -66,15 +66,15 @@ public class ServiceBeanAopCacheManager {
 		Class<?> targetClass, Method method,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		Annotation[] annotationsArray = _methodAnnotations.get(method);
+		Annotation[] annotationArray = _methodAnnotations.get(method);
 
-		if (annotationsArray == _nullAnnotations) {
+		if (annotationArray == _nullAnnotations) {
 			return defaultValue;
 		}
 
 		T annotation = defaultValue;
 
-		if (annotationsArray == null) {
+		if (annotationArray == null) {
 			List<Annotation> annotations = AnnotationLocator.locate(
 				method, targetClass);
 
@@ -94,17 +94,17 @@ public class ServiceBeanAopCacheManager {
 				}
 			}
 
-			annotationsArray = _nullAnnotations;
-
-			if (!annotations.isEmpty()) {
-				annotationsArray = annotations.toArray(
-					new Annotation[annotations.size()]);
+			if (annotations.isEmpty()) {
+				_methodAnnotations.put(method, _nullAnnotations);
 			}
-
-			_methodAnnotations.put(method, annotationsArray);
+			else {
+				_methodAnnotations.put(
+					method,
+					annotations.toArray(new Annotation[annotations.size()]));
+			}
 		}
 		else {
-			for (Annotation curAnnotation : annotationsArray) {
+			for (Annotation curAnnotation : annotationArray) {
 				if (curAnnotation.annotationType() == annotationType) {
 					return (T)curAnnotation;
 				}

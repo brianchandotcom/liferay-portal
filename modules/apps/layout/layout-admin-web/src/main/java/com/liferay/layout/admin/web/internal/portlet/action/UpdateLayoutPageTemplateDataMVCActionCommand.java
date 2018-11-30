@@ -14,9 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.concurrent.Callable;
@@ -93,6 +96,8 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String data = ParamUtil.getString(actionRequest, "data");
+		String fragmentEntryLinks = ParamUtil.getString(
+			actionRequest, "fragmentEntryLinkIds");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -100,6 +105,20 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
 				serviceContext.getScopeGroupId(), classNameId, classPK, data);
+
+		if (Validator.isNotNull(fragmentEntryLinks)) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				fragmentEntryLinks);
+
+			long[] toFragmentEntryLinkIds = new long[jsonArray.length()];
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				toFragmentEntryLinkIds[i] = jsonArray.getLong(i);
+			}
+
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+				toFragmentEntryLinkIds);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -108,6 +127,9 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

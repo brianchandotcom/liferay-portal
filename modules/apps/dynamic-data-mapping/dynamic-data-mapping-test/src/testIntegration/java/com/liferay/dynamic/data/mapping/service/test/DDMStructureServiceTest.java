@@ -114,9 +114,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	@Transactional
 	public void testGetStructuresWithSiteAdminPermission() throws Throwable {
-		addStructure(_classNameId, StringUtil.randomString());
+		DDMStructure structure1 = addStructure(
+			_classNameId, StringUtil.randomString());
 
-		DDMStructure structure = addStructure(
+		DDMStructure structure2 = addStructure(
 			_classNameId, StringUtil.randomString());
 
 		String modelName = ResourceActionsUtil.getCompositeModelName(
@@ -128,9 +129,9 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		for (Role role : roles) {
 			ResourcePermissionServiceUtil.removeResourcePermission(
-				structure.getGroupId(), structure.getCompanyId(), modelName,
+				structure2.getGroupId(), structure2.getCompanyId(), modelName,
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(structure.getPrimaryKey()), role.getRoleId(),
+				String.valueOf(structure2.getPrimaryKey()), role.getRoleId(),
 				ActionKeys.VIEW);
 		}
 
@@ -146,6 +147,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 				DDMStructureUtil.filterFindByGroupId(groupIds);
 
 			Assert.assertEquals(structures.toString(), 2, structures.size());
+			Assert.assertEquals(structure1, structures.get(0));
+			Assert.assertEquals(structure2, structures.get(1));
 		}
 		finally {
 			UserLocalServiceUtil.deleteUser(siteAdminUser);

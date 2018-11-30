@@ -15,21 +15,38 @@
 package com.liferay.journal.internal.upgrade.v1_1_6;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Vendel Toreki
  */
 public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
+
+	public UpgradeAssetDisplayPageEntry(
+		AssetDisplayPageEntryLocalService assetDisplayPageEntryLocalService) {
+
+		_assetDisplayPageEntryLocalService = assetDisplayPageEntryLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -37,12 +54,11 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 	}
 
 	protected void updateAssetDisplayPageEntry() throws Exception {
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder(8);
 
-		sb.append("select groupId, companyId, userId, userName, createDate, ");
-		sb.append("resourcePrimKey from JournalArticle where ");
-		sb.append("JournalArticle.layoutUuid is not null and ");
-		sb.append("JournalArticle.layoutUuid != '' and not exists ( ");
+		sb.append("select groupId, userId, resourcePrimKey from ");
+		sb.append("JournalArticle where JournalArticle.layoutUuid is not null");
+		sb.append(" and JournalArticle.layoutUuid != '' and not exists ( ");
 		sb.append("select 1 from AssetDisplayPageEntry where ");
 		sb.append("AssetDisplayPageEntry.groupId = JournalArticle.groupId ");
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
@@ -53,53 +69,96 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			JournalArticle.class);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, _createInsertSql());) {
+			PreparedStatement ps1 =
+				connection.prepareStatement(sb.toString());) {
 
 			ps1.setLong(1, journalArticleClassNameId);
+
+			List<SaveAssetDisplayPageEntryCallable>
+				saveAssetDisplayPageEntryCallables = new ArrayList<>();
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
 					long groupId = rs.getLong("groupId");
-					long companyId = rs.getLong("companyId");
 					long userId = rs.getLong("userId");
-					String userName = rs.getString("userName");
-					Timestamp createDate = rs.getTimestamp("createDate");
 					long resourcePrimKey = rs.getLong("resourcePrimKey");
 
-					ps2.setString(1, PortalUUIDUtil.generate());
-					ps2.setLong(2, increment());
-					ps2.setLong(3, groupId);
-					ps2.setLong(4, companyId);
-					ps2.setLong(5, userId);
-					ps2.setString(6, userName);
-					ps2.setTimestamp(7, createDate);
-					ps2.setTimestamp(8, createDate);
-					ps2.setLong(9, journalArticleClassNameId);
-					ps2.setLong(10, resourcePrimKey);
-					ps2.setLong(11, 0);
-					ps2.setInt(12, AssetDisplayPageConstants.TYPE_SPECIFIC);
+					SaveAssetDisplayPageEntryCallable
+						saveAssetDisplayPageEntryCallable =
+							new SaveAssetDisplayPageEntryCallable(
+								groupId, userId, resourcePrimKey);
 
-					ps2.addBatch();
+					saveAssetDisplayPageEntryCallables.add(
+						saveAssetDisplayPageEntryCallable);
 				}
+			}
 
-				ps2.executeBatch();
+			ExecutorService executorService = Executors.newWorkStealingPool();
+
+			List<Future<Boolean>> futures = executorService.invokeAll(
+				saveAssetDisplayPageEntryCallables);
+
+			executorService.shutdown();
+
+			for (Future<Boolean> future : futures) {
+				boolean success = GetterUtil.get(future.get(), true);
+
+				if (!success) {
+					throw new UpgradeException(
+						"Unable to copy journal article images to the file " +
+							"repository");
+				}
 			}
 		}
 	}
 
-	private String _createInsertSql() {
-		StringBuilder sb = new StringBuilder(5);
+	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
+		JournalArticle.class);
 
-		sb.append("insert into AssetDisplayPageEntry (uuid_, ");
-		sb.append("assetDisplayPageEntryId, groupId, companyId, userId, ");
-		sb.append("userName, createDate, modifiedDate, classNameId, ");
-		sb.append("classPK, layoutPageTemplateEntryId, type_) values ");
-		sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeAssetDisplayPageEntry.class);
 
-		return sb.toString();
+	private final AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	private class SaveAssetDisplayPageEntryCallable
+		implements Callable<Boolean> {
+
+		public SaveAssetDisplayPageEntryCallable(
+			long groupId, long userId, long classPK) {
+
+			_groupId = groupId;
+			_userId = userId;
+			_classPK = classPK;
+		}
+
+		@Override
+		public Boolean call() throws Exception {
+			try {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setUuid(PortalUUIDUtil.generate());
+
+				_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+					_userId, _groupId, _CLASS_NAME_ID, _classPK, 0,
+					AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to add asset display page entry for article " +
+						_classPK,
+					e);
+
+				return false;
+			}
+
+			return true;
+		}
+
+		private final long _classPK;
+		private final long _groupId;
+		private final long _userId;
+
 	}
 
 }

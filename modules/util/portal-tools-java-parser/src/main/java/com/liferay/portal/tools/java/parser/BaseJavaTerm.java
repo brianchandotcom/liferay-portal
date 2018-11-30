@@ -289,6 +289,15 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, List<? extends JavaTerm> list, String delimeter,
 		String indent, String prefix, String suffix, int maxLineLength) {
 
+		appendNewLine(
+			sb, list, delimeter, indent, prefix, suffix, maxLineLength, true);
+	}
+
+	protected void appendNewLine(
+		StringBundler sb, List<? extends JavaTerm> list, String delimeter,
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean breakJavaTerms) {
+
 		sb = _stripTrailingWhitespace(sb);
 
 		if (sb.index() > 0) {
@@ -325,8 +334,14 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 					delimeter = StringUtil.trim(delimeter);
 
-					appendNewLine(
-						sb, javaTerm, indent, prefix, suffix, maxLineLength);
+					if (breakJavaTerms) {
+						appendNewLine(
+							sb, javaTerm, indent, prefix, suffix,
+							maxLineLength);
+					}
+					else {
+						appendNewLine(sb, javaTerm, indent, prefix, suffix, -1);
+					}
 				}
 
 				return;
@@ -346,9 +361,16 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			if (!appendSingleLine(
 					sb, javaTerm, prefix, delimeter, maxLineLength)) {
 
-				appendNewLine(
-					sb, javaTerm, indent, prefix,
-					StringUtil.trimTrailing(delimeter), maxLineLength);
+				if (breakJavaTerms) {
+					appendNewLine(
+						sb, javaTerm, indent, prefix,
+						StringUtil.trimTrailing(delimeter), maxLineLength);
+				}
+				else {
+					appendNewLine(
+						sb, javaTerm, indent, prefix,
+						StringUtil.trimTrailing(delimeter), -1);
+				}
 
 				sb.append("\n");
 			}

@@ -29,6 +29,12 @@ public class JavaArray extends JavaExpression {
 		_valueJavaExpressions.add(valueJavaExpression);
 	}
 
+	public void setBreakJavaValueExpressions(
+		boolean breakJavaValueExpressions) {
+
+		_breakJavaValueExpressions = breakJavaValueExpressions;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -50,7 +56,9 @@ public class JavaArray extends JavaExpression {
 			return sb.toString();
 		}
 
-		appendNewLine(sb, _valueJavaExpressions, indent, maxLineLength);
+		appendNewLine(
+			sb, _valueJavaExpressions, ", ", indent, "", "", maxLineLength,
+			_breakJavaValueExpressions);
 
 		sb.append("\n");
 		sb.append(StringUtil.replaceFirst(indent, "\t", ""));
@@ -60,6 +68,7 @@ public class JavaArray extends JavaExpression {
 		return sb.toString();
 	}
 
+	private boolean _breakJavaValueExpressions = true;
 	private final List<JavaExpression> _valueJavaExpressions =
 		new ArrayList<>();
 

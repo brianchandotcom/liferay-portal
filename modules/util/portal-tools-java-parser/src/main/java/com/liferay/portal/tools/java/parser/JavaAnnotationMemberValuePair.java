@@ -16,6 +16,8 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.Objects;
+
 /**
  * @author Hugo Huijser
  */
@@ -38,9 +40,14 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 		if (_valueJavaExpression instanceof JavaArray) {
 			sb.append(_name.toString(indent, prefix, " = ", -1));
 
+			JavaArray javaArray = (JavaArray)_valueJavaExpression;
+
+			if (Objects.equals(_name.toString(), "property")) {
+				javaArray.setBreakJavaValueExpressions(false);
+			}
+
 			append(
-				sb, _valueJavaExpression, indent + "\t", "", suffix,
-				maxLineLength, false);
+				sb, javaArray, indent + "\t", "", suffix, maxLineLength, false);
 
 			return sb.toString();
 		}

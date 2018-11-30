@@ -7,6 +7,19 @@ window.Liferay = {
 	}
 };
 
+window.AlloyEditor = {
+	Selections: [
+		{
+			buttons: ["linkEdit"],
+			name: "link"
+		},
+		{
+			buttons: ["styles", "bold", "italic", "underline", "link", "twitter"],
+			name: "text"
+		}
+	]
+}
+
 window.AUI = () => (
 	{
 		use: (_, callback) => callback(
@@ -15,7 +28,13 @@ window.AUI = () => (
 					{
 						render: () => (
 							{
-								getHTML: () => 'test'
+								getHTML: () => 'test',
+								getNativeEditor: () => (
+									{
+										on: () => true,
+										setData: () => false
+									}
+								)
 							}
 						)
 					}
@@ -29,9 +48,5 @@ window.AUI = () => (
 		)
 	}
 );
-
-window.AlloyEditor = {
-	Selections: []
-};
 
 window.themeDisplay = window.Liferay.ThemeDisplay;

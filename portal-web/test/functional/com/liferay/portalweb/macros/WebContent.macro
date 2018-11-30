@@ -2040,6 +2040,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
 	</command>
 
+	<command name="viewVersion">
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="${version}" />
+	</command>
+
 	<command name="viewVideoViaWCD">
 		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_VIDEO" />
 	</command>

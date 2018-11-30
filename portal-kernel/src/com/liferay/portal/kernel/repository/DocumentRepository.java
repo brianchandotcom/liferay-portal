@@ -100,6 +100,8 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void deleteFileShortcuts(long toFileEntryId) throws PortalException;
 
+	public void deleteFileVersion(long fileVersionId) throws PortalException;
+
 	public void deleteFolder(long folderId) throws PortalException;
 
 	public List<FileEntry> getFileEntries(

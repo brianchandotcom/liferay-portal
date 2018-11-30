@@ -121,6 +121,9 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 
 	public void deleteFragmentEntryLinks(long groupId);
 
+	public void deleteFragmentEntryLinks(long[] fragmentEntryLinkIds)
+		throws PortalException;
+
 	public List<FragmentEntryLink> deleteLayoutPageTemplateEntryFragmentEntryLinks(
 		long groupId, long classNameId, long classPK);
 

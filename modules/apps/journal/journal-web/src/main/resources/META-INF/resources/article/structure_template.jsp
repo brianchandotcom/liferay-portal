@@ -200,7 +200,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 							bodyCssClass: 'dialog-with-footer'
 						},
 						id: '<portlet:namespace />editDDMTemplate',
-						title: '<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>',
+						title: '<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>',
 
 						<portlet:renderURL var="editDDMTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />

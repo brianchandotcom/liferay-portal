@@ -1,4 +1,10 @@
 <definition>
+	<command name="executeCommand">
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="${commandName}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
 	<command name="getModuleID">
 		<execute macro="GogoShell#listModuleStatus">
 			<var name="moduleName" value="${moduleName}" />
@@ -45,5 +51,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${moduleStatus}" />
+	</command>
+
+	<command name="viewOutPut">
+		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${outputContent}" />
 	</command>
 </definition>

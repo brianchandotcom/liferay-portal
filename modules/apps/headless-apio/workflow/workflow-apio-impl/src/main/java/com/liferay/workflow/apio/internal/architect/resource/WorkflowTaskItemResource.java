@@ -41,7 +41,6 @@ import com.liferay.workflow.apio.internal.architect.route.UpdateDueDatePostRoute
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

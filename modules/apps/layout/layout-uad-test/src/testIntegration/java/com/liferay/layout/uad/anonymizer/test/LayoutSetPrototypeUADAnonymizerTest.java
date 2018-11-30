@@ -68,7 +68,8 @@ public class LayoutSetPrototypeUADAnonymizerTest
 			_layoutSetPrototypes.add(layoutSetPrototype);
 		}
 
-		return layoutSetPrototype;
+		return _layoutSetPrototypeLocalService.getLayoutSetPrototype(
+			layoutSetPrototype.getLayoutSetPrototypeId());
 	}
 
 	@Override

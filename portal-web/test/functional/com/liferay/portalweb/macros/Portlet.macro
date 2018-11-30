@@ -506,6 +506,16 @@
 		</if>
 	</command>
 
+	<command name="viewPortletOptions">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${OptionsName}">
+			<var name="key_menuItem" value="${OptionsName}" />
+		</execute>
+	</command>
+
 	<command name="viewPortletOptionsMenulist">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#OPTIONS_ICON" />
 

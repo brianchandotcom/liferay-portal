@@ -163,16 +163,42 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 			doGetDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 
+	/**
+	 * Returns an {@link OrderByComparator} for type {@code T} to be used to sort search
+	 * results. If this returns null then default DynamicQuery ordering is used.
+	 *
+	 * @param orderByField
+	 * @param orderByType
+	 * @return an {@link OrderByComparator} for type {@code T}
+	 */
 	protected OrderByComparator<T> getOrderByComparator(
 		String orderByField, String orderByType) {
 
 		return null;
 	}
 
+	/**
+	 * Returns field names that are queried when using the search or
+	 * searchCount methods.
+	 *
+	 * @return field names to be queried
+	 */
 	protected String[] getSearchableFields() {
 		return getDisplayFieldNames();
 	}
 
+	/**
+	 * Returns a {@link DynamicQuery} that can be used to perform a database
+	 * search for entities of type {@code T} that are associated with a user.
+	 *
+	 * @param userId the primary key of the user whose data to search
+	 * @param groupIds optional primary keys of groups to filter by
+	 * @param keywords optional search terms to filter by
+	 * @param orderByField the name of the field to use for ordering
+	 * @param orderByType the type of ordering
+	 * @return a {@link DynamicQuery} to be used by the doGetRange and doCount
+	 *         methods
+	 */
 	protected DynamicQuery getSearchDynamicQuery(
 		long userId, long[] groupIds, String keywords, String orderByField,
 		String orderByType) {

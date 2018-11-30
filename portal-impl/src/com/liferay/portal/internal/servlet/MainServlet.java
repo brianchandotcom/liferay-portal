@@ -1303,7 +1303,7 @@ public class MainServlet extends HttpServlet {
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(
-			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, ReleaseInfo.getName());
+			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "off");
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
 		StringUtil.equalsIgnoreCase(

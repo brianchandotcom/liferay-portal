@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addWebContent">
+	<command name="_addWebContent" summary="Helper function to add a WC Article via JSON">
 
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
@@ -75,13 +75,13 @@
 		</execute>
 	</command>
 
-	<command name="_convertToXML">
+	<command name="_convertToXML" summary="Helper function to help input content html info">
 		<var name="contentXML"><![CDATA[<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ]]></var>
 
 		<return value="${contentXML}" />
 	</command>
 
-	<command name="addWebContent">
+	<command name="addWebContent" summary="Add a WC Article via JSON">
 		<if>
 			<not>
 				<isset var="content" />

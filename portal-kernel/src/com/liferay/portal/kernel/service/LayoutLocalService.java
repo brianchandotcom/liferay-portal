@@ -129,6 +129,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @return the layout
 	* @throws PortalException if a portal exception occurred
 	*/
+	@Indexable(type = IndexableType.REINDEX)
 	public Layout addLayout(long userId, long groupId, boolean privateLayout,
 		long parentLayoutId, Map<Locale, String> nameMap,
 		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,

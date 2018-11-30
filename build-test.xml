@@ -1883,7 +1883,12 @@ passthrough=&quot;true&quot;</echo>
 			<loadfile
 				property="patching.tool.version"
 				srcFile="${patching.tool.latest.txt}"
-			/>
+			>
+				<filterchain>
+					<trim />
+					<striplinebreaks/>
+				</filterchain>
+			</loadfile>
 
 			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
 

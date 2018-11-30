@@ -43,6 +43,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.java.archives.Manifest;
@@ -85,7 +86,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			project, originalModuleConfiguration);
 
 		_configureLiferay(project);
-		_configureTaskDeploy(jar);
+		_configureTaskDeploy(project, jar);
 
 		_configureTaskJar(jar, unzipOriginalModuleTask);
 
@@ -222,11 +223,34 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskDeploy(Jar jar) {
+	private void _configureTaskDeploy(Project project, Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
 			jar.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME);
 
-		copy.from(jar);
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		copy.from(
+			jar,
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.rename(
+						new Closure<String>(project) {
+
+							public String doCall(String fileName) {
+								Closure<String> closure =
+									liferayExtension.
+										getDeployedFileNameClosure();
+
+								return closure.call(jar);
+							}
+
+						});
+				}
+
+			});
 	}
 
 	private Jar _configureTaskJar(

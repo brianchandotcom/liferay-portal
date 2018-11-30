@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
+ * @author Cristina González
+ * @author Balazs Safrany-Kovalik
  * @author Alberto Chaparro
  */
 public class UpgradeModulePortletId extends BaseUpgradePortletId {
@@ -98,6 +100,5 @@ public class UpgradeModulePortletId extends BaseUpgradePortletId {
 	private static final String _SITE_TEMPLATE_SETTINGS =
 		"com_liferay_layout_set_prototype_web_portlet_" +
 			"SiteTemplateSettingsPortlet";
-
 
 }

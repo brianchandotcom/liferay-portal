@@ -32,7 +32,7 @@
 	<command name="AddCategorywithLocalization" priority="4">
 		<property name="testray.component.names" value="Categories,Localization" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
@@ -283,12 +283,12 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -313,7 +313,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -368,13 +368,13 @@
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
@@ -403,18 +403,18 @@
 	<command name="AddSubcategoryProperty" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
@@ -492,7 +492,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -558,7 +558,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -612,7 +612,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -664,7 +664,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -710,12 +710,12 @@
 	<command name="DeletePartialCategory" priority="4">
 		<property name="testray.component.names" value="Categories,Permissions,Roles" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -808,7 +808,7 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -934,12 +934,12 @@
 	<command name="DuplicateCategoriesViaWebContentCopy" priority="3">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -1004,18 +1004,18 @@
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
@@ -1182,7 +1182,7 @@
 	<command name="MoveSubcategory" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
@@ -1235,7 +1235,7 @@
 	<command name="SearchCategory" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
@@ -1308,12 +1308,12 @@
 	<command name="SearchCategoryWithNullResult" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -1396,12 +1396,12 @@
 	<command name="SearchSubcategory" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -1480,18 +1480,18 @@
 	<command name="SearchSubcategoryWithNullResult" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
@@ -1609,12 +1609,12 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -1662,18 +1662,18 @@
 	<command name="ViewCannotAddDuplicateSubCategory" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
@@ -1751,18 +1751,18 @@
 	<command name="ViewNavigation" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />

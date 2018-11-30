@@ -2476,13 +2476,13 @@
 	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
 		<for list="1,2,3,4,5" param="index">
-			<execute macro="JSONCategory#addCategoryByGroupName">
+			<execute macro="JSONCategory#addCategory">
 				<var name="groupName" value="Test Site Name" />
 				<var name="title" value="Category Name ${index}" />
 				<var name="vocabularyName" value="Vocabulary Name" />
@@ -2528,12 +2528,12 @@
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
 		<for list="1,2,3,4,5" param="index">
-			<execute macro="JSONCategory#addVocabularyByGroupName">
+			<execute macro="JSONCategory#addVocabulary">
 				<var name="groupName" value="Test Site Name" />
 				<var name="title" value="Vocabulary Name ${index}" />
 			</execute>
 
-			<execute macro="JSONCategory#addCategoryByGroupName">
+			<execute macro="JSONCategory#addCategory">
 				<var name="groupName" value="Test Site Name" />
 				<var name="title" value="Category Name" />
 				<var name="vocabularyName" value="Vocabulary Name ${index}" />

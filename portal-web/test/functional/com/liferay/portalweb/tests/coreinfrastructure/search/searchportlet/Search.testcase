@@ -1895,12 +1895,12 @@
 
 		<var name="searchPage" value="Search Page" />
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Guest" />
 			<var name="title" value="Fruit Vocabulary" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Guest" />
 			<var name="title" value="organic" />
 			<var name="vocabularyName" value="Fruit Vocabulary" />

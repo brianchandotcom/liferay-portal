@@ -18,7 +18,7 @@
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
 		</execute>
@@ -45,19 +45,19 @@
 	</tear-down>
 
 	<command name="AddCategories" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 3" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -94,7 +94,7 @@
 	<command name="AddCategory" priority="4">
 		<description message="Ensure that a user can add a category." />
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="AddCategoryProperties" priority="3">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -159,7 +159,7 @@
 	</command>
 
 	<command name="AddCategoryProperty" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -249,39 +249,39 @@
 	</command>
 
 	<command name="AddSubcategories" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 3" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 1" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 2" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 3" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 3" />
@@ -320,17 +320,17 @@
 	</command>
 
 	<command name="AddVocabularies" priority="4">
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name 1" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name 2" />
 		</execute>
 
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name 3" />
 		</execute>
@@ -579,19 +579,19 @@
 	</command>
 
 	<command name="DeleteCategories" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 3" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -607,7 +607,7 @@
 	</command>
 
 	<command name="DeleteCategory" priority="5">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -624,7 +624,7 @@
 	</command>
 
 	<command name="DeleteCategoryByMenu" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -641,7 +641,7 @@
 	</command>
 
 	<command name="DeleteCategoryProperty2" priority="3">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -691,13 +691,13 @@
 	</command>
 
 	<command name="DeleteSubcategoryViaIcon" priority="3">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 1" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 1" />
@@ -716,13 +716,13 @@
 	</command>
 
 	<command name="DeleteSubcategoryViaMenu" priority="5">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 1" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 1" />
@@ -774,7 +774,7 @@
 	</command>
 
 	<command name="EditCategoryProperty" priority="4">
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -846,13 +846,13 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
+		<execute macro="JSONCategory#addSubcategory">
 			<var name="categoryName" value="Category Name 1" />
 			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name 1" />
@@ -881,12 +881,12 @@
 	</command>
 
 	<command name="MoveCategoryViaEdit" priority="3">
-		<execute macro="JSONCategory#addVocabularyByGroupName">
+		<execute macro="JSONCategory#addVocabulary">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name 2" />
 		</execute>
 
-		<execute macro="JSONCategory#addCategoryByGroupName">
+		<execute macro="JSONCategory#addCategory">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />

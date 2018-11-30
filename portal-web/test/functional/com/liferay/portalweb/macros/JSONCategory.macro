@@ -223,7 +223,7 @@
 		<return value="${vocabularyId}" />
 	</command>
 
-	<command name="addCategoryByGroupName" summary="Add a basic category">
+	<command name="addCategory" summary="Add a basic category">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -269,7 +269,7 @@
 		</execute>
 	</command>
 
-	<command name="addSubcategoryByGroupName" summary="Add a basic subcategory">
+	<command name="addSubcategory" summary="Add a basic subcategory">
 		<if>
 			<not>
 				<isset var="categoryName" />
@@ -332,7 +332,7 @@
 		</execute>
 	</command>
 
-	<command name="addVocabularyByGroupName" summary="Add a basic vocabulary">
+	<command name="addVocabulary" summary="Add a basic vocabulary">
 		<if>
 			<not>
 				<isset var="groupName" />

@@ -177,6 +177,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_QUERY_AND_OPERATOR</td>
+	<td>//select[contains(@id,'queryAndOperator')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_QUERY_CONTAINS</td>
 	<td>//select[contains(@id,'queryContains')]</td>
 	<td></td>

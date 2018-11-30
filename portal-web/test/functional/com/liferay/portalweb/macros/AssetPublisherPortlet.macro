@@ -221,6 +221,13 @@
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
 
+		<if>
+			<isset var="queryAndOperator" />
+			<then>
+				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_AND_OPERATOR" value1="${queryAndOperator}" />
+			</then>
+		</if>
+
 		<execute function="Click" locator1="Button#SELECT_CATEGORIES" />
 
 		<execute macro="AssetCategorization#selectCategory">

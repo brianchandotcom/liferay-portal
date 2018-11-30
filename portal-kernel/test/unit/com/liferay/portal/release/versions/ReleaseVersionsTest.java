@@ -36,8 +36,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -116,6 +118,8 @@ public class ReleaseVersionsTest {
 			}
 		}
 
+		List<String> messages = new ArrayList<>();
+
 		Files.walkFileTree(
 			_portalPath,
 			new SimpleFileVisitor<Path>() {
@@ -154,16 +158,29 @@ public class ReleaseVersionsTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					_checkReleaseVersion(
+					String message = _checkReleaseVersion(
 						bndBndPath, otherBndBndPath, otherRelease, dirPath);
+
+					if (message != null) {
+						messages.add(message);
+					}
 
 					return FileVisitResult.SKIP_SUBTREE;
 				}
 
 			});
+
+		StringBundler sb = new StringBundler(messages.size() * 2);
+
+		for (String message : messages) {
+			sb.append(message);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		Assert.assertTrue(sb.toString(), messages.isEmpty());
 	}
 
-	private void _checkReleaseVersion(
+	private String _checkReleaseVersion(
 			Path bndBndPath, Path otherBndBndPath, boolean otherRelease,
 			Path dirPath)
 		throws IOException {
@@ -267,8 +284,10 @@ public class ReleaseVersionsTest {
 			sb.append(_portalPath.relativize(updateVersionPath));
 			sb.append(" for the 'master' branch.");
 
-			Assert.fail(sb.toString());
+			return sb.toString();
 		}
+
+		return null;
 	}
 
 	private Path _getParentFile(Path dirPath, String fileName) {

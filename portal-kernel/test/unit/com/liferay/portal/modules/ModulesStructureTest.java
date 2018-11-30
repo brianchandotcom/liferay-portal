@@ -439,15 +439,13 @@ public class ModulesStructureTest {
 
 							Path path = dirPath.resolve(entry.getKey());
 
-							if (Files.exists(path)) {
-								Assert.fail(
-									StringBundler.concat(
-										"Please rename ", String.valueOf(path),
-										" to ",
-										String.valueOf(
-											path.resolveSibling(
-												entry.getValue()))));
-							}
+							Assert.assertFalse(
+								StringBundler.concat(
+									"Please rename ", String.valueOf(path),
+									" to ",
+									String.valueOf(
+										path.resolveSibling(entry.getValue()))),
+								Files.exists(path));
 						}
 					}
 
@@ -1077,48 +1075,46 @@ public class ModulesStructureTest {
 			else {
 				Matcher matcher = gradlePropertiesPattern.matcher(key);
 
-				if (!_gitRepoGradlePropertiesKeys.contains(key) &&
-					!key.endsWith(".version") && !matcher.matches()) {
+				StringBundler sb = new StringBundler(
+					(_gitRepoGradlePropertiesKeys.size() + 5) * 3 + 8);
 
-					StringBundler sb = new StringBundler(
-						(_gitRepoGradlePropertiesKeys.size() + 5) * 3 + 8);
+				sb.append("Incorrect key \"");
+				sb.append(key);
+				sb.append("\" in ");
+				sb.append(gradlePropertiesPath);
+				sb.append(". Allowed keys are: ");
 
-					sb.append("Incorrect key \"");
-					sb.append(key);
-					sb.append("\" in ");
-					sb.append(gradlePropertiesPath);
-					sb.append(". Allowed keys are: ");
+				List<String> allowedKeys = new ArrayList<>(
+					_gitRepoGradlePropertiesKeys);
 
-					List<String> allowedKeys = new ArrayList<>(
-						_gitRepoGradlePropertiesKeys);
+				allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_GROUP_KEY);
+				allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY);
 
-					allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_GROUP_KEY);
-					allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY);
-
-					if (privateRepo) {
-						allowedKeys.add(
-							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD);
-						allowedKeys.add(
-							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL);
-						allowedKeys.add(
-							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME);
-					}
-
-					Collections.sort(allowedKeys);
-
-					for (String allowedKey : allowedKeys) {
-						sb.append(CharPool.QUOTE);
-						sb.append(allowedKey);
-						sb.append("\", ");
-					}
-
-					sb.append(", keys ending with \".version\", and keys ");
-					sb.append("matching the pattern \"");
-					sb.append(gradlePropertiesPattern.pattern());
-					sb.append("\".");
-
-					Assert.fail(sb.toString());
+				if (privateRepo) {
+					allowedKeys.add(
+						_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD);
+					allowedKeys.add(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL);
+					allowedKeys.add(
+						_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME);
 				}
+
+				Collections.sort(allowedKeys);
+
+				for (String allowedKey : allowedKeys) {
+					sb.append(CharPool.QUOTE);
+					sb.append(allowedKey);
+					sb.append("\", ");
+				}
+
+				sb.append(", keys ending with \".version\", and keys ");
+				sb.append("matching the pattern \"");
+				sb.append(gradlePropertiesPattern.pattern());
+				sb.append("\".");
+
+				Assert.assertFalse(
+					sb.toString(),
+					!_gitRepoGradlePropertiesKeys.contains(key) &&
+					!key.endsWith(".version") && !matcher.matches());
 			}
 
 			previousKey = key;
@@ -1293,37 +1289,36 @@ public class ModulesStructureTest {
 			"testIntegrationRuntime", hasSrcTestIntegrationDir);
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
-			if (_shouldBecomeProjectDependency(gradleDependency, dirPath)) {
-				StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(9);
 
-				sb.append("Artifact dependency {");
-				sb.append(gradleDependency);
-				sb.append("} in ");
-				sb.append(path);
-				sb.append(" not permitted on ");
-				sb.append(_branchName);
-				sb.append(" branch. Use ");
+			sb.append("Artifact dependency {");
+			sb.append(gradleDependency);
+			sb.append("} in ");
+			sb.append(path);
+			sb.append(" not permitted on ");
+			sb.append(_branchName);
+			sb.append(" branch. Use ");
 
-				String moduleGroup = gradleDependency.getModuleGroup();
+			String moduleGroup = gradleDependency.getModuleGroup();
 
-				if (moduleGroup.equals("com.liferay.portal")) {
-					sb.append("version \"default\"");
-				}
-				else {
-					sb.append("a project dependency");
-				}
-
-				sb.append(" instead.");
-
-				Assert.fail(sb.toString());
+			if (moduleGroup.equals("com.liferay.portal")) {
+				sb.append("version \"default\"");
 			}
+			else {
+				sb.append("a project dependency");
+			}
+
+			sb.append(" instead.");
+
+			Assert.assertFalse(
+				sb.toString(),
+				_shouldBecomeProjectDependency(gradleDependency, dirPath));
 
 			Boolean allowed = allowedConfigurationsMap.get(
 				gradleDependency.getConfiguration());
 
 			if ((allowed != null) && !allowed.booleanValue()) {
-				StringBundler sb = new StringBundler(
-					allowedConfigurationsMap.size() * 4 + 4);
+				sb = new StringBundler(allowedConfigurationsMap.size() * 4 + 4);
 
 				sb.append("Incorrect configuration of dependency {");
 				sb.append(gradleDependency);
@@ -1351,7 +1346,7 @@ public class ModulesStructureTest {
 					sb.append(CharPool.QUOTE);
 				}
 
-				Assert.fail(sb.toString());
+				Assert.assertFalse(sb.toString(), !allowed);
 			}
 
 			GradleDependency activeGradleDependency =

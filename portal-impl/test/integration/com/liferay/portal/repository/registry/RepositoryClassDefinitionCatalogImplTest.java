@@ -46,17 +46,10 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			RepositoryClassDefinitionCatalogUtil.
 				getExternalRepositoryClassDefinitions();
 
-		for (RepositoryClassDefinition repositoryClassDefinition :
-				repositoryClassDefinitions) {
-
-			if (_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME.equals(
-					repositoryClassDefinition.getClassName())) {
-
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(
+			_REPOSITORY_DEFINER_CLASS_NAME + " not found in " +
+				repositoryClassDefinitions,
+			_containsExternalRepositoryDefiner(repositoryClassDefinitions));
 	}
 
 	@Test
@@ -100,17 +93,10 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			repositoryClassDefinitionCatalog.
 				getExternalRepositoryClassDefinitions();
 
-		for (RepositoryClassDefinition repositoryClassDefinition :
-				repositoryClassDefinitions) {
-
-			if (_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME.equals(
-					repositoryClassDefinition.getClassName())) {
-
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(
+			_REPOSITORY_DEFINER_CLASS_NAME + " not found in " +
+				repositoryClassDefinitions,
+			_containsExternalRepositoryDefiner(repositoryClassDefinitions));
 	}
 
 	@Test
@@ -149,6 +135,22 @@ public class RepositoryClassDefinitionCatalogImplTest {
 		Assert.assertEquals(
 			_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME,
 			repositoryExternalClassDefinition.getClassName());
+	}
+
+	private boolean _containsExternalRepositoryDefiner(
+		Iterable<RepositoryClassDefinition> repositoryClassDefinitions) {
+
+		for (RepositoryClassDefinition repositoryClassDefinition :
+				repositoryClassDefinitions) {
+
+			if (_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME.equals(
+					repositoryClassDefinition.getClassName())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME =

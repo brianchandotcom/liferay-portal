@@ -55,140 +55,208 @@ public class PortletInstanceTest {
 		Assert.assertEquals(0, portletInstance.getUserId());
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdNull() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, null);
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, null);
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidNumber1() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "12a34_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "12a34_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidNumber2() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "abcd_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "abcd_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash1() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "/1234_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "/1234_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash2() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "12/34_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "12/34_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash3() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234/_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234/_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash4() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234_/xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_/xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash5() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234_x/yz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_x/yz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash6() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234_xyz/");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_xyz/");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens1() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234xyz_");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234xyz_");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens2() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "_1234xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "_1234xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens3() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "__1234xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "__1234xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens4() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234__xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234__xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens5() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234xyz__");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234xyz__");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens6() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "12_34_xyz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "12_34_xyz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens7() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "1234_x_yz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_x_yz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
-	@Test(expected = InvalidParameterException.class)
+	@Test
 	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens8() {
-		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
-			PortletKeys.TEST, "12_34_x_yz");
+		try {
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "12_34_x_yz");
 
-		Assert.fail();
+			Assert.fail();
+		}
+		catch (InvalidParameterException ipe) {
+		}
 	}
 
 	@Test

@@ -78,9 +78,7 @@ public class PortalLogAssertorTest {
 			}
 		}
 
-		if (sb.index() != 0) {
-			Assert.fail(sb.toString());
-		}
+		Assert.assertTrue(sb.toString(), sb.index() == 0);
 	}
 
 	@Test
@@ -171,7 +169,11 @@ public class PortalLogAssertorTest {
 								path.toString(), ".xml", ".log")),
 						System.out);
 
-					Assert.fail(message);
+					Assert.assertFalse(
+						message,
+						levelString.equals("ERROR") ||
+						levelString.equals("FATAL") ||
+						levelString.equals("WARN"));
 				}
 			}
 		}

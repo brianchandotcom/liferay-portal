@@ -63,19 +63,12 @@ public class PortletToolbarTest {
 			ProxyFactory.newDummyInstance(PortletRequest.class),
 			ProxyFactory.newDummyInstance(PortletResponse.class));
 
-		for (Menu menu : menus) {
-			String label = menu.getLabel();
-
-			if ((label != null) &&
-				label.equals(TestPortletToolbarContributor.LABEL)) {
-
-				return;
-			}
-		}
-
-		Assert.fail(
+		Assert.assertTrue(
 			"Unable to retrieve menu with label " +
-				TestPortletToolbarContributor.LABEL);
+				TestPortletToolbarContributor.LABEL,
+			menus.removeIf(
+				menu -> TestPortletToolbarContributor.LABEL.equals(
+					menu.getLabel())));
 	}
 
 }

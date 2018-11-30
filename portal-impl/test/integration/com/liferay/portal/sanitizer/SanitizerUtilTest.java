@@ -15,6 +15,7 @@
 package com.liferay.portal.sanitizer;
 
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.sanitizer.bundle.sanitizerimpl.TestSanitizer;
@@ -58,24 +59,19 @@ public class SanitizerUtilTest {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize1() {
+	public void testSanitize1() throws SanitizerException {
 		_atomicState.reset();
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				"bytes".getBytes());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			"bytes".getBytes());
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize2() {
+	public void testSanitize2() throws SanitizerException {
 		_atomicState.reset();
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -84,52 +80,37 @@ public class SanitizerUtilTest {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				byteArrayInputStream, byteArrayOutputStream);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			byteArrayInputStream, byteArrayOutputStream);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testSanitize3() {
-		try {
-			String value = SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType", "s");
+	public void testSanitize3() throws SanitizerException {
+		String value = SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType", "s");
 
-			Assert.assertEquals("1:1", value);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", value);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize4() {
+	public void testSanitize4() throws SanitizerException {
 		_atomicState.reset();
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				Sanitizer.MODE_ALL, "bytes".getBytes(),
-				new HashMap<String, Object>());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			Sanitizer.MODE_ALL, "bytes".getBytes(),
+			new HashMap<String, Object>());
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize5() {
+	public void testSanitize5() throws SanitizerException {
 		_atomicState.reset();
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -138,54 +119,39 @@ public class SanitizerUtilTest {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				Sanitizer.MODE_ALL, byteArrayInputStream, byteArrayOutputStream,
-				new HashMap<String, Object>());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			Sanitizer.MODE_ALL, byteArrayInputStream, byteArrayOutputStream,
+			new HashMap<String, Object>());
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testSanitize6() {
-		try {
-			String value = SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				Sanitizer.MODE_ALL, "s", new HashMap<String, Object>());
+	public void testSanitize6() throws SanitizerException {
+		String value = SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			Sanitizer.MODE_ALL, "s", new HashMap<String, Object>());
 
-			Assert.assertEquals("1:1", value);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", value);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize7() {
+	public void testSanitize7() throws SanitizerException {
 		_atomicState.reset();
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				Sanitizer.MODE_ALL, "bytes".getBytes(),
-				new HashMap<String, Object>());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			Sanitizer.MODE_ALL, "bytes".getBytes(),
+			new HashMap<String, Object>());
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testSanitize8() {
+	public void testSanitize8() throws SanitizerException {
 		_atomicState.reset();
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -194,39 +160,27 @@ public class SanitizerUtilTest {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		try {
-			SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				new String[] {
-					Sanitizer.MODE_ALL, Sanitizer.MODE_BAD_WORDS,
-					Sanitizer.MODE_XSS
-				},
-				byteArrayInputStream, byteArrayOutputStream,
-				new HashMap<String, Object>());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			new String[] {
+				Sanitizer.MODE_ALL, Sanitizer.MODE_BAD_WORDS, Sanitizer.MODE_XSS
+			},
+			byteArrayInputStream, byteArrayOutputStream,
+			new HashMap<String, Object>());
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testSanitize9() {
-		try {
-			String value = SanitizerUtil.sanitize(
-				1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
-				new String[] {
-					Sanitizer.MODE_ALL, Sanitizer.MODE_BAD_WORDS,
-					Sanitizer.MODE_XSS
-				},
-				"s", new HashMap<String, Object>());
+	public void testSanitize9() throws SanitizerException {
+		String value = SanitizerUtil.sanitize(
+			1, 1, 1, TestSanitizer.class.getName(), 1, "contentType",
+			new String[] {
+				Sanitizer.MODE_ALL, Sanitizer.MODE_BAD_WORDS, Sanitizer.MODE_XSS
+			},
+			"s", new HashMap<String, Object>());
 
-			Assert.assertEquals("1:1", value);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", value);
 	}
 
 	private static AtomicState _atomicState;

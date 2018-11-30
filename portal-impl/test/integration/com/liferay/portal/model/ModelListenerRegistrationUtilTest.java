@@ -22,6 +22,10 @@ import com.liferay.portal.model.bundle.modellistenerregistrationutil.TestModelLi
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -41,20 +45,22 @@ public class ModelListenerRegistrationUtilTest {
 
 	@Test
 	public void testGetModelListeners() {
-		ModelListener<Contact>[] modelListeners =
-			ModelListenerRegistrationUtil.getModelListeners(Contact.class);
+		List<ModelListener<Contact>> modelListeners = new ArrayList<>(
+			Arrays.asList(
+				ModelListenerRegistrationUtil.getModelListeners(
+					Contact.class)));
 
-		for (ModelListener<Contact> modelListener : modelListeners) {
-			Class<?> clazz = modelListener.getClass();
+		String testClassName = TestModelListener.class.getName();
 
-			String className = clazz.getName();
+		Assert.assertTrue(
+			testClassName + " not found in " +
+				modelListeners,
+			modelListeners.removeIf(
+				modelListener -> {
+					Class<?> clazz = modelListener.getClass();
 
-			if (className.equals(TestModelListener.class.getName())) {
-				return;
-			}
-		}
-
-		Assert.fail();
+					return testClassName.equals(clazz.getName());
+				}));
 	}
 
 }

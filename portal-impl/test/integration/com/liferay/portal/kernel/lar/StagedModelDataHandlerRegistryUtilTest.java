@@ -58,19 +58,17 @@ public class StagedModelDataHandlerRegistryUtilTest {
 		List<StagedModelDataHandler<?>> stagedModelDataHandlers =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandlers();
 
-		for (StagedModelDataHandler<?> stagedModelDataHandler :
-				stagedModelDataHandlers) {
+		String testClassName = TestStagedModelDataHandler.class.getName();
 
-			Class<?> clazz = stagedModelDataHandler.getClass();
+		Assert.assertTrue(
+			testClassName + " not found in " +
+				stagedModelDataHandlers,
+			stagedModelDataHandlers.removeIf(
+				stagedModelDataHandler -> {
+					Class<?> clazz = stagedModelDataHandler.getClass();
 
-			String className = clazz.getName();
-
-			if (className.equals(TestStagedModelDataHandler.class.getName())) {
-				return;
-			}
-		}
-
-		Assert.fail();
+					return testClassName.equals(clazz.getName());
+				}));
 	}
 
 }

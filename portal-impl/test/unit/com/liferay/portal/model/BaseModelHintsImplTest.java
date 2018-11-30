@@ -143,10 +143,6 @@ public class BaseModelHintsImplTest {
 		Object fieldObject = _testBaseModelHints.getFieldsElement(
 			_MODEL, "simpleField");
 
-		if (!(fieldObject instanceof Element)) {
-			Assert.fail();
-		}
-
 		Element fieldElement = (Element)fieldObject;
 
 		Assert.assertEquals("simpleField", fieldElement.attributeValue("name"));

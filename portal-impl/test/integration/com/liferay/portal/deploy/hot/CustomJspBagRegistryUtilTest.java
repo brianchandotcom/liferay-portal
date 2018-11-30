@@ -41,50 +41,34 @@ public class CustomJspBagRegistryUtilTest {
 
 	@Test
 	public void testGetCustomJspBags() {
-		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
-			CustomJspBagRegistryUtil.getCustomJspBags();
-
-		for (Map.Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
-				customJspBags.entrySet()) {
-
-			ServiceReference<CustomJspBag> serviceReference = entry.getKey();
-
-			String contextId = GetterUtil.getString(
-				serviceReference.getProperty("context.id"));
-
-			if (!contextId.equals("TestCustomJspBag")) {
-				continue;
-			}
-
-			return;
-		}
-
-		Assert.fail();
+		Assert.assertTrue(
+			"TestCustomJspBag not found",
+			_findCustomJspBag("TestCustomJspBag"));
 	}
 
 	@Test
 	public void testGetGlobalCustomJspBags() {
+		Assert.assertTrue(
+			"TestGlobalCustomJspBag not found",
+			_findCustomJspBag("TestGlobalCustomJspBag"));
+	}
+
+	private boolean _findCustomJspBag(String targetContextId) {
 		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
 			CustomJspBagRegistryUtil.getCustomJspBags();
 
-		for (Map.Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
-				customJspBags.entrySet()) {
-
-			ServiceReference<CustomJspBag> serviceReference = entry.getKey();
+		for (ServiceReference<CustomJspBag> serviceReference :
+				customJspBags.keySet()) {
 
 			String contextId = GetterUtil.getString(
 				serviceReference.getProperty("context.id"));
 
-			if (contextId.equals("TestGlobalCustomJspBag")) {
-				CustomJspBag customJspBag = entry.getValue();
-
-				if (customJspBag.isCustomJspGlobal()) {
-					return;
-				}
+			if (contextId.equals(targetContextId)) {
+				return true;
 			}
 		}
 
-		Assert.fail();
+		return false;
 	}
 
 }

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.messaging;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -48,7 +47,9 @@ public class AbstractMessagingConfiguratorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCustomClassLoaderDestinationConfiguration() {
+	public void testCustomClassLoaderDestinationConfiguration()
+		throws InterruptedException {
+
 		final TestClassLoader testClassLoader = new TestClassLoader();
 
 		AbstractMessagingConfigurator pluginMessagingConfigurator =
@@ -98,44 +99,40 @@ public class AbstractMessagingConfiguratorTest {
 
 		serviceTracker.open();
 
-		try {
-			while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
-				Thread.sleep(1000);
-			}
-
-			Object[] services = serviceTracker.getServices();
-
-			Assert.assertEquals(Arrays.toString(services), 2, services.length);
-
-			for (Object service : services) {
-				Destination destination = (Destination)service;
-
-				String destinationName = destination.getName();
-
-				Assert.assertTrue(
-					destinationName, destinationName.contains("plugintest"));
-
-				if (destinationName.equals("liferay/plugintest1")) {
-					Assert.assertEquals(
-						1, destination.getMessageListenerCount());
-				}
-
-				if (destination.getMessageListenerCount() > 0) {
-					Message message = new Message();
-
-					message.setDestinationName(destinationName);
-
-					destination.send(message);
-				}
-			}
+		while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
+			Thread.sleep(1000);
 		}
-		catch (Exception e) {
-			Assert.fail(StackTraceUtil.getStackTrace(e));
+
+		Object[] services = serviceTracker.getServices();
+
+		Assert.assertEquals(Arrays.toString(services), 2, services.length);
+
+		for (Object service : services) {
+			Destination destination = (Destination)service;
+
+			String destinationName = destination.getName();
+
+			Assert.assertTrue(
+				destinationName, destinationName.contains("plugintest"));
+
+			if (destinationName.equals("liferay/plugintest1")) {
+				Assert.assertEquals(1, destination.getMessageListenerCount());
+			}
+
+			if (destination.getMessageListenerCount() > 0) {
+				Message message = new Message();
+
+				message.setDestinationName(destinationName);
+
+				destination.send(message);
+			}
 		}
 	}
 
 	@Test
-	public void testPortalClassLoaderDestinationConfiguration() {
+	public void testPortalClassLoaderDestinationConfiguration()
+		throws InterruptedException {
+
 		DefaultMessagingConfigurator defaultMessagingConfigurator =
 			new DefaultMessagingConfigurator();
 
@@ -183,39 +180,33 @@ public class AbstractMessagingConfiguratorTest {
 
 		serviceTracker.open();
 
-		try {
-			while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
-				Thread.sleep(1000);
-			}
-
-			Object[] services = serviceTracker.getServices();
-
-			Assert.assertEquals(Arrays.toString(services), 2, services.length);
-
-			for (Object service : services) {
-				Destination destination = (Destination)service;
-
-				String destinationName = destination.getName();
-
-				Assert.assertTrue(
-					destinationName, destinationName.contains("portaltest"));
-
-				if (destinationName.equals("liferay/portaltest1")) {
-					Assert.assertEquals(
-						1, destination.getMessageListenerCount());
-				}
-
-				if (destination.getMessageListenerCount() > 0) {
-					Message message = new Message();
-
-					message.setDestinationName(destinationName);
-
-					destination.send(message);
-				}
-			}
+		while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
+			Thread.sleep(1000);
 		}
-		catch (Exception e) {
-			Assert.fail(StackTraceUtil.getStackTrace(e));
+
+		Object[] services = serviceTracker.getServices();
+
+		Assert.assertEquals(Arrays.toString(services), 2, services.length);
+
+		for (Object service : services) {
+			Destination destination = (Destination)service;
+
+			String destinationName = destination.getName();
+
+			Assert.assertTrue(
+				destinationName, destinationName.contains("portaltest"));
+
+			if (destinationName.equals("liferay/portaltest1")) {
+				Assert.assertEquals(1, destination.getMessageListenerCount());
+			}
+
+			if (destination.getMessageListenerCount() > 0) {
+				Message message = new Message();
+
+				message.setDestinationName(destinationName);
+
+				destination.send(message);
+			}
 		}
 	}
 

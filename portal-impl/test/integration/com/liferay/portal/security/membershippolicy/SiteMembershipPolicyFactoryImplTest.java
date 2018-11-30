@@ -65,31 +65,21 @@ public class SiteMembershipPolicyFactoryImplTest {
 	}
 
 	@Test
-	public void testCheckMembership() {
+	public void testCheckMembership() throws PortalException {
 		_atomicState.reset();
 
 		long[] array = {1, 2, 3};
 
-		try {
-			SiteMembershipPolicyUtil.checkMembership(array, array, array);
-		}
-		catch (PortalException pe) {
-			Assert.fail();
-		}
+		SiteMembershipPolicyUtil.checkMembership(array, array, array);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testCheckRoles() {
+	public void testCheckRoles() throws PortalException {
 		_atomicState.reset();
 
-		try {
-			SiteMembershipPolicyUtil.checkRoles(null, null);
-		}
-		catch (PortalException pe) {
-			Assert.fail();
-		}
+		SiteMembershipPolicyUtil.checkRoles(null, null);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

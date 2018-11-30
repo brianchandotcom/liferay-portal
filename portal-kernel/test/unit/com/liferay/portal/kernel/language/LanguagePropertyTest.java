@@ -141,11 +141,10 @@ public class LanguagePropertyTest {
 			}
 		}
 
-		if (!failureMessages.isEmpty()) {
-			Assert.fail(
-				"Required field names are not a subset of user name field " +
-					"names in " + failureMessages);
-		}
+		Assert.assertTrue(
+			"Required field names are not a subset of user name field names " +
+				"in " + failureMessages,
+			failureMessages.isEmpty());
 	}
 
 	@Test
@@ -264,12 +263,11 @@ public class LanguagePropertyTest {
 			}
 		}
 
-		if (!invalidFileNames.isEmpty()) {
-			Assert.fail(
-				StringBundler.concat(
-					"Special key \"", key, "\" is found in: ",
-					String.valueOf(invalidFileNames)));
-		}
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Special key \"", key, "\" is found in: ",
+				String.valueOf(invalidFileNames)),
+			invalidFileNames.isEmpty());
 	}
 
 	private void _testValidKey(String key) {
@@ -287,12 +285,11 @@ public class LanguagePropertyTest {
 			}
 		}
 
-		if (!invalidFileNames.isEmpty()) {
-			Assert.fail(
-				StringBundler.concat(
-					"Invalid values for key \"", key, "\" are found in: ",
-					String.valueOf(invalidFileNames)));
-		}
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Invalid values for key \"", key, "\" are found in: ",
+				String.valueOf(invalidFileNames)),
+			invalidFileNames.isEmpty());
 	}
 
 	private static Map<String, Properties> _modulesPropertiesMap;

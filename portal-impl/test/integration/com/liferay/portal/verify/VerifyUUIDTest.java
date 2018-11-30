@@ -306,8 +306,8 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 					message.startsWith(logMessage));
 			}
 			else {
-				Assert.fail(
-					"Unknown ExpectedType" + expectedLog.expectedType());
+				throw new IllegalStateException(
+					"Unknown ExpectedType" + expectedLog.expectedType(), e);
 			}
 		}
 	}

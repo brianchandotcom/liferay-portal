@@ -56,19 +56,13 @@ public class AtomCollectionAdapterRegistryUtilTest {
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters =
 			AtomCollectionAdapterRegistryUtil.getAtomCollectionAdapters();
 
-		for (AtomCollectionAdapter<?> atomCollectionAdapter :
-				atomCollectionAdapters) {
-
-			String collectionName = atomCollectionAdapter.getCollectionName();
-
-			if (collectionName.equals(
-					TestAtomCollectionAdapter.COLLECTION_NAME)) {
-
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(
+			TestAtomCollectionAdapter.COLLECTION_NAME + " not found in " +
+				atomCollectionAdapters,
+			atomCollectionAdapters.removeIf(
+				atomCollectionAdapter ->
+					TestAtomCollectionAdapter.COLLECTION_NAME.equals(
+						atomCollectionAdapter.getCollectionName())));
 	}
 
 }

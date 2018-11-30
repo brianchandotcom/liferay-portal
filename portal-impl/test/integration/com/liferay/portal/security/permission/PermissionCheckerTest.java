@@ -350,8 +350,6 @@ public class PermissionCheckerTest {
 			}
 
 			if (!found) {
-				Assert.fail(t.getMessage());
-
 				throw t;
 			}
 		}
@@ -548,8 +546,6 @@ public class PermissionCheckerTest {
 			}
 
 			if (!found) {
-				Assert.fail(t.getMessage());
-
 				throw t;
 			}
 		}

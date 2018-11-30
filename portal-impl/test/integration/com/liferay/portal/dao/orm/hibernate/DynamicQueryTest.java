@@ -208,9 +208,9 @@ public class DynamicQueryTest {
 			dynamicQuery);
 
 		for (ClassName className : _allClassNames) {
-			if (!classNames.contains(className)) {
-				Assert.fail("Class names do not contain " + className);
-			}
+			Assert.assertTrue(
+				"Class names do not contain " + className,
+				classNames.contains(className));
 		}
 	}
 

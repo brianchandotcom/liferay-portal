@@ -45,18 +45,17 @@ public class XStreamConverterRegistryUtilTest {
 		Set<XStreamConverter> xStreamConverters =
 			XStreamConverterRegistryUtil.getXStreamConverters();
 
-		for (XStreamConverter xStreamConverter : xStreamConverters) {
-			Class<? extends XStreamConverter> clazz =
-				xStreamConverter.getClass();
+		String testClassName = TestXStreamConverter.class.getName();
 
-			String className = clazz.getName();
+		Assert.assertTrue(
+			testClassName + " not found in " +
+				xStreamConverters,
+			xStreamConverters.removeIf(
+				xStreamConverter -> {
+					Class<?> clazz = xStreamConverter.getClass();
 
-			if (className.equals(TestXStreamConverter.class.getName())) {
-				return;
-			}
-		}
-
-		Assert.fail();
+					return testClassName.equals(clazz.getName());
+				}));
 	}
 
 }

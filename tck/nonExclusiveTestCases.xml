@@ -239,6 +239,8 @@
 <entry key="V3URLTests_ResourceURL_getResourceParameters3"></entry>
 
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2"></entry>
+<entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters"></entry>
+<entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters2"></entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters3"></entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getWindowState"></entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getWindowState2"></entry>

@@ -47,9 +47,6 @@
 <entry key="V3URLTests_ResourceURL_getResourceParameters">V3URLTests</entry>
 <entry key="V3URLTests_ResourceURL_getResourceParameters2">V3URLTests</entry>
 <entry key="V3URLTests_ResourceURL_getResourceParameters3">V3URLTests</entry>
-<entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters2">V3RenderStateTests</entry>
-<entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters3">V3RenderStateTests</entry>
-<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters3">V3RenderStateTests</entry>
 <entry key="V3PortletContextTests_Context_getClassLoader">V3PortletContextTests</entry>
 <entry key="V3PortletContextTests_Context_getContextPath">V3PortletContextTests</entry>
 <entry key="V3PortletContextTests_Context_getEffectiveMajorVersion">V3PortletContextTests</entry>

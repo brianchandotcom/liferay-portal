@@ -170,6 +170,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	 * @param orderByField
 	 * @param orderByType
 	 * @return an {@link OrderByComparator} for type {@code T}
+	 * @review
 	 */
 	protected OrderByComparator<T> getOrderByComparator(
 		String orderByField, String orderByType) {
@@ -182,6 +183,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	 * searchCount methods.
 	 *
 	 * @return field names to be queried
+	 * @review
 	 */
 	protected String[] getSearchableFields() {
 		return getDisplayFieldNames();
@@ -198,6 +200,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	 * @param orderByType the type of ordering
 	 * @return a {@link DynamicQuery} to be used by the doGetRange and doCount
 	 *         methods
+	 * @review
 	 */
 	protected DynamicQuery getSearchDynamicQuery(
 		long userId, long[] groupIds, String keywords, String orderByField,

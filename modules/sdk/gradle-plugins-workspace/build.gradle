@@ -70,6 +70,11 @@ gradleTest {
 
 	deprecationMessagesAreFailures = false
 
+	if (System.getenv("JENKINS_HOME")) {
+		expectFailure "buildDockerImage"
+		expectFailure "createDockerContainer"
+	}
+
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
 

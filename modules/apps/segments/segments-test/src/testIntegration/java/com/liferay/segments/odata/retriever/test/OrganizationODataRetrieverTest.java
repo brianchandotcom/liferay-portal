@@ -372,16 +372,18 @@ public class OrganizationODataRetrieverTest {
 		throws Exception {
 
 		Organization parentOrganization = OrganizationTestUtil.addOrganization(
-			0, "A", false);
+			0, RandomTestUtil.randomString(), false);
 
 		Organization organization = OrganizationTestUtil.addOrganization(
-			parentOrganization.getOrganizationId(), "B", false);
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
 
 		_organizations.add(organization);
 
 		_organizations.add(parentOrganization);
 
-		String filterString = "contains(nameTreePath, 'B')";
+		String filterString =
+			"contains(nameTreePath, '" + organization.getName() + "')";
 
 		int count = _oDataRetriever.getResultsCount(
 			TestPropsValues.getCompanyId(), filterString,
@@ -451,6 +453,45 @@ public class OrganizationODataRetrieverTest {
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(organization, organizations.get(0));
+	}
+
+	@Test
+	public void testGetOrganizationsFilterByParentOrganizationIdAndNotOrganizationId()
+		throws Exception {
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		_organizations.add(organization1);
+
+		_organizations.add(organization2);
+
+		_organizations.add(parentOrganization);
+
+		String filterString = String.format(
+			"(parentOrganizationId eq '%s') and (not (organizationId eq '%s'))",
+			parentOrganization.getOrganizationId(),
+			organization2.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 1);
+
+		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
 	@Test

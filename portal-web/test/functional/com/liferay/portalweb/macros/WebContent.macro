@@ -2033,11 +2033,10 @@
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#viewVersion">
+			<var name="version" value="1.1" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
 	</command>
 
 	<command name="viewVersion">

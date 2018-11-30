@@ -1505,11 +1505,10 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#viewVersion">
+			<var name="version" value="1.0" />
 			<var name="webContentTitle" value="WebContent Title 1" />
 		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.0" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
@@ -1567,11 +1566,10 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#viewVersion">
+			<var name="version" value="1.1" />
 			<var name="webContentTitle" value="WebContent Title 1.1" />
 		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
 
 		<execute macro="Navigator#openURL" />
 

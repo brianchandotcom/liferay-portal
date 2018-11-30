@@ -41,7 +41,6 @@ import com.liferay.workflow.apio.internal.architect.route.UpdateDueDatePostRoute
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +104,7 @@ public class WorkflowTaskItemResource
 		).addDate(
 			"dateCreated", WorkflowTask::getCreateDate
 		).addDate(
-			"expires", WorkflowTask::getDueDate
+			"dueDate", WorkflowTask::getDueDate
 		).addNested(
 			"object", WorkflowTask::getOptionalAttributes,
 			nestedBuilder -> nestedBuilder.types(

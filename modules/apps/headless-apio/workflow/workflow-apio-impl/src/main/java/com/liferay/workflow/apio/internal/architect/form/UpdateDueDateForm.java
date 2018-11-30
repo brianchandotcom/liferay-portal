@@ -44,7 +44,7 @@ public class UpdateDueDateForm {
 		).addOptionalString(
 			"comment", UpdateDueDateForm::setComment
 		).addRequiredDate(
-			"expires", UpdateDueDateForm::setDueDate
+			"dueDate", UpdateDueDateForm::setDueDate
 		).build();
 	}
 

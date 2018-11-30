@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -42,6 +43,8 @@ public class JavaConstructorDefinition extends BaseJavaTerm {
 				appendNewLine(
 					sb, _javaAnnotations.get(i), indent, prefix, "",
 					maxLineLength);
+
+				prefix = StringPool.BLANK;
 			}
 			else {
 				appendNewLine(
@@ -49,7 +52,8 @@ public class JavaConstructorDefinition extends BaseJavaTerm {
 			}
 		}
 
-		appendNewLine(sb, _javaSignature, indent, "", suffix, maxLineLength);
+		appendNewLine(
+			sb, _javaSignature, indent, prefix, suffix, maxLineLength);
 
 		return sb.toString();
 	}

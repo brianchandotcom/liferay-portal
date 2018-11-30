@@ -10638,6 +10638,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					</then>
 				</if>
 
+				<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+					<param name="database.type" value="@{database.type}" />
+				</antcall>
+
 				<start-app-server />
 
 				<get-testcase-property property.name="app.server.bundles.size" />

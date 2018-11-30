@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_LANGUAGE_2</td>
+	<td>//select[contains(@id,'languageId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFAULT_VALUE_SELECT</td>
 	<td>//select[contains(@id,'defaultValue')]</td>
 	<td></td>

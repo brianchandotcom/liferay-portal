@@ -1013,7 +1013,7 @@
 			<var name="menuItem" value="Edit" />
 		</execute>
 
-		<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${languageName}" />
+		<execute function="Select" locator1="Select#DEFAULT_LANGUAGE_2" value1="${languageName}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

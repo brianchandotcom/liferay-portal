@@ -149,7 +149,7 @@
 			<then>
 				<var name="defaultPortalLanguage" value="${defaultPortalLanguage}" />
 
-				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultPortalLanguage}" />
+				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE_2" value1="${defaultPortalLanguage}" />
 			</then>
 		</if>
 
@@ -748,7 +748,7 @@
 			<var name="navTab" value="${navTab}" />
 		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultPortalLanguage}" />
+		<execute function="AssertSelectedLabel" locator1="Select#DEFAULT_LANGUAGE_2" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultLanguageCP">
@@ -756,7 +756,7 @@
 			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultPortalLanguage}" />
+		<execute function="AssertSelectedLabel" locator1="Select#DEFAULT_LANGUAGE_2" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultUserAssociationsCP">

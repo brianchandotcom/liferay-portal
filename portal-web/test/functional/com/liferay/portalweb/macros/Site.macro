@@ -519,7 +519,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE_2" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 
@@ -1220,7 +1220,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE_2" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 	</command>

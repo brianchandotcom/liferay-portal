@@ -1,0 +1,314 @@
+<definition component-name="portal-upgrades">
+	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sybase" />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="testray.main.component.name" value="Upgrades Core Infrastructure" />
+
+	<set-up>
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Search" />
+		</execute>
+
+		<execute macro="SearchAdministration#executeSearchActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+	</set-up>
+
+	<command name="ViewPortletsPermissionsArchive6130" priority="5">
+		<property name="data.archive.type" value="data-archive-portlets-permissions" />
+		<property name="database.types" value="db2,mysql,oracle,sybase" />
+		<property name="portal.version" value="6.1.30" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="replyCount" value="0" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/site-name-2/blogs-page" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPagePG">
+			<var name="wikiPageContent" value="Wiki Front Page Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Configuration" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Permissions" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+	</command>
+
+	<command name="ViewPortletsPermissionsArchive621015" priority="5">
+		<property name="data.archive.type" value="data-archive-portlets-permissions" />
+		<property name="database.types" value="db2,mysql,oracle,sybase" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="replyCount" value="0" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/site-name-2/blogs-page" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPagePG">
+			<var name="wikiPageContent" value="Wiki Front Page Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Configuration" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Permissions" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+	</command>
+
+	<command name="ViewPortletsPermissionsArchive621021" priority="5">
+		<property name="data.archive.type" value="data-archive-portlets-permissions" />
+		<property name="database.types" value="db2,mysql,oracle,postgresql,sybase" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="replyCount" value="0" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name 1" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/site-name-2/blogs-page" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPagePG">
+			<var name="wikiPageContent" value="Wiki Front Page Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Configuration" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewPortletOptions">
+			<var name="OptionsName" value="Permissions" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPermissionPG" />
+	</command>
+</definition>

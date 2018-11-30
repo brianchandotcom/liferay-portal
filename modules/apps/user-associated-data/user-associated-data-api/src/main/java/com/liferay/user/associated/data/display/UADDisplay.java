@@ -128,7 +128,7 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 * Returns the field names to be used as table column headers when sorting a
 	 * list of entities of type {@code T}
 	 *
-	 * @return an array of field names used for column headers for sorting
+	 * @return field names used for column headers when sorting
 	 * @review
 	 */
 	public String[] getSortingFieldNames();
@@ -143,8 +143,8 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	public String getTypeName(Locale locale);
 
 	/**
-	 * Returns an ordered range of all the entities of type {@code T} that match
-	 * the keywords with the given user ID and group IDs.
+	 * Returns paginated sorted entities of type {@code T} related to a user,
+	 * optionally filtered by groups and/or keywords.
 	 *
 	 * @param userId the primary key of the user
 	 * @param groupIds the primary keys of the groups that the entities are
@@ -155,8 +155,7 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 *                    descending
 	 * @param start the starting index of the result set
 	 * @param end the ending index of the result set
-	 * @return the ordered range of matching entities with the user ID and
-	 * group IDs
+	 * @return paginated sorted filtered entities associated with a user
 	 * @review
 	 */
 	public List<T> search(
@@ -164,14 +163,14 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		String orderByType, int start, int end);
 
 	/**
-	 * Returns a count of the number of entities of type {@code T} that match
-	 * the keywords with the given user ID and group IDs.
+	 * Returns a count of the number of entities of type {@code T} related to a
+	 * user, optionally filtered by groups and/or keywords
 	 *
 	 * @param userId the primary key of the user
 	 * @param groupIds the primary keys of the groups that the entities are
 	 *                 associated with
 	 * @param keywords the keywords which may occur in the entity's fields
-	 * @return the number of matching entities with the userId and groupIds
+	 * @return the number of filtered entities associated with a user
 	 * @review
 	 */
 	public long searchCount(long userId, long[] groupIds, String keywords);

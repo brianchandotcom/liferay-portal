@@ -83,10 +83,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureTaskBuildTheme(project);
 			_configureWar(project);
-
-			War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
-
-			addTaskDockerDeploy(project, war, workspaceExtension);
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);

@@ -70,6 +70,9 @@ public class SharingPermissionHelper {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
 	@Reference(
 		target = "(&(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)(!(component.name=" + SharingEntryDLFileEntryModelResourcePermissionRegistrar.COMPONENT_NAME + ")))"
 	)
@@ -78,8 +81,5 @@ public class SharingPermissionHelper {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

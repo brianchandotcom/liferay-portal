@@ -276,7 +276,7 @@ public class ReleaseInfo {
 
 	private static final String _CODE_NAME = "Judson";
 
-	private static final String _DATE = "October 30, 2018";
+	private static final String _DATE = "January 7, 2019";
 
 	private static final String _NAME = "Liferay Community Edition Portal";
 
@@ -290,9 +290,9 @@ public class ReleaseInfo {
 
 	private static final String _VENDOR = "Liferay, Inc.";
 
-	private static final String _VERSION = "7.1.1";
+	private static final String _VERSION = "7.1.2";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.1.1 CE GA2";
+	private static final String _VERSION_DISPLAY_NAME = "7.1.2 CE GA3";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

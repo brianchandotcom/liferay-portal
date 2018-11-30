@@ -150,10 +150,27 @@ class Editor extends Component {
 
 	willReceiveState({children, value}) {
 		if (value && value.newVal !== value.prevVal && children) {
-			this._alloyEditor.destroy();
-
-			this._createEditor();
+			this._alloyEditor.getNativeEditor().setData(value.newVal);
 		}
+	}
+
+	/**
+	 * Remove twitter button
+	 * @return {array} selections
+	 */
+
+	getSelections() {
+		return AlloyEditor.Selections.map(
+			 selection => {
+				let newSelection = {...selection};
+
+				if (newSelection.name == 'text') {
+					newSelection.buttons = newSelection.buttons.filter(button => button !== 'twitter')
+				}
+
+				return newSelection
+			}
+		);
 	}
 
 	_createEditor() {
@@ -180,7 +197,7 @@ class Editor extends Component {
 							buttons: ['hline', 'table']
 						},
 						styles: {
-							selections: AlloyEditor.Selections,
+							selections: this.getSelections(),
 							tabIndex: 1
 						}
 					}

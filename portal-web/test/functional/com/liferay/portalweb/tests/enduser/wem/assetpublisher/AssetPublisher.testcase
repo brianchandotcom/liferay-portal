@@ -1312,4 +1312,20 @@
 			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 	</command>
+
+	<command name="ViewDefaultAssetLinkBehavior" priority="4">
+		<description message="This is a test for LPS-86192. The default asset link behavior should be 'View in Context'." />
+
+		<echo message="## Navigate to Asset Publisher widget display settings." />
+
+		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
+
+		<echo message="## Assert the default asset link behavior is 'View in Context'." />
+
+		<execute function="AssertSelectedLabel" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="View in Context" />
+	</command>
 </definition>

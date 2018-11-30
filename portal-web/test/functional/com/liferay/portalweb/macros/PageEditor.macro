@@ -104,29 +104,6 @@
 		</execute>
 	</command>
 
-	<command name="moveFragment">
-		<execute function="MouseOver" locator1="Fragment#FRAGMENT_BODY">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${direction}" arg2="up" />
-			<then>
-				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_UP_ARROW_BUTTON">
-					<var name="key_fragmentName" value="${fragmentName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${direction}" arg2="down" />
-				<then>
-					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_DOWN_ARROW_BUTTON">
-						<var name="key_fragmentName" value="${fragmentName}" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-	</command>
-
 	<command name="removeFragment">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />

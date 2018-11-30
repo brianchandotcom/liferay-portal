@@ -397,10 +397,6 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="assetLinkBehavior" value="View in Context" />
-		</execute>
-
 		<execute macro="DisplayPagesAdmin#viewPGViaAP">
 			<var name="contentList" value="Webcontent Title,Webcontent Content,tag1,tag2,tag3" />
 			<var name="webContentContent" value="Webcontent Content" />

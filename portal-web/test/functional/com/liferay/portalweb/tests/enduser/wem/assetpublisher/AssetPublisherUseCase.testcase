@@ -1793,7 +1793,6 @@
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="assetLinkBehavior" value="View in Context" />
 			<var name="disableConfiguration" value="Show Add Content Button" />
 		</execute>
 
@@ -2501,18 +2500,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="assetLinkBehavior" value="View in Context" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page 2" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplaySettings">

@@ -206,10 +206,6 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="assetLinkBehavior" value="View in Context" />
-		</execute>
-
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="Webcontent Title">
 			<var name="key_assetTitle" value="Webcontent Title" />
 		</execute>
@@ -391,10 +387,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="assetLinkBehavior" value="View in Context" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="Webcontent Title">

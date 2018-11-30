@@ -476,6 +476,10 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="${message}" />
 	</command>
 
+	<command name="viewNoPermissionPG">
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
+	</command>
+
 	<command name="viewNoPortletsPresentPG">
 		<execute function="AssertElementNotPresent" locator1="Portlet#PORTLET_CONTENT" />
 	</command>

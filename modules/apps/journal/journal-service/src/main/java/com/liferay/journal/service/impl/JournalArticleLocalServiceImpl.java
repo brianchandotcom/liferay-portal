@@ -8296,7 +8296,7 @@ public class JournalArticleLocalServiceImpl
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
+		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
 			PortalUtil.getSiteGroupId(groupId),
 			classNameLocalService.getClassNameId(DDMStructure.class),
 			ddmTemplateKey, true);
@@ -8306,9 +8306,11 @@ public class JournalArticleLocalServiceImpl
 				ddmStructure.getClassNameId(), id,
 				ddmStructure.getStructureId(), new ServiceContext());
 
-			ddmTemplateLinkLocalService.addTemplateLink(
-				classNameLocalService.getClassNameId(JournalArticle.class), id,
-				ddmTemplate.getTemplateId());
+			if (ddmTemplate != null) {
+				ddmTemplateLinkLocalService.addTemplateLink(
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					id, ddmTemplate.getTemplateId());
+			}
 		}
 		else {
 			DDMStorageLink ddmStorageLink =
@@ -8318,9 +8320,11 @@ public class JournalArticleLocalServiceImpl
 
 			ddmStorageLinkLocalService.updateDDMStorageLink(ddmStorageLink);
 
-			ddmTemplateLinkLocalService.updateTemplateLink(
-				classNameLocalService.getClassNameId(JournalArticle.class), id,
-				ddmTemplate.getTemplateId());
+			if (ddmTemplate != null) {
+				ddmTemplateLinkLocalService.updateTemplateLink(
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					id, ddmTemplate.getTemplateId());
+			}
 		}
 	}
 

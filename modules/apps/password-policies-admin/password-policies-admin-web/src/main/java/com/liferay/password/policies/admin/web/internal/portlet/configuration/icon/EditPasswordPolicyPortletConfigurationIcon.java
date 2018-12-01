@@ -15,10 +15,7 @@
 package com.liferay.password.policies.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -62,27 +59,18 @@ public class EditPasswordPolicyPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		try {
-			PortletURL portletURL = _portletURLFactory.create(
-				portletRequest,
-				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _portletURLFactory.create(
+			portletRequest,
+			PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/edit_password_policy.jsp");
-			portletURL.setParameter(
-				"passwordPolicyId",
-				String.valueOf(_getPasswordPolicyId(portletRequest)));
-			portletURL.setParameter("tabs1", "details");
+		portletURL.setParameter("mvcPath", "/edit_password_policy.jsp");
+		portletURL.setParameter(
+			"passwordPolicyId",
+			String.valueOf(_getPasswordPolicyId(portletRequest)));
+		portletURL.setParameter("tabs1", "details");
 
-			return portletURL.toString();
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
-		return StringPool.BLANK;
+		return portletURL.toString();
 	}
 
 	@Override
@@ -92,22 +80,14 @@ public class EditPasswordPolicyPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (PasswordPolicyPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
+		if (PasswordPolicyPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
 
-				return true;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			return true;
 		}
 
 		return false;
@@ -119,9 +99,6 @@ public class EditPasswordPolicyPortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditPasswordPolicyPortletConfigurationIcon.class);
 
 	@Reference
 	private Portal _portal;

@@ -16,8 +16,6 @@ package com.liferay.password.policies.admin.web.internal.portlet.configuration.i
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -69,20 +67,13 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			sb.append(portletDisplay.getNamespace());
+		sb.append(portletDisplay.getNamespace());
 
-			sb.append("deletePasswordPolicy('");
-			sb.append(String.valueOf(_getPasswordPolicyId(portletRequest)));
-			sb.append("');");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
+		sb.append("deletePasswordPolicy('");
+		sb.append(String.valueOf(_getPasswordPolicyId(portletRequest)));
+		sb.append("');");
 
 		return sb.toString();
 	}
@@ -101,29 +92,20 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			long passwordPolicyId = _getPasswordPolicyId(portletRequest);
+		long passwordPolicyId = _getPasswordPolicyId(portletRequest);
 
-			PasswordPolicy passwordPolicy =
-				_passwordPolicyLocalService.fetchPasswordPolicy(
-					passwordPolicyId);
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
 
-			if (!passwordPolicy.isDefaultPolicy() &&
-				PasswordPolicyPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), passwordPolicyId,
-					ActionKeys.DELETE)) {
+		if (!passwordPolicy.isDefaultPolicy() &&
+			PasswordPolicyPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), passwordPolicyId,
+				ActionKeys.DELETE)) {
 
-				return true;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			return true;
 		}
 
 		return false;
@@ -142,9 +124,6 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeletePasswordPolicyPortletConfigurationIcon.class);
 
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 

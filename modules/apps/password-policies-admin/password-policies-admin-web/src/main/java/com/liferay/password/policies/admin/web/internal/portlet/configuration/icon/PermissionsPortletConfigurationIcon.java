@@ -64,13 +64,11 @@ public class PermissionsPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			url = PermissionsURLTag.doTag(
+			return PermissionsURLTag.doTag(
 				StringPool.BLANK, PasswordPolicy.class.getName(),
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(_getPasswordPolicyId(portletRequest)),
@@ -78,12 +76,10 @@ public class PermissionsPortletConfigurationIcon
 				themeDisplay.getRequest());
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			_log.error(e, e);
 		}
 
-		return url;
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -93,23 +89,14 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (PasswordPolicyPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					_getPasswordPolicyId(portletRequest),
-					ActionKeys.PERMISSIONS)) {
+		if (PasswordPolicyPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				_getPasswordPolicyId(portletRequest), ActionKeys.PERMISSIONS)) {
 
-				return true;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			return true;
 		}
 
 		return false;

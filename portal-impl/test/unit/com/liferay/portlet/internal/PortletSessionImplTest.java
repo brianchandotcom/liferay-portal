@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -41,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -88,11 +88,9 @@ public class PortletSessionImplTest {
 				"$LazySerializableObjectWrapper");
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -110,11 +108,9 @@ public class PortletSessionImplTest {
 		Assert.assertEquals(sb.toString(), portletSessionImpl.scopePrefix);
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testDirectDelegateMethods() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -154,11 +150,9 @@ public class PortletSessionImplTest {
 		Assert.assertSame(session, portletSessionImpl.session);
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttribute() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -208,11 +202,9 @@ public class PortletSessionImplTest {
 				_KEY_6, PortletSession.APPLICATION_SCOPE));
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttributeMap() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -242,11 +234,9 @@ public class PortletSessionImplTest {
 		Assert.assertSame(_value5, attributeMap.get(_KEY_5));
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttributeNames() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -394,11 +384,9 @@ public class PortletSessionImplTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testRemoveAttribute() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -442,15 +430,10 @@ public class PortletSessionImplTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			PropsUtilAdvice.class, PortalClassLoaderUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = PortalClassLoaderUtilAdvice.class)
 	@Test
 	public void testSerializableHttpSessionWrapper() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "true");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "true");
 
 		// Constructor
 
@@ -519,11 +502,9 @@ public class PortletSessionImplTest {
 			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSetAttribute() {
-		PropsUtilAdvice.setProps(
-			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
 
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
@@ -571,25 +552,6 @@ public class PortletSessionImplTest {
 		}
 
 		private static boolean _portalClassLoader;
-
-	}
-
-	@Aspect
-	public static class PropsUtilAdvice {
-
-		public static void setProps(String name, String value) {
-			_props.put(name, value);
-		}
-
-		@Around(
-			"execution(public static String com.liferay.portal.util." +
-				"PropsUtil.get(String)) && args(key)"
-		)
-		public Object get(String key) {
-			return _props.get(key);
-		}
-
-		private static final Map<String, String> _props = new HashMap<>();
 
 	}
 

@@ -64,8 +64,6 @@ public class IndexableAdvice
 			return;
 		}
 
-		Indexable indexable = findAnnotation(methodInvocation);
-
 		Method method = methodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
@@ -100,6 +98,8 @@ public class IndexableAdvice
 				return;
 			}
 		}
+
+		Indexable indexable = findAnnotation(methodInvocation);
 
 		if (indexable.type() == IndexableType.DELETE) {
 			indexer.delete(result);

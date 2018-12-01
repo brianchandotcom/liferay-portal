@@ -124,15 +124,6 @@ public class IndexableAdvice
 			return false;
 		}
 
-		Class<?> returnType = method.getReturnType();
-
-		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
-			returnType.getName());
-
-		if (indexer == null) {
-			return false;
-		}
-
 		return true;
 	}
 

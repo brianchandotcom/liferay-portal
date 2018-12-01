@@ -49,28 +49,30 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 	</c:if>
 </div>
 
-<div class="article-template">
-	<liferay-ui:message key="template" />:
+<c:if test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
+	<div class="article-template">
+		<liferay-ui:message key="template" />:
 
-	<span id="<portlet:namespace />templateNameLabel">
-		<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
-			<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-		</c:if>
+		<span id="<portlet:namespace />templateNameLabel">
+			<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
+				<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+			</c:if>
 
-		<c:choose>
-			<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-				<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
-			</c:when>
-			<c:otherwise>
-				<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
-			</c:otherwise>
-		</c:choose>
-	</span>
+			<c:choose>
+				<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
+					<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
+				</c:when>
+				<c:otherwise>
+					<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
+				</c:otherwise>
+			</c:choose>
+		</span>
 
-	<div class="button-holder">
-		<aui:button id="selectDDMTemplate" value="select" />
+		<div class="button-holder">
+			<aui:button id="selectDDMTemplate" value="select" />
+		</div>
 	</div>
-</div>
+</c:if>
 
 <aui:script>
 

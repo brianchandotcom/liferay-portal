@@ -180,9 +180,6 @@ public class JournalArticleModelValidator
 					"{templateKey=" + ddmTemplateKey + "}");
 			}
 		}
-		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			throw new NoSuchTemplateException("DDM template key is null");
-		}
 
 		if (!smallImage || Validator.isNotNull(smallImageURL) ||
 			(smallImageFile == null) || (smallImageBytes == null)) {

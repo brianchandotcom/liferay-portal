@@ -70,15 +70,6 @@ public class IndexableAdvice
 
 		Class<?> returnType = method.getReturnType();
 
-		if (!BaseModel.class.isAssignableFrom(returnType)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					methodInvocation + " does not have a valid return type");
-			}
-
-			return;
-		}
-
 		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
 			returnType.getName());
 
@@ -121,6 +112,16 @@ public class IndexableAdvice
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
 		if (!super.isEnabled(targetClass, method)) {
+			return false;
+		}
+
+		Class<?> returnType = method.getReturnType();
+
+		if (!BaseModel.class.isAssignableFrom(returnType)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(method + " does not have a valid return type");
+			}
+
 			return false;
 		}
 

@@ -61,6 +61,7 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
+import com.liferay.journal.util.JournalDefaultTemplateProvider;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
@@ -7521,30 +7522,40 @@ public class JournalArticleLocalServiceImpl
 			}
 			catch (NoSuchTemplateException nste) {
 				if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
-					ddmTemplate = ddmTemplateLocalService.getTemplate(
+					ddmTemplate = ddmTemplateLocalService.fetchTemplate(
 						PortalUtil.getSiteGroupId(article.getGroupId()),
 						classNameLocalService.getClassNameId(
 							DDMStructure.class),
 						defaultDDMTemplateKey);
 				}
-				else {
-					throw nste;
-				}
 			}
 
-			tokens.put(
-				"ddm_template_key",
-				String.valueOf(ddmTemplate.getTemplateKey()));
-			tokens.put(
-				"ddm_template_id", String.valueOf(ddmTemplate.getTemplateId()));
+			String script = StringPool.BLANK;
+			String langType = StringPool.BLANK;
 
-			// Deprecated token
+			if (ddmTemplate != null) {
+				tokens.put(
+					"ddm_template_key",
+					String.valueOf(ddmTemplate.getTemplateKey()));
+				tokens.put(
+					"ddm_template_id",
+					String.valueOf(ddmTemplate.getTemplateId()));
 
-			tokens.put("template_id", ddmTemplateKey);
+				// Deprecated token
 
-			String script = ddmTemplate.getScript();
-			String langType = ddmTemplate.getLanguage();
-			cacheable = ddmTemplate.isCacheable();
+				tokens.put("template_id", ddmTemplateKey);
+
+				script = ddmTemplate.getScript();
+				langType = ddmTemplate.getLanguage();
+				cacheable = ddmTemplate.isCacheable();
+			}
+			else {
+				script = _journalDefaultTemplateProvider.getScript(
+					ddmStructure.getStructureId());
+
+				langType = _journalDefaultTemplateProvider.getLanguage();
+				cacheable = _journalDefaultTemplateProvider.isCacheable();
+			}
 
 			content = JournalUtil.transform(
 				themeDisplay, tokens, viewMode, languageId, document,
@@ -8787,6 +8798,9 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = CommentManager.class)
 	private CommentManager _commentManager;
+
+	@ServiceReference(type = JournalDefaultTemplateProvider.class)
+	private JournalDefaultTemplateProvider _journalDefaultTemplateProvider;
 
 	@ServiceReference(type = JournalFileUploadsConfiguration.class)
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;

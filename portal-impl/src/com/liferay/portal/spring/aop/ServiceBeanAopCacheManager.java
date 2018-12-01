@@ -64,15 +64,15 @@ public class ServiceBeanAopCacheManager {
 
 	public <T> T findAnnotation(
 		Class<?> targetClass, Method method,
-		Class<? extends Annotation> annotationType, T defaultValue) {
+		Class<? extends Annotation> annotationType) {
 
 		Annotation[] annotationArray = _methodAnnotations.get(method);
 
 		if (annotationArray == _nullAnnotations) {
-			return defaultValue;
+			return null;
 		}
 
-		T annotation = defaultValue;
+		T annotation = null;
 
 		if (annotationArray == null) {
 			List<Annotation> annotations = AnnotationLocator.locate(

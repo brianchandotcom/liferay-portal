@@ -43,7 +43,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
 		T annotation = serviceBeanAopCacheManager.findAnnotation(
-			targetClass, method, _annotationClass, null);
+			targetClass, method, _annotationClass);
 
 		if (annotation == null) {
 			return false;

@@ -89,7 +89,7 @@ public class DynamicDataSourceAdvice
 
 		return serviceBeanAopCacheManager.findAnnotation(
 			target.getClass(), methodInvocation.getMethod(),
-			MasterDataSource.class, null);
+			MasterDataSource.class);
 	}
 
 	@Override

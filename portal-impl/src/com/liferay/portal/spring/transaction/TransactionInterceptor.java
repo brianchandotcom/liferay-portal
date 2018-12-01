@@ -66,7 +66,7 @@ public class TransactionInterceptor
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
 		Transactional transactional = serviceBeanAopCacheManager.findAnnotation(
-			targetClass, method, Transactional.class, null);
+			targetClass, method, Transactional.class);
 
 		if (transactional == null) {
 			return false;

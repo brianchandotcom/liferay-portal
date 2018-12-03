@@ -51,8 +51,8 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		Map
 			<String,
 			 Map
-				<String,
-				 Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>>
+				 <String,
+				  Map<String, GetFieldMappingsResponse.FieldMappingMetaData>>>
 					mappings = getFieldMappingsResponse.mappings();
 
 		Map<String, String> fieldMappings = new HashMap<>();

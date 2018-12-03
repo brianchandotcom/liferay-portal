@@ -211,14 +211,12 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 						return Optional.of(
 							_createCollectionCsdlProperty(
-								entityField, fullQualifiedName)
-						);
+								entityField, fullQualifiedName));
 					}
 
 					return Optional.of(
 						_createPrimitiveCsdlProperty(
-							entityField, fullQualifiedName)
-					);
+							entityField, fullQualifiedName));
 				}
 			).orElse(
 				Optional.empty()

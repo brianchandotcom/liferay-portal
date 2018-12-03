@@ -16,6 +16,7 @@ package com.liferay.util.dao.orm;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -29,6 +30,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.sql.SQLException;
+
+import java.util.Collections;
 
 import javax.sql.DataSource;
 
@@ -90,22 +93,7 @@ public class CustomSQLTest {
 
 		_props = (Props)propsField.get(null);
 
-		propsField.set(
-			null,
-			ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {Props.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						return "test";
-					}
-
-				}));
+		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	@AfterClass

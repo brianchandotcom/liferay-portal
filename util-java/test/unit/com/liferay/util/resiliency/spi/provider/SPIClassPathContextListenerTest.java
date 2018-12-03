@@ -27,19 +27,14 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -157,31 +152,15 @@ public class SPIClassPathContextListenerTest {
 		putResource(
 			resources, _portalServiceJarFile, PortalException.class.getName());
 
-		final Method getMethod = Props.class.getMethod("get", String.class);
+		Map<String, Object> properties = new HashMap<>();
 
-		PropsUtil.setProps(
-			(Props)ProxyUtil.newProxyInstance(
-				Props.class.getClassLoader(), new Class<?>[] {Props.class},
-				new InvocationHandler() {
+		properties.put(
+			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME, driverClassName);
+		properties.put(PropsKeys.INTRABAND_IMPL, StringPool.BLANK);
+		properties.put(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, StringPool.BLANK);
+		properties.put(PropsKeys.INTRABAND_WELDER_IMPL, StringPool.BLANK);
 
-					@Override
-					public Object invoke(
-						Object proxy, Method method, Object[] args) {
-
-						if (getMethod.equals(method)) {
-							if (args[0].equals(
-									PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME)) {
-
-								return driverClassName;
-							}
-
-							return StringPool.BLANK;
-						}
-
-						throw new UnsupportedOperationException();
-					}
-
-				}));
+		PropsTestUtil.setProps(properties);
 
 		PortalClassLoaderUtil.setClassLoader(
 			new ClassLoader() {

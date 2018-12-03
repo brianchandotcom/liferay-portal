@@ -98,6 +98,10 @@ if (nullable && nullDate) {
 else {
 	dateString = format.format(calendar.getTime());
 }
+
+if (required) {
+	showDisableCheckbox = false;
+}
 %>
 
 <span class="lfr-input-date <%= cssClass %>" id="<%= randomNamespace %>displayDate">

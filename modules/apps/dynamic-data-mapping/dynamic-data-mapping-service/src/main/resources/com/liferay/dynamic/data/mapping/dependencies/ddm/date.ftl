@@ -66,6 +66,7 @@
 	helpMessage=escape(fieldStructure.tip)
 	label=escape(label)
 	name=namespacedFieldName
+	required=required
 >
 	<div class="form-group">
 		<@liferay_ui["input-date"]

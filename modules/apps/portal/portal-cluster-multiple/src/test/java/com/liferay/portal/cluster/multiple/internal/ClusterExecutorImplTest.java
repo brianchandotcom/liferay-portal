@@ -147,7 +147,10 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String[] excludedPropertyKeys() {
-					return new String[] {"access_key", "secret_access_key"};
+					return new String[] {
+						"access_key", "connection_password",
+						"connection_username", "secret_access_key"
+					};
 				}
 
 			};

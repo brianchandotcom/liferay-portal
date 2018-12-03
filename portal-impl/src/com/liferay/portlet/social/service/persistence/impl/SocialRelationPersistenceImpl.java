@@ -636,7 +636,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "socialRelation.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "socialRelation.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(socialRelation.uuid IS NULL OR socialRelation.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
@@ -1222,7 +1221,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "socialRelation.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "socialRelation.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(socialRelation.uuid IS NULL OR socialRelation.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "socialRelation.companyId = ?";

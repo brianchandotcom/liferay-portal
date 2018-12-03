@@ -4862,7 +4862,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	private static final String _FINDER_COLUMN_T_C_D_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_D_COLUMNID_2 = "expandoValue.columnId = ? AND ";
-	private static final String _FINDER_COLUMN_T_C_D_DATA_1 = "expandoValue.data IS NULL";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "CAST_CLOB_TEXT(expandoValue.data) = ?";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR CAST_CLOB_TEXT(expandoValue.data) = '')";
 

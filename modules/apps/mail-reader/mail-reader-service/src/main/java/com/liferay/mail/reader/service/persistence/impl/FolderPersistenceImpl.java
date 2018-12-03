@@ -846,7 +846,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	}
 
 	private static final String _FINDER_COLUMN_A_F_ACCOUNTID_2 = "folder.accountId = ? AND ";
-	private static final String _FINDER_COLUMN_A_F_FULLNAME_1 = "folder.fullName IS NULL";
 	private static final String _FINDER_COLUMN_A_F_FULLNAME_2 = "folder.fullName = ?";
 	private static final String _FINDER_COLUMN_A_F_FULLNAME_3 = "(folder.fullName IS NULL OR folder.fullName = '')";
 

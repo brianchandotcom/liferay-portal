@@ -637,7 +637,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NAME_NAME_1 = "resourcePermission.name IS NULL";
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "resourcePermission.name = ?";
 	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SCOPE = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2489,7 +2488,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_C_LIKEP_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_LIKEP_PRIMKEY_1 = "resourcePermission.primKey IS NULL";
 	private static final String _FINDER_COLUMN_C_LIKEP_PRIMKEY_2 = "resourcePermission.primKey LIKE ?";
 	private static final String _FINDER_COLUMN_C_LIKEP_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N_S = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
@@ -3117,7 +3115,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_C_N_S_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_SCOPE_2 = "resourcePermission.scope = ?";
@@ -3748,7 +3745,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	private static final String _FINDER_COLUMN_C_S_P_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_P_SCOPE_2 = "resourcePermission.scope = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_1 = "resourcePermission.primKey IS NULL";
 	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_2 = "resourcePermission.primKey = ?";
 	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N_S_P = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
@@ -4451,11 +4447,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_C_N_S_P_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_SCOPE_2 = "resourcePermission.scope = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_PRIMKEY_1 = "resourcePermission.primKey IS NULL";
 	private static final String _FINDER_COLUMN_C_N_S_P_PRIMKEY_2 = "resourcePermission.primKey = ?";
 	private static final String _FINDER_COLUMN_C_N_S_P_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N_S_P_R =
@@ -5152,6 +5146,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public int countByC_N_S_P_R(long companyId, String name, int scope,
 		String primKey, long[] roleIds) {
+		name = Objects.toString(name, "");
+		primKey = Objects.toString(primKey, "");
+
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
@@ -5286,11 +5283,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_2 = "resourcePermission.scope = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1 = "resourcePermission.primKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_2 = "resourcePermission.roleId = ?";
@@ -6369,6 +6364,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public int countByC_N_S_P_R_V(long companyId, String name, int scope,
 		long primKeyId, long[] roleIds, boolean viewActionId) {
+		name = Objects.toString(name, "");
+
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
@@ -6500,7 +6497,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_C_N_S_P_R_V_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_V_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_V_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_V_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_V_SCOPE_2 = "resourcePermission.scope = ? AND ";

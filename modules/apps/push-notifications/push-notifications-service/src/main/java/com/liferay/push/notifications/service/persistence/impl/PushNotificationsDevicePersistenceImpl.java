@@ -315,7 +315,6 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TOKEN_TOKEN_1 = "pushNotificationsDevice.token IS NULL";
 	private static final String _FINDER_COLUMN_TOKEN_TOKEN_2 = "pushNotificationsDevice.token = ?";
 	private static final String _FINDER_COLUMN_TOKEN_TOKEN_3 = "(pushNotificationsDevice.token IS NULL OR pushNotificationsDevice.token = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
@@ -1222,7 +1221,6 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 	private static final String _FINDER_COLUMN_U_P_USERID_2 = "pushNotificationsDevice.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_P_USERID_7 = "pushNotificationsDevice.userId IN (";
-	private static final String _FINDER_COLUMN_U_P_PLATFORM_1 = "pushNotificationsDevice.platform IS NULL";
 	private static final String _FINDER_COLUMN_U_P_PLATFORM_2 = "pushNotificationsDevice.platform = ?";
 	private static final String _FINDER_COLUMN_U_P_PLATFORM_3 = "(pushNotificationsDevice.platform IS NULL OR pushNotificationsDevice.platform = '')";
 

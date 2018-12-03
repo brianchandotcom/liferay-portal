@@ -328,7 +328,6 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KEY_KEY_1 = "memberRequest.key IS NULL";
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "memberRequest.key = ?";
 	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(memberRequest.key IS NULL OR memberRequest.key = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_RECEIVERUSERID =

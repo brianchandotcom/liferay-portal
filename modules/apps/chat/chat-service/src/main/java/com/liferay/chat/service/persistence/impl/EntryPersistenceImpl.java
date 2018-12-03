@@ -4392,7 +4392,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	private static final String _FINDER_COLUMN_F_T_C_FROMUSERID_2 = "entry.fromUserId = ? AND ";
 	private static final String _FINDER_COLUMN_F_T_C_TOUSERID_2 = "entry.toUserId = ? AND ";
-	private static final String _FINDER_COLUMN_F_T_C_CONTENT_1 = "entry.content IS NULL";
 	private static final String _FINDER_COLUMN_F_T_C_CONTENT_2 = "entry.content = ?";
 	private static final String _FINDER_COLUMN_F_T_C_CONTENT_3 = "(entry.content IS NULL OR entry.content = '')";
 

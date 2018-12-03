@@ -642,7 +642,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmFormInstance.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmFormInstance.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmFormInstance.uuid IS NULL OR ddmFormInstance.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
@@ -887,7 +886,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmFormInstance.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmFormInstance.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmFormInstance.uuid IS NULL OR ddmFormInstance.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmFormInstance.groupId = ?";
@@ -1473,7 +1471,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmFormInstance.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmFormInstance.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmFormInstance.uuid IS NULL OR ddmFormInstance.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmFormInstance.companyId = ?";

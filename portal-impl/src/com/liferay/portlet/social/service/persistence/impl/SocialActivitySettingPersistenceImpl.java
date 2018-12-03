@@ -2609,7 +2609,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	private static final String _FINDER_COLUMN_G_C_A_N_GROUPID_2 = "socialActivitySetting.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_A_N_CLASSNAMEID_2 = "socialActivitySetting.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_A_N_ACTIVITYTYPE_2 = "socialActivitySetting.activityType = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_A_N_NAME_1 = "socialActivitySetting.name IS NULL";
 	private static final String _FINDER_COLUMN_G_C_A_N_NAME_2 = "socialActivitySetting.name = ?";
 	private static final String _FINDER_COLUMN_G_C_A_N_NAME_3 = "(socialActivitySetting.name IS NULL OR socialActivitySetting.name = '')";
 

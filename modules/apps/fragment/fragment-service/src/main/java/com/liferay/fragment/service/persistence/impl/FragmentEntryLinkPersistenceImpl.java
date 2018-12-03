@@ -641,7 +641,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "fragmentEntryLink.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "fragmentEntryLink.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(fragmentEntryLink.uuid IS NULL OR fragmentEntryLink.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
@@ -886,7 +885,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "fragmentEntryLink.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "fragmentEntryLink.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(fragmentEntryLink.uuid IS NULL OR fragmentEntryLink.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "fragmentEntryLink.groupId = ?";
@@ -1476,7 +1474,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "fragmentEntryLink.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "fragmentEntryLink.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(fragmentEntryLink.uuid IS NULL OR fragmentEntryLink.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "fragmentEntryLink.companyId = ?";

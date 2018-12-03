@@ -625,7 +625,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_N_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
@@ -906,10 +905,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_N_T_NAME_1 = "listType.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_N_T_NAME_2 = "listType.name = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_NAME_3 = "(listType.name IS NULL OR listType.name = '') AND ";
-	private static final String _FINDER_COLUMN_N_T_TYPE_1 = "listType.type IS NULL";
 	private static final String _FINDER_COLUMN_N_T_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_N_T_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
 

@@ -2403,7 +2403,6 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	}
 
 	private static final String _FINDER_COLUMN_FORMUUID_KTI_KALEOTASKID_2 = "kaleoTaskForm.kaleoTaskId = ? AND ";
-	private static final String _FINDER_COLUMN_FORMUUID_KTI_FORMUUID_1 = "kaleoTaskForm.formUuid IS NULL";
 	private static final String _FINDER_COLUMN_FORMUUID_KTI_FORMUUID_2 = "kaleoTaskForm.formUuid = ?";
 	private static final String _FINDER_COLUMN_FORMUUID_KTI_FORMUUID_3 = "(kaleoTaskForm.formUuid IS NULL OR kaleoTaskForm.formUuid = '')";
 

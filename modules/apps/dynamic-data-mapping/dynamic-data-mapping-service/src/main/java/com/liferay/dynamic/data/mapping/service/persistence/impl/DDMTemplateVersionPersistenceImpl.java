@@ -844,7 +844,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	private static final String _FINDER_COLUMN_T_V_TEMPLATEID_2 = "ddmTemplateVersion.templateId = ? AND ";
-	private static final String _FINDER_COLUMN_T_V_VERSION_1 = "ddmTemplateVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_T_V_VERSION_2 = "ddmTemplateVersion.version = ?";
 	private static final String _FINDER_COLUMN_T_V_VERSION_3 = "(ddmTemplateVersion.version IS NULL OR ddmTemplateVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S = new FinderPath(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,

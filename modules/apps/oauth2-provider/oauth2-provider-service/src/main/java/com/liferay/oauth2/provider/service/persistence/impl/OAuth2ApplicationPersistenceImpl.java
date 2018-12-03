@@ -1215,7 +1215,6 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "oAuth2Application.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLIENTID_1 = "oAuth2Application.clientId IS NULL";
 	private static final String _FINDER_COLUMN_C_C_CLIENTID_2 = "oAuth2Application.clientId = ?";
 	private static final String _FINDER_COLUMN_C_C_CLIENTID_3 = "(oAuth2Application.clientId IS NULL OR oAuth2Application.clientId = '')";
 

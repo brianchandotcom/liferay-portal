@@ -1157,7 +1157,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "kbArticle.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "kbArticle.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(kbArticle.uuid IS NULL OR kbArticle.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
@@ -1401,7 +1400,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "kbArticle.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "kbArticle.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(kbArticle.uuid IS NULL OR kbArticle.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "kbArticle.groupId = ?";
@@ -1984,7 +1982,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "kbArticle.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "kbArticle.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(kbArticle.uuid IS NULL OR kbArticle.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "kbArticle.companyId = ?";
@@ -23036,7 +23033,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 	private static final String _FINDER_COLUMN_G_KBFI_UT_GROUPID_2 = "kbArticle.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_KBFOLDERID_2 = "kbArticle.kbFolderId = ? AND ";
-	private static final String _FINDER_COLUMN_G_KBFI_UT_URLTITLE_1 = "kbArticle.urlTitle IS NULL";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_URLTITLE_2 = "kbArticle.urlTitle = ?";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_URLTITLE_3 = "(kbArticle.urlTitle IS NULL OR kbArticle.urlTitle = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_KBFI_L = new FinderPath(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
@@ -26661,11 +26657,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	private static final String _FINDER_COLUMN_G_S_L_GROUPID_2 = "kbArticle.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_1 = "kbArticle.sections IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_2 = "kbArticle.sections LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_3 = "(kbArticle.sections IS NULL OR kbArticle.sections LIKE '') AND ";
-	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_4 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_S_L_SECTIONS_1) + ")";
 	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_S_L_SECTIONS_2) + ")";
 	private static final String _FINDER_COLUMN_G_S_L_SECTIONS_6 = "(" +
@@ -28325,11 +28318,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	private static final String _FINDER_COLUMN_G_S_M_GROUPID_2 = "kbArticle.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_1 = "kbArticle.sections IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_2 = "kbArticle.sections LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_3 = "(kbArticle.sections IS NULL OR kbArticle.sections LIKE '') AND ";
-	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_4 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_S_M_SECTIONS_1) + ")";
 	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_S_M_SECTIONS_2) + ")";
 	private static final String _FINDER_COLUMN_G_S_M_SECTIONS_6 = "(" +
@@ -29988,11 +29978,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	private static final String _FINDER_COLUMN_G_S_S_GROUPID_2 = "kbArticle.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_1 = "kbArticle.sections IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_2 = "kbArticle.sections LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_3 = "(kbArticle.sections IS NULL OR kbArticle.sections LIKE '') AND ";
-	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_4 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_S_S_SECTIONS_1) + ")";
 	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_S_S_SECTIONS_2) + ")";
 	private static final String _FINDER_COLUMN_G_S_S_SECTIONS_6 = "(" +
@@ -32652,6 +32639,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				start, end, orderByComparator);
 		}
 
+		urlTitle = Objects.toString(urlTitle, "");
+
 		if (statuses == null) {
 			statuses = new int[0];
 		}
@@ -33291,6 +33280,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			return countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses);
 		}
 
+		urlTitle = Objects.toString(urlTitle, "");
+
 		if (statuses == null) {
 			statuses = new int[0];
 		}
@@ -33372,7 +33363,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2 = "kbArticle.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2 = "kbArticle.kbFolderId = ? AND ";
-	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1 = "kbArticle.urlTitle IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2 = "kbArticle.urlTitle = ? AND ";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3 = "(kbArticle.urlTitle IS NULL OR kbArticle.urlTitle = '') AND ";
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_STATUS_2 = "kbArticle.status = ?";

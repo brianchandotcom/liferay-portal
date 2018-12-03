@@ -646,7 +646,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "assetVocabulary.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "assetVocabulary.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(assetVocabulary.uuid IS NULL OR assetVocabulary.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
@@ -893,7 +892,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "assetVocabulary.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "assetVocabulary.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(assetVocabulary.uuid IS NULL OR assetVocabulary.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "assetVocabulary.groupId = ?";
@@ -1481,7 +1479,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "assetVocabulary.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetVocabulary.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetVocabulary.uuid IS NULL OR assetVocabulary.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetVocabulary.companyId = ?";
@@ -3570,7 +3567,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "assetVocabulary.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "assetVocabulary.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "assetVocabulary.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetVocabulary.name IS NULL OR assetVocabulary.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN = new FinderPath(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
@@ -4555,7 +4551,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 = "assetVocabulary.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_1 = "assetVocabulary.name IS NULL";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 = "lower(assetVocabulary.name) LIKE ?";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 = "(assetVocabulary.name IS NULL OR assetVocabulary.name LIKE '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_ERC = new FinderPath(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
@@ -4818,7 +4813,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 = "assetVocabulary.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_1 = "assetVocabulary.externalReferenceCode IS NULL";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 = "assetVocabulary.externalReferenceCode = ?";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 = "(assetVocabulary.externalReferenceCode IS NULL OR assetVocabulary.externalReferenceCode = '')";
 

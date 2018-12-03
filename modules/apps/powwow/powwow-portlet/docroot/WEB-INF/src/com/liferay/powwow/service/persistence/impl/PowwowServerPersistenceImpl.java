@@ -674,7 +674,6 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_PT_A_PROVIDERTYPE_1 = "powwowServer.providerType IS NULL AND ";
 	private static final String _FINDER_COLUMN_PT_A_PROVIDERTYPE_2 = "powwowServer.providerType = ? AND ";
 	private static final String _FINDER_COLUMN_PT_A_PROVIDERTYPE_3 = "(powwowServer.providerType IS NULL OR powwowServer.providerType = '') AND ";
 	private static final String _FINDER_COLUMN_PT_A_ACTIVE_2 = "powwowServer.active = ?";

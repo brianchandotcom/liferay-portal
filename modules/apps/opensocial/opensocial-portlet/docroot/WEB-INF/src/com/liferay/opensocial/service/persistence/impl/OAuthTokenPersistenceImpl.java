@@ -708,10 +708,8 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_S_GADGETKEY_1 = "oAuthToken.gadgetKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_S_GADGETKEY_2 = "oAuthToken.gadgetKey = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_GADGETKEY_3 = "(oAuthToken.gadgetKey IS NULL OR oAuthToken.gadgetKey = '') AND ";
-	private static final String _FINDER_COLUMN_G_S_SERVICENAME_1 = "oAuthToken.serviceName IS NULL";
 	private static final String _FINDER_COLUMN_G_S_SERVICENAME_2 = "oAuthToken.serviceName = ?";
 	private static final String _FINDER_COLUMN_G_S_SERVICENAME_3 = "(oAuthToken.serviceName IS NULL OR oAuthToken.serviceName = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_U_G_S_M_T = new FinderPath(OAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
@@ -1091,14 +1089,11 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 	}
 
 	private static final String _FINDER_COLUMN_U_G_S_M_T_USERID_2 = "oAuthToken.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_G_S_M_T_GADGETKEY_1 = "oAuthToken.gadgetKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_GADGETKEY_2 = "oAuthToken.gadgetKey = ? AND ";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_GADGETKEY_3 = "(oAuthToken.gadgetKey IS NULL OR oAuthToken.gadgetKey = '') AND ";
-	private static final String _FINDER_COLUMN_U_G_S_M_T_SERVICENAME_1 = "oAuthToken.serviceName IS NULL AND ";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_SERVICENAME_2 = "oAuthToken.serviceName = ? AND ";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_SERVICENAME_3 = "(oAuthToken.serviceName IS NULL OR oAuthToken.serviceName = '') AND ";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_MODULEID_2 = "oAuthToken.moduleId = ? AND ";
-	private static final String _FINDER_COLUMN_U_G_S_M_T_TOKENNAME_1 = "oAuthToken.tokenName IS NULL";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_TOKENNAME_2 = "oAuthToken.tokenName = ?";
 	private static final String _FINDER_COLUMN_U_G_S_M_T_TOKENNAME_3 = "(oAuthToken.tokenName IS NULL OR oAuthToken.tokenName = '')";
 

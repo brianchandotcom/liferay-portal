@@ -1099,7 +1099,6 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	private static final String _FINDER_COLUMN_PMI_EA_POWWOWMEETINGID_2 = "powwowParticipant.powwowMeetingId = ? AND ";
-	private static final String _FINDER_COLUMN_PMI_EA_EMAILADDRESS_1 = "powwowParticipant.emailAddress IS NULL";
 	private static final String _FINDER_COLUMN_PMI_EA_EMAILADDRESS_2 = "powwowParticipant.emailAddress = ?";
 	private static final String _FINDER_COLUMN_PMI_EA_EMAILADDRESS_3 = "(powwowParticipant.emailAddress IS NULL OR powwowParticipant.emailAddress = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PMI_T = new FinderPath(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,

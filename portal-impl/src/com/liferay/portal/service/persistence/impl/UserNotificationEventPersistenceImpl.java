@@ -640,7 +640,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "userNotificationEvent.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "userNotificationEvent.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(userNotificationEvent.uuid IS NULL OR userNotificationEvent.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
@@ -1233,7 +1232,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "userNotificationEvent.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "userNotificationEvent.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(userNotificationEvent.uuid IS NULL OR userNotificationEvent.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "userNotificationEvent.companyId = ?";
@@ -2294,7 +2292,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "userNotificationEvent.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "userNotificationEvent.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(userNotificationEvent.type IS NULL OR userNotificationEvent.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_DT = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
@@ -7012,7 +7009,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	private static final String _FINDER_COLUMN_U_T_DT_D_USERID_2 = "userNotificationEvent.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_T_DT_D_TYPE_1 = "userNotificationEvent.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_U_T_DT_D_TYPE_2 = "userNotificationEvent.type = ? AND ";
 	private static final String _FINDER_COLUMN_U_T_DT_D_TYPE_3 = "(userNotificationEvent.type IS NULL OR userNotificationEvent.type = '') AND ";
 	private static final String _FINDER_COLUMN_U_T_DT_D_DELIVERYTYPE_2 = "userNotificationEvent.deliveryType = ? AND ";

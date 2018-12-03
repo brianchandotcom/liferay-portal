@@ -624,7 +624,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "app.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "app.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(app.uuid IS NULL OR app.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(AppModelImpl.ENTITY_CACHE_ENABLED,
@@ -1198,7 +1197,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "app.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "app.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(app.uuid IS NULL OR app.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "app.companyId = ?";
@@ -2438,7 +2436,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CATEGORY_CATEGORY_1 = "app.category IS NULL";
 	private static final String _FINDER_COLUMN_CATEGORY_CATEGORY_2 = "app.category = ?";
 	private static final String _FINDER_COLUMN_CATEGORY_CATEGORY_3 = "(app.category IS NULL OR app.category = '')";
 

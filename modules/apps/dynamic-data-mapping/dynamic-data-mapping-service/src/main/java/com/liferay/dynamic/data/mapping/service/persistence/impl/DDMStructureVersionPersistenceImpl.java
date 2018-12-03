@@ -849,7 +849,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	private static final String _FINDER_COLUMN_S_V_STRUCTUREID_2 = "ddmStructureVersion.structureId = ? AND ";
-	private static final String _FINDER_COLUMN_S_V_VERSION_1 = "ddmStructureVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_S_V_VERSION_2 = "ddmStructureVersion.version = ?";
 	private static final String _FINDER_COLUMN_S_V_VERSION_3 = "(ddmStructureVersion.version IS NULL OR ddmStructureVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_S_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,

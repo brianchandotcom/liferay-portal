@@ -627,7 +627,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "module.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "module.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(module.uuid IS NULL OR module.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
@@ -1206,7 +1205,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "module.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "module.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(module.uuid IS NULL OR module.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "module.companyId = ?";
@@ -2259,8 +2257,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_BUNDLESYMBOLICNAME_BUNDLESYMBOLICNAME_1 =
-		"module.bundleSymbolicName IS NULL";
 	private static final String _FINDER_COLUMN_BUNDLESYMBOLICNAME_BUNDLESYMBOLICNAME_2 =
 		"module.bundleSymbolicName = ?";
 	private static final String _FINDER_COLUMN_BUNDLESYMBOLICNAME_BUNDLESYMBOLICNAME_3 =
@@ -2807,7 +2803,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CONTEXTNAME_CONTEXTNAME_1 = "module.contextName IS NULL";
 	private static final String _FINDER_COLUMN_CONTEXTNAME_CONTEXTNAME_2 = "module.contextName = ?";
 	private static final String _FINDER_COLUMN_CONTEXTNAME_CONTEXTNAME_3 = "(module.contextName IS NULL OR module.contextName = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A_CN = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
@@ -3063,7 +3058,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	private static final String _FINDER_COLUMN_A_CN_APPID_2 = "module.appId = ? AND ";
-	private static final String _FINDER_COLUMN_A_CN_CONTEXTNAME_1 = "module.contextName IS NULL";
 	private static final String _FINDER_COLUMN_A_CN_CONTEXTNAME_2 = "module.contextName = ?";
 	private static final String _FINDER_COLUMN_A_CN_CONTEXTNAME_3 = "(module.contextName IS NULL OR module.contextName = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A_BSN_BV = new FinderPath(ModuleModelImpl.ENTITY_CACHE_ENABLED,
@@ -3375,10 +3369,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	private static final String _FINDER_COLUMN_A_BSN_BV_APPID_2 = "module.appId = ? AND ";
-	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLESYMBOLICNAME_1 = "module.bundleSymbolicName IS NULL AND ";
 	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLESYMBOLICNAME_2 = "module.bundleSymbolicName = ? AND ";
 	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLESYMBOLICNAME_3 = "(module.bundleSymbolicName IS NULL OR module.bundleSymbolicName = '') AND ";
-	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLEVERSION_1 = "module.bundleVersion IS NULL";
 	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLEVERSION_2 = "module.bundleVersion = ?";
 	private static final String _FINDER_COLUMN_A_BSN_BV_BUNDLEVERSION_3 = "(module.bundleVersion IS NULL OR module.bundleVersion = '')";
 

@@ -1034,10 +1034,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "userGroup.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "userGroup.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(userGroup.uuid IS NULL OR userGroup.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "userGroup.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "userGroup.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(userGroup.uuid_ IS NULL OR userGroup.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
@@ -2032,10 +2030,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "userGroup.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "userGroup.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(userGroup.uuid IS NULL OR userGroup.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "userGroup.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "userGroup.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(userGroup.uuid_ IS NULL OR userGroup.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "userGroup.companyId = ?";
@@ -4063,7 +4059,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "userGroup.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "userGroup.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "lower(userGroup.name) = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(userGroup.name IS NULL OR userGroup.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LIKEN = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
@@ -5042,7 +5037,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	private static final String _FINDER_COLUMN_C_LIKEN_COMPANYID_2 = "userGroup.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_LIKEN_NAME_1 = "userGroup.name IS NULL";
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_2 = "lower(userGroup.name) LIKE ?";
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_3 = "(userGroup.name IS NULL OR userGroup.name LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_P = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
@@ -5913,7 +5907,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 = "userGroup.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_1 = "userGroup.externalReferenceCode IS NULL";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 = "userGroup.externalReferenceCode = ?";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 = "(userGroup.externalReferenceCode IS NULL OR userGroup.externalReferenceCode = '')";
 

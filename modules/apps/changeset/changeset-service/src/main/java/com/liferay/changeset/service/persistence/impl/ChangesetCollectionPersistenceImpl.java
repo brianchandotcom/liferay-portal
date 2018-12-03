@@ -1899,7 +1899,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "changesetCollection.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "changesetCollection.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "changesetCollection.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(changesetCollection.name IS NULL OR changesetCollection.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N = new FinderPath(ChangesetCollectionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2486,7 +2485,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "changesetCollection.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "changesetCollection.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "changesetCollection.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(changesetCollection.name IS NULL OR changesetCollection.name = '')";
 

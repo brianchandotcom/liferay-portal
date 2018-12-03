@@ -1218,7 +1218,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEID_2 = "ddmFormInstanceRecordVersion.formInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEVERSION_1 = "ddmFormInstanceRecordVersion.formInstanceVersion IS NULL";
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEVERSION_2 = "ddmFormInstanceRecordVersion.formInstanceVersion = ?";
 	private static final String _FINDER_COLUMN_F_F_FORMINSTANCEVERSION_3 = "(ddmFormInstanceRecordVersion.formInstanceVersion IS NULL OR ddmFormInstanceRecordVersion.formInstanceVersion = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_F_V = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -1469,7 +1468,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_F_V_FORMINSTANCERECORDID_2 = "ddmFormInstanceRecordVersion.formInstanceRecordId = ? AND ";
-	private static final String _FINDER_COLUMN_F_V_VERSION_1 = "ddmFormInstanceRecordVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_F_V_VERSION_2 = "ddmFormInstanceRecordVersion.version = ?";
 	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(ddmFormInstanceRecordVersion.version IS NULL OR ddmFormInstanceRecordVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_S = new FinderPath(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2713,7 +2711,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_U_F_F_S_USERID_2 = "ddmFormInstanceRecordVersion.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_F_F_S_FORMINSTANCEID_2 = "ddmFormInstanceRecordVersion.formInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_U_F_F_S_FORMINSTANCEVERSION_1 = "ddmFormInstanceRecordVersion.formInstanceVersion IS NULL AND ";
 	private static final String _FINDER_COLUMN_U_F_F_S_FORMINSTANCEVERSION_2 = "ddmFormInstanceRecordVersion.formInstanceVersion = ? AND ";
 	private static final String _FINDER_COLUMN_U_F_F_S_FORMINSTANCEVERSION_3 = "(ddmFormInstanceRecordVersion.formInstanceVersion IS NULL OR ddmFormInstanceRecordVersion.formInstanceVersion = '') AND ";
 	private static final String _FINDER_COLUMN_U_F_F_S_STATUS_2 = "ddmFormInstanceRecordVersion.status = ?";

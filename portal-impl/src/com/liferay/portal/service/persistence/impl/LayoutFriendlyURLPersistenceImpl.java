@@ -643,7 +643,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutFriendlyURL.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutFriendlyURL.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutFriendlyURL.uuid IS NULL OR layoutFriendlyURL.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -890,7 +889,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layoutFriendlyURL.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layoutFriendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layoutFriendlyURL.uuid IS NULL OR layoutFriendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layoutFriendlyURL.groupId = ?";
@@ -1478,7 +1476,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutFriendlyURL.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutFriendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutFriendlyURL.uuid IS NULL OR layoutFriendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutFriendlyURL.companyId = ?";
@@ -3590,7 +3587,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	private static final String _FINDER_COLUMN_P_F_PLID_2 = "layoutFriendlyURL.plid = ? AND ";
-	private static final String _FINDER_COLUMN_P_F_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_P_F_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ?";
 	private static final String _FINDER_COLUMN_P_F_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -4137,6 +4133,8 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			Arrays.sort(plids);
 		}
 
+		languageId = Objects.toString(languageId, "");
+
 		Object[] finderArgs = new Object[] { StringUtil.merge(plids), languageId };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_P_L,
@@ -4237,7 +4235,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 	private static final String _FINDER_COLUMN_P_L_PLID_2 = "layoutFriendlyURL.plid = ? AND ";
 	private static final String _FINDER_COLUMN_P_L_PLID_7 = "layoutFriendlyURL.plid IN (";
-	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_1 = "layoutFriendlyURL.languageId IS NULL";
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -4876,7 +4873,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 = "layoutFriendlyURL.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ?";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_F_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -5205,10 +5201,8 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 	private static final String _FINDER_COLUMN_G_P_F_L_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_F_L_PRIVATELAYOUT_2 = "layoutFriendlyURL.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '') AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_1 = "layoutFriendlyURL.languageId IS NULL";
 	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 

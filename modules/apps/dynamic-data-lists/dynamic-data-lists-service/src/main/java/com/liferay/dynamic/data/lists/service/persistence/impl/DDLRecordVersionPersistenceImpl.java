@@ -1187,7 +1187,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	private static final String _FINDER_COLUMN_R_R_RECORDSETID_2 = "ddlRecordVersion.recordSetId = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_1 = "ddlRecordVersion.recordSetVersion IS NULL";
 	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_2 = "ddlRecordVersion.recordSetVersion = ?";
 	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_3 = "(ddlRecordVersion.recordSetVersion IS NULL OR ddlRecordVersion.recordSetVersion = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_R_V = new FinderPath(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -1432,7 +1431,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	private static final String _FINDER_COLUMN_R_V_RECORDID_2 = "ddlRecordVersion.recordId = ? AND ";
-	private static final String _FINDER_COLUMN_R_V_VERSION_1 = "ddlRecordVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_R_V_VERSION_2 = "ddlRecordVersion.version = ?";
 	private static final String _FINDER_COLUMN_R_V_VERSION_3 = "(ddlRecordVersion.version IS NULL OR ddlRecordVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_S = new FinderPath(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2652,7 +2650,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 	private static final String _FINDER_COLUMN_U_R_R_S_USERID_2 = "ddlRecordVersion.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_R_R_S_RECORDSETID_2 = "ddlRecordVersion.recordSetId = ? AND ";
-	private static final String _FINDER_COLUMN_U_R_R_S_RECORDSETVERSION_1 = "ddlRecordVersion.recordSetVersion IS NULL AND ";
 	private static final String _FINDER_COLUMN_U_R_R_S_RECORDSETVERSION_2 = "ddlRecordVersion.recordSetVersion = ? AND ";
 	private static final String _FINDER_COLUMN_U_R_R_S_RECORDSETVERSION_3 = "(ddlRecordVersion.recordSetVersion IS NULL OR ddlRecordVersion.recordSetVersion = '') AND ";
 	private static final String _FINDER_COLUMN_U_R_R_S_STATUS_2 = "ddlRecordVersion.status = ?";

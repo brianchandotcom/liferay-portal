@@ -636,7 +636,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStorageLink.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStorageLink.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStorageLink.uuid IS NULL OR ddmStorageLink.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
@@ -1221,7 +1220,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmStorageLink.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmStorageLink.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmStorageLink.uuid IS NULL OR ddmStorageLink.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmStorageLink.companyId = ?";

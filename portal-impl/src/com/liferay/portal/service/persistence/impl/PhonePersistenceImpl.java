@@ -628,7 +628,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "phone.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "phone.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(phone.uuid IS NULL OR phone.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
@@ -1206,7 +1205,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "phone.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "phone.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(phone.uuid IS NULL OR phone.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "phone.companyId = ?";

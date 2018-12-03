@@ -2002,8 +2002,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_CLASSNAMEID_2 = "socialActivityLimit.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_CLASSPK_2 = "socialActivityLimit.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYTYPE_2 = "socialActivityLimit.activityType = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_1 =
-		"socialActivityLimit.activityCounterName IS NULL";
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2 =
 		"socialActivityLimit.activityCounterName = ?";
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3 =

@@ -636,7 +636,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddlRecordSet.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddlRecordSet.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddlRecordSet.uuid IS NULL OR ddlRecordSet.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
@@ -880,7 +879,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddlRecordSet.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddlRecordSet.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddlRecordSet.uuid IS NULL OR ddlRecordSet.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddlRecordSet.groupId = ?";
@@ -1463,7 +1461,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddlRecordSet.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddlRecordSet.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddlRecordSet.uuid IS NULL OR ddlRecordSet.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddlRecordSet.companyId = ?";
@@ -3032,7 +3029,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	}
 
 	private static final String _FINDER_COLUMN_G_R_GROUPID_2 = "ddlRecordSet.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_1 = "ddlRecordSet.recordSetKey IS NULL";
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_2 = "ddlRecordSet.recordSetKey = ?";
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_3 = "(ddlRecordSet.recordSetKey IS NULL OR ddlRecordSet.recordSetKey = '')";
 

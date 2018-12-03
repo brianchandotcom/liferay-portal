@@ -869,8 +869,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LOCALIZEDENTRYID_2 =
 		"localizedEntryLocalization.localizedEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LANGUAGEID_1 =
-		"localizedEntryLocalization.languageId IS NULL";
 	private static final String _FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LANGUAGEID_2 =
 		"localizedEntryLocalization.languageId = ?";
 	private static final String _FINDER_COLUMN_LOCALIZEDENTRYID_LANGUAGEID_LANGUAGEID_3 =

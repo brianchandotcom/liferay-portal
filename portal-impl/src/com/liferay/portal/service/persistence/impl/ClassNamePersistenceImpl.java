@@ -307,7 +307,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_VALUE_VALUE_1 = "className.value IS NULL";
 	private static final String _FINDER_COLUMN_VALUE_VALUE_2 = "className.value = ?";
 	private static final String _FINDER_COLUMN_VALUE_VALUE_3 = "(className.value IS NULL OR className.value = '')";
 

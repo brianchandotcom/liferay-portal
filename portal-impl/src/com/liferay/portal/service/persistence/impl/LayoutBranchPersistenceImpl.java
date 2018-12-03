@@ -1414,7 +1414,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	private static final String _FINDER_COLUMN_L_P_N_LAYOUTSETBRANCHID_2 = "layoutBranch.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_N_PLID_2 = "layoutBranch.plid = ? AND ";
-	private static final String _FINDER_COLUMN_L_P_N_NAME_1 = "layoutBranch.name IS NULL";
 	private static final String _FINDER_COLUMN_L_P_N_NAME_2 = "layoutBranch.name = ?";
 	private static final String _FINDER_COLUMN_L_P_N_NAME_3 = "(layoutBranch.name IS NULL OR layoutBranch.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_L_P_M = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,

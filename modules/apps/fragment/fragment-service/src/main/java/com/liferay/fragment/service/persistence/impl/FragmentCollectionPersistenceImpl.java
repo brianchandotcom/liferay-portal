@@ -641,7 +641,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "fragmentCollection.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "fragmentCollection.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(fragmentCollection.uuid IS NULL OR fragmentCollection.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
@@ -886,7 +885,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "fragmentCollection.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "fragmentCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(fragmentCollection.uuid IS NULL OR fragmentCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "fragmentCollection.groupId = ?";
@@ -1475,7 +1473,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "fragmentCollection.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "fragmentCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(fragmentCollection.uuid IS NULL OR fragmentCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "fragmentCollection.companyId = ?";
@@ -2235,7 +2232,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	}
 
 	private static final String _FINDER_COLUMN_G_FCK_GROUPID_2 = "fragmentCollection.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_FCK_FRAGMENTCOLLECTIONKEY_1 = "fragmentCollection.fragmentCollectionKey IS NULL";
 	private static final String _FINDER_COLUMN_G_FCK_FRAGMENTCOLLECTIONKEY_2 = "fragmentCollection.fragmentCollectionKey = ?";
 	private static final String _FINDER_COLUMN_G_FCK_FRAGMENTCOLLECTIONKEY_3 = "(fragmentCollection.fragmentCollectionKey IS NULL OR fragmentCollection.fragmentCollectionKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN = new FinderPath(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2805,7 +2801,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 = "fragmentCollection.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_1 = "fragmentCollection.name IS NULL";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 = "lower(fragmentCollection.name) LIKE ?";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 = "(fragmentCollection.name IS NULL OR fragmentCollection.name LIKE '')";
 

@@ -633,7 +633,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "emailAddress.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "emailAddress.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(emailAddress.uuid IS NULL OR emailAddress.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
@@ -1217,7 +1216,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "emailAddress.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "emailAddress.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(emailAddress.uuid IS NULL OR emailAddress.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "emailAddress.companyId = ?";

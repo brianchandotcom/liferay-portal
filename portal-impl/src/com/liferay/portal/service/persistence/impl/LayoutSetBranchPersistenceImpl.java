@@ -2164,7 +2164,6 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 	private static final String _FINDER_COLUMN_G_P_N_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_N_PRIVATELAYOUT_2 = "layoutSetBranch.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "layoutSetBranch.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "layoutSetBranch.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(layoutSetBranch.name IS NULL OR layoutSetBranch.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,

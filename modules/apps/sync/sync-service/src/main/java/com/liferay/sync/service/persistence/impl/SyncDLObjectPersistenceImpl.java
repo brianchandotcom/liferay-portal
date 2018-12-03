@@ -623,7 +623,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TREEPATH_TREEPATH_1 = "syncDLObject.treePath IS NULL";
 	private static final String _FINDER_COLUMN_TREEPATH_TREEPATH_2 = "syncDLObject.treePath LIKE ?";
 	private static final String _FINDER_COLUMN_TREEPATH_TREEPATH_3 = "(syncDLObject.treePath IS NULL OR syncDLObject.treePath LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_M_R = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -2263,7 +2262,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	}
 
 	private static final String _FINDER_COLUMN_R_NOTE_REPOSITORYID_2 = "syncDLObject.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_R_NOTE_EVENT_1 = "syncDLObject.event IS NOT NULL";
 	private static final String _FINDER_COLUMN_R_NOTE_EVENT_2 = "syncDLObject.event != ?";
 	private static final String _FINDER_COLUMN_R_NOTE_EVENT_3 = "(syncDLObject.event IS NULL OR syncDLObject.event != '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_T = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -2846,7 +2844,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	}
 
 	private static final String _FINDER_COLUMN_R_T_REPOSITORYID_2 = "syncDLObject.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_R_T_TYPE_1 = "syncDLObject.type IS NULL";
 	private static final String _FINDER_COLUMN_R_T_TYPE_2 = "syncDLObject.type = ?";
 	private static final String _FINDER_COLUMN_R_T_TYPE_3 = "(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_NOTE = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -3447,10 +3444,8 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_T_NOTE_TREEPATH_1 = "syncDLObject.treePath IS NULL AND ";
 	private static final String _FINDER_COLUMN_T_NOTE_TREEPATH_2 = "syncDLObject.treePath LIKE ? AND ";
 	private static final String _FINDER_COLUMN_T_NOTE_TREEPATH_3 = "(syncDLObject.treePath IS NULL OR syncDLObject.treePath LIKE '') AND ";
-	private static final String _FINDER_COLUMN_T_NOTE_EVENT_1 = "syncDLObject.event IS NOT NULL";
 	private static final String _FINDER_COLUMN_T_NOTE_EVENT_2 = "syncDLObject.event != ?";
 	private static final String _FINDER_COLUMN_T_NOTE_EVENT_3 = "(syncDLObject.event IS NULL OR syncDLObject.event != '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_V_T = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -4069,10 +4064,8 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_V_T_VERSION_1 = "syncDLObject.version IS NULL AND ";
 	private static final String _FINDER_COLUMN_V_T_VERSION_2 = "syncDLObject.version = ? AND ";
 	private static final String _FINDER_COLUMN_V_T_VERSION_3 = "(syncDLObject.version IS NULL OR syncDLObject.version = '') AND ";
-	private static final String _FINDER_COLUMN_V_T_TYPE_1 = "syncDLObject.type IS NULL";
 	private static final String _FINDER_COLUMN_V_T_TYPE_2 = "syncDLObject.type = ?";
 	private static final String _FINDER_COLUMN_V_T_TYPE_3 = "(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_T_T = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -4316,7 +4309,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_T_T_TYPE_1 = "syncDLObject.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_T_T_TYPE_2 = "syncDLObject.type = ? AND ";
 	private static final String _FINDER_COLUMN_T_T_TYPE_3 = "(syncDLObject.type IS NULL OR syncDLObject.type = '') AND ";
 	private static final String _FINDER_COLUMN_T_T_TYPEPK_2 = "syncDLObject.typePK = ?";
@@ -5271,7 +5263,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 	private static final String _FINDER_COLUMN_M_R_NOTE_MODIFIEDTIME_2 = "syncDLObject.modifiedTime > ? AND ";
 	private static final String _FINDER_COLUMN_M_R_NOTE_REPOSITORYID_2 = "syncDLObject.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_M_R_NOTE_EVENT_1 = "syncDLObject.event IS NOT NULL";
 	private static final String _FINDER_COLUMN_M_R_NOTE_EVENT_2 = "syncDLObject.event != ?";
 	private static final String _FINDER_COLUMN_M_R_NOTE_EVENT_3 = "(syncDLObject.event IS NULL OR syncDLObject.event != '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_P_T = new FinderPath(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -6247,7 +6238,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 	private static final String _FINDER_COLUMN_R_P_T_REPOSITORYID_2 = "syncDLObject.repositoryId = ? AND ";
 	private static final String _FINDER_COLUMN_R_P_T_PARENTFOLDERID_2 = "syncDLObject.parentFolderId = ? AND ";
-	private static final String _FINDER_COLUMN_R_P_T_TYPE_1 = "syncDLObject.type IS NULL";
 	private static final String _FINDER_COLUMN_R_P_T_TYPE_2 = "syncDLObject.type = ?";
 	private static final String _FINDER_COLUMN_R_P_T_TYPE_3 = "(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 

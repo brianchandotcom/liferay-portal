@@ -638,7 +638,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ratingsEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ratingsEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ratingsEntry.uuid IS NULL OR ratingsEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -1220,7 +1219,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ratingsEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ratingsEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ratingsEntry.uuid IS NULL OR ratingsEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ratingsEntry.companyId = ?";

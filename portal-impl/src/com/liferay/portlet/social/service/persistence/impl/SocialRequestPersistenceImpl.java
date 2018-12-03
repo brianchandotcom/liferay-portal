@@ -634,7 +634,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "socialRequest.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "socialRequest.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
@@ -880,7 +879,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "socialRequest.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "socialRequest.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "socialRequest.groupId = ?";
@@ -1466,7 +1464,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "socialRequest.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "socialRequest.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "socialRequest.companyId = ?";

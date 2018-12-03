@@ -844,8 +844,6 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	}
 
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LVENTRYID_2 = "lvEntryLocalization.lvEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_1 =
-		"lvEntryLocalization.languageId IS NULL";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_2 =
 		"lvEntryLocalization.languageId = ?";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_3 =

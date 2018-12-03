@@ -633,7 +633,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "wikiNode.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "wikiNode.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(wikiNode.uuid IS NULL OR wikiNode.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
@@ -877,7 +876,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "wikiNode.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "wikiNode.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(wikiNode.uuid IS NULL OR wikiNode.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "wikiNode.groupId = ?";
@@ -1460,7 +1458,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "wikiNode.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "wikiNode.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(wikiNode.uuid IS NULL OR wikiNode.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "wikiNode.companyId = ?";
@@ -3064,7 +3061,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "wikiNode.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "wikiNode.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "wikiNode.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(wikiNode.name IS NULL OR wikiNode.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,

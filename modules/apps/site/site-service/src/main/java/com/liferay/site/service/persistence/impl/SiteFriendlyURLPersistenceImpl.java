@@ -637,7 +637,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "siteFriendlyURL.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "siteFriendlyURL.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(siteFriendlyURL.uuid IS NULL OR siteFriendlyURL.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -882,7 +881,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "siteFriendlyURL.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "siteFriendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(siteFriendlyURL.uuid IS NULL OR siteFriendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "siteFriendlyURL.groupId = ?";
@@ -1468,7 +1466,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "siteFriendlyURL.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "siteFriendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(siteFriendlyURL.uuid IS NULL OR siteFriendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "siteFriendlyURL.companyId = ?";
@@ -2259,7 +2256,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	}
 
 	private static final String _FINDER_COLUMN_C_F_COMPANYID_2 = "siteFriendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_1 = "siteFriendlyURL.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_2 = "siteFriendlyURL.friendlyURL = ?";
 	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_3 = "(siteFriendlyURL.friendlyURL IS NULL OR siteFriendlyURL.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_L = new FinderPath(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -2533,7 +2529,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 
 	private static final String _FINDER_COLUMN_C_G_L_COMPANYID_2 = "siteFriendlyURL.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_L_GROUPID_2 = "siteFriendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_1 = "siteFriendlyURL.languageId IS NULL";
 	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_2 = "siteFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_3 = "(siteFriendlyURL.languageId IS NULL OR siteFriendlyURL.languageId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_F_L = new FinderPath(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
@@ -2832,10 +2827,8 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	}
 
 	private static final String _FINDER_COLUMN_C_F_L_COMPANYID_2 = "siteFriendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_F_L_FRIENDLYURL_1 = "siteFriendlyURL.friendlyURL IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_F_L_FRIENDLYURL_2 = "siteFriendlyURL.friendlyURL = ? AND ";
 	private static final String _FINDER_COLUMN_C_F_L_FRIENDLYURL_3 = "(siteFriendlyURL.friendlyURL IS NULL OR siteFriendlyURL.friendlyURL = '') AND ";
-	private static final String _FINDER_COLUMN_C_F_L_LANGUAGEID_1 = "siteFriendlyURL.languageId IS NULL";
 	private static final String _FINDER_COLUMN_C_F_L_LANGUAGEID_2 = "siteFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_C_F_L_LANGUAGEID_3 = "(siteFriendlyURL.languageId IS NULL OR siteFriendlyURL.languageId = '')";
 

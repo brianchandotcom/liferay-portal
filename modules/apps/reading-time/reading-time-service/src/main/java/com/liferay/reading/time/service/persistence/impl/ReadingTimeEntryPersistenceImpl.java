@@ -638,7 +638,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "readingTimeEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "readingTimeEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -883,7 +882,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "readingTimeEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "readingTimeEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "readingTimeEntry.groupId = ?";
@@ -1471,7 +1469,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "readingTimeEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "readingTimeEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "readingTimeEntry.companyId = ?";

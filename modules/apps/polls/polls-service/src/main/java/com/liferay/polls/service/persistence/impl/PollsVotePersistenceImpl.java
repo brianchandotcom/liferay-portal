@@ -631,7 +631,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsVote.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsVote.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
@@ -875,7 +874,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "pollsVote.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "pollsVote.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "pollsVote.groupId = ?";
@@ -1457,7 +1455,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "pollsVote.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "pollsVote.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "pollsVote.companyId = ?";

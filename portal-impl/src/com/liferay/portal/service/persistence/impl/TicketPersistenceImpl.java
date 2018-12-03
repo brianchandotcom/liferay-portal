@@ -323,7 +323,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KEY_KEY_1 = "ticket.key IS NULL";
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
 	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T = new FinderPath(TicketModelImpl.ENTITY_CACHE_ENABLED,

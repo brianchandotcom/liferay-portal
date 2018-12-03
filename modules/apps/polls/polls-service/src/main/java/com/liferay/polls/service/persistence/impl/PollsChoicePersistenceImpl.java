@@ -633,7 +633,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsChoice.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsChoice.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
@@ -877,7 +876,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "pollsChoice.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "pollsChoice.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "pollsChoice.groupId = ?";
@@ -1461,7 +1459,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "pollsChoice.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "pollsChoice.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "pollsChoice.companyId = ?";
@@ -2214,7 +2211,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	private static final String _FINDER_COLUMN_Q_N_QUESTIONID_2 = "pollsChoice.questionId = ? AND ";
-	private static final String _FINDER_COLUMN_Q_N_NAME_1 = "pollsChoice.name IS NULL";
 	private static final String _FINDER_COLUMN_Q_N_NAME_2 = "pollsChoice.name = ?";
 	private static final String _FINDER_COLUMN_Q_N_NAME_3 = "(pollsChoice.name IS NULL OR pollsChoice.name = '')";
 

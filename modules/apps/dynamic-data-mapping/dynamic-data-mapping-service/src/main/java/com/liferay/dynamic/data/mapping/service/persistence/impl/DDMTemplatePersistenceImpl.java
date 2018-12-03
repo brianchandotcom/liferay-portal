@@ -636,7 +636,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmTemplate.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmTemplate.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -880,7 +879,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmTemplate.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmTemplate.groupId = ?";
@@ -1462,7 +1460,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmTemplate.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmTemplate.companyId = ?";
@@ -3371,7 +3368,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_1 = "ddmTemplate.templateKey IS NULL";
 	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_2 = "ddmTemplate.templateKey = ?";
 	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_3 = "(ddmTemplate.templateKey IS NULL OR ddmTemplate.templateKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -3911,7 +3907,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LANGUAGE = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -4456,7 +4451,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_LANGUAGE_LANGUAGE_1 = "ddmTemplate.language IS NULL";
 	private static final String _FINDER_COLUMN_LANGUAGE_LANGUAGE_2 = "ddmTemplate.language = ?";
 	private static final String _FINDER_COLUMN_LANGUAGE_LANGUAGE_3 = "(ddmTemplate.language IS NULL OR ddmTemplate.language = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_SMALLIMAGEID = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -8799,7 +8793,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	private static final String _FINDER_COLUMN_G_C_T_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_T_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_1 = "ddmTemplate.templateKey IS NULL";
 	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_2 = "ddmTemplate.templateKey = ?";
 	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_3 = "(ddmTemplate.templateKey IS NULL OR ddmTemplate.templateKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -9424,7 +9417,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	private static final String _FINDER_COLUMN_C_C_T_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -10546,10 +10538,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_G_C_C_T_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '')";
-	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_1_SQL = "ddmTemplate.type_ IS NULL";
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2_SQL = "ddmTemplate.type_ = ?";
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_3_SQL = "(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T_M =
@@ -11798,16 +11788,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_G_C_C_T_M_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_1 = "ddmTemplate.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_2 = "ddmTemplate.type = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '') AND ";
-	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_1_SQL = "ddmTemplate.type_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_2_SQL = "ddmTemplate.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_3_SQL = "(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = '') AND ";
-	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_1 = "ddmTemplate.mode IS NULL";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_2 = "ddmTemplate.mode = ?";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_3 = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode = '')";
-	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_1_SQL = "ddmTemplate.mode_ IS NULL";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_2_SQL = "ddmTemplate.mode_ = ?";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_3_SQL = "(ddmTemplate.mode_ IS NULL OR ddmTemplate.mode_ = '')";
 

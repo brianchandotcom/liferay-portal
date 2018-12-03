@@ -639,7 +639,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "journalFolder.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "journalFolder.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(journalFolder.uuid IS NULL OR journalFolder.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
@@ -883,7 +882,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "journalFolder.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "journalFolder.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(journalFolder.uuid IS NULL OR journalFolder.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "journalFolder.groupId = ?";
@@ -1469,7 +1467,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "journalFolder.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "journalFolder.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(journalFolder.uuid IS NULL OR journalFolder.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "journalFolder.companyId = ?";
@@ -4023,7 +4020,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "journalFolder.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "journalFolder.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "journalFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(journalFolder.name IS NULL OR journalFolder.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTS = new FinderPath(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
@@ -4823,7 +4819,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	private static final String _FINDER_COLUMN_G_P_N_GROUPID_2 = "journalFolder.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_N_PARENTFOLDERID_2 = "journalFolder.parentFolderId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "journalFolder.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "journalFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(journalFolder.name IS NULL OR journalFolder.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_S = new FinderPath(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,

@@ -316,8 +316,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_1 =
-		"release.servletContextName IS NULL";
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2 =
 		"lower(release.servletContextName) = ?";
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3 =

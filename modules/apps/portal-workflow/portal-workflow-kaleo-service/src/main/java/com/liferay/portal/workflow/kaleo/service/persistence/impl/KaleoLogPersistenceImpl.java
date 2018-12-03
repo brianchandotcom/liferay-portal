@@ -2735,7 +2735,6 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	}
 
 	private static final String _FINDER_COLUMN_KITI_T_KALEOINSTANCETOKENID_2 = "kaleoLog.kaleoInstanceTokenId = ? AND ";
-	private static final String _FINDER_COLUMN_KITI_T_TYPE_1 = "kaleoLog.type IS NULL";
 	private static final String _FINDER_COLUMN_KITI_T_TYPE_2 = "kaleoLog.type = ?";
 	private static final String _FINDER_COLUMN_KITI_T_TYPE_3 = "(kaleoLog.type IS NULL OR kaleoLog.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_KCN_KCPK_KITI_T =
@@ -3448,13 +3447,11 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_1 = "kaleoLog.kaleoClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_2 = "kaleoLog.kaleoClassName = ? AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_3 = "(kaleoLog.kaleoClassName IS NULL OR kaleoLog.kaleoClassName = '') AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSPK_2 = "kaleoLog.kaleoClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOINSTANCETOKENID_2 =
 		"kaleoLog.kaleoInstanceTokenId = ? AND ";
-	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_1 = "kaleoLog.type IS NULL";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_2 = "kaleoLog.type = ?";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_3 = "(kaleoLog.type IS NULL OR kaleoLog.type = '')";
 

@@ -1743,7 +1743,6 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "socialActivityAchievement.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "socialActivityAchievement.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "socialActivityAchievement.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(socialActivityAchievement.name IS NULL OR socialActivityAchievement.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F = new FinderPath(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
@@ -2576,7 +2575,6 @@ public class SocialActivityAchievementPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_U_N_GROUPID_2 = "socialActivityAchievement.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_N_USERID_2 = "socialActivityAchievement.userId = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_N_NAME_1 = "socialActivityAchievement.name IS NULL";
 	private static final String _FINDER_COLUMN_G_U_N_NAME_2 = "socialActivityAchievement.name = ?";
 	private static final String _FINDER_COLUMN_G_U_N_NAME_3 = "(socialActivityAchievement.name IS NULL OR socialActivityAchievement.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_F = new FinderPath(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,

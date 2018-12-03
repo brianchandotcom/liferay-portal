@@ -643,7 +643,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "bookmarksEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "bookmarksEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(bookmarksEntry.uuid IS NULL OR bookmarksEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -888,7 +887,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "bookmarksEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "bookmarksEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(bookmarksEntry.uuid IS NULL OR bookmarksEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "bookmarksEntry.groupId = ?";
@@ -1475,7 +1473,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "bookmarksEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "bookmarksEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(bookmarksEntry.uuid IS NULL OR bookmarksEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "bookmarksEntry.companyId = ?";

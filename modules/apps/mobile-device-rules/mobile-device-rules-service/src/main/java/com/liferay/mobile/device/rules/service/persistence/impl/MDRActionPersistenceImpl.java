@@ -631,7 +631,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mdrAction.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mdrAction.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
@@ -875,7 +874,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mdrAction.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mdrAction.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mdrAction.groupId = ?";
@@ -1457,7 +1455,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mdrAction.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mdrAction.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mdrAction.companyId = ?";

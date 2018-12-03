@@ -1038,10 +1038,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "organization.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "organization.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(organization.uuid IS NULL OR organization.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "organization.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "organization.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(organization.uuid_ IS NULL OR organization.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
@@ -2041,10 +2039,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "organization.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "organization.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(organization.uuid IS NULL OR organization.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "organization.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "organization.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(organization.uuid_ IS NULL OR organization.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "organization.companyId = ?";
@@ -5698,7 +5694,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	private static final String _FINDER_COLUMN_C_T_COMPANYID_2 = "organization.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_T_TREEPATH_1 = "organization.treePath IS NULL";
 	private static final String _FINDER_COLUMN_C_T_TREEPATH_2 = "organization.treePath LIKE ?";
 	private static final String _FINDER_COLUMN_C_T_TREEPATH_3 = "(organization.treePath IS NULL OR organization.treePath LIKE '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N = new FinderPath(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
@@ -5945,7 +5940,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "organization.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "organization.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "organization.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(organization.name IS NULL OR organization.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LIKEN = new FinderPath(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
@@ -6929,7 +6923,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	private static final String _FINDER_COLUMN_C_LIKEN_COMPANYID_2 = "organization.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_LIKEN_NAME_1 = "organization.name IS NULL";
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_2 = "lower(organization.name) LIKE ?";
 	private static final String _FINDER_COLUMN_C_LIKEN_NAME_3 = "(organization.name IS NULL OR organization.name LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_O_C_P = new FinderPath(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
@@ -8612,7 +8605,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	private static final String _FINDER_COLUMN_C_P_LIKEN_COMPANYID_2 = "organization.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_P_LIKEN_PARENTORGANIZATIONID_2 = "organization.parentOrganizationId = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_LIKEN_NAME_1 = "organization.name IS NULL";
 	private static final String _FINDER_COLUMN_C_P_LIKEN_NAME_2 = "lower(organization.name) LIKE ?";
 	private static final String _FINDER_COLUMN_C_P_LIKEN_NAME_3 = "(organization.name IS NULL OR organization.name LIKE '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_ERC = new FinderPath(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
@@ -8873,7 +8865,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 = "organization.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_1 = "organization.externalReferenceCode IS NULL";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 = "organization.externalReferenceCode = ?";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 = "(organization.externalReferenceCode IS NULL OR organization.externalReferenceCode = '')";
 

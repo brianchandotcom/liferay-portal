@@ -639,7 +639,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "assetListEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "assetListEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(assetListEntry.uuid IS NULL OR assetListEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -884,7 +883,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "assetListEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "assetListEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(assetListEntry.uuid IS NULL OR assetListEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "assetListEntry.groupId = ?";
@@ -1470,7 +1468,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "assetListEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetListEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetListEntry.uuid IS NULL OR assetListEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetListEntry.companyId = ?";
@@ -2581,7 +2578,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	}
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "assetListEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_TITLE_1 = "assetListEntry.title IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TITLE_2 = "assetListEntry.title = ?";
 	private static final String _FINDER_COLUMN_G_T_TITLE_3 = "(assetListEntry.title IS NULL OR assetListEntry.title = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKET = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -3565,7 +3561,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKET_GROUPID_2 = "assetListEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKET_TITLE_1 = "assetListEntry.title IS NULL";
 	private static final String _FINDER_COLUMN_G_LIKET_TITLE_2 = "lower(assetListEntry.title) LIKE ?";
 	private static final String _FINDER_COLUMN_G_LIKET_TITLE_3 = "(assetListEntry.title IS NULL OR assetListEntry.title LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_TY = new FinderPath(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,

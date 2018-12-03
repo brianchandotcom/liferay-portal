@@ -632,7 +632,6 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "address.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "address.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(address.uuid IS NULL OR address.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(AddressModelImpl.ENTITY_CACHE_ENABLED,
@@ -1213,7 +1212,6 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "address.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "address.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(address.uuid IS NULL OR address.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "address.companyId = ?";

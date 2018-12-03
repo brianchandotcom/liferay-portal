@@ -1025,10 +1025,8 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "gadget.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "gadget.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(gadget.uuid IS NULL OR gadget.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "gadget.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "gadget.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(gadget.uuid_ IS NULL OR gadget.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(GadgetModelImpl.ENTITY_CACHE_ENABLED,
@@ -2020,10 +2018,8 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "gadget.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "gadget.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(gadget.uuid IS NULL OR gadget.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "gadget.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "gadget.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(gadget.uuid_ IS NULL OR gadget.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "gadget.companyId = ?";
@@ -3128,7 +3124,6 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	}
 
 	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 = "gadget.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_URL_1 = "gadget.url IS NULL";
 	private static final String _FINDER_COLUMN_C_U_URL_2 = "gadget.url = ?";
 	private static final String _FINDER_COLUMN_C_U_URL_3 = "(gadget.url IS NULL OR gadget.url = '')";
 

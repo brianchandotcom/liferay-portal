@@ -1711,7 +1711,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	}
 
 	private static final String _FINDER_COLUMN_T_N_TABLEID_2 = "expandoColumn.tableId = ? AND ";
-	private static final String _FINDER_COLUMN_T_N_NAME_1 = "expandoColumn.name IS NULL";
 	private static final String _FINDER_COLUMN_T_N_NAME_2 = "expandoColumn.name = ?";
 	private static final String _FINDER_COLUMN_T_N_NAME_3 = "(expandoColumn.name IS NULL OR expandoColumn.name = '')";
 

@@ -1895,7 +1895,6 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	}
 
 	private static final String _FINDER_COLUMN_KNI_N_KALEONODEID_2 = "kaleoTransition.kaleoNodeId = ? AND ";
-	private static final String _FINDER_COLUMN_KNI_N_NAME_1 = "kaleoTransition.name IS NULL";
 	private static final String _FINDER_COLUMN_KNI_N_NAME_2 = "kaleoTransition.name = ?";
 	private static final String _FINDER_COLUMN_KNI_N_NAME_3 = "(kaleoTransition.name IS NULL OR kaleoTransition.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_KNI_DT = new FinderPath(KaleoTransitionModelImpl.ENTITY_CACHE_ENABLED,

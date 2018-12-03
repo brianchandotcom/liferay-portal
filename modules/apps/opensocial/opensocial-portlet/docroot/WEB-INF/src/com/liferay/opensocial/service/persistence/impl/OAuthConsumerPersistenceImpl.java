@@ -641,7 +641,6 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GADGETKEY_GADGETKEY_1 = "oAuthConsumer.gadgetKey IS NULL";
 	private static final String _FINDER_COLUMN_GADGETKEY_GADGETKEY_2 = "oAuthConsumer.gadgetKey = ?";
 	private static final String _FINDER_COLUMN_GADGETKEY_GADGETKEY_3 = "(oAuthConsumer.gadgetKey IS NULL OR oAuthConsumer.gadgetKey = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_S = new FinderPath(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
@@ -922,10 +921,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_S_GADGETKEY_1 = "oAuthConsumer.gadgetKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_S_GADGETKEY_2 = "oAuthConsumer.gadgetKey = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_GADGETKEY_3 = "(oAuthConsumer.gadgetKey IS NULL OR oAuthConsumer.gadgetKey = '') AND ";
-	private static final String _FINDER_COLUMN_G_S_SERVICENAME_1 = "oAuthConsumer.serviceName IS NULL";
 	private static final String _FINDER_COLUMN_G_S_SERVICENAME_2 = "oAuthConsumer.serviceName = ?";
 	private static final String _FINDER_COLUMN_G_S_SERVICENAME_3 = "(oAuthConsumer.serviceName IS NULL OR oAuthConsumer.serviceName = '')";
 

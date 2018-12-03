@@ -1038,10 +1038,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPrototype.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPrototype.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "layoutPrototype.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "layoutPrototype.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
@@ -2044,10 +2042,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPrototype.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPrototype.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "layoutPrototype.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "layoutPrototype.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPrototype.companyId = ?";

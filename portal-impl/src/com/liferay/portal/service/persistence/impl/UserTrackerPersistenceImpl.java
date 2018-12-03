@@ -1639,7 +1639,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_1 = "userTracker.sessionId IS NULL";
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_2 = "userTracker.sessionId = ?";
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = '')";
 

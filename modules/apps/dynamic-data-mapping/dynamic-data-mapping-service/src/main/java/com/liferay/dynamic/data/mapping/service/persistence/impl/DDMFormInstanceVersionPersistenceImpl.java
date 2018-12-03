@@ -861,7 +861,6 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 	}
 
 	private static final String _FINDER_COLUMN_F_V_FORMINSTANCEID_2 = "ddmFormInstanceVersion.formInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_F_V_VERSION_1 = "ddmFormInstanceVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_F_V_VERSION_2 = "ddmFormInstanceVersion.version = ?";
 	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(ddmFormInstanceVersion.version IS NULL OR ddmFormInstanceVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_S = new FinderPath(DDMFormInstanceVersionModelImpl.ENTITY_CACHE_ENABLED,

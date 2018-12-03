@@ -1500,7 +1500,6 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "segmentsEntry.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "segmentsEntry.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -2667,7 +2666,6 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	}
 
 	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "segmentsEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_K_KEY_1 = "segmentsEntry.key IS NULL";
 	private static final String _FINDER_COLUMN_G_K_KEY_2 = "segmentsEntry.key = ?";
 	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(segmentsEntry.key IS NULL OR segmentsEntry.key = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -3252,7 +3250,6 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	}
 
 	private static final String _FINDER_COLUMN_A_T_ACTIVE_2 = "segmentsEntry.active = ? AND ";
-	private static final String _FINDER_COLUMN_A_T_TYPE_1 = "segmentsEntry.type IS NULL";
 	private static final String _FINDER_COLUMN_A_T_TYPE_2 = "segmentsEntry.type = ?";
 	private static final String _FINDER_COLUMN_A_T_TYPE_3 = "(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_T = new FinderPath(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -4317,10 +4314,8 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	private static final String _FINDER_COLUMN_G_A_T_GROUPID_2 = "segmentsEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_T_ACTIVE_2 = "segmentsEntry.active = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_T_ACTIVE_2_SQL = "segmentsEntry.active_ = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_T_TYPE_1 = "segmentsEntry.type IS NULL";
 	private static final String _FINDER_COLUMN_G_A_T_TYPE_2 = "segmentsEntry.type = ?";
 	private static final String _FINDER_COLUMN_G_A_T_TYPE_3 = "(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
-	private static final String _FINDER_COLUMN_G_A_T_TYPE_1_SQL = "segmentsEntry.type_ IS NULL";
 	private static final String _FINDER_COLUMN_G_A_T_TYPE_2_SQL = "segmentsEntry.type_ = ?";
 	private static final String _FINDER_COLUMN_G_A_T_TYPE_3_SQL = "(segmentsEntry.type_ IS NULL OR segmentsEntry.type_ = '')";
 

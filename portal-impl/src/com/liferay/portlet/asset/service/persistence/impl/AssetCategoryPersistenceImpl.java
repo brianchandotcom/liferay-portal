@@ -677,7 +677,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "assetCategory.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "assetCategory.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(assetCategory.uuid IS NULL OR assetCategory.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
@@ -923,7 +922,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "assetCategory.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "assetCategory.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(assetCategory.uuid IS NULL OR assetCategory.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "assetCategory.groupId = ?";
@@ -1510,7 +1508,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "assetCategory.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetCategory.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetCategory.uuid IS NULL OR assetCategory.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetCategory.companyId = ?";
@@ -6346,7 +6343,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_P_N_PARENTCATEGORYID_2 = "assetCategory.parentCategoryId = ? AND ";
-	private static final String _FINDER_COLUMN_P_N_NAME_1 = "assetCategory.name IS NULL";
 	private static final String _FINDER_COLUMN_P_N_NAME_2 = "assetCategory.name = ?";
 	private static final String _FINDER_COLUMN_P_N_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_V = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
@@ -7478,7 +7474,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_N_V_NAME_1 = "assetCategory.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_N_V_NAME_2 = "assetCategory.name = ? AND ";
 	private static final String _FINDER_COLUMN_N_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name = '') AND ";
 	private static final String _FINDER_COLUMN_N_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
@@ -9423,6 +9418,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				orderByComparator);
 		}
 
+		name = Objects.toString(name, "");
+
 		if (vocabularyIds == null) {
 			vocabularyIds = new long[0];
 		}
@@ -10033,6 +10030,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			return countByG_LikeN_V(groupId, name, vocabularyIds);
 		}
 
+		name = Objects.toString(name, "");
+
 		if (vocabularyIds == null) {
 			vocabularyIds = new long[0];
 		}
@@ -10109,7 +10108,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_V_GROUPID_2 = "assetCategory.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_1 = "assetCategory.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_2 = "lower(assetCategory.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
@@ -10386,7 +10384,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_P_N_V_PARENTCATEGORYID_2 = "assetCategory.parentCategoryId = ? AND ";
-	private static final String _FINDER_COLUMN_P_N_V_NAME_1 = "assetCategory.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_P_N_V_NAME_2 = "assetCategory.name = ? AND ";
 	private static final String _FINDER_COLUMN_P_N_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name = '') AND ";
 	private static final String _FINDER_COLUMN_P_N_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
@@ -11522,7 +11519,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 	private static final String _FINDER_COLUMN_G_P_N_V_GROUPID_2 = "assetCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_N_V_PARENTCATEGORYID_2 = "assetCategory.parentCategoryId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_N_V_NAME_1 = "assetCategory.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_P_N_V_NAME_2 = "assetCategory.name = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_N_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_P_N_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
@@ -11785,7 +11781,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 = "assetCategory.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_1 = "assetCategory.externalReferenceCode IS NULL";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 = "assetCategory.externalReferenceCode = ?";
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 = "(assetCategory.externalReferenceCode IS NULL OR assetCategory.externalReferenceCode = '')";
 

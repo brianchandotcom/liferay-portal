@@ -636,7 +636,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStructure.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStructure.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
@@ -880,7 +879,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmStructure.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmStructure.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmStructure.groupId = ?";
@@ -1463,7 +1461,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmStructure.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmStructure.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmStructure.companyId = ?";
@@ -4359,7 +4356,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_1 = "ddmStructure.structureKey IS NULL";
 	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_2 = "ddmStructure.structureKey = ?";
 	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_3 = "(ddmStructure.structureKey IS NULL OR ddmStructure.structureKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
@@ -7525,7 +7521,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 = "ddmStructure.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_CLASSNAMEID_2 = "ddmStructure.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_S_STRUCTUREKEY_1 = "ddmStructure.structureKey IS NULL";
 	private static final String _FINDER_COLUMN_G_C_S_STRUCTUREKEY_2 = "ddmStructure.structureKey = ?";
 	private static final String _FINDER_COLUMN_G_C_S_STRUCTUREKEY_3 = "(ddmStructure.structureKey IS NULL OR ddmStructure.structureKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_N_D = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
@@ -8659,10 +8654,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	private static final String _FINDER_COLUMN_G_N_D_GROUPID_2 = "ddmStructure.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_D_NAME_1 = "ddmStructure.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_N_D_NAME_2 = "ddmStructure.name = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_D_NAME_3 = "(ddmStructure.name IS NULL OR ddmStructure.name = '') AND ";
-	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_1 = "ddmStructure.description IS NULL";
 	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_2 = "CAST_CLOB_TEXT(ddmStructure.description) = ?";
 	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_3 = "(ddmStructure.description IS NULL OR CAST_CLOB_TEXT(ddmStructure.description) = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_N_D = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
@@ -9736,6 +9729,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			Arrays.sort(groupIds);
 		}
 
+		name = Objects.toString(name, "");
+		description = Objects.toString(description, "");
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -10443,6 +10439,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			Arrays.sort(groupIds);
 		}
 
+		name = Objects.toString(name, "");
+		description = Objects.toString(description, "");
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE);
@@ -10529,10 +10528,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_G_C_N_D_GROUPID_2 = "ddmStructure.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_GROUPID_7 = "ddmStructure.groupId IN (";
 	private static final String _FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2 = "ddmStructure.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_N_D_NAME_1 = "ddmStructure.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_NAME_2 = "ddmStructure.name = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_NAME_3 = "(ddmStructure.name IS NULL OR ddmStructure.name = '') AND ";
-	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_1 = "ddmStructure.description IS NULL";
 	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_2 = "CAST_CLOB_TEXT(ddmStructure.description) = ?";
 	private static final String _FINDER_COLUMN_G_C_N_D_DESCRIPTION_3 = "(ddmStructure.description IS NULL OR CAST_CLOB_TEXT(ddmStructure.description) = '')";
 

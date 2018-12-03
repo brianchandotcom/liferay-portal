@@ -636,7 +636,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "fragmentEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "fragmentEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(fragmentEntry.uuid IS NULL OR fragmentEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -880,7 +879,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "fragmentEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "fragmentEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(fragmentEntry.uuid IS NULL OR fragmentEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "fragmentEntry.groupId = ?";
@@ -1466,7 +1464,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "fragmentEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "fragmentEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(fragmentEntry.uuid IS NULL OR fragmentEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "fragmentEntry.companyId = ?";
@@ -3295,7 +3292,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	}
 
 	private static final String _FINDER_COLUMN_G_FEK_GROUPID_2 = "fragmentEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_FEK_FRAGMENTENTRYKEY_1 = "fragmentEntry.fragmentEntryKey IS NULL";
 	private static final String _FINDER_COLUMN_G_FEK_FRAGMENTENTRYKEY_2 = "fragmentEntry.fragmentEntryKey = ?";
 	private static final String _FINDER_COLUMN_G_FEK_FRAGMENTENTRYKEY_3 = "(fragmentEntry.fragmentEntryKey IS NULL OR fragmentEntry.fragmentEntryKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_FCI_LIKEN =
@@ -3918,7 +3914,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_GROUPID_2 = "fragmentEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_FRAGMENTCOLLECTIONID_2 =
 		"fragmentEntry.fragmentCollectionId = ? AND ";
-	private static final String _FINDER_COLUMN_G_FCI_LIKEN_NAME_1 = "fragmentEntry.name IS NULL";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_NAME_2 = "lower(fragmentEntry.name) LIKE ?";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_NAME_3 = "(fragmentEntry.name IS NULL OR fragmentEntry.name LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_FCI_T = new FinderPath(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -5773,7 +5768,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_GROUPID_2 = "fragmentEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_FRAGMENTCOLLECTIONID_2 =
 		"fragmentEntry.fragmentCollectionId = ? AND ";
-	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_NAME_1 = "fragmentEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_NAME_2 = "lower(fragmentEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_NAME_3 = "(fragmentEntry.name IS NULL OR fragmentEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_STATUS_2 = "fragmentEntry.status = ?";

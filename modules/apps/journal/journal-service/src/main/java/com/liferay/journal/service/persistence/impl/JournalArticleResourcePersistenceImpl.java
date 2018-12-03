@@ -638,7 +638,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "journalArticleResource.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "journalArticleResource.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(journalArticleResource.uuid IS NULL OR journalArticleResource.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
@@ -885,7 +884,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "journalArticleResource.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "journalArticleResource.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(journalArticleResource.uuid IS NULL OR journalArticleResource.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "journalArticleResource.groupId = ?";
@@ -1478,7 +1476,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "journalArticleResource.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "journalArticleResource.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(journalArticleResource.uuid IS NULL OR journalArticleResource.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "journalArticleResource.companyId = ?";
@@ -2236,7 +2233,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "journalArticleResource.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_ARTICLEID_1 = "journalArticleResource.articleId IS NULL";
 	private static final String _FINDER_COLUMN_G_A_ARTICLEID_2 = "journalArticleResource.articleId = ?";
 	private static final String _FINDER_COLUMN_G_A_ARTICLEID_3 = "(journalArticleResource.articleId IS NULL OR journalArticleResource.articleId = '')";
 

@@ -2527,8 +2527,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LVENTRYID_2 = "lvEntryLocalizationVersion.lvEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_1 =
-		"lvEntryLocalizationVersion.languageId IS NULL";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_2 =
 		"lvEntryLocalizationVersion.languageId = ?";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_3 =
@@ -2814,8 +2812,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_VERSION_LVENTRYID_2 =
 		"lvEntryLocalizationVersion.lvEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_VERSION_LANGUAGEID_1 =
-		"lvEntryLocalizationVersion.languageId IS NULL AND ";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_VERSION_LANGUAGEID_2 =
 		"lvEntryLocalizationVersion.languageId = ? AND ";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_VERSION_LANGUAGEID_3 =

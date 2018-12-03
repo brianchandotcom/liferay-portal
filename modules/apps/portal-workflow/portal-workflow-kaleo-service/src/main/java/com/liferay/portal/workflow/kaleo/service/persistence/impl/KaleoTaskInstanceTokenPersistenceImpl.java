@@ -2487,7 +2487,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CN_CPK_CLASSNAME_1 = "kaleoTaskInstanceToken.className IS NULL AND ";
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSNAME_2 = "kaleoTaskInstanceToken.className = ? AND ";
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSNAME_3 = "(kaleoTaskInstanceToken.className IS NULL OR kaleoTaskInstanceToken.className = '') AND ";
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSPK_2 = "kaleoTaskInstanceToken.classPK = ?";

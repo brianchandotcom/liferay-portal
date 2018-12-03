@@ -639,7 +639,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFileVersion.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFileVersion.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -885,7 +884,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFileVersion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFileVersion.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "dlFileVersion.groupId = ?";
@@ -1473,7 +1471,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFileVersion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFileVersion.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "dlFileVersion.companyId = ?";
@@ -3044,7 +3041,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_1 = "dlFileVersion.mimeType IS NULL";
 	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_2 = "dlFileVersion.mimeType = ?";
 	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_3 = "(dlFileVersion.mimeType IS NULL OR dlFileVersion.mimeType = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTS = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -3821,7 +3817,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	private static final String _FINDER_COLUMN_F_V_FILEENTRYID_2 = "dlFileVersion.fileEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_F_V_VERSION_1 = "dlFileVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_F_V_VERSION_2 = "dlFileVersion.version = ?";
 	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_S = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -5661,10 +5656,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	private static final String _FINDER_COLUMN_G_F_T_V_GROUPID_2 = "dlFileVersion.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_FOLDERID_2 = "dlFileVersion.folderId = ? AND ";
-	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_1 = "dlFileVersion.title IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_2 = "dlFileVersion.title = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_3 = "(dlFileVersion.title IS NULL OR dlFileVersion.title = '') AND ";
-	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_1 = "dlFileVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_2 = "dlFileVersion.version = ?";
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 

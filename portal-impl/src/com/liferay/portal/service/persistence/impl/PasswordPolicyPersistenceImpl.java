@@ -1037,10 +1037,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "passwordPolicy.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "passwordPolicy.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(passwordPolicy.uuid IS NULL OR passwordPolicy.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "passwordPolicy.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "passwordPolicy.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(passwordPolicy.uuid_ IS NULL OR passwordPolicy.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
@@ -2042,10 +2040,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "passwordPolicy.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "passwordPolicy.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(passwordPolicy.uuid IS NULL OR passwordPolicy.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "passwordPolicy.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "passwordPolicy.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(passwordPolicy.uuid_ IS NULL OR passwordPolicy.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "passwordPolicy.companyId = ?";
@@ -3392,7 +3388,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "passwordPolicy.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "passwordPolicy.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "passwordPolicy.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(passwordPolicy.name IS NULL OR passwordPolicy.name = '')";
 

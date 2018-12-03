@@ -1334,7 +1334,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 = "region.countryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_REGIONCODE_1 = "region.regionCode IS NULL";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 = "region.regionCode = ?";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 = "(region.regionCode IS NULL OR region.regionCode = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,

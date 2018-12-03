@@ -841,7 +841,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	}
 
 	private static final String _FINDER_COLUMN_U_EA_USERID_2 = "entry.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_EA_EMAILADDRESS_1 = "entry.emailAddress IS NULL";
 	private static final String _FINDER_COLUMN_U_EA_EMAILADDRESS_2 = "entry.emailAddress = ?";
 	private static final String _FINDER_COLUMN_U_EA_EMAILADDRESS_3 = "(entry.emailAddress IS NULL OR entry.emailAddress = '')";
 

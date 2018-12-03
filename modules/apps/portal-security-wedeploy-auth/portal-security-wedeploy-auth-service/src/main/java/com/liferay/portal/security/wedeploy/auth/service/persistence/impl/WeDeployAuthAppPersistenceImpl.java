@@ -369,10 +369,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_RU_CI_REDIRECTURI_1 = "weDeployAuthApp.redirectURI IS NULL AND ";
 	private static final String _FINDER_COLUMN_RU_CI_REDIRECTURI_2 = "weDeployAuthApp.redirectURI = ? AND ";
 	private static final String _FINDER_COLUMN_RU_CI_REDIRECTURI_3 = "(weDeployAuthApp.redirectURI IS NULL OR weDeployAuthApp.redirectURI = '') AND ";
-	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_1 = "weDeployAuthApp.clientId IS NULL";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_2 = "weDeployAuthApp.clientId = ?";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_3 = "(weDeployAuthApp.clientId IS NULL OR weDeployAuthApp.clientId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
@@ -653,10 +651,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CI_CS_CLIENTID_1 = "weDeployAuthApp.clientId IS NULL AND ";
 	private static final String _FINDER_COLUMN_CI_CS_CLIENTID_2 = "weDeployAuthApp.clientId = ? AND ";
 	private static final String _FINDER_COLUMN_CI_CS_CLIENTID_3 = "(weDeployAuthApp.clientId IS NULL OR weDeployAuthApp.clientId = '') AND ";
-	private static final String _FINDER_COLUMN_CI_CS_CLIENTSECRET_1 = "weDeployAuthApp.clientSecret IS NULL";
 	private static final String _FINDER_COLUMN_CI_CS_CLIENTSECRET_2 = "weDeployAuthApp.clientSecret = ?";
 	private static final String _FINDER_COLUMN_CI_CS_CLIENTSECRET_3 = "(weDeployAuthApp.clientSecret IS NULL OR weDeployAuthApp.clientSecret = '')";
 

@@ -309,7 +309,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_WEBID_WEBID_1 = "company.webId IS NULL";
 	private static final String _FINDER_COLUMN_WEBID_WEBID_2 = "company.webId = ?";
 	private static final String _FINDER_COLUMN_WEBID_WEBID_3 = "(company.webId IS NULL OR company.webId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_MX = new FinderPath(CompanyModelImpl.ENTITY_CACHE_ENABLED,
@@ -544,7 +543,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_MX_MX_1 = "company.mx IS NULL";
 	private static final String _FINDER_COLUMN_MX_MX_2 = "company.mx = ?";
 	private static final String _FINDER_COLUMN_MX_MX_3 = "(company.mx IS NULL OR company.mx = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_LOGOID = new FinderPath(CompanyModelImpl.ENTITY_CACHE_ENABLED,

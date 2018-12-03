@@ -850,7 +850,6 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	}
 
 	private static final String _FINDER_COLUMN_RS_V_RECORDSETID_2 = "ddlRecordSetVersion.recordSetId = ? AND ";
-	private static final String _FINDER_COLUMN_RS_V_VERSION_1 = "ddlRecordSetVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_RS_V_VERSION_2 = "ddlRecordSetVersion.version = ?";
 	private static final String _FINDER_COLUMN_RS_V_VERSION_3 = "(ddlRecordSetVersion.version IS NULL OR ddlRecordSetVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_RS_S = new FinderPath(DDLRecordSetVersionModelImpl.ENTITY_CACHE_ENABLED,

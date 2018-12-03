@@ -308,7 +308,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NAME_NAME_1 = "country.name IS NULL";
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "country.name = ?";
 	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(country.name IS NULL OR country.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A2 = new FinderPath(CountryModelImpl.ENTITY_CACHE_ENABLED,
@@ -532,7 +531,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A2_A2_1 = "country.a2 IS NULL";
 	private static final String _FINDER_COLUMN_A2_A2_2 = "country.a2 = ?";
 	private static final String _FINDER_COLUMN_A2_A2_3 = "(country.a2 IS NULL OR country.a2 = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A3 = new FinderPath(CountryModelImpl.ENTITY_CACHE_ENABLED,
@@ -756,7 +754,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A3_A3_1 = "country.a3 IS NULL";
 	private static final String _FINDER_COLUMN_A3_A3_2 = "country.a3 = ?";
 	private static final String _FINDER_COLUMN_A3_A3_3 = "(country.a3 IS NULL OR country.a3 = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE = new FinderPath(CountryModelImpl.ENTITY_CACHE_ENABLED,

@@ -854,7 +854,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_A_L_ARTICLEPK_2 = "journalArticleLocalization.articlePK = ? AND ";
-	private static final String _FINDER_COLUMN_A_L_LANGUAGEID_1 = "journalArticleLocalization.languageId IS NULL";
 	private static final String _FINDER_COLUMN_A_L_LANGUAGEID_2 = "journalArticleLocalization.languageId = ?";
 	private static final String _FINDER_COLUMN_A_L_LANGUAGEID_3 = "(journalArticleLocalization.languageId IS NULL OR journalArticleLocalization.languageId = '')";
 

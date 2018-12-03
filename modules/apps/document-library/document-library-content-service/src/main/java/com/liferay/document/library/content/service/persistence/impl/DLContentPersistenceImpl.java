@@ -1255,7 +1255,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	private static final String _FINDER_COLUMN_C_R_P_COMPANYID_2 = "dlContent.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_P_REPOSITORYID_2 = "dlContent.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_P_PATH_1 = "dlContent.path IS NULL";
 	private static final String _FINDER_COLUMN_C_R_P_PATH_2 = "dlContent.path = ?";
 	private static final String _FINDER_COLUMN_C_R_P_PATH_3 = "(dlContent.path IS NULL OR dlContent.path = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_LIKEP =
@@ -1865,7 +1864,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	private static final String _FINDER_COLUMN_C_R_LIKEP_COMPANYID_2 = "dlContent.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_LIKEP_REPOSITORYID_2 = "dlContent.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_LIKEP_PATH_1 = "dlContent.path IS NULL";
 	private static final String _FINDER_COLUMN_C_R_LIKEP_PATH_2 = "dlContent.path LIKE ?";
 	private static final String _FINDER_COLUMN_C_R_LIKEP_PATH_3 = "(dlContent.path IS NULL OR dlContent.path LIKE '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_R_P_V = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
@@ -2186,10 +2184,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	private static final String _FINDER_COLUMN_C_R_P_V_COMPANYID_2 = "dlContent.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_P_V_REPOSITORYID_2 = "dlContent.repositoryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_P_V_PATH_1 = "dlContent.path IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_R_P_V_PATH_2 = "dlContent.path = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_P_V_PATH_3 = "(dlContent.path IS NULL OR dlContent.path = '') AND ";
-	private static final String _FINDER_COLUMN_C_R_P_V_VERSION_1 = "dlContent.version IS NULL";
 	private static final String _FINDER_COLUMN_C_R_P_V_VERSION_2 = "dlContent.version = ?";
 	private static final String _FINDER_COLUMN_C_R_P_V_VERSION_3 = "(dlContent.version IS NULL OR dlContent.version = '')";
 

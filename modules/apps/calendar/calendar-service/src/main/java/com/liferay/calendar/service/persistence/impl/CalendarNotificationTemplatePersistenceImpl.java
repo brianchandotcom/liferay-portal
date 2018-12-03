@@ -647,7 +647,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "calendarNotificationTemplate.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "calendarNotificationTemplate.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CalendarNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -895,7 +894,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "calendarNotificationTemplate.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "calendarNotificationTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "calendarNotificationTemplate.groupId = ?";
@@ -1493,7 +1491,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "calendarNotificationTemplate.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "calendarNotificationTemplate.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(calendarNotificationTemplate.uuid IS NULL OR calendarNotificationTemplate.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "calendarNotificationTemplate.companyId = ?";
@@ -2334,11 +2331,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_C_NT_NTT_CALENDARID_2 = "calendarNotificationTemplate.calendarId = ? AND ";
-	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_1 = "calendarNotificationTemplate.notificationType IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_2 = "calendarNotificationTemplate.notificationType = ? AND ";
 	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_3 = "(calendarNotificationTemplate.notificationType IS NULL OR calendarNotificationTemplate.notificationType = '') AND ";
-	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_1 =
-		"calendarNotificationTemplate.notificationTemplateType IS NULL";
 	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_2 =
 		"calendarNotificationTemplate.notificationTemplateType = ?";
 	private static final String _FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_3 =

@@ -673,7 +673,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "resourceBlock.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
@@ -1301,7 +1300,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	private static final String _FINDER_COLUMN_C_G_N_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_N_GROUPID_2 = "resourceBlock.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_N_NAME_1 = "resourceBlock.name IS NULL";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
@@ -1627,10 +1625,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	private static final String _FINDER_COLUMN_C_G_N_P_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_N_P_GROUPID_2 = "resourceBlock.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_N_P_NAME_1 = "resourceBlock.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_G_N_P_NAME_2 = "resourceBlock.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_N_P_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '') AND ";
-	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_1 = "resourceBlock.permissionsHash IS NULL";
 	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2 = "resourceBlock.permissionsHash = ?";
 	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3 = "(resourceBlock.permissionsHash IS NULL OR resourceBlock.permissionsHash = '')";
 

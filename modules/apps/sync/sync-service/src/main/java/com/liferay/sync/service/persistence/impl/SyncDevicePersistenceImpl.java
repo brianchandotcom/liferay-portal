@@ -632,7 +632,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "syncDevice.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "syncDevice.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(syncDevice.uuid IS NULL OR syncDevice.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
@@ -1214,7 +1213,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "syncDevice.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "syncDevice.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(syncDevice.uuid IS NULL OR syncDevice.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "syncDevice.companyId = ?";
@@ -2286,7 +2284,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	}
 
 	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 = "syncDevice.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_USERNAME_1 = "syncDevice.userName IS NULL";
 	private static final String _FINDER_COLUMN_C_U_USERNAME_2 = "lower(syncDevice.userName) LIKE ?";
 	private static final String _FINDER_COLUMN_C_U_USERNAME_3 = "(syncDevice.userName IS NULL OR syncDevice.userName LIKE '')";
 

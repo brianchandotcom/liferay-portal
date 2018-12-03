@@ -650,7 +650,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPageTemplateCollection.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPageTemplateCollection.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
@@ -898,7 +897,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layoutPageTemplateCollection.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layoutPageTemplateCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layoutPageTemplateCollection.groupId = ?";
@@ -1497,7 +1495,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPageTemplateCollection.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPageTemplateCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPageTemplateCollection.companyId = ?";
@@ -2632,7 +2629,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "layoutPageTemplateCollection.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "layoutPageTemplateCollection.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "layoutPageTemplateCollection.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(layoutPageTemplateCollection.name IS NULL OR layoutPageTemplateCollection.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
@@ -3639,7 +3635,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 = "layoutPageTemplateCollection.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_1 = "layoutPageTemplateCollection.name IS NULL";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 = "lower(layoutPageTemplateCollection.name) LIKE ?";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 = "(layoutPageTemplateCollection.name IS NULL OR layoutPageTemplateCollection.name LIKE '')";
 

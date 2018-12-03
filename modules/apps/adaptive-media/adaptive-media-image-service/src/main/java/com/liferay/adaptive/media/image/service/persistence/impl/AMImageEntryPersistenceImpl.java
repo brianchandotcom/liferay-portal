@@ -628,7 +628,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "amImageEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "amImageEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(amImageEntry.uuid IS NULL OR amImageEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -872,7 +871,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "amImageEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "amImageEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(amImageEntry.uuid IS NULL OR amImageEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "amImageEntry.groupId = ?";
@@ -1455,7 +1453,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "amImageEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "amImageEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(amImageEntry.uuid IS NULL OR amImageEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "amImageEntry.companyId = ?";
@@ -3022,8 +3019,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_1 =
-		"amImageEntry.configurationUuid IS NULL";
 	private static final String _FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_2 =
 		"amImageEntry.configurationUuid = ?";
 	private static final String _FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_3 =
@@ -4126,7 +4121,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "amImageEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CONFIGURATIONUUID_1 = "amImageEntry.configurationUuid IS NULL";
 	private static final String _FINDER_COLUMN_C_C_CONFIGURATIONUUID_2 = "amImageEntry.configurationUuid = ?";
 	private static final String _FINDER_COLUMN_C_C_CONFIGURATIONUUID_3 = "(amImageEntry.configurationUuid IS NULL OR amImageEntry.configurationUuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_F = new FinderPath(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -4371,7 +4365,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_F_CONFIGURATIONUUID_1 = "amImageEntry.configurationUuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_F_CONFIGURATIONUUID_2 = "amImageEntry.configurationUuid = ? AND ";
 	private static final String _FINDER_COLUMN_C_F_CONFIGURATIONUUID_3 = "(amImageEntry.configurationUuid IS NULL OR amImageEntry.configurationUuid = '') AND ";
 	private static final String _FINDER_COLUMN_C_F_FILEVERSIONID_2 = "amImageEntry.fileVersionId = ?";

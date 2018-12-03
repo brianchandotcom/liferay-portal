@@ -1023,10 +1023,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "sapEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "sapEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(sapEntry.uuid IS NULL OR sapEntry.uuid = '')";
-	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "sapEntry.uuid_ IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "sapEntry.uuid_ = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(sapEntry.uuid_ IS NULL OR sapEntry.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -2019,10 +2017,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "sapEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "sapEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(sapEntry.uuid IS NULL OR sapEntry.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "sapEntry.uuid_ IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "sapEntry.uuid_ = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(sapEntry.uuid_ IS NULL OR sapEntry.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "sapEntry.companyId = ?";
@@ -4052,7 +4048,6 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "sapEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_1 = "sapEntry.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "lower(sapEntry.name) = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(sapEntry.name IS NULL OR sapEntry.name = '')";
 

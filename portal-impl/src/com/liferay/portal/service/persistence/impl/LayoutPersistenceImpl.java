@@ -666,7 +666,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layout.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layout.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G_P = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -937,7 +936,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_P_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2 = "layout.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_P_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_P_GROUPID_2 = "layout.groupId = ? AND ";
@@ -1521,7 +1519,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layout.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layout.companyId = ?";
@@ -4157,8 +4154,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1 =
-		"layout.layoutPrototypeUuid IS NULL";
 	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2 =
 		"layout.layoutPrototypeUuid = ?";
 	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
@@ -4734,8 +4729,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1 =
-		"layout.sourcePrototypeLayoutUuid IS NULL";
 	private static final String _FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2 =
 		"layout.sourcePrototypeLayoutUuid = ?";
 	private static final String _FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3 =
@@ -6650,10 +6643,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "layout.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "layout.type = ?";
 	private static final String _FINDER_COLUMN_G_T_TYPE_3 = "(layout.type IS NULL OR layout.type = '')";
-	private static final String _FINDER_COLUMN_G_T_TYPE_1_SQL = "layout.type_ IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL = "layout.type_ = ?";
 	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_L = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -7239,7 +7230,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	private static final String _FINDER_COLUMN_C_L_COMPANYID_2 = "layout.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1 = "layout.layoutPrototypeUuid IS NULL";
 	private static final String _FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_2 = "layout.layoutPrototypeUuid = ?";
 	private static final String _FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3 = "(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_P_I = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -10372,10 +10362,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_G_P_T_GROUPID_2 = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ?";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = '')";
-	private static final String _FINDER_COLUMN_G_P_T_TYPE_1_SQL = "layout.type_ IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_SQL = "layout.type_ = ?";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_SQL = "(layout.type_ IS NULL OR layout.type_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_F = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -10649,7 +10637,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_1 = "layout.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 = "layout.friendlyURL = ?";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 = "(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_SPLU = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
@@ -10944,8 +10931,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_G_P_SPLU_GROUPID_2 = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1 =
-		"layout.sourcePrototypeLayoutUuid IS NULL";
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2 =
 		"layout.sourcePrototypeLayoutUuid = ?";
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =

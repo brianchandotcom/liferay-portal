@@ -634,7 +634,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "wikiPageResource.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "wikiPageResource.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
@@ -879,7 +878,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "wikiPageResource.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "wikiPageResource.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "wikiPageResource.groupId = ?";
@@ -1466,7 +1464,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "wikiPageResource.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "wikiPageResource.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "wikiPageResource.companyId = ?";
@@ -1712,7 +1709,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	}
 
 	private static final String _FINDER_COLUMN_N_T_NODEID_2 = "wikiPageResource.nodeId = ? AND ";
-	private static final String _FINDER_COLUMN_N_T_TITLE_1 = "wikiPageResource.title IS NULL";
 	private static final String _FINDER_COLUMN_N_T_TITLE_2 = "wikiPageResource.title = ?";
 	private static final String _FINDER_COLUMN_N_T_TITLE_3 = "(wikiPageResource.title IS NULL OR wikiPageResource.title = '')";
 

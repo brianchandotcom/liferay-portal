@@ -672,7 +672,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KCN_KCPK_KALEOCLASSNAME_1 = "kaleoTimer.kaleoClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KALEOCLASSNAME_2 = "kaleoTimer.kaleoClassName = ? AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KALEOCLASSNAME_3 = "(kaleoTimer.kaleoClassName IS NULL OR kaleoTimer.kaleoClassName = '') AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_KALEOCLASSPK_2 = "kaleoTimer.kaleoClassPK = ?";
@@ -1314,8 +1313,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KCN_KCPK_BLOCKING_KALEOCLASSNAME_1 =
-		"kaleoTimer.kaleoClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_BLOCKING_KALEOCLASSNAME_2 =
 		"kaleoTimer.kaleoClassName = ? AND ";
 	private static final String _FINDER_COLUMN_KCN_KCPK_BLOCKING_KALEOCLASSNAME_3 =

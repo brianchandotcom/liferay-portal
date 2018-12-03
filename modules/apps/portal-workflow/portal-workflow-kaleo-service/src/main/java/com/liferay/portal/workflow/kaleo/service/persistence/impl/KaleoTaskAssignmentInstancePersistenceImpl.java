@@ -2767,8 +2767,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ASSIGNEECLASSNAME_ASSIGNEECLASSNAME_1 =
-		"kaleoTaskAssignmentInstance.assigneeClassName IS NULL";
 	private static final String _FINDER_COLUMN_ASSIGNEECLASSNAME_ASSIGNEECLASSNAME_2 =
 		"kaleoTaskAssignmentInstance.assigneeClassName = ?";
 	private static final String _FINDER_COLUMN_ASSIGNEECLASSNAME_ASSIGNEECLASSNAME_3 =
@@ -3931,7 +3929,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACN_ACPK_ASSIGNEECLASSNAME_1 = "kaleoTaskAssignmentInstance.assigneeClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_ACN_ACPK_ASSIGNEECLASSNAME_2 = "kaleoTaskAssignmentInstance.assigneeClassName = ? AND ";
 	private static final String _FINDER_COLUMN_ACN_ACPK_ASSIGNEECLASSNAME_3 = "(kaleoTaskAssignmentInstance.assigneeClassName IS NULL OR kaleoTaskAssignmentInstance.assigneeClassName = '') AND ";
 	private static final String _FINDER_COLUMN_ACN_ACPK_ASSIGNEECLASSPK_2 = "kaleoTaskAssignmentInstance.assigneeClassPK = ?";

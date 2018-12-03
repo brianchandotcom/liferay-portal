@@ -1019,13 +1019,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	private static final String _FINDER_COLUMN_C_O_A_B_S_COMPANYID_2 = "oAuth2ScopeGrant.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_OAUTH2APPLICATIONSCOPEALIASESID_2 =
 		"oAuth2ScopeGrant.oAuth2ApplicationScopeAliasesId = ? AND ";
-	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_1 = "oAuth2ScopeGrant.applicationName IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_2 = "oAuth2ScopeGrant.applicationName = ? AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_3 = "(oAuth2ScopeGrant.applicationName IS NULL OR oAuth2ScopeGrant.applicationName = '') AND ";
-	private static final String _FINDER_COLUMN_C_O_A_B_S_BUNDLESYMBOLICNAME_1 = "oAuth2ScopeGrant.bundleSymbolicName IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_BUNDLESYMBOLICNAME_2 = "oAuth2ScopeGrant.bundleSymbolicName = ? AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_BUNDLESYMBOLICNAME_3 = "(oAuth2ScopeGrant.bundleSymbolicName IS NULL OR oAuth2ScopeGrant.bundleSymbolicName = '') AND ";
-	private static final String _FINDER_COLUMN_C_O_A_B_S_SCOPE_1 = "oAuth2ScopeGrant.scope IS NULL";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_SCOPE_2 = "oAuth2ScopeGrant.scope = ?";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_SCOPE_3 = "(oAuth2ScopeGrant.scope IS NULL OR oAuth2ScopeGrant.scope = '')";
 

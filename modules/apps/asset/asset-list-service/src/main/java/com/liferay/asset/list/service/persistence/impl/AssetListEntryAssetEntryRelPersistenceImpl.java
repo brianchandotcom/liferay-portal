@@ -647,7 +647,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "assetListEntryAssetEntryRel.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "assetListEntryAssetEntryRel.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(assetListEntryAssetEntryRel.uuid IS NULL OR assetListEntryAssetEntryRel.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
@@ -895,7 +894,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "assetListEntryAssetEntryRel.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "assetListEntryAssetEntryRel.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(assetListEntryAssetEntryRel.uuid IS NULL OR assetListEntryAssetEntryRel.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "assetListEntryAssetEntryRel.groupId = ?";
@@ -1494,7 +1492,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "assetListEntryAssetEntryRel.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "assetListEntryAssetEntryRel.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(assetListEntryAssetEntryRel.uuid IS NULL OR assetListEntryAssetEntryRel.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "assetListEntryAssetEntryRel.companyId = ?";

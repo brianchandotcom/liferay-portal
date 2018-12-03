@@ -312,7 +312,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_1 = "virtualHost.hostname IS NULL";
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_2 = "virtualHost.hostname = ?";
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_3 = "(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,

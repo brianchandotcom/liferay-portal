@@ -645,7 +645,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPageTemplateEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPageTemplateEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPageTemplateEntry.uuid IS NULL OR layoutPageTemplateEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -892,7 +891,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layoutPageTemplateEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layoutPageTemplateEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layoutPageTemplateEntry.uuid IS NULL OR layoutPageTemplateEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layoutPageTemplateEntry.groupId = ?";
@@ -1489,7 +1487,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPageTemplateEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPageTemplateEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPageTemplateEntry.uuid IS NULL OR layoutPageTemplateEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPageTemplateEntry.companyId = ?";
@@ -4092,7 +4089,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "layoutPageTemplateEntry.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "layoutPageTemplateEntry.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -6104,7 +6100,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_L_LIKEN_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_LAYOUTPAGETEMPLATECOLLECTIONID_2 =
 		"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
-	private static final String _FINDER_COLUMN_G_L_LIKEN_NAME_1 = "layoutPageTemplateEntry.name IS NULL";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ?";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L_T = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -9194,7 +9189,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_G_T_LIKEN_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_LIKEN_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_TYPE_2 = "layoutPageTemplateEntry.type = ?";
@@ -11326,7 +11320,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2 =
 		"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
-	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
@@ -15631,7 +15624,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";
@@ -16807,7 +16799,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_TYPE_2 = "layoutPageTemplateEntry.type = ?";
@@ -20279,7 +20270,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";

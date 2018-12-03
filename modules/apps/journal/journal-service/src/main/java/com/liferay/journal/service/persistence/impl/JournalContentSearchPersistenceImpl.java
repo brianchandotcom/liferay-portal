@@ -639,7 +639,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_1 = "journalContentSearch.portletId IS NULL";
 	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_2 = "journalContentSearch.portletId = ?";
 	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(journalContentSearch.portletId IS NULL OR journalContentSearch.portletId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ARTICLEID =
@@ -1192,7 +1191,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_1 = "journalContentSearch.articleId IS NULL";
 	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
@@ -2335,7 +2333,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	}
 
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "journalContentSearch.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_ARTICLEID_1 = "journalContentSearch.articleId IS NULL";
 	private static final String _FINDER_COLUMN_G_A_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_G_A_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_L = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
@@ -3566,7 +3563,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 	private static final String _FINDER_COLUMN_G_P_A_GROUPID_2 = "journalContentSearch.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_A_PRIVATELAYOUT_2 = "journalContentSearch.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_A_ARTICLEID_1 = "journalContentSearch.articleId IS NULL";
 	private static final String _FINDER_COLUMN_G_P_A_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_G_P_A_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_L_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
@@ -4245,7 +4241,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _FINDER_COLUMN_G_P_L_P_GROUPID_2 = "journalContentSearch.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_PRIVATELAYOUT_2 = "journalContentSearch.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_LAYOUTID_2 = "journalContentSearch.layoutId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_L_P_PORTLETID_1 = "journalContentSearch.portletId IS NULL";
 	private static final String _FINDER_COLUMN_G_P_L_P_PORTLETID_2 = "journalContentSearch.portletId = ?";
 	private static final String _FINDER_COLUMN_G_P_L_P_PORTLETID_3 = "(journalContentSearch.portletId IS NULL OR journalContentSearch.portletId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_L_P_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
@@ -4594,10 +4589,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _FINDER_COLUMN_G_P_L_P_A_GROUPID_2 = "journalContentSearch.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_PRIVATELAYOUT_2 = "journalContentSearch.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_LAYOUTID_2 = "journalContentSearch.layoutId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_L_P_A_PORTLETID_1 = "journalContentSearch.portletId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_PORTLETID_2 = "journalContentSearch.portletId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_PORTLETID_3 = "(journalContentSearch.portletId IS NULL OR journalContentSearch.portletId = '') AND ";
-	private static final String _FINDER_COLUMN_G_P_L_P_A_ARTICLEID_1 = "journalContentSearch.articleId IS NULL";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = '')";
 

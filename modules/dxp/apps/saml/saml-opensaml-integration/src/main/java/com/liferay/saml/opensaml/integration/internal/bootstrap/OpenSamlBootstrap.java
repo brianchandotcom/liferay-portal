@@ -27,6 +27,7 @@ import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.config.InitializationException;
 import org.opensaml.core.config.InitializationService;
 import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
+import org.opensaml.xmlsec.signature.support.SignatureValidator;
 import org.opensaml.xmlsec.signature.support.Signer;
 
 import org.osgi.framework.Bundle;
@@ -52,6 +53,13 @@ public class OpenSamlBootstrap {
 		initializeParserPool();
 
 		Method method = Signer.class.getDeclaredMethod("getSignerProvider");
+
+		method.setAccessible(true);
+
+		method.invoke(null);
+
+		method = SignatureValidator.class.getDeclaredMethod(
+			"getSignatureValidationProvider");
 
 		method.setAccessible(true);
 

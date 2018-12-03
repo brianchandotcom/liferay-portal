@@ -135,6 +135,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides the local service for accessing, adding, checking in/out, deleting,
@@ -833,10 +835,12 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String version)
 		throws PortalException {
 
-		if (Validator.isNull(version)) {
+		if (!_isValidFileVersionNumber(version)) {
 			throw new InvalidFileVersionException(
-				"Cannot delete version for file entry " + fileEntryId +
-					" because version is null");
+				StringBundler.concat(
+					"Cannot delete version for file entry ",
+					String.valueOf(fileEntryId), " because version number ",
+					version, " is not valid"));
 		}
 
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
@@ -1727,8 +1731,11 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isNull(version)) {
-			throw new InvalidFileVersionException("Version is null");
+		if (!_isValidFileVersionNumber(version)) {
+			throw new InvalidFileVersionException(
+				StringBundler.concat(
+					"Cannot revert file entry ", String.valueOf(fileEntryId),
+					" to version ", version, " because it is not valid"));
 		}
 
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
@@ -2453,8 +2460,9 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected String getNextVersion(
-		DLFileEntry dlFileEntry,
-		DLVersionNumberIncrease dlVersionNumberIncrease) {
+			DLFileEntry dlFileEntry,
+			DLVersionNumberIncrease dlVersionNumberIncrease)
+		throws InvalidFileVersionException {
 
 		String version = dlFileEntry.getVersion();
 
@@ -2464,6 +2472,15 @@ public class DLFileEntryLocalServiceImpl
 
 		if (dlFileVersion != null) {
 			version = dlFileVersion.getVersion();
+		}
+
+		if (!_isValidFileVersionNumber(version)) {
+			throw new InvalidFileVersionException(
+				StringBundler.concat(
+					"Cannot increase version number for file entry ",
+					String.valueOf(dlFileEntry.getFileEntryId()),
+					" because original version number ", version,
+					" is not valid"));
 		}
 
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
@@ -2886,6 +2903,24 @@ public class DLFileEntryLocalServiceImpl
 			previousDLFileVersion, nextDLFileVersion);
 	}
 
+	private boolean _isValidFileVersionNumber(String version) {
+		if (Validator.isNull(version)) {
+			return false;
+		}
+
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			return true;
+		}
+
+		Matcher matcher = _fileVersionPattern.matcher(version);
+
+		if (matcher.matches()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _overwritePreviousFileVersion(
 			User user, DLFileEntry dlFileEntry,
 			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion,
@@ -2986,6 +3021,8 @@ public class DLFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
+	private static final Pattern _fileVersionPattern = Pattern.compile(
+		"\\d+\\.\\d+");
 	private static volatile VersioningStrategy _versioningStrategy =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			VersioningStrategy.class, DLFileEntryLocalServiceImpl.class,

@@ -502,6 +502,18 @@ public class DetailASTUtil {
 		return false;
 	}
 
+	public static boolean isAtLineStart(DetailAST detailAST, String line) {
+		for (int i = 0; i < detailAST.getColumnNo(); i++) {
+			char c = line.charAt(i);
+
+			if ((c != CharPool.SPACE) && (c != CharPool.TAB)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static boolean isCollection(DetailAST detailAST) {
 		if (detailAST.getType() != TokenTypes.TYPE) {
 			return false;

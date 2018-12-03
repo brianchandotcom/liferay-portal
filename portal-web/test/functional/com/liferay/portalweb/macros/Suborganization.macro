@@ -1,7 +1,8 @@
 <definition>
 	<command name="addCP">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Add Organization" />
+			<var name="rowEntry" value="${orgName}" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${suborgName}" />

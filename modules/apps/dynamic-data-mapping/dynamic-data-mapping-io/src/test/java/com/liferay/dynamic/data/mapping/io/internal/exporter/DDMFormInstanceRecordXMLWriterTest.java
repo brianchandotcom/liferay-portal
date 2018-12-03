@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.mapping.io.internal.exporter;
 
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -39,13 +39,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 
@@ -238,13 +236,8 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 	}
 
 	protected void setUpPropsUtil() {
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED)
-		).thenReturn(
-			Boolean.TRUE.toString()
-		);
+		PropsTestUtil.setProps(
+			PropsKeys.XML_SECURITY_ENABLED, Boolean.TRUE.toString());
 	}
 
 	protected void setUpSAXReaderUtil() {

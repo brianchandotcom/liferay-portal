@@ -25,13 +25,12 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -41,7 +40,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 import org.junit.Assert;
@@ -421,7 +419,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	protected ClusterExecutorImpl getClusterExecutorImpl(boolean enabled) {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		Map<String, String> properties = new HashMap<>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put(
 			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
@@ -431,47 +429,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			"test-channel-properties-control");
 		properties.put(PropsKeys.CLUSTER_LINK_ENABLED, String.valueOf(enabled));
 
-		clusterExecutorImpl.setProps(
-			new Props() {
-
-				@Override
-				public boolean contains(String key) {
-					return false;
-				}
-
-				@Override
-				public String get(String key) {
-					return properties.getOrDefault(key, StringPool.BLANK);
-				}
-
-				@Override
-				public String get(String key, Filter filter) {
-					return null;
-				}
-
-				@Override
-				public String[] getArray(String key) {
-					return null;
-				}
-
-				@Override
-				public String[] getArray(String key, Filter filter) {
-					return null;
-				}
-
-				@Override
-				public Properties getProperties() {
-					return null;
-				}
-
-				@Override
-				public Properties getProperties(
-					String prefix, boolean removePrefix) {
-
-					return null;
-				}
-
-			});
+		clusterExecutorImpl.setProps(PropsTestUtil.setProps(properties));
 
 		clusterExecutorImpl.setClusterChannelFactory(
 			new TestClusterChannelFactory());

@@ -18,13 +18,16 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -44,9 +47,17 @@ public class EntityCacheImplTest {
 		_nullModel = ReflectionTestUtil.getFieldValue(
 			BasePersistenceImpl.class, "nullModel");
 
-		_props = (Props)ProxyUtil.newProxyInstance(
-			_classLoader, new Class<?>[] {Props.class},
-			new PropsInvocationHandler());
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE, "true");
+		properties.put(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true");
+		properties.put(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true");
+		properties.put(
+			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
+		properties.put(
+			PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD, "-1");
+
+		_props = PropsTestUtil.setProps(properties);
 	}
 
 	@Test

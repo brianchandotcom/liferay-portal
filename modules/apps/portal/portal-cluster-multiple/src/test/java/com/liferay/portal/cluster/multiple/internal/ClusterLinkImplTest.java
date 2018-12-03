@@ -17,14 +17,13 @@ package com.liferay.portal.cluster.multiple.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -314,8 +313,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				"test-channel-properties-transport-" + i);
 		}
 
-		Map<String, Properties> properties = new HashMap<>();
+		Map<String, Object> properties = new HashMap<>();
 
+		properties.put(PropsKeys.CLUSTER_LINK_ENABLED, String.valueOf(enabled));
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT,
+			new Properties());
 		properties.put(
 			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT,
 			channelNameProperties);
@@ -323,51 +326,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT,
 			channelPropertiesProperties);
 
-		clusterLinkImpl.setProps(
-			new Props() {
-
-				@Override
-				public boolean contains(String key) {
-					return true;
-				}
-
-				@Override
-				public String get(String key) {
-					if (PropsKeys.CLUSTER_LINK_ENABLED.equals(key)) {
-						return String.valueOf(enabled);
-					}
-
-					return StringPool.BLANK;
-				}
-
-				@Override
-				public String get(String key, Filter filter) {
-					return null;
-				}
-
-				@Override
-				public String[] getArray(String key) {
-					return null;
-				}
-
-				@Override
-				public String[] getArray(String key, Filter filter) {
-					return null;
-				}
-
-				@Override
-				public Properties getProperties() {
-					return new Properties();
-				}
-
-				@Override
-				public Properties getProperties(
-					String prefix, boolean removePrefix) {
-
-					return properties.getOrDefault(prefix, new Properties());
-				}
-
-			});
+		clusterLinkImpl.setProps(PropsTestUtil.setProps(properties));
 
 		clusterLinkImpl.setClusterChannelFactory(
 			new TestClusterChannelFactory());

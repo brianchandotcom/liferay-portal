@@ -15,9 +15,10 @@
 package com.liferay.portal.scheduler.internal.verify;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 
+import java.util.Collections;
 import java.util.Dictionary;
 
 import org.junit.Assert;
@@ -53,17 +54,8 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			schedulerHelperPropertiesVerifyProcess =
 				new SchedulerHelperPropertiesVerifyProcess();
 
-		Props props = Mockito.mock(Props.class);
-
-		schedulerHelperPropertiesVerifyProcess.props = props;
-
-		Mockito.when(
-			props.get(
-				SchedulerHelperPropertiesVerifyProcess.
-					LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB)
-		).thenReturn(
-			null
-		);
+		schedulerHelperPropertiesVerifyProcess.props = PropsTestUtil.setProps(
+			Collections.emptyMap());
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
@@ -98,17 +90,10 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			schedulerHelperPropertiesVerifyProcess =
 				new SchedulerHelperPropertiesVerifyProcess();
 
-		Props props = Mockito.mock(Props.class);
-
-		schedulerHelperPropertiesVerifyProcess.props = props;
-
-		Mockito.when(
-			props.get(
-				SchedulerHelperPropertiesVerifyProcess.
-					LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB)
-		).thenReturn(
-			"true"
-		);
+		schedulerHelperPropertiesVerifyProcess.props = PropsTestUtil.setProps(
+			SchedulerHelperPropertiesVerifyProcess.
+				LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB,
+			"true");
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);

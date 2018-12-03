@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.test.util;
 
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -22,20 +23,15 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
  */
 public class DocumentFixture {
-
-	public void mockProperty(String property, String value) {
-		Mockito.when(
-			props.get(property)
-		).thenReturn(
-			value
-		);
-	}
 
 	public void setUp() {
 		setUpFastDateFormatFactoryUtil();
@@ -70,30 +66,30 @@ public class DocumentFixture {
 	protected void setUpPropsUtil() {
 		_props = PropsUtil.getProps();
 
-		props = Mockito.mock(Props.class);
+		Map<String, Object> properties = new HashMap<>();
 
-		mockProperty(PropsKeys.INDEX_DATE_FORMAT_PATTERN, "yyyyMMddHHmmss");
-		mockProperty(
+		properties.put(PropsKeys.INDEX_DATE_FORMAT_PATTERN, "yyyyMMddHHmmss");
+		properties.put(
 			PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED, "true");
-		mockProperty(
+		properties.put(
 			PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD,
 			"50");
-		mockProperty(PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE, "80");
-		mockProperty(
+		properties.put(PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE, "80");
+		properties.put(
 			PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH, "true");
-		mockProperty(PropsKeys.INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE, "3");
-		mockProperty(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED, "true");
-		mockProperty(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD, "50");
-		mockProperty(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED, "true");
-		mockProperty(
+		properties.put(PropsKeys.INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE, "3");
+		properties.put(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED, "true");
+		properties.put(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD, "50");
+		properties.put(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED, "true");
+		properties.put(
 			PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX, "yyyyMMddHHmmss");
-		mockProperty(
+		properties.put(
 			PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD, "0");
-		mockProperty(PropsKeys.INDEX_SEARCH_SCORING_ENABLED, "true");
-		mockProperty(
+		properties.put(PropsKeys.INDEX_SEARCH_SCORING_ENABLED, "true");
+		properties.put(
 			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
 
-		PropsUtil.setProps(props);
+		props = PropsTestUtil.setProps(properties);
 	}
 
 	protected void tearDownFastDateFormatFactoryUtil() {

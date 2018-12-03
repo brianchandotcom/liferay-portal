@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.constants.SearchContextAttributes;
@@ -102,17 +103,7 @@ public class ElasticsearchIndexSearcherTest {
 	}
 
 	protected Props createProps() {
-		Props props = Mockito.mock(Props.class);
-
-		Mockito.doReturn(
-			"20"
-		).when(
-			props
-		).get(
-			PropsKeys.INDEX_SEARCH_LIMIT
-		);
-
-		return props;
+		return PropsTestUtil.setProps(PropsKeys.INDEX_SEARCH_LIMIT, "20");
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();

@@ -14,60 +14,32 @@
 
 package com.liferay.petra.encryptor;
 
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.security.Key;
 
-import org.junit.After;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Mika Koivisto
  * @see    com.liferay.util.EncryptorTest
  */
-@PowerMockIgnore("javax.crypto.*")
-@RunWith(PowerMockRunner.class)
-public class EncryptorTest extends PowerMockito {
-
-	@Before
-	public void setUp() {
-		_props = PropsUtil.getProps();
-
-		Props props = mock(Props.class);
-
-		PropsUtil.setProps(props);
-
-		when(
-			props.get(Mockito.eq(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM))
-		).thenReturn(
-			"AES"
-		);
-
-		when(
-			props.get(Mockito.eq(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE))
-		).thenReturn(
-			"128"
-		);
-	}
-
-	@After
-	public void tearDown() {
-		PropsUtil.setProps(_props);
-	}
+public class EncryptorTest {
 
 	@Test
 	public void testKeySerialization() throws Exception {
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM, "AES");
+		properties.put(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE, "128");
+
+		PropsTestUtil.setProps(properties);
+
 		Key key = Encryptor.generateKey();
 
 		String encryptedString = Encryptor.encrypt(key, "Hello World!");
@@ -79,7 +51,5 @@ public class EncryptorTest extends PowerMockito {
 		Assert.assertEquals(
 			"Hello World!", Encryptor.decrypt(key, encryptedString));
 	}
-
-	private Props _props;
 
 }

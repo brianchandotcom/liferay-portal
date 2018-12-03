@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1860,13 +1861,8 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	protected void setUpProps() {
-		_props = Mockito.mock(Props.class);
-
-		Mockito.when(
-			_props.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT)
-		).thenReturn(
-			"100"
-		);
+		_props = PropsTestUtil.setProps(
+			PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT, "100");
 	}
 
 	protected void setUpSchedulerEngineHelperUtil() {

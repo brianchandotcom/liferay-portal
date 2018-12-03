@@ -15,10 +15,9 @@
 package com.liferay.portal.odata.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -36,6 +35,7 @@ import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
@@ -57,7 +57,7 @@ public class ExpressionConvertImplTest {
 
 	@Before
 	public void setUp() {
-		PropsUtil.setProps(Mockito.mock(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();

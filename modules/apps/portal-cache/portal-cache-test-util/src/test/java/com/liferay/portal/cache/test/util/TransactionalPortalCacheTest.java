@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
@@ -529,7 +527,7 @@ public class TransactionalPortalCacheTest {
 			TransactionalPortalCacheHelper.class, "_transactionalCacheEnabled",
 			null);
 
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 
 		Assert.assertFalse(
 			"TransactionalPortalCacheHelper should be disabled",

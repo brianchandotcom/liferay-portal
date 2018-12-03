@@ -15,13 +15,8 @@
 package com.liferay.mentions.internal.util;
 
 import com.liferay.mentions.matcher.MentionsMatcher;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-
-import java.lang.reflect.Field;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,25 +33,9 @@ public class DefaultMentionsMatcherTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsUtil.class, "_props");
-
-		field.set(
-			null,
-			ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {Props.class},
-				(proxy, method, args) -> {
-					if (method.equals(
-							Props.class.getMethod("get", String.class)) &&
-						PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS.equals(
-							args[0])) {
-
-						return _SCREEN_NAME_SPECIAL_CHARS;
-					}
-
-					return null;
-				}));
+		PropsTestUtil.setProps(
+			PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS,
+			_SCREEN_NAME_SPECIAL_CHARS);
 
 		_mentionsMatcher = new DefaultMentionsMatcher();
 	}

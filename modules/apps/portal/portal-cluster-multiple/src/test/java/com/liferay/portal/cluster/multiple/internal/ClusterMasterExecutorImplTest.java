@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -33,9 +32,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -47,7 +46,6 @@ import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Exchanger;
@@ -826,47 +824,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			setPortalExecutorManager(new MockPortalExecutorManager());
 
-			setProps(
-				new Props() {
-
-					@Override
-					public boolean contains(String key) {
-						return false;
-					}
-
-					@Override
-					public String get(String key) {
-						return null;
-					}
-
-					@Override
-					public String get(String key, Filter filter) {
-						return null;
-					}
-
-					@Override
-					public String[] getArray(String key) {
-						return null;
-					}
-
-					@Override
-					public String[] getArray(String key, Filter filter) {
-						return null;
-					}
-
-					@Override
-					public Properties getProperties() {
-						return null;
-					}
-
-					@Override
-					public Properties getProperties(
-						String prefix, boolean removePrefix) {
-
-						return null;
-					}
-
-				});
+			setProps(PropsTestUtil.setProps(Collections.emptyMap()));
 
 			initialize(
 				"test-channel-logic-name-mock", "test-channel-properties-mock",

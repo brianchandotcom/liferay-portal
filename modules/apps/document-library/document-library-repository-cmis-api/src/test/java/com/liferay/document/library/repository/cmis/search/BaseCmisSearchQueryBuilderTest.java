@@ -26,14 +26,15 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.text.SimpleDateFormat;
+
+import java.util.Collections;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
@@ -41,7 +42,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -457,13 +457,7 @@ public class BaseCmisSearchQueryBuilderTest {
 	protected void setUpDateFormatFactoryUtil() {
 		String pattern = _INDEX_DATE_FORMAT_PATTERN;
 
-		Mockito.doReturn(
-			pattern
-		).when(
-			_props
-		).get(
-			PropsKeys.INDEX_DATE_FORMAT_PATTERN
-		);
+		PropsTestUtil.setProps(PropsKeys.INDEX_DATE_FORMAT_PATTERN, pattern);
 
 		DateFormatFactoryUtil dateFormatFactoryUtil =
 			new DateFormatFactoryUtil();
@@ -485,7 +479,7 @@ public class BaseCmisSearchQueryBuilderTest {
 	}
 
 	protected void setUpPropsUtil() {
-		PropsUtil.setProps(_props);
+		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	private static final long _DL_FOLDER_ID = RandomTestUtil.randomLong();
@@ -500,8 +494,5 @@ public class BaseCmisSearchQueryBuilderTest {
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE ";
 
 	private CMISSearchQueryBuilder _cmisSearchQueryBuilder;
-
-	@Mock
-	private Props _props;
 
 }

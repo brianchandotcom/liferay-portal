@@ -26,17 +26,18 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.internal.facet.SearchFacetTracker;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
+
+import java.util.Collections;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -209,7 +210,7 @@ public class SearchDisplayContextTest {
 
 		setUpRequestKeywords(keywords);
 
-		PropsUtil.setProps(Mockito.mock(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

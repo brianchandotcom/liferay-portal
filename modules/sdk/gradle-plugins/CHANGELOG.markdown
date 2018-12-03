@@ -6101,6 +6101,14 @@ to version 2.3.286.
 ### Changed
 - [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.2.
 
+## 3.13.22 - 2018-11-27
+
+### Changed
+- [LPS-86406]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.2.0.
+- [LPS-86406]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.248.
+
 ## 3.13.26 - 2018-11-30
 
 ### Fixed
@@ -6560,6 +6568,7 @@ to version 2.3.286.
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
+[LPS-86406]: https://issues.liferay.com/browse/LPS-86406
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
 [LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86447]: https://issues.liferay.com/browse/LPS-86447

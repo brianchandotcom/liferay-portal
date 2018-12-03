@@ -89,8 +89,6 @@
 										<aui:button name="changeLanguageButton" value="change" />
 									</div>
 								</aui:field-wrapper>
-
-								<aui:input label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="col-md-6">
@@ -224,6 +222,16 @@
 							</aui:fieldset>
 						</div>
 
+						<div class="hide row" id="sampleData">
+							<aui:fieldset cssClass="col-md-12">
+								<h3 class="sheet-subtitle">
+									<liferay-ui:message key="sample-data" />
+								</h3>
+
+								<aui:input disabled="<%= true %>" helpMessage="add-sample-data-help" id="addSampleData" label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA %>" />
+							</aui:fieldset>
+						</div>
+
 						<aui:button-row>
 							<aui:button name="finishButton" type="submit" value="finish-configuration" />
 						</aui:button-row>
@@ -243,6 +251,10 @@
 
 						var jdbcDefaultDriverClassName = A.one('#jdbcDefaultDriverName');
 						var jdbcDefaultURL = A.one('#jdbcDefaultURL');
+						var jdbcDefaultUserName = A.one('#jdbcDefaultUserName');
+
+						var sampleData = A.one('#sampleData');
+						var addSampleData = A.one('#addSampleData');
 
 						var command = A.one('#<%= Constants.CMD %>');
 						var setupForm = A.one('#fm');
@@ -258,8 +270,31 @@
 
 							customDatabaseOptions.toggle(!showDefault);
 
+							sampleData.toggle(!showDefault);
+
 							defaultDatabase.val(showDefault);
 						};
+
+						databaseSelector.on(
+							'focus',
+							function() {
+								addSampleData.removeAttribute('disabled');
+							}
+						);
+
+						jdbcDefaultURL.on(
+							'focus',
+							function() {
+								addSampleData.removeAttribute('disabled');
+							}
+						);
+
+						jdbcDefaultUserName.on(
+							'focus',
+							function() {
+								addSampleData.removeAttribute('disabled');
+							}
+						);
 
 						if (customDatabaseOptionsLink) {
 							customDatabaseOptionsLink.on('click', A.bind(toggleDatabaseOptions, null, false));

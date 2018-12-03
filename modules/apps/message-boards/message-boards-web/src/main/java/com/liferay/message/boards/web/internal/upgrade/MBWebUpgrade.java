@@ -14,9 +14,12 @@
 
 package com.liferay.message.boards.web.internal.upgrade;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +37,17 @@ public class MBWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradePortletSettings(_settingsFactory));
+
+		registry.register(
+			"1.0.0", "1.1.0",
+			new UpgradeStagingGroupTypeSettings(
+				_groupLocalService, MBPortletKeys.MESSAGE_BOARDS,
+				MBPortletKeys.MESSAGE_BOARDS_ADMIN));
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -41,6 +55,7 @@ public class MBWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
+	private GroupLocalService _groupLocalService;
 	private SettingsFactory _settingsFactory;
 
 }

@@ -14,10 +14,13 @@
 
 package com.liferay.document.library.web.internal.upgrade;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradeAdminPortlets;
 import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,6 +39,17 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradeAdminPortlets(),
 			new UpgradePortletSettings(_settingsFactory));
+
+		registry.register(
+			"1.0.0", "1.1.0",
+			new UpgradeStagingGroupTypeSettings(
+				_groupLocalService, DLPortletKeys.DOCUMENT_LIBRARY,
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -43,6 +57,7 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
+	private GroupLocalService _groupLocalService;
 	private SettingsFactory _settingsFactory;
 
 }

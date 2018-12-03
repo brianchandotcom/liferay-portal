@@ -64,20 +64,28 @@ public class UpgradeStagingGroupTypeSettings extends UpgradeProcess {
 					return;
 				}
 
-				String propertyKey = _getStagedPortletId(oldPortletId);
+				String oldPropertyKey = _getStagedPortletId(oldPortletId);
 
-				String propertyValue = typeSettingsProperties.getProperty(
-					propertyKey);
+				String oldPropertyValue = typeSettingsProperties.getProperty(
+					oldPropertyKey);
 
-				if (Validator.isNull(propertyValue)) {
-					return;
+				typeSettingsProperties.remove(oldPropertyKey);
+
+				String newPropertyKey = _getStagedPortletId(newPortletId);
+
+				String newPropertyValue = typeSettingsProperties.getProperty(
+					newPropertyKey);
+
+				if (Validator.isNull(newPropertyValue)) {
+					if (Validator.isNotNull(oldPropertyValue)) {
+						typeSettingsProperties.put(
+							newPropertyKey, oldPropertyValue);
+					}
+					else {
+						typeSettingsProperties.put(
+							newPropertyKey, Boolean.toString(false));
+					}
 				}
-
-				typeSettingsProperties.remove(propertyKey);
-
-				propertyKey = _getStagedPortletId(newPortletId);
-
-				typeSettingsProperties.put(propertyKey, propertyValue);
 
 				group.setTypeSettingsProperties(typeSettingsProperties);
 

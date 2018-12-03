@@ -31,15 +31,15 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Adam Brandizzi
+ * @author Rafael Praxedes
  */
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-workflow",
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-instance",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
-		"com.liferay.portlet.friendly-url-mapping=workflow",
+		"com.liferay.portlet.friendly-url-mapping=workflow_instance",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -47,24 +47,22 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Process Builder",
+		"javax.portlet.display-name=Submissions",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
+public class ControlPanelWorkflowInstancePortlet extends BaseWorkflowPortlet {
 
 	@Override
 	public List<String> getWorkflowPortletTabNames() {
-		return Arrays.asList(
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION,
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
+		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class WhitespaceAroundGenericsCheck extends BaseCheck {
 				log(detailAST, _MSG_MISSING_WHITESPACE, detailAST.getText());
 			}
 		}
-		else {
+		else if (!DetailASTUtil.isAtLineStart(detailAST, line)) {
 			char c = line.charAt(detailAST.getColumnNo() - 1);
 
 			if (c == CharPool.SPACE) {

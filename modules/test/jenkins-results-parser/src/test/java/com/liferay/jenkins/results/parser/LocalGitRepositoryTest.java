@@ -36,7 +36,8 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 			if (!REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
 				errorCollector.addError(
 					new Throwable(
-						"The repository directorydirectory should be " + REPOSITORY_DIR));
+						"The repository directorydirectory should be " +
+							REPOSITORY_DIR));
 			}
 		}
 		catch (IOException ioe) {

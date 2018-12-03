@@ -96,7 +96,8 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 
 		if (!expectedLabelNames.isEmpty()) {
 			errorCollector.addError(
-				new Throwable("Not all expected labels were found"));
+				new Throwable(
+					"Expected labels were not found: " + expectedLabelNames));
 		}
 	}
 
@@ -121,7 +122,16 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("color", "c7e8cb");
+		jsonObject.put("default", false);
+		jsonObject.put("description", "This is a description");
+		jsonObject.put("id", 884437936);
 		jsonObject.put("name", "ci:test - success");
+		jsonObject.put("node_id", "MDU6TGFiZWw4ODQ0Mzc5MzY=");
+		jsonObject.put(
+			"url",
+			JenkinsResultsParserUtil.combine(
+				"https://api.github.com/repos/liferay/liferay-portal/labels/",
+				"ci:test%20-%20success"));
 
 		GitHubRemoteGitRepository.Label expectedLabel =
 			new GitHubRemoteGitRepository.Label(
@@ -130,8 +140,13 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 		GitHubRemoteGitRepository.Label actualLabel = _getLabel(
 			"ci:test - success");
 
-		if (!actualLabel.equals(expectedLabel)) {
-			errorCollector.addError(new Throwable("Mismatched labels"));
+		if (!expectedLabel.equals(actualLabel)) {
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedLabel.toString(), "\nActual:   ",
+						actualLabel.toString())));
 		}
 	}
 
@@ -141,8 +156,14 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 
 		GitHubRemoteGitRepository.Label label = _getLabel("ci:test - success");
 
-		if (!expectedColor.equals(label.getColor())) {
-			errorCollector.addError(new Throwable("Mismatched label color"));
+		String actualColor = label.getColor();
+
+		if (!expectedColor.equals(actualColor)) {
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedColor, "\nActual:   ", actualColor)));
 		}
 	}
 
@@ -152,25 +173,39 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 
 		GitHubRemoteGitRepository.Label label = _getLabel("ci:test - success");
 
-		if (!expectedDescription.equals(label.getDescription())) {
+		String actualDescription = label.getDescription();
+
+		if (!expectedDescription.equals(actualDescription)) {
 			errorCollector.addError(
-				new Throwable("Mismatched label description"));
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedDescription, "\nActual:   ",
+						actualDescription)));
 		}
 	}
 
 	@Test
 	public void testLabelGetGitHubRemoteGitRepository() throws Exception {
-		GitHubRemoteGitRepository gitHubRemoteGitRepository =
+		GitHubRemoteGitRepository expectedGitHubRemoteGitRepository =
 			_getGitHubRemoteGitRepository();
 
 		GitHubRemoteGitRepository.Label label =
-			gitHubRemoteGitRepository.getLabel("ci:test - success");
+			expectedGitHubRemoteGitRepository.getLabel("ci:test - success");
 
-		if (!gitHubRemoteGitRepository.equals(
-				label.getGitHubRemoteGitRepository())) {
+		GitHubRemoteGitRepository actualGitHubRemoteGitRepository =
+			label.getGitHubRemoteGitRepository();
+
+		if (!expectedGitHubRemoteGitRepository.equals(
+				actualGitHubRemoteGitRepository)) {
 
 			errorCollector.addError(
-				new Throwable("Mismatched GitHubRemoteRepository"));
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedGitHubRemoteGitRepository.toString(),
+						"\nActual:   ",
+						actualGitHubRemoteGitRepository.toString())));
 		}
 	}
 
@@ -180,8 +215,14 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 
 		GitHubRemoteGitRepository.Label label = _getLabel(expectedLabelName);
 
-		if (!expectedLabelName.equals(label.getName())) {
-			errorCollector.addError(new Throwable("Mismatched label name"));
+		String actualLabelName = label.getName();
+
+		if (!expectedLabelName.equals(actualLabelName)) {
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedLabelName, "\nActual:   ", expectedLabelName)));
 		}
 	}
 

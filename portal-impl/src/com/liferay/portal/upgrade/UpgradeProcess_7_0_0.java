@@ -36,7 +36,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMobileDeviceRules;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeModulePortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMySQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeOrgLabor;
@@ -44,6 +43,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
+import com.liferay.portal.upgrade.v7_0_0.UpgradePortletIds;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePostgreSQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
@@ -103,9 +103,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradePhone());
 		upgrade(new UpgradePortalPreferences());
 		upgrade(new UpgradePortletDisplayTemplatePreferences());
-
-		upgrade(new UpgradeModulePortletId());
-
+		upgrade(new UpgradePortletIds());
 		upgrade(new UpgradePostgreSQL());
 		upgrade(new UpgradeRatings());
 		upgrade(new UpgradeRelease());

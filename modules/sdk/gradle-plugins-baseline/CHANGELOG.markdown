@@ -185,6 +185,11 @@ the project for baselining.
 - [LPS-87776]: Allow the `baseline` task to update the `Bundle-Version` header
 when all the `packageinfo` files are correct.
 
+## 2.0.4 - 2018-11-26
+
+### Changed
+- [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.2.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util

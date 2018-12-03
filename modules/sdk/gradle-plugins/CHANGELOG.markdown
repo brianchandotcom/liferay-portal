@@ -6096,6 +6096,11 @@ to version 2.3.286.
 ### Changed
 - [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.1.
 
+## 3.13.21 - 2018-11-26
+
+### Changed
+- [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.2.
+
 ## 3.13.26 - 2018-11-30
 
 ### Fixed

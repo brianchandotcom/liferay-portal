@@ -67,8 +67,11 @@ public class TransactionInterceptor
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		Transactional transactional = serviceBeanAopCacheManager.findAnnotation(
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		AnnotationHelper annotationHelper) {
+
+		Transactional transactional = annotationHelper.findAnnotation(
 			targetClass, method, Transactional.class);
 
 		if (transactional == null) {

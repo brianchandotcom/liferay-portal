@@ -116,6 +116,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		setDataAlwaysStaged(true);
 	}
 
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

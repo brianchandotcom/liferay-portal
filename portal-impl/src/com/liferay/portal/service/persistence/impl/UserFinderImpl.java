@@ -781,6 +781,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 	}
 
+	@Override
 	public List<User> findByUsersOrgsGtUserId(
 		long companyId, long organizationId, long gtUserId, int size) {
 
@@ -809,6 +810,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 	}
 
+	@Override
 	public List<User> findByUsersUserGroupsGtUserId(
 		long companyId, long userGroupId, long gtUserId, int size) {
 

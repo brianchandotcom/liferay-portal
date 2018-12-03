@@ -83,6 +83,7 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
 		unbind = "-"

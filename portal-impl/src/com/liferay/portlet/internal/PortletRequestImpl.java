@@ -983,6 +983,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			allRenderParameters, publicRenderParameterNames, portletNamespace);
 	}
 
+	@Override
 	public void invalidateSession() {
 		_invalidSession = true;
 	}

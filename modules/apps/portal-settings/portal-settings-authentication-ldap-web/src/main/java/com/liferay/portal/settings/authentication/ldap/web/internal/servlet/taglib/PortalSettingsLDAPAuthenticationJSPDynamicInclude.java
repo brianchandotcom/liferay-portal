@@ -45,6 +45,7 @@ public class PortalSettingsLDAPAuthenticationJSPDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
 		unbind = "-"

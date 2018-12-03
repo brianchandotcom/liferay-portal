@@ -70,6 +70,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		};
 	}
 
+	@Override
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
 		Company company) {
 
@@ -83,6 +84,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 	}
 
+	@Override
 	public AssetAutoTaggerConfiguration getAssetAutoTaggerConfiguration(
 		Group group) {
 

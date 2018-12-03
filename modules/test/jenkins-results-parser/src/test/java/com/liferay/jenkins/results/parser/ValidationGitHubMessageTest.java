@@ -67,6 +67,7 @@ public class ValidationGitHubMessageTest extends BuildTest {
 		assertSamples();
 	}
 
+	@Override
 	protected File getExpectedMessageFile(TestSample testSample) {
 		return new File(
 			testSample.getSampleDir(), "expected-validation-message.html");

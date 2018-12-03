@@ -68,6 +68,7 @@ public class AssetListPortletDataHandler extends BasePortletDataHandler {
 		return false;
 	}
 
+	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
 		return _portletDataHandlerHelper.validateSchemaVersion(
 			schemaVersion, getSchemaVersion());

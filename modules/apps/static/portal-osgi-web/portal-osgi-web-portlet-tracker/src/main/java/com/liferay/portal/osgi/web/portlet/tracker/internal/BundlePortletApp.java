@@ -178,10 +178,12 @@ public class BundlePortletApp implements PortletApp {
 		return _portletApp.getServletURLPatterns();
 	}
 
+	@Override
 	public int getSpecMajorVersion() {
 		return _specMajorVersion;
 	}
 
+	@Override
 	public int getSpecMinorVersion() {
 		return _specMinorVersion;
 	}
@@ -221,10 +223,12 @@ public class BundlePortletApp implements PortletApp {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setSpecMajorVersion(int specMajorVersion) {
 		_specMajorVersion = specMajorVersion;
 	}
 
+	@Override
 	public void setSpecMinorVersion(int specMinorVersion) {
 		_specMinorVersion = specMinorVersion;
 	}

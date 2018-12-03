@@ -84,6 +84,7 @@ public class LDAPServerConfigurationProviderImpl
 		return true;
 	}
 
+	@Override
 	public boolean delete(long companyId, long ldapServerId) {
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 			objectValuePairs = _configurations.get(companyId);

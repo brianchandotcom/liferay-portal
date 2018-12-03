@@ -44,6 +44,7 @@ public class SharingEntryFinderImpl
 	public static final String FIND_BY_TO_USER_ID =
 		SharingEntryFinder.class.getName() + ".findByToUserId";
 
+	@Override
 	public int countByToUserId(long toUserId, long classNameId) {
 		Session session = null;
 
@@ -86,6 +87,7 @@ public class SharingEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<SharingEntry> findByToUserId(
 		long toUserId, long classNameId, int begin, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {

@@ -31,6 +31,7 @@ public class JenkinsPerformanceTableUtilTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		downloadSample(
 			"master-success-1", "1682",

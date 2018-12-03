@@ -49,10 +49,12 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	public AssetListEntryImpl() {
 	}
 
+	@Override
 	public List<AssetEntry> getAssetEntries() {
 		return getAssetEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<AssetEntry> getAssetEntries(int start, int end) {
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
@@ -63,6 +65,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return _getDynamicAssetEntries(start, end);
 	}
 
+	@Override
 	public int getAssetEntriesCount() {
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
@@ -74,6 +77,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return AssetEntryLocalServiceUtil.getEntriesCount(getAssetEntryQuery());
 	}
 
+	@Override
 	public AssetEntryQuery getAssetEntryQuery() {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -136,6 +140,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return assetEntryQuery;
 	}
 
+	@Override
 	public String getTypeLabel() {
 		return AssetListEntryTypeConstants.getTypeLabel(getType());
 	}

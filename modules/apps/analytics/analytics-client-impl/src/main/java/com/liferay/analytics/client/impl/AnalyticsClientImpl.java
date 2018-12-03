@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class AnalyticsClientImpl implements AnalyticsClient {
 
+	@Override
 	public String sendAnalytics(AnalyticsEventsMessage analyticsEventsMessage)
 		throws Exception {
 

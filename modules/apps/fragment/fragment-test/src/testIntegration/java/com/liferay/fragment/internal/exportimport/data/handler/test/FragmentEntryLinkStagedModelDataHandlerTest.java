@@ -57,6 +57,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

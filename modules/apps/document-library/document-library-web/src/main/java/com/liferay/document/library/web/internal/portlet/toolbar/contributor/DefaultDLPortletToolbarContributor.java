@@ -119,6 +119,7 @@ public class DefaultDLPortletToolbarContributor
 		return urlMenuItem;
 	}
 
+	@Override
 	public List<MenuItem> getPortletTitleAddDocumentMenuItems(
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
@@ -151,6 +152,7 @@ public class DefaultDLPortletToolbarContributor
 		return menuItems;
 	}
 
+	@Override
 	public MenuItem getPortletTitleAddFolderMenuItem(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest,
 		Folder folder) {
@@ -193,6 +195,7 @@ public class DefaultDLPortletToolbarContributor
 		return urlMenuItem;
 	}
 
+	@Override
 	public MenuItem getPortletTitleAddMultipleDocumentsMenuItem(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest,
 		Folder folder) {

@@ -64,6 +64,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 		}
 	}
 
+	@Override
 	public void checkAddTemplatePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			long resourceClassNameId)
@@ -80,6 +81,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 			templatePermissionSupportServiceWrapper);
 	}
 
+	@Override
 	public void checkAddTemplatePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			String resourceClassName)

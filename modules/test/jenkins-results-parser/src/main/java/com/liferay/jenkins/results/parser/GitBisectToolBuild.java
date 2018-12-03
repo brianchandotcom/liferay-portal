@@ -291,6 +291,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return Dom4JUtil.getNewElement("td");
 	}
 
+	@Override
 	protected Element getJenkinsReportBodyElement() {
 		String buildURL = getBuildURL();
 
@@ -326,6 +327,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 					"em", null, "Indicates HEAD Commit (*)")));
 	}
 
+	@Override
 	protected Element getJenkinsReportHeadElement() {
 		return Dom4JUtil.getNewElement(
 			"head", null, getJenkinsReportHeadJQueryElement(),

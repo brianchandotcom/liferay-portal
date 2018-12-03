@@ -44,6 +44,7 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	 * @return description of the Form or empty string if not present in the
 	 *         String
 	 */
+	@Override
 	public String getDescription() {
 		JsonNode jsonNode = responseJsonNode.path(
 			HydraConstants.FieldNames.DESCRIPTION);
@@ -61,6 +62,7 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	 *
 	 * @return title of the Form or empty string if not present in the String
 	 */
+	@Override
 	public String getTitle() {
 		JsonNode jsonNode = responseJsonNode.path(
 			HydraConstants.FieldNames.TITLE);

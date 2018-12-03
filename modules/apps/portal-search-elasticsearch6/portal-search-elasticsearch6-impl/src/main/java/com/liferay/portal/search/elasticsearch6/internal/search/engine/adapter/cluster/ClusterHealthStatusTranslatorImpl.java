@@ -45,6 +45,7 @@ public class ClusterHealthStatusTranslatorImpl
 			"Unknown status: " + clusterHealthStatus);
 	}
 
+	@Override
 	public ClusterHealthStatus translate(
 		org.elasticsearch.cluster.health.ClusterHealthStatus
 			clusterHealthStatus) {

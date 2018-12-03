@@ -57,6 +57,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
+	@Override
 	public File exportLayoutsAsFile(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap)

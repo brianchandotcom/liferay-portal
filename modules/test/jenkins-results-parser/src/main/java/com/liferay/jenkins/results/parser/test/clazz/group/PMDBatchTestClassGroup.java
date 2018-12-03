@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class PMDBatchTestClassGroup extends BatchTestClassGroup {
 
+	@Override
 	public int getAxisCount() {
 		if (testAllFiles) {
 			return 1;

@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportImportConfigurationSettingsMapFactoryImpl
 	implements ExportImportConfigurationSettingsMapFactory {
 
+	@Override
 	public Map<String, Serializable> buildExportLayoutSettingsMap(
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
@@ -73,6 +74,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			timeZone);
 	}
 
+	@Override
 	public Map<String, Serializable> buildExportLayoutSettingsMap(
 		User user, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap) {
@@ -82,6 +84,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			user.getLocale(), user.getTimeZone());
 	}
 
+	@Override
 	public Map<String, Serializable> buildExportPortletSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
@@ -93,6 +96,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			null, locale, timeZone, fileName);
 	}
 
+	@Override
 	public Map<String, Serializable> buildExportPortletSettingsMap(
 		User user, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, String fileName) {
@@ -102,6 +106,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			parameterMap, user.getLocale(), user.getTimeZone(), fileName);
 	}
 
+	@Override
 	public Map<String, Serializable> buildImportLayoutSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
 		long[] layoutIds, Map<String, String[]> parameterMap, Locale locale,
@@ -113,6 +118,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			StringPool.BLANK, null, null, locale, timeZone, StringPool.BLANK);
 	}
 
+	@Override
 	public Map<String, Serializable> buildImportLayoutSettingsMap(
 		User user, long targetGroupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap) {
@@ -122,6 +128,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			parameterMap, user.getLocale(), user.getTimeZone());
 	}
 
+	@Override
 	public Map<String, Serializable> buildImportPortletSettingsMap(
 		long userId, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
@@ -132,6 +139,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			null, locale, timeZone, StringPool.BLANK);
 	}
 
+	@Override
 	public Map<String, Serializable> buildImportPortletSettingsMap(
 		User user, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap) {
@@ -141,6 +149,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			parameterMap, user.getLocale(), user.getTimeZone());
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishLayoutLocalSettingsMap(
 		long userId, long sourceGroupId, long targetGroupId,
 		boolean privateLayout, long[] layoutIds,
@@ -152,6 +161,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			StringPool.BLANK, null, null, locale, timeZone, StringPool.BLANK);
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishLayoutLocalSettingsMap(
 		User user, long sourceGroupId, long targetGroupId,
 		boolean privateLayout, long[] layoutIds,
@@ -162,6 +172,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			layoutIds, parameterMap, user.getLocale(), user.getTimeZone());
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishLayoutRemoteSettingsMap(
 		long userId, long sourceGroupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -176,6 +187,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			remotePrivateLayout, locale, timeZone, StringPool.BLANK);
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishLayoutRemoteSettingsMap(
 		User user, long sourceGroupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -190,6 +202,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			user.getLocale(), user.getTimeZone());
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishPortletSettingsMap(
 		long userId, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap,
@@ -201,6 +214,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			StringPool.BLANK, null, null, locale, timeZone, null);
 	}
 
+	@Override
 	public Map<String, Serializable> buildPublishPortletSettingsMap(
 		User user, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap) {
@@ -224,6 +238,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 	 *         otherwise, returns either a local or remote publish layout
 	 *         settings map, depending on the staging type
 	 */
+	@Override
 	public Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)
 		throws PortalException {

@@ -95,6 +95,7 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.connect.web)",
 		unbind = "-"

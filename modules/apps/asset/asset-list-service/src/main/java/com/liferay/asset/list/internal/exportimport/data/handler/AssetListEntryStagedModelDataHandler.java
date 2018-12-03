@@ -165,6 +165,7 @@ public class AssetListEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	@Override
 	protected boolean isSkipImportReferenceStagedModels() {
 		return true;
 	}

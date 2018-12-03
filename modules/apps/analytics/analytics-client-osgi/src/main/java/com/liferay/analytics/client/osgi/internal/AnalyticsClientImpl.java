@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AnalyticsClientImpl implements AnalyticsClient {
 
+	@Override
 	public String sendAnalytics(AnalyticsEventsMessage analyticsEventsMessage)
 		throws Exception {
 

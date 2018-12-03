@@ -166,6 +166,7 @@ public abstract class BaseRepositoryImpl
 			serviceContext);
 	}
 
+	@Override
 	public abstract void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
@@ -628,6 +629,7 @@ public abstract class BaseRepositoryImpl
 		}
 	}
 
+	@Override
 	public abstract FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,

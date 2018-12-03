@@ -35,6 +35,7 @@ public class PrimitivePropertyExpressionImpl
 		return expressionVisitor.visitPrimitivePropertyExpression(this);
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

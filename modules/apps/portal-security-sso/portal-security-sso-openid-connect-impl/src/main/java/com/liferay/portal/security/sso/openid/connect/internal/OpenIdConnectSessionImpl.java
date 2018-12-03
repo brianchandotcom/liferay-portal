@@ -48,10 +48,12 @@ public class OpenIdConnectSessionImpl
 		return _accessToken.getValue();
 	}
 
+	@Override
 	public long getLoginTime() {
 		return _loginTime;
 	}
 
+	@Override
 	public long getLoginUserId() {
 		return _loginUserId;
 	}
@@ -65,10 +67,12 @@ public class OpenIdConnectSessionImpl
 		return _nonce.getValue();
 	}
 
+	@Override
 	public OpenIdConnectFlowState getOpenIdConnectFlowState() {
 		return _openIdConnectFlowState;
 	}
 
+	@Override
 	public String getOpenIdProviderName() {
 		return _openIdProviderName;
 	}
@@ -107,6 +111,7 @@ public class OpenIdConnectSessionImpl
 		_loginUserId = loginUserId;
 	}
 
+	@Override
 	public void setOpenIdConnectFlowState(
 		OpenIdConnectFlowState openIdConnectFlowState) {
 

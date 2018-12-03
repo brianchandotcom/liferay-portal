@@ -466,6 +466,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			companyId, className, parentGroupId);
 	}
 
+	@Override
 	public List<Group> getGtGroups(
 			long gtGroupId, long companyId, long parentGroupId, boolean site,
 			int size)

@@ -76,6 +76,7 @@ public class ViewModulesManagementToolbarDisplayContext
 		return appDisplay;
 	}
 
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -98,6 +99,7 @@ public class ViewModulesManagementToolbarDisplayContext
 		};
 	}
 
+	@Override
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -118,6 +120,7 @@ public class ViewModulesManagementToolbarDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer getSearchContainer() throws Exception {
 		if (_searchContainer != null) {
 			return _searchContainer;

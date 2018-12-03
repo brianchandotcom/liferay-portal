@@ -5211,6 +5211,7 @@ public class JournalArticleLocalServiceImpl
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
+	@Override
 	public void setSubscriptionLocalService(
 		com.liferay.portal.kernel.service.SubscriptionLocalService
 			subscriptionLocalService) {

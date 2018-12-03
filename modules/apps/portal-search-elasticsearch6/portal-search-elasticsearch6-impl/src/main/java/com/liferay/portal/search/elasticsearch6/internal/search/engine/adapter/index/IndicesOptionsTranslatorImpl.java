@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = IndicesOptionsTranslator.class)
 public class IndicesOptionsTranslatorImpl implements IndicesOptionsTranslator {
 
+	@Override
 	public IndicesOptions translate(
 		com.liferay.portal.search.engine.adapter.index.IndicesOptions
 			indicesOptions) {

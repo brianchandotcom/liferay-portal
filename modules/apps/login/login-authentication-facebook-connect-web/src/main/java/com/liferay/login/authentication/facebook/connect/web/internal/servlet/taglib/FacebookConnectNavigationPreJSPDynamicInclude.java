@@ -106,6 +106,7 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 		_facebookConnect = facebookConnect;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.login.authentication.facebook.connect.web)",
 		unbind = "-"

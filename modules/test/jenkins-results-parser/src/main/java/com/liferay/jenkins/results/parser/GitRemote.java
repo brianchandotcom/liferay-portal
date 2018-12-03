@@ -62,6 +62,7 @@ public class GitRemote {
 		return _username;
 	}
 
+	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
 			getName(), " (", getRemoteURL(), ")");

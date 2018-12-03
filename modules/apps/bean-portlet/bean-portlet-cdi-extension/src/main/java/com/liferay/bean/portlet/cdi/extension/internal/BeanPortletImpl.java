@@ -237,6 +237,7 @@ public class BeanPortletImpl implements BeanPortlet {
 		return _asyncSupported;
 	}
 
+	@Override
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
 		HashMapDictionary<String, Object> dictionary =
 			new HashMapDictionary<>();

@@ -117,6 +117,7 @@ public class FragmentManagementToolbarDisplayContext
 		return "fragmentEntriesManagementToolbar";
 	}
 
+	@Override
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
@@ -171,6 +172,7 @@ public class FragmentManagementToolbarDisplayContext
 		};
 	}
 
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

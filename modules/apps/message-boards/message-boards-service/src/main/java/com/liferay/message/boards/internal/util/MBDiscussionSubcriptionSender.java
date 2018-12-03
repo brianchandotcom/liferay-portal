@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
  */
 public class MBDiscussionSubcriptionSender extends SubscriptionSender {
 
+	@Override
 	protected void sendEmailNotification(User user) throws Exception {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED)) {

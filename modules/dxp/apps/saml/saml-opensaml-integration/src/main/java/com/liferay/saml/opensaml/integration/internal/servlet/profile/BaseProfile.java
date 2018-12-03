@@ -50,6 +50,7 @@ import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.messaging.decoder.servlet.HttpServletRequestMessageDecoder;
 import org.opensaml.messaging.encoder.servlet.HttpServletResponseMessageEncoder;
+import org.opensaml.messaging.handler.MessageHandler;
 import org.opensaml.saml.common.SAMLObject;
 import org.opensaml.saml.common.binding.security.impl.SAMLOutboundProtocolMessageSigningHandler;
 import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
@@ -66,6 +67,11 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.xmlsec.SignatureValidationParameters;
+import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
+import org.opensaml.xmlsec.context.SecurityParametersContext;
+import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
+import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
 
 /**
  * @author Mika Koivisto
@@ -141,10 +147,15 @@ public abstract class BaseProfile {
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
 			roleDescriptor = entityDescriptor.getSPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
+
+			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
+			
+			samlPeerEntityContext.setRole(
+				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 
 		SAMLMetadataContext samlMetadataContext =
@@ -153,6 +164,36 @@ public abstract class BaseProfile {
 
 		samlMetadataContext.setEntityDescriptor(entityDescriptor);
 		samlMetadataContext.setRoleDescriptor(roleDescriptor);
+
+		MessageHandler securityPolicyResolver =
+			metadataManager.getSecurityPolicyResolver(
+				request, samlBindingContext.getBindingUri(), requireSignature);
+
+		SecurityParametersContext securityParametersContext =
+			inboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
+
+		BasicSignatureValidationParametersResolver
+			basicSignatureValidationParametersResolver =
+				new BasicSignatureValidationParametersResolver();
+
+		SignatureValidationParameters signatureValidationParameters =
+			basicSignatureValidationParametersResolver.resolveSingle(
+				new CriteriaSet(
+					new SignatureValidationConfigurationCriterion(
+						DefaultSecurityConfigurationBootstrap.
+							buildDefaultSignatureValidationConfiguration())));
+
+		signatureValidationParameters.setSignatureTrustEngine(
+			metadataManager.getSignatureTrustEngine());
+
+		securityParametersContext.setSignatureValidationParameters(
+			signatureValidationParameters);
+
+		inboundMessageContext.addSubcontext(
+			messageContext.getSubcontext(SAMLProtocolContext.class));
+
+		securityPolicyResolver.invoke(inboundMessageContext);
 
 		messageContext.removeSubcontext(SAMLPeerEntityContext.class);
 
@@ -200,9 +241,8 @@ public abstract class BaseProfile {
 
 		samlSelfMetadataContext.setEntityDescriptor(entityDescriptor);
 
-		SAMLProtocolContext samlProtocolContext =
-			samlSelfEntityContext.getSubcontext(
-				SAMLProtocolContext.class, true);
+		SAMLProtocolContext samlProtocolContext = messageContext.getSubcontext(
+			SAMLProtocolContext.class, true);
 
 		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 

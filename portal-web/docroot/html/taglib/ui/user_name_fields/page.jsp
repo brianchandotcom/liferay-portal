@@ -31,85 +31,87 @@
 </aui:select>
 
 <aui:script use="liferay-portlet-url">
-const form = document.getElementById('<portlet:namespace />fm');
-const select = document.getElementById('<portlet:namespace />languageId');
+	const form = document.getElementById('<portlet:namespace />fm');
+	const select = document.getElementById('<portlet:namespace />languageId');
 
-if (form && select) {
-	const maxLengthsCache = {};
-	const userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
-	const userNameFields = document.getElementById('<portlet:namespace />userNameFields');
+	if (form && select) {
+		const maxLengthsCache = {};
 
-	select.addEventListener(
-		'change',
-		function(event) {
-			const currentFormData = new FormData(form);
+		const userNameFields = document.getElementById('<portlet:namespace />userNameFields');
 
-			for (const tuple of currentFormData) {
-				const fieldName = tuple[0];
-
-				const field = userNameFields.querySelector('#' + fieldName);
-
-				if (field && field.hasAttribute('maxLength')) {
-					maxLengthsCache[fieldName] = field.getAttribute('maxLength');
-				}
-			}
-
-			userNameFields.insertAdjacentHTML('beforebegin', '<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
-
-			userNameFields.style.display = 'none';
-
-			const cleanUp = function() {
-				const loadingAnimation = document.getElementById('<portlet:namespace />loadingUserNameFields');
-
-				if (loadingAnimation) {
-					loadingAnimation.parentNode.removeChild(loadingAnimation);
-				}
-
-				if (userNameFields.style.display === 'none') {
-					userNameFields.style.display = '';
-				}
+		select.addEventListener(
+			'change',
+			function(event) {
+				const currentFormData = new FormData(form);
 
 				for (const tuple of currentFormData) {
 					const fieldName = tuple[0];
 
-					const newField = userNameFields.querySelector('#' + fieldName);
+					const field = userNameFields.querySelector('#' + fieldName);
 
-					if (newField) {
-						newField.value = tuple[1];
-
-						if (maxLengthsCache.hasOwnProperty(fieldName)) {
-							newField.setAttribute('maxLength', maxLengthsCache[fieldName]);
-						}
+					if (field && field.hasAttribute('maxLength')) {
+						maxLengthsCache[fieldName] = field.getAttribute('maxLength');
 					}
 				}
-			};
 
-			userDetailsURL.setParameter('languageId', select.value);
+				userNameFields.insertAdjacentHTML('beforebegin', '<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
 
-			fetch(userDetailsURL.toString())
-				.then(
-					function(response) {
-						return response.text();
+				userNameFields.style.display = 'none';
+
+				const cleanUp = function() {
+					const loadingAnimation = document.getElementById('<portlet:namespace />loadingUserNameFields');
+
+					if (loadingAnimation) {
+						loadingAnimation.parentNode.removeChild(loadingAnimation);
 					}
-				)
-				.then(
-					function(responseData) {
-						const temp = document.implementation.createHTMLDocument();
 
-						temp.body.innerHTML = responseData;
+					if (userNameFields.style.display === 'none') {
+						userNameFields.style.display = '';
+					}
 
-						const newUserNameFields = temp.getElementById('<portlet:namespace />userNameFields');
+					for (const tuple of currentFormData) {
+						const fieldName = tuple[0];
 
-						if (newUserNameFields) {
-							userNameFields.innerHTML = newUserNameFields.innerHTML;
+						const newField = userNameFields.querySelector('#' + fieldName);
+
+						if (newField) {
+							newField.value = tuple[1];
+
+							if (maxLengthsCache.hasOwnProperty(fieldName)) {
+								newField.setAttribute('maxLength', maxLengthsCache[fieldName]);
+							}
 						}
 					}
-				)
-				.then(cleanUp)
-				.catch(cleanUp);
-		}
-	);
-}
+				};
+
+				const userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
+
+				userDetailsURL.setParameter('languageId', select.value);
+
+				fetch(userDetailsURL.toString())
+					.then(
+						function(response) {
+							return response.text();
+						}
+					)
+					.then(
+						function(responseData) {
+							const temp = document.implementation.createHTMLDocument();
+
+							temp.body.innerHTML = responseData;
+
+							const newUserNameFields = temp.getElementById('<portlet:namespace />userNameFields');
+
+							if (newUserNameFields) {
+								userNameFields.innerHTML = newUserNameFields.innerHTML;
+							}
+						}
+					)
+					.then(cleanUp)
+					.catch(cleanUp);
+			}
+		);
+	}
 </aui:script>
 
 <%

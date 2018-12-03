@@ -27,7 +27,11 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Raymond Augé
+ *
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ * 	           com.liferay.portal.model.impl.ThemeImpl}
  */
+@Deprecated
 public class ThemeHelper {
 
 	public static final String TEMPLATE_EXTENSION_FTL = "ftl";

@@ -552,6 +552,14 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public String doPut(String url, List<NameValuePair> parameters)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
+
+		return doPut(url, parameters, Collections.<NameValuePair>emptyList());
+	}
+
+	@Override
 	public String doPut(
 			String url, List<NameValuePair> parameters,
 			List<NameValuePair> headers)

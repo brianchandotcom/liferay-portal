@@ -5105,6 +5105,12 @@ project property `artifactAppendix`.
 - [LPS-87890]: Override the `artifactVersion` extension object by setting the
 project property `artifactVersion`.
 
+## 5.5.126 - 2018-11-28
+
+### Changed
+- [LPS-87890]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.8.
+
 ## 5.5.128 - 2018-11-30
 
 ### Changed

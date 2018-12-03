@@ -922,8 +922,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 						x = x + pos + 1;
 					}
 				}
-				else if ((trimmedLine.length() + previousLineLength) <
-							getMaxLineLength()) {
+				else if (!trimmedPreviousLine.startsWith(").") &&
+						 (trimmedLine.length() + previousLineLength) <
+							 getMaxLineLength()) {
 
 					if ((getLevel(line, "{", "}") == 0) &&
 						(!trimmedLine.startsWith("new ") ||

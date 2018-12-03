@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
  * @author Balazs Safrany-Kovalik
  * @author Alberto Chaparro
  */
-public class UpgradeModulePortletId extends BaseUpgradePortletId {
+public class UpgradePortletIds extends BaseUpgradePortletId {
 
 	@Override
 	protected void doUpgrade() throws Exception {

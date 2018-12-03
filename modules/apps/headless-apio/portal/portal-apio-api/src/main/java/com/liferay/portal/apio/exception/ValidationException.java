@@ -36,7 +36,11 @@ public class ValidationException extends ClientErrorException {
 	 * @review
 	 */
 	public ValidationException(String message) {
-		super(message, Response.status(422, "Unprocessable Entity").build());
+		super(
+			message,
+			Response.status(
+				422, "Unprocessable Entity"
+			).build());
 	}
 
 	/**
@@ -48,7 +52,10 @@ public class ValidationException extends ClientErrorException {
 	 */
 	public ValidationException(String message, Throwable cause) {
 		super(
-			message, Response.status(422, "Unprocessable Entity").build(),
+			message,
+			Response.status(
+				422, "Unprocessable Entity"
+			).build(),
 			cause);
 	}
 

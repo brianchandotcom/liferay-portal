@@ -21,9 +21,10 @@
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
 boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle"));
+String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-article:wrapperCssClass");
 %>
 
-<div class="clearfix journal-content-article" data-analytics-asset-id="<%= articleDisplay.getArticleId() %>" data-analytics-asset-title="<%= articleDisplay.getTitle() %>" data-analytics-asset-type="web-content">
+<div class="clearfix journal-content-article <%= Validator.isNotNull(wrapperCssClass) ? wrapperCssClass : StringPool.BLANK %>" data-analytics-asset-id="<%= articleDisplay.getArticleId() %>" data-analytics-asset-title="<%= articleDisplay.getTitle() %>" data-analytics-asset-type="web-content">
 	<c:if test="<%= showTitle %>">
 		<%= articleDisplay.getTitle() %>
 	</c:if>

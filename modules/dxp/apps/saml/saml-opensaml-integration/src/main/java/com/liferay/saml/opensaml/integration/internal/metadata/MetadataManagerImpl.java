@@ -57,6 +57,8 @@ import org.opensaml.messaging.handler.impl.CheckMandatoryAuthentication;
 import org.opensaml.messaging.handler.impl.CheckMandatoryIssuer;
 import org.opensaml.messaging.handler.impl.HTTPRequestValidationHandler;
 import org.opensaml.saml.common.binding.security.impl.SAMLProtocolMessageXMLSignatureSecurityHandler;
+import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextAuthenticationFunction;
+import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextIssuerFunction;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.criterion.EntityRoleCriterion;
 import org.opensaml.saml.criterion.ProtocolCriterion;
@@ -336,7 +338,8 @@ public class MetadataManagerImpl
 
 	@Override
 	public MessageHandler<?> getSecurityPolicyResolver(
-		String communicationProfileId, boolean requireSignature) {
+		HttpServletRequest request, String communicationProfileId,
+		boolean requireSignature) {
 
 		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
 			new BasicMessageHandlerChain<>();
@@ -347,8 +350,15 @@ public class MetadataManagerImpl
 			if (communicationProfileId.equals(
 					SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
 
+				SAML2HTTPRedirectDeflateSignatureSecurityHandler
+					saml2HTTPRedirectDeflateSignatureSecurityHandler =
+						new SAML2HTTPRedirectDeflateSignatureSecurityHandler();
+
+				saml2HTTPRedirectDeflateSignatureSecurityHandler.
+					setHttpServletRequest(request);
+
 				messageHandlers.add(
-					new SAML2HTTPRedirectDeflateSignatureSecurityHandler());
+					saml2HTTPRedirectDeflateSignatureSecurityHandler);
 			}
 			else if (communicationProfileId.equals(
 						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
@@ -375,11 +385,29 @@ public class MetadataManagerImpl
 					new SAMLProtocolMessageXMLSignatureSecurityHandler());
 			}
 
-			messageHandlers.add(new CheckMandatoryAuthentication());
+			CheckMandatoryAuthentication checkMandatoryAuthentication =
+				new CheckMandatoryAuthentication();
+
+			checkMandatoryAuthentication.setAuthenticationLookupStrategy(
+				new SAMLMessageContextAuthenticationFunction());
+
+			messageHandlers.add(checkMandatoryAuthentication);
 		}
 
-		messageHandlers.add(new CheckMandatoryIssuer());
-		messageHandlers.add(new HTTPRequestValidationHandler());
+		CheckMandatoryIssuer checkMandatoryIssuer = new CheckMandatoryIssuer();
+
+		checkMandatoryIssuer.setIssuerLookupStrategy(
+			new SAMLMessageContextIssuerFunction());
+
+		messageHandlers.add(checkMandatoryIssuer);
+
+		HTTPRequestValidationHandler httpRequestValidationHandler =
+			new HTTPRequestValidationHandler();
+
+		httpRequestValidationHandler.setHttpServletRequest(request);
+		httpRequestValidationHandler.setRequireSecured(isSSLRequired());
+
+		messageHandlers.add(httpRequestValidationHandler);
 
 		basicMessageHandlerChain.setHandlers(messageHandlers);
 

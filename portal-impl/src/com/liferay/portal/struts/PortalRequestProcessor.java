@@ -97,7 +97,6 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessages;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
@@ -256,15 +255,11 @@ public class PortalRequestProcessor {
 			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if (actionMapping != null) {
-			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
-
 			return actionMapping;
 		}
 
 		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
 			if (actionConfig.getUnknown()) {
-				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
-
 				return (ActionMapping)actionConfig;
 			}
 		}
@@ -535,8 +530,6 @@ public class PortalRequestProcessor {
 
 		response.setContentType("text/html; charset=UTF-8");
 
-		_processCachedMessages(request);
-
 		ActionMapping actionMapping = _processMapping(request, response, path);
 
 		if (actionMapping == null) {
@@ -596,28 +589,6 @@ public class PortalRequestProcessor {
 		return _getOriginalAction(actionMapping);
 	}
 
-	private void _processCachedMessages(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-
-		if (session == null) {
-			return;
-		}
-
-		ActionMessages actionMessages = (ActionMessages)session.getAttribute(
-			Globals.MESSAGE_KEY);
-
-		if ((actionMessages != null) && actionMessages.isAccessed()) {
-			session.removeAttribute(Globals.MESSAGE_KEY);
-		}
-
-		actionMessages = (ActionMessages)session.getAttribute(
-			Globals.ERROR_KEY);
-
-		if ((actionMessages != null) && actionMessages.isAccessed()) {
-			session.removeAttribute(Globals.ERROR_KEY);
-		}
-	}
-
 	private boolean _processForward(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
@@ -668,8 +639,6 @@ public class PortalRequestProcessor {
 
 				actionMapping.setModuleConfig(_moduleConfig);
 				actionMapping.setPath(path);
-
-				request.setAttribute(Globals.MAPPING_KEY, actionMapping);
 			}
 
 			return actionMapping;

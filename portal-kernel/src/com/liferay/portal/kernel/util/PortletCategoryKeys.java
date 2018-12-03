@@ -24,7 +24,8 @@ public class PortletCategoryKeys {
 		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION,
 		PortletCategoryKeys.CONTROL_PANEL_SITES,
 		PortletCategoryKeys.CONTROL_PANEL_SYSTEM,
-		PortletCategoryKeys.CONTROL_PANEL_USERS
+		PortletCategoryKeys.CONTROL_PANEL_USERS,
+		PortletCategoryKeys.CONTROL_PANEL_WORKFLOW
 	};
 
 	/**
@@ -51,6 +52,9 @@ public class PortletCategoryKeys {
 	public static final String CONTROL_PANEL_SYSTEM = "control_panel.system";
 
 	public static final String CONTROL_PANEL_USERS = "control_panel.users";
+
+	public static final String CONTROL_PANEL_WORKFLOW =
+		"control_panel.workflow";
 
 	public static final String CURRENT_SITE = "current_site";
 

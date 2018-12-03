@@ -24,26 +24,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adam Brandizzi
+ * @author Rafael Praxedes
  */
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=100",
+		"panel.app.order:Integer=200",
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_WORKFLOW
 	},
 	service = PanelApp.class
 )
-public class ControlPanelWorkflowPanelApp extends BasePanelApp {
+public class ControlPanelWorkflowInstancePanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW;
+		return WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW + ")",
+		target = "(javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

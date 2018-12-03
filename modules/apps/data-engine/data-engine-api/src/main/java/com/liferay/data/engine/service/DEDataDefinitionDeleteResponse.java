@@ -14,47 +14,47 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.model.DataDefinition;
-
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionGetResponse {
+public final class DEDataDefinitionDeleteResponse {
 
-	public DataDefinition getDataDefinition() {
-		return _dataDefinition;
+	public long getDEDataDefinitionId() {
+		return _deDataDefinitionId;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(DataDefinition dataDefinition) {
-			return new Builder(dataDefinition);
+		public static Builder newBuilder(long deDataDefinitionId) {
+			return new Builder(deDataDefinitionId);
 		}
 
-		public static DataDefinitionGetResponse of(
-			DataDefinition dataDefinition) {
+		public static DEDataDefinitionDeleteResponse of(
+			long deDataDefinitionId) {
 
 			return newBuilder(
-				dataDefinition
+				deDataDefinitionId
 			).build();
 		}
 
-		public DataDefinitionGetResponse build() {
-			return _dataDefinitionGetResponse;
+		public DEDataDefinitionDeleteResponse build() {
+			return _deDataDefinitionDeleteResponse;
 		}
 
-		private Builder(DataDefinition dataDefinition) {
-			_dataDefinitionGetResponse._dataDefinition = dataDefinition;
+		private Builder(long deDataDefinitionId) {
+			_deDataDefinitionDeleteResponse._deDataDefinitionId =
+				deDataDefinitionId;
 		}
 
-		private final DataDefinitionGetResponse _dataDefinitionGetResponse =
-			new DataDefinitionGetResponse();
+		private final DEDataDefinitionDeleteResponse
+			_deDataDefinitionDeleteResponse =
+				new DEDataDefinitionDeleteResponse();
 
 	}
 
-	private DataDefinitionGetResponse() {
+	private DEDataDefinitionDeleteResponse() {
 	}
 
-	private DataDefinition _dataDefinition;
+	private long _deDataDefinitionId;
 
 }

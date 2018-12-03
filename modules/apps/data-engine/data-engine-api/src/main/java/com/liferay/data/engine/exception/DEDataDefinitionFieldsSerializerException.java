@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.data.engine.service;
+package com.liferay.data.engine.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.data.engine.exception.DataDefinitionException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Leonardo Barros
  */
-@ProviderType
-public interface DataDefinitionService {
+public class DEDataDefinitionFieldsSerializerException extends PortalException {
 
-	public DataDefinitionDeleteResponse delete(
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionFieldsSerializerException() {
+	}
 
-	public DataDefinitionGetResponse get(
-			DataDefinitionGetRequest dataDefinitionGetRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionFieldsSerializerException(String msg) {
+		super(msg);
+	}
 
-	public DataDefinitionSaveResponse save(
-			DataDefinitionSaveRequest dataDefinitionSaveRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionFieldsSerializerException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public DEDataDefinitionFieldsSerializerException(Throwable cause) {
+		super(cause);
+	}
 
 }

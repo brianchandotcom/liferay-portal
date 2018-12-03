@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DataEnginePermissionSupport.class)
-public class DataEnginePermissionSupport {
+@Component(immediate = true, service = DEDataEnginePermissionSupport.class)
+public class DEDataEnginePermissionSupport {
 
 	public static final String RESOURCE_NAME = "com.liferay.data.engine";
 

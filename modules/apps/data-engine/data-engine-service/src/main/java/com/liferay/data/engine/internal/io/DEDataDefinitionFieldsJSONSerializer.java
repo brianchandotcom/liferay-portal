@@ -14,11 +14,11 @@
 
 package com.liferay.data.engine.internal.io;
 
-import com.liferay.data.engine.exception.DataDefinitionFieldsSerializerException;
-import com.liferay.data.engine.io.DataDefinitionFieldsSerializer;
-import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionFieldsSerializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionField;
+import com.liferay.data.engine.exception.DEDataDefinitionFieldsSerializerException;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializer;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializerApplyRequest;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializerApplyResponse;
+import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,75 +37,77 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "data.definition.serializer.type=json",
-	service = DataDefinitionFieldsSerializer.class
+	service = DEDataDefinitionFieldsSerializer.class
 )
-public class DataDefinitionFieldsJSONSerializer
-	implements DataDefinitionFieldsSerializer {
+public class DEDataDefinitionFieldsJSONSerializer
+	implements DEDataDefinitionFieldsSerializer {
 
 	@Override
-	public DataDefinitionFieldsSerializerApplyResponse apply(
-			DataDefinitionFieldsSerializerApplyRequest
-				dataDefinitionFieldsSerializerApplyRequest)
-		throws DataDefinitionFieldsSerializerException {
+	public DEDataDefinitionFieldsSerializerApplyResponse apply(
+			DEDataDefinitionFieldsSerializerApplyRequest
+				deDataDefinitionFieldsSerializerApplyRequest)
+		throws DEDataDefinitionFieldsSerializerException {
 
-		List<DataDefinitionField> dataDefinitionFields =
-			dataDefinitionFieldsSerializerApplyRequest.
-				getDataDefinitionFields();
+		List<DEDataDefinitionField> deDataDefinitionFields =
+			deDataDefinitionFieldsSerializerApplyRequest.
+				getDEDataDefinitionFields();
 
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
-			jsonArray.put(mapField(dataDefinitionField));
+		for (DEDataDefinitionField deDataDefinitionField :
+				deDataDefinitionFields) {
+
+			jsonArray.put(mapField(deDataDefinitionField));
 		}
 
-		return DataDefinitionFieldsSerializerApplyResponse.Builder.of(
+		return DEDataDefinitionFieldsSerializerApplyResponse.Builder.of(
 			jsonArray.toJSONString());
 	}
 
-	protected JSONObject mapField(DataDefinitionField dataDefinitionField)
-		throws DataDefinitionFieldsSerializerException {
+	protected JSONObject mapField(DEDataDefinitionField deDataDefinitionField)
+		throws DEDataDefinitionFieldsSerializerException {
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Object defaultValue = dataDefinitionField.getDefaultValue();
+		Object defaultValue = deDataDefinitionField.getDefaultValue();
 
 		if (defaultValue != null) {
 			jsonObject.put("defaultValue", defaultValue);
 		}
 
-		jsonObject.put("indexable", dataDefinitionField.isIndexable());
+		jsonObject.put("indexable", deDataDefinitionField.isIndexable());
 
-		Map<String, String> label = dataDefinitionField.getLabel();
+		Map<String, String> label = deDataDefinitionField.getLabel();
 
 		if (!label.isEmpty()) {
 			setProperty("label", jsonObject, label);
 		}
 
-		jsonObject.put("localizable", dataDefinitionField.isLocalizable());
+		jsonObject.put("localizable", deDataDefinitionField.isLocalizable());
 
-		String name = dataDefinitionField.getName();
+		String name = deDataDefinitionField.getName();
 
 		if (Validator.isNull(name)) {
-			throw new DataDefinitionFieldsSerializerException(
+			throw new DEDataDefinitionFieldsSerializerException(
 				"Name property is required");
 		}
 		else {
 			jsonObject.put("name", name);
 		}
 
-		jsonObject.put("repeatable", dataDefinitionField.isRepeatable());
-		jsonObject.put("required", dataDefinitionField.isRequired());
+		jsonObject.put("repeatable", deDataDefinitionField.isRepeatable());
+		jsonObject.put("required", deDataDefinitionField.isRequired());
 
-		Map<String, String> tip = dataDefinitionField.getTip();
+		Map<String, String> tip = deDataDefinitionField.getTip();
 
 		if (!tip.isEmpty()) {
 			setProperty("tip", jsonObject, tip);
 		}
 
-		String type = dataDefinitionField.getType();
+		String type = deDataDefinitionField.getType();
 
 		if ((type == null) || type.isEmpty()) {
-			throw new DataDefinitionFieldsSerializerException(
+			throw new DEDataDefinitionFieldsSerializerException(
 				"Type property is required");
 		}
 		else {

@@ -14,8 +14,8 @@
 
 package com.liferay.data.engine.internal.security.permission;
 
-import com.liferay.data.engine.constants.DataDefinitionConstants;
-import com.liferay.data.engine.model.DataDefinition;
+import com.liferay.data.engine.constants.DEDataDefinitionConstants;
+import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,22 +34,23 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.data.engine.model.DataDefinition",
+	property = "model.class.name=com.liferay.data.engine.model.DEDataDefinition",
 	service = ModelResourcePermission.class
 )
-public class DataDefinitionModelResourcePermission
-	implements ModelResourcePermission<DataDefinition> {
+public class DEDataDefinitionModelResourcePermission
+	implements ModelResourcePermission<DEDataDefinition> {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, DataDefinition dataDefinition,
-			String actionId)
+			PermissionChecker permissionChecker,
+			DEDataDefinition deDataDefinition, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, dataDefinition, actionId)) {
+		if (!contains(permissionChecker, deDataDefinition, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DataDefinitionConstants.MODEL_RESOURCE_NAME,
-				dataDefinition.getDataDefinitionId(), actionId);
+				permissionChecker,
+				DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
+				deDataDefinition.getDEDataDefinitionId(), actionId);
 		}
 	}
 
@@ -59,35 +60,35 @@ public class DataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DataDefinition dataDefinition = DataDefinition.Builder.newBuilder(
+		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
 			Collections.emptyList()
-		).dataDefinitionId(
+		).deDataDefinitionId(
 			primaryKey
 		).build();
 
-		check(permissionChecker, dataDefinition, actionId);
+		check(permissionChecker, deDataDefinition, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, DataDefinition dataDefinition,
-			String actionId)
+			PermissionChecker permissionChecker,
+			DEDataDefinition deDataDefinition, String actionId)
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			dataDefinition.getDataDefinitionId());
+			deDataDefinition.getDEDataDefinitionId());
 
 		if (permissionChecker.hasOwnerPermission(
-				ddmStructure.getCompanyId(), DataDefinition.class.getName(),
-				dataDefinition.getDataDefinitionId(), ddmStructure.getUserId(),
-				actionId)) {
+				ddmStructure.getCompanyId(), DEDataDefinition.class.getName(),
+				deDataDefinition.getDEDataDefinitionId(),
+				ddmStructure.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			ddmStructure.getGroupId(), DataDefinition.class.getName(),
-			dataDefinition.getDataDefinitionId(), actionId);
+			ddmStructure.getGroupId(), DEDataDefinition.class.getName(),
+			deDataDefinition.getDEDataDefinitionId(), actionId);
 	}
 
 	@Override
@@ -96,18 +97,18 @@ public class DataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DataDefinition dataDefinition = DataDefinition.Builder.newBuilder(
+		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
 			Collections.emptyList()
-		).dataDefinitionId(
+		).deDataDefinitionId(
 			primaryKey
 		).build();
 
-		return contains(permissionChecker, dataDefinition, actionId);
+		return contains(permissionChecker, deDataDefinition, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return DataDefinition.class.getName();
+		return DEDataDefinition.class.getName();
 	}
 
 	@Override

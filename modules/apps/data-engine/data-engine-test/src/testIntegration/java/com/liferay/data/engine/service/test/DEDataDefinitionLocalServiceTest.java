@@ -15,15 +15,15 @@
 package com.liferay.data.engine.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.data.engine.exception.DataDefinitionException;
-import com.liferay.data.engine.model.DataDefinition;
-import com.liferay.data.engine.model.DataDefinitionField;
-import com.liferay.data.engine.service.DataDefinitionDeleteRequest;
-import com.liferay.data.engine.service.DataDefinitionGetRequest;
-import com.liferay.data.engine.service.DataDefinitionGetResponse;
-import com.liferay.data.engine.service.DataDefinitionLocalService;
-import com.liferay.data.engine.service.DataDefinitionSaveRequest;
-import com.liferay.data.engine.service.DataDefinitionSaveResponse;
+import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.model.DEDataDefinition;
+import com.liferay.data.engine.model.DEDataDefinitionField;
+import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
+import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
+import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
+import com.liferay.data.engine.service.DEDataDefinitionLocalService;
+import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
  * @author Leonardo Barros
  */
 @RunWith(Arquillian.class)
-public class DataDefinitionLocalServiceTest {
+public class DEDataDefinitionLocalServiceTest {
 
 	@ClassRule
 	@Rule
@@ -73,7 +73,7 @@ public class DataDefinitionLocalServiceTest {
 		_user = UserTestUtil.addGroupOwnerUser(_group);
 	}
 
-	@Test(expected = DataDefinitionException.class)
+	@Test(expected = DEDataDefinitionException.class)
 	public void testDelete() throws Exception {
 		Map<String, String> expectedNameLabels = new HashMap() {
 			{
@@ -82,24 +82,24 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField dataDefinitionField =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField deDataDefinitionField =
+			DEDataDefinitionField.Builder.newBuilder(
 				"name", "string"
 			).label(
 				expectedNameLabels
 			).build();
 
-		DataDefinition dataDefinition = DataDefinition.Builder.newBuilder(
-			Arrays.asList(dataDefinitionField)
+		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
+			Arrays.asList(deDataDefinitionField)
 		).name(
 			LocaleUtil.US, "Definition 1"
 		).storageType(
 			"json"
 		).build();
 
-		DataDefinitionSaveRequest dataDefinitionSaveRequest =
-			DataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), dataDefinition
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), deDataDefinition
 			);
 
 		try {
@@ -108,21 +108,21 @@ public class DataDefinitionLocalServiceTest {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			DataDefinitionSaveResponse dataDefinitionSaveResponse =
-				_dataDefinitionLocalService.save(dataDefinitionSaveRequest);
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
 
-			long dataDefinitionId =
-				dataDefinitionSaveResponse.getDataDefinitionId();
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest =
-				DataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
 
-			_dataDefinitionLocalService.delete(dataDefinitionDeleteRequest);
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
 
-			DataDefinitionGetRequest dataDefinitionGetRequest =
-				DataDefinitionGetRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
 
-			_dataDefinitionLocalService.get(dataDefinitionGetRequest);
+			_deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -137,8 +137,8 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField dataDefinitionField1 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField deDataDefinitionField1 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"field1", "string"
 			).label(
 				field1Labels
@@ -150,8 +150,8 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField dataDefinitionField2 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField deDataDefinitionField2 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"field2", "number"
 			).label(
 				field2Labels
@@ -163,27 +163,27 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField dataDefinitionField3 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField deDataDefinitionField3 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"field3", "date"
 			).label(
 				field3Labels
 			).build();
 
-		DataDefinition expectedDataDefinition =
-			DataDefinition.Builder.newBuilder(
+		DEDataDefinition expectedDEDataDefinition =
+			DEDataDefinition.Builder.newBuilder(
 				Arrays.asList(
-					dataDefinitionField1, dataDefinitionField2,
-					dataDefinitionField3)
+					deDataDefinitionField1, deDataDefinitionField2,
+					deDataDefinitionField3)
 			).name(
 				LocaleUtil.US, "Definition 2"
 			).storageType(
 				"json"
 			).build();
 
-		DataDefinitionSaveRequest dataDefinitionSaveRequest =
-			DataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDataDefinition
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
 			);
 
 		try {
@@ -192,28 +192,28 @@ public class DataDefinitionLocalServiceTest {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			DataDefinitionSaveResponse dataDefinitionSaveResponse =
-				_dataDefinitionLocalService.save(dataDefinitionSaveRequest);
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
 
-			long dataDefinitionId =
-				dataDefinitionSaveResponse.getDataDefinitionId();
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
-			expectedDataDefinition.setPrimaryKeyObj(dataDefinitionId);
+			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
 
-			DataDefinitionGetRequest dataDefinitionGetRequest =
-				DataDefinitionGetRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
 
-			DataDefinitionGetResponse dataDefinitionGetResponse =
-				_dataDefinitionLocalService.get(dataDefinitionGetRequest);
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
 
 			Assert.assertEquals(
-				expectedDataDefinition,
-				dataDefinitionGetResponse.getDataDefinition());
+				expectedDEDataDefinition,
+				deDataDefinitionGetResponse.getDeDataDefinition());
 
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest =
-				DataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
 
-			_dataDefinitionLocalService.delete(dataDefinitionDeleteRequest);
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -229,8 +229,8 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField expectedDataDefinitionField1 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField expectedDEDataDefinitionField1 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"name", "string"
 			).label(
 				expectedNameLabels
@@ -243,17 +243,18 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField expectedDataDefinitionField2 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField expectedDEDataDefinitionField2 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"email", "string"
 			).label(
 				expectedEmailLabels
 			).build();
 
-		DataDefinition expectedDataDefinition =
-			DataDefinition.Builder.newBuilder(
+		DEDataDefinition expectedDEDataDefinition =
+			DEDataDefinition.Builder.newBuilder(
 				Arrays.asList(
-					expectedDataDefinitionField1, expectedDataDefinitionField2)
+					expectedDEDataDefinitionField1,
+					expectedDEDataDefinitionField2)
 			).description(
 				LocaleUtil.US, "Contact description"
 			).description(
@@ -266,9 +267,9 @@ public class DataDefinitionLocalServiceTest {
 				"json"
 			).build();
 
-		DataDefinitionSaveRequest dataDefinitionSaveRequest =
-			DataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDataDefinition
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
 			);
 
 		try {
@@ -277,40 +278,40 @@ public class DataDefinitionLocalServiceTest {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			DataDefinitionSaveResponse dataDefinitionSaveResponse =
-				_dataDefinitionLocalService.save(dataDefinitionSaveRequest);
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
 
-			long dataDefinitionId =
-				dataDefinitionSaveResponse.getDataDefinitionId();
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
-			expectedDataDefinition.setPrimaryKeyObj(dataDefinitionId);
+			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
 
-			DataDefinitionGetRequest dataDefinitionGetRequest =
-				DataDefinitionGetRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
 
-			DataDefinitionGetResponse dataDefinitionGetResponse =
-				_dataDefinitionLocalService.get(dataDefinitionGetRequest);
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
 
-			DataDefinition dataDefinition =
-				dataDefinitionGetResponse.getDataDefinition();
+			DEDataDefinition deDataDefinition =
+				deDataDefinitionGetResponse.getDeDataDefinition();
 
-			Assert.assertEquals(expectedDataDefinition, dataDefinition);
+			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
 
 			Role ownerRole = _roleLocalService.getRole(
 				_group.getCompanyId(), RoleConstants.OWNER);
 
 			ResourcePermission resourcePermission =
 				_resourcePermissionLocalService.fetchResourcePermission(
-					_group.getCompanyId(), DataDefinition.class.getName(),
+					_group.getCompanyId(), DEDataDefinition.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(dataDefinitionId), ownerRole.getRoleId());
+					String.valueOf(deDataDefinitionId), ownerRole.getRoleId());
 
 			Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest =
-				DataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
 
-			_dataDefinitionLocalService.delete(dataDefinitionDeleteRequest);
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -326,8 +327,8 @@ public class DataDefinitionLocalServiceTest {
 			}
 		};
 
-		DataDefinitionField dataDefinitionField1 =
-			DataDefinitionField.Builder.newBuilder(
+		DEDataDefinitionField deDataDefinitionField1 =
+			DEDataDefinitionField.Builder.newBuilder(
 				"title", "string"
 			).label(
 				expectedTitleLabels
@@ -335,9 +336,9 @@ public class DataDefinitionLocalServiceTest {
 				true
 			).build();
 
-		DataDefinition expectedDataDefinition =
-			DataDefinition.Builder.newBuilder(
-				Arrays.asList(dataDefinitionField1)
+		DEDataDefinition expectedDEDataDefinition =
+			DEDataDefinition.Builder.newBuilder(
+				Arrays.asList(deDataDefinitionField1)
 			).name(
 				LocaleUtil.US, "Story"
 			).name(
@@ -346,9 +347,9 @@ public class DataDefinitionLocalServiceTest {
 				"json"
 			).build();
 
-		DataDefinitionSaveRequest dataDefinitionSaveRequest =
-			DataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDataDefinition
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
 			);
 
 		try {
@@ -357,13 +358,13 @@ public class DataDefinitionLocalServiceTest {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			DataDefinitionSaveResponse dataDefinitionSaveResponse =
-				_dataDefinitionLocalService.save(dataDefinitionSaveRequest);
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
 
 			long dataDefinitionId =
-				dataDefinitionSaveResponse.getDataDefinitionId();
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
-			expectedDataDefinition.setPrimaryKeyObj(dataDefinitionId);
+			expectedDEDataDefinition.setPrimaryKeyObj(dataDefinitionId);
 
 			Map<String, String> expectedDescriptionLabels = new HashMap() {
 				{
@@ -372,8 +373,8 @@ public class DataDefinitionLocalServiceTest {
 				}
 			};
 
-			DataDefinitionField dataDefinitionField2 =
-				DataDefinitionField.Builder.newBuilder(
+			DEDataDefinitionField deDataDefinitionField2 =
+				DEDataDefinitionField.Builder.newBuilder(
 					"description", "string"
 				).label(
 					expectedDescriptionLabels
@@ -381,9 +382,9 @@ public class DataDefinitionLocalServiceTest {
 					true
 				).build();
 
-			expectedDataDefinition = DataDefinition.Builder.newBuilder(
-				Arrays.asList(dataDefinitionField1, dataDefinitionField2)
-			).dataDefinitionId(
+			expectedDEDataDefinition = DEDataDefinition.Builder.newBuilder(
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2)
+			).deDataDefinitionId(
 				dataDefinitionId
 			).name(
 				LocaleUtil.US, "Story"
@@ -393,27 +394,29 @@ public class DataDefinitionLocalServiceTest {
 				"json"
 			).build();
 
-			dataDefinitionSaveRequest = DataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDataDefinition
-			);
+			deDataDefinitionSaveRequest =
+				DEDataDefinitionSaveRequest.Builder.of(
+					_user.getUserId(), _group.getGroupId(),
+					expectedDEDataDefinition
+				);
 
-			_dataDefinitionLocalService.save(dataDefinitionSaveRequest);
+			_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
 
-			DataDefinitionGetRequest dataDefinitionGetRequest =
-				DataDefinitionGetRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(dataDefinitionId);
 
-			DataDefinitionGetResponse dataDefinitionGetResponse =
-				_dataDefinitionLocalService.get(dataDefinitionGetRequest);
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
 
-			DataDefinition dataDefinition =
-				dataDefinitionGetResponse.getDataDefinition();
+			DEDataDefinition deDataDefinition =
+				deDataDefinitionGetResponse.getDeDataDefinition();
 
-			Assert.assertEquals(expectedDataDefinition, dataDefinition);
+			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
 
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest =
-				DataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
 
-			_dataDefinitionLocalService.delete(dataDefinitionDeleteRequest);
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -444,8 +447,8 @@ public class DataDefinitionLocalServiceTest {
 		return serviceContext;
 	}
 
-	@Inject(type = DataDefinitionLocalService.class)
-	private DataDefinitionLocalService _dataDefinitionLocalService;
+	@Inject(type = DEDataDefinitionLocalService.class)
+	private DEDataDefinitionLocalService _deDataDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

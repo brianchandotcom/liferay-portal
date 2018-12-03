@@ -17,40 +17,44 @@ package com.liferay.data.engine.service;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionSaveResponse {
+public final class DEDataDefinitionDeleteRequest {
 
-	public long getDataDefinitionId() {
-		return _dataDefinitionId;
+	public long getDEDataDefinitionId() {
+		return _deDataDefinitionId;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long dataDefinitionId) {
-			return new Builder(dataDefinitionId);
+		public static Builder newBuilder(long deDataDefinitionId) {
+			return new Builder(deDataDefinitionId);
 		}
 
-		public static DataDefinitionSaveResponse of(long dataDefinitionId) {
+		public static DEDataDefinitionDeleteRequest of(
+			long deDataDefinitionId) {
+
 			return newBuilder(
-				dataDefinitionId
+				deDataDefinitionId
 			).build();
 		}
 
-		public DataDefinitionSaveResponse build() {
-			return _dataDefinitionSaveResponse;
+		public DEDataDefinitionDeleteRequest build() {
+			return _deDataDefinitionDeleteRequest;
 		}
 
-		private Builder(long dataDefinitionId) {
-			_dataDefinitionSaveResponse._dataDefinitionId = dataDefinitionId;
+		private Builder(long deDataDefinitionId) {
+			_deDataDefinitionDeleteRequest._deDataDefinitionId =
+				deDataDefinitionId;
 		}
 
-		private final DataDefinitionSaveResponse _dataDefinitionSaveResponse =
-			new DataDefinitionSaveResponse();
+		private final DEDataDefinitionDeleteRequest
+			_deDataDefinitionDeleteRequest =
+				new DEDataDefinitionDeleteRequest();
 
 	}
 
-	private DataDefinitionSaveResponse() {
+	private DEDataDefinitionDeleteRequest() {
 	}
 
-	private long _dataDefinitionId;
+	private long _deDataDefinitionId;
 
 }

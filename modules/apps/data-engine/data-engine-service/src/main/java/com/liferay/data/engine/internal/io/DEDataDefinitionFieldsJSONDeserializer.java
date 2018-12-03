@@ -14,11 +14,11 @@
 
 package com.liferay.data.engine.internal.io;
 
-import com.liferay.data.engine.exception.DataDefinitionFieldsDeserializerException;
-import com.liferay.data.engine.io.DataDefinitionFieldsDeserializer;
-import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyRequest;
-import com.liferay.data.engine.io.DataDefinitionFieldsDeserializerApplyResponse;
-import com.liferay.data.engine.model.DataDefinitionField;
+import com.liferay.data.engine.exception.DEDataDefinitionFieldsDeserializerException;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializer;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializerApplyRequest;
+import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializerApplyResponse;
+import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,46 +38,46 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "data.definition.deserializer.type=json",
-	service = DataDefinitionFieldsDeserializer.class
+	service = DEDataDefinitionFieldsDeserializer.class
 )
-public class DataDefinitionFieldsJSONDeserializer
-	implements DataDefinitionFieldsDeserializer {
+public class DEDataDefinitionFieldsJSONDeserializer
+	implements DEDataDefinitionFieldsDeserializer {
 
 	@Override
-	public DataDefinitionFieldsDeserializerApplyResponse apply(
-			DataDefinitionFieldsDeserializerApplyRequest
-				dataDefinitionFieldsDeserializerApplyRequest)
-		throws DataDefinitionFieldsDeserializerException {
+	public DEDataDefinitionFieldsDeserializerApplyResponse apply(
+			DEDataDefinitionFieldsDeserializerApplyRequest
+				deDataDefinitionFieldsDeserializerApplyRequest)
+		throws DEDataDefinitionFieldsDeserializerException {
 
-		List<DataDefinitionField> dataDefinitionFields = new ArrayList<>();
+		List<DEDataDefinitionField> deDataDefinitionFields = new ArrayList<>();
 
 		try {
 			JSONArray jsonArray = jsonFactory.createJSONArray(
-				dataDefinitionFieldsDeserializerApplyRequest.getContent());
+				deDataDefinitionFieldsDeserializerApplyRequest.getContent());
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				DataDefinitionField dataDefinitionField =
+				DEDataDefinitionField deDataDefinitionField =
 					createDataDefinitionField(jsonArray.getJSONObject(i));
 
-				dataDefinitionFields.add(dataDefinitionField);
+				deDataDefinitionFields.add(deDataDefinitionField);
 			}
 
-			return DataDefinitionFieldsDeserializerApplyResponse.Builder.of(
-				dataDefinitionFields);
+			return DEDataDefinitionFieldsDeserializerApplyResponse.Builder.of(
+				deDataDefinitionFields);
 		}
 		catch (JSONException e)
 		{
-			throw new DataDefinitionFieldsDeserializerException(
+			throw new DEDataDefinitionFieldsDeserializerException(
 				"Invalid JSON format");
 		}
-		catch (DataDefinitionFieldsDeserializerException ddfde) {
-			throw ddfde;
+		catch (DEDataDefinitionFieldsDeserializerException deddfde) {
+			throw deddfde;
 		}
 	}
 
-	protected DataDefinitionField createDataDefinitionField(
+	protected DEDataDefinitionField createDataDefinitionField(
 			JSONObject jsonObject)
-		throws DataDefinitionFieldsDeserializerException {
+		throws DEDataDefinitionFieldsDeserializerException {
 
 		Map<String, String> labels = new TreeMap<>();
 
@@ -85,7 +85,7 @@ public class DataDefinitionFieldsJSONDeserializer
 			JSONObject labelJSONObject = jsonObject.getJSONObject("label");
 
 			if (labelJSONObject == null) {
-				throw new DataDefinitionFieldsDeserializerException(
+				throw new DEDataDefinitionFieldsDeserializerException(
 					"Label property must contain localized values");
 			}
 
@@ -99,12 +99,12 @@ public class DataDefinitionFieldsJSONDeserializer
 		}
 
 		if (!jsonObject.has("name")) {
-			throw new DataDefinitionFieldsDeserializerException(
+			throw new DEDataDefinitionFieldsDeserializerException(
 				"Name property is required");
 		}
 
 		if (!jsonObject.has("type")) {
-			throw new DataDefinitionFieldsDeserializerException(
+			throw new DEDataDefinitionFieldsDeserializerException(
 				"Type property is required");
 		}
 
@@ -114,7 +114,7 @@ public class DataDefinitionFieldsJSONDeserializer
 			JSONObject tipJSONObject = jsonObject.getJSONObject("tip");
 
 			if (tipJSONObject == null) {
-				throw new DataDefinitionFieldsDeserializerException(
+				throw new DEDataDefinitionFieldsDeserializerException(
 					"Tip property must contain localized values");
 			}
 
@@ -127,7 +127,7 @@ public class DataDefinitionFieldsJSONDeserializer
 			}
 		}
 
-		return DataDefinitionField.Builder.newBuilder(
+		return DEDataDefinitionField.Builder.newBuilder(
 			jsonObject.getString("name"), jsonObject.getString("type")
 		).defaultValue(
 			jsonObject.get("defaultValue")

@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinition implements ClassedModel, Serializable {
+public final class DEDataDefinition implements ClassedModel, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -40,18 +40,18 @@ public final class DataDefinition implements ClassedModel, Serializable {
 			return true;
 		}
 
-		if (!(obj instanceof DataDefinition)) {
+		if (!(obj instanceof DEDataDefinition)) {
 			return false;
 		}
 
-		DataDefinition dataDefinition = (DataDefinition)obj;
+		DEDataDefinition deDataDefinition = (DEDataDefinition)obj;
 
-		if (Objects.equals(_name, dataDefinition._name) &&
-			Objects.equals(_description, dataDefinition._description) &&
+		if (Objects.equals(_name, deDataDefinition._name) &&
+			Objects.equals(_description, deDataDefinition._description) &&
 			Objects.equals(
-				_dataDefinitionId, dataDefinition._dataDefinitionId) &&
-			Objects.equals(_storageType, dataDefinition._storageType) &&
-			Objects.equals(_fields, dataDefinition._fields)) {
+				_deDataDefinitionId, deDataDefinition._deDataDefinitionId) &&
+			Objects.equals(_storageType, deDataDefinition._storageType) &&
+			Objects.equals(_fields, deDataDefinition._fields)) {
 
 			return true;
 		}
@@ -59,8 +59,8 @@ public final class DataDefinition implements ClassedModel, Serializable {
 		return false;
 	}
 
-	public long getDataDefinitionId() {
-		return _dataDefinitionId;
+	public long getDEDataDefinitionId() {
+		return _deDataDefinitionId;
 	}
 
 	public Map<String, String> getDescription() {
@@ -72,18 +72,18 @@ public final class DataDefinition implements ClassedModel, Serializable {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<DataDefinitionField> getFields() {
+	public List<DEDataDefinitionField> getFields() {
 		return Collections.unmodifiableList(_fields);
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return DataDefinition.class;
+		return DEDataDefinition.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return DataDefinition.class.getName();
+		return DEDataDefinition.class.getName();
 	}
 
 	public Map<String, String> getName() {
@@ -92,7 +92,7 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _dataDefinitionId;
+		return _deDataDefinitionId;
 	}
 
 	public String getStorageType() {
@@ -105,7 +105,7 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 		hash = HashUtil.hash(hash, _description.hashCode());
 
-		hash = HashUtil.hash(hash, _dataDefinitionId);
+		hash = HashUtil.hash(hash, _deDataDefinitionId);
 
 		hash = HashUtil.hash(hash, _storageType.hashCode());
 
@@ -114,27 +114,27 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dataDefinitionId = ((Long)primaryKeyObj).longValue();
+		_deDataDefinitionId = ((Long)primaryKeyObj).longValue();
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(List<DataDefinitionField> fields) {
+		public static Builder newBuilder(List<DEDataDefinitionField> fields) {
 			return new Builder(fields);
 		}
 
-		public DataDefinition build() {
-			return _dataDefinition;
+		public DEDataDefinition build() {
+			return _deDataDefinition;
 		}
 
-		public Builder dataDefinitionId(long dataDefinitionId) {
-			_dataDefinition._dataDefinitionId = dataDefinitionId;
+		public Builder deDataDefinitionId(long deDataDefinitionId) {
+			_deDataDefinition._deDataDefinitionId = deDataDefinitionId;
 
 			return this;
 		}
 
 		public Builder description(Locale locale, String description) {
-			_dataDefinition._description.put(
+			_deDataDefinition._description.put(
 				LocaleUtil.toLanguageId(locale), description);
 
 			return this;
@@ -142,7 +142,7 @@ public final class DataDefinition implements ClassedModel, Serializable {
 
 		public Builder description(Map<Locale, String> descriptions) {
 			for (Map.Entry<Locale, String> entry : descriptions.entrySet()) {
-				_dataDefinition._description.put(
+				_deDataDefinition._description.put(
 					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 			}
 
@@ -150,14 +150,14 @@ public final class DataDefinition implements ClassedModel, Serializable {
 		}
 
 		public Builder name(Locale locale, String name) {
-			_dataDefinition._name.put(LocaleUtil.toLanguageId(locale), name);
+			_deDataDefinition._name.put(LocaleUtil.toLanguageId(locale), name);
 
 			return this;
 		}
 
 		public Builder name(Map<Locale, String> names) {
 			for (Map.Entry<Locale, String> entry : names.entrySet()) {
-				_dataDefinition._name.put(
+				_deDataDefinition._name.put(
 					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 			}
 
@@ -165,25 +165,26 @@ public final class DataDefinition implements ClassedModel, Serializable {
 		}
 
 		public Builder storageType(String type) {
-			_dataDefinition._storageType = type;
+			_deDataDefinition._storageType = type;
 
 			return this;
 		}
 
-		private Builder(List<DataDefinitionField> fields) {
-			_dataDefinition._fields.addAll(fields);
+		private Builder(List<DEDataDefinitionField> fields) {
+			_deDataDefinition._fields.addAll(fields);
 		}
 
-		private final DataDefinition _dataDefinition = new DataDefinition();
+		private final DEDataDefinition _deDataDefinition =
+			new DEDataDefinition();
 
 	}
 
-	private DataDefinition() {
+	private DEDataDefinition() {
 	}
 
-	private long _dataDefinitionId;
+	private long _deDataDefinitionId;
 	private final Map<String, String> _description = new HashMap<>();
-	private final List<DataDefinitionField> _fields = new ArrayList<>();
+	private final List<DEDataDefinitionField> _fields = new ArrayList<>();
 	private final Map<String, String> _name = new HashMap<>();
 	private String _storageType = "json";
 

@@ -14,15 +14,15 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.model.DataDefinition;
+import com.liferay.data.engine.model.DEDataDefinition;
 
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionSaveRequest {
+public final class DEDataDefinitionSaveRequest {
 
-	public DataDefinition getDataDefinition() {
-		return _dataDefinition;
+	public DEDataDefinition getDEDataDefinition() {
+		return _deDataDefinition;
 	}
 
 	public long getGroupId() {
@@ -36,40 +36,40 @@ public final class DataDefinitionSaveRequest {
 	public static final class Builder {
 
 		public static Builder newBuilder(
-			long userId, long groupId, DataDefinition dataDefinition) {
+			long userId, long groupId, DEDataDefinition deDataDefinition) {
 
-			return new Builder(userId, groupId, dataDefinition);
+			return new Builder(userId, groupId, deDataDefinition);
 		}
 
-		public static DataDefinitionSaveRequest of(
-			long userId, long groupId, DataDefinition dataDefinition) {
+		public static DEDataDefinitionSaveRequest of(
+			long userId, long groupId, DEDataDefinition deDataDefinition) {
 
 			return newBuilder(
-				userId, groupId, dataDefinition
+				userId, groupId, deDataDefinition
 			).build();
 		}
 
-		public DataDefinitionSaveRequest build() {
-			return _dataDefinitionSaveRequest;
+		public DEDataDefinitionSaveRequest build() {
+			return _deDataDefinitionSaveRequest;
 		}
 
 		private Builder(
-			long userId, long groupId, DataDefinition dataDefinition) {
+			long userId, long groupId, DEDataDefinition deDataDefinition) {
 
-			_dataDefinitionSaveRequest._userId = userId;
-			_dataDefinitionSaveRequest._groupId = groupId;
-			_dataDefinitionSaveRequest._dataDefinition = dataDefinition;
+			_deDataDefinitionSaveRequest._userId = userId;
+			_deDataDefinitionSaveRequest._groupId = groupId;
+			_deDataDefinitionSaveRequest._deDataDefinition = deDataDefinition;
 		}
 
-		private final DataDefinitionSaveRequest _dataDefinitionSaveRequest =
-			new DataDefinitionSaveRequest();
+		private final DEDataDefinitionSaveRequest _deDataDefinitionSaveRequest =
+			new DEDataDefinitionSaveRequest();
 
 	}
 
-	private DataDefinitionSaveRequest() {
+	private DEDataDefinitionSaveRequest() {
 	}
 
-	private DataDefinition _dataDefinition;
+	private DEDataDefinition _deDataDefinition;
 	private long _groupId;
 	private long _userId;
 

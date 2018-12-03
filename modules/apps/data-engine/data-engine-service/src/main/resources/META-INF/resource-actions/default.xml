@@ -30,7 +30,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.data.engine.model.DataDefinition</model-name>
+		<model-name>com.liferay.data.engine.model.DEDataDefinition</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_data_engine_web_portlet_DataDefinitionPortlet</portlet-name>
 		</portlet-ref>

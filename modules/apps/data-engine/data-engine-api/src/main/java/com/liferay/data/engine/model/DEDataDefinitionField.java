@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionField implements Serializable {
+public final class DEDataDefinitionField implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -34,21 +34,23 @@ public final class DataDefinitionField implements Serializable {
 			return true;
 		}
 
-		if (!(obj instanceof DataDefinitionField)) {
+		if (!(obj instanceof DEDataDefinitionField)) {
 			return false;
 		}
 
-		DataDefinitionField dataDefinitionField = (DataDefinitionField)obj;
+		DEDataDefinitionField deDataDefinitionField =
+			(DEDataDefinitionField)obj;
 
-		if (Objects.equals(_defaultValue, dataDefinitionField._defaultValue) &&
-			Objects.equals(_indexable, dataDefinitionField._indexable) &&
-			Objects.equals(_label, dataDefinitionField._label) &&
-			Objects.equals(_localizable, dataDefinitionField._localizable) &&
-			Objects.equals(_name, dataDefinitionField._name) &&
-			Objects.equals(_repeatable, dataDefinitionField._repeatable) &&
-			Objects.equals(_required, dataDefinitionField._required) &&
-			Objects.equals(_tip, dataDefinitionField._tip) &&
-			Objects.equals(_type, dataDefinitionField._type)) {
+		if (Objects.equals(
+				_defaultValue, deDataDefinitionField._defaultValue) &&
+			Objects.equals(_indexable, deDataDefinitionField._indexable) &&
+			Objects.equals(_label, deDataDefinitionField._label) &&
+			Objects.equals(_localizable, deDataDefinitionField._localizable) &&
+			Objects.equals(_name, deDataDefinitionField._name) &&
+			Objects.equals(_repeatable, deDataDefinitionField._repeatable) &&
+			Objects.equals(_required, deDataDefinitionField._required) &&
+			Objects.equals(_tip, deDataDefinitionField._tip) &&
+			Objects.equals(_type, deDataDefinitionField._type)) {
 
 			return true;
 		}
@@ -123,63 +125,63 @@ public final class DataDefinitionField implements Serializable {
 			return new Builder(name, type);
 		}
 
-		public DataDefinitionField build() {
-			return _dataDefinitionField;
+		public DEDataDefinitionField build() {
+			return _deDataDefinitionField;
 		}
 
 		public Builder defaultValue(Object defaultValue) {
-			_dataDefinitionField._defaultValue = defaultValue;
+			_deDataDefinitionField._defaultValue = defaultValue;
 
 			return this;
 		}
 
 		public Builder indexable(boolean indexable) {
-			_dataDefinitionField._indexable = indexable;
+			_deDataDefinitionField._indexable = indexable;
 
 			return this;
 		}
 
 		public Builder label(Map<String, String> label) {
-			_dataDefinitionField._label.putAll(label);
+			_deDataDefinitionField._label.putAll(label);
 
 			return this;
 		}
 
 		public Builder localizable(boolean localizable) {
-			_dataDefinitionField._localizable = localizable;
+			_deDataDefinitionField._localizable = localizable;
 
 			return this;
 		}
 
 		public Builder repeatable(boolean repeatable) {
-			_dataDefinitionField._repeatable = repeatable;
+			_deDataDefinitionField._repeatable = repeatable;
 
 			return this;
 		}
 
 		public Builder required(boolean required) {
-			_dataDefinitionField._required = required;
+			_deDataDefinitionField._required = required;
 
 			return this;
 		}
 
 		public Builder tip(Map<String, String> tip) {
-			_dataDefinitionField._tip.putAll(tip);
+			_deDataDefinitionField._tip.putAll(tip);
 
 			return this;
 		}
 
 		private Builder(String name, String type) {
-			_dataDefinitionField._name = name;
-			_dataDefinitionField._type = type;
+			_deDataDefinitionField._name = name;
+			_deDataDefinitionField._type = type;
 		}
 
-		private final DataDefinitionField _dataDefinitionField =
-			new DataDefinitionField();
+		private final DEDataDefinitionField _deDataDefinitionField =
+			new DEDataDefinitionField();
 
 	}
 
-	private DataDefinitionField() {
+	private DEDataDefinitionField() {
 	}
 
 	private Object _defaultValue;

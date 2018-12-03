@@ -12,17 +12,28 @@
  * details.
  */
 
-package com.liferay.data.engine.constants;
+package com.liferay.data.engine.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Leonardo Barros
  */
-public class DataDefinitionConstants {
+public class DEDataDefinitionException extends PortalException {
 
-	public static final String ADD_DATA_DEFINITION_ACTION =
-		"ADD_DATA_DEFINITION";
+	public DEDataDefinitionException() {
+	}
 
-	public static final String MODEL_RESOURCE_NAME =
-		"com.liferay.data.engine.model.DataDefinition";
+	public DEDataDefinitionException(String msg) {
+		super(msg);
+	}
+
+	public DEDataDefinitionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DEDataDefinitionException(Throwable cause) {
+		super(cause);
+	}
 
 }

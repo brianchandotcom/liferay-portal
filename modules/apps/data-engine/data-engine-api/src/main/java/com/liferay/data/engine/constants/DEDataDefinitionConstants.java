@@ -12,30 +12,17 @@
  * details.
  */
 
-package com.liferay.data.engine.exception;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.data.engine.constants;
 
 /**
  * @author Leonardo Barros
  */
-public class DataDefinitionFieldsDeserializerException extends PortalException {
+public class DEDataDefinitionConstants {
 
-	public DataDefinitionFieldsDeserializerException() {
-	}
+	public static final String ADD_DATA_DEFINITION_ACTION =
+		"ADD_DATA_DEFINITION";
 
-	public DataDefinitionFieldsDeserializerException(String msg) {
-		super(msg);
-	}
-
-	public DataDefinitionFieldsDeserializerException(
-		String msg, Throwable cause) {
-
-		super(msg, cause);
-	}
-
-	public DataDefinitionFieldsDeserializerException(Throwable cause) {
-		super(cause);
-	}
+	public static final String MODEL_RESOURCE_NAME =
+		"com.liferay.data.engine.model.DEDataDefinition";
 
 }

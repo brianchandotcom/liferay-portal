@@ -16,24 +16,24 @@ package com.liferay.data.engine.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.data.engine.exception.DataDefinitionException;
+import com.liferay.data.engine.exception.DEDataDefinitionException;
 
 /**
  * @author Leonardo Barros
  */
 @ProviderType
-public interface DataDefinitionLocalService {
+public interface DEDataDefinitionLocalService {
 
-	public DataDefinitionDeleteResponse delete(
-			DataDefinitionDeleteRequest dataDefinitionDeleteRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionDeleteResponse delete(
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
+		throws DEDataDefinitionException;
 
-	public DataDefinitionGetResponse get(
-			DataDefinitionGetRequest dataDefinitionGetRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionGetResponse get(
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
+		throws DEDataDefinitionException;
 
-	public DataDefinitionSaveResponse save(
-			DataDefinitionSaveRequest dataDefinitionSaveRequest)
-		throws DataDefinitionException;
+	public DEDataDefinitionSaveResponse save(
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
+		throws DEDataDefinitionException;
 
 }

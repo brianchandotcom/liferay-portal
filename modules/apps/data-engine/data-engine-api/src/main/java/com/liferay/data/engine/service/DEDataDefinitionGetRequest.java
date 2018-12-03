@@ -17,40 +17,41 @@ package com.liferay.data.engine.service;
 /**
  * @author Leonardo Barros
  */
-public final class DataDefinitionGetRequest {
+public final class DEDataDefinitionGetRequest {
 
-	public long getDataDefinitionId() {
-		return _dataDefinitionId;
+	public long getDEDataDefinitionId() {
+		return _deDataDefinitionId;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long dataDefinitionId) {
-			return new Builder(dataDefinitionId);
+		public static Builder newBuilder(long deDataDefinitionId) {
+			return new Builder(deDataDefinitionId);
 		}
 
-		public static DataDefinitionGetRequest of(long dataDefinitionId) {
+		public static DEDataDefinitionGetRequest of(long deDataDefinitionId) {
 			return newBuilder(
-				dataDefinitionId
+				deDataDefinitionId
 			).build();
 		}
 
-		public DataDefinitionGetRequest build() {
-			return _dataDefinitionGetRequest;
+		public DEDataDefinitionGetRequest build() {
+			return _deDataDefinitionGetRequest;
 		}
 
-		private Builder(long dataDefinitionId) {
-			_dataDefinitionGetRequest._dataDefinitionId = dataDefinitionId;
+		private Builder(long deDataDefinitionId) {
+			_deDataDefinitionGetRequest._deDataDefinitionId =
+				deDataDefinitionId;
 		}
 
-		private DataDefinitionGetRequest _dataDefinitionGetRequest =
-			new DataDefinitionGetRequest();
+		private DEDataDefinitionGetRequest _deDataDefinitionGetRequest =
+			new DEDataDefinitionGetRequest();
 
 	}
 
-	private DataDefinitionGetRequest() {
+	private DEDataDefinitionGetRequest() {
 	}
 
-	private long _dataDefinitionId;
+	private long _deDataDefinitionId;
 
 }

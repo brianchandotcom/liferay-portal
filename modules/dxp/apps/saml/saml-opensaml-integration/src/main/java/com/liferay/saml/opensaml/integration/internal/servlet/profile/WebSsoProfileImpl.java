@@ -63,6 +63,7 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
@@ -426,7 +427,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				_userLocalService);
 		}
 		else {
-			messageContext = decodeSamlMessage(request, response, samlBinding);
+			SamlProviderConfiguration samlProviderConfiguration =
+				samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+			messageContext = decodeSamlMessage(
+				request, response, samlBinding,
+				samlProviderConfiguration.authnRequestSignatureRequired());
 
 			InOutOperationContext inOutOperationContext =
 				messageContext.getSubcontext(InOutOperationContext.class);
@@ -571,7 +577,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		MessageContext messageContext = decodeSamlMessage(
 			request, response,
-			getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI));
+			getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
 
 		InOutOperationContext inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);

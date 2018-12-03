@@ -245,7 +245,7 @@ public class SingleLogoutProfileImpl
 
 		try {
 			MessageContext<?> messageContext = decodeSamlMessage(
-				request, response, samlBinding);
+				request, response, samlBinding, true);
 
 			InOutOperationContext inOutOperationContext =
 				messageContext.getSubcontext(InOutOperationContext.class);

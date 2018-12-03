@@ -236,7 +236,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		MessageContext<LogoutRequest> messageContext =
 			_singleLogoutProfileImpl.decodeSamlMessage(
-				mockHttpServletRequest, mockHttpServletResponse, samlBinding);
+				mockHttpServletRequest, mockHttpServletResponse, samlBinding,
+				true);
 
 		InOutOperationContext inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -301,7 +302,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		MessageContext messageContext =
 			_singleLogoutProfileImpl.decodeSamlMessage(
-				mockHttpServletRequest, mockHttpServletResponse, samlBinding);
+				mockHttpServletRequest, mockHttpServletResponse, samlBinding,
+				true);
 
 		InOutOperationContext inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);

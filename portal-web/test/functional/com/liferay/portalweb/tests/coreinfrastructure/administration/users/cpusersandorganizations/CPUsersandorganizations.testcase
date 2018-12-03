@@ -557,7 +557,6 @@
 
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
 			<var name="suborgName" value="Suborganization Name" />
 		</execute>
 

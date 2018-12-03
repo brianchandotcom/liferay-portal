@@ -1802,7 +1802,43 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeToFolder" priority="4">
+	<command name="SubscribeToFolderAndViewEmailNotifications" priority="5">
+		<property name="test.smtp.server.enabled" value="true" />
+
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1810,6 +1846,19 @@
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="DM Folder Description" />
 			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -1829,6 +1878,62 @@
 		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="AssertTextEquals" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Basic Document: ${dmDocumentTitle}" />
+			<var name="content" value="A Basic Document with the title ${dmDocumentTitle} has been added to folder ${dmFolderName}." />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="recipient" value="userfn userln" />
+			<var name="sender" value="Joe Bloggs" />
+			<var name="subject" value="New Basic Document: ${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
+		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Basic Document Updated for ${dmDocumentTitle}" />
+			<var name="content" value="A Basic Document with the title ${dmDocumentTitle} has been updated in folder ${dmFolderName}." />
+			<var name="dmDocumentTitle" value="DM Document Title Edit" />
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="recipient" value="userfn userln" />
+			<var name="sender" value="Joe Bloggs" />
+			<var name="subject" value="Basic Document Updated for ${dmDocumentTitle}" />
+		</execute>
 	</command>
 
 	<command name="UnlockDocumentInFolder" priority="4">

@@ -5089,6 +5089,16 @@ version 2.0.4.
 - [LPS-87839]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 2.0.5.
 
+## 5.5.124 - 2018-11-28
+
+### Added
+- [LPS-87890]: Override the `artifactAppendix` extension object by setting the
+project property `artifactAppendix`.
+
+### Changed
+- [LPS-86806]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.24.
+
 ## 5.5.128 - 2018-11-30
 
 ### Changed
@@ -5611,6 +5621,7 @@ version 2.0.5.
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
+[LPS-87890]: https://issues.liferay.com/browse/LPS-87890
 [LPS-87978]: https://issues.liferay.com/browse/LPS-87978
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

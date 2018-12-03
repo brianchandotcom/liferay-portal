@@ -44,7 +44,8 @@ public class SPIClusterableAdvice
 			Object result)
 		throws Throwable {
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		SPI spi = SPIUtil.getSPI();
 
@@ -63,7 +64,8 @@ public class SPIClusterableAdvice
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;

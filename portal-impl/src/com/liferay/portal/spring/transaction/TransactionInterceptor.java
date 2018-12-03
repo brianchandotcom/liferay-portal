@@ -14,16 +14,12 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
-
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -37,14 +33,22 @@ public class TransactionInterceptor
 		super(Transactional.class);
 	}
 
-	public TransactionAttribute getTransactionAttribute(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
 
-		Object target = serviceBeanMethodInvocation.getThis();
+		Transactional transactional = methodContextHelper.findAnnotation(
+			Transactional.class);
 
-		return _transactionAttributes.get(
-			new CacheKey(
-				target.getClass(), serviceBeanMethodInvocation.getMethod()));
+		TransactionAttribute transactionAttribute =
+			TransactionAttributeBuilder.build(transactional);
+
+		if (transactionAttribute == null) {
+			return null;
+		}
+
+		return new TransactionAttributeAdapter(transactionAttribute);
 	}
 
 	@Override
@@ -52,43 +56,11 @@ public class TransactionInterceptor
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		TransactionAttribute transactionAttribute = getTransactionAttribute(
-			serviceBeanMethodInvocation);
-
-		if (transactionAttribute == null) {
-			return serviceBeanMethodInvocation.proceed();
-		}
-
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			new TransactionAttributeAdapter(transactionAttribute);
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		return transactionExecutor.execute(
 			transactionAttributeAdapter, serviceBeanMethodInvocation);
-	}
-
-	@Override
-	public boolean isEnabled(
-		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
-
-		Transactional transactional = annotationHelper.findAnnotation(
-			Transactional.class);
-
-		if (transactional == null) {
-			return false;
-		}
-
-		TransactionAttribute transactionAttribute =
-			TransactionAttributeBuilder.build(transactional);
-
-		if (transactionAttribute == null) {
-			return false;
-		}
-
-		_transactionAttributes.put(
-			new CacheKey(targetClass, method), transactionAttribute);
-
-		return true;
 	}
 
 	public void setTransactionExecutor(
@@ -98,40 +70,5 @@ public class TransactionInterceptor
 	}
 
 	protected TransactionExecutor transactionExecutor;
-
-	private final ConcurrentMap<CacheKey, TransactionAttribute>
-		_transactionAttributes = new ConcurrentHashMap<>();
-
-	private static class CacheKey {
-
-		@Override
-		public boolean equals(Object obj) {
-			CacheKey cacheKey = (CacheKey)obj;
-
-			if (Objects.equals(_targetClass, cacheKey._targetClass) &&
-				Objects.equals(_method, cacheKey._method)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = HashUtil.hash(0, _targetClass);
-
-			return HashUtil.hash(hash, _method);
-		}
-
-		private CacheKey(Class<?> targetClass, Method method) {
-			_targetClass = targetClass;
-			_method = method;
-		}
-
-		private final Method _method;
-		private final Class<?> _targetClass;
-
-	}
 
 }

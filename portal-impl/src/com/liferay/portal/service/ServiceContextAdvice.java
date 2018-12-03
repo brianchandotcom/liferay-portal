@@ -17,13 +17,10 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 /**
  * @author Preston Crary
@@ -35,11 +32,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		Integer index = _indexCache.get(serviceBeanMethodInvocation.getMethod());
-
-		if (index == null) {
-			return serviceBeanMethodInvocation.proceed();
-		}
+		int index = serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
@@ -60,22 +53,18 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
-	public boolean isEnabled(
+	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
+		MethodContextHelper methodContextHelper) {
 
 		int index = _getServiceContextParameterIndex(method);
 
 		if (index == -1) {
-			return false;
+			return null;
 		}
 
-		_indexCache.put(method, index);
-
-		return true;
+		return index;
 	}
-
-	private final Map<Method, Integer> _indexCache = new ConcurrentHashMap<>();
 
 	private int _getServiceContextParameterIndex(Method method) {
 		Class<?>[] parameterTypes = method.getParameterTypes();

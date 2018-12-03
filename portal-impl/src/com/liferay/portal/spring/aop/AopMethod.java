@@ -30,11 +30,13 @@ public class AopMethod {
 
 	public AopMethod(
 		Object target, Method method,
-		ChainableMethodAdvice[] chainableMethodAdvices) {
+		ChainableMethodAdvice[] chainableMethodAdvices,
+		Object[] adviceMethodContexts) {
 
 		_target = target;
 		_method = method;
 		_chainableMethodAdvices = chainableMethodAdvices;
+		_adviceMethodContexts = adviceMethodContexts;
 
 		_method.setAccessible(true);
 	}
@@ -133,6 +135,11 @@ public class AopMethod {
 		return _toString;
 	}
 
+	protected Object[] getAdviceMethodContexts() {
+		return _adviceMethodContexts;
+	}
+
+	private final Object[] _adviceMethodContexts;
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private int _hashCode;
 	private final Method _method;

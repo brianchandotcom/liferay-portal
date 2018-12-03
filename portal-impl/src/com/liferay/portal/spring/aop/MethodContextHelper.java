@@ -15,29 +15,12 @@
 package com.liferay.portal.spring.aop;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import java.util.Objects;
 
 /**
- * @author Shuyang Zhou
- * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
-public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
-	extends ChainableMethodAdvice {
+public interface MethodContextHelper {
 
-	public AnnotationChainableMethodAdvice(Class<T> annotationClass) {
-		_annotationClass = Objects.requireNonNull(annotationClass);
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
-
-		return methodContextHelper.findAnnotation(_annotationClass);
-	}
-
-	private final Class<T> _annotationClass;
+	public <T extends Annotation> T findAnnotation(Class<T> annotationClass);
 
 }

@@ -39,8 +39,8 @@ public class ThreadLocalCacheAdvice
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		ThreadLocalCachable threadLocalCachable = findAnnotation(
-			serviceBeanMethodInvocation);
+		ThreadLocalCachable threadLocalCachable =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(

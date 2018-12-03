@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlThreadLoca
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.util.PropsValues;
 
@@ -53,15 +54,7 @@ public class PortalResiliencyAdvice
 			return null;
 		}
 
-		Object targetObject = serviceBeanMethodInvocation.getThis();
-
-		Class<?> targetClass = targetObject.getClass();
-
-		SPI spi = _getSPI(targetClass);
-
-		if (spi == null) {
-			return null;
-		}
+		SPI spi = serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
@@ -87,28 +80,21 @@ public class PortalResiliencyAdvice
 	}
 
 	@Override
-	public boolean isEnabled(
+	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
+		MethodContextHelper methodContextHelper) {
 
 		if (!PropsValues.PORTAL_RESILIENCY_ENABLED) {
-			return false;
+			return null;
 		}
 
-		if (!super.isEnabled(targetClass, method, annotationHelper)) {
-			return false;
+		AccessControlled accessControlled = methodContextHelper.findAnnotation(
+			AccessControlled.class);
+
+		if (accessControlled == null) {
+			return null;
 		}
 
-		SPI spi = _getSPI(targetClass);
-
-		if (spi == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private SPI _getSPI(Class<?> targetClass) {
 		String servletContextName =
 			ServletContextClassLoaderPool.getServletContextName(
 				targetClass.getClassLoader());

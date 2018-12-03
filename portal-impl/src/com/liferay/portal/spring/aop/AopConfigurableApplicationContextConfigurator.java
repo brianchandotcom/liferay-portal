@@ -226,8 +226,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 				dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 					dynamicDataSourceTargetSource);
-				dynamicDataSourceAdvice.setTransactionInterceptor(
-					transactionInterceptor);
 
 				chainableMethodAdvices.add(dynamicDataSourceAdvice);
 			}

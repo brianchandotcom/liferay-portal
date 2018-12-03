@@ -43,7 +43,8 @@ public class ClusterableAdvice
 			return;
 		}
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		ClusterableInvokerUtil.invokeOnCluster(
 			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
@@ -60,7 +61,8 @@ public class ClusterableAdvice
 			return null;
 		}
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;

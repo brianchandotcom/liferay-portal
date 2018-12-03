@@ -21,6 +21,7 @@ com.liferay.saml.opensaml.integration.internal.profile.BaseProfile#getSamlSpSess
 com.liferay.saml.opensaml.integration.internal.profile.BaseProfile#getSamlSsoSessionId(HttpServletRequest)
 com.liferay.saml.opensaml.integration.internal.profile.BaseProfile#logout(HttpServletRequest,HttpServletResponse)
 com.liferay.saml.opensaml.integration.metadata.MetadataManager#getEntityDescriptor(HttpServletRequest)
+com.liferay.saml.opensaml.integration.metadata.MetadataManager#getSecurityMessageHandler(HttpServletRequest,String,boolean)
 com.liferay.saml.opensaml.integration.resolver.UserResolver#resolveUser(UserResolverSAMLContext,ServiceContext)
 com.liferay.saml.runtime.profile.SingleLogoutProfile#getSamlSpSession(HttpServletRequest)
 com.liferay.saml.runtime.profile.SingleLogoutProfile#isSingleLogoutSupported(HttpServletRequest)

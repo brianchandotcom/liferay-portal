@@ -58,6 +58,15 @@ public class DLAppServiceAdapter {
 		}
 	}
 
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		if (_dlAppService != null) {
+			_dlAppService.deleteFileVersion(fileVersionId);
+		}
+		else {
+			_dlAppLocalService.deleteFileVersion(fileVersionId);
+		}
+	}
+
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLAppService _dlAppService;
 

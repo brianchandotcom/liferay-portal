@@ -1,4 +1,4 @@
-<definition component-name="portal-security">
+<definition component-name="portal-security" ignore="true">
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="OAuth 2" />
 

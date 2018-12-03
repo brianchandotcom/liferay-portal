@@ -26,14 +26,14 @@ import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -135,7 +135,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void setUpPropsUtil() {
-		PropsUtil.setProps(Mockito.mock(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	protected void setUpRegistryUtil() {

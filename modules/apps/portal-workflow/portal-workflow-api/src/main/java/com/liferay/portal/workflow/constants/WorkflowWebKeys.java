@@ -52,9 +52,9 @@ public class WorkflowWebKeys {
 
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 
-	public static final String WORKFLOW_TAB_DEFINITION_LINK = "schemes";
+	public static final String WORKFLOW_TAB_DEFINITION_LINK = "configuration";
 
-	public static final String WORKFLOW_TAB_INSTANCE = "monitoring";
+	public static final String WORKFLOW_TAB_INSTANCE = "submissions";
 
 	public static final String WORKFLOW_TAB_MY_SUBMISSIONS = "my-submissions";
 

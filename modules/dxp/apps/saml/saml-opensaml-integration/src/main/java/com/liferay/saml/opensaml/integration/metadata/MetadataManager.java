@@ -47,7 +47,8 @@ public interface MetadataManager {
 	public String getNameIdFormat(String entityId);
 
 	public MessageHandler<?> getSecurityPolicyResolver(
-			String communicationProfileId, boolean requireSignature)
+			HttpServletRequest request, String communicationProfileId,
+			boolean requireSignature)
 		throws SamlException;
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;

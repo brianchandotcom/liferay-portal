@@ -5138,7 +5138,11 @@ ${output.content}</echo>
 				<test-action>
 					<database-test-run-test database.type="mysql" stop.app.server="true">
 						<test-action>
-							<trycatch>
+							<local name="junit.failure.count" />
+							<local name="junit.failure.message" />
+							<local name="junit.timestamp" />
+
+							<trycatch property="junit.failure.message">
 								<try>
 									<sequential>
 										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
@@ -5152,8 +5156,39 @@ ${output.content}</echo>
 										<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
 										<antcall inheritAll="false" target="start-app-server" />
+
+										<property name="junit.failure.count" value="0" />
 									</sequential>
 								</try>
+								<catch>
+									<property name="junit.failure.count" value="1" />
+
+									<fail message="${junit.failure.message}" />
+								</catch>
+								<finally>
+									<condition else="" property="junit.failure.count" value="${junit.failure.count}">
+										<isset property="junit.failure.count" />
+									</condition>
+
+									<condition else="" property="junit.failure.message" value="${junit.failure.message}">
+										<isset property="junit.failure.message" />
+									</condition>
+
+									<tstamp>
+										<format pattern="yyyy-MM-dd_kk:mm:ss" property="junit.timestamp" />
+									</tstamp>
+
+									<echo file="TEST-PortalStartupSpaceInPath.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="${junit.failure.count}" failures="${junit.failure.count}" hostname="localhost" name="portal.startup.space.in.path" skipped="0" tests="1" time="0.0" timestamp="${junit.timestamp}">
+	<properties />
+	<testcase classname="PortalStartup" name="portalStartupSpaceInPath" time="0.0">
+		${junit.failure.message}
+	</testcase>
+	<system-out></system-out>
+	<system-err></system-err>
+</testsuite>]]></echo>
+								</finally>
 							</trycatch>
 
 							<antcall inheritall="false" target="stop-app-server" />

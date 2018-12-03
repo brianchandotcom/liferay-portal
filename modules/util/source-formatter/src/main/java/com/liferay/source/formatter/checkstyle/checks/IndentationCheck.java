@@ -128,16 +128,23 @@ public class IndentationCheck extends BaseCheck {
 				DetailAST previousSiblingDetailAST =
 					parentDetailAST.getPreviousSibling();
 
-				if ((previousSiblingDetailAST == null) ||
-					(previousSiblingDetailAST.getType() != TokenTypes.COMMA)) {
+				while (true) {
+					if (previousSiblingDetailAST == null) {
+						return expectedTabCount;
+					}
 
-					return expectedTabCount;
-				}
+					if (previousSiblingDetailAST.getType() ==
+							TokenTypes.COMMA) {
 
-				int lineNo = grandParentDetailAST.getLineNo();
+						int lineNo = grandParentDetailAST.getLineNo();
 
-				if (lineNo < detailAST.getLineNo()) {
-					return expectedTabCount + 1;
+						if (lineNo < detailAST.getLineNo()) {
+							return expectedTabCount + 1;
+						}
+					}
+
+					previousSiblingDetailAST =
+						previousSiblingDetailAST.getPreviousSibling();
 				}
 			}
 
@@ -782,6 +789,7 @@ public class IndentationCheck extends BaseCheck {
 
 		Set<Integer> lineNumbers = new HashSet<>();
 
+		DetailAST childDetailAST = null;
 		DetailAST parentDetailAST = detailAST;
 
 		while (true) {
@@ -897,15 +905,27 @@ public class IndentationCheck extends BaseCheck {
 			if ((parentDetailAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
 				(parentDetailAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
 
-				DetailAST nameDetailAST = parentDetailAST.findFirstToken(
-					TokenTypes.IDENT);
+				DetailAST previousSiblingDetailAST = childDetailAST;
 
-				if (nameDetailAST != null) {
-					int lineNo = nameDetailAST.getLineNo();
-
-					if (lineNo < detailAST.getLineNo()) {
-						lineNumbers.add(lineNo);
+				while (true) {
+					if (previousSiblingDetailAST == null) {
+						break;
 					}
+
+					if (previousSiblingDetailAST.getType() ==
+							TokenTypes.IDENT) {
+
+						int lineNo = previousSiblingDetailAST.getLineNo();
+
+						if (lineNo < detailAST.getLineNo()) {
+							lineNumbers.add(lineNo);
+						}
+
+						break;
+					}
+
+					previousSiblingDetailAST =
+						previousSiblingDetailAST.getPreviousSibling();
 				}
 			}
 
@@ -989,6 +1009,8 @@ public class IndentationCheck extends BaseCheck {
 
 				continue;
 			}
+
+			childDetailAST = parentDetailAST;
 
 			parentDetailAST = parentDetailAST.getParent();
 		}

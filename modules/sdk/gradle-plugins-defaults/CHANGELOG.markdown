@@ -5099,6 +5099,12 @@ project property `artifactAppendix`.
 - [LPS-86806]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.24.
 
+## 5.5.125 - 2018-11-28
+
+### Added
+- [LPS-87890]: Override the `artifactVersion` extension object by setting the
+project property `artifactVersion`.
+
 ## 5.5.128 - 2018-11-30
 
 ### Changed

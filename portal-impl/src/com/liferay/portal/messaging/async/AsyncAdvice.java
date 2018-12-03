@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
@@ -47,19 +48,8 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			return null;
 		}
 
-		String destinationName = null;
-
-		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
-			Object thisObject = serviceBeanMethodInvocation.getThis();
-
-			destinationName = _destinationNames.get(thisObject.getClass());
-		}
-
-		if (destinationName == null) {
-			destinationName = _defaultDestinationName;
-		}
-
-		final String callbackDestinationName = destinationName;
+		String callbackDestinationName =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -73,17 +63,15 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		return nullResult;
 	}
 
-	public String getDefaultDestinationName() {
-		return _defaultDestinationName;
-	}
-
 	@Override
-	public boolean isEnabled(
+	public Object createMethodContext(
 		Class<?> targetClass, Method method,
 		MethodContextHelper methodContextHelper) {
 
-		if (!super.isEnabled(targetClass, method, methodContextHelper)) {
-			return false;
+		Async async = methodContextHelper.findAnnotation(Async.class);
+
+		if (async == null) {
+			return null;
 		}
 
 		if (method.getReturnType() != void.class) {
@@ -93,10 +81,24 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 						" does not return void");
 			}
 
-			return false;
+			return null;
 		}
 
-		return true;
+		String destinationName = null;
+
+		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
+			destinationName = _destinationNames.get(targetClass);
+		}
+
+		if (destinationName == null) {
+			destinationName = _defaultDestinationName;
+		}
+
+		return destinationName;
+	}
+
+	public String getDefaultDestinationName() {
+		return _defaultDestinationName;
 	}
 
 	public void setDefaultDestinationName(String defaultDestinationName) {

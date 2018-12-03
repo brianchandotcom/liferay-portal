@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -40,6 +39,13 @@ public abstract class ChainableMethodAdvice {
 		throws Throwable {
 
 		return null;
+	}
+
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
+
+		return nullResult;
 	}
 
 	public void duringFinally(
@@ -77,20 +83,6 @@ public abstract class ChainableMethodAdvice {
 		return returnValue;
 	}
 
-	public boolean isEnabled(
-		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
-
-		return true;
-	}
-
-	public interface AnnotationHelper {
-
-		public <T extends Annotation> T findAnnotation(
-			Class<T> annotationClass);
-
-	}
-
 	protected void setServiceBeanAopCacheManager(
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
@@ -101,7 +93,8 @@ public abstract class ChainableMethodAdvice {
 		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
-	protected Object nullResult = new Object();
+	protected static Object nullResult = new Object();
+
 	protected ServiceBeanAopCacheManager serviceBeanAopCacheManager;
 
 }

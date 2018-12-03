@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
@@ -108,6 +109,18 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
+
+		if (_monitorServiceRequest) {
+			return nullResult;
+		}
+
+		return null;
+	}
+
+	@Override
 	public void duringFinally(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
@@ -128,14 +141,6 @@ public class ServiceMonitorAdvice
 	@Override
 	public Set<MethodSignature> getServiceClassMethods() {
 		return Collections.unmodifiableSet(_serviceClassMethods);
-	}
-
-	@Override
-	public boolean isEnabled(
-		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
-
-		return _monitorServiceRequest;
 	}
 
 	@Override

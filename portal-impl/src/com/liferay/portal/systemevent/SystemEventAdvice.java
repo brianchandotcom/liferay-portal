@@ -52,7 +52,8 @@ public class SystemEventAdvice
 			Object result)
 		throws Throwable {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		if (!systemEvent.send()) {
 			return;
@@ -120,7 +121,8 @@ public class SystemEventAdvice
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
 			if (!isValid(serviceBeanMethodInvocation, _PHASE_BEFORE)) {
@@ -148,7 +150,8 @@ public class SystemEventAdvice
 	public void duringFinally(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		if (!isValid(serviceBeanMethodInvocation, _PHASE_DURING_FINALLY)) {
 			return;

@@ -17,10 +17,12 @@ package com.liferay.portal.dao.jdbc.aop;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
-import com.liferay.portal.spring.transaction.TransactionInterceptor;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 
 import java.lang.reflect.Method;
 
@@ -42,24 +44,39 @@ public class DynamicDataSourceAdvice
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		Operation operation = Operation.WRITE;
-
-		MasterDataSource masterDataSource = findAnnotation(
-			serviceBeanMethodInvocation);
-
-		if (masterDataSource == null) {
-			TransactionAttribute transactionAttribute =
-				_transactionInterceptor.getTransactionAttribute(
-					serviceBeanMethodInvocation);
-
-			if (transactionAttribute.isReadOnly()) {
-				operation = Operation.READ;
-			}
-		}
+		Operation operation =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		_dynamicDataSourceTargetSource.pushOperation(operation);
 
 		return null;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
+
+		Transactional transactional = methodContextHelper.findAnnotation(
+			Transactional.class);
+
+		TransactionAttribute transactionAttribute =
+			TransactionAttributeBuilder.build(transactional);
+
+		if (transactionAttribute == null) {
+			return null;
+		}
+
+		Operation operation = Operation.WRITE;
+
+		MasterDataSource masterDataSource = methodContextHelper.findAnnotation(
+			MasterDataSource.class);
+
+		if ((masterDataSource == null) && transactional.readOnly()) {
+			operation = Operation.READ;
+		}
+
+		return operation;
 	}
 
 	@Override
@@ -69,32 +86,10 @@ public class DynamicDataSourceAdvice
 		_dynamicDataSourceTargetSource.popOperation();
 	}
 
-	@Override
-	public boolean isEnabled(
-		Class<?> targetClass, Method method,
-		AnnotationHelper annotationHelper) {
-
-		if (!_transactionInterceptor.isEnabled(
-				targetClass, method, annotationHelper)) {
-
-			return false;
-		}
-
-		super.isEnabled(targetClass, method, annotationHelper);
-
-		return true;
-	}
-
 	public void setDynamicDataSourceTargetSource(
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
 
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
-	}
-
-	public void setTransactionInterceptor(
-		TransactionInterceptor transactionInterceptor) {
-
-		_transactionInterceptor = transactionInterceptor;
 	}
 
 	@Override
@@ -105,6 +100,5 @@ public class DynamicDataSourceAdvice
 	}
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
-	private TransactionInterceptor _transactionInterceptor;
 
 }

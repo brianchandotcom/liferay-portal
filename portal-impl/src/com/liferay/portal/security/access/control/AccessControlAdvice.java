@@ -43,8 +43,8 @@ public class AccessControlAdvice
 
 		incrementServiceDepth();
 
-		AccessControlled accessControlled = findAnnotation(
-			serviceBeanMethodInvocation);
+		AccessControlled accessControlled =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
 
 		_accessControlAdvisor.accept(
 			serviceBeanMethodInvocation, accessControlled);

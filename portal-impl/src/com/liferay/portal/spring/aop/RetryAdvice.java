@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
+import java.lang.reflect.Method;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,22 +37,20 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 	}
 
 	@Override
-	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
-		throws Throwable {
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
 
-		Retry retry = findAnnotation(serviceBeanMethodInvocation);
+		Retry retry = methodContextHelper.findAnnotation(Retry.class);
+
+		if (retry == null) {
+			return null;
+		}
 
 		int retries = retry.retries();
 
 		if (retries < 0) {
 			retries = PropsValues.RETRY_ADVICE_MAX_RETRIES;
-		}
-
-		int totalRetries = retries;
-
-		if (retries >= 0) {
-			retries++;
 		}
 
 		Map<String, String> properties = new HashMap<>();
@@ -61,7 +61,36 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 
 		Class<? extends RetryAcceptor> clazz = retry.acceptor();
 
-		RetryAcceptor retryAcceptor = clazz.newInstance();
+		try {
+			RetryAcceptor retryAcceptor = clazz.newInstance();
+
+			return new RetryContext(retryAcceptor, properties, retries);
+		}
+		catch (ReflectiveOperationException roe) {
+			_log.error(roe, roe);
+
+			return null;
+		}
+	}
+
+	@Override
+	public Object invoke(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
+		RetryContext retryContext =
+			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+
+		RetryAcceptor retryAcceptor = retryContext._retryAcceptor;
+		Map<String, String> properties = retryContext._properties;
+
+		int retries = retryContext._retries;
+
+		int totalRetries = retries;
+
+		if (retries >= 0) {
+			retries++;
+		}
 
 		int index = serviceBeanMethodInvocation.getIndex();
 
@@ -147,5 +176,22 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RetryAdvice.class);
+
+	private static class RetryContext {
+
+		private RetryContext(
+			RetryAcceptor retryAcceptor, Map<String, String> properties,
+			int retries) {
+
+			_retryAcceptor = retryAcceptor;
+			_properties = properties;
+			_retries = retries;
+		}
+
+		private final Map<String, String> _properties;
+		private final int _retries;
+		private final RetryAcceptor _retryAcceptor;
+
+	}
 
 }

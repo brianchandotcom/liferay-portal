@@ -5111,6 +5111,12 @@ project property `artifactVersion`.
 - [LPS-87890]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
 version 2.2.8.
 
+## 5.5.127 - 2018-11-29
+
+### Changed
+- [LPS-87936]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.25.
+
 ## 5.5.128 - 2018-11-30
 
 ### Changed
@@ -5634,6 +5640,7 @@ version 2.2.8.
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
 [LPS-87890]: https://issues.liferay.com/browse/LPS-87890
+[LPS-87936]: https://issues.liferay.com/browse/LPS-87936
 [LPS-87978]: https://issues.liferay.com/browse/LPS-87978
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

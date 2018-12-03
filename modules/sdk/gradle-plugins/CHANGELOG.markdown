@@ -6122,6 +6122,14 @@ to version 2.3.287.
 - [LPS-86806]: Update the [Liferay Source Formatter] dependency to version
 1.0.759.
 
+## 3.13.25 - 2018-11-29
+
+### Changed
+- [LPS-87936]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.25.
+- [LPS-87936]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.30.
+
 ## 3.13.26 - 2018-11-30
 
 ### Fixed
@@ -6600,5 +6608,6 @@ to version 2.3.287.
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
+[LPS-87936]: https://issues.liferay.com/browse/LPS-87936
 [LPS-87978]: https://issues.liferay.com/browse/LPS-87978
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -87,7 +87,7 @@ public abstract class ChainableMethodAdvice {
 	public interface AnnotationHelper {
 
 		public <T extends Annotation> T findAnnotation(
-			Class<?> targetClass, Method method, Class<T> annotationClass);
+			Class<T> annotationClass);
 
 	}
 

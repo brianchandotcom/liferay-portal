@@ -16,7 +16,6 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.versioning.VersionPurger;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
@@ -59,6 +59,9 @@ public class LiferayVersioningCapability
 	public LocalRepository wrapLocalRepository(
 		LocalRepository localRepository) {
 
+		DLAppServiceAdapter dlAppServiceAdapter = DLAppServiceAdapter.create(
+			localRepository);
+
 		return new LocalRepositoryWrapper(localRepository) {
 
 			@Override
@@ -71,6 +74,7 @@ public class LiferayVersioningCapability
 				throws PortalException {
 
 				return _purgeVersions(
+					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, file,
@@ -87,6 +91,7 @@ public class LiferayVersioningCapability
 				throws PortalException {
 
 				return _purgeVersions(
+					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, is,
@@ -98,6 +103,9 @@ public class LiferayVersioningCapability
 
 	@Override
 	public Repository wrapRepository(Repository repository) {
+		DLAppServiceAdapter dlAppServiceAdapter = DLAppServiceAdapter.create(
+			repository);
+
 		return new RepositoryWrapper(repository) {
 
 			@Override
@@ -110,6 +118,7 @@ public class LiferayVersioningCapability
 				throws PortalException {
 
 				return _purgeVersions(
+					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, file,
@@ -126,6 +135,7 @@ public class LiferayVersioningCapability
 				throws PortalException {
 
 				return _purgeVersions(
+					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, is,
@@ -146,7 +156,9 @@ public class LiferayVersioningCapability
 		_versionPurgedListeners.close();
 	}
 
-	private FileEntry _purgeVersions(FileEntry fileEntry) {
+	private FileEntry _purgeVersions(
+		DLAppServiceAdapter dlAppServiceAdapter, FileEntry fileEntry) {
+
 		if (_versionPurger == null) {
 			return fileEntry;
 		}
@@ -162,8 +174,8 @@ public class LiferayVersioningCapability
 						versionPurgedListener.versionPurged(fileVersion);
 					}
 
-					_dlAppService.deleteFileVersion(
-						fileEntry.getFileEntryId(), fileVersion.getVersion());
+					dlAppServiceAdapter.deleteFileVersion(
+						fileVersion.getFileVersionId());
 				}
 
 				return null;
@@ -171,9 +183,6 @@ public class LiferayVersioningCapability
 
 		return fileEntry;
 	}
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private DLConfiguration _dlConfiguration;

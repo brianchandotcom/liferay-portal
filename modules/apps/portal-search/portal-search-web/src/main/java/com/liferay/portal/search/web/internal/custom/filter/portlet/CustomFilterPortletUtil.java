@@ -12,35 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.util;
+package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
+
 import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
  */
-public class SearchOptionalUtil {
+public class CustomFilterPortletUtil {
 
-	public static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
+	public static String getParameterName(
+		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		optional.ifPresent(to);
-	}
-
-	public static <T> T findFirstPresent(
-		Stream<Optional<T>> stream, T defaultValue) {
-
-		return stream.filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).findFirst(
-		).orElse(
-			defaultValue
-		);
+		return SearchOptionalUtil.findFirstPresent(
+			Stream.of(
+				customFilterPortletPreferences.getParameterNameOptional(),
+				customFilterPortletPreferences.getFilterFieldOptional()),
+			"customfilter");
 	}
 
 }

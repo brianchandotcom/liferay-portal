@@ -12,35 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.util;
+package com.liferay.portal.search.web.internal.custom.filter.portlet.action;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author André de Oliveira
  */
-public class SearchOptionalUtil {
+public class OccurEntriesHolder {
 
-	public static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
+	public OccurEntriesHolder() {
+		add("filter", "filter");
+		add("must", "must");
+		add("must_not", "must_not");
+		add("should", "should");
 	}
 
-	public static <T> T findFirstPresent(
-		Stream<Optional<T>> stream, T defaultValue) {
-
-		return stream.filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).findFirst(
-		).orElse(
-			defaultValue
-		);
+	public List<OccurEntry> getOccurEntries() {
+		return _occurEntries;
 	}
+
+	protected void add(String occur, String name) {
+		_occurEntries.add(
+			new OccurEntry() {
+				{
+					setName(name);
+					setOccur(occur);
+				}
+			});
+	}
+
+	private final List<OccurEntry> _occurEntries = new ArrayList<>();
 
 }

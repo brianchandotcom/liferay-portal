@@ -56,6 +56,10 @@ public class CustomFacetPortletSharedSearchContributor
 					portletSharedSearchSettings.getPortletId()
 				).fieldToAggregate(
 					fieldToAggregate
+				).frequencyThreshold(
+					customFacetPortletPreferences.getFrequencyThreshold()
+				).maxTerms(
+					customFacetPortletPreferences.getMaxTerms()
 				).selectedValues(
 					portletSharedSearchSettings.getParameterValues(
 						getParameterName(customFacetPortletPreferences))

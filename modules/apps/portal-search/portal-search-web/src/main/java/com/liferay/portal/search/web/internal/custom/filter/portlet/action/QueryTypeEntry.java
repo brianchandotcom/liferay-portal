@@ -12,35 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.util;
-
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
+package com.liferay.portal.search.web.internal.custom.filter.portlet.action;
 
 /**
  * @author André de Oliveira
  */
-public class SearchOptionalUtil {
+public class QueryTypeEntry {
 
-	public static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
+	public String getName() {
+		return _name;
 	}
 
-	public static <T> T findFirstPresent(
-		Stream<Optional<T>> stream, T defaultValue) {
-
-		return stream.filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).findFirst(
-		).orElse(
-			defaultValue
-		);
+	public String getTypeId() {
+		return _typeId;
 	}
+
+	protected void setName(String name) {
+		_name = name;
+	}
+
+	protected void setTypeId(String typeId) {
+		_typeId = typeId;
+	}
+
+	private String _name;
+	private String _typeId;
 
 }

@@ -11,6 +11,10 @@
 							path: 'search_bar.js',
 							requires: []
 						},
+						'liferay-search-custom-filter': {
+							path: 'custom_filter.js',
+							requires: []
+						},
 						'liferay-search-facet-util': {
 							path: 'facet_util.js',
 							requires: []

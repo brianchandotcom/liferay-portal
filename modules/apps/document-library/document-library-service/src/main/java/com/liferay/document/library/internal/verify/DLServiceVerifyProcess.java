@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.verify;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -25,18 +24,14 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -46,8 +41,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -247,7 +240,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		updateClassNameId();
 		updateFileEntryAssets();
 		updateFolderAssets();
-		updateStagedPortletNames();
 	}
 
 	@Reference(
@@ -392,48 +384,13 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings}
+	 */
+	@Deprecated
 	protected void updateStagedPortletNames() throws PortalException {
-		ActionableDynamicQuery groupActionableDynamicQuery =
-			_groupLocalService.getActionableDynamicQuery();
-
-		groupActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property siteProperty = PropertyFactoryUtil.forName("site");
-
-				dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
-			});
-		groupActionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<Group>)group -> {
-				UnicodeProperties typeSettingsProperties =
-					group.getTypeSettingsProperties();
-
-				if (typeSettingsProperties == null) {
-					return;
-				}
-
-				String propertyKey = _staging.getStagedPortletId(
-					DLPortletKeys.DOCUMENT_LIBRARY);
-
-				String propertyValue = typeSettingsProperties.getProperty(
-					propertyKey);
-
-				if (Validator.isNull(propertyValue)) {
-					return;
-				}
-
-				typeSettingsProperties.remove(propertyKey);
-
-				propertyKey = _staging.getStagedPortletId(
-					DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-
-				typeSettingsProperties.put(propertyKey, propertyValue);
-
-				group.setTypeSettingsProperties(typeSettingsProperties);
-
-				_groupLocalService.updateGroup(group);
-			});
-
-		groupActionableDynamicQuery.performActions();
+		throw new UnsupportedOperationException();
 	}
 
 	private static final String _MS_OFFICE_2010_TEXT_XML_UTF8 =
@@ -448,8 +405,5 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Staging _staging;
 
 }

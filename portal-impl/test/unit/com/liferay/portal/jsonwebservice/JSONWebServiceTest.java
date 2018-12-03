@@ -21,14 +21,14 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,7 +75,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 				}));
 
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 
 		initPortalServices();
 

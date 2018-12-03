@@ -20,15 +20,16 @@ import com.liferay.portal.kernel.nio.intraband.welder.test.WelderTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtilAdvice;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.net.ServerSocket;
 
 import java.nio.channels.ServerSocketChannel;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -48,32 +49,35 @@ public class SocketWelderTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
-		PropsUtilAdvice.setProps(
+		_properties = new HashMap<>();
+
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_BUFFER_SIZE,
 			String.valueOf(8192));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_KEEP_ALIVE,
 			Boolean.toString(false));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_REUSE_ADDRESS,
 			Boolean.toString(false));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_SERVER_START_PORT,
 			String.valueOf(3414));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_SO_LINGER, String.valueOf(0));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_SO_TIMEOUT, String.valueOf(0));
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_TCP_NO_DELAY,
 			Boolean.toString(false));
+
+		PropsTestUtil.setProps(_properties);
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConfiguration() {
 		Assert.assertEquals(8192, SocketWelder.Configuration.bufferSize);
@@ -85,7 +89,6 @@ public class SocketWelderTest {
 		Assert.assertFalse(SocketWelder.Configuration.tcpNoDelay);
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() throws Exception {
 		SocketWelder socketWelder = new SocketWelder();
@@ -112,16 +115,14 @@ public class SocketWelderTest {
 			socketWelder.soTimeout, serverSocket.getSoTimeout());
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testWeldSolingerOff() throws Exception {
-		PropsUtilAdvice.setProps(
+		_properties.put(
 			PropsKeys.INTRABAND_WELDER_SOCKET_SO_LINGER, String.valueOf(10));
 
 		testWeldSolingerOn();
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testWeldSolingerOn() throws Exception {
 		final SocketWelder serverSocketWelder = new SocketWelder();
@@ -199,5 +200,7 @@ public class SocketWelderTest {
 				ise.getMessage());
 		}
 	}
+
+	private Map<String, Object> _properties;
 
 }

@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
@@ -60,6 +60,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -503,21 +504,23 @@ public class SPIAgentSerializableTest {
 		}
 	}
 
-	@AdviseWith(
-		adviceClasses = {DeserializerAdvice.class, PropsUtilAdvice.class}
-	)
+	@AdviseWith(adviceClasses = DeserializerAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testSerialization() throws IOException {
 
 		// Unable to send
 
-		PropsUtilAdvice.setProps(
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(
 			PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED,
 			Boolean.FALSE.toString());
-		PropsUtilAdvice.setProps(
+		properties.put(
 			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE,
 			String.valueOf(Long.MAX_VALUE));
+
+		PropsTestUtil.setProps(properties);
 
 		final AtomicLong receiptReference = new AtomicLong();
 

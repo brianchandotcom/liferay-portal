@@ -24,15 +24,16 @@ import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.PropsUtilAdvice;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.nio.ByteBuffer;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,10 +66,11 @@ public class MailboxDatagramReceiveHandlerTest {
 				new PortalExecutorManagerInvocationHandler()));
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testDoReceive() {
+		PropsTestUtil.setProps(Collections.emptyMap());
+
 		MailboxDatagramReceiveHandler mailboxDatagramReceiveHandler =
 			new MailboxDatagramReceiveHandler();
 

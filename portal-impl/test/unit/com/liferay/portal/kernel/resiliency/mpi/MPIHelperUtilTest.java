@@ -37,26 +37,22 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.PropsUtilAdvice;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.IOException;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
@@ -79,15 +75,19 @@ public class MPIHelperUtilTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
-		PropsUtilAdvice.setProps(
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(
 			PropsKeys.INTRABAND_IMPL, ExecutorIntraband.class.getName());
-		PropsUtilAdvice.setProps(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, "10000");
-		PropsUtilAdvice.setProps(
+		properties.put(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, "10000");
+		properties.put(
 			PropsKeys.INTRABAND_WELDER_IMPL, SocketWelder.class.getName());
+
+		PropsTestUtil.setProps(properties);
 
 		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
 
@@ -117,9 +117,10 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationFailed() {
+		PropsUtil.setProps(null);
+
 		System.setProperty(PropsKeys.INTRABAND_IMPL, "NoSuchClass");
 
 		try {
@@ -140,23 +141,9 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationOnMPI() throws Exception {
-		PropsUtil.setProps(
-			(Props)ProxyUtil.newProxyInstance(
-				MPIHelperUtilTest.class.getClassLoader(),
-				new Class<?>[] {Props.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-						Object proxy, Method method, Object[] args) {
-
-						throw new UnsupportedOperationException();
-					}
-
-				}));
+		PropsUtil.setProps(null);
 
 		MPI mpiImpl = _getMPIImpl();
 
@@ -180,9 +167,10 @@ public class MPIHelperUtilTest {
 			datagramReceiveHandlers[SystemDataType.RPC.getValue()].getClass());
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationOnSPI() throws Exception {
+		PropsUtil.setProps(null);
+
 		System.setProperty(
 			PropsKeys.INTRABAND_IMPL, SelectorIntraband.class.getName());
 		System.setProperty(PropsKeys.INTRABAND_TIMEOUT_DEFAULT, "10000");
@@ -217,7 +205,6 @@ public class MPIHelperUtilTest {
 		new MPIHelperUtil();
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownFailWithLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
@@ -265,7 +252,6 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownFailWithoutLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
@@ -295,7 +281,6 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownSuccess() {
 		try (CaptureHandler captureHandler =
@@ -310,7 +295,6 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSPIProviderRegistration() throws RemoteException {
 
@@ -739,7 +723,6 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSPIRegistration() {
 		try (CaptureHandler captureHandler =

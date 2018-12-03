@@ -38,7 +38,7 @@ public interface ClusterExecutorConfiguration {
 	public boolean debugEnabled();
 
 	@Meta.AD(
-		deflt = "access_key|secret_access_key",
+		deflt = "access_key|connection_password|connection_username|secret_access_key",
 		description = "excluded-property-keys-help",
 		name = "excluded-property-keys", required = false
 	)

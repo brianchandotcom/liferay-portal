@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -33,7 +32,10 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (_isAtLineStart(detailAST)) {
+		if (DetailASTUtil.isAtLineStart(
+				detailAST,
+				getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1))) {
+
 			return;
 		}
 
@@ -63,20 +65,6 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 
 			return;
 		}
-	}
-
-	private boolean _isAtLineStart(DetailAST detailAST) {
-		String line = getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1);
-
-		for (int i = 0; i < detailAST.getColumnNo(); i++) {
-			char c = line.charAt(i);
-
-			if ((c != CharPool.SPACE) && (c != CharPool.TAB)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private static final String _MSG_INCORRECT_LINE_BREAK =

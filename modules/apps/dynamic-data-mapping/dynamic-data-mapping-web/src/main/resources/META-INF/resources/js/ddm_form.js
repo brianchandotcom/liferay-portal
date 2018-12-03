@@ -1363,10 +1363,14 @@ AUI.add(
 
 						var url = Liferay.PortletURL.createRenderURL(themeDisplay.getURLControlPanel());
 
+						var groupIdNode = A.one('#' + this.get('portletNamespace') + 'groupId');
+
+						var groupId = groupIdNode.getAttribute('value') || themeDisplay.getScopeGroupId();
+
 						url.setParameter('eventName', 'selectContent');
-						url.setParameter('groupId', themeDisplay.getScopeGroupId());
+						url.setParameter('groupId', groupId);
 						url.setParameter('p_p_auth', container.getData('assetBrowserAuthToken'));
-						url.setParameter('selectedGroupId', themeDisplay.getScopeGroupId());
+						url.setParameter('selectedGroupId', groupId);
 						url.setParameter('showNonindexable', true);
 						url.setParameter('showScheduled', true);
 						url.setParameter('typeSelection', 'com.liferay.journal.model.JournalArticle');
@@ -1511,8 +1515,12 @@ AUI.add(
 
 							var privateLayout = !!(layoutValue && layoutValue.privateLayout);
 
+							var groupIdNode = A.one('#' + this.get('portletNamespace') + 'groupId');
+
+							var groupId = groupIdNode.getAttribute('value') || themeDisplay.getScopeGroupId();
+
 							var layoutsRoot = {
-								groupId: themeDisplay.getScopeGroupId(),
+								groupId: groupId,
 								label: Liferay.Language.get('all'),
 								layoutId: 0,
 								privateLayout: privateLayout
@@ -1933,7 +1941,9 @@ AUI.add(
 
 						var delta = instance.get('delta');
 
-						var groupId = themeDisplay.getScopeGroupId();
+						var groupIdNode = A.one('#' + this.get('portletNamespace') + 'groupId');
+
+						var groupId = groupIdNode.getAttribute('value') || themeDisplay.getScopeGroupId();
 
 						var parentLayoutId = instance._currentParentLayoutId;
 
@@ -2172,9 +2182,11 @@ AUI.add(
 
 						var selectedLayout = instance.get('selectedLayout');
 
-						if (selectedLayout && selectedLayout.layoutId) {
-							var groupId = themeDisplay.getScopeGroupId();
+						var groupIdNode = A.one('#' + this.get('portletNamespace') + 'groupId');
 
+						var groupId = groupIdNode.getAttribute('value') || themeDisplay.getScopeGroupId();
+
+						if (selectedLayout && selectedLayout.layoutId) {
 							instance._requestSiblingLayouts(
 								groupId,
 								privateLayout,
@@ -2198,7 +2210,7 @@ AUI.add(
 						else {
 							listNode.addClass('top-ended');
 
-							instance._requestInitialLayouts(0, themeDisplay.getScopeGroupId(), privateLayout, instance._renderLayouts);
+							instance._requestInitialLayouts(0, groupId, privateLayout, instance._renderLayouts);
 						}
 					},
 

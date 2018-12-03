@@ -100,10 +100,8 @@ public class UpgradeStagingGroupTypeSettings extends UpgradeProcess {
 	protected String oldPortletId;
 
 	private String _getStagedPortletId(String portletId) {
-		String key = portletId;
-
-		if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
-			return key;
+		if (portletId.startsWith(StagingConstants.STAGED_PORTLET)) {
+			return portletId;
 		}
 
 		return StagingConstants.STAGED_PORTLET.concat(portletId);

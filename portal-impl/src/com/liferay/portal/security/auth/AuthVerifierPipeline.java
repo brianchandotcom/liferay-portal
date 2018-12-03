@@ -305,8 +305,8 @@ public class AuthVerifierPipeline {
 		_serviceTracker;
 
 	private class AuthVerifierTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer<AuthVerifier, AuthVerifierConfiguration> {
+		implements ServiceTrackerCustomizer
+			<AuthVerifier, AuthVerifierConfiguration> {
 
 		@Override
 		public AuthVerifierConfiguration addingService(

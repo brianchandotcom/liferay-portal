@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  */
 public abstract class BaseCategoryNestedCollectionRouter
-	<T extends Identifier<Long>> implements
-		NestedCollectionRouter
+	<T extends Identifier<Long>>
+		implements NestedCollectionRouter
 			<AssetCategory, Long, CategoryIdentifier, Long, T> {
 
 	/**

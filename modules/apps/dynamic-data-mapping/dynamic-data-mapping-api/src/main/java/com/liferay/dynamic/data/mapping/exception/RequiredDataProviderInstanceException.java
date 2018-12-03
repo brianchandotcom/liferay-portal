@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredDataProviderInstanceException extends PortalException {
 
-	public static class MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks
-		extends RequiredDataProviderInstanceException {
+	public static class
+		MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks
+			extends RequiredDataProviderInstanceException {
 
 		public MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks(
 			long dataProviderInstanceId) {

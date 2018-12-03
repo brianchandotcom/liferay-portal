@@ -34,8 +34,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  */
 public abstract class BaseUserAccountOrganizationNestedCollectionRouter
-	<T extends Identifier<Long>> implements NestedCollectionRouter
-		<Organization, Long, OrganizationIdentifier, Long, T> {
+	<T extends Identifier<Long>>
+		implements NestedCollectionRouter
+			<Organization, Long, OrganizationIdentifier, Long, T> {
 
 	@Override
 	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(

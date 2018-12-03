@@ -31,8 +31,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Shuyang Zhou
  */
-class LocalProcessChannel<T extends Serializable>
-	implements ProcessChannel<T> {
+class LocalProcessChannel<T extends Serializable> implements ProcessChannel<T> {
 
 	LocalProcessChannel(
 		NoticeableFuture<T> noticeableFuture,

@@ -115,8 +115,8 @@ public class ModelListenerRegistrationUtil {
 		_serviceTracker;
 
 	private class ModelListenerTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer<ModelListener<?>, ModelListener<?>> {
+		implements ServiceTrackerCustomizer
+			<ModelListener<?>, ModelListener<?>> {
 
 		@Override
 		public ModelListener<?> addingService(

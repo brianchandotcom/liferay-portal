@@ -18,7 +18,8 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public abstract class BaseTestBatch
-	<T extends BatchBuildData, S extends Workspace> implements TestBatch<T, S> {
+	<T extends BatchBuildData, S extends Workspace>
+		implements TestBatch<T, S> {
 
 	public JDK getJDK() {
 		return _jdk;

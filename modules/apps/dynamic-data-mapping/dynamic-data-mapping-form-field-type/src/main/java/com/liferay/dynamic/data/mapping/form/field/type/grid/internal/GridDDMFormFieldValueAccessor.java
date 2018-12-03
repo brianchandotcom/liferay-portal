@@ -40,8 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=grid",
-	service =
-		{DDMFormFieldValueAccessor.class, GridDDMFormFieldValueAccessor.class}
+	service = {
+		DDMFormFieldValueAccessor.class, GridDDMFormFieldValueAccessor.class
+	}
 )
 public class GridDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {

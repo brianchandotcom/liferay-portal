@@ -46,8 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + PortletKeys.LOGIN,
-		"mvc.command.name=" +
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME
+		"mvc.command.name=" + OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME
 	},
 	service = MVCActionCommand.class
 )

@@ -120,8 +120,8 @@ public class ItemSelectorViewReturnTypeProviderHandlerImpl
 		_serviceTrackerMap;
 
 	private class ItemSelectorViewServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer<ItemSelectorView, ItemSelectorView> {
+		implements ServiceTrackerCustomizer
+			<ItemSelectorView, ItemSelectorView> {
 
 		@Override
 		public ItemSelectorView addingService(

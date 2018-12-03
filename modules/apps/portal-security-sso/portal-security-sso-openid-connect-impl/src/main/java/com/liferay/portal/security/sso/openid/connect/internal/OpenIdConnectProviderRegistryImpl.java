@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Component;
 )
 public class OpenIdConnectProviderRegistryImpl
 	implements ManagedServiceFactory,
-			OpenIdConnectProviderRegistry
-		<OIDCClientMetadata, OIDCProviderMetadata> {
+			   OpenIdConnectProviderRegistry
+				   <OIDCClientMetadata, OIDCProviderMetadata> {
 
 	@Override
 	public void deleted(String factoryPid) {

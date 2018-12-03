@@ -134,8 +134,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 	}
 
-	private abstract static class
-		BaseLicenseReportConfigurator<P extends Plugin<? extends Project>>
+	private abstract static class BaseLicenseReportConfigurator
+		<P extends Plugin<? extends Project>>
 			implements Action<P> {
 
 		public static final String LICENSE_REPORT_CONFIGURATION_NAME =

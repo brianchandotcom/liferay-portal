@@ -35,7 +35,8 @@ import java.util.List;
  * @author Adolfo Pérez
  */
 public abstract class InitializedDocumentRepository
-	<T extends DocumentRepository> implements DocumentRepository {
+	<T extends DocumentRepository>
+		implements DocumentRepository {
 
 	@Override
 	public FileEntry addFileEntry(

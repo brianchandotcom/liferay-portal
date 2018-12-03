@@ -79,8 +79,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"mvc.command.name=exportImportChangeset"
 	},
-	service =
-		{ExportImportChangesetMVCActionCommand.class, MVCActionCommand.class}
+	service = {
+		ExportImportChangesetMVCActionCommand.class, MVCActionCommand.class
+	}
 )
 public class ExportImportChangesetMVCActionCommandImpl
 	extends BaseMVCActionCommand

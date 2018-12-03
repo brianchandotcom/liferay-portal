@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMExpressionFunction.Function3.class
 )
 public class BetweenFunction
-	implements DDMExpressionFunction.
-		Function3<BigDecimal, BigDecimal, BigDecimal, Boolean> {
+	implements DDMExpressionFunction.Function3
+		<BigDecimal, BigDecimal, BigDecimal, Boolean> {
 
 	@Override
 	public Boolean apply(

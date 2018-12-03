@@ -38,8 +38,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=select",
-	service =
-		{DDMFormFieldValueAccessor.class, SelectDDMFormFieldValueAccessor.class}
+	service = {
+		DDMFormFieldValueAccessor.class, SelectDDMFormFieldValueAccessor.class
+	}
 )
 public class SelectDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {

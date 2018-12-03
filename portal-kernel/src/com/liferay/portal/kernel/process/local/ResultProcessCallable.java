@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-class ResultProcessCallable <T extends Serializable>
+class ResultProcessCallable<T extends Serializable>
 	implements ProcessCallable<T> {
 
 	ResultProcessCallable(T returnValue, ProcessException processException) {

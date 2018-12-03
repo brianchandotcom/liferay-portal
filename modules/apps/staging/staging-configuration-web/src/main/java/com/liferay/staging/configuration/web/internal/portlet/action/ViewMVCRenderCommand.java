@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" +
-			StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
+		"javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
 		"mvc.command.name=staging"
 	},
 	service = MVCRenderCommand.class

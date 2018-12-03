@@ -445,9 +445,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	}
 
 	private static class ServiceReferenceMapperWrapper<K, S>
-		implements
-			com.liferay.osgi.service.tracker.collections.map.
-				ServiceReferenceMapper<K, S> {
+		implements com.liferay.osgi.service.tracker.collections.map.
+			ServiceReferenceMapper<K, S> {
 
 		public ServiceReferenceMapperWrapper(
 			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {

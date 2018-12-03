@@ -38,8 +38,9 @@ import java.util.List;
  * @author Alejandro Hernández
  */
 public abstract class BaseCommentNestedCollectionRouter
-	<T extends Identifier<Long>> implements
-		NestedCollectionRouter<Comment, Long, CommentIdentifier, Long, T> {
+	<T extends Identifier<Long>>
+		implements NestedCollectionRouter
+			<Comment, Long, CommentIdentifier, Long, T> {
 
 	@Override
 	public NestedCollectionRoutes<Comment, Long, Long> collectionRoutes(

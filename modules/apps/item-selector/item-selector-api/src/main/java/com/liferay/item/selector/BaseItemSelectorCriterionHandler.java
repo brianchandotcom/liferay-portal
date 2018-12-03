@@ -33,7 +33,8 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Roberto Díaz
  */
 public abstract class BaseItemSelectorCriterionHandler
-	<T extends ItemSelectorCriterion> implements ItemSelectorCriterionHandler {
+	<T extends ItemSelectorCriterion>
+		implements ItemSelectorCriterionHandler {
 
 	@Override
 	@SuppressWarnings("unchecked")

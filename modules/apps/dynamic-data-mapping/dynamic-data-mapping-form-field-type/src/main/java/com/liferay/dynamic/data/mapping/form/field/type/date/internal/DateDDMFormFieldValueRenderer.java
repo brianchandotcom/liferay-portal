@@ -34,8 +34,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=date",
-	service =
-		{DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class}
+	service = {
+		DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class
+	}
 )
 public class DateDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {

@@ -53,8 +53,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service =
-		{FreeMarkerTemplateContextHelper.class, TemplateContextHelper.class}
+	service = {
+		FreeMarkerTemplateContextHelper.class, TemplateContextHelper.class
+	}
 )
 public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 

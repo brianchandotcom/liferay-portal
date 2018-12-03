@@ -80,10 +80,7 @@ import org.springframework.mock.web.portlet.MockRenderResponse;
  * @author Pedro Queiroz
  */
 @PrepareForTest(
-	{
-		DDMFormInstancePermission.class, DDMFormTaglibUtil.class,
-		LocaleUtil.class
-	}
+	{DDMFormInstancePermission.class, DDMFormTaglibUtil.class, LocaleUtil.class}
 )
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(

@@ -337,8 +337,8 @@ public class WorkflowHandlerRegistryUtil {
 		new TreeMap<>();
 
 	private class WorkflowHandlerServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer<WorkflowHandler<?>, WorkflowHandler<?>> {
+		implements ServiceTrackerCustomizer
+			<WorkflowHandler<?>, WorkflowHandler<?>> {
 
 		@Override
 		public WorkflowHandler<?> addingService(

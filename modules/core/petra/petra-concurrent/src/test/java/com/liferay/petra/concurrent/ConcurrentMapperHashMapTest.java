@@ -1113,8 +1113,8 @@ public class ConcurrentMapperHashMapTest {
 	private final Value _testValue2 = new Value("testValue2");
 
 	private static class ConcurrentTypeReferenceHashMap
-		extends
-			ConcurrentMapperHashMap<Key, KeyReference, Value, ValueReference> {
+		extends ConcurrentMapperHashMap
+			<Key, KeyReference, Value, ValueReference> {
 
 		public ConcurrentTypeReferenceHashMap() {
 			super(new ConcurrentHashMap<KeyReference, ValueReference>());

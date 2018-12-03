@@ -46,8 +46,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service =
-		{TemplateResourceLoader.class, VelocityTemplateResourceLoader.class}
+	service = {
+		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
+	}
 )
 public class VelocityTemplateResourceLoader implements TemplateResourceLoader {
 

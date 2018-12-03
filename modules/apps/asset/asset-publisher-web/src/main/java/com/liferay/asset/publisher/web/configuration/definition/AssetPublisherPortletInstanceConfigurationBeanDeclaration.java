@@ -23,9 +23,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class
-	AssetPublisherPortletInstanceConfigurationBeanDeclaration
-		implements ConfigurationBeanDeclaration {
+public class AssetPublisherPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

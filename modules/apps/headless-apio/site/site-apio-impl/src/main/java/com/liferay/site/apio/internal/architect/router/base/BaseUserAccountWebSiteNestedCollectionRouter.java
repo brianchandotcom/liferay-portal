@@ -37,8 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Perez
  */
 public abstract class BaseUserAccountWebSiteNestedCollectionRouter
-	<T extends Identifier<Long>> implements NestedCollectionRouter
-		<GroupWrapper, Long, WebSiteIdentifier, Long, T> {
+	<T extends Identifier<Long>>
+		implements NestedCollectionRouter
+			<GroupWrapper, Long, WebSiteIdentifier, Long, T> {
 
 	@Override
 	public NestedCollectionRoutes<GroupWrapper, Long, Long> collectionRoutes(

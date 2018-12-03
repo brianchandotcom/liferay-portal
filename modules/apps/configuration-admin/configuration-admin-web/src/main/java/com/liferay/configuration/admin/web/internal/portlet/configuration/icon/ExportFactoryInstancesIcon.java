@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" +
-			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"path=/view_factory_instances"
 	},
 	service = PortletConfigurationIcon.class

@@ -41,12 +41,17 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		_showTitle = showTitle;
 	}
 
+	public void setWrapperCssClass(String wrapperCssClass) {
+		_wrapperCssClass = wrapperCssClass;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_articleDisplay = null;
 		_showTitle = false;
+		_wrapperCssClass = null;
 	}
 
 	@Override
@@ -61,11 +66,15 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-journal:journal-article:showTitle",
 			String.valueOf(_showTitle));
+		request.setAttribute(
+			"liferay-journal:journal-article:wrapperCssClass",
+			_wrapperCssClass);
 	}
 
 	private static final String _PAGE = "/journal_article/page.jsp";
 
 	private JournalArticleDisplay _articleDisplay;
 	private boolean _showTitle;
+	private String _wrapperCssClass;
 
 }

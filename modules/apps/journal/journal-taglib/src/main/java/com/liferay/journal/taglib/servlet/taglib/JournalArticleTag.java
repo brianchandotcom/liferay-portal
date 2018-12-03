@@ -103,6 +103,10 @@ public class JournalArticleTag extends IncludeTag {
 		_showTitle = showTitle;
 	}
 
+	public void setWrapperCssClass(String wrapperCssClass) {
+		_wrapperCssClass = wrapperCssClass;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -113,6 +117,7 @@ public class JournalArticleTag extends IncludeTag {
 		_groupId = 0;
 		_languageId = null;
 		_showTitle = false;
+		_wrapperCssClass = null;
 	}
 
 	protected String getDdmTemplateKey() {
@@ -143,6 +148,9 @@ public class JournalArticleTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-journal:journal-article:showTitle",
 			String.valueOf(_showTitle));
+		request.setAttribute(
+			"liferay-journal:journal-article:wrapperCssClass",
+			_wrapperCssClass);
 	}
 
 	private static final String _PAGE = "/journal_article/page.jsp";
@@ -157,5 +165,6 @@ public class JournalArticleTag extends IncludeTag {
 	private long _groupId;
 	private String _languageId;
 	private boolean _showTitle;
+	private String _wrapperCssClass;
 
 }

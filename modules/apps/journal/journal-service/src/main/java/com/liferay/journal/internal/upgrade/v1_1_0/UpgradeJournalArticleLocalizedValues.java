@@ -44,8 +44,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		updateJournalArticleDefaultLanguageId();
 
-		upgradeSchema();
-
 		updateJournalArticleLocalizedFields();
 
 		dropTitleColumn();
@@ -110,6 +108,15 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
+		if (hasColumn("JournalArticle", "description") &&
+			hasColumn("JournalArticle", "title") &&
+			hasTable("JournalArticleLocalization")) {
+
+			runSQL("drop table JournalArticleLocalization");
+		}
+
+		_upgradeSchema();
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("insert into JournalArticleLocalization(");
@@ -178,14 +185,11 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 			ps2.executeBatch();
 		}
-	}
+		catch (Exception e) {
+			runSQL("drop table JournalArticleLocalization");
 
-	protected void upgradeSchema() throws Exception {
-		String template = StringUtil.read(
-			UpgradeJournalArticleLocalizedValues.class.getResourceAsStream(
-				"dependencies/update.sql"));
-
-		runSQLTemplateString(template, false, false);
+			throw e;
+		}
 	}
 
 	private static long _increment() {
@@ -203,6 +207,14 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			StringBundler.concat(
 				"Truncated the ", columnName, " value for article ", articleId,
 				" because it is too long"));
+	}
+
+	private void _upgradeSchema() throws Exception {
+		String template = StringUtil.read(
+			UpgradeJournalArticleLocalizedValues.class.getResourceAsStream(
+				"dependencies/update.sql"));
+
+		runSQLTemplateString(template, false, false);
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

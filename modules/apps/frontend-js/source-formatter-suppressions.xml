@@ -6,5 +6,6 @@
 		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/builtin/package\.html" />
 		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/model/package\.html" />
 		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/package\.html" />
+		<suppress checks="JSLodashDependencyCheck" files="modules/apps/frontend-js/frontend-js-aui-web/src/main/resources/META-INF/resources/liferay/aui_sandbox\.js" />
 	</source-check>
 </suppressions>

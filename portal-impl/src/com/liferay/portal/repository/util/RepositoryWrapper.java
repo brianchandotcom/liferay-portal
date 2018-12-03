@@ -289,6 +289,11 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		_repository.deleteFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

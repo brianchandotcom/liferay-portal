@@ -395,6 +395,11 @@ public class LiferayRepository
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		dlFileVersionLocalService.deleteDLFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

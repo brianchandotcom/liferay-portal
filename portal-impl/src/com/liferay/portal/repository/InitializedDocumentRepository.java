@@ -173,6 +173,13 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		checkDocumentRepository();
+
+		documentRepository.deleteFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		checkDocumentRepository();
 

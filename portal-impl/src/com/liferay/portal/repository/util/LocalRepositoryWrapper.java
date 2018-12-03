@@ -153,6 +153,11 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		_localRepository.deleteFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		_localRepository.deleteFolder(folderId);
 	}

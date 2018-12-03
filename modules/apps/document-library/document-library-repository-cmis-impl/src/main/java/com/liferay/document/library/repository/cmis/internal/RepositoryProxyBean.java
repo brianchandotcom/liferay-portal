@@ -388,6 +388,15 @@ public class RepositoryProxyBean
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		try (ContextClassLoaderSetter contextClassLoaderSetter =
+				new ContextClassLoaderSetter(_classLoader)) {
+
+			_repository.deleteFileVersion(fileVersionId);
+		}
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

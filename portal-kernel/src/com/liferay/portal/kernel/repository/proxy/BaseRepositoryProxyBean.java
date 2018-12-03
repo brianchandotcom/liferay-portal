@@ -315,6 +315,11 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		_baseRepository.deleteFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

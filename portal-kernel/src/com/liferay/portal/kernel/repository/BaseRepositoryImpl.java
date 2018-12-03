@@ -230,6 +230,11 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version) {
 		throw new UnsupportedOperationException();
 	}

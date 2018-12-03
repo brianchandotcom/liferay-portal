@@ -228,6 +228,18 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public void deleteFileVersion(long fileVersionId) throws PortalException {
+		LocalRepository localRepository = getRepository();
+
+		FileVersion fileVersion = localRepository.getFileVersion(fileVersionId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileVersion.class, fileVersion);
+
+		localRepository.deleteFileVersion(fileVersionId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		LocalRepository localRepository = getRepository();
 

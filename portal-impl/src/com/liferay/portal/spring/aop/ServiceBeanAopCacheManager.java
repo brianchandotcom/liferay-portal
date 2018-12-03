@@ -22,13 +22,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -43,20 +39,6 @@ public class ServiceBeanAopCacheManager {
 				chainableMethodAdvices) {
 
 			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
-
-			if (chainableMethodAdvice instanceof
-					AnnotationChainableMethodAdvice) {
-
-				AnnotationChainableMethodAdvice<?>
-					annotationChainableMethodAdvice =
-						(AnnotationChainableMethodAdvice<?>)
-							chainableMethodAdvice;
-
-				Class<? extends Annotation> annotationClass =
-					annotationChainableMethodAdvice.getAnnotationClass();
-
-				_annotationClasses.add(annotationClass);
-			}
 		}
 
 		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
@@ -86,18 +68,20 @@ public class ServiceBeanAopCacheManager {
 		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
 			new ArrayList<>();
 
-		ChainableMethodAdvice.AnnotationHelper annotationHelper =
-			new DefaultAnnotationHelper();
+		DefaultAnnotationHelper defaultAnnotationHelper =
+			new DefaultAnnotationHelper(targetClass, method);
 
 		for (ChainableMethodAdvice chainableMethodAdvice :
 				_fullChainableMethodAdvices) {
 
 			if (chainableMethodAdvice.isEnabled(
-					targetClass, method, annotationHelper)) {
+					targetClass, method, defaultAnnotationHelper)) {
 
 				filteredChainableMethodAdvices.add(chainableMethodAdvice);
 			}
 		}
+
+		defaultAnnotationHelper._methodAnnotations.clear();
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			_emptyChainableMethodAdvices;
@@ -113,10 +97,7 @@ public class ServiceBeanAopCacheManager {
 
 	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
 		new ChainableMethodAdvice[0];
-	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private final Set<Class<? extends Annotation>> _annotationClasses =
-		new HashSet<>();
 	private final Map<CacheKey, AopMethod> _aopMethods =
 		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;
@@ -158,59 +139,22 @@ public class ServiceBeanAopCacheManager {
 
 		@Override
 		public <T extends Annotation> T findAnnotation(
-			Class<?> targetClass, Method method, Class<T> annotationType) {
+			Class<T> annotationClass) {
 
-			Annotation[] annotationArray = _methodAnnotations.get(method);
-
-			if (annotationArray == _nullAnnotations) {
-				return null;
-			}
-
-			T annotation = null;
-
-			if (annotationArray == null) {
-				List<Annotation> annotations = AnnotationLocator.locate(
-					method, targetClass);
-
-				Iterator<Annotation> iterator = annotations.iterator();
-
-				while (iterator.hasNext()) {
-					Annotation curAnnotation = iterator.next();
-
-					Class<? extends Annotation> curAnnotationType =
-						curAnnotation.annotationType();
-
-					if (!_annotationClasses.contains(curAnnotationType)) {
-						iterator.remove();
-					}
-					else if (annotationType == curAnnotationType) {
-						annotation = (T)curAnnotation;
-					}
-				}
-
-				if (annotations.isEmpty()) {
-					_methodAnnotations.put(method, _nullAnnotations);
-				}
-				else {
-					_methodAnnotations.put(
-						method,
-						annotations.toArray(
-							new Annotation[annotations.size()]));
-				}
-			}
-			else {
-				for (Annotation curAnnotation : annotationArray) {
-					if (curAnnotation.annotationType() == annotationType) {
-						return (T)curAnnotation;
-					}
+			for (Annotation curAnnotation : _methodAnnotations) {
+				if (curAnnotation.annotationType() == annotationClass) {
+					return (T)curAnnotation;
 				}
 			}
 
-			return annotation;
+			return null;
 		}
 
-		private final Map<Method, Annotation[]> _methodAnnotations =
-			new HashMap<>();
+		private DefaultAnnotationHelper(Class<?> targetClass, Method method) {
+			_methodAnnotations = AnnotationLocator.locate(method, targetClass);
+		}
+
+		private final List<Annotation> _methodAnnotations;
 
 	}
 

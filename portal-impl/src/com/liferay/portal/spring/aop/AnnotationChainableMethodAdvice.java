@@ -34,7 +34,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		_annotationClass = Objects.requireNonNull(annotationClass);
 	}
 
-	public Class<? extends Annotation> getAnnotationClass() {
+	public Class<T> getAnnotationClass() {
 		return _annotationClass;
 	}
 
@@ -43,8 +43,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		Class<?> targetClass, Method method,
 		AnnotationHelper annotationHelper) {
 
-		T annotation = annotationHelper.findAnnotation(
-			targetClass, method, _annotationClass);
+		T annotation = annotationHelper.findAnnotation(_annotationClass);
 
 		if (annotation == null) {
 			return false;
@@ -65,7 +64,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 				target.getClass(), serviceBeanMethodInvocation.getMethod()));
 	}
 
-	private final Class<? extends Annotation> _annotationClass;
+	private final Class<T> _annotationClass;
 	private final ConcurrentMap<CacheKey, T> _annotations =
 		new ConcurrentHashMap<>();
 

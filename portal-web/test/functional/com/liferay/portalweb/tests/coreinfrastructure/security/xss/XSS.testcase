@@ -428,7 +428,7 @@
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
-	<command name="ViewRoles" priority="4">
+	<command ignore="true" name="ViewRoles" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />

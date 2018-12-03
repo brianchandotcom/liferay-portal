@@ -41,6 +41,7 @@ import java.util.List;
  */
 public abstract class AuroraAmazonVM extends VM {
 
+	@Override
 	public void create() {
 		CreateDBClusterRequest createDBClusterRequest =
 			new CreateDBClusterRequest();
@@ -104,6 +105,7 @@ public abstract class AuroraAmazonVM extends VM {
 		}
 	}
 
+	@Override
 	public void delete() {
 		DeleteDBInstanceRequest deleteDBInstanceRequest =
 			new DeleteDBInstanceRequest();

@@ -677,6 +677,7 @@ public class OrganizationLocalServiceImpl
 			companyId, parentOrganizationId, start, end);
 	}
 
+	@Override
 	public List<Organization> getOrganizations(
 		long companyId, long parentOrganizationId, String name, int start,
 		int end) {
@@ -793,6 +794,7 @@ public class OrganizationLocalServiceImpl
 			companyId, parentOrganizationId);
 	}
 
+	@Override
 	public int getOrganizationsCount(
 		long companyId, long parentOrganizationId, String name) {
 

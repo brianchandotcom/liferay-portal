@@ -33,6 +33,7 @@ public class LoadBalancerUtilTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		downloadSample("test-1", null);
 		downloadSample("test-2", null);

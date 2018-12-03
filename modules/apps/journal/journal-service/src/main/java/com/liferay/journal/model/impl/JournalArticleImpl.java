@@ -507,6 +507,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
+	@Override
 	public String getLegacyDescription() {
 		return _description;
 	}
@@ -515,6 +516,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
+	@Override
 	public String getLegacyTitle() {
 		return _title;
 	}
@@ -649,6 +651,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return getResourcePrimKey();
 	}
 
+	@Override
 	public String getUrlTitle(Locale locale) throws PortalException {
 		String urlTitle = getFriendlyURLMap().get(locale);
 
@@ -693,10 +696,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
 		_descriptionMap = descriptionMap;
 	}
@@ -740,10 +745,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
+	@Override
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
 		_titleMap = titleMap;
 	}

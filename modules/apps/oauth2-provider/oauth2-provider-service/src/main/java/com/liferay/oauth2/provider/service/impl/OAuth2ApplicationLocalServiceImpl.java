@@ -157,6 +157,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
+	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 

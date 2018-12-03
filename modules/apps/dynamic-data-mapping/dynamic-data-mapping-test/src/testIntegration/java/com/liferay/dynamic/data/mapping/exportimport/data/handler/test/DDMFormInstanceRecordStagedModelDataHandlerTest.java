@@ -65,6 +65,7 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Ignore
+	@Override
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {
 		super.testCleanStagedModelDataHandler();

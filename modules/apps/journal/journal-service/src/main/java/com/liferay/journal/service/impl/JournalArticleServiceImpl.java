@@ -886,6 +886,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return getArticles(groupId, folderId, locale, start, end, obc);
 	}
 
+	@Override
 	public List<JournalArticle> getArticles(
 		long groupId, long folderId, Locale locale) {
 

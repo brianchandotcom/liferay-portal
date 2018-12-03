@@ -819,6 +819,7 @@ public class PortletURLImpl
 		clearCache();
 	}
 
+	@Override
 	public void setWindowStateRestoreCurrentView(
 		boolean windowStateRestoreCurrentView) {
 

@@ -47,6 +47,7 @@ public class PutMappingIndexRequest
 		return _mapping;
 	}
 
+	@Override
 	public String getMappingName() {
 		return _mappingName;
 	}

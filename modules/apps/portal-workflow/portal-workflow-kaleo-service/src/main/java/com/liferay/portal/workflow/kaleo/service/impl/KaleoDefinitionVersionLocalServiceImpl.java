@@ -48,6 +48,7 @@ import java.util.List;
 public class KaleoDefinitionVersionLocalServiceImpl
 	extends KaleoDefinitionVersionLocalServiceBaseImpl {
 
+	@Override
 	public KaleoDefinitionVersion addKaleoDefinitionVersion(
 			String name, String title, String description, String content,
 			String version, ServiceContext serviceContext)

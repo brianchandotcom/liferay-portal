@@ -41,6 +41,7 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 		_usersAdmin = usersAdmin;
 	}
 
+	@Override
 	public Phone construct(ActionRequest actionRequest) {
 		long phoneId = ParamUtil.getLong(actionRequest, "primaryKey");
 

@@ -35,14 +35,17 @@ public class FormLayoutPageImpl implements FormLayoutPage {
 		_title = ddmFormLayoutPage.getTitle();
 	}
 
+	@Override
 	public String getDescription(Locale locale) {
 		return _description.getString(locale);
 	}
 
+	@Override
 	public List<DDMFormField> getFields() {
 		return _fields;
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _title.getString(locale);
 	}

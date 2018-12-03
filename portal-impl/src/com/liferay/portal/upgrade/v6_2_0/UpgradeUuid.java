@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class UpgradeUuid extends UpgradeProcess {
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		updateLayoutUuid();
 

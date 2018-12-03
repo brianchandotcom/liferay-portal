@@ -63,6 +63,7 @@ public abstract class BaseUpgradePortletPreferences
 		runSQL(sb.toString());
 	}
 
+	@Override
 	protected void updatePortletPreferences() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			String whereClause = getUpdatePortletPreferencesWhereClause();

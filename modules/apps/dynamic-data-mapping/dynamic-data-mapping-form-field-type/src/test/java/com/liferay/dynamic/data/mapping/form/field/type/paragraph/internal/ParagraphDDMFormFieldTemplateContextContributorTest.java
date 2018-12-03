@@ -41,6 +41,7 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		setUpSoyHTMLSanitizer();
 	}

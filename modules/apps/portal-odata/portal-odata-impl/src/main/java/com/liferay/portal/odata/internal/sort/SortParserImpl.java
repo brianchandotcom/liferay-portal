@@ -70,6 +70,7 @@ public class SortParserImpl implements SortParser {
 	 * @param  sortString the string to parse
 	 * @return the sort field list
 	 */
+	@Override
 	public List<SortField> parse(String sortString) {
 		if (Validator.isNull(sortString)) {
 			return Collections.emptyList();

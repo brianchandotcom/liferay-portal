@@ -32,6 +32,7 @@ public class JenkinsResultsParserUtilTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		downloadSample(
 			"axis-integration-db2-1", "0,label_exp=!master", "129",

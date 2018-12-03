@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
  */
 public class UserPortraitTag extends StickerTag {
 
+	@Override
 	public int doStartTag() {
 		putValue("shape", "circle");
 		putValue("style", "unstyled");

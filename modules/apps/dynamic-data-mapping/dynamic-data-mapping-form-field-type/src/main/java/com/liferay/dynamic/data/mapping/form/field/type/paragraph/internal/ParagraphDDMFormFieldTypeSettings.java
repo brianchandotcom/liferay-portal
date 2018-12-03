@@ -78,6 +78,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(predefinedValue = "")
+	@Override
 	public String dataType();
 
 	@DDMFormField(

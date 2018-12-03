@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuth2JSONWSPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
+	@Override
 	public void portalInstanceRegistered(Company company) {
 		_sapEntryScopeDescriptorFinderRegistrator.register(
 			company.getCompanyId());

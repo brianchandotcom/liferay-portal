@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMDataProviderInstanceSettingsImpl
 	implements DDMDataProviderInstanceSettings {
 
+	@Override
 	public <T> T getSettings(
 		DDMDataProviderInstance ddmDataProviderInstance, Class<T> clazz) {
 

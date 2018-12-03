@@ -147,7 +147,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 					if (layoutPageTemplateEntry == null) {
 						_layoutPageTemplateEntryLocalService.
-							addLayoutPageTemplateEntry(layoutPrototype);
+							addLayoutPageTemplateEntry(layoutPrototype, false);
 					}
 				}
 

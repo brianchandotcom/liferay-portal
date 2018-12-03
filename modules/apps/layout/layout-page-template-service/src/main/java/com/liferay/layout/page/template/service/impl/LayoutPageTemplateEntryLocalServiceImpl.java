@@ -57,6 +57,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			LayoutPrototype layoutPrototype)
 		throws PortalException {
 
+		return addLayoutPageTemplateEntry(layoutPrototype, true);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			LayoutPrototype layoutPrototype, boolean useServiceContextGroupId)
+		throws PortalException {
+
 		Company company = _companyLocalService.getCompany(
 			layoutPrototype.getCompanyId());
 
@@ -79,7 +87,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		long groupId = company.getGroupId();
 
-		if (serviceContext != null) {
+		if (useServiceContextGroupId && (serviceContext != null)) {
 			long scopeGroupId = serviceContext.getScopeGroupId();
 
 			if (scopeGroupId != 0) {

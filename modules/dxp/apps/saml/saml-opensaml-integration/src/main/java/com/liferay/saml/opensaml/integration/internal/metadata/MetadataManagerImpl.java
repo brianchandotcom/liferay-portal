@@ -337,7 +337,7 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public MessageHandler<?> getSecurityPolicyResolver(
+	public MessageHandler<?> getSecurityMessageHandler(
 		HttpServletRequest request, String communicationProfileId,
 		boolean requireSignature) {
 

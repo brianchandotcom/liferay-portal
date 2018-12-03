@@ -153,7 +153,7 @@ public abstract class BaseProfile {
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
-			
+
 			samlPeerEntityContext.setRole(
 				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
@@ -165,8 +165,8 @@ public abstract class BaseProfile {
 		samlMetadataContext.setEntityDescriptor(entityDescriptor);
 		samlMetadataContext.setRoleDescriptor(roleDescriptor);
 
-		MessageHandler securityPolicyResolver =
-			metadataManager.getSecurityPolicyResolver(
+		MessageHandler messageHandler =
+			metadataManager.getSecurityMessageHandler(
 				request, samlBindingContext.getBindingUri(), requireSignature);
 
 		SecurityParametersContext securityParametersContext =
@@ -193,7 +193,7 @@ public abstract class BaseProfile {
 		inboundMessageContext.addSubcontext(
 			messageContext.getSubcontext(SAMLProtocolContext.class));
 
-		securityPolicyResolver.invoke(inboundMessageContext);
+		messageHandler.invoke(inboundMessageContext);
 
 		messageContext.removeSubcontext(SAMLPeerEntityContext.class);
 

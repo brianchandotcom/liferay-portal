@@ -27,7 +27,6 @@ import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * @author Shuyang Zhou
@@ -48,18 +47,6 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			return null;
 		}
 
-		Method method = serviceBeanMethodInvocation.getMethod();
-
-		if (method.getReturnType() != void.class) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Async annotation on method " + method.getName() +
-						" does not return void");
-			}
-
-			return null;
-		}
-
 		String destinationName = null;
 
 		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
@@ -75,17 +62,12 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		final String callbackDestinationName = destinationName;
 
 		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+			() -> {
+				MessageBusUtil.sendMessage(
+					callbackDestinationName,
+					new AsyncProcessCallable(serviceBeanMethodInvocation));
 
-				@Override
-				public Void call() throws Exception {
-					MessageBusUtil.sendMessage(
-						callbackDestinationName,
-						new AsyncProcessCallable(serviceBeanMethodInvocation));
-
-					return null;
-				}
-
+				return null;
 			});
 
 		return nullResult;
@@ -93,6 +75,28 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
 	public String getDefaultDestinationName() {
 		return _defaultDestinationName;
+	}
+
+	@Override
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		MethodContextHelper methodContextHelper) {
+
+		if (!super.isEnabled(targetClass, method, methodContextHelper)) {
+			return false;
+		}
+
+		if (method.getReturnType() != void.class) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Async annotation on method " + method.getName() +
+						" does not return void");
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setDefaultDestinationName(String defaultDestinationName) {

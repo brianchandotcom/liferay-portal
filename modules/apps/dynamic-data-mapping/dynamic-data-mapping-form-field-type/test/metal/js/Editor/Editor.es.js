@@ -173,7 +173,7 @@ describe(
 		);
 
 		it(
-			`shouldn't contain twitter button in AlloyEditor selections attribute`,
+			'shouldn\'t contain twitter button in AlloyEditor selections attribute',
 			() => {
 				component = new Editor(
 					{
@@ -183,22 +183,24 @@ describe(
 
 				const selections = component.getSelections();
 
-				expect(selections).toEqual([
-					{
-						buttons: ["linkEdit"],
-						name: "link"
-					},
-					{
-						buttons: ["styles", "bold", "italic", "underline", "link"],
-						name: "text"
-					}
-				]);
-				expect(AlloyEditor.Selections).not.toEqual(selections)
+				expect(selections).toEqual(
+					[
+						{
+							buttons: ['linkEdit'],
+							name: 'link'
+						},
+						{
+							buttons: ['styles', 'bold', 'italic', 'underline', 'link'],
+							name: 'text'
+						}
+					]
+				);
+				expect(AlloyEditor.Selections).not.toEqual(selections);
 			}
 		);
 
 		it(
-			`should trigger AlloyEditor actionPerformed method`,
+			'should trigger AlloyEditor actionPerformed method',
 			() => {
 				component = new Editor(
 					{
@@ -206,20 +208,24 @@ describe(
 					}
 				);
 
-				component._onActionPerformed({
-					data: {
-						props: {}
+				component._onActionPerformed(
+					{
+						data: {
+							props: {}
+						}
 					}
-				});
+				);
 
-				component.willReceiveState({
-					children: true, 
-					value: {
-						newVal: '<p>test</p>'
+				component.willReceiveState(
+					{
+						children: true,
+						value: {
+							newVal: '<p>test</p>'
+						}
 					}
-				});
+				);
 
-				expect(component).toMatchSnapshot()
+				expect(component).toMatchSnapshot();
 			}
 		);
 	}

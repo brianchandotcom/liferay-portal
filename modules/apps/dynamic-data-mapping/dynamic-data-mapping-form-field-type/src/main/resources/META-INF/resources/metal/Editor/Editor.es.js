@@ -161,14 +161,14 @@ class Editor extends Component {
 
 	getSelections() {
 		return AlloyEditor.Selections.map(
-			 selection => {
-				let newSelection = {...selection};
+			selection => {
+				const newSelection = {...selection};
 
 				if (newSelection.name == 'text') {
-					newSelection.buttons = newSelection.buttons.filter(button => button !== 'twitter')
+					newSelection.buttons = newSelection.buttons.filter(button => button !== 'twitter');
 				}
 
-				return newSelection
+				return newSelection;
 			}
 		);
 	}

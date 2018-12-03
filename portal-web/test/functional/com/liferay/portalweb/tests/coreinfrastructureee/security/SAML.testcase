@@ -40,7 +40,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="categoryName" value="com.liferay.saml.opensaml.integration.internal.profile.BaseProfile" />
+			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
 			<var name="categoryPriority" value="DEBUG" />
 		</execute>
 

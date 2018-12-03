@@ -287,6 +287,14 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
+	* Deletes the file version. File versions can only be deleted if it is
+	* approved and there are other approved file versions available.
+	*
+	* @param fileVersionId the primary key of the file version
+	*/
+	public void deleteFileVersion(long fileVersionId) throws PortalException;
+
+	/**
 	* Deletes the folder and all of its subfolders and file entries.
 	*
 	* @param folderId the primary key of the folder

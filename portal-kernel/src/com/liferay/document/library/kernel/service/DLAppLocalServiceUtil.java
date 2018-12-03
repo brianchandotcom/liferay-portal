@@ -333,6 +333,17 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the file version. File versions can only be deleted if it is
+	* approved and there are other approved file versions available.
+	*
+	* @param fileVersionId the primary key of the file version
+	*/
+	public static void deleteFileVersion(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileVersion(fileVersionId);
+	}
+
+	/**
 	* Deletes the folder and all of its subfolders and file entries.
 	*
 	* @param folderId the primary key of the folder

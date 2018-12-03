@@ -427,6 +427,14 @@ public interface DLAppService extends BaseService {
 
 	/**
 	* Deletes the file version. File versions can only be deleted if it is
+	* approved and there are other approved file versions available.
+	*
+	* @param fileVersionId the primary key of the file version
+	*/
+	public void deleteFileVersion(long fileVersionId) throws PortalException;
+
+	/**
+	* Deletes the file version. File versions can only be deleted if it is
 	* approved and there are other approved file versions available. This
 	* method is only supported by the Liferay repository.
 	*

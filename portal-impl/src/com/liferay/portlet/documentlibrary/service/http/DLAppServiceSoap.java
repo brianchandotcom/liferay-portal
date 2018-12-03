@@ -422,6 +422,24 @@ public class DLAppServiceSoap {
 
 	/**
 	* Deletes the file version. File versions can only be deleted if it is
+	* approved and there are other approved file versions available.
+	*
+	* @param fileVersionId the primary key of the file version
+	*/
+	public static void deleteFileVersion(long fileVersionId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.deleteFileVersion(fileVersionId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Deletes the file version. File versions can only be deleted if it is
 	* approved and there are other approved file versions available. This
 	* method is only supported by the Liferay repository.
 	*

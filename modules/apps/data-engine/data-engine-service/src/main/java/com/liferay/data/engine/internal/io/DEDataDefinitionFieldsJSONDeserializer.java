@@ -127,23 +127,22 @@ public class DEDataDefinitionFieldsJSONDeserializer
 			}
 		}
 
-		return DEDataDefinitionField.Builder.newBuilder(
-			jsonObject.getString("name"), jsonObject.getString("type")
-		).defaultValue(
-			jsonObject.get("defaultValue")
-		).indexable(
-			jsonObject.getBoolean("indexable", true)
-		).label(
-			labels
-		).localizable(
-			jsonObject.getBoolean("localizable", false)
-		).repeatable(
-			jsonObject.getBoolean("repeatable", false)
-		).required(
-			jsonObject.getBoolean("required", false)
-		).tip(
-			tips
-		).build();
+		DEDataDefinitionField deDataDefinitionField = new DEDataDefinitionField(
+			jsonObject.getString("name"), jsonObject.getString("type"));
+
+		deDataDefinitionField.setDefaultValue(jsonObject.get("defaultValue"));
+		deDataDefinitionField.setIndexable(
+			jsonObject.getBoolean("indexable", true));
+		deDataDefinitionField.addLabels(labels);
+		deDataDefinitionField.setLocalizable(
+			jsonObject.getBoolean("localizable", false));
+		deDataDefinitionField.setRepeatable(
+			jsonObject.getBoolean("repeatable", false));
+		deDataDefinitionField.setRequired(
+			jsonObject.getBoolean("required", false));
+		deDataDefinitionField.addTips(tips);
+
+		return deDataDefinitionField;
 	}
 
 	@Reference

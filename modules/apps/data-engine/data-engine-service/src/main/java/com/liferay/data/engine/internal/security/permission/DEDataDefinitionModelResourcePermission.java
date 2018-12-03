@@ -50,7 +50,7 @@ public class DEDataDefinitionModelResourcePermission
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker,
 				DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
-				deDataDefinition.getDEDataDefinitionId(), actionId);
+				deDataDefinition.getDataDefinitionId(), actionId);
 		}
 	}
 
@@ -60,11 +60,10 @@ public class DEDataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
-			Collections.emptyList()
-		).deDataDefinitionId(
-			primaryKey
-		).build();
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			Collections.emptyList());
+
+		deDataDefinition.setDataDefinitionId(primaryKey);
 
 		check(permissionChecker, deDataDefinition, actionId);
 	}
@@ -76,11 +75,11 @@ public class DEDataDefinitionModelResourcePermission
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			deDataDefinition.getDEDataDefinitionId());
+			deDataDefinition.getDataDefinitionId());
 
 		if (permissionChecker.hasOwnerPermission(
 				ddmStructure.getCompanyId(), DEDataDefinition.class.getName(),
-				deDataDefinition.getDEDataDefinitionId(),
+				deDataDefinition.getDataDefinitionId(),
 				ddmStructure.getUserId(), actionId)) {
 
 			return true;
@@ -88,7 +87,7 @@ public class DEDataDefinitionModelResourcePermission
 
 		return permissionChecker.hasPermission(
 			ddmStructure.getGroupId(), DEDataDefinition.class.getName(),
-			deDataDefinition.getDEDataDefinitionId(), actionId);
+			deDataDefinition.getDataDefinitionId(), actionId);
 	}
 
 	@Override
@@ -97,11 +96,10 @@ public class DEDataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
-			Collections.emptyList()
-		).deDataDefinitionId(
-			primaryKey
-		).build();
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			Collections.emptyList());
+
+		deDataDefinition.setDataDefinitionId(primaryKey);
 
 		return contains(permissionChecker, deDataDefinition, actionId);
 	}

@@ -124,7 +124,7 @@ public class DEDataDefinitionLocalServiceImpl
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionSaveRequest.getDEDataDefinition();
 
-			long deDataDefinitionId = deDataDefinition.getDEDataDefinitionId();
+			long deDataDefinitionId = deDataDefinition.getDataDefinitionId();
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -234,17 +234,15 @@ public class DEDataDefinitionLocalServiceImpl
 		List<DEDataDefinitionField> deDataDefinitionFields = deserialize(
 			ddmStructure.getDefinition());
 
-		return DEDataDefinition.Builder.newBuilder(
-			deDataDefinitionFields
-		).deDataDefinitionId(
-			ddmStructure.getStructureId()
-		).description(
-			ddmStructure.getDescriptionMap()
-		).name(
-			ddmStructure.getNameMap()
-		).storageType(
-			ddmStructure.getStorageType()
-		).build();
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			deDataDefinitionFields);
+
+		deDataDefinition.setDataDefinitionId(ddmStructure.getStructureId());
+		deDataDefinition.addDescriptions(ddmStructure.getDescriptionMap());
+		deDataDefinition.addNames(ddmStructure.getNameMap());
+		deDataDefinition.setStorageType(ddmStructure.getStorageType());
+
+		return deDataDefinition;
 	}
 
 	protected String serialize(DEDataDefinition deDataDefinition)
@@ -279,7 +277,7 @@ public class DEDataDefinitionLocalServiceImpl
 			deDataDefinition.getDescription());
 
 		ddmStructureLocalService.updateStructure(
-			userId, deDataDefinition.getDEDataDefinitionId(),
+			userId, deDataDefinition.getDataDefinitionId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}

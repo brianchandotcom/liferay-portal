@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +32,42 @@ import java.util.Objects;
  * @author Leonardo Barros
  */
 public final class DEDataDefinition implements ClassedModel, Serializable {
+
+	public DEDataDefinition(
+		List<DEDataDefinitionField> deDataDefinitionFields) {
+
+		_fields.addAll(deDataDefinitionFields);
+	}
+
+	public void addDescription(Locale locale, String description) {
+		_description.put(LocaleUtil.toLanguageId(locale), description);
+	}
+
+	public void addDescriptions(Map<Locale, String> descriptions) {
+		for (Map.Entry<Locale, String> entry : descriptions.entrySet()) {
+			_description.put(
+				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
+		}
+	}
+
+	public void addField(DEDataDefinitionField field) {
+		_fields.add(field);
+	}
+
+	public void addFields(List<DEDataDefinitionField> fields) {
+		_fields.addAll(fields);
+	}
+
+	public void addName(Locale locale, String name) {
+		_name.put(LocaleUtil.toLanguageId(locale), name);
+	}
+
+	public void addNames(Map<Locale, String> names) {
+		for (Map.Entry<Locale, String> entry : names.entrySet()) {
+			_name.put(
+				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
+		}
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,7 +84,7 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		if (Objects.equals(_name, deDataDefinition._name) &&
 			Objects.equals(_description, deDataDefinition._description) &&
 			Objects.equals(
-				_deDataDefinitionId, deDataDefinition._deDataDefinitionId) &&
+				_dataDefinitionId, deDataDefinition._dataDefinitionId) &&
 			Objects.equals(_storageType, deDataDefinition._storageType) &&
 			Objects.equals(_fields, deDataDefinition._fields)) {
 
@@ -59,12 +94,12 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		return false;
 	}
 
-	public long getDEDataDefinitionId() {
-		return _deDataDefinitionId;
+	public long getDataDefinitionId() {
+		return _dataDefinitionId;
 	}
 
 	public Map<String, String> getDescription() {
-		return Collections.unmodifiableMap(_description);
+		return _description;
 	}
 
 	@Override
@@ -73,7 +108,7 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 	}
 
 	public List<DEDataDefinitionField> getFields() {
-		return Collections.unmodifiableList(_fields);
+		return _fields;
 	}
 
 	@Override
@@ -87,12 +122,12 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 	}
 
 	public Map<String, String> getName() {
-		return Collections.unmodifiableMap(_name);
+		return _name;
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _deDataDefinitionId;
+		return _dataDefinitionId;
 	}
 
 	public String getStorageType() {
@@ -105,87 +140,54 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 
 		hash = HashUtil.hash(hash, _description.hashCode());
 
-		hash = HashUtil.hash(hash, _deDataDefinitionId);
+		hash = HashUtil.hash(hash, _dataDefinitionId);
 
 		hash = HashUtil.hash(hash, _storageType.hashCode());
 
 		return HashUtil.hash(hash, _fields.hashCode());
 	}
 
+	public void setDataDefinitionId(long dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
+	}
+
+	public void setDescription(Map<String, String> description) {
+		_description = description;
+
+		if (_description == null) {
+			_description = new HashMap<>();
+		}
+	}
+
+	public void setFields(List<DEDataDefinitionField> fields) {
+		_fields = fields;
+
+		if (_fields == null) {
+			_fields = new ArrayList<>();
+		}
+	}
+
+	public void setName(Map<String, String> name) {
+		_name = name;
+
+		if (_name == null) {
+			_name = new HashMap<>();
+		}
+	}
+
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_deDataDefinitionId = ((Long)primaryKeyObj).longValue();
+		_dataDefinitionId = ((Long)primaryKeyObj).longValue();
 	}
 
-	public static final class Builder {
-
-		public static Builder newBuilder(List<DEDataDefinitionField> fields) {
-			return new Builder(fields);
-		}
-
-		public DEDataDefinition build() {
-			return _deDataDefinition;
-		}
-
-		public Builder deDataDefinitionId(long deDataDefinitionId) {
-			_deDataDefinition._deDataDefinitionId = deDataDefinitionId;
-
-			return this;
-		}
-
-		public Builder description(Locale locale, String description) {
-			_deDataDefinition._description.put(
-				LocaleUtil.toLanguageId(locale), description);
-
-			return this;
-		}
-
-		public Builder description(Map<Locale, String> descriptions) {
-			for (Map.Entry<Locale, String> entry : descriptions.entrySet()) {
-				_deDataDefinition._description.put(
-					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-			}
-
-			return this;
-		}
-
-		public Builder name(Locale locale, String name) {
-			_deDataDefinition._name.put(LocaleUtil.toLanguageId(locale), name);
-
-			return this;
-		}
-
-		public Builder name(Map<Locale, String> names) {
-			for (Map.Entry<Locale, String> entry : names.entrySet()) {
-				_deDataDefinition._name.put(
-					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-			}
-
-			return this;
-		}
-
-		public Builder storageType(String type) {
-			_deDataDefinition._storageType = type;
-
-			return this;
-		}
-
-		private Builder(List<DEDataDefinitionField> fields) {
-			_deDataDefinition._fields.addAll(fields);
-		}
-
-		private final DEDataDefinition _deDataDefinition =
-			new DEDataDefinition();
-
+	public void setStorageType(String storageType) {
+		_storageType = storageType;
 	}
 
-	private DEDataDefinition() {
-	}
-
-	private long _deDataDefinitionId;
-	private final Map<String, String> _description = new HashMap<>();
-	private final List<DEDataDefinitionField> _fields = new ArrayList<>();
-	private final Map<String, String> _name = new HashMap<>();
+	private long _dataDefinitionId;
+	private Map<String, String> _description = new HashMap<>();
+	private List<DEDataDefinitionField> _fields = new ArrayList<>();
+	private Map<String, String> _name = new HashMap<>();
 	private String _storageType = "json";
 
 }

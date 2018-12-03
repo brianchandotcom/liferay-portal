@@ -113,7 +113,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionSaveRequest.getDEDataDefinition();
 
-			long deDataDefinitionId = deDataDefinition.getDEDataDefinitionId();
+			long deDataDefinitionId = deDataDefinition.getDataDefinitionId();
 
 			if (deDataDefinitionId == 0) {
 				checkCreateDataDefinitionPermission(

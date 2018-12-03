@@ -82,20 +82,16 @@ public class DEDataDefinitionLocalServiceTest {
 			}
 		};
 
-		DEDataDefinitionField deDataDefinitionField =
-			DEDataDefinitionField.Builder.newBuilder(
-				"name", "string"
-			).label(
-				expectedNameLabels
-			).build();
+		DEDataDefinitionField deDataDefinitionField = new DEDataDefinitionField(
+			"name", "string");
 
-		DEDataDefinition deDataDefinition = DEDataDefinition.Builder.newBuilder(
-			Arrays.asList(deDataDefinitionField)
-		).name(
-			LocaleUtil.US, "Definition 1"
-		).storageType(
-			"json"
-		).build();
+		deDataDefinitionField.addLabels(expectedNameLabels);
+
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField));
+
+		deDataDefinition.addName(LocaleUtil.US, "Definition 1");
+		deDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
 			DEDataDefinitionSaveRequest.Builder.of(
@@ -138,11 +134,9 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField deDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"field1", "string"
-			).label(
-				field1Labels
-			).build();
+			new DEDataDefinitionField("field1", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
 
 		Map<String, String> field2Labels = new HashMap() {
 			{
@@ -151,11 +145,9 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField deDataDefinitionField2 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"field2", "number"
-			).label(
-				field2Labels
-			).build();
+			new DEDataDefinitionField("field2", "number");
+
+		deDataDefinitionField2.addLabels(field2Labels);
 
 		Map<String, String> field3Labels = new HashMap() {
 			{
@@ -164,22 +156,17 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField deDataDefinitionField3 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"field3", "date"
-			).label(
-				field3Labels
-			).build();
+			new DEDataDefinitionField("field3", "date");
 
-		DEDataDefinition expectedDEDataDefinition =
-			DEDataDefinition.Builder.newBuilder(
-				Arrays.asList(
-					deDataDefinitionField1, deDataDefinitionField2,
-					deDataDefinitionField3)
-			).name(
-				LocaleUtil.US, "Definition 2"
-			).storageType(
-				"json"
-			).build();
+		deDataDefinitionField3.addLabels(field3Labels);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(
+				deDataDefinitionField1, deDataDefinitionField2,
+				deDataDefinitionField3));
+
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Definition 2");
+		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
 			DEDataDefinitionSaveRequest.Builder.of(
@@ -230,11 +217,9 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField expectedDEDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"name", "string"
-			).label(
-				expectedNameLabels
-			).build();
+			new DEDataDefinitionField("name", "string");
+
+		expectedDEDataDefinitionField1.addLabels(expectedNameLabels);
 
 		Map<String, String> expectedEmailLabels = new HashMap() {
 			{
@@ -244,28 +229,22 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField expectedDEDataDefinitionField2 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"email", "string"
-			).label(
-				expectedEmailLabels
-			).build();
+			new DEDataDefinitionField("email", "string");
 
-		DEDataDefinition expectedDEDataDefinition =
-			DEDataDefinition.Builder.newBuilder(
-				Arrays.asList(
-					expectedDEDataDefinitionField1,
-					expectedDEDataDefinitionField2)
-			).description(
-				LocaleUtil.US, "Contact description"
-			).description(
-				LocaleUtil.BRAZIL, "Descrição do contato"
-			).name(
-				LocaleUtil.US, "Contact"
-			).name(
-				LocaleUtil.BRAZIL, "Contato"
-			).storageType(
-				"json"
-			).build();
+		expectedDEDataDefinitionField1.addLabels(expectedEmailLabels);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(
+				expectedDEDataDefinitionField1,
+				expectedDEDataDefinitionField2));
+
+		expectedDEDataDefinition.addDescription(
+			LocaleUtil.US, "Contact description");
+		expectedDEDataDefinition.addDescription(
+			LocaleUtil.BRAZIL, "Descrição do contato");
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Contact");
+		expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Contato");
+		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
 			DEDataDefinitionSaveRequest.Builder.of(
@@ -328,24 +307,17 @@ public class DEDataDefinitionLocalServiceTest {
 		};
 
 		DEDataDefinitionField deDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"title", "string"
-			).label(
-				expectedTitleLabels
-			).localizable(
-				true
-			).build();
+			new DEDataDefinitionField("title", "string");
 
-		DEDataDefinition expectedDEDataDefinition =
-			DEDataDefinition.Builder.newBuilder(
-				Arrays.asList(deDataDefinitionField1)
-			).name(
-				LocaleUtil.US, "Story"
-			).name(
-				LocaleUtil.BRAZIL, "Estória"
-			).storageType(
-				"json"
-			).build();
+		deDataDefinitionField1.addLabels(expectedTitleLabels);
+		deDataDefinitionField1.setLocalizable(true);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
+		expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
+		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
 			DEDataDefinitionSaveRequest.Builder.of(
@@ -374,25 +346,18 @@ public class DEDataDefinitionLocalServiceTest {
 			};
 
 			DEDataDefinitionField deDataDefinitionField2 =
-				DEDataDefinitionField.Builder.newBuilder(
-					"description", "string"
-				).label(
-					expectedDescriptionLabels
-				).localizable(
-					true
-				).build();
+				new DEDataDefinitionField("description", "string");
 
-			expectedDEDataDefinition = DEDataDefinition.Builder.newBuilder(
-				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2)
-			).deDataDefinitionId(
-				dataDefinitionId
-			).name(
-				LocaleUtil.US, "Story"
-			).name(
-				LocaleUtil.BRAZIL, "Estória"
-			).storageType(
-				"json"
-			).build();
+			deDataDefinitionField2.addLabels(expectedDescriptionLabels);
+			deDataDefinitionField2.setLocalizable(true);
+
+			expectedDEDataDefinition = new DEDataDefinition(
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
+
+			expectedDEDataDefinition.setDataDefinitionId(dataDefinitionId);
+			expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
+			expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
+			expectedDEDataDefinition.setStorageType("json");
 
 			deDataDefinitionSaveRequest =
 				DEDataDefinitionSaveRequest.Builder.of(

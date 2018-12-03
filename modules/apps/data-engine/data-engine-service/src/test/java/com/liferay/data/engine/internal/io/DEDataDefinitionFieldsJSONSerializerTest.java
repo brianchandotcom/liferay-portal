@@ -43,13 +43,10 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 		};
 
 		DEDataDefinitionField deDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"name", "string"
-			).required(
-				true
-			).label(
-				nameLabels
-			).build();
+			new DEDataDefinitionField("name", "string");
+
+		deDataDefinitionField1.setRequired(true);
+		deDataDefinitionField1.addLabels(nameLabels);
 
 		Map<String, String> emailLabels = new HashMap() {
 			{
@@ -66,17 +63,12 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 		};
 
 		DEDataDefinitionField deDataDefinitionField2 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"email", "string"
-			).defaultValue(
-				"test@liferay.com"
-			).indexable(
-				false
-			).label(
-				emailLabels
-			).tip(
-				emailTips
-			).build();
+			new DEDataDefinitionField("email", "string");
+
+		deDataDefinitionField2.setDefaultValue("test@liferay.com");
+		deDataDefinitionField2.setIndexable(false);
+		deDataDefinitionField2.addLabels(emailLabels);
+		deDataDefinitionField2.addTips(emailTips);
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(
@@ -106,9 +98,7 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 		throws DEDataDefinitionFieldsSerializerException {
 
 		DEDataDefinitionField deDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				null, "boolean"
-			).build();
+			new DEDataDefinitionField(null, "boolean");
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(
@@ -130,9 +120,7 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 		throws DEDataDefinitionFieldsSerializerException {
 
 		DEDataDefinitionField deDataDefinitionField1 =
-			DEDataDefinitionField.Builder.newBuilder(
-				"name", null
-			).build();
+			new DEDataDefinitionField("name", null);
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(

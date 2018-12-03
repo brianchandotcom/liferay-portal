@@ -18,7 +18,6 @@ import com.liferay.petra.lang.HashUtil;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,6 +26,27 @@ import java.util.Objects;
  * @author Leonardo Barros
  */
 public final class DEDataDefinitionField implements Serializable {
+
+	public DEDataDefinitionField(String name, String type) {
+		_name = name;
+		_type = type;
+	}
+
+	public void addLabel(String key, String label) {
+		_label.put(key, label);
+	}
+
+	public void addLabels(Map<String, String> label) {
+		_label.putAll(label);
+	}
+
+	public void addTip(String key, String tip) {
+		_tip.put(key, tip);
+	}
+
+	public void addTips(Map<String, String> tip) {
+		_tip.putAll(tip);
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -63,7 +83,7 @@ public final class DEDataDefinitionField implements Serializable {
 	}
 
 	public Map<String, String> getLabel() {
-		return Collections.unmodifiableMap(_label);
+		return _label;
 	}
 
 	public String getName() {
@@ -71,7 +91,7 @@ public final class DEDataDefinitionField implements Serializable {
 	}
 
 	public Map<String, String> getTip() {
-		return Collections.unmodifiableMap(_tip);
+		return _tip;
 	}
 
 	public String getType() {
@@ -119,79 +139,58 @@ public final class DEDataDefinitionField implements Serializable {
 		return _required;
 	}
 
-	public static final class Builder {
-
-		public static Builder newBuilder(String name, String type) {
-			return new Builder(name, type);
-		}
-
-		public DEDataDefinitionField build() {
-			return _deDataDefinitionField;
-		}
-
-		public Builder defaultValue(Object defaultValue) {
-			_deDataDefinitionField._defaultValue = defaultValue;
-
-			return this;
-		}
-
-		public Builder indexable(boolean indexable) {
-			_deDataDefinitionField._indexable = indexable;
-
-			return this;
-		}
-
-		public Builder label(Map<String, String> label) {
-			_deDataDefinitionField._label.putAll(label);
-
-			return this;
-		}
-
-		public Builder localizable(boolean localizable) {
-			_deDataDefinitionField._localizable = localizable;
-
-			return this;
-		}
-
-		public Builder repeatable(boolean repeatable) {
-			_deDataDefinitionField._repeatable = repeatable;
-
-			return this;
-		}
-
-		public Builder required(boolean required) {
-			_deDataDefinitionField._required = required;
-
-			return this;
-		}
-
-		public Builder tip(Map<String, String> tip) {
-			_deDataDefinitionField._tip.putAll(tip);
-
-			return this;
-		}
-
-		private Builder(String name, String type) {
-			_deDataDefinitionField._name = name;
-			_deDataDefinitionField._type = type;
-		}
-
-		private final DEDataDefinitionField _deDataDefinitionField =
-			new DEDataDefinitionField();
-
+	public void setDefaultValue(Object defaultValue) {
+		_defaultValue = defaultValue;
 	}
 
-	private DEDataDefinitionField() {
+	public void setIndexable(boolean indexable) {
+		_indexable = indexable;
+	}
+
+	public void setLabel(Map<String, String> label) {
+		_label = label;
+
+		if (_label == null) {
+			_label = new HashMap<>();
+		}
+	}
+
+	public void setLocalizable(boolean localizable) {
+		_localizable = localizable;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setRepeatable(boolean repeatable) {
+		_repeatable = repeatable;
+	}
+
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
+	public void setTip(Map<String, String> tip) {
+		_tip = tip;
+
+		if (_tip == null) {
+			_tip = new HashMap<>();
+		}
+	}
+
+	public void setType(String type) {
+		_type = type;
 	}
 
 	private Object _defaultValue;
 	private boolean _indexable = true;
-	private final Map<String, String> _label = new HashMap<>();
+	private Map<String, String> _label = new HashMap<>();
 	private boolean _localizable;
 	private String _name;
 	private boolean _repeatable;
 	private boolean _required;
-	private final Map<String, String> _tip = new HashMap<>();
+	private Map<String, String> _tip = new HashMap<>();
 	private String _type;
 
 }

@@ -132,7 +132,7 @@ class Editor extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string()
+		value: Config.string().value('')
 	};
 
 	created() {
@@ -145,18 +145,43 @@ class Editor extends Component {
 	}
 
 	attached() {
-		this.setEditor();
+		this._createEditor();
 	}
 
-	setEditor() {
+	willReceiveState({children, value}) {
+		if (value && value.newVal !== value.prevVal && children) {
+			this._alloyEditor.getNativeEditor().setData(value.newVal);
+		}
+	}
+
+	/**
+	 * Remove twitter button
+	 * @return {array} selections
+	 */
+
+	getSelections() {
+		return AlloyEditor.Selections.map(
+			selection => {
+				const newSelection = {...selection};
+
+				if (newSelection.name == 'text') {
+					newSelection.buttons = newSelection.buttons.filter(button => button !== 'twitter');
+				}
+
+				return newSelection;
+			}
+		);
+	}
+
+	_createEditor() {
 		const {A, name, readOnly, value} = this;
-		const editor = A.one(this.element.querySelector('.alloy-editor'));
+		const editorNode = this.element.querySelector('.alloy-editor');
 
 		if (readOnly) {
 			return;
 		}
 
-		editor.innerHTML = value;
+		editorNode.innerHTML = value;
 
 		window[name] = {};
 
@@ -166,13 +191,13 @@ class Editor extends Component {
 				editorConfig: {
 					extraPlugins: 'ae_placeholder,ae_selectionregion,ae_uicore',
 					removePlugins: 'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
-					srcNode: editor,
+					srcNode: A.one(editorNode),
 					toolbars: {
 						add: {
 							buttons: ['hline', 'table']
 						},
 						styles: {
-							selections: AlloyEditor.Selections,
+							selections: this.getSelections(),
 							tabIndex: 1
 						}
 					}
@@ -183,6 +208,20 @@ class Editor extends Component {
 				textMode: false
 			}
 		).render();
+
+		this._alloyEditor.getNativeEditor().on('actionPerformed', this._onActionPerformed.bind(this));
+	}
+
+	_onActionPerformed(e) {
+		const {
+			data: {
+				props
+			}
+		} = e;
+
+		if (!props.command) {
+			this._onChangeEditor(e);
+		}
 	}
 
 	_onChangeEditor(event) {
@@ -191,16 +230,15 @@ class Editor extends Component {
 		this.setState(
 			{
 				value
-			}
-		);
-
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value
-			}
+			},
+			() => this.emit(
+				'fieldEdited',
+				{
+					fieldInstance: this,
+					originalEvent: event,
+					value
+				}
+			)
 		);
 	}
 }

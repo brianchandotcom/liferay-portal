@@ -168,14 +168,64 @@ describe(
 
 				component._onChangeEditor(event);
 
-				expect(spy).toHaveBeenCalledWith(
-					'fieldEdited',
+				expect(spy).toBeCalled();
+			}
+		);
+
+		it(
+			'shouldn\'t contain twitter button in AlloyEditor selections attribute',
+			() => {
+				component = new Editor(
 					{
-						fieldInstance: component,
-						originalEvent: event,
-						value: ''
+						...defaultEditorConfig
 					}
 				);
+
+				const selections = component.getSelections();
+
+				expect(selections).toEqual(
+					[
+						{
+							buttons: ['linkEdit'],
+							name: 'link'
+						},
+						{
+							buttons: ['styles', 'bold', 'italic', 'underline', 'link'],
+							name: 'text'
+						}
+					]
+				);
+				expect(AlloyEditor.Selections).not.toEqual(selections);
+			}
+		);
+
+		it(
+			'should trigger AlloyEditor actionPerformed method',
+			() => {
+				component = new Editor(
+					{
+						...defaultEditorConfig
+					}
+				);
+
+				component._onActionPerformed(
+					{
+						data: {
+							props: {}
+						}
+					}
+				);
+
+				component.willReceiveState(
+					{
+						children: true,
+						value: {
+							newVal: '<p>test</p>'
+						}
+					}
+				);
+
+				expect(component).toMatchSnapshot();
 			}
 		);
 	}

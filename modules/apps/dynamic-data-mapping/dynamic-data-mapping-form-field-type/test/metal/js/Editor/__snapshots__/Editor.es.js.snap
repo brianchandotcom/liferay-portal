@@ -66,7 +66,7 @@ exports[`Field Editor should have a value 1`] = `
 <div class="form-group">
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
-      <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>
+      <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor">value</div>
     </div>
   </div>
 </div>
@@ -95,6 +95,16 @@ exports[`Field Editor should not be required 1`] = `
 exports[`Field Editor should render Label if showLabel is true 1`] = `
 <div class="form-group">
   <label>text </label>
+  <div class="field-type-editor form-control input-group-container">
+    <div class="alloy-editor-container input-group" id="textFieldContainer">
+      <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Field Editor should trigger AlloyEditor actionPerformed method 1`] = `
+<div class="form-group">
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>

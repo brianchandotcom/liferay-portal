@@ -1885,8 +1885,8 @@ passthrough=&quot;true&quot;</echo>
 				srcFile="${patching.tool.latest.txt}"
 			>
 				<filterchain>
-					<trim />
 					<striplinebreaks/>
+					<trim />
 				</filterchain>
 			</loadfile>
 

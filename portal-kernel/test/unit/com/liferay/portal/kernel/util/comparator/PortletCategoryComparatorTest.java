@@ -17,11 +17,10 @@ package com.liferay.portal.kernel.util.comparator;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 
+import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -45,7 +44,7 @@ public class PortletCategoryComparatorTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+		PropsTestUtil.setProps(Collections.emptyMap());
 
 		setUpLanguageUtil();
 	}

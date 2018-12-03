@@ -15,9 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-
-import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -33,21 +32,7 @@ public class ParamUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		final Method getMethod = Props.class.getMethod("get", String.class);
-
-		Props props = (Props)ProxyUtil.newProxyInstance(
-			Props.class.getClassLoader(), new Class<?>[] {Props.class},
-			(proxy, method, args) -> {
-				if (getMethod.equals(method) &&
-					args[0].equals(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM)) {
-
-					return "NFC";
-				}
-
-				throw new UnsupportedOperationException();
-			});
-
-		PropsUtil.setProps(props);
+		PropsTestUtil.setProps(PropsKeys.UNICODE_TEXT_NORMALIZER_FORM, "NFC");
 	}
 
 	@Test

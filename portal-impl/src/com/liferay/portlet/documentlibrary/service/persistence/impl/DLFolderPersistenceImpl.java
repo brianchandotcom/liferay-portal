@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFolderPersisten
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -12179,6 +12180,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public DLFolderPersistenceImpl() {
 		setModelClass(DLFolder.class);
 
+		setModelImplClass(DLFolderImpl.class);
+		setEntityCacheEnabled(DLFolderModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -12248,7 +12252,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Clears the cache for all document library folders.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12264,7 +12268,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Clears the cache for the document library folder.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12991,53 +12995,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	/**
 	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the document library folder
-	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
-	 */
-	@Override
-	public DLFolder fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-				DLFolderImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DLFolder dlFolder = (DLFolder)serializable;
-
-		if (dlFolder == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				dlFolder = (DLFolder)session.get(DLFolderImpl.class, primaryKey);
-
-				if (dlFolder != null) {
-					cacheResult(dlFolder);
-				}
-				else {
-					EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-						DLFolderImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-					DLFolderImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return dlFolder;
-	}
-
-	/**
-	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param folderId the primary key of the document library folder
 	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
 	 */
@@ -13640,6 +13597,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

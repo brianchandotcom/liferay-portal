@@ -3011,6 +3011,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVotePersistenceImpl() {
 		setModelClass(PollsVote.class);
 
+		setModelImplClass(PollsVoteImpl.class);
+		setEntityCacheEnabled(PollsVoteModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3515,54 +3518,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	/**
 	 * Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the polls vote
-	 * @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
-	 */
-	@Override
-	public PollsVote fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-				PollsVoteImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PollsVote pollsVote = (PollsVote)serializable;
-
-		if (pollsVote == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				pollsVote = (PollsVote)session.get(PollsVoteImpl.class,
-						primaryKey);
-
-				if (pollsVote != null) {
-					cacheResult(pollsVote);
-				}
-				else {
-					entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-						PollsVoteImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-					PollsVoteImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return pollsVote;
-	}
-
-	/**
-	 * Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param voteId the primary key of the polls vote
 	 * @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
 	 */
@@ -3859,6 +3814,11 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

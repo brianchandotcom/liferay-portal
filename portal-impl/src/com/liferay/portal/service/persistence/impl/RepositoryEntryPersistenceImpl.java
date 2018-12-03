@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2242,6 +2243,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	public RepositoryEntryPersistenceImpl() {
 		setModelClass(RepositoryEntry.class);
 
+		setModelImplClass(RepositoryEntryImpl.class);
+		setEntityCacheEnabled(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2308,7 +2312,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 * Clears the cache for all repository entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2324,7 +2328,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 * Clears the cache for the repository entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2742,54 +2746,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	/**
 	 * Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the repository entry
-	 * @return the repository entry, or <code>null</code> if a repository entry with the primary key could not be found
-	 */
-	@Override
-	public RepositoryEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-				RepositoryEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		RepositoryEntry repositoryEntry = (RepositoryEntry)serializable;
-
-		if (repositoryEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				repositoryEntry = (RepositoryEntry)session.get(RepositoryEntryImpl.class,
-						primaryKey);
-
-				if (repositoryEntry != null) {
-					cacheResult(repositoryEntry);
-				}
-				else {
-					EntityCacheUtil.putResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-						RepositoryEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return repositoryEntry;
-	}
-
-	/**
-	 * Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param repositoryEntryId the primary key of the repository entry
 	 * @return the repository entry, or <code>null</code> if a repository entry with the primary key could not be found
 	 */
@@ -3086,6 +3042,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

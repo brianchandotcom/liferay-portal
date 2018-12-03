@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -536,6 +537,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	public VirtualHostPersistenceImpl() {
 		setModelClass(VirtualHost.class);
+
+		setModelImplClass(VirtualHostImpl.class);
+		setEntityCacheEnabled(VirtualHostModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -582,7 +586,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Clears the cache for all virtual hosts.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -598,7 +602,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Clears the cache for the virtual host.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -895,54 +899,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	/**
 	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the virtual host
-	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
-	 */
-	@Override
-	public VirtualHost fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-				VirtualHostImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		VirtualHost virtualHost = (VirtualHost)serializable;
-
-		if (virtualHost == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				virtualHost = (VirtualHost)session.get(VirtualHostImpl.class,
-						primaryKey);
-
-				if (virtualHost != null) {
-					cacheResult(virtualHost);
-				}
-				else {
-					EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-						VirtualHostImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-					VirtualHostImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return virtualHost;
-	}
-
-	/**
-	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param virtualHostId the primary key of the virtual host
 	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
 	 */
@@ -1234,6 +1190,11 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

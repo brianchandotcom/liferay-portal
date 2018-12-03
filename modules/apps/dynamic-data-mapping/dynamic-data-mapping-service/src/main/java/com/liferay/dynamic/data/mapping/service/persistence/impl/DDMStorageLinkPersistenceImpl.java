@@ -2729,6 +2729,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public DDMStorageLinkPersistenceImpl() {
 		setModelClass(DDMStorageLink.class);
 
+		setModelImplClass(DDMStorageLinkImpl.class);
+		setEntityCacheEnabled(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3186,54 +3189,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	/**
 	 * Returns the ddm storage link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm storage link
-	 * @return the ddm storage link, or <code>null</code> if a ddm storage link with the primary key could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStorageLinkImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMStorageLink ddmStorageLink = (DDMStorageLink)serializable;
-
-		if (ddmStorageLink == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmStorageLink = (DDMStorageLink)session.get(DDMStorageLinkImpl.class,
-						primaryKey);
-
-				if (ddmStorageLink != null) {
-					cacheResult(ddmStorageLink);
-				}
-				else {
-					entityCache.putResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStorageLinkImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStorageLinkImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmStorageLink;
-	}
-
-	/**
-	 * Returns the ddm storage link with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param storageLinkId the primary key of the ddm storage link
 	 * @return the ddm storage link, or <code>null</code> if a ddm storage link with the primary key could not be found
 	 */
@@ -3530,6 +3485,11 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

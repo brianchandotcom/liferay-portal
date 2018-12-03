@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1115,6 +1116,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	public UserIdMapperPersistenceImpl() {
 		setModelClass(UserIdMapper.class);
 
+		setModelImplClass(UserIdMapperImpl.class);
+		setEntityCacheEnabled(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1179,7 +1183,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * Clears the cache for all user ID mappers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1195,7 +1199,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * Clears the cache for the user ID mapper.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1524,54 +1528,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	/**
 	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the user ID mapper
-	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
-	 */
-	@Override
-	public UserIdMapper fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-				UserIdMapperImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		UserIdMapper userIdMapper = (UserIdMapper)serializable;
-
-		if (userIdMapper == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
-						primaryKey);
-
-				if (userIdMapper != null) {
-					cacheResult(userIdMapper);
-				}
-				else {
-					EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-						UserIdMapperImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-					UserIdMapperImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return userIdMapper;
-	}
-
-	/**
-	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
 	 */
@@ -1868,6 +1824,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

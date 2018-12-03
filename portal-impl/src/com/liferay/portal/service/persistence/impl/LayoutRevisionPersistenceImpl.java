@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -7860,6 +7861,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	public LayoutRevisionPersistenceImpl() {
 		setModelClass(LayoutRevision.class);
+
+		setModelImplClass(LayoutRevisionImpl.class);
+		setEntityCacheEnabled(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -7912,7 +7916,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * Clears the cache for all layout revisions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -7928,7 +7932,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * Clears the cache for the layout revision.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -8631,54 +8635,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	/**
 	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout revision
-	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
-	 */
-	@Override
-	public LayoutRevision fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutRevisionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LayoutRevision layoutRevision = (LayoutRevision)serializable;
-
-		if (layoutRevision == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				layoutRevision = (LayoutRevision)session.get(LayoutRevisionImpl.class,
-						primaryKey);
-
-				if (layoutRevision != null) {
-					cacheResult(layoutRevision);
-				}
-				else {
-					EntityCacheUtil.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutRevisionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutRevisionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return layoutRevision;
-	}
-
-	/**
-	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param layoutRevisionId the primary key of the layout revision
 	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
 	 */
@@ -8970,6 +8926,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.liferay.counter.model.impl.CounterModelImpl;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -83,6 +84,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 	public CounterPersistenceImpl() {
 		setModelClass(Counter.class);
+
+		setModelImplClass(CounterImpl.class);
+		setEntityCacheEnabled(CounterModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -121,7 +125,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * Clears the cache for all counters.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -137,7 +141,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * Clears the cache for the counter.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -333,53 +337,6 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	@Override
 	public Counter findByPrimaryKey(String name) throws NoSuchCounterException {
 		return findByPrimaryKey((Serializable)name);
-	}
-
-	/**
-	 * Returns the counter with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the counter
-	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	 */
-	@Override
-	public Counter fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-				CounterImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Counter counter = (Counter)serializable;
-
-		if (counter == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				counter = (Counter)session.get(CounterImpl.class, primaryKey);
-
-				if (counter != null) {
-					cacheResult(counter);
-				}
-				else {
-					EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-						CounterImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-					CounterImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return counter;
 	}
 
 	/**
@@ -681,6 +638,11 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

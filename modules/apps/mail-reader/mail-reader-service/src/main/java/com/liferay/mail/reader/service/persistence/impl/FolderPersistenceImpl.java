@@ -852,6 +852,9 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 
 	public FolderPersistenceImpl() {
 		setModelClass(Folder.class);
+
+		setModelImplClass(FolderImpl.class);
+		setEntityCacheEnabled(FolderModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1220,53 +1223,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	/**
 	 * Returns the folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the folder
-	 * @return the folder, or <code>null</code> if a folder with the primary key could not be found
-	 */
-	@Override
-	public Folder fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-				FolderImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Folder folder = (Folder)serializable;
-
-		if (folder == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				folder = (Folder)session.get(FolderImpl.class, primaryKey);
-
-				if (folder != null) {
-					cacheResult(folder);
-				}
-				else {
-					entityCache.putResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-						FolderImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-					FolderImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return folder;
-	}
-
-	/**
-	 * Returns the folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param folderId the primary key of the folder
 	 * @return the folder, or <code>null</code> if a folder with the primary key could not be found
 	 */
@@ -1557,6 +1513,11 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -2494,6 +2494,9 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 
 	public KaleoTaskInstanceTokenPersistenceImpl() {
 		setModelClass(KaleoTaskInstanceToken.class);
+
+		setModelImplClass(KaleoTaskInstanceTokenImpl.class);
+		setEntityCacheEnabled(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2979,54 +2982,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	/**
 	 * Returns the kaleo task instance token with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kaleo task instance token
-	 * @return the kaleo task instance token, or <code>null</code> if a kaleo task instance token with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskInstanceTokenImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = (KaleoTaskInstanceToken)serializable;
-
-		if (kaleoTaskInstanceToken == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kaleoTaskInstanceToken = (KaleoTaskInstanceToken)session.get(KaleoTaskInstanceTokenImpl.class,
-						primaryKey);
-
-				if (kaleoTaskInstanceToken != null) {
-					cacheResult(kaleoTaskInstanceToken);
-				}
-				else {
-					entityCache.putResult(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoTaskInstanceTokenImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskInstanceTokenImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kaleoTaskInstanceToken;
-	}
-
-	/**
-	 * Returns the kaleo task instance token with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kaleoTaskInstanceTokenId the primary key of the kaleo task instance token
 	 * @return the kaleo task instance token, or <code>null</code> if a kaleo task instance token with the primary key could not be found
 	 */
@@ -3320,6 +3275,11 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

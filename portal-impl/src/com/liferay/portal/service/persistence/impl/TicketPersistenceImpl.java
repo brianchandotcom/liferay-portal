@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1530,6 +1531,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	public TicketPersistenceImpl() {
 		setModelClass(Ticket.class);
 
+		setModelImplClass(TicketImpl.class);
+		setEntityCacheEnabled(TicketModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1589,7 +1593,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Clears the cache for all tickets.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1605,7 +1609,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Clears the cache for the ticket.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1930,53 +1934,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	/**
 	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ticket
-	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
-	 */
-	@Override
-	public Ticket fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-				TicketImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Ticket ticket = (Ticket)serializable;
-
-		if (ticket == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ticket = (Ticket)session.get(TicketImpl.class, primaryKey);
-
-				if (ticket != null) {
-					cacheResult(ticket);
-				}
-				else {
-					EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-						TicketImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-					TicketImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ticket;
-	}
-
-	/**
-	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param ticketId the primary key of the ticket
 	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
 	 */
@@ -2272,6 +2229,11 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

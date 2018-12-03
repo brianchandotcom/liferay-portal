@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1873,6 +1874,9 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 
 	public RecentLayoutBranchPersistenceImpl() {
 		setModelClass(RecentLayoutBranch.class);
+
+		setModelImplClass(RecentLayoutBranchImpl.class);
+		setEntityCacheEnabled(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1920,7 +1924,7 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	 * Clears the cache for all recent layout branchs.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1936,7 +1940,7 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	 * Clears the cache for the recent layout branch.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2294,54 +2298,6 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	/**
 	 * Returns the recent layout branch with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the recent layout branch
-	 * @return the recent layout branch, or <code>null</code> if a recent layout branch with the primary key could not be found
-	 */
-	@Override
-	public RecentLayoutBranch fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-				RecentLayoutBranchImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		RecentLayoutBranch recentLayoutBranch = (RecentLayoutBranch)serializable;
-
-		if (recentLayoutBranch == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				recentLayoutBranch = (RecentLayoutBranch)session.get(RecentLayoutBranchImpl.class,
-						primaryKey);
-
-				if (recentLayoutBranch != null) {
-					cacheResult(recentLayoutBranch);
-				}
-				else {
-					EntityCacheUtil.putResult(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-						RecentLayoutBranchImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutBranchImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return recentLayoutBranch;
-	}
-
-	/**
-	 * Returns the recent layout branch with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param recentLayoutBranchId the primary key of the recent layout branch
 	 * @return the recent layout branch, or <code>null</code> if a recent layout branch with the primary key could not be found
 	 */
@@ -2634,6 +2590,11 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

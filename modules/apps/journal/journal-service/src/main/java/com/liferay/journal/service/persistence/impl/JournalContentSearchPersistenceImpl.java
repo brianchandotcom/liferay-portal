@@ -4603,6 +4603,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 	public JournalContentSearchPersistenceImpl() {
 		setModelClass(JournalContentSearch.class);
+
+		setModelImplClass(JournalContentSearchImpl.class);
+		setEntityCacheEnabled(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -5167,54 +5170,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	/**
 	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the journal content search
-	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-				JournalContentSearchImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		JournalContentSearch journalContentSearch = (JournalContentSearch)serializable;
-
-		if (journalContentSearch == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				journalContentSearch = (JournalContentSearch)session.get(JournalContentSearchImpl.class,
-						primaryKey);
-
-				if (journalContentSearch != null) {
-					cacheResult(journalContentSearch);
-				}
-				else {
-					entityCache.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-						JournalContentSearchImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-					JournalContentSearchImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return journalContentSearch;
-	}
-
-	/**
-	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param contentSearchId the primary key of the journal content search
 	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
 	 */
@@ -5507,6 +5462,11 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

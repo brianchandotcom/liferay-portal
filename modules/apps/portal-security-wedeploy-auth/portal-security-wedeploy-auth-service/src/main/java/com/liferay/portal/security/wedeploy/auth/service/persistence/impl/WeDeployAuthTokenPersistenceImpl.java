@@ -665,6 +665,9 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 	public WeDeployAuthTokenPersistenceImpl() {
 		setModelClass(WeDeployAuthToken.class);
 
+		setModelImplClass(WeDeployAuthTokenImpl.class);
+		setEntityCacheEnabled(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1082,54 +1085,6 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 	/**
 	 * Returns the we deploy auth token with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the we deploy auth token
-	 * @return the we deploy auth token, or <code>null</code> if a we deploy auth token with the primary key could not be found
-	 */
-	@Override
-	public WeDeployAuthToken fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-				WeDeployAuthTokenImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		WeDeployAuthToken weDeployAuthToken = (WeDeployAuthToken)serializable;
-
-		if (weDeployAuthToken == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				weDeployAuthToken = (WeDeployAuthToken)session.get(WeDeployAuthTokenImpl.class,
-						primaryKey);
-
-				if (weDeployAuthToken != null) {
-					cacheResult(weDeployAuthToken);
-				}
-				else {
-					entityCache.putResult(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-						WeDeployAuthTokenImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-					WeDeployAuthTokenImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return weDeployAuthToken;
-	}
-
-	/**
-	 * Returns the we deploy auth token with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param weDeployAuthTokenId the primary key of the we deploy auth token
 	 * @return the we deploy auth token, or <code>null</code> if a we deploy auth token with the primary key could not be found
 	 */
@@ -1426,6 +1381,11 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

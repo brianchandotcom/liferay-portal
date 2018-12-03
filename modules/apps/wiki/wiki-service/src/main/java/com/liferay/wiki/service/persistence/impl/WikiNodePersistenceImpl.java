@@ -4523,6 +4523,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNodePersistenceImpl() {
 		setModelClass(WikiNode.class);
 
+		setModelImplClass(WikiNodeImpl.class);
+		setEntityCacheEnabled(WikiNodeModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -5084,53 +5087,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	/**
 	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the wiki node
-	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
-	 */
-	@Override
-	public WikiNode fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-				WikiNodeImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		WikiNode wikiNode = (WikiNode)serializable;
-
-		if (wikiNode == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				wikiNode = (WikiNode)session.get(WikiNodeImpl.class, primaryKey);
-
-				if (wikiNode != null) {
-					cacheResult(wikiNode);
-				}
-				else {
-					entityCache.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-					WikiNodeImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return wikiNode;
-	}
-
-	/**
-	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param nodeId the primary key of the wiki node
 	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
 	 */
@@ -5426,6 +5382,11 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

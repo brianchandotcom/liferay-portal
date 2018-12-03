@@ -2260,6 +2260,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	public LayoutPageTemplateStructurePersistenceImpl() {
 		setModelClass(LayoutPageTemplateStructure.class);
 
+		setModelImplClass(LayoutPageTemplateStructureImpl.class);
+		setEntityCacheEnabled(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2790,56 +2793,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	/**
 	 * Returns the layout page template structure with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout page template structure
-	 * @return the layout page template structure, or <code>null</code> if a layout page template structure with the primary key could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructure fetchByPrimaryKey(
-		Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPageTemplateStructureImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure = (LayoutPageTemplateStructure)serializable;
-
-		if (layoutPageTemplateStructure == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				layoutPageTemplateStructure = (LayoutPageTemplateStructure)session.get(LayoutPageTemplateStructureImpl.class,
-						primaryKey);
-
-				if (layoutPageTemplateStructure != null) {
-					cacheResult(layoutPageTemplateStructure);
-				}
-				else {
-					entityCache.putResult(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutPageTemplateStructureImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPageTemplateStructureImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return layoutPageTemplateStructure;
-	}
-
-	/**
-	 * Returns the layout page template structure with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param layoutPageTemplateStructureId the primary key of the layout page template structure
 	 * @return the layout page template structure, or <code>null</code> if a layout page template structure with the primary key could not be found
 	 */
@@ -3139,6 +3092,11 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

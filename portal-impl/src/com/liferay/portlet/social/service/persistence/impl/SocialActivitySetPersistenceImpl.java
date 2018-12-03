@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3548,6 +3549,9 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	public SocialActivitySetPersistenceImpl() {
 		setModelClass(SocialActivitySet.class);
 
+		setModelImplClass(SocialActivitySetImpl.class);
+		setEntityCacheEnabled(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3605,7 +3609,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 * Clears the cache for all social activity sets.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3621,7 +3625,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 * Clears the cache for the social activity set.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4036,54 +4040,6 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	/**
 	 * Returns the social activity set with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the social activity set
-	 * @return the social activity set, or <code>null</code> if a social activity set with the primary key could not be found
-	 */
-	@Override
-	public SocialActivitySet fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivitySetImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SocialActivitySet socialActivitySet = (SocialActivitySet)serializable;
-
-		if (socialActivitySet == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				socialActivitySet = (SocialActivitySet)session.get(SocialActivitySetImpl.class,
-						primaryKey);
-
-				if (socialActivitySet != null) {
-					cacheResult(socialActivitySet);
-				}
-				else {
-					EntityCacheUtil.putResult(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivitySetImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivitySetImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return socialActivitySet;
-	}
-
-	/**
-	 * Returns the social activity set with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param activitySetId the primary key of the social activity set
 	 * @return the social activity set, or <code>null</code> if a social activity set with the primary key could not be found
 	 */
@@ -4380,6 +4336,11 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -2842,6 +2842,9 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	public SiteFriendlyURLPersistenceImpl() {
 		setModelClass(SiteFriendlyURL.class);
 
+		setModelImplClass(SiteFriendlyURLImpl.class);
+		setEntityCacheEnabled(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3426,54 +3429,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	/**
 	 * Returns the site friendly url with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the site friendly url
-	 * @return the site friendly url, or <code>null</code> if a site friendly url with the primary key could not be found
-	 */
-	@Override
-	public SiteFriendlyURL fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-				SiteFriendlyURLImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SiteFriendlyURL siteFriendlyURL = (SiteFriendlyURL)serializable;
-
-		if (siteFriendlyURL == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				siteFriendlyURL = (SiteFriendlyURL)session.get(SiteFriendlyURLImpl.class,
-						primaryKey);
-
-				if (siteFriendlyURL != null) {
-					cacheResult(siteFriendlyURL);
-				}
-				else {
-					entityCache.putResult(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-						SiteFriendlyURLImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SiteFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-					SiteFriendlyURLImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return siteFriendlyURL;
-	}
-
-	/**
-	 * Returns the site friendly url with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param siteFriendlyURLId the primary key of the site friendly url
 	 * @return the site friendly url, or <code>null</code> if a site friendly url with the primary key could not be found
 	 */
@@ -3770,6 +3725,11 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

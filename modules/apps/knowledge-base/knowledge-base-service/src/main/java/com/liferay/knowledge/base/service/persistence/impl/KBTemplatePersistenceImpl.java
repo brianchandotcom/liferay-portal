@@ -2335,6 +2335,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplatePersistenceImpl() {
 		setModelClass(KBTemplate.class);
 
+		setModelImplClass(KBTemplateImpl.class);
+		setEntityCacheEnabled(KBTemplateModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2813,54 +2816,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	/**
 	 * Returns the kb template with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kb template
-	 * @return the kb template, or <code>null</code> if a kb template with the primary key could not be found
-	 */
-	@Override
-	public KBTemplate fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				KBTemplateImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KBTemplate kbTemplate = (KBTemplate)serializable;
-
-		if (kbTemplate == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kbTemplate = (KBTemplate)session.get(KBTemplateImpl.class,
-						primaryKey);
-
-				if (kbTemplate != null) {
-					cacheResult(kbTemplate);
-				}
-				else {
-					entityCache.putResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						KBTemplateImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					KBTemplateImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kbTemplate;
-	}
-
-	/**
-	 * Returns the kb template with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kbTemplateId the primary key of the kb template
 	 * @return the kb template, or <code>null</code> if a kb template with the primary key could not be found
 	 */
@@ -3157,6 +3112,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

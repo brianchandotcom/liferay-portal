@@ -5069,6 +5069,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	public KBCommentPersistenceImpl() {
 		setModelClass(KBComment.class);
 
+		setModelImplClass(KBCommentImpl.class);
+		setEntityCacheEnabled(KBCommentModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -5678,54 +5681,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	/**
 	 * Returns the kb comment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kb comment
-	 * @return the kb comment, or <code>null</code> if a kb comment with the primary key could not be found
-	 */
-	@Override
-	public KBComment fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-				KBCommentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KBComment kbComment = (KBComment)serializable;
-
-		if (kbComment == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kbComment = (KBComment)session.get(KBCommentImpl.class,
-						primaryKey);
-
-				if (kbComment != null) {
-					cacheResult(kbComment);
-				}
-				else {
-					entityCache.putResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-						KBCommentImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-					KBCommentImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kbComment;
-	}
-
-	/**
-	 * Returns the kb comment with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kbCommentId the primary key of the kb comment
 	 * @return the kb comment, or <code>null</code> if a kb comment with the primary key could not be found
 	 */
@@ -6022,6 +5977,11 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

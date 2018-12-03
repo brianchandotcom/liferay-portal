@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPer
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -5992,6 +5993,9 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcutPersistenceImpl() {
 		setModelClass(DLFileShortcut.class);
 
+		setModelImplClass(DLFileShortcutImpl.class);
+		setEntityCacheEnabled(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -6053,7 +6057,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 * Clears the cache for all document library file shortcuts.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -6069,7 +6073,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 * Clears the cache for the document library file shortcut.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -6581,54 +6585,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	/**
 	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the document library file shortcut
-	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileShortcutImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DLFileShortcut dlFileShortcut = (DLFileShortcut)serializable;
-
-		if (dlFileShortcut == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				dlFileShortcut = (DLFileShortcut)session.get(DLFileShortcutImpl.class,
-						primaryKey);
-
-				if (dlFileShortcut != null) {
-					cacheResult(dlFileShortcut);
-				}
-				else {
-					EntityCacheUtil.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileShortcutImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileShortcutImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return dlFileShortcut;
-	}
-
-	/**
-	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param fileShortcutId the primary key of the document library file shortcut
 	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
 	 */
@@ -6925,6 +6881,11 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

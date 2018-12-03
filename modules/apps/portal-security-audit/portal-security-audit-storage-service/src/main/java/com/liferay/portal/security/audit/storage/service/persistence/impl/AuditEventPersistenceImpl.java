@@ -594,6 +594,9 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 
 	public AuditEventPersistenceImpl() {
 		setModelClass(AuditEvent.class);
+
+		setModelImplClass(AuditEventImpl.class);
+		setEntityCacheEnabled(AuditEventModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -899,54 +902,6 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 	/**
 	 * Returns the audit event with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the audit event
-	 * @return the audit event, or <code>null</code> if a audit event with the primary key could not be found
-	 */
-	@Override
-	public AuditEvent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-				AuditEventImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AuditEvent auditEvent = (AuditEvent)serializable;
-
-		if (auditEvent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				auditEvent = (AuditEvent)session.get(AuditEventImpl.class,
-						primaryKey);
-
-				if (auditEvent != null) {
-					cacheResult(auditEvent);
-				}
-				else {
-					entityCache.putResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-						AuditEventImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-					AuditEventImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return auditEvent;
-	}
-
-	/**
-	 * Returns the audit event with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param auditEventId the primary key of the audit event
 	 * @return the audit event, or <code>null</code> if a audit event with the primary key could not be found
 	 */
@@ -1238,6 +1193,11 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

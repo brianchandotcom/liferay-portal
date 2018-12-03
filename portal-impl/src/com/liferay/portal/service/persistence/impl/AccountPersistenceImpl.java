@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -93,6 +94,9 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	public AccountPersistenceImpl() {
 		setModelClass(Account.class);
 
+		setModelImplClass(AccountImpl.class);
+		setEntityCacheEnabled(AccountModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -149,7 +153,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 * Clears the cache for all accounts.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -165,7 +169,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 * Clears the cache for the account.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -404,53 +408,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	public Account findByPrimaryKey(long accountId)
 		throws NoSuchAccountException {
 		return findByPrimaryKey((Serializable)accountId);
-	}
-
-	/**
-	 * Returns the account with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account
-	 * @return the account, or <code>null</code> if a account with the primary key could not be found
-	 */
-	@Override
-	public Account fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-				AccountImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Account account = (Account)serializable;
-
-		if (account == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				account = (Account)session.get(AccountImpl.class, primaryKey);
-
-				if (account != null) {
-					cacheResult(account);
-				}
-				else {
-					EntityCacheUtil.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-						AccountImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-					AccountImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return account;
 	}
 
 	/**
@@ -751,6 +708,11 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

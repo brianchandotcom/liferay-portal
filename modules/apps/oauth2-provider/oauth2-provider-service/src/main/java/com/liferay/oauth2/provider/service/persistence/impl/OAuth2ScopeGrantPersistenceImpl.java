@@ -1032,6 +1032,9 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	public OAuth2ScopeGrantPersistenceImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
 
+		setModelImplClass(OAuth2ScopeGrantImpl.class);
+		setEntityCacheEnabled(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1428,54 +1431,6 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	public OAuth2ScopeGrant findByPrimaryKey(long oAuth2ScopeGrantId)
 		throws NoSuchOAuth2ScopeGrantException {
 		return findByPrimaryKey((Serializable)oAuth2ScopeGrantId);
-	}
-
-	/**
-	 * Returns the o auth2 scope grant with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 scope grant
-	 * @return the o auth2 scope grant, or <code>null</code> if a o auth2 scope grant with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuth2ScopeGrant oAuth2ScopeGrant = (OAuth2ScopeGrant)serializable;
-
-		if (oAuth2ScopeGrant == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuth2ScopeGrant = (OAuth2ScopeGrant)session.get(OAuth2ScopeGrantImpl.class,
-						primaryKey);
-
-				if (oAuth2ScopeGrant != null) {
-					cacheResult(oAuth2ScopeGrant);
-				}
-				else {
-					entityCache.putResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-						OAuth2ScopeGrantImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ScopeGrantImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuth2ScopeGrant;
 	}
 
 	/**
@@ -2086,6 +2041,11 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

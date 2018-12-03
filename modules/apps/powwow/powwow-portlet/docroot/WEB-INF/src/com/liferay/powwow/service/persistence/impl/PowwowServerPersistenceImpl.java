@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -681,6 +682,9 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	public PowwowServerPersistenceImpl() {
 		setModelClass(PowwowServer.class);
 
+		setModelImplClass(PowwowServerImpl.class);
+		setEntityCacheEnabled(PowwowServerModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -736,7 +740,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 * Clears the cache for all powwow servers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -752,7 +756,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 * Clears the cache for the powwow server.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1030,54 +1034,6 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	public PowwowServer findByPrimaryKey(long powwowServerId)
 		throws NoSuchServerException {
 		return findByPrimaryKey((Serializable)powwowServerId);
-	}
-
-	/**
-	 * Returns the powwow server with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the powwow server
-	 * @return the powwow server, or <code>null</code> if a powwow server with the primary key could not be found
-	 */
-	@Override
-	public PowwowServer fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-				PowwowServerImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PowwowServer powwowServer = (PowwowServer)serializable;
-
-		if (powwowServer == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				powwowServer = (PowwowServer)session.get(PowwowServerImpl.class,
-						primaryKey);
-
-				if (powwowServer != null) {
-					cacheResult(powwowServer);
-				}
-				else {
-					EntityCacheUtil.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-						PowwowServerImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-					PowwowServerImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return powwowServer;
 	}
 
 	/**
@@ -1379,6 +1335,11 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

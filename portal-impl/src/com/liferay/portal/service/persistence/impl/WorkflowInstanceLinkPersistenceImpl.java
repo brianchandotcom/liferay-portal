@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -729,6 +730,9 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 
 	public WorkflowInstanceLinkPersistenceImpl() {
 		setModelClass(WorkflowInstanceLink.class);
+
+		setModelImplClass(WorkflowInstanceLinkImpl.class);
+		setEntityCacheEnabled(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -769,7 +773,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 * Clears the cache for all workflow instance links.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -785,7 +789,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 * Clears the cache for the workflow instance link.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1074,54 +1078,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	public WorkflowInstanceLink findByPrimaryKey(long workflowInstanceLinkId)
 		throws NoSuchWorkflowInstanceLinkException {
 		return findByPrimaryKey((Serializable)workflowInstanceLinkId);
-	}
-
-	/**
-	 * Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the workflow instance link
-	 * @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowInstanceLinkImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)serializable;
-
-		if (workflowInstanceLink == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				workflowInstanceLink = (WorkflowInstanceLink)session.get(WorkflowInstanceLinkImpl.class,
-						primaryKey);
-
-				if (workflowInstanceLink != null) {
-					cacheResult(workflowInstanceLink);
-				}
-				else {
-					EntityCacheUtil.putResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-						WorkflowInstanceLinkImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowInstanceLinkImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return workflowInstanceLink;
 	}
 
 	/**
@@ -1419,6 +1375,11 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -33381,6 +33381,9 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public KBArticlePersistenceImpl() {
 		setModelClass(KBArticle.class);
 
+		setModelImplClass(KBArticleImpl.class);
+		setEntityCacheEnabled(KBArticleModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -34691,54 +34694,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	/**
 	 * Returns the kb article with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kb article
-	 * @return the kb article, or <code>null</code> if a kb article with the primary key could not be found
-	 */
-	@Override
-	public KBArticle fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
-				KBArticleImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KBArticle kbArticle = (KBArticle)serializable;
-
-		if (kbArticle == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kbArticle = (KBArticle)session.get(KBArticleImpl.class,
-						primaryKey);
-
-				if (kbArticle != null) {
-					cacheResult(kbArticle);
-				}
-				else {
-					entityCache.putResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
-						KBArticleImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
-					KBArticleImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kbArticleId the primary key of the kb article
 	 * @return the kb article, or <code>null</code> if a kb article with the primary key could not be found
 	 */
@@ -35035,6 +34990,11 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -8300,6 +8301,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	public UserNotificationEventPersistenceImpl() {
 		setModelClass(UserNotificationEvent.class);
 
+		setModelImplClass(UserNotificationEventImpl.class);
+		setEntityCacheEnabled(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -8358,7 +8362,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 * Clears the cache for all user notification events.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -8374,7 +8378,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 * Clears the cache for the user notification event.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9050,54 +9054,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	/**
 	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the user notification event
-	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationEvent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-				UserNotificationEventImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)serializable;
-
-		if (userNotificationEvent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				userNotificationEvent = (UserNotificationEvent)session.get(UserNotificationEventImpl.class,
-						primaryKey);
-
-				if (userNotificationEvent != null) {
-					cacheResult(userNotificationEvent);
-				}
-				else {
-					EntityCacheUtil.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-						UserNotificationEventImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationEventImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return userNotificationEvent;
-	}
-
-	/**
-	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param userNotificationEventId the primary key of the user notification event
 	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
 	 */
@@ -9395,6 +9351,11 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

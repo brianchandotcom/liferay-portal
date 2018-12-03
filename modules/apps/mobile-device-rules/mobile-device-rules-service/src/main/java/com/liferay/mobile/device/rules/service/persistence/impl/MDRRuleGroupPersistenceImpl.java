@@ -2797,6 +2797,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	public MDRRuleGroupPersistenceImpl() {
 		setModelClass(MDRRuleGroup.class);
 
+		setModelImplClass(MDRRuleGroupImpl.class);
+		setEntityCacheEnabled(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3254,54 +3257,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	/**
 	 * Returns the mdr rule group with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the mdr rule group
-	 * @return the mdr rule group, or <code>null</code> if a mdr rule group with the primary key could not be found
-	 */
-	@Override
-	public MDRRuleGroup fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleGroupImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)serializable;
-
-		if (mdrRuleGroup == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				mdrRuleGroup = (MDRRuleGroup)session.get(MDRRuleGroupImpl.class,
-						primaryKey);
-
-				if (mdrRuleGroup != null) {
-					cacheResult(mdrRuleGroup);
-				}
-				else {
-					entityCache.putResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleGroupImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleGroupImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return mdrRuleGroup;
-	}
-
-	/**
-	 * Returns the mdr rule group with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param ruleGroupId the primary key of the mdr rule group
 	 * @return the mdr rule group, or <code>null</code> if a mdr rule group with the primary key could not be found
 	 */
@@ -3598,6 +3553,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

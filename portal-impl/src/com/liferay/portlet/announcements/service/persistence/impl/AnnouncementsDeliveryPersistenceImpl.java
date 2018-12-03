@@ -23,6 +23,7 @@ import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliver
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -852,6 +853,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	public AnnouncementsDeliveryPersistenceImpl() {
 		setModelClass(AnnouncementsDelivery.class);
 
+		setModelImplClass(AnnouncementsDeliveryImpl.class);
+		setEntityCacheEnabled(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -915,7 +919,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * Clears the cache for all announcements deliveries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -931,7 +935,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * Clears the cache for the announcements delivery.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1238,54 +1242,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	/**
 	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the announcements delivery
-	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)serializable;
-
-		if (announcementsDelivery == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
-						primaryKey);
-
-				if (announcementsDelivery != null) {
-					cacheResult(announcementsDelivery);
-				}
-				else {
-					EntityCacheUtil.putResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsDeliveryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsDeliveryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return announcementsDelivery;
-	}
-
-	/**
-	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param deliveryId the primary key of the announcements delivery
 	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
 	 */
@@ -1583,6 +1539,11 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

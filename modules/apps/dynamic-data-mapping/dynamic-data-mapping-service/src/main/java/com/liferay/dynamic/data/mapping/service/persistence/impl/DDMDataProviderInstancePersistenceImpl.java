@@ -3353,6 +3353,9 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	public DDMDataProviderInstancePersistenceImpl() {
 		setModelClass(DDMDataProviderInstance.class);
 
+		setModelImplClass(DDMDataProviderInstanceImpl.class);
+		setEntityCacheEnabled(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3856,54 +3859,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	/**
 	 * Returns the ddm data provider instance with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm data provider instance
-	 * @return the ddm data provider instance, or <code>null</code> if a ddm data provider instance with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-				DDMDataProviderInstanceImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)serializable;
-
-		if (ddmDataProviderInstance == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmDataProviderInstance = (DDMDataProviderInstance)session.get(DDMDataProviderInstanceImpl.class,
-						primaryKey);
-
-				if (ddmDataProviderInstance != null) {
-					cacheResult(ddmDataProviderInstance);
-				}
-				else {
-					entityCache.putResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-						DDMDataProviderInstanceImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmDataProviderInstance;
-	}
-
-	/**
-	 * Returns the ddm data provider instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param dataProviderInstanceId the primary key of the ddm data provider instance
 	 * @return the ddm data provider instance, or <code>null</code> if a ddm data provider instance with the primary key could not be found
 	 */
@@ -4202,6 +4157,11 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

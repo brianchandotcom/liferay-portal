@@ -6254,6 +6254,9 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	public SyncDLObjectPersistenceImpl() {
 		setModelClass(SyncDLObject.class);
 
+		setModelImplClass(SyncDLObjectImpl.class);
+		setEntityCacheEnabled(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -6727,54 +6730,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	/**
 	 * Returns the sync dl object with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the sync dl object
-	 * @return the sync dl object, or <code>null</code> if a sync dl object with the primary key could not be found
-	 */
-	@Override
-	public SyncDLObject fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
-				SyncDLObjectImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SyncDLObject syncDLObject = (SyncDLObject)serializable;
-
-		if (syncDLObject == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				syncDLObject = (SyncDLObject)session.get(SyncDLObjectImpl.class,
-						primaryKey);
-
-				if (syncDLObject != null) {
-					cacheResult(syncDLObject);
-				}
-				else {
-					entityCache.putResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
-						SyncDLObjectImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDLObjectImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return syncDLObject;
-	}
-
-	/**
-	 * Returns the sync dl object with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param syncDLObjectId the primary key of the sync dl object
 	 * @return the sync dl object, or <code>null</code> if a sync dl object with the primary key could not be found
 	 */
@@ -7071,6 +7026,11 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

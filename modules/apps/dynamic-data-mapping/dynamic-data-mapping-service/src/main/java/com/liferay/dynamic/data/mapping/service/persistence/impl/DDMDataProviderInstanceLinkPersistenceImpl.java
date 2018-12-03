@@ -1369,6 +1369,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 	public DDMDataProviderInstanceLinkPersistenceImpl() {
 		setModelClass(DDMDataProviderInstanceLink.class);
+
+		setModelImplClass(DDMDataProviderInstanceLinkImpl.class);
+		setEntityCacheEnabled(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1777,56 +1780,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	/**
 	 * Returns the ddm data provider instance link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm data provider instance link
-	 * @return the ddm data provider instance link, or <code>null</code> if a ddm data provider instance link with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink fetchByPrimaryKey(
-		Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMDataProviderInstanceLinkImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink = (DDMDataProviderInstanceLink)serializable;
-
-		if (ddmDataProviderInstanceLink == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmDataProviderInstanceLink = (DDMDataProviderInstanceLink)session.get(DDMDataProviderInstanceLinkImpl.class,
-						primaryKey);
-
-				if (ddmDataProviderInstanceLink != null) {
-					cacheResult(ddmDataProviderInstanceLink);
-				}
-				else {
-					entityCache.putResult(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMDataProviderInstanceLinkImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceLinkImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmDataProviderInstanceLink;
-	}
-
-	/**
-	 * Returns the ddm data provider instance link with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
 	 * @return the ddm data provider instance link, or <code>null</code> if a ddm data provider instance link with the primary key could not be found
 	 */
@@ -2121,6 +2074,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

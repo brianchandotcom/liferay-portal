@@ -1376,6 +1376,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 	public AssetEntryAssetCategoryRelPersistenceImpl() {
 		setModelClass(AssetEntryAssetCategoryRel.class);
+
+		setModelImplClass(AssetEntryAssetCategoryRelImpl.class);
+		setEntityCacheEnabled(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1780,55 +1783,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	/**
 	 * Returns the asset entry asset category rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset entry asset category rel
-	 * @return the asset entry asset category rel, or <code>null</code> if a asset entry asset category rel with the primary key could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-				AssetEntryAssetCategoryRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = (AssetEntryAssetCategoryRel)serializable;
-
-		if (assetEntryAssetCategoryRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetEntryAssetCategoryRel = (AssetEntryAssetCategoryRel)session.get(AssetEntryAssetCategoryRelImpl.class,
-						primaryKey);
-
-				if (assetEntryAssetCategoryRel != null) {
-					cacheResult(assetEntryAssetCategoryRel);
-				}
-				else {
-					entityCache.putResult(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-						AssetEntryAssetCategoryRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-					AssetEntryAssetCategoryRelImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetEntryAssetCategoryRel;
-	}
-
-	/**
-	 * Returns the asset entry asset category rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param assetEntryAssetCategoryRelId the primary key of the asset entry asset category rel
 	 * @return the asset entry asset category rel, or <code>null</code> if a asset entry asset category rel with the primary key could not be found
 	 */
@@ -2122,6 +2076,11 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

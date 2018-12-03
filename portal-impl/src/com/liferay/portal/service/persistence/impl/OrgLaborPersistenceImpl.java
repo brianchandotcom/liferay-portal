@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -601,6 +602,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	public OrgLaborPersistenceImpl() {
 		setModelClass(OrgLabor.class);
+
+		setModelImplClass(OrgLaborImpl.class);
+		setEntityCacheEnabled(OrgLaborModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -639,7 +643,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Clears the cache for all org labors.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -655,7 +659,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Clears the cache for the org labor.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -905,53 +909,6 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public OrgLabor findByPrimaryKey(long orgLaborId)
 		throws NoSuchOrgLaborException {
 		return findByPrimaryKey((Serializable)orgLaborId);
-	}
-
-	/**
-	 * Returns the org labor with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the org labor
-	 * @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
-	 */
-	@Override
-	public OrgLabor fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OrgLabor orgLabor = (OrgLabor)serializable;
-
-		if (orgLabor == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				orgLabor = (OrgLabor)session.get(OrgLaborImpl.class, primaryKey);
-
-				if (orgLabor != null) {
-					cacheResult(orgLabor);
-				}
-				else {
-					EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-						OrgLaborImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-					OrgLaborImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return orgLabor;
 	}
 
 	/**
@@ -1247,6 +1204,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

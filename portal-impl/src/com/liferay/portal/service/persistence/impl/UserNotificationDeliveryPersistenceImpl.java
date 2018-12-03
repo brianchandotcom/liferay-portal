@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -928,6 +929,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 	public UserNotificationDeliveryPersistenceImpl() {
 		setModelClass(UserNotificationDelivery.class);
+
+		setModelImplClass(UserNotificationDeliveryImpl.class);
+		setEntityCacheEnabled(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -978,7 +982,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Clears the cache for all user notification deliveries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -994,7 +998,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Clears the cache for the user notification delivery.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1315,55 +1319,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	/**
 	 * Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the user notification delivery
-	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationDelivery fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				UserNotificationDeliveryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)serializable;
-
-		if (userNotificationDelivery == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				userNotificationDelivery = (UserNotificationDelivery)session.get(UserNotificationDeliveryImpl.class,
-						primaryKey);
-
-				if (userNotificationDelivery != null) {
-					cacheResult(userNotificationDelivery);
-				}
-				else {
-					EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-						UserNotificationDeliveryImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationDeliveryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return userNotificationDelivery;
-	}
-
-	/**
-	 * Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param userNotificationDeliveryId the primary key of the user notification delivery
 	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
 	 */
@@ -1657,6 +1612,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -3390,6 +3390,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	public SubscriptionPersistenceImpl() {
 		setModelClass(Subscription.class);
+
+		setModelImplClass(SubscriptionImpl.class);
+		setEntityCacheEnabled(SubscriptionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -3927,54 +3930,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	/**
 	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the subscription
-	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
-	 */
-	@Override
-	public Subscription fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-				SubscriptionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Subscription subscription = (Subscription)serializable;
-
-		if (subscription == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				subscription = (Subscription)session.get(SubscriptionImpl.class,
-						primaryKey);
-
-				if (subscription != null) {
-					cacheResult(subscription);
-				}
-				else {
-					entityCache.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-						SubscriptionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-					SubscriptionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return subscription;
-	}
-
-	/**
-	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param subscriptionId the primary key of the subscription
 	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
 	 */
@@ -4266,6 +4221,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

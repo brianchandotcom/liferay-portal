@@ -8808,6 +8808,9 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 	public BackgroundTaskPersistenceImpl() {
 		setModelClass(BackgroundTask.class);
+
+		setModelImplClass(BackgroundTaskImpl.class);
+		setEntityCacheEnabled(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -9433,54 +9436,6 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	/**
 	 * Returns the background task with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the background task
-	 * @return the background task, or <code>null</code> if a background task with the primary key could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
-				BackgroundTaskImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		BackgroundTask backgroundTask = (BackgroundTask)serializable;
-
-		if (backgroundTask == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				backgroundTask = (BackgroundTask)session.get(BackgroundTaskImpl.class,
-						primaryKey);
-
-				if (backgroundTask != null) {
-					cacheResult(backgroundTask);
-				}
-				else {
-					entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
-						BackgroundTaskImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
-					BackgroundTaskImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return backgroundTask;
-	}
-
-	/**
-	 * Returns the background task with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param backgroundTaskId the primary key of the background task
 	 * @return the background task, or <code>null</code> if a background task with the primary key could not be found
 	 */
@@ -9772,6 +9727,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

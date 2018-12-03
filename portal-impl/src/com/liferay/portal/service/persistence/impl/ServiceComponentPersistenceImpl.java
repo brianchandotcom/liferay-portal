@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -904,6 +905,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public ServiceComponentPersistenceImpl() {
 		setModelClass(ServiceComponent.class);
 
+		setModelImplClass(ServiceComponentImpl.class);
+		setEntityCacheEnabled(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -967,7 +971,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Clears the cache for all service components.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -983,7 +987,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Clears the cache for the service component.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1289,54 +1293,6 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	/**
 	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the service component
-	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
-	 */
-	@Override
-	public ServiceComponent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-				ServiceComponentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ServiceComponent serviceComponent = (ServiceComponent)serializable;
-
-		if (serviceComponent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				serviceComponent = (ServiceComponent)session.get(ServiceComponentImpl.class,
-						primaryKey);
-
-				if (serviceComponent != null) {
-					cacheResult(serviceComponent);
-				}
-				else {
-					EntityCacheUtil.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-						ServiceComponentImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-					ServiceComponentImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return serviceComponent;
-	}
-
-	/**
-	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param serviceComponentId the primary key of the service component
 	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
 	 */
@@ -1633,6 +1589,11 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

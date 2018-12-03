@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -289,6 +290,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	public BrowserTrackerPersistenceImpl() {
 		setModelClass(BrowserTracker.class);
+
+		setModelImplClass(BrowserTrackerImpl.class);
+		setEntityCacheEnabled(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -331,7 +335,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * Clears the cache for all browser trackers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -347,7 +351,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * Clears the cache for the browser tracker.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -609,54 +613,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	public BrowserTracker findByPrimaryKey(long browserTrackerId)
 		throws NoSuchBrowserTrackerException {
 		return findByPrimaryKey((Serializable)browserTrackerId);
-	}
-
-	/**
-	 * Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the browser tracker
-	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	 */
-	@Override
-	public BrowserTracker fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				BrowserTrackerImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		BrowserTracker browserTracker = (BrowserTracker)serializable;
-
-		if (browserTracker == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				browserTracker = (BrowserTracker)session.get(BrowserTrackerImpl.class,
-						primaryKey);
-
-				if (browserTracker != null) {
-					cacheResult(browserTracker);
-				}
-				else {
-					EntityCacheUtil.putResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						BrowserTrackerImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					BrowserTrackerImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return browserTracker;
 	}
 
 	/**
@@ -953,6 +909,11 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

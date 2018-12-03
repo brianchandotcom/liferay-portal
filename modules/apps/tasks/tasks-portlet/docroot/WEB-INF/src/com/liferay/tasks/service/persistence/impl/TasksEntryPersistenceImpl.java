@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -9952,6 +9953,9 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 	public TasksEntryPersistenceImpl() {
 		setModelClass(TasksEntry.class);
+
+		setModelImplClass(TasksEntryImpl.class);
+		setEntityCacheEnabled(TasksEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -9990,7 +9994,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 * Clears the cache for all tasks entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -10006,7 +10010,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 * Clears the cache for the tasks entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -10572,54 +10576,6 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	/**
 	 * Returns the tasks entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the tasks entry
-	 * @return the tasks entry, or <code>null</code> if a tasks entry with the primary key could not be found
-	 */
-	@Override
-	public TasksEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
-				TasksEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		TasksEntry tasksEntry = (TasksEntry)serializable;
-
-		if (tasksEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				tasksEntry = (TasksEntry)session.get(TasksEntryImpl.class,
-						primaryKey);
-
-				if (tasksEntry != null) {
-					cacheResult(tasksEntry);
-				}
-				else {
-					EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
-						TasksEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TasksEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return tasksEntry;
-	}
-
-	/**
-	 * Returns the tasks entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param tasksEntryId the primary key of the tasks entry
 	 * @return the tasks entry, or <code>null</code> if a tasks entry with the primary key could not be found
 	 */
@@ -10911,6 +10867,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

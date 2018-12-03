@@ -1222,6 +1222,9 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	public OAuth2ApplicationPersistenceImpl() {
 		setModelClass(OAuth2Application.class);
 
+		setModelImplClass(OAuth2ApplicationImpl.class);
+		setEntityCacheEnabled(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1628,54 +1631,6 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	/**
 	 * Returns the o auth2 application with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the o auth2 application
-	 * @return the o auth2 application, or <code>null</code> if a o auth2 application with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Application fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ApplicationImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuth2Application oAuth2Application = (OAuth2Application)serializable;
-
-		if (oAuth2Application == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuth2Application = (OAuth2Application)session.get(OAuth2ApplicationImpl.class,
-						primaryKey);
-
-				if (oAuth2Application != null) {
-					cacheResult(oAuth2Application);
-				}
-				else {
-					entityCache.putResult(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED,
-						OAuth2ApplicationImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuth2Application;
-	}
-
-	/**
-	 * Returns the o auth2 application with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param oAuth2ApplicationId the primary key of the o auth2 application
 	 * @return the o auth2 application, or <code>null</code> if a o auth2 application with the primary key could not be found
 	 */
@@ -1972,6 +1927,11 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

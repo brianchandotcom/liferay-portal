@@ -2388,6 +2388,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	public MBDiscussionPersistenceImpl() {
 		setModelClass(MBDiscussion.class);
 
+		setModelImplClass(MBDiscussionImpl.class);
+		setEntityCacheEnabled(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2908,54 +2911,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	/**
 	 * Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the message boards discussion
-	 * @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
-	 */
-	@Override
-	public MBDiscussion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-				MBDiscussionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		MBDiscussion mbDiscussion = (MBDiscussion)serializable;
-
-		if (mbDiscussion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				mbDiscussion = (MBDiscussion)session.get(MBDiscussionImpl.class,
-						primaryKey);
-
-				if (mbDiscussion != null) {
-					cacheResult(mbDiscussion);
-				}
-				else {
-					entityCache.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-						MBDiscussionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-					MBDiscussionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return mbDiscussion;
-	}
-
-	/**
-	 * Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param discussionId the primary key of the message boards discussion
 	 * @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
 	 */
@@ -3252,6 +3207,11 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

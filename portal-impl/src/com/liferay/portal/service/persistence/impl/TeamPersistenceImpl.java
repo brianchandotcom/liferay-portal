@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2565,6 +2566,9 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	public TeamPersistenceImpl() {
 		setModelClass(Team.class);
 
+		setModelImplClass(TeamImpl.class);
+		setEntityCacheEnabled(TeamModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2625,7 +2629,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 * Clears the cache for all teams.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2641,7 +2645,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 * Clears the cache for the team.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3035,53 +3039,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Team findByPrimaryKey(long teamId) throws NoSuchTeamException {
 		return findByPrimaryKey((Serializable)teamId);
-	}
-
-	/**
-	 * Returns the team with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the team
-	 * @return the team, or <code>null</code> if a team with the primary key could not be found
-	 */
-	@Override
-	public Team fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-				TeamImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Team team = (Team)serializable;
-
-		if (team == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				team = (Team)session.get(TeamImpl.class, primaryKey);
-
-				if (team != null) {
-					cacheResult(team);
-				}
-				else {
-					EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-						TeamImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-					TeamImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return team;
 	}
 
 	/**
@@ -3982,6 +3939,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

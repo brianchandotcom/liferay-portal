@@ -23,6 +23,7 @@ import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1314,6 +1315,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	public ExpandoRowPersistenceImpl() {
 		setModelClass(ExpandoRow.class);
 
+		setModelImplClass(ExpandoRowImpl.class);
+		setEntityCacheEnabled(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1373,7 +1377,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 * Clears the cache for all expando rows.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1389,7 +1393,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 * Clears the cache for the expando row.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1706,54 +1710,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	/**
 	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the expando row
-	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
-	 */
-	@Override
-	public ExpandoRow fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoRowImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ExpandoRow expandoRow = (ExpandoRow)serializable;
-
-		if (expandoRow == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				expandoRow = (ExpandoRow)session.get(ExpandoRowImpl.class,
-						primaryKey);
-
-				if (expandoRow != null) {
-					cacheResult(expandoRow);
-				}
-				else {
-					EntityCacheUtil.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoRowImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoRowImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return expandoRow;
-	}
-
-	/**
-	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param rowId the primary key of the expando row
 	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
 	 */
@@ -2050,6 +2006,11 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

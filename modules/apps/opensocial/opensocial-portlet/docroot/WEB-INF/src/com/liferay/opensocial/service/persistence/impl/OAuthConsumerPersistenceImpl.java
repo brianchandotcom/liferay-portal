@@ -25,6 +25,7 @@ import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -930,6 +931,9 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 	public OAuthConsumerPersistenceImpl() {
 		setModelClass(OAuthConsumer.class);
+
+		setModelImplClass(OAuthConsumerImpl.class);
+		setEntityCacheEnabled(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -974,7 +978,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 * Clears the cache for all o auth consumers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -990,7 +994,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 * Clears the cache for the o auth consumer.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1313,54 +1317,6 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	/**
 	 * Returns the o auth consumer with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the o auth consumer
-	 * @return the o auth consumer, or <code>null</code> if a o auth consumer with the primary key could not be found
-	 */
-	@Override
-	public OAuthConsumer fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-				OAuthConsumerImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuthConsumer oAuthConsumer = (OAuthConsumer)serializable;
-
-		if (oAuthConsumer == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuthConsumer = (OAuthConsumer)session.get(OAuthConsumerImpl.class,
-						primaryKey);
-
-				if (oAuthConsumer != null) {
-					cacheResult(oAuthConsumer);
-				}
-				else {
-					EntityCacheUtil.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-						OAuthConsumerImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthConsumerImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuthConsumer;
-	}
-
-	/**
-	 * Returns the o auth consumer with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param oAuthConsumerId the primary key of the o auth consumer
 	 * @return the o auth consumer, or <code>null</code> if a o auth consumer with the primary key could not be found
 	 */
@@ -1652,6 +1608,11 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

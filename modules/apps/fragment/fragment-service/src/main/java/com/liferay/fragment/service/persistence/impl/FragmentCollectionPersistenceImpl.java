@@ -2812,6 +2812,9 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	public FragmentCollectionPersistenceImpl() {
 		setModelClass(FragmentCollection.class);
 
+		setModelImplClass(FragmentCollectionImpl.class);
+		setEntityCacheEnabled(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3315,54 +3318,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	/**
 	 * Returns the fragment collection with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the fragment collection
-	 * @return the fragment collection, or <code>null</code> if a fragment collection with the primary key could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
-				FragmentCollectionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		FragmentCollection fragmentCollection = (FragmentCollection)serializable;
-
-		if (fragmentCollection == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				fragmentCollection = (FragmentCollection)session.get(FragmentCollectionImpl.class,
-						primaryKey);
-
-				if (fragmentCollection != null) {
-					cacheResult(fragmentCollection);
-				}
-				else {
-					entityCache.putResult(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
-						FragmentCollectionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentCollectionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return fragmentCollection;
-	}
-
-	/**
-	 * Returns the fragment collection with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param fragmentCollectionId the primary key of the fragment collection
 	 * @return the fragment collection, or <code>null</code> if a fragment collection with the primary key could not be found
 	 */
@@ -3660,6 +3615,11 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -21805,6 +21805,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPagePersistenceImpl() {
 		setModelClass(WikiPage.class);
 
+		setModelImplClass(WikiPageImpl.class);
+		setEntityCacheEnabled(WikiPageModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -23137,53 +23140,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	/**
 	 * Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the wiki page
-	 * @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
-	 */
-	@Override
-	public WikiPage fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-				WikiPageImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		WikiPage wikiPage = (WikiPage)serializable;
-
-		if (wikiPage == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				wikiPage = (WikiPage)session.get(WikiPageImpl.class, primaryKey);
-
-				if (wikiPage != null) {
-					cacheResult(wikiPage);
-				}
-				else {
-					entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-						WikiPageImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-					WikiPageImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return wikiPage;
-	}
-
-	/**
-	 * Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param pageId the primary key of the wiki page
 	 * @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
 	 */
@@ -23479,6 +23435,11 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

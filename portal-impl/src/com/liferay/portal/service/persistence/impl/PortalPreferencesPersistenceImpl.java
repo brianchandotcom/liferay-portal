@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -319,6 +320,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 	public PortalPreferencesPersistenceImpl() {
 		setModelClass(PortalPreferences.class);
+
+		setModelImplClass(PortalPreferencesImpl.class);
+		setEntityCacheEnabled(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -364,7 +368,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 * Clears the cache for all portal preferenceses.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -380,7 +384,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 * Clears the cache for the portal preferences.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -649,54 +653,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	public PortalPreferences findByPrimaryKey(long portalPreferencesId)
 		throws NoSuchPreferencesException {
 		return findByPrimaryKey((Serializable)portalPreferencesId);
-	}
-
-	/**
-	 * Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portal preferences
-	 * @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferences fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortalPreferencesImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PortalPreferences portalPreferences = (PortalPreferences)serializable;
-
-		if (portalPreferences == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				portalPreferences = (PortalPreferences)session.get(PortalPreferencesImpl.class,
-						primaryKey);
-
-				if (portalPreferences != null) {
-					cacheResult(portalPreferences);
-				}
-				else {
-					EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-						PortalPreferencesImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortalPreferencesImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return portalPreferences;
 	}
 
 	/**
@@ -993,6 +949,11 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

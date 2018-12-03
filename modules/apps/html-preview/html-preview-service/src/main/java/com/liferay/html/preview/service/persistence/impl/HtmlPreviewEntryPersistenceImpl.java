@@ -350,6 +350,9 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 
 	public HtmlPreviewEntryPersistenceImpl() {
 		setModelClass(HtmlPreviewEntry.class);
+
+		setModelImplClass(HtmlPreviewEntryImpl.class);
+		setEntityCacheEnabled(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -713,54 +716,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 	/**
 	 * Returns the html preview entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the html preview entry
-	 * @return the html preview entry, or <code>null</code> if a html preview entry with the primary key could not be found
-	 */
-	@Override
-	public HtmlPreviewEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-				HtmlPreviewEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		HtmlPreviewEntry htmlPreviewEntry = (HtmlPreviewEntry)serializable;
-
-		if (htmlPreviewEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				htmlPreviewEntry = (HtmlPreviewEntry)session.get(HtmlPreviewEntryImpl.class,
-						primaryKey);
-
-				if (htmlPreviewEntry != null) {
-					cacheResult(htmlPreviewEntry);
-				}
-				else {
-					entityCache.putResult(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-						HtmlPreviewEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-					HtmlPreviewEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return htmlPreviewEntry;
-	}
-
-	/**
-	 * Returns the html preview entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param htmlPreviewEntryId the primary key of the html preview entry
 	 * @return the html preview entry, or <code>null</code> if a html preview entry with the primary key could not be found
 	 */
@@ -1052,6 +1007,11 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -3600,6 +3600,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	public DDLRecordPersistenceImpl() {
 		setModelClass(DDLRecord.class);
 
+		setModelImplClass(DDLRecordImpl.class);
+		setEntityCacheEnabled(DDLRecordModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4136,54 +4139,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	/**
 	 * Returns the ddl record with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddl record
-	 * @return the ddl record, or <code>null</code> if a ddl record with the primary key could not be found
-	 */
-	@Override
-	public DDLRecord fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDLRecord ddlRecord = (DDLRecord)serializable;
-
-		if (ddlRecord == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddlRecord = (DDLRecord)session.get(DDLRecordImpl.class,
-						primaryKey);
-
-				if (ddlRecord != null) {
-					cacheResult(ddlRecord);
-				}
-				else {
-					entityCache.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddlRecord;
-	}
-
-	/**
-	 * Returns the ddl record with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param recordId the primary key of the ddl record
 	 * @return the ddl record, or <code>null</code> if a ddl record with the primary key could not be found
 	 */
@@ -4480,6 +4435,11 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

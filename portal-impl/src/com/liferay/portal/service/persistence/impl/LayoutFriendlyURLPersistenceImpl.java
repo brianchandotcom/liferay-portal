@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -5214,6 +5215,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	public LayoutFriendlyURLPersistenceImpl() {
 		setModelClass(LayoutFriendlyURL.class);
 
+		setModelImplClass(LayoutFriendlyURLImpl.class);
+		setEntityCacheEnabled(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -5289,7 +5293,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 * Clears the cache for all layout friendly urls.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -5305,7 +5309,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 * Clears the cache for the layout friendly url.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -5902,54 +5906,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	/**
 	 * Returns the layout friendly url with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout friendly url
-	 * @return the layout friendly url, or <code>null</code> if a layout friendly url with the primary key could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutFriendlyURLImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)serializable;
-
-		if (layoutFriendlyURL == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				layoutFriendlyURL = (LayoutFriendlyURL)session.get(LayoutFriendlyURLImpl.class,
-						primaryKey);
-
-				if (layoutFriendlyURL != null) {
-					cacheResult(layoutFriendlyURL);
-				}
-				else {
-					EntityCacheUtil.putResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutFriendlyURLImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutFriendlyURLImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return layoutFriendlyURL;
-	}
-
-	/**
-	 * Returns the layout friendly url with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param layoutFriendlyURLId the primary key of the layout friendly url
 	 * @return the layout friendly url, or <code>null</code> if a layout friendly url with the primary key could not be found
 	 */
@@ -6246,6 +6202,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

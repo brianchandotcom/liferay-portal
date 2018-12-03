@@ -1877,6 +1877,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	public MBStatsUserPersistenceImpl() {
 		setModelClass(MBStatsUser.class);
+
+		setModelImplClass(MBStatsUserImpl.class);
+		setEntityCacheEnabled(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2254,54 +2257,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	/**
 	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the message boards stats user
-	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
-	 */
-	@Override
-	public MBStatsUser fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				MBStatsUserImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		MBStatsUser mbStatsUser = (MBStatsUser)serializable;
-
-		if (mbStatsUser == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				mbStatsUser = (MBStatsUser)session.get(MBStatsUserImpl.class,
-						primaryKey);
-
-				if (mbStatsUser != null) {
-					cacheResult(mbStatsUser);
-				}
-				else {
-					entityCache.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						MBStatsUserImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					MBStatsUserImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return mbStatsUser;
-	}
-
-	/**
-	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param statsUserId the primary key of the message boards stats user
 	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
 	 */
@@ -2593,6 +2548,11 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

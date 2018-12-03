@@ -4493,6 +4493,9 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	public AssetListEntryPersistenceImpl() {
 		setModelClass(AssetListEntry.class);
 
+		setModelImplClass(AssetListEntryImpl.class);
+		setEntityCacheEnabled(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -5019,54 +5022,6 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	/**
 	 * Returns the asset list entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset list entry
-	 * @return the asset list entry, or <code>null</code> if a asset list entry with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetListEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetListEntry assetListEntry = (AssetListEntry)serializable;
-
-		if (assetListEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetListEntry = (AssetListEntry)session.get(AssetListEntryImpl.class,
-						primaryKey);
-
-				if (assetListEntry != null) {
-					cacheResult(assetListEntry);
-				}
-				else {
-					entityCache.putResult(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetListEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetListEntry;
-	}
-
-	/**
-	 * Returns the asset list entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param assetListEntryId the primary key of the asset list entry
 	 * @return the asset list entry, or <code>null</code> if a asset list entry with the primary key could not be found
 	 */
@@ -5363,6 +5318,11 @@ public class AssetListEntryPersistenceImpl extends BasePersistenceImpl<AssetList
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

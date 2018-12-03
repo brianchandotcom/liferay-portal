@@ -2339,6 +2339,9 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	public PollsQuestionPersistenceImpl() {
 		setModelClass(PollsQuestion.class);
 
+		setModelImplClass(PollsQuestionImpl.class);
+		setEntityCacheEnabled(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2797,54 +2800,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	/**
 	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the polls question
-	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
-	 */
-	@Override
-	public PollsQuestion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-				PollsQuestionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PollsQuestion pollsQuestion = (PollsQuestion)serializable;
-
-		if (pollsQuestion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				pollsQuestion = (PollsQuestion)session.get(PollsQuestionImpl.class,
-						primaryKey);
-
-				if (pollsQuestion != null) {
-					cacheResult(pollsQuestion);
-				}
-				else {
-					entityCache.putResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-						PollsQuestionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-					PollsQuestionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return pollsQuestion;
-	}
-
-	/**
-	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param questionId the primary key of the polls question
 	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
 	 */
@@ -3141,6 +3096,11 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

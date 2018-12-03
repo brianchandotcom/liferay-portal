@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -6263,6 +6264,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequestPersistenceImpl() {
 		setModelClass(SocialRequest.class);
 
+		setModelImplClass(SocialRequestImpl.class);
+		setEntityCacheEnabled(SocialRequestModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -6331,7 +6335,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * Clears the cache for all social requests.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -6347,7 +6351,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * Clears the cache for the social request.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -6970,54 +6974,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	/**
 	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the social request
-	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
-	 */
-	@Override
-	public SocialRequest fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SocialRequest socialRequest = (SocialRequest)serializable;
-
-		if (socialRequest == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
-						primaryKey);
-
-				if (socialRequest != null) {
-					cacheResult(socialRequest);
-				}
-				else {
-					EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRequestImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return socialRequest;
-	}
-
-	/**
-	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param requestId the primary key of the social request
 	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
 	 */
@@ -7314,6 +7270,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

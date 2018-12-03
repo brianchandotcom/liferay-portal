@@ -5781,6 +5781,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	public FragmentEntryPersistenceImpl() {
 		setModelClass(FragmentEntry.class);
 
+		setModelImplClass(FragmentEntryImpl.class);
+		setEntityCacheEnabled(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -6401,54 +6404,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	/**
 	 * Returns the fragment entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the fragment entry
-	 * @return the fragment entry, or <code>null</code> if a fragment entry with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-				FragmentEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		FragmentEntry fragmentEntry = (FragmentEntry)serializable;
-
-		if (fragmentEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				fragmentEntry = (FragmentEntry)session.get(FragmentEntryImpl.class,
-						primaryKey);
-
-				if (fragmentEntry != null) {
-					cacheResult(fragmentEntry);
-				}
-				else {
-					entityCache.putResult(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-						FragmentEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return fragmentEntry;
-	}
-
-	/**
-	 * Returns the fragment entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param fragmentEntryId the primary key of the fragment entry
 	 * @return the fragment entry, or <code>null</code> if a fragment entry with the primary key could not be found
 	 */
@@ -6745,6 +6700,11 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

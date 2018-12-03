@@ -2720,6 +2720,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	public DDMFormInstanceRecordVersionPersistenceImpl() {
 		setModelClass(DDMFormInstanceRecordVersion.class);
+
+		setModelImplClass(DDMFormInstanceRecordVersionImpl.class);
+		setEntityCacheEnabled(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -3198,56 +3201,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	/**
 	 * Returns the ddm form instance record version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm form instance record version
-	 * @return the ddm form instance record version, or <code>null</code> if a ddm form instance record version with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecordVersion fetchByPrimaryKey(
-		Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DDMFormInstanceRecordVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion = (DDMFormInstanceRecordVersion)serializable;
-
-		if (ddmFormInstanceRecordVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmFormInstanceRecordVersion = (DDMFormInstanceRecordVersion)session.get(DDMFormInstanceRecordVersionImpl.class,
-						primaryKey);
-
-				if (ddmFormInstanceRecordVersion != null) {
-					cacheResult(ddmFormInstanceRecordVersion);
-				}
-				else {
-					entityCache.putResult(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DDMFormInstanceRecordVersionImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMFormInstanceRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDMFormInstanceRecordVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmFormInstanceRecordVersion;
-	}
-
-	/**
-	 * Returns the ddm form instance record version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param formInstanceRecordVersionId the primary key of the ddm form instance record version
 	 * @return the ddm form instance record version, or <code>null</code> if a ddm form instance record version with the primary key could not be found
 	 */
@@ -3543,6 +3496,11 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

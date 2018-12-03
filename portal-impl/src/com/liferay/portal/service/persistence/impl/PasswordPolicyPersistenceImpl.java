@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3398,6 +3399,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	public PasswordPolicyPersistenceImpl() {
 		setModelClass(PasswordPolicy.class);
 
+		setModelImplClass(PasswordPolicyImpl.class);
+		setEntityCacheEnabled(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3463,7 +3467,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 * Clears the cache for all password policies.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3479,7 +3483,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 * Clears the cache for the password policy.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3897,54 +3901,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	/**
 	 * Returns the password policy with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the password policy
-	 * @return the password policy, or <code>null</code> if a password policy with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicy fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-				PasswordPolicyImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PasswordPolicy passwordPolicy = (PasswordPolicy)serializable;
-
-		if (passwordPolicy == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				passwordPolicy = (PasswordPolicy)session.get(PasswordPolicyImpl.class,
-						primaryKey);
-
-				if (passwordPolicy != null) {
-					cacheResult(passwordPolicy);
-				}
-				else {
-					EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-						PasswordPolicyImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordPolicyImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return passwordPolicy;
-	}
-
-	/**
-	 * Returns the password policy with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param passwordPolicyId the primary key of the password policy
 	 * @return the password policy, or <code>null</code> if a password policy with the primary key could not be found
 	 */
@@ -4241,6 +4197,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

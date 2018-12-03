@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersist
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1968,6 +1969,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryPropertyPersistenceImpl() {
 		setModelClass(AssetCategoryProperty.class);
 
+		setModelImplClass(AssetCategoryPropertyImpl.class);
+		setEntityCacheEnabled(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2031,7 +2035,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 * Clears the cache for all asset category properties.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2047,7 +2051,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 * Clears the cache for the asset category property.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2439,54 +2443,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	/**
 	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset category property
-	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetCategoryPropertyImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)serializable;
-
-		if (assetCategoryProperty == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetCategoryProperty = (AssetCategoryProperty)session.get(AssetCategoryPropertyImpl.class,
-						primaryKey);
-
-				if (assetCategoryProperty != null) {
-					cacheResult(assetCategoryProperty);
-				}
-				else {
-					EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryPropertyImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryPropertyImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetCategoryProperty;
-	}
-
-	/**
-	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param categoryPropertyId the primary key of the asset category property
 	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
 	 */
@@ -2784,6 +2740,11 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

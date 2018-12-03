@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2894,6 +2895,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	public SubscriptionPersistenceImpl() {
 		setModelClass(Subscription.class);
+
+		setModelImplClass(SubscriptionImpl.class);
+		setEntityCacheEnabled(SubscriptionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2938,7 +2942,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 * Clears the cache for all subscriptions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2954,7 +2958,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 * Clears the cache for the subscription.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3409,54 +3413,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	/**
 	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the subscription
-	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
-	 */
-	@Override
-	public Subscription fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-				SubscriptionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Subscription subscription = (Subscription)serializable;
-
-		if (subscription == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				subscription = (Subscription)session.get(SubscriptionImpl.class,
-						primaryKey);
-
-				if (subscription != null) {
-					cacheResult(subscription);
-				}
-				else {
-					EntityCacheUtil.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-						SubscriptionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-					SubscriptionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return subscription;
-	}
-
-	/**
-	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param subscriptionId the primary key of the subscription
 	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
 	 */
@@ -3748,6 +3704,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

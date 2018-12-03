@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -4824,6 +4825,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabularyPersistenceImpl() {
 		setModelClass(AssetVocabulary.class);
 
+		setModelImplClass(AssetVocabularyImpl.class);
+		setEntityCacheEnabled(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4896,7 +4900,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 * Clears the cache for all asset vocabularies.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4912,7 +4916,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 * Clears the cache for the asset vocabulary.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -5384,54 +5388,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	/**
 	 * Returns the asset vocabulary with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset vocabulary
-	 * @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetVocabularyImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetVocabulary assetVocabulary = (AssetVocabulary)serializable;
-
-		if (assetVocabulary == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetVocabulary = (AssetVocabulary)session.get(AssetVocabularyImpl.class,
-						primaryKey);
-
-				if (assetVocabulary != null) {
-					cacheResult(assetVocabulary);
-				}
-				else {
-					EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetVocabularyImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetVocabularyImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetVocabulary;
-	}
-
-	/**
-	 * Returns the asset vocabulary with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param vocabularyId the primary key of the asset vocabulary
 	 * @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
 	 */
@@ -5728,6 +5684,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

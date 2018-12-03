@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -81,6 +82,9 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 	public ClusterGroupPersistenceImpl() {
 		setModelClass(ClusterGroup.class);
+
+		setModelImplClass(ClusterGroupImpl.class);
+		setEntityCacheEnabled(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -119,7 +123,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 * Clears the cache for all cluster groups.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -135,7 +139,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 * Clears the cache for the cluster group.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -335,54 +339,6 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public ClusterGroup findByPrimaryKey(long clusterGroupId)
 		throws NoSuchClusterGroupException {
 		return findByPrimaryKey((Serializable)clusterGroupId);
-	}
-
-	/**
-	 * Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cluster group
-	 * @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
-	 */
-	@Override
-	public ClusterGroup fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-				ClusterGroupImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ClusterGroup clusterGroup = (ClusterGroup)serializable;
-
-		if (clusterGroup == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				clusterGroup = (ClusterGroup)session.get(ClusterGroupImpl.class,
-						primaryKey);
-
-				if (clusterGroup != null) {
-					cacheResult(clusterGroup);
-				}
-				else {
-					EntityCacheUtil.putResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-						ClusterGroupImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-					ClusterGroupImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return clusterGroup;
 	}
 
 	/**
@@ -679,6 +635,11 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

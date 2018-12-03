@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1879,6 +1880,9 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public RegionPersistenceImpl() {
 		setModelClass(Region.class);
 
+		setModelImplClass(RegionImpl.class);
+		setEntityCacheEnabled(RegionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1938,7 +1942,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 * Clears the cache for all regions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1954,7 +1958,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 * Clears the cache for the region.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2295,53 +2299,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	/**
 	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the region
-	 * @return the region, or <code>null</code> if a region with the primary key could not be found
-	 */
-	@Override
-	public Region fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-				RegionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Region region = (Region)serializable;
-
-		if (region == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				region = (Region)session.get(RegionImpl.class, primaryKey);
-
-				if (region != null) {
-					cacheResult(region);
-				}
-				else {
-					EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-						RegionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-					RegionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return region;
-	}
-
-	/**
-	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param regionId the primary key of the region
 	 * @return the region, or <code>null</code> if a region with the primary key could not be found
 	 */
@@ -2637,6 +2594,11 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

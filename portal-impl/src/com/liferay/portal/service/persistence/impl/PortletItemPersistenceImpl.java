@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1595,6 +1596,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	public PortletItemPersistenceImpl() {
 		setModelClass(PortletItem.class);
+
+		setModelImplClass(PortletItemImpl.class);
+		setEntityCacheEnabled(PortletItemModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1639,7 +1643,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 * Clears the cache for all portlet items.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1655,7 +1659,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 * Clears the cache for the portlet item.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2021,54 +2025,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	/**
 	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the portlet item
-	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
-	 */
-	@Override
-	public PortletItem fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-				PortletItemImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		PortletItem portletItem = (PortletItem)serializable;
-
-		if (portletItem == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				portletItem = (PortletItem)session.get(PortletItemImpl.class,
-						primaryKey);
-
-				if (portletItem != null) {
-					cacheResult(portletItem);
-				}
-				else {
-					EntityCacheUtil.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-						PortletItemImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-					PortletItemImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return portletItem;
-	}
-
-	/**
-	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param portletItemId the primary key of the portlet item
 	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
 	 */
@@ -2360,6 +2316,11 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

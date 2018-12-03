@@ -23,6 +23,7 @@ import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -906,6 +907,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	public ExpandoTablePersistenceImpl() {
 		setModelClass(ExpandoTable.class);
+
+		setModelImplClass(ExpandoTableImpl.class);
+		setEntityCacheEnabled(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -950,7 +954,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * Clears the cache for all expando tables.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -966,7 +970,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * Clears the cache for the expando table.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1273,54 +1277,6 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	/**
 	 * Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the expando table
-	 * @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
-	 */
-	@Override
-	public ExpandoTable fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ExpandoTable expandoTable = (ExpandoTable)serializable;
-
-		if (expandoTable == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
-						primaryKey);
-
-				if (expandoTable != null) {
-					cacheResult(expandoTable);
-				}
-				else {
-					EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoTableImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoTableImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return expandoTable;
-	}
-
-	/**
-	 * Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param tableId the primary key of the expando table
 	 * @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
 	 */
@@ -1612,6 +1568,11 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

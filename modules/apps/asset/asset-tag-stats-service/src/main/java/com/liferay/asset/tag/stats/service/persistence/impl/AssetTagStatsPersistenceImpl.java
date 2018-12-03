@@ -1319,6 +1319,9 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 	public AssetTagStatsPersistenceImpl() {
 		setModelClass(AssetTagStats.class);
+
+		setModelImplClass(AssetTagStatsImpl.class);
+		setEntityCacheEnabled(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1698,54 +1701,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	/**
 	 * Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset tag stats
-	 * @return the asset tag stats, or <code>null</code> if a asset tag stats with the primary key could not be found
-	 */
-	@Override
-	public AssetTagStats fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagStatsImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetTagStats assetTagStats = (AssetTagStats)serializable;
-
-		if (assetTagStats == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetTagStats = (AssetTagStats)session.get(AssetTagStatsImpl.class,
-						primaryKey);
-
-				if (assetTagStats != null) {
-					cacheResult(assetTagStats);
-				}
-				else {
-					entityCache.putResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagStatsImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagStatsImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetTagStats;
-	}
-
-	/**
-	 * Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param tagStatsId the primary key of the asset tag stats
 	 * @return the asset tag stats, or <code>null</code> if a asset tag stats with the primary key could not be found
 	 */
@@ -2037,6 +1992,11 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

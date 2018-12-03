@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2716,6 +2717,9 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 
 	public UserGroupGroupRolePersistenceImpl() {
 		setModelClass(UserGroupGroupRole.class);
+
+		setModelImplClass(UserGroupGroupRoleImpl.class);
+		setEntityCacheEnabled(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2756,7 +2760,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	 * Clears the cache for all user group group roles.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2772,7 +2776,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	 * Clears the cache for the user group group role.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3138,54 +3142,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	/**
 	 * Returns the user group group role with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the user group group role
-	 * @return the user group group role, or <code>null</code> if a user group group role with the primary key could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupGroupRoleImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		UserGroupGroupRole userGroupGroupRole = (UserGroupGroupRole)serializable;
-
-		if (userGroupGroupRole == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				userGroupGroupRole = (UserGroupGroupRole)session.get(UserGroupGroupRoleImpl.class,
-						primaryKey);
-
-				if (userGroupGroupRole != null) {
-					cacheResult(userGroupGroupRole);
-				}
-				else {
-					EntityCacheUtil.putResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupGroupRoleImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-					UserGroupGroupRoleImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return userGroupGroupRole;
-	}
-
-	/**
-	 * Returns the user group group role with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param userGroupGroupRolePK the primary key of the user group group role
 	 * @return the user group group role, or <code>null</code> if a user group group role with the primary key could not be found
 	 */
@@ -3409,6 +3365,11 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	@Override
 	public Set<String> getCompoundPKColumnNames() {
 		return _compoundPKColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

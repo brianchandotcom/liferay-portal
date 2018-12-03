@@ -1347,6 +1347,9 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 
 	public AssetAutoTaggerEntryPersistenceImpl() {
 		setModelClass(AssetAutoTaggerEntry.class);
+
+		setModelImplClass(AssetAutoTaggerEntryImpl.class);
+		setEntityCacheEnabled(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1765,54 +1768,6 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	/**
 	 * Returns the asset auto tagger entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset auto tagger entry
-	 * @return the asset auto tagger entry, or <code>null</code> if a asset auto tagger entry with the primary key could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetAutoTaggerEntry assetAutoTaggerEntry = (AssetAutoTaggerEntry)serializable;
-
-		if (assetAutoTaggerEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetAutoTaggerEntry = (AssetAutoTaggerEntry)session.get(AssetAutoTaggerEntryImpl.class,
-						primaryKey);
-
-				if (assetAutoTaggerEntry != null) {
-					cacheResult(assetAutoTaggerEntry);
-				}
-				else {
-					entityCache.putResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetAutoTaggerEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetAutoTaggerEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetAutoTaggerEntry;
-	}
-
-	/**
-	 * Returns the asset auto tagger entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param assetAutoTaggerEntryId the primary key of the asset auto tagger entry
 	 * @return the asset auto tagger entry, or <code>null</code> if a asset auto tagger entry with the primary key could not be found
 	 */
@@ -2105,6 +2060,11 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

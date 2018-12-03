@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2344,6 +2345,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	public SystemEventPersistenceImpl() {
 		setModelClass(SystemEvent.class);
 
+		setModelImplClass(SystemEventImpl.class);
+		setEntityCacheEnabled(SystemEventModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2399,7 +2403,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Clears the cache for all system events.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2415,7 +2419,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Clears the cache for the system event.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2768,54 +2772,6 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	/**
 	 * Returns the system event with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the system event
-	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
-	 */
-	@Override
-	public SystemEvent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
-				SystemEventImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SystemEvent systemEvent = (SystemEvent)serializable;
-
-		if (systemEvent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				systemEvent = (SystemEvent)session.get(SystemEventImpl.class,
-						primaryKey);
-
-				if (systemEvent != null) {
-					cacheResult(systemEvent);
-				}
-				else {
-					EntityCacheUtil.putResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
-						SystemEventImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
-					SystemEventImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return systemEvent;
-	}
-
-	/**
-	 * Returns the system event with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
 	 */
@@ -3112,6 +3068,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -781,6 +781,9 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	public DLSyncEventPersistenceImpl() {
 		setModelClass(DLSyncEvent.class);
 
+		setModelImplClass(DLSyncEventImpl.class);
+		setEntityCacheEnabled(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1119,54 +1122,6 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	/**
 	 * Returns the dl sync event with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the dl sync event
-	 * @return the dl sync event, or <code>null</code> if a dl sync event with the primary key could not be found
-	 */
-	@Override
-	public DLSyncEvent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-				DLSyncEventImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DLSyncEvent dlSyncEvent = (DLSyncEvent)serializable;
-
-		if (dlSyncEvent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				dlSyncEvent = (DLSyncEvent)session.get(DLSyncEventImpl.class,
-						primaryKey);
-
-				if (dlSyncEvent != null) {
-					cacheResult(dlSyncEvent);
-				}
-				else {
-					entityCache.putResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-						DLSyncEventImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-					DLSyncEventImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return dlSyncEvent;
-	}
-
-	/**
-	 * Returns the dl sync event with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param syncEventId the primary key of the dl sync event
 	 * @return the dl sync event, or <code>null</code> if a dl sync event with the primary key could not be found
 	 */
@@ -1463,6 +1418,11 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

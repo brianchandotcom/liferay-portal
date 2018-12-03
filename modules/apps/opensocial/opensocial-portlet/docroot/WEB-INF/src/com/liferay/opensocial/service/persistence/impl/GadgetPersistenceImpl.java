@@ -25,6 +25,7 @@ import com.liferay.opensocial.service.persistence.GadgetPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3134,6 +3135,9 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	public GadgetPersistenceImpl() {
 		setModelClass(Gadget.class);
 
+		setModelImplClass(GadgetImpl.class);
+		setEntityCacheEnabled(GadgetModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3192,7 +3196,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	 * Clears the cache for all gadgets.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3208,7 +3212,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	 * Clears the cache for the gadget.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3582,53 +3586,6 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	/**
 	 * Returns the gadget with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the gadget
-	 * @return the gadget, or <code>null</code> if a gadget with the primary key could not be found
-	 */
-	@Override
-	public Gadget fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
-				GadgetImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Gadget gadget = (Gadget)serializable;
-
-		if (gadget == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				gadget = (Gadget)session.get(GadgetImpl.class, primaryKey);
-
-				if (gadget != null) {
-					cacheResult(gadget);
-				}
-				else {
-					EntityCacheUtil.putResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
-						GadgetImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
-					GadgetImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return gadget;
-	}
-
-	/**
-	 * Returns the gadget with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param gadgetId the primary key of the gadget
 	 * @return the gadget, or <code>null</code> if a gadget with the primary key could not be found
 	 */
@@ -3924,6 +3881,11 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

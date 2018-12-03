@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -8928,6 +8929,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public RolePersistenceImpl() {
 		setModelClass(Role.class);
 
+		setModelImplClass(RoleImpl.class);
+		setEntityCacheEnabled(RoleModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -8991,7 +8995,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * Clears the cache for all roles.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9007,7 +9011,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * Clears the cache for the role.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9561,53 +9565,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role findByPrimaryKey(long roleId) throws NoSuchRoleException {
 		return findByPrimaryKey((Serializable)roleId);
-	}
-
-	/**
-	 * Returns the role with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the role
-	 * @return the role, or <code>null</code> if a role with the primary key could not be found
-	 */
-	@Override
-	public Role fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-				RoleImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Role role = (Role)serializable;
-
-		if (role == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				role = (Role)session.get(RoleImpl.class, primaryKey);
-
-				if (role != null) {
-					cacheResult(role);
-				}
-				else {
-					EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-						RoleImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-					RoleImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return role;
 	}
 
 	/**
@@ -10504,6 +10461,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

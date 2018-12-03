@@ -4379,6 +4379,9 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	public AMImageEntryPersistenceImpl() {
 		setModelClass(AMImageEntry.class);
 
+		setModelImplClass(AMImageEntryImpl.class);
+		setEntityCacheEnabled(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4956,54 +4959,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	/**
 	 * Returns the am image entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the am image entry
-	 * @return the am image entry, or <code>null</code> if a am image entry with the primary key could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AMImageEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AMImageEntry amImageEntry = (AMImageEntry)serializable;
-
-		if (amImageEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				amImageEntry = (AMImageEntry)session.get(AMImageEntryImpl.class,
-						primaryKey);
-
-				if (amImageEntry != null) {
-					cacheResult(amImageEntry);
-				}
-				else {
-					entityCache.putResult(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AMImageEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AMImageEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return amImageEntry;
-	}
-
-	/**
-	 * Returns the am image entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param amImageEntryId the primary key of the am image entry
 	 * @return the am image entry, or <code>null</code> if a am image entry with the primary key could not be found
 	 */
@@ -5300,6 +5255,11 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

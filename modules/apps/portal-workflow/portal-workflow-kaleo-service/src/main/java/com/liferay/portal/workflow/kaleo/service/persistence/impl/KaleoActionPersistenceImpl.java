@@ -2399,6 +2399,9 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 
 	public KaleoActionPersistenceImpl() {
 		setModelClass(KaleoAction.class);
+
+		setModelImplClass(KaleoActionImpl.class);
+		setEntityCacheEnabled(KaleoActionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2820,54 +2823,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 	/**
 	 * Returns the kaleo action with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kaleo action
-	 * @return the kaleo action, or <code>null</code> if a kaleo action with the primary key could not be found
-	 */
-	@Override
-	public KaleoAction fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KaleoActionModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoActionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KaleoAction kaleoAction = (KaleoAction)serializable;
-
-		if (kaleoAction == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kaleoAction = (KaleoAction)session.get(KaleoActionImpl.class,
-						primaryKey);
-
-				if (kaleoAction != null) {
-					cacheResult(kaleoAction);
-				}
-				else {
-					entityCache.putResult(KaleoActionModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoActionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KaleoActionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoActionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kaleoAction;
-	}
-
-	/**
-	 * Returns the kaleo action with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kaleoActionId the primary key of the kaleo action
 	 * @return the kaleo action, or <code>null</code> if a kaleo action with the primary key could not be found
 	 */
@@ -3159,6 +3114,11 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

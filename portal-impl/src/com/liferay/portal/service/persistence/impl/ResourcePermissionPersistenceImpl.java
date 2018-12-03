@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -6510,6 +6511,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	public ResourcePermissionPersistenceImpl() {
 		setModelClass(ResourcePermission.class);
+
+		setModelImplClass(ResourcePermissionImpl.class);
+		setEntityCacheEnabled(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -6557,7 +6561,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * Clears the cache for all resource permissions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -6573,7 +6577,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * Clears the cache for the resource permission.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -7117,54 +7121,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	/**
 	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the resource permission
-	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
-	 */
-	@Override
-	public ResourcePermission fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourcePermissionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ResourcePermission resourcePermission = (ResourcePermission)serializable;
-
-		if (resourcePermission == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				resourcePermission = (ResourcePermission)session.get(ResourcePermissionImpl.class,
-						primaryKey);
-
-				if (resourcePermission != null) {
-					cacheResult(resourcePermission);
-				}
-				else {
-					EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourcePermissionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourcePermissionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return resourcePermission;
-	}
-
-	/**
-	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param resourcePermissionId the primary key of the resource permission
 	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
 	 */
@@ -7457,6 +7413,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

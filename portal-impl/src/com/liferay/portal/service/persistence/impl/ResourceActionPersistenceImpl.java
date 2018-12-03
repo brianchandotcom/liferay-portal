@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -906,6 +907,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	public ResourceActionPersistenceImpl() {
 		setModelClass(ResourceAction.class);
+
+		setModelImplClass(ResourceActionImpl.class);
+		setEntityCacheEnabled(ResourceActionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -949,7 +953,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Clears the cache for all resource actions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -965,7 +969,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Clears the cache for the resource action.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1262,54 +1266,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	/**
 	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the resource action
-	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
-	 */
-	@Override
-	public ResourceAction fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceActionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ResourceAction resourceAction = (ResourceAction)serializable;
-
-		if (resourceAction == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				resourceAction = (ResourceAction)session.get(ResourceActionImpl.class,
-						primaryKey);
-
-				if (resourceAction != null) {
-					cacheResult(resourceAction);
-				}
-				else {
-					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceActionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceActionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return resourceAction;
-	}
-
-	/**
-	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param resourceActionId the primary key of the resource action
 	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
 	 */
@@ -1601,6 +1557,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

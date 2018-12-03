@@ -2197,6 +2197,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	public OAuth2AuthorizationPersistenceImpl() {
 		setModelClass(OAuth2Authorization.class);
 
+		setModelImplClass(OAuth2AuthorizationImpl.class);
+		setEntityCacheEnabled(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2616,54 +2619,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	public OAuth2Authorization findByPrimaryKey(long oAuth2AuthorizationId)
 		throws NoSuchOAuth2AuthorizationException {
 		return findByPrimaryKey((Serializable)oAuth2AuthorizationId);
-	}
-
-	/**
-	 * Returns the o auth2 authorization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 authorization
-	 * @return the o auth2 authorization, or <code>null</code> if a o auth2 authorization with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2AuthorizationImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)serializable;
-
-		if (oAuth2Authorization == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuth2Authorization = (OAuth2Authorization)session.get(OAuth2AuthorizationImpl.class,
-						primaryKey);
-
-				if (oAuth2Authorization != null) {
-					cacheResult(oAuth2Authorization);
-				}
-				else {
-					entityCache.putResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-						OAuth2AuthorizationImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2AuthorizationImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuth2Authorization;
 	}
 
 	/**
@@ -3273,6 +3228,11 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2240,6 +2241,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	public MembershipRequestPersistenceImpl() {
 		setModelClass(MembershipRequest.class);
+
+		setModelImplClass(MembershipRequestImpl.class);
+		setEntityCacheEnabled(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2280,7 +2284,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 * Clears the cache for all membership requests.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2296,7 +2300,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 * Clears the cache for the membership request.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2636,54 +2640,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	/**
 	 * Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the membership request
-	 * @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-				MembershipRequestImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		MembershipRequest membershipRequest = (MembershipRequest)serializable;
-
-		if (membershipRequest == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				membershipRequest = (MembershipRequest)session.get(MembershipRequestImpl.class,
-						primaryKey);
-
-				if (membershipRequest != null) {
-					cacheResult(membershipRequest);
-				}
-				else {
-					EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-						MembershipRequestImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-					MembershipRequestImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return membershipRequest;
-	}
-
-	/**
-	 * Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param membershipRequestId the primary key of the membership request
 	 * @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
 	 */
@@ -2975,6 +2931,11 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

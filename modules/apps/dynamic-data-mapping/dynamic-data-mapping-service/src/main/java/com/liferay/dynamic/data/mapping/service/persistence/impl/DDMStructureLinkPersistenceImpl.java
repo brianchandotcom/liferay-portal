@@ -1905,6 +1905,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	public DDMStructureLinkPersistenceImpl() {
 		setModelClass(DDMStructureLink.class);
+
+		setModelImplClass(DDMStructureLinkImpl.class);
+		setEntityCacheEnabled(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2325,54 +2328,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	/**
 	 * Returns the ddm structure link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm structure link
-	 * @return the ddm structure link, or <code>null</code> if a ddm structure link with the primary key could not be found
-	 */
-	@Override
-	public DDMStructureLink fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureLinkImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMStructureLink ddmStructureLink = (DDMStructureLink)serializable;
-
-		if (ddmStructureLink == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmStructureLink = (DDMStructureLink)session.get(DDMStructureLinkImpl.class,
-						primaryKey);
-
-				if (ddmStructureLink != null) {
-					cacheResult(ddmStructureLink);
-				}
-				else {
-					entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureLinkImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLinkImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmStructureLink;
-	}
-
-	/**
-	 * Returns the ddm structure link with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param structureLinkId the primary key of the ddm structure link
 	 * @return the ddm structure link, or <code>null</code> if a ddm structure link with the primary key could not be found
 	 */
@@ -2664,6 +2619,11 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

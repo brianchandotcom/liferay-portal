@@ -2470,6 +2470,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	public DDMContentPersistenceImpl() {
 		setModelClass(DDMContent.class);
 
+		setModelImplClass(DDMContentImpl.class);
+		setEntityCacheEnabled(DDMContentModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2948,54 +2951,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	/**
 	 * Returns the ddm content with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddm content
-	 * @return the ddm content, or <code>null</code> if a ddm content with the primary key could not be found
-	 */
-	@Override
-	public DDMContent fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-				DDMContentImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDMContent ddmContent = (DDMContent)serializable;
-
-		if (ddmContent == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddmContent = (DDMContent)session.get(DDMContentImpl.class,
-						primaryKey);
-
-				if (ddmContent != null) {
-					cacheResult(ddmContent);
-				}
-				else {
-					entityCache.putResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-						DDMContentImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-					DDMContentImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddmContent;
-	}
-
-	/**
-	 * Returns the ddm content with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param contentId the primary key of the ddm content
 	 * @return the ddm content, or <code>null</code> if a ddm content with the primary key could not be found
 	 */
@@ -3292,6 +3247,11 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

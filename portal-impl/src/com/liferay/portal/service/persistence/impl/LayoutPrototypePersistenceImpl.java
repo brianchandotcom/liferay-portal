@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3848,6 +3849,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	public LayoutPrototypePersistenceImpl() {
 		setModelClass(LayoutPrototype.class);
 
+		setModelImplClass(LayoutPrototypeImpl.class);
+		setEntityCacheEnabled(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3907,7 +3911,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 * Clears the cache for all layout prototypes.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3923,7 +3927,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 * Clears the cache for the layout prototype.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4295,54 +4299,6 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	/**
 	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout prototype
-	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPrototypeImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		LayoutPrototype layoutPrototype = (LayoutPrototype)serializable;
-
-		if (layoutPrototype == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				layoutPrototype = (LayoutPrototype)session.get(LayoutPrototypeImpl.class,
-						primaryKey);
-
-				if (layoutPrototype != null) {
-					cacheResult(layoutPrototype);
-				}
-				else {
-					EntityCacheUtil.putResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutPrototypeImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPrototypeImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return layoutPrototype;
-	}
-
-	/**
-	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param layoutPrototypeId the primary key of the layout prototype
 	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
 	 */
@@ -4639,6 +4595,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

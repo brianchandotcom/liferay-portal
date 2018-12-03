@@ -2772,6 +2772,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	public AssetDisplayPageEntryPersistenceImpl() {
 		setModelClass(AssetDisplayPageEntry.class);
 
+		setModelImplClass(AssetDisplayPageEntryImpl.class);
+		setEntityCacheEnabled(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3316,54 +3319,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	/**
 	 * Returns the asset display page entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset display page entry
-	 * @return the asset display page entry, or <code>null</code> if a asset display page entry with the primary key could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetDisplayPageEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetDisplayPageEntry assetDisplayPageEntry = (AssetDisplayPageEntry)serializable;
-
-		if (assetDisplayPageEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetDisplayPageEntry = (AssetDisplayPageEntry)session.get(AssetDisplayPageEntryImpl.class,
-						primaryKey);
-
-				if (assetDisplayPageEntry != null) {
-					cacheResult(assetDisplayPageEntry);
-				}
-				else {
-					entityCache.putResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetDisplayPageEntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetDisplayPageEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetDisplayPageEntry;
-	}
-
-	/**
-	 * Returns the asset display page entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param assetDisplayPageEntryId the primary key of the asset display page entry
 	 * @return the asset display page entry, or <code>null</code> if a asset display page entry with the primary key could not be found
 	 */
@@ -3661,6 +3616,11 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

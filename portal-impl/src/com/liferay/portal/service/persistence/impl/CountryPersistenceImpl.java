@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1263,6 +1264,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	public CountryPersistenceImpl() {
 		setModelClass(Country.class);
 
+		setModelImplClass(CountryImpl.class);
+		setEntityCacheEnabled(CountryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1329,7 +1333,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Clears the cache for all countries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1345,7 +1349,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Clears the cache for the country.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1672,53 +1676,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	/**
 	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the country
-	 * @return the country, or <code>null</code> if a country with the primary key could not be found
-	 */
-	@Override
-	public Country fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-				CountryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Country country = (Country)serializable;
-
-		if (country == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				country = (Country)session.get(CountryImpl.class, primaryKey);
-
-				if (country != null) {
-					cacheResult(country);
-				}
-				else {
-					EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-						CountryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-					CountryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return country;
-	}
-
-	/**
-	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param countryId the primary key of the country
 	 * @return the country, or <code>null</code> if a country with the primary key could not be found
 	 */
@@ -2014,6 +1971,11 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

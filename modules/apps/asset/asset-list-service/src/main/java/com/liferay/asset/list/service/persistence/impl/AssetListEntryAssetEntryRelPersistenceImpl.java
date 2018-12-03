@@ -2795,6 +2795,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	public AssetListEntryAssetEntryRelPersistenceImpl() {
 		setModelClass(AssetListEntryAssetEntryRel.class);
 
+		setModelImplClass(AssetListEntryAssetEntryRelImpl.class);
+		setEntityCacheEnabled(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3322,56 +3325,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	/**
 	 * Returns the asset list entry asset entry rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset list entry asset entry rel
-	 * @return the asset list entry asset entry rel, or <code>null</code> if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntryAssetEntryRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-				AssetListEntryAssetEntryRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEntryRel)serializable;
-
-		if (assetListEntryAssetEntryRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetListEntryAssetEntryRel = (AssetListEntryAssetEntryRel)session.get(AssetListEntryAssetEntryRelImpl.class,
-						primaryKey);
-
-				if (assetListEntryAssetEntryRel != null) {
-					cacheResult(assetListEntryAssetEntryRel);
-				}
-				else {
-					entityCache.putResult(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-						AssetListEntryAssetEntryRelImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryAssetEntryRelImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetListEntryAssetEntryRel;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param assetListEntryAssetEntryRelId the primary key of the asset list entry asset entry rel
 	 * @return the asset list entry asset entry rel, or <code>null</code> if a asset list entry asset entry rel with the primary key could not be found
 	 */
@@ -3671,6 +3624,11 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -1404,6 +1404,9 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	public DDLRecordSetVersionPersistenceImpl() {
 		setModelClass(DDLRecordSetVersion.class);
 
+		setModelImplClass(DDLRecordSetVersionImpl.class);
+		setEntityCacheEnabled(DDLRecordSetVersionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1820,54 +1823,6 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	/**
 	 * Returns the ddl record set version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ddl record set version
-	 * @return the ddl record set version, or <code>null</code> if a ddl record set version with the primary key could not be found
-	 */
-	@Override
-	public DDLRecordSetVersion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DDLRecordSetVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordSetVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DDLRecordSetVersion ddlRecordSetVersion = (DDLRecordSetVersion)serializable;
-
-		if (ddlRecordSetVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ddlRecordSetVersion = (DDLRecordSetVersion)session.get(DDLRecordSetVersionImpl.class,
-						primaryKey);
-
-				if (ddlRecordSetVersion != null) {
-					cacheResult(ddlRecordSetVersion);
-				}
-				else {
-					entityCache.putResult(DDLRecordSetVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordSetVersionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DDLRecordSetVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ddlRecordSetVersion;
-	}
-
-	/**
-	 * Returns the ddl record set version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param recordSetVersionId the primary key of the ddl record set version
 	 * @return the ddl record set version, or <code>null</code> if a ddl record set version with the primary key could not be found
 	 */
@@ -2165,6 +2120,11 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

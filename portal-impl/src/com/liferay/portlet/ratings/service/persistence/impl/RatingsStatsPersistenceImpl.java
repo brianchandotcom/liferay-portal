@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -681,6 +682,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 	public RatingsStatsPersistenceImpl() {
 		setModelClass(RatingsStats.class);
+
+		setModelImplClass(RatingsStatsImpl.class);
+		setEntityCacheEnabled(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -724,7 +728,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 * Clears the cache for all ratings statses.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -740,7 +744,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 * Clears the cache for the ratings stats.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1044,54 +1048,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	/**
 	 * Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the ratings stats
-	 * @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
-	 */
-	@Override
-	public RatingsStats fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-				RatingsStatsImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		RatingsStats ratingsStats = (RatingsStats)serializable;
-
-		if (ratingsStats == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				ratingsStats = (RatingsStats)session.get(RatingsStatsImpl.class,
-						primaryKey);
-
-				if (ratingsStats != null) {
-					cacheResult(ratingsStats);
-				}
-				else {
-					EntityCacheUtil.putResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-						RatingsStatsImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-					RatingsStatsImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return ratingsStats;
-	}
-
-	/**
-	 * Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param statsId the primary key of the ratings stats
 	 * @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
 	 */
@@ -1383,6 +1339,11 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

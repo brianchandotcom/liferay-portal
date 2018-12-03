@@ -2922,6 +2922,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 
 	public KaleoTaskFormInstancePersistenceImpl() {
 		setModelClass(KaleoTaskFormInstance.class);
+
+		setModelImplClass(KaleoTaskFormInstanceImpl.class);
+		setEntityCacheEnabled(KaleoTaskFormInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -3425,54 +3428,6 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 	/**
 	 * Returns the kaleo task form instance with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kaleo task form instance
-	 * @return the kaleo task form instance, or <code>null</code> if a kaleo task form instance with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KaleoTaskFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskFormInstanceImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KaleoTaskFormInstance kaleoTaskFormInstance = (KaleoTaskFormInstance)serializable;
-
-		if (kaleoTaskFormInstance == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kaleoTaskFormInstance = (KaleoTaskFormInstance)session.get(KaleoTaskFormInstanceImpl.class,
-						primaryKey);
-
-				if (kaleoTaskFormInstance != null) {
-					cacheResult(kaleoTaskFormInstance);
-				}
-				else {
-					entityCache.putResult(KaleoTaskFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoTaskFormInstanceImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KaleoTaskFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskFormInstanceImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kaleoTaskFormInstance;
-	}
-
-	/**
-	 * Returns the kaleo task form instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kaleoTaskFormInstanceId the primary key of the kaleo task form instance
 	 * @return the kaleo task form instance, or <code>null</code> if a kaleo task form instance with the primary key could not be found
 	 */
@@ -3765,6 +3720,11 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

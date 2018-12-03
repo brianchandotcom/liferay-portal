@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1095,6 +1096,9 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	public OrgGroupRolePersistenceImpl() {
 		setModelClass(OrgGroupRole.class);
+
+		setModelImplClass(OrgGroupRoleImpl.class);
+		setEntityCacheEnabled(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1133,7 +1137,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 * Clears the cache for all org group roles.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1149,7 +1153,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 * Clears the cache for the org group role.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1426,54 +1430,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	/**
 	 * Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the org group role
-	 * @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
-	 */
-	@Override
-	public OrgGroupRole fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				OrgGroupRoleImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OrgGroupRole orgGroupRole = (OrgGroupRole)serializable;
-
-		if (orgGroupRole == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				orgGroupRole = (OrgGroupRole)session.get(OrgGroupRoleImpl.class,
-						primaryKey);
-
-				if (orgGroupRole != null) {
-					cacheResult(orgGroupRole);
-				}
-				else {
-					EntityCacheUtil.putResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						OrgGroupRoleImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-					OrgGroupRoleImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return orgGroupRole;
-	}
-
-	/**
-	 * Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param orgGroupRolePK the primary key of the org group role
 	 * @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
 	 */
@@ -1696,6 +1652,11 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	public Set<String> getCompoundPKColumnNames() {
 		return _compoundPKColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

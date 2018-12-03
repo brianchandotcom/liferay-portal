@@ -3703,6 +3703,9 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	public SiteNavigationMenuItemPersistenceImpl() {
 		setModelClass(SiteNavigationMenuItem.class);
 
+		setModelImplClass(SiteNavigationMenuItemImpl.class);
+		setEntityCacheEnabled(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4246,54 +4249,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	/**
 	 * Returns the site navigation menu item with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the site navigation menu item
-	 * @return the site navigation menu item, or <code>null</code> if a site navigation menu item with the primary key could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
-				SiteNavigationMenuItemImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)serializable;
-
-		if (siteNavigationMenuItem == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				siteNavigationMenuItem = (SiteNavigationMenuItem)session.get(SiteNavigationMenuItemImpl.class,
-						primaryKey);
-
-				if (siteNavigationMenuItem != null) {
-					cacheResult(siteNavigationMenuItem);
-				}
-				else {
-					entityCache.putResult(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
-						SiteNavigationMenuItemImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
-					SiteNavigationMenuItemImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return siteNavigationMenuItem;
-	}
-
-	/**
-	 * Returns the site navigation menu item with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param siteNavigationMenuItemId the primary key of the site navigation menu item
 	 * @return the site navigation menu item, or <code>null</code> if a site navigation menu item with the primary key could not be found
 	 */
@@ -4592,6 +4547,11 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

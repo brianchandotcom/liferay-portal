@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -915,6 +916,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public ListTypePersistenceImpl() {
 		setModelClass(ListType.class);
 
+		setModelImplClass(ListTypeImpl.class);
+		setEntityCacheEnabled(ListTypeModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -973,7 +977,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 * Clears the cache for all list types.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -989,7 +993,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 * Clears the cache for the list type.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1273,53 +1277,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public ListType findByPrimaryKey(long listTypeId)
 		throws NoSuchListTypeException {
 		return findByPrimaryKey((Serializable)listTypeId);
-	}
-
-	/**
-	 * Returns the list type with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the list type
-	 * @return the list type, or <code>null</code> if a list type with the primary key could not be found
-	 */
-	@Override
-	public ListType fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-				ListTypeImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ListType listType = (ListType)serializable;
-
-		if (listType == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				listType = (ListType)session.get(ListTypeImpl.class, primaryKey);
-
-				if (listType != null) {
-					cacheResult(listType);
-				}
-				else {
-					EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-						ListTypeImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-					ListTypeImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return listType;
 	}
 
 	/**
@@ -1620,6 +1577,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

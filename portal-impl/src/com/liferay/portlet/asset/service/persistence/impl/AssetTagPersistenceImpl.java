@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -4198,6 +4199,9 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public AssetTagPersistenceImpl() {
 		setModelClass(AssetTag.class);
 
+		setModelImplClass(AssetTagImpl.class);
+		setEntityCacheEnabled(AssetTagModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4259,7 +4263,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 * Clears the cache for all asset tags.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4275,7 +4279,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 * Clears the cache for the asset tag.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4696,53 +4700,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public AssetTag findByPrimaryKey(long tagId) throws NoSuchTagException {
 		return findByPrimaryKey((Serializable)tagId);
-	}
-
-	/**
-	 * Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset tag
-	 * @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
-	 */
-	@Override
-	public AssetTag fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetTag assetTag = (AssetTag)serializable;
-
-		if (assetTag == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetTag = (AssetTag)session.get(AssetTagImpl.class, primaryKey);
-
-				if (assetTag != null) {
-					cacheResult(assetTag);
-				}
-				else {
-					EntityCacheUtil.putResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetTag;
 	}
 
 	/**
@@ -5347,6 +5304,11 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

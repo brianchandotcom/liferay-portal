@@ -2012,6 +2012,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public LockPersistenceImpl() {
 		setModelClass(Lock.class);
 
+		setModelImplClass(LockImpl.class);
+		setEntityCacheEnabled(LockModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2410,53 +2413,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	/**
 	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the lock
-	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
-	 */
-	@Override
-	public Lock fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-				LockImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Lock lock = (Lock)serializable;
-
-		if (lock == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				lock = (Lock)session.get(LockImpl.class, primaryKey);
-
-				if (lock != null) {
-					cacheResult(lock);
-				}
-				else {
-					entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-						LockImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-					LockImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return lock;
-	}
-
-	/**
-	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param lockId the primary key of the lock
 	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
 	 */
@@ -2752,6 +2708,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

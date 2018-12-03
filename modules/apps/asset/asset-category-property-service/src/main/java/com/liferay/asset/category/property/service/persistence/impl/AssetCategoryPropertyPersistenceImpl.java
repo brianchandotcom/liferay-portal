@@ -1960,6 +1960,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryPropertyPersistenceImpl() {
 		setModelClass(AssetCategoryProperty.class);
 
+		setModelImplClass(AssetCategoryPropertyImpl.class);
+		setEntityCacheEnabled(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2426,54 +2429,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	/**
 	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the asset category property
-	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetCategoryPropertyImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)serializable;
-
-		if (assetCategoryProperty == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				assetCategoryProperty = (AssetCategoryProperty)session.get(AssetCategoryPropertyImpl.class,
-						primaryKey);
-
-				if (assetCategoryProperty != null) {
-					cacheResult(assetCategoryProperty);
-				}
-				else {
-					entityCache.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryPropertyImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryPropertyImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return assetCategoryProperty;
-	}
-
-	/**
-	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param categoryPropertyId the primary key of the asset category property
 	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
 	 */
@@ -2771,6 +2726,11 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -1993,6 +1993,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 
 	public SegmentsEntryRelPersistenceImpl() {
 		setModelClass(SegmentsEntryRel.class);
+
+		setModelImplClass(SegmentsEntryRelImpl.class);
+		setEntityCacheEnabled(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2450,54 +2453,6 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	/**
 	 * Returns the segments entry rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the segments entry rel
-	 * @return the segments entry rel, or <code>null</code> if a segments entry rel with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntryRel fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-				SegmentsEntryRelImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SegmentsEntryRel segmentsEntryRel = (SegmentsEntryRel)serializable;
-
-		if (segmentsEntryRel == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				segmentsEntryRel = (SegmentsEntryRel)session.get(SegmentsEntryRelImpl.class,
-						primaryKey);
-
-				if (segmentsEntryRel != null) {
-					cacheResult(segmentsEntryRel);
-				}
-				else {
-					entityCache.putResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-						SegmentsEntryRelImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					SegmentsEntryRelImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return segmentsEntryRel;
-	}
-
-	/**
-	 * Returns the segments entry rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param segmentsEntryRelId the primary key of the segments entry rel
 	 * @return the segments entry rel, or <code>null</code> if a segments entry rel with the primary key could not be found
 	 */
@@ -2789,6 +2744,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

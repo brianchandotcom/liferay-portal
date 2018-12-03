@@ -298,6 +298,9 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	public DLOpenerFileEntryReferencePersistenceImpl() {
 		setModelClass(DLOpenerFileEntryReference.class);
 
+		setModelImplClass(DLOpenerFileEntryReferenceImpl.class);
+		setEntityCacheEnabled(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -682,55 +685,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	/**
 	 * Returns the dl opener file entry reference with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the dl opener file entry reference
-	 * @return the dl opener file entry reference, or <code>null</code> if a dl opener file entry reference with the primary key could not be found
-	 */
-	@Override
-	public DLOpenerFileEntryReference fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-				DLOpenerFileEntryReferenceImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		DLOpenerFileEntryReference dlOpenerFileEntryReference = (DLOpenerFileEntryReference)serializable;
-
-		if (dlOpenerFileEntryReference == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				dlOpenerFileEntryReference = (DLOpenerFileEntryReference)session.get(DLOpenerFileEntryReferenceImpl.class,
-						primaryKey);
-
-				if (dlOpenerFileEntryReference != null) {
-					cacheResult(dlOpenerFileEntryReference);
-				}
-				else {
-					entityCache.putResult(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-						DLOpenerFileEntryReferenceImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-					DLOpenerFileEntryReferenceImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return dlOpenerFileEntryReference;
-	}
-
-	/**
-	 * Returns the dl opener file entry reference with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param dlOpenerFileEntryReferenceId the primary key of the dl opener file entry reference
 	 * @return the dl opener file entry reference, or <code>null</code> if a dl opener file entry reference with the primary key could not be found
 	 */
@@ -1029,6 +983,11 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

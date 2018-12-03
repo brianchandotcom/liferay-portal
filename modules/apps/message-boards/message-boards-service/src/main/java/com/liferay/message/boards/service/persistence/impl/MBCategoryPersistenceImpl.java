@@ -11308,6 +11308,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategoryPersistenceImpl() {
 		setModelClass(MBCategory.class);
 
+		setModelImplClass(MBCategoryImpl.class);
+		setEntityCacheEnabled(MBCategoryModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -11908,54 +11911,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	/**
 	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the message boards category
-	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
-	 */
-	@Override
-	public MBCategory fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				MBCategoryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		MBCategory mbCategory = (MBCategory)serializable;
-
-		if (mbCategory == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				mbCategory = (MBCategory)session.get(MBCategoryImpl.class,
-						primaryKey);
-
-				if (mbCategory != null) {
-					cacheResult(mbCategory);
-				}
-				else {
-					entityCache.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						MBCategoryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					MBCategoryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return mbCategory;
-	}
-
-	/**
-	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param categoryId the primary key of the message boards category
 	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
 	 */
@@ -12252,6 +12207,11 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

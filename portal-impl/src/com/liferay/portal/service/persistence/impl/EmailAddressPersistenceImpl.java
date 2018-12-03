@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3993,6 +3994,9 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public EmailAddressPersistenceImpl() {
 		setModelClass(EmailAddress.class);
 
+		setModelImplClass(EmailAddressImpl.class);
+		setEntityCacheEnabled(EmailAddressModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -4049,7 +4053,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 * Clears the cache for all email addresses.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4065,7 +4069,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 * Clears the cache for the email address.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -4528,54 +4532,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	/**
 	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the email address
-	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
-	 */
-	@Override
-	public EmailAddress fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-				EmailAddressImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		EmailAddress emailAddress = (EmailAddress)serializable;
-
-		if (emailAddress == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				emailAddress = (EmailAddress)session.get(EmailAddressImpl.class,
-						primaryKey);
-
-				if (emailAddress != null) {
-					cacheResult(emailAddress);
-				}
-				else {
-					EntityCacheUtil.putResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-						EmailAddressImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-					EmailAddressImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return emailAddress;
-	}
-
-	/**
-	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param emailAddressId the primary key of the email address
 	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
 	 */
@@ -4872,6 +4828,11 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

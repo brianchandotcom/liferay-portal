@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -11985,6 +11986,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public LayoutPersistenceImpl() {
 		setModelClass(Layout.class);
 
+		setModelImplClass(LayoutImpl.class);
+		setEntityCacheEnabled(LayoutModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -12072,7 +12076,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Clears the cache for all layouts.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12088,7 +12092,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Clears the cache for the layout.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12907,53 +12911,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	/**
 	 * Returns the layout with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout
-	 * @return the layout, or <code>null</code> if a layout with the primary key could not be found
-	 */
-	@Override
-	public Layout fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Layout layout = (Layout)serializable;
-
-		if (layout == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				layout = (Layout)session.get(LayoutImpl.class, primaryKey);
-
-				if (layout != null) {
-					cacheResult(layout);
-				}
-				else {
-					EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return layout;
-	}
-
-	/**
-	 * Returns the layout with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param plid the primary key of the layout
 	 * @return the layout, or <code>null</code> if a layout with the primary key could not be found
 	 */
@@ -13249,6 +13206,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

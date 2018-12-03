@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigura
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2828,6 +2829,9 @@ public class ExportImportConfigurationPersistenceImpl
 	public ExportImportConfigurationPersistenceImpl() {
 		setModelClass(ExportImportConfiguration.class);
 
+		setModelImplClass(ExportImportConfigurationImpl.class);
+		setEntityCacheEnabled(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2887,7 +2891,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 * Clears the cache for all export import configurations.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2903,7 +2907,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 * Clears the cache for the export import configuration.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3313,55 +3317,6 @@ public class ExportImportConfigurationPersistenceImpl
 	/**
 	 * Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the export import configuration
-	 * @return the export import configuration, or <code>null</code> if a export import configuration with the primary key could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-				ExportImportConfigurationImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)serializable;
-
-		if (exportImportConfiguration == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				exportImportConfiguration = (ExportImportConfiguration)session.get(ExportImportConfigurationImpl.class,
-						primaryKey);
-
-				if (exportImportConfiguration != null) {
-					cacheResult(exportImportConfiguration);
-				}
-				else {
-					EntityCacheUtil.putResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-						ExportImportConfigurationImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-					ExportImportConfigurationImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return exportImportConfiguration;
-	}
-
-	/**
-	 * Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param exportImportConfigurationId the primary key of the export import configuration
 	 * @return the export import configuration, or <code>null</code> if a export import configuration with the primary key could not be found
 	 */
@@ -3660,6 +3615,11 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

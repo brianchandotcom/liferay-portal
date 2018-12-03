@@ -2950,6 +2950,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	public KBFolderPersistenceImpl() {
 		setModelClass(KBFolder.class);
 
+		setModelImplClass(KBFolderImpl.class);
+		setEntityCacheEnabled(KBFolderModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3485,53 +3488,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	/**
 	 * Returns the kb folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kb folder
-	 * @return the kb folder, or <code>null</code> if a kb folder with the primary key could not be found
-	 */
-	@Override
-	public KBFolder fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-				KBFolderImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KBFolder kbFolder = (KBFolder)serializable;
-
-		if (kbFolder == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kbFolder = (KBFolder)session.get(KBFolderImpl.class, primaryKey);
-
-				if (kbFolder != null) {
-					cacheResult(kbFolder);
-				}
-				else {
-					entityCache.putResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-						KBFolderImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-					KBFolderImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kbFolder;
-	}
-
-	/**
-	 * Returns the kb folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kbFolderId the primary key of the kb folder
 	 * @return the kb folder, or <code>null</code> if a kb folder with the primary key could not be found
 	 */
@@ -3827,6 +3783,11 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

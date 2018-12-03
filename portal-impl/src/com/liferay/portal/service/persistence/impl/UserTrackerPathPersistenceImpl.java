@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -609,6 +610,9 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	public UserTrackerPathPersistenceImpl() {
 		setModelClass(UserTrackerPath.class);
 
+		setModelImplClass(UserTrackerPathImpl.class);
+		setEntityCacheEnabled(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -666,7 +670,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 * Clears the cache for all user tracker paths.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -682,7 +686,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 * Clears the cache for the user tracker path.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -936,54 +940,6 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	public UserTrackerPath findByPrimaryKey(long userTrackerPathId)
 		throws NoSuchUserTrackerPathException {
 		return findByPrimaryKey((Serializable)userTrackerPathId);
-	}
-
-	/**
-	 * Returns the user tracker path with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user tracker path
-	 * @return the user tracker path, or <code>null</code> if a user tracker path with the primary key could not be found
-	 */
-	@Override
-	public UserTrackerPath fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-				UserTrackerPathImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		UserTrackerPath userTrackerPath = (UserTrackerPath)serializable;
-
-		if (userTrackerPath == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				userTrackerPath = (UserTrackerPath)session.get(UserTrackerPathImpl.class,
-						primaryKey);
-
-				if (userTrackerPath != null) {
-					cacheResult(userTrackerPath);
-				}
-				else {
-					EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-						UserTrackerPathImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-					UserTrackerPathImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return userTrackerPath;
 	}
 
 	/**
@@ -1285,6 +1241,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

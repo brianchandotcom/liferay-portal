@@ -1696,6 +1696,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	public OAuth2ApplicationScopeAliasesPersistenceImpl() {
 		setModelClass(OAuth2ApplicationScopeAliases.class);
 
+		setModelImplClass(OAuth2ApplicationScopeAliasesImpl.class);
+		setEntityCacheEnabled(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2102,56 +2105,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	/**
 	 * Returns the o auth2 application scope aliases with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the o auth2 application scope aliases
-	 * @return the o auth2 application scope aliases, or <code>null</code> if a o auth2 application scope aliases with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases fetchByPrimaryKey(
-		Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ApplicationScopeAliasesImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = (OAuth2ApplicationScopeAliases)serializable;
-
-		if (oAuth2ApplicationScopeAliases == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuth2ApplicationScopeAliases = (OAuth2ApplicationScopeAliases)session.get(OAuth2ApplicationScopeAliasesImpl.class,
-						primaryKey);
-
-				if (oAuth2ApplicationScopeAliases != null) {
-					cacheResult(oAuth2ApplicationScopeAliases);
-				}
-				else {
-					entityCache.putResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
-						OAuth2ApplicationScopeAliasesImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationScopeAliasesImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuth2ApplicationScopeAliases;
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliases with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param oAuth2ApplicationScopeAliasesId the primary key of the o auth2 application scope aliases
 	 * @return the o auth2 application scope aliases, or <code>null</code> if a o auth2 application scope aliases with the primary key could not be found
 	 */
@@ -2452,6 +2405,11 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

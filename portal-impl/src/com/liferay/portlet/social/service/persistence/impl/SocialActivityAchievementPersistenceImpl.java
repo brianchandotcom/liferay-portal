@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3179,6 +3180,9 @@ public class SocialActivityAchievementPersistenceImpl
 
 	public SocialActivityAchievementPersistenceImpl() {
 		setModelClass(SocialActivityAchievement.class);
+
+		setModelImplClass(SocialActivityAchievementImpl.class);
+		setEntityCacheEnabled(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -3227,7 +3231,7 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Clears the cache for all social activity achievements.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3243,7 +3247,7 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Clears the cache for the social activity achievement.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3680,55 +3684,6 @@ public class SocialActivityAchievementPersistenceImpl
 	/**
 	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the social activity achievement
-	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityAchievementImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)serializable;
-
-		if (socialActivityAchievement == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				socialActivityAchievement = (SocialActivityAchievement)session.get(SocialActivityAchievementImpl.class,
-						primaryKey);
-
-				if (socialActivityAchievement != null) {
-					cacheResult(socialActivityAchievement);
-				}
-				else {
-					EntityCacheUtil.putResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityAchievementImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityAchievementImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return socialActivityAchievement;
-	}
-
-	/**
-	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param activityAchievementId the primary key of the social activity achievement
 	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
 	 */
@@ -4022,6 +3977,11 @@ public class SocialActivityAchievementPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

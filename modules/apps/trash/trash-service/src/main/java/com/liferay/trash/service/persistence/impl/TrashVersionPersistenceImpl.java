@@ -1349,6 +1349,9 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 	public TrashVersionPersistenceImpl() {
 		setModelClass(TrashVersion.class);
+
+		setModelImplClass(TrashVersionImpl.class);
+		setEntityCacheEnabled(TrashVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1734,54 +1737,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	/**
 	 * Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the trash version
-	 * @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
-	 */
-	@Override
-	public TrashVersion fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-				TrashVersionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		TrashVersion trashVersion = (TrashVersion)serializable;
-
-		if (trashVersion == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				trashVersion = (TrashVersion)session.get(TrashVersionImpl.class,
-						primaryKey);
-
-				if (trashVersion != null) {
-					cacheResult(trashVersion);
-				}
-				else {
-					entityCache.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-						TrashVersionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-					TrashVersionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return trashVersion;
-	}
-
-	/**
-	 * Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param versionId the primary key of the trash version
 	 * @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
 	 */
@@ -2073,6 +2028,11 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

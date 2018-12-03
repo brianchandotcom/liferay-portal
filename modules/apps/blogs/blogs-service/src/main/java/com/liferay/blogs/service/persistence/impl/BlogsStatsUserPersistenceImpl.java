@@ -2964,6 +2964,9 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 	public BlogsStatsUserPersistenceImpl() {
 		setModelClass(BlogsStatsUser.class);
+
+		setModelImplClass(BlogsStatsUserImpl.class);
+		setEntityCacheEnabled(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -3374,54 +3377,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	/**
 	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the blogs stats user
-	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
-	 */
-	@Override
-	public BlogsStatsUser fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		BlogsStatsUser blogsStatsUser = (BlogsStatsUser)serializable;
-
-		if (blogsStatsUser == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				blogsStatsUser = (BlogsStatsUser)session.get(BlogsStatsUserImpl.class,
-						primaryKey);
-
-				if (blogsStatsUser != null) {
-					cacheResult(blogsStatsUser);
-				}
-				else {
-					entityCache.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						BlogsStatsUserImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsStatsUserImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return blogsStatsUser;
-	}
-
-	/**
-	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param statsUserId the primary key of the blogs stats user
 	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
 	 */
@@ -3713,6 +3668,11 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

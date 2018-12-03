@@ -23,6 +23,7 @@ import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPer
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -847,6 +848,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	public AnnouncementsFlagPersistenceImpl() {
 		setModelClass(AnnouncementsFlag.class);
+
+		setModelImplClass(AnnouncementsFlagImpl.class);
+		setEntityCacheEnabled(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -893,7 +897,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Clears the cache for all announcements flags.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -909,7 +913,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Clears the cache for the announcements flag.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1212,54 +1216,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	/**
 	 * Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the announcements flag
-	 * @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsFlag fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)serializable;
-
-		if (announcementsFlag == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
-						primaryKey);
-
-				if (announcementsFlag != null) {
-					cacheResult(announcementsFlag);
-				}
-				else {
-					EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsFlagImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsFlagImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return announcementsFlag;
-	}
-
-	/**
-	 * Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
 	 */
@@ -1551,6 +1507,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

@@ -2293,6 +2293,9 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	public SyncDevicePersistenceImpl() {
 		setModelClass(SyncDevice.class);
 
+		setModelImplClass(SyncDeviceImpl.class);
+		setEntityCacheEnabled(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -2701,54 +2704,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	/**
 	 * Returns the sync device with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the sync device
-	 * @return the sync device, or <code>null</code> if a sync device with the primary key could not be found
-	 */
-	@Override
-	public SyncDevice fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-				SyncDeviceImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SyncDevice syncDevice = (SyncDevice)serializable;
-
-		if (syncDevice == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				syncDevice = (SyncDevice)session.get(SyncDeviceImpl.class,
-						primaryKey);
-
-				if (syncDevice != null) {
-					cacheResult(syncDevice);
-				}
-				else {
-					entityCache.putResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-						SyncDeviceImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDeviceImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return syncDevice;
-	}
-
-	/**
-	 * Returns the sync device with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param syncDeviceId the primary key of the sync device
 	 * @return the sync device, or <code>null</code> if a sync device with the primary key could not be found
 	 */
@@ -3045,6 +3000,11 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

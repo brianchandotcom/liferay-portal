@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -76,8 +77,18 @@ public abstract class ChainableMethodAdvice {
 		return returnValue;
 	}
 
-	public boolean isEnabled(Class<?> targetClass, Method method) {
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		AnnotationHelper annotationHelper) {
+
 		return true;
+	}
+
+	public interface AnnotationHelper {
+
+		public <T extends Annotation> T findAnnotation(
+			Class<?> targetClass, Method method, Class<T> annotationClass);
+
 	}
 
 	protected void setServiceBeanAopCacheManager(

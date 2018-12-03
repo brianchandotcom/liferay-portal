@@ -70,8 +70,19 @@ public class DynamicDataSourceAdvice
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		return _transactionInterceptor.isEnabled(targetClass, method);
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		AnnotationHelper annotationHelper) {
+
+		if (!_transactionInterceptor.isEnabled(
+				targetClass, method, annotationHelper)) {
+
+			return false;
+		}
+
+		super.isEnabled(targetClass, method, annotationHelper);
+
+		return true;
 	}
 
 	public void setDynamicDataSourceTargetSource(
@@ -84,17 +95,6 @@ public class DynamicDataSourceAdvice
 		TransactionInterceptor transactionInterceptor) {
 
 		_transactionInterceptor = transactionInterceptor;
-	}
-
-	@Override
-	protected MasterDataSource findAnnotation(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
-
-		Object target = serviceBeanMethodInvocation.getThis();
-
-		return serviceBeanAopCacheManager.findAnnotation(
-			target.getClass(), serviceBeanMethodInvocation.getMethod(),
-			MasterDataSource.class);
 	}
 
 	@Override

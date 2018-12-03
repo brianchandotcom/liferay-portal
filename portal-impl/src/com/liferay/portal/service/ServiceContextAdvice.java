@@ -60,7 +60,10 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		AnnotationHelper annotationHelper) {
+
 		int index = _getServiceContextParameterIndex(method);
 
 		if (index == -1) {

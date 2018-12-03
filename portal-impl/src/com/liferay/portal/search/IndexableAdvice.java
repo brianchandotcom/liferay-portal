@@ -111,8 +111,11 @@ public class IndexableAdvice
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		if (!super.isEnabled(targetClass, method)) {
+	public boolean isEnabled(
+		Class<?> targetClass, Method method,
+		AnnotationHelper annotationHelper) {
+
+		if (!super.isEnabled(targetClass, method, annotationHelper)) {
 			return false;
 		}
 

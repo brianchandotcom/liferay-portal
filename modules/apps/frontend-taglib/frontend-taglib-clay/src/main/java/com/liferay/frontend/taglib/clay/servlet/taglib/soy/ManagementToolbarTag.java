@@ -59,7 +59,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 		if (Validator.isNotNull(searchContainerId)) {
 			String componentId = getComponentId();
 
-			putValue("cacheState", true);
+			putValue("cacheState", _CACHE_STATE);
 
 			if (Validator.isNull(componentId)) {
 				setComponentId(searchContainerId + "ManagementToolbar");
@@ -431,6 +431,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		return searchData;
 	}
+
+	private static final String[] _CACHE_STATE = {
+		"selectedItems", "totalItems"
+	};
 
 	private static final String[] _NAMESPACED_PARAMS = {
 		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"

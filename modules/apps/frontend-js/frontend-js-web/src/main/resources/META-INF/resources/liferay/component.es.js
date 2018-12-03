@@ -98,10 +98,21 @@ const _onStartNavigate = function(event) {
 		componentsCache = componentIds.reduce(
 			(cache, componentId) => {
 				const component = components[componentId];
+				const componentConfig = componentConfigs[componentId];
+				const componentState = component.getState();
+
+				const componentCache = componentConfig.cacheState.reduce(
+					(cache, stateKey) => {
+						cache[stateKey] = componentState[stateKey];
+
+						return cache;
+					},
+					{}
+				);
 
 				cache[componentId] = {
 					html: component.element.innerHTML,
-					state: component.getState()
+					state: componentCache
 				};
 
 				return cache;

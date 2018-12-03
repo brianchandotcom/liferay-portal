@@ -42,9 +42,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateJournalArticleDefaultLanguageId();
+
 		upgradeSchema();
 
-		updateJournalArticleDefaultLanguageId();
 		updateJournalArticleLocalizedFields();
 
 		dropTitleColumn();
@@ -74,6 +75,12 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleDefaultLanguageId() throws Exception {
+		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
+			runSQL(
+				"alter table JournalArticle add defaultLanguageId " +
+					"VARCHAR(75)null");
+		}
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				"select id_, title from JournalArticle");
@@ -82,7 +89,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					connection,
 					"update JournalArticle set defaultLanguageId = ? where " +
 						"id_ = ?");
-
 			ResultSet rs = ps1.executeQuery()) {
 
 			Locale defaultLocale = LocaleUtil.getSiteDefault();

@@ -9,6 +9,4 @@ create table JournalArticleLocalization (
 
 create unique index IX_ACF2560A on JournalArticleLocalization (articlePK, languageId[$COLUMN_LENGTH:75$]);
 
-alter table JournalArticle add defaultLanguageId VARCHAR(75) null;
-
 COMMIT_TRANSACTION;

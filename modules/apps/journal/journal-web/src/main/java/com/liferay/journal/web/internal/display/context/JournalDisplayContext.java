@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -52,6 +54,7 @@ import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.util.JournalPortletUtil;
+import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -69,6 +72,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -111,6 +115,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -744,6 +749,60 @@ public class JournalDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public String getPreviewURL(JournalArticle article) throws Exception {
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
+				_themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey());
+
+		if ((assetDisplayPageEntry != null) &&
+			(assetDisplayPageEntry.getLayoutPageTemplateEntryId() > 0)) {
+
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+					JournalArticle.class);
+
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(
+				PortalUtil.getGroupFriendlyURL(
+					_themeDisplay.getLayoutSet(), _themeDisplay));
+			sb.append("/a/");
+			sb.append(assetEntry.getEntryId());
+			sb.append("?p_p_state=pop_up");
+
+			return sb.toString();
+		}
+
+		if (Validator.isNull(article.getDDMTemplateKey())) {
+			return StringPool.BLANK;
+		}
+
+		PortletURL portletURL = _liferayPortletResponse.createLiferayPortletURL(
+			JournalUtil.getPreviewPlid(article, _themeDisplay),
+			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+
+		Map<String, String[]> parameters = new HashMap<>();
+
+		parameters.put("articleId", new String[] {article.getArticleId()});
+		parameters.put(
+			"groupId", new String[] {String.valueOf(article.getGroupId())});
+		parameters.put(
+			"mvcPath", new String[] {"/preview_article_content.jsp"});
+		parameters.put(
+			"version", new String[] {String.valueOf(article.getVersion())});
+
+		portletURL.setParameters(parameters);
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	public int getRestrictionType() {

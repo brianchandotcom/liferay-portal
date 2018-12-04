@@ -96,7 +96,7 @@ public class PortalPreferencesImplTest {
 			aopMethod.getChainableMethodAdvices();
 
 		_transactionInterceptor =
-			(TransactionInterceptor)chainableMethodAdvices[0];
+			(TransactionInterceptor)chainableMethodAdvices[1];
 
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
 			_transactionInterceptor, "transactionExecutor");

@@ -13,7 +13,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute macro="DMDocument#_manageCollaborators" />
+		<execute macro="DMDocumentSharing#_manageCollaborators" />
 
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 

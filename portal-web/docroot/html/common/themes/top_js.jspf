@@ -589,15 +589,48 @@ private static String _getDateFormatPattern(Locale locale) {
 		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT, locale);
 
 		dateFormatPattern = simpleDateFormat.toPattern();
+		String lowerCaseDFP = StringUtil.toLowerCase(dateFormatPattern);
 
-		if (dateFormatPattern.indexOf("y") == 0) {
-			dateFormatPattern = "%Y/%m/%d";
+		boolean endDelimiter = false;
+		char dateFormatSymbol = CharPool.FORWARD_SLASH;
+
+		for (char dateDelimiter : _DATE_DELIMITERS) {
+			if (lowerCaseDFP.indexOf(dateDelimiter) != -1) {
+				dateFormatSymbol = dateDelimiter;
+
+				if (lowerCaseDFP.lastIndexOf(dateDelimiter) ==
+					lowerCaseDFP.length() - 1) {
+
+					endDelimiter = true;
+				}
+			}
 		}
-		else if (dateFormatPattern.indexOf("d") == 0) {
-			dateFormatPattern = "%d/%m/%Y";
+
+		int dayOrder = lowerCaseDFP.indexOf("d");
+		int monthOrder = lowerCaseDFP.indexOf("m");
+		int yearOrder = lowerCaseDFP.indexOf("y");
+
+		if ((yearOrder < dayOrder) && (yearOrder < monthOrder)) {
+			dateFormatPattern =
+				"%y" + dateFormatSymbol + "%m" + dateFormatSymbol + "%d";
+		}
+		else if (dayOrder < monthOrder) {
+			dateFormatPattern =
+				"%d" + dateFormatSymbol + "%m" + dateFormatSymbol + "%y";
 		}
 		else {
-			dateFormatPattern = "%m/%d/%Y";
+			dateFormatPattern =
+				"%m" + dateFormatSymbol + "%d" + dateFormatSymbol + "%y";
+		}
+
+		if (endDelimiter) {
+			dateFormatPattern += dateFormatSymbol;
+		}
+
+		boolean fullYear = lowerCaseDFP.contains("yyyy");
+
+		if (fullYear) {
+			dateFormatPattern.replace("y", "Y");
 		}
 
 		_dateFormatPatterns.put(languageId, dateFormatPattern);
@@ -629,6 +662,10 @@ private static boolean _isAnalyticsTrackingEnabled(String liferayAnalyticsKey, S
 
 	return false;
 }
+
+private static final char[] _DATE_DELIMITERS = {
+	CharPool.DASH, CharPool.FORWARD_SLASH, CharPool.PERIOD
+};
 
 private static final Map<String, String> _dateFormatPatterns = new ConcurrentHashMap<>();
 %>

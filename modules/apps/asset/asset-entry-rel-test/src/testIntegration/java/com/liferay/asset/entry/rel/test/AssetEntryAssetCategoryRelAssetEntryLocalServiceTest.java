@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Samuel Trong Tran
  */
 @RunWith(Arquillian.class)
-public class AssetEntryAssetCategoryRelUpdateTest {
+public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 
 	@ClassRule
 	@Rule

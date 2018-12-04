@@ -15,6 +15,8 @@
 package com.liferay.data.engine.executor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.executor.DEDeleteRequestExecutor;
 import com.liferay.data.engine.executor.DEGetRequestExecutor;
 import com.liferay.data.engine.executor.DESaveRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
@@ -22,7 +24,6 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
-import com.liferay.data.engine.service.DEDataDefinitionLocalService;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.portal.kernel.model.Group;
@@ -72,6 +73,58 @@ public class DERequestExecutorTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addGroupOwnerUser(_group);
+	}
+
+	@Test(expected = DEDataDefinitionException.class)
+	public void testDelete() throws Exception {
+		Map<String, String> expectedNameLabels = new HashMap() {
+			{
+				put("pt_BR", "Nome");
+				put("en_US", "Name");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField = new DEDataDefinitionField(
+			"name", "string");
+
+		deDataDefinitionField.addLabels(expectedNameLabels);
+
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField));
+
+		deDataDefinition.addName(LocaleUtil.US, "Definition 1");
+		deDataDefinition.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), deDataDefinition
+			);
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
+
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
+
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
+
+			_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -149,7 +202,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
 
-			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -239,7 +292,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
 
-			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -330,7 +383,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
 
-			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -361,8 +414,8 @@ public class DERequestExecutorTest {
 		return serviceContext;
 	}
 
-	@Inject(type = DEDataDefinitionLocalService.class)
-	private DEDataDefinitionLocalService _deDataDefinitionLocalService;
+	@Inject(type = DEDeleteRequestExecutor.class)
+	private DEDeleteRequestExecutor _deDeleteRequestExecutor;
 
 	@Inject(type = DEGetRequestExecutor.class)
 	private DEGetRequestExecutor _deGetRequestExecutor;

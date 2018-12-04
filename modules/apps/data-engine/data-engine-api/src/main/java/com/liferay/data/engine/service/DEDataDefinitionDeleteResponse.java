@@ -14,10 +14,12 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.executor.DEDeleteResponse;
+
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionDeleteResponse {
+public final class DEDataDefinitionDeleteResponse implements DEDeleteResponse {
 
 	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;

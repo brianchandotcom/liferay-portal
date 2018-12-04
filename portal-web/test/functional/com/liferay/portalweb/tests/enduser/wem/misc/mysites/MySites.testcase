@@ -656,7 +656,7 @@
 			<var name="layoutName" value="Private Page" />
 		</execute>
 
-		<!-- Add MySites widget-->
+		<!-- Add MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />

@@ -111,7 +111,7 @@
 
 		<!-- Replace last comma with } -->
 
-		<var method="RegexUtil#replace('${localizedMap}','(.*)(?=,)','1')" name="localizedMap" />
+		<var method="RegexUtil#replace('${localizedMap}', '(.*)(?=,)', '1')" name="localizedMap" />
 
 		<var name="localizedMap" value="${localizedMap}}" />
 
@@ -157,7 +157,7 @@
 			<var name="localeList" value="${localeList},${locale}" />
 		</for>
 
-		<var method="RegexUtil#replace('${localeList}',',(.*)','1')" name="localeList" />
+		<var method="RegexUtil#replace('${localeList}', ',(.*)', '1')" name="localeList" />
 
 		<!-- Build dynamic content -->
 

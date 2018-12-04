@@ -45,7 +45,7 @@
 			<var name="parentLayoutName" value="Site Page" />
 		</execute>
 
-		<!-- Navigate to child page via Navigation Menu Widget-->
+		<!-- Navigate to child page via Navigation Menu Widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -94,7 +94,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<!-- Assert pages hierarchy is set as the default-->
+		<!-- Assert pages hierarchy is set as the default -->
 
 		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
 

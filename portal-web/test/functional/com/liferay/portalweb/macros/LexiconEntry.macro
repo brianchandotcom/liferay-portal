@@ -235,7 +235,7 @@ else {
 				<equals arg1="${managementBarReady}" arg2="ready" />
 			</not>
 			<then>
-				<var method="selenium#getEval(${javaScript})" name="managementBarReady" />
+				<var method="selenium#getEval('${javaScript}')" name="managementBarReady" />
 
 				<execute function="Pause" locator1="1000" />
 			</then>

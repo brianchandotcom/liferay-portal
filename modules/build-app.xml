@@ -31,17 +31,6 @@
 
 	<target depends="dist-module-artifacts,update-app-marketplace-version,write-app-change-log,zip-app-sources" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
-
-		<condition property="git.finalize">
-			<and>
-				<isset property="app.ticket.list" />
-				<not>
-					<istrue value="${override.git.finalize}" />
-				</not>
-			</and>
-		</condition>
-
-		<antcall target="git-finalize" />
 	</target>
 
 	<target depends="get-app-names" name="build-app-all">
@@ -54,6 +43,8 @@
 				</antcall>
 			</sequential>
 		</for>
+
+		<antcall target="git-finalize" />
 	</target>
 
 	<target depends="dist-module-artifacts,get-app-change-log" name="build-app-from-changelog">
@@ -631,33 +622,21 @@
 		</pathconvert>
 	</target>
 
-	<target if="${git.finalize}" name="git-finalize">
+	<target name="git-finalize" unless="${override.git.finalize}">
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="reset" />
 		</exec>
 
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="add" />
-			<arg value="${releng.app.dir}/app.changelog" />
-			<arg value="${releng.app.dir}/app.properties" />
-			<arg value="-f" />
+			<arg value=".releng/**/app.changelog" />
+			<arg value=".releng/**/app.properties" />
 		</exec>
 
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="commit" />
 			<arg value="-m" />
-			<arg value="${git.commit.app.ticket} ${Liferay-Releng-App-Title} ${app.version}" />
-		</exec>
-
-		<exec dir="${modules.dir}" executable="git" failonerror="false">
-			<arg value="tag" />
-			<arg value="-d" />
-			<arg value="marketplace-${app.name}-${app.version}" />
-		</exec>
-
-		<exec dir="${modules.dir}" executable="git" failonerror="true">
-			<arg value="tag" />
-			<arg value="marketplace-${app.name}-${app.version}" />
+			<arg value="${git.commit.app.ticket} Release Apps: ${app.names}" />
 		</exec>
 	</target>
 

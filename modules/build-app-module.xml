@@ -250,7 +250,7 @@
 				<tokenfilter>
 					<filetokenizer />
 					<replaceregex flags="g" pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}=" replace="" />
-					<replaceregex flags="g" pattern="\n|\r\n" replace=" " />
+					<replaceregex flags="g" pattern="\r?\n" replace=" " />
 				</tokenfilter>
 			</filterchain>
 		</loadfile>
@@ -279,12 +279,12 @@
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
 				</linecontainsregexp>
 
-				<headfilter lines="-1" skip="1" />
+				<headfilter lines="1" />
 
 				<tokenfilter>
 					<filetokenizer />
 					<replaceregex flags="g" pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}=" replace="" />
-					<replaceregex flags="g" pattern="\n|\r\n" replace=" " />
+					<replaceregex flags="g" pattern="\r?\n" replace=" " />
 				</tokenfilter>
 			</filterchain>
 		</loadfile>

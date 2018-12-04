@@ -491,6 +491,10 @@ public class AutoCloseUtil {
 					continue;
 				}
 
+				if (autoCloseRuleData.startsWith("static_")) {
+					continue;
+				}
+
 				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
 					autoCloseRuleData);
 

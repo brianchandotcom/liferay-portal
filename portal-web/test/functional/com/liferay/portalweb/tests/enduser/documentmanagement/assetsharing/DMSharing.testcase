@@ -1,0 +1,211 @@
+<definition component-name="portal-document-management">
+	<property name="portal.release" value="false" />
+	<property name="portal.upstream" value="false" />
+	<property name="testray.main.component.name" value="Documents Management" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="privacy" value="Public Pages" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="DMFolder#tearDownCP" />
+
+				<execute macro="User#logoutPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ManageCollaborators" priority="5">
+		<description message="This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. " />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="viewableBy" value="Owner" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleTitle" value="Guest" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#sharePG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Comments#COMMENT_FIELD" />
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocumentSharing#changePermission">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="selectPermission" value="Can Comment" />
+			<var name="userName" value="userfn userln" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocumentComment#addPG">
+			<var name="commentBody" value="DM Document Comment Body" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocumentSharing#changePermission">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="selectPermission" value="Can Update" />
+			<var name="userName" value="userfn userln" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitleEdit" value="DM Document Title Edited" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title Edited" />
+		</execute>
+	</command>
+</definition>

@@ -34,6 +34,13 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		_layoutPageTemplateEntryLocalService = layoutPageTemplateEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry addGlobalLayoutPageTemplateEntry(
+		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntryLocalService.addGlobalLayoutPageTemplateEntry(layoutPrototype);
+	}
+
 	/**
 	* Adds the layout page template entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -51,15 +58,6 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(layoutPrototype);
-	}
-
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype,
-		boolean useServiceContextGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(layoutPrototype,
-			useServiceContextGroupId);
 	}
 
 	@Override

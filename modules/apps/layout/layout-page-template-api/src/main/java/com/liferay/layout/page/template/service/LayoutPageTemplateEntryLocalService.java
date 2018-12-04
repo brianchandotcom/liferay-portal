@@ -65,6 +65,8 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryLocalServiceUtil} to access the layout page template entry local service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LayoutPageTemplateEntry addGlobalLayoutPageTemplateEntry(
+		LayoutPrototype layoutPrototype) throws PortalException;
 
 	/**
 	* Adds the layout page template entry to the database. Also notifies the appropriate model listeners.
@@ -78,10 +80,6 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		LayoutPrototype layoutPrototype) throws PortalException;
-
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-		LayoutPrototype layoutPrototype, boolean useServiceContextGroupId)
-		throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, long classNameId,

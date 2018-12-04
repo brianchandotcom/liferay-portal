@@ -44,8 +44,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -402,7 +404,7 @@ public class InvokerFilterHelper {
 				urlPatterns.add(urlPatternElement.getTextTrim());
 			}
 
-			List<String> dispatchers = new ArrayList<>(4);
+			Set<Dispatcher> dispatchers = new HashSet<>();
 
 			List<Element> dispatcherElements = filterMappingElement.elements(
 				"dispatcher");
@@ -411,7 +413,7 @@ public class InvokerFilterHelper {
 				String dispatcher = StringUtil.toUpperCase(
 					dispatcherElement.getTextTrim());
 
-				dispatchers.add(dispatcher);
+				dispatchers.add(Dispatcher.valueOf(dispatcher));
 			}
 
 			ObjectValuePair<Filter, FilterConfig> filterObjectValuePair =
@@ -507,10 +509,19 @@ public class InvokerFilterHelper {
 
 			updateFilterMappings(servletFilterName, filter);
 
+			String[] dispatchers = (String[])serviceReference.getProperty(
+				"dispatcher");
+
+			Set<Dispatcher> dispatcherSet = new HashSet<>();
+
+			for (String dispatcher : dispatchers) {
+				dispatcherSet.add(Dispatcher.valueOf(dispatcher));
+			}
+
 			FilterMapping filterMapping = new FilterMapping(
 				servletFilterName, filter, filterConfig,
 				StringPlus.asList(serviceReference.getProperty("url-pattern")),
-				StringPlus.asList(serviceReference.getProperty("dispatcher")));
+				dispatcherSet);
 
 			registerFilterMapping(filterMapping, positionFilterName, after);
 

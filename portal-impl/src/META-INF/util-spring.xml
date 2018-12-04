@@ -396,11 +396,6 @@
 			<bean class="com.liferay.portal.util.PortletListerFactoryImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil" id="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil">
-		<property name="serviceBeanMethodInvocationFactory">
-			<bean class="com.liferay.portal.util.ServiceBeanMethodInvocationFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.util.ThemeFactoryUtil" id="com.liferay.portal.kernel.util.ThemeFactoryUtil">
 		<property name="ThemeFactory">
 			<bean class="com.liferay.portal.util.ThemeFactoryImpl" />

@@ -310,7 +310,9 @@
 			<var name="id" value="content" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="javax.portlet.PortletException: org.apache.jasper.JasperException: java.lang.NullPointerException" />
+		<execute function="AssertConsoleTextNotPresent" value1="javax.portlet.PortletException:" />
+		<execute function="AssertConsoleTextNotPresent" value1="org.apache.jasper.JasperException:" />
+		<execute function="AssertConsoleTextNotPresent" value1="java.lang.NullPointerException" />
 	</command>
 
 	<command name="ExportImportDDLViaGlobal" priority="5">

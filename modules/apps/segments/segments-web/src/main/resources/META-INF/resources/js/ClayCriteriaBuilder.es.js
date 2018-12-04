@@ -75,18 +75,21 @@ class ClayCriteriaBuilder extends React.Component {
 	_cleanCriteria(criterion) {
 		const test = criterion
 			.filter(
-				({items}) => (items ? items.length : true)
+				({items}) => {
+					return items ? items.length : true;
+				}
 			)
 			.map(
-				item =>
-					(item.items ?
+				item => {
+					return item.items ?
 						Object.assign(
 							item,
 							{
 								items: this._cleanCriteria(item.items)
 							}
 						) :
-						item)
+						item;
+				}
 			);
 
 		return test;

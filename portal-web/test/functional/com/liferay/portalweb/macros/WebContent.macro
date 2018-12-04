@@ -736,43 +736,6 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
-	<command name="addWithThreeTranslations">
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Contenido" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="de-DE" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Inhalt" />
-			<var name="webContentTitle" value="WC Titel" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="fi-FI" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Pitoisuus" />
-			<var name="webContentTitle" value="WC Otsikko" />
-		</execute>
-	</command>
-
 	<command name="addWithWorkflowCP">
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />

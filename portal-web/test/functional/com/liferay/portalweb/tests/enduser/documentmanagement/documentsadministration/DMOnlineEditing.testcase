@@ -168,10 +168,16 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="GoogleDoc#edit">
+		<execute macro="GoogleDoc#gotoEdit">
 			<var name="dmDocumentTitle" value="Untitled" />
-			<var name="dmDocumentTitleEdit" value="Edited Google Document" />
+			<var name="dmGoogleApp" value="Google Docs" />
 		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="Edited Google Document" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Document" />
 	</command>

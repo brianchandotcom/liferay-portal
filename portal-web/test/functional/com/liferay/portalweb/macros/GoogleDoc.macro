@@ -1,23 +1,21 @@
 <definition>
 	<command name="discardChanges">
 		<execute function="AssertClick" locator1="Button#ANY">
-			<var name="key_text" value="Discard Changs" />
+			<var name="key_text" value="Discard Changes" />
 		</execute>
 	</command>
 
-	<command name="edit">
+	<command name="editTitleInGoogleDoc">
+		<execute function="Type" locator1="GoogleDoc#TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="gotoEdit">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit in Google Docs" />
-		</execute>
-
-		<execute function="Type" locator1="GoogleDoc#TITLE" value1="${dmDocumentTitleEdit}" />
-
-		<execute function="AssertClick" locator1="Button#ANY" value1="Save and Return to Liferay">
-			<var name="key_text" value="Save and Return to Liferay" />
+			<var name="menuItem" value="Edit in ${dmGoogleApp}" />
 		</execute>
 	</command>
 

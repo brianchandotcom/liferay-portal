@@ -94,7 +94,7 @@ public class Entity implements Comparable<Entity> {
 	public Entity(ServiceBuilder serviceBuilder, String name) {
 		this(
 			serviceBuilder, null, null, null, name, null, null, null, false,
-			false, false, false, true, null, null, null, null, null, true,
+			false, false, false, true, true, null, null, null, null, null, true,
 			false, false, false, false, null, false, null, null, false, null,
 			null, null, null, null, null, null, null, null, null, false);
 	}
@@ -104,12 +104,12 @@ public class Entity implements Comparable<Entity> {
 		String apiPackagePath, String portletShortName, String name,
 		String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean externalReferenceCode,
-		boolean localService, boolean remoteService, String persistenceClass,
-		String finderClassName, String dataSource, String sessionFactory,
-		String txManager, boolean cacheEnabled, boolean dynamicUpdateEnabled,
-		boolean jsonEnabled, boolean mvccEnabled, boolean trashEnabled,
-		String uadApplicationName, boolean uadAutoDelete, String uadOutputPath,
-		String uadPackagePath, boolean deprecated,
+		boolean localService, boolean remoteService, boolean persistence,
+		String persistenceClass, String finderClassName, String dataSource,
+		String sessionFactory, String txManager, boolean cacheEnabled,
+		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean mvccEnabled,
+		boolean trashEnabled, String uadApplicationName, boolean uadAutoDelete,
+		String uadOutputPath, String uadPackagePath, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,
@@ -131,6 +131,7 @@ public class Entity implements Comparable<Entity> {
 		_externalReferenceCode = externalReferenceCode;
 		_localService = localService;
 		_remoteService = remoteService;
+		_persistence = persistence;
 		_persistenceClassName = persistenceClass;
 		_finderClassName = finderClassName;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;
@@ -842,6 +843,10 @@ public class Entity implements Comparable<Entity> {
 		return _localService;
 	}
 
+	public boolean hasPersistence() {
+		return _persistence;
+	}
+
 	public boolean hasPrimitivePK() {
 		return hasPrimitivePK(true);
 	}
@@ -1252,6 +1257,7 @@ public class Entity implements Comparable<Entity> {
 	private final String _name;
 	private final String _packagePath;
 	private List<String> _parentTransients;
+	private final boolean _persistence;
 	private final String _persistenceClassName;
 	private final List<EntityColumn> _pkEntityColumns;
 	private boolean _portalReference;

@@ -45,7 +45,7 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 	 * Never modify or reference this class directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${entity.name}} interface instead.
 	 */
 
-	<#if entity.hasLocalService() && entity.hasEntityColumns()>
+	<#if entity.hasLocalService() && entity.hasEntityColumns() && entity.hasPersistence()>
 		@Override
 		public void persist() {
 			if (this.isNew()) {

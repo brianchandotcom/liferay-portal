@@ -112,7 +112,7 @@ import java.util.Set;
 	<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
 		<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
 
-		<#if stringUtil.equals(entity.name, "Counter") || !stringUtil.equals(referenceEntity.name, "Counter")>
+		<#if referenceEntity.hasPersistence()>
 			import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
 		</#if>
 	</#if>

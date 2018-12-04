@@ -142,6 +142,14 @@ interfaces for the service. The default value is true.
 >
 
 <!--
+If the persistence value is true, then the service will generate persistence
+interfaces and database files for the service. The default value is true.
+-->
+<!ATTLIST entity
+	persistence CDATA #IMPLIED
+>
+
+<!--
 The persistence-class value specifies the name of your custom persistence class.
 This class must implement the generated persistence interface or extend the
 generated persistence class. This allows you to override default behavior

@@ -36,7 +36,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragmentsEditor" %>'
 	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
-	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
+	module="layout-admin-web@3.0.0/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
 />
 
@@ -44,7 +44,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule, layout-admin-web/js/fragments_editor/reducers/sections.es as SectionsReducerModule">
+<aui:script require="layout-admin-web@3.0.0/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web@3.0.0/js/fragments_editor/store/store.es as StoreModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule, layout-admin-web@3.0.0/js/fragments_editor/reducers/sections.es as SectionsReducerModule">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		[

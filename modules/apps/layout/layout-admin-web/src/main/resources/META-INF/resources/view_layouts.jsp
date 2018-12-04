@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String moduleName = (String)request.getAttribute(LayoutAdminWebKeys.RESOLVED_MODULE_NAME);
+%>
+
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-to-a-site-template" />
@@ -68,7 +72,7 @@
 
 					<soy:component-renderer
 						context="<%= context %>"
-						module="layout-admin-web/js/miller_columns/Layout.es"
+						module='<%= moduleName + "/js/miller_columns/Layout.es" %>'
 						templateNamespace="com.liferay.layout.admin.web.Layout.render"
 					/>
 				</c:otherwise>

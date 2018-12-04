@@ -110,6 +110,90 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Document" />
 	</command>
 
+	<command name="GoogleDocSmoke" priority="5">
+		<description message="This test ensures that a document is checked out when the Google Doc editor is being used" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutPG">
+			<var name="dmDocumentTitle" value="Untitled" />
+		</execute>
+	</command>
+
+	<command name="GoogleSheetSmoke" priority="5">
+		<description message="This test ensures that a document is checked out when the Google Sheet editor is being used" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutPG">
+			<var name="dmDocumentTitle" value="Untitled" />
+		</execute>
+	</command>
+
+	<command name="GoogleSlideSmoke" priority="5">
+		<description message="This test ensures that a document is checked out when the Google Slide editor is being used" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutPG">
+			<var name="dmDocumentTitle" value="Untitled" />
+		</execute>
+	</command>
+
 	<tear-down>
 		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 

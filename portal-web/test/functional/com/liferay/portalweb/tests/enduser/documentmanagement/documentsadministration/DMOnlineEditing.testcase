@@ -94,13 +94,7 @@
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutPG">
-			<var name="dmDocumentTitle" value="Untitled" />
-		</execute>
+		<execute macro="GoogleDoc#saveAndExit" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

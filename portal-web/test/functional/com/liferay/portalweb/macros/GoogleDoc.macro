@@ -14,4 +14,12 @@
 			<var name="key_text" value="Save and Return to Liferay" />
 		</execute>
 	</command>
+
+	<command name="saveAndExit">
+		<execute function="AssertElementPresent" locator1="Button#ANY">
+			<var name="key_text" value="Save and Return to Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+	</command>
 </definition>

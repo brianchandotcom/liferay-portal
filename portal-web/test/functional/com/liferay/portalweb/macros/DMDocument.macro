@@ -1270,6 +1270,55 @@
 		</if>
 	</command>
 
+	<command name="sharePG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute macro="DMDocument#viewDocumentTitleCmdPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<var name="key_text" value="Share" />
+
+		<execute function="AssertClick" locator1="Button#ANY" value1="Share" />
+
+		<execute macro="IFrame#selectModalFrame" />
+
+		<execute function="Type" locator1="DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT" value1="${userEmailAddress}" />
+
+		<if>
+			<equals arg1="${sharingPermissions}" arg2="Update" />
+			<then>
+				<execute macro="FormFields#selectRadioOption">
+					<var name="fieldName" value="sharingEntryPermission" />
+					<var name="radioOption" value="Update" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${sharingPermissions}" arg2="Comment" />
+				<then>
+					<execute macro="FormFields#selectRadioOption">
+						<var name="fieldName" value="sharingEntryPermission" />
+						<var name="radioOption" value="Comment" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="FormFields#viewRadioValue">
+					<var name="fieldName" value="sharingEntryPermission" />
+					<var name="fieldValue" value="VIEW" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="Button#clickShare" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="The item was shared successfully." />
+		</execute>
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 

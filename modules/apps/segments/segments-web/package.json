@@ -14,6 +14,12 @@
 			}
 		}
 	},
+	"jest": {
+		"setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
+		"testMatch": [
+			"<rootDir>/test/js/**/*.js"
+		]
+	},
 	"version": "1.0.0",
 	"description": "",
 	"main": "js/index.es.js",
@@ -23,7 +29,8 @@
 		"build:libs": "webpack",
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es.js",
-		"format": "npm run csf -- -i"
+		"format": "npm run csf -- -i",
+		"test": "jest"
 	},
 	"dependencies": {
 		"prop-types": "^15.6.2",
@@ -47,6 +54,7 @@
 		"eslint-plugin-babel": "^5.3.0",
 		"eslint-plugin-react": "^7.11.1",
 		"eslint-plugin-sort-destructure-keys": "^1.1.0",
+		"jest": "^23.6.0",
 		"liferay-npm-bundler": "^2.0.0",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
 		"odata-v4-parser": "^0.1.29",

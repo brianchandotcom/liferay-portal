@@ -55,7 +55,7 @@ public class MultipleFileEntrySelection implements Selection<FileEntry> {
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return _language.format(
-			resourceBundle, "you-are-editing-the-common-tags-for-x-items",
+			resourceBundle, "these-changes-will-be-applied-to-x-items",
 			_fileEntryIds.length);
 	}
 

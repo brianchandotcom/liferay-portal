@@ -52,7 +52,7 @@ public class SingleFileEntrySelection implements Selection<FileEntry> {
 		FileEntry fileEntry = _dlAppService.getFileEntry(_fileEntryId);
 
 		return _language.format(
-			resourceBundle, "you-are-editing-the-tags-for-x",
+			resourceBundle, "these-changes-will-be-applied-to-x",
 			fileEntry.getTitle());
 	}
 

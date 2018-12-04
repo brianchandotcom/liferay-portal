@@ -1053,8 +1053,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
-			<var name="queryOperator" value="All" />
+		<execute macro="AssetPublisherPortlet#editConfigureTagsFilterPG">
+			<var name="queryAndOperator" value="All" />
 			<var name="tagNameList" value="tag1,tag2" />
 		</execute>
 

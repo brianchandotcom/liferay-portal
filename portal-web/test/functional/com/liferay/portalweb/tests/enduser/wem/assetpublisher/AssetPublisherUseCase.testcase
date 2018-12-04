@@ -1661,7 +1661,7 @@
 			<var name="assetTitle" value="Web Content Category Title" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
+		<execute macro="AssetPublisherPortlet#editConfigureTagsFilterPG">
 			<var name="tagNameList" value="tagname" />
 		</execute>
 

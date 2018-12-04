@@ -843,9 +843,7 @@ public class DLFileEntryLocalServiceImpl
 					version, " is not valid"));
 		}
 
-		if (version.equals(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			throw new InvalidFileVersionException(
 				StringBundler.concat(
 					"Unable to delete a private working copy file version ",
@@ -1741,9 +1739,7 @@ public class DLFileEntryLocalServiceImpl
 					" to version ", version, " because it is not valid"));
 		}
 
-		if (version.equals(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			throw new InvalidFileVersionException(
 				"Unable to revert a private working copy file version");
 		}

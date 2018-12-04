@@ -10,25 +10,7 @@
 					"es6": true,
 					"node": true
 				},
-				"parser": "babel-eslint",
-				"rules": {
-					"no-console": 0,
-					"require-jsdoc": 0,
-					"comma-dangle": 0,
-					"eol-last": [
-						2,
-						"never"
-					],
-					"max-len": 0,
-					"sort-vars": 2,
-					"valid-jsdoc": 0,
-					"no-invalid-this": 0,
-					"no-mixed-spaces-and-tabs": [
-						"warn",
-						"smart-tabs"
-					],
-					"no-confusing-arrow": 0
-				}
+				"parser": "babel-eslint"
 			}
 		}
 	},
@@ -42,8 +24,6 @@
 		"csf": "csf src/**/*.es.js",
 		"format": "npm run csf -- -i"
 	},
-	"author": "",
-	"license": "BSD",
 	"dependencies": {
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",

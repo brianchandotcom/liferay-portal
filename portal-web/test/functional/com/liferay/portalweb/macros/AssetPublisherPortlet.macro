@@ -606,17 +606,12 @@
 			<var name="panel" value="Filter" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="APConfiguration#FILTER_RULES" />
-			<then>
-				<execute function="Click" locator1="APConfiguration#RULE_BUILDER_ADD_CONDITION" />
-			</then>
-		</if>
+		<execute function="Click" locator1="APConfiguration#RULE_BUILDER_ADD_CONDITION" />
 
 		<if>
-			<isset var="queryOperator" />
+			<isset var="aqueryAndOperator" />
 			<then>
-				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_OPERATOR" value1="${queryOperator}" />
+				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_AND_OPERATOR" value1="${queryAndOperator}" />
 			</then>
 		</if>
 
@@ -691,6 +686,38 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="editConfigureTagsFilterPG">
+		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Filter" />
+		</execute>
+
+		<if>
+			<isset var="queryAndOperator" />
+			<then>
+				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_AND_OPERATOR" value1="${queryAndOperator}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="queryContains" />
+			<then>
+				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_CONTAINS" value1="${queryContains}" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Tags" />
+
+		<execute macro="AssetCategorization#selectTag">
+			<var name="tagNameList" value="${tagNameList}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
 	<command name="enableRSSSubscription">

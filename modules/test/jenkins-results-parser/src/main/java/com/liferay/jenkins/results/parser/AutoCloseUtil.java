@@ -33,6 +33,101 @@ public class AutoCloseUtil {
 
 	public static boolean debug = false;
 
+	public static void autoClose(PullRequest pullRequest, Build build)
+		throws Exception {
+
+		pullRequest.close();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h1>The pull request tester is still running.</h1>");
+		sb.append("<p>Please wait until you get the ");
+		sb.append("<i><b>final report</b></i> before running 'ci:retest'.");
+		sb.append("</p><p>See this link to check on the status of your ");
+		sb.append("test:</p>");
+
+		sb.append("<ul><li><a href=\"");
+		sb.append(build.getBuildURL());
+		sb.append("\">");
+		sb.append(build.getJobName());
+		sb.append("</a></li></ul><p>@");
+		sb.append(pullRequest.getSenderUsername());
+		sb.append("</p><hr />");
+
+		sb.append("<h1>However, the pull request was closed.</h1>");
+		sb.append("<p>The pull request was closed because the following ");
+		sb.append("critical builds had failed:</p><ul>");
+
+		String buildURL = build.getBuildURL();
+
+		sb.append("<li><a href=\"");
+		sb.append(buildURL);
+		sb.append("\">");
+
+		String jobVariant = build.getJobVariant();
+
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			sb.append(jobVariant);
+		}
+		else {
+			sb.append(build.getJobName());
+		}
+
+		sb.append("</a></li></ul><p>For information as to why we ");
+		sb.append("automatically close out certain pull requests see this ");
+		sb.append("<a href=\"https://in.liferay.com/web/global.");
+		sb.append("engineering/wiki/-/wiki/Quality+Assurance+Main/Test");
+		sb.append("+Batch+Automatic+Close+List\">article</a>.</p><p");
+
+		boolean sourceFormatBuild =
+			build instanceof SourceFormatBuild;
+
+		if (sourceFormatBuild) {
+			sb.append("><strong><em>*");
+		}
+		else {
+			sb.append(" auto-close=\"false\"><strong><em>*This pull will ");
+			sb.append("no longer automatically close if this comment is ");
+			sb.append("available. ");
+		}
+
+		sb.append("If you believe this is a mistake please reopen this ");
+		sb.append("pull by entering the following command as a comment.");
+		sb.append("</em></strong><pre>ci&#58;reopen</pre></p>");
+
+		if (sourceFormatBuild) {
+			sb.append("<strong><em>*The reopened pull request may ");
+			sb.append("be automatically closed again if other critical ");
+			sb.append("batches or tests fail.</em></strong>");
+		}
+
+		sb.append("<hr /><h3>Critical Failure Details:</h3>");
+
+		try {
+			sb.append(Dom4JUtil.format(build.getGitHubMessageElement(), false));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			throw e;
+		}
+
+		if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
+			sb.append("<div>cc");
+
+			for (String autoCloseGitHubCommentMentionUsername :
+					_autoCloseGitHubCommentMentionUsernames) {
+
+				sb.append(" @");
+				sb.append(autoCloseGitHubCommentMentionUsername);
+			}
+
+			sb.append("</div>");
+		}
+
+		pullRequest.addComment(sb.toString());
+	}
+
 	public static boolean autoCloseOnCriticalBatchFailures(
 			PullRequest pullRequest, Build topLevelBuild)
 		throws Exception {

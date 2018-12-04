@@ -80,9 +80,9 @@
 	</set-up>
 
 	<command name="CancelGoogleDocCreation" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleDocCreation" />
-
 		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleDocCreation" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -104,9 +104,9 @@
 	</command>
 
 	<command name="CancelGoogleDocEdit" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleDocEdit" />
-
 		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Doc." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleDocEdit" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -139,9 +139,9 @@
 	</command>
 
 	<command name="CancelGoogleSheetCreation" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSheetCreation" />
-
 		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSheetCreation" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -163,9 +163,9 @@
 	</command>
 
 	<command name="CancelGoogleSheetEdit" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSheetEdit" />
-
 		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Sheet." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSheetEdit" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -198,9 +198,9 @@
 	</command>
 
 	<command name="CancelGoogleSlideCreation" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSlideCreation" />
-
 		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSlideCreation" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -222,9 +222,9 @@
 	</command>
 
 	<command name="CancelGoogleSlideEdit" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSlideEdit" />
-
 		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Slide." />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#CancelGoogleSlideEdit" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -257,9 +257,9 @@
 	</command>
 
 	<command name="EditGoogleDoc" priority="4">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleDoc" />
-
 		<description message="This test ensures a Google Doc title can be changed through the editor" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleDoc" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -335,9 +335,9 @@
 	</command>
 
 	<command name="EditGoogleSheet" priority="4">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleSheet" />
-
 		<description message="This test ensures a Google Sheet title can be changed through the editor" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleSheet" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -374,9 +374,9 @@
 	</command>
 
 	<command name="EditGoogleSlide" priority="4">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleSlide" />
-
 		<description message="This test ensures a Google Slide title can be changed through the editor" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#EditGoogleSlide" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -413,9 +413,9 @@
 	</command>
 
 	<command name="GoogleDocSmoke" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleDocSmoke" />
-
 		<description message="This test ensures that a document is checked out when the Google Doc editor is being used" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleDocSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -444,9 +444,9 @@
 	</command>
 
 	<command name="GoogleSheetSmoke" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleSheetSmoke" />
-
 		<description message="This test ensures that a document is checked out when the Google Sheet editor is being used" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleSheetSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -475,9 +475,9 @@
 	</command>
 
 	<command name="GoogleSlideSmoke" priority="5">
-		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleSlideSmoke" />
-
 		<description message="This test ensures that a document is checked out when the Google Slide editor is being used" />
+
+		<property name="test.name.skip.portal.instance" value="DMOnlineEditing#GoogleSlideSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

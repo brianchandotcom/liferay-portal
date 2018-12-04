@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>DocumentsAndMediaShare</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaShare</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>INVITE_TO_COLLABORATE_INPUT</td>
+	<td>//div/input[contains(@id,'userEmailAddress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLABORATOR_TOOLTIP</td>
+	<td>//div[contains(@class,'lfr-portal-tooltip') and contains(@data-title,'${key_collaborator}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGE_COLLABORATORS-->
+<tr>
+	<td>MANAGE_COLLABORATORS_NAME</td>
+	<td>//div/h4[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_COLLABORATORS_ACCESS_DROPDOWN</td>
+	<td>//li/div[contains(.,'${key_userName}')]//div[3]/div/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE</td>
+	<td>//h3[contains(.,'No Collaborators')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_COLLABORATORS_REMOVE_BUTTON</td>
+	<td>//li/div[contains(.,'${key_userName}')]//div[4]/button[//*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

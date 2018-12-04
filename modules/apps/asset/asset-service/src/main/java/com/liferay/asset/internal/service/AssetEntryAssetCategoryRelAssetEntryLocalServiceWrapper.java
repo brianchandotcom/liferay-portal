@@ -79,7 +79,6 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 			startDate, endDate, publishDate, expirationDate, mimeType, title,
 			description, summary, url, layoutUuid, height, width, priority);
 
-
 		if ((categoryIds != null) &&
 			(!entry.isNew() || (categoryIds.length > 0))) {
 

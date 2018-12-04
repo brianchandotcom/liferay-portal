@@ -12,9 +12,13 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.io.Serializable;
+
 import java.math.BigDecimal;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the ${entity.humanName} service.
@@ -45,15 +49,18 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 	 * Never modify or reference this interface directly. Always use {@link ${entity.name}Util} to access the ${entity.humanName} persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
 
+	@Override
+	public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys);
+
 	<#list methods as method>
-		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method) && !stringUtil.equals(method.name, "fetchByPrimaryKeys")>
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated
 			</#if>
 
-			<#if stringUtil.equals(method.name, "fetchByPrimaryKeys") || stringUtil.equals(method.name, "getBadColumnNames")>
+			<#if stringUtil.equals(method.name, "getBadColumnNames")>
 				@Override
 			</#if>
 

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -57,6 +59,8 @@ import java.sql.Types;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -176,10 +180,135 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Map<Serializable, T> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
 
-		throw new UnsupportedOperationException();
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, T> map = new HashMap<>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			T model = fetchByPrimaryKey(primaryKey);
+
+			if (model != null) {
+				map.put(primaryKey, model);
+			}
+
+			return map;
+		}
+
+		if (_modelPKType == ModelPKType.COMPOUND) {
+			for (Serializable primaryKey : primaryKeys) {
+				T model = fetchByPrimaryKey(primaryKey);
+
+				if (model != null) {
+					map.put(primaryKey, model);
+				}
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		EntityCache entityCache = getEntityCache();
+
+		for (Serializable primaryKey : primaryKeys) {
+			Serializable serializable = entityCache.getResult(
+				_entityCacheEnabled, _modelImplClass, primaryKey);
+
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (T)serializable);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		com.liferay.petra.string.StringBundler query =
+			new com.liferay.petra.string.StringBundler(
+				2 * uncachedPrimaryKeys.size() + 4);
+
+		query.append(getSelectSQL());
+		query.append(" WHERE ");
+		query.append(getPKDBName());
+		query.append(" IN (");
+
+		if (_modelPKType == ModelPKType.STRING) {
+			for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+				query.append("?");
+
+				query.append(",");
+			}
+		}
+		else {
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				query.append(primaryKey);
+
+				query.append(",");
+			}
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(")");
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			if (_modelPKType == ModelPKType.STRING) {
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				for (Serializable primaryKey : uncachedPrimaryKeys) {
+					qPos.add(primaryKey);
+				}
+			}
+
+			for (T model : (List<T>)q.list()) {
+				map.put(model.getPrimaryKeyObj(), model);
+
+				cacheResult(model);
+
+				uncachedPrimaryKeys.remove(model.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(
+					_entityCacheEnabled, _modelImplClass, primaryKey,
+					nullModel);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	@Override
@@ -565,6 +694,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	protected String getPKDBName() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected String getSelectSQL() {
+		throw new UnsupportedOperationException();
+	}
+
 	protected Map<String, Integer> getTableColumnsMap() {
 		throw new UnsupportedOperationException();
 	}
@@ -591,6 +728,15 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected void setModelImplClass(Class<? extends T> modelImplClass) {
 		_modelImplClass = modelImplClass;
+	}
+
+	protected void setModelPKClass(Class<? extends Serializable> clazz) {
+		if (clazz.isPrimitive()) {
+			_modelPKType = ModelPKType.NUMBER;
+		}
+		else if (String.class.isAssignableFrom(clazz)) {
+			_modelPKType = ModelPKType.STRING;
+		}
 	}
 
 	/**
@@ -670,6 +816,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private boolean _entityCacheEnabled;
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;
+	private ModelPKType _modelPKType = ModelPKType.COMPOUND;
 	private SessionFactory _sessionFactory;
 
 	private static class NullModel
@@ -806,6 +953,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		public String toXmlString() {
 			throw new UnsupportedOperationException();
 		}
+
+	}
+
+	private enum ModelPKType {
+
+		COMPOUND, NUMBER, STRING
 
 	}
 

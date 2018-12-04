@@ -230,6 +230,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if !serviceBuilder.isVersionLTE_7_1_0()>
 			setModelImplClass(${entity.name}Impl.class);
+			setModelPKClass(${entity.PKClassName}.class);
 			setEntityCacheEnabled(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED);
 		<#elseif entity.badEntityColumns?size != 0>
 			try {
@@ -927,123 +928,125 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return fetchByPrimaryKey((Serializable)${entity.PKVarName});
 	}
 
-	@Override
-	public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ${entity.name}> map = new HashMap<Serializable, ${entity.name}>();
-
-		<#if entity.hasCompoundPK()>
-			for (Serializable primaryKey : primaryKeys) {
-				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
-
-				if (${entity.varName} != null) {
-					map.put(primaryKey, ${entity.varName});
-				}
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		@Override
+		public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
+			if (primaryKeys.isEmpty()) {
+				return Collections.emptyMap();
 			}
 
-			return map;
-		<#else>
-			if (primaryKeys.size() == 1) {
-				Iterator<Serializable> iterator = primaryKeys.iterator();
+			Map<Serializable, ${entity.name}> map = new HashMap<Serializable, ${entity.name}>();
 
-				Serializable primaryKey = iterator.next();
+			<#if entity.hasCompoundPK()>
+				for (Serializable primaryKey : primaryKeys) {
+					${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
 
-				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
-
-				if (${entity.varName} != null) {
-					map.put(primaryKey, ${entity.varName});
+					if (${entity.varName} != null) {
+						map.put(primaryKey, ${entity.varName});
+					}
 				}
 
 				return map;
-			}
-
-			Set<Serializable> uncachedPrimaryKeys = null;
-
-			for (Serializable primaryKey : primaryKeys) {
-				Serializable serializable = ${entityCache}.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
-
-				if (serializable != nullModel) {
-					if (serializable == null) {
-						if (uncachedPrimaryKeys == null) {
-							uncachedPrimaryKeys = new HashSet<Serializable>();
-						}
-
-						uncachedPrimaryKeys.add(primaryKey);
-					}
-					else {
-						map.put(primaryKey, (${entity.name})serializable);
-					}
-				}
-			}
-
-			if (uncachedPrimaryKeys == null) {
-				return map;
-			}
-
-			StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
-
-			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
-
-			<#if stringUtil.equals(entity.PKClassName, "String")>
-				for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
-					query.append("?");
-
-					query.append(",");
-				}
 			<#else>
-				for (Serializable primaryKey : uncachedPrimaryKeys) {
-					query.append((${entity.PKClassName})primaryKey);
+				if (primaryKeys.size() == 1) {
+					Iterator<Serializable> iterator = primaryKeys.iterator();
 
-					query.append(",");
+					Serializable primaryKey = iterator.next();
+
+					${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
+
+					if (${entity.varName} != null) {
+						map.put(primaryKey, ${entity.varName});
+					}
+
+					return map;
 				}
-			</#if>
 
-			query.setIndex(query.index() - 1);
+				Set<Serializable> uncachedPrimaryKeys = null;
 
-			query.append(")");
+				for (Serializable primaryKey : primaryKeys) {
+					Serializable serializable = ${entityCache}.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
-			String sql = query.toString();
+					if (serializable != nullModel) {
+						if (serializable == null) {
+							if (uncachedPrimaryKeys == null) {
+								uncachedPrimaryKeys = new HashSet<Serializable>();
+							}
 
-			Session session = null;
+							uncachedPrimaryKeys.add(primaryKey);
+						}
+						else {
+							map.put(primaryKey, (${entity.name})serializable);
+						}
+					}
+				}
 
-			try {
-				session = openSession();
+				if (uncachedPrimaryKeys == null) {
+					return map;
+				}
 
-				Query q = session.createQuery(sql);
+				StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
+
+				query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
 
 				<#if stringUtil.equals(entity.PKClassName, "String")>
-					QueryPos qPos = QueryPos.getInstance(q);
+					for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+						query.append("?");
 
+						query.append(",");
+					}
+				<#else>
 					for (Serializable primaryKey : uncachedPrimaryKeys) {
-						qPos.add((String)primaryKey);
+						query.append((${entity.PKClassName})primaryKey);
+
+						query.append(",");
 					}
 				</#if>
 
-				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
-					map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
+				query.setIndex(query.index() - 1);
 
-					cacheResult(${entity.varName});
+				query.append(")");
 
-					uncachedPrimaryKeys.remove(${entity.varName}.getPrimaryKeyObj());
+				String sql = query.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query q = session.createQuery(sql);
+
+					<#if stringUtil.equals(entity.PKClassName, "String")>
+						QueryPos qPos = QueryPos.getInstance(q);
+
+						for (Serializable primaryKey : uncachedPrimaryKeys) {
+							qPos.add((String)primaryKey);
+						}
+					</#if>
+
+					for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
+						map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
+
+						cacheResult(${entity.varName});
+
+						uncachedPrimaryKeys.remove(${entity.varName}.getPrimaryKeyObj());
+					}
+
+					for (Serializable primaryKey : uncachedPrimaryKeys) {
+						${entityCache}.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, nullModel);
+					}
+				}
+				catch (Exception e) {
+					throw processException(e);
+				}
+				finally {
+					closeSession(session);
 				}
 
-				for (Serializable primaryKey : uncachedPrimaryKeys) {
-					${entityCache}.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-
-			return map;
-		</#if>
-	}
+				return map;
+			</#if>
+		}
+	</#if>
 
 	/**
 	 * Returns all the ${entity.humanNames}.
@@ -1537,6 +1540,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return EntityCacheUtil.getEntityCache();
 			</#if>
 		}
+
+		@Override
+		protected String getPKDBName() {
+			return "${entity.PKDBName}";
+		}
+
+		@Override
+		protected String getSelectSQL() {
+			return _SQL_SELECT_${entity.alias?upper_case};
+		}
 	</#if>
 
 	@Override
@@ -1863,7 +1876,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
 
-	<#if !entity.hasCompoundPK()>
+	<#if !entity.hasCompoundPK() && serviceBuilder.isVersionLTE_7_1_0()>
 		private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ${entity.PKDBName} IN (";
 	</#if>
 

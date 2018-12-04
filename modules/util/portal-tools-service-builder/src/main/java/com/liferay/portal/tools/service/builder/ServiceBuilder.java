@@ -1593,6 +1593,7 @@ public class ServiceBuilder {
 		String methodName = method.getName();
 
 		if (methodName.equals("clearCache") ||
+			methodName.equals("fetchByPrimaryKeys") ||
 			methodName.equals("findWithDynamicQuery")) {
 
 			return true;

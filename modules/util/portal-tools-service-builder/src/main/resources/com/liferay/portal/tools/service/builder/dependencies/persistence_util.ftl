@@ -11,10 +11,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.io.Serializable;
+
 import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -68,6 +72,13 @@ public class ${entity.name}Util {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

@@ -624,6 +624,21 @@
 		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" />
 	</command>
 
+	<command name="viewDMLink">
+		<var name="key_dmDocumentURL" value="${dmDocumentURL}" />
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute function="DoubleClick" locator1="BlogsEntry#CONTENT_LINK" />
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
+
+		<execute function="AssertTextEquals" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT" value1="${dmDocumentURL}" />
+	</command>
+
 	<command name="viewEntry">
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entrySubtitle" value="${entrySubtitle}" />

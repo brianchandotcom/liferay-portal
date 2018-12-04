@@ -452,6 +452,17 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="viewableBy" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panel" value="Permissions" />
+				</execute>
+
+				<execute function="Select" locator1="Select#PERMISSIONS" value1="${viewableBy}" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<if>

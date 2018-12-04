@@ -401,27 +401,36 @@ public interface GroupLocalService extends BaseLocalService,
 	* Returns all the active or inactive groups associated with the company.
 	*
 	* @param companyId the primary key of the company
-	* @param active whether to return only active groups, or only inactive
+	* @param active whether to return only active groups or only inactive
 	groups
-	* @return the active or inactive groups associated with the company
+	* @return the active or inactive groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getActiveGroups(long companyId, boolean active);
 
 	/**
-	* Returns the active or inactive groups associated with the company.
+	* Returns the active or inactive groups associated with the company and,
+	* optionally, the main site.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
 	*
 	* @param companyId the primary key of the company
-	* @param active whether to return only active groups, or only inactive
+	* @param site whether the group is associated with a main site
+	* @param active whether to return only active groups or only inactive
 	groups
-	* @param site whether the group is to be associated with a main site
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @param obc the comparator to order the groups (optionally
 	<code>null</code>)
-	* @return the active or inactive groups associated with the company
-	* @review
+	* @return the active or inactive groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getActiveGroups(long companyId, boolean site,
@@ -430,42 +439,50 @@ public interface GroupLocalService extends BaseLocalService,
 	/**
 	* Returns the active or inactive groups associated with the company.
 	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
 	* @param companyId the primary key of the company
-	* @param active whether to return only active groups, or only inactive
+	* @param active whether to return only active groups or only inactive
 	groups
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @param obc the comparator to order the groups (optionally
 	<code>null</code>)
-	* @return the active or inactive groups associated with the company
-	* @review
+	* @return the active or inactive groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getActiveGroups(long companyId, boolean active,
 		int start, int end, OrderByComparator<Group> obc);
 
 	/**
-	* Returns the number of active or inactive groups associated with the company.
+	* Returns the number of active or inactive groups associated with the
+	* company.
 	*
 	* @param companyId the primary key of the company
-	* @param active whether to count only active groups, or only inactive
+	* @param active whether to count only active groups or only inactive
 	groups
-	* @return the number of active or inactive groups associated with the company
-	* @review
+	* @return the number of active or inactive groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActiveGroupsCount(long companyId, boolean active);
 
 	/**
-	* Returns the number of active or inactive groups associated with the company.
+	* Returns the number of active or inactive groups associated with the
+	* company.
 	*
 	* @param companyId the primary key of the company
-	* @param active whether to count only active groups, or only inactive
+	* @param active whether to count only active groups or only inactive
 	groups
 	* @param site whether the group is to be associated with a main site
-	* @return the number of active or inactive groups associated with the company
-	* @review
+	* @return the number of active or inactive groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActiveGroupsCount(long companyId, boolean active, boolean site);

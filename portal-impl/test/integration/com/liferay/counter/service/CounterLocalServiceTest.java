@@ -14,7 +14,6 @@
 
 package com.liferay.counter.service;
 
-import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
@@ -35,6 +34,7 @@ import com.liferay.portal.test.rule.HypersonicServerTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
@@ -79,10 +79,7 @@ public class CounterLocalServiceTest {
 
 						CounterLocalServiceUtil.reset(_COUNTER_NAME);
 
-						Counter counter = CounterLocalServiceUtil.createCounter(
-							_COUNTER_NAME);
-
-						CounterLocalServiceUtil.updateCounter(counter);
+						CounterLocalServiceUtil.reset(_COUNTER_NAME, 0);
 
 						MBeanServer mBeanServer =
 							ManagementFactory.getPlatformMBeanServer();
@@ -175,7 +172,8 @@ public class CounterLocalServiceTest {
 		for (int i = 0; i < total; i++) {
 			Long id = ids.get(i);
 
-			Assert.assertEquals(i + 1, id.intValue());
+			Assert.assertEquals(
+				i + 1 + PropsValues.COUNTER_INCREMENT, id.intValue());
 		}
 	}
 

@@ -15,18 +15,18 @@
 
 	<command name="add">
 		<if>
-			<isset var="widgetPageTemplate" />
+			<isset var="pageTemplateType" />
 			<then>
-				<execute macro="LexiconEntry#gotoAddMenuItem">
-					<var name="menuItem" value="Widget Page Template" />
-				</execute>
+				<var name="menuItem" value="${pageTemplateType}" />
 			</then>
 			<else>
-				<execute macro="LexiconEntry#gotoAddMenuItem">
-					<var name="menuItem" value="Content Page Template" />
-				</execute>
+				<var name="menuItem" value="Content Page Template" />
 			</else>
 		</if>
+
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="${menuItem}}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageTemplateName}" />

@@ -89,7 +89,7 @@
 
 		<execute macro="PageTemplatesAdmin#add">
 			<var name="pageTemplateName" value="Test" />
-			<var name="widgetPageTemplate" value="true" />
+			<var name="pageTemplateType" value="Widget Page Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_MODAL_CONTENT" value1="A page template entry with that name already exists." />

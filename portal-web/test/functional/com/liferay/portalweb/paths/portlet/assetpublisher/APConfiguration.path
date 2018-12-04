@@ -187,16 +187,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_QUERY_OPERATOR</td>
-	<td>//select[contains(@id,'queryAndOperator0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_RULES</td>
-	<td>//li[contains(@class,'timeline-item')]//div[(@class='panel-body')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

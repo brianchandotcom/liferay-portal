@@ -2539,6 +2539,9 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 	public KaleoProcessPersistenceImpl() {
 		setModelClass(KaleoProcess.class);
 
+		setModelImplClass(KaleoProcessImpl.class);
+		setEntityCacheEnabled(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3025,54 +3028,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 	/**
 	 * Returns the kaleo process with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kaleo process
-	 * @return the kaleo process, or <code>null</code> if a kaleo process with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcess fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoProcessImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KaleoProcess kaleoProcess = (KaleoProcess)serializable;
-
-		if (kaleoProcess == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kaleoProcess = (KaleoProcess)session.get(KaleoProcessImpl.class,
-						primaryKey);
-
-				if (kaleoProcess != null) {
-					cacheResult(kaleoProcess);
-				}
-				else {
-					entityCache.putResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoProcessImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoProcessImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kaleoProcess;
-	}
-
-	/**
-	 * Returns the kaleo process with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
 	 * @return the kaleo process, or <code>null</code> if a kaleo process with the primary key could not be found
 	 */
@@ -3369,6 +3324,11 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

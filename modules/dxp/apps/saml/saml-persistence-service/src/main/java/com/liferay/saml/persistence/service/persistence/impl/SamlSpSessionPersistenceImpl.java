@@ -1355,6 +1355,9 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	public SamlSpSessionPersistenceImpl() {
 		setModelClass(SamlSpSession.class);
 
+		setModelImplClass(SamlSpSessionImpl.class);
+		setEntityCacheEnabled(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -1803,54 +1806,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	/**
 	 * Returns the saml sp session with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the saml sp session
-	 * @return the saml sp session, or <code>null</code> if a saml sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlSpSession fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-				SamlSpSessionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SamlSpSession samlSpSession = (SamlSpSession)serializable;
-
-		if (samlSpSession == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				samlSpSession = (SamlSpSession)session.get(SamlSpSessionImpl.class,
-						primaryKey);
-
-				if (samlSpSession != null) {
-					cacheResult(samlSpSession);
-				}
-				else {
-					entityCache.putResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlSpSessionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpSessionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return samlSpSession;
-	}
-
-	/**
-	 * Returns the saml sp session with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param samlSpSessionId the primary key of the saml sp session
 	 * @return the saml sp session, or <code>null</code> if a saml sp session with the primary key could not be found
 	 */
@@ -2147,6 +2102,11 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

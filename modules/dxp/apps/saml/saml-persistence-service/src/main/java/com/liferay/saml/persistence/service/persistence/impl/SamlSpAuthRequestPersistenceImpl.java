@@ -923,6 +923,9 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 
 	public SamlSpAuthRequestPersistenceImpl() {
 		setModelClass(SamlSpAuthRequest.class);
+
+		setModelImplClass(SamlSpAuthRequestImpl.class);
+		setEntityCacheEnabled(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1260,54 +1263,6 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 	/**
 	 * Returns the saml sp auth request with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the saml sp auth request
-	 * @return the saml sp auth request, or <code>null</code> if a saml sp auth request with the primary key could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SamlSpAuthRequestImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SamlSpAuthRequest samlSpAuthRequest = (SamlSpAuthRequest)serializable;
-
-		if (samlSpAuthRequest == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				samlSpAuthRequest = (SamlSpAuthRequest)session.get(SamlSpAuthRequestImpl.class,
-						primaryKey);
-
-				if (samlSpAuthRequest != null) {
-					cacheResult(samlSpAuthRequest);
-				}
-				else {
-					entityCache.putResult(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SamlSpAuthRequestImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpAuthRequestImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return samlSpAuthRequest;
-	}
-
-	/**
-	 * Returns the saml sp auth request with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param samlSpAuthnRequestId the primary key of the saml sp auth request
 	 * @return the saml sp auth request, or <code>null</code> if a saml sp auth request with the primary key could not be found
 	 */
@@ -1599,6 +1554,11 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

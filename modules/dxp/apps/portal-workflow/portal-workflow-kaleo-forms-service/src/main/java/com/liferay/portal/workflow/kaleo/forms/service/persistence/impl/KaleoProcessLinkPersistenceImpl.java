@@ -857,6 +857,9 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 	public KaleoProcessLinkPersistenceImpl() {
 		setModelClass(KaleoProcessLink.class);
+
+		setModelImplClass(KaleoProcessLinkImpl.class);
+		setEntityCacheEnabled(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1223,54 +1226,6 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	/**
 	 * Returns the kaleo process link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the kaleo process link
-	 * @return the kaleo process link, or <code>null</code> if a kaleo process link with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcessLink fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoProcessLinkImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)serializable;
-
-		if (kaleoProcessLink == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				kaleoProcessLink = (KaleoProcessLink)session.get(KaleoProcessLinkImpl.class,
-						primaryKey);
-
-				if (kaleoProcessLink != null) {
-					cacheResult(kaleoProcessLink);
-				}
-				else {
-					entityCache.putResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoProcessLinkImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoProcessLinkImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return kaleoProcessLink;
-	}
-
-	/**
-	 * Returns the kaleo process link with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param kaleoProcessLinkId the primary key of the kaleo process link
 	 * @return the kaleo process link, or <code>null</code> if a kaleo process link with the primary key could not be found
 	 */
@@ -1562,6 +1517,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

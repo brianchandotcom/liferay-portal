@@ -90,6 +90,9 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	public EntryPersistenceImpl() {
 		setModelClass(Entry.class);
+
+		setModelImplClass(EntryImpl.class);
+		setEntityCacheEnabled(EntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -379,53 +382,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	@Override
 	public Entry findByPrimaryKey(long entryId) throws NoSuchEntryException {
 		return findByPrimaryKey((Serializable)entryId);
-	}
-
-	/**
-	 * Returns the entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the entry
-	 * @return the entry, or <code>null</code> if a entry with the primary key could not be found
-	 */
-	@Override
-	public Entry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-				EntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Entry entry = (Entry)serializable;
-
-		if (entry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				entry = (Entry)session.get(EntryImpl.class, primaryKey);
-
-				if (entry != null) {
-					cacheResult(entry);
-				}
-				else {
-					entityCache.putResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-						EntryImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-					EntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return entry;
 	}
 
 	/**
@@ -721,6 +677,11 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

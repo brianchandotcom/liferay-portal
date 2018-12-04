@@ -2476,6 +2476,9 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	public OAuthApplicationPersistenceImpl() {
 		setModelClass(OAuthApplication.class);
+
+		setModelImplClass(OAuthApplicationImpl.class);
+		setEntityCacheEnabled(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2878,54 +2881,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	/**
 	 * Returns the o auth application with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the o auth application
-	 * @return the o auth application, or <code>null</code> if a o auth application with the primary key could not be found
-	 */
-	@Override
-	public OAuthApplication fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-				OAuthApplicationImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuthApplication oAuthApplication = (OAuthApplication)serializable;
-
-		if (oAuthApplication == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuthApplication = (OAuthApplication)session.get(OAuthApplicationImpl.class,
-						primaryKey);
-
-				if (oAuthApplication != null) {
-					cacheResult(oAuthApplication);
-				}
-				else {
-					entityCache.putResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-						OAuthApplicationImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthApplicationImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuthApplication;
-	}
-
-	/**
-	 * Returns the o auth application with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param oAuthApplicationId the primary key of the o auth application
 	 * @return the o auth application, or <code>null</code> if a o auth application with the primary key could not be found
 	 */
@@ -3217,6 +3172,11 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

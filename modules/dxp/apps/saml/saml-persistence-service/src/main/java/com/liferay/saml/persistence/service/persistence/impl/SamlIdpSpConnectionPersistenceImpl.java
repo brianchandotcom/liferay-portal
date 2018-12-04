@@ -867,6 +867,9 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 
 	public SamlIdpSpConnectionPersistenceImpl() {
 		setModelClass(SamlIdpSpConnection.class);
+
+		setModelImplClass(SamlIdpSpConnectionImpl.class);
+		setEntityCacheEnabled(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1258,54 +1261,6 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	/**
 	 * Returns the saml idp sp connection with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the saml idp sp connection
-	 * @return the saml idp sp connection, or <code>null</code> if a saml idp sp connection with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSpConnection fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-				SamlIdpSpConnectionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)serializable;
-
-		if (samlIdpSpConnection == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				samlIdpSpConnection = (SamlIdpSpConnection)session.get(SamlIdpSpConnectionImpl.class,
-						primaryKey);
-
-				if (samlIdpSpConnection != null) {
-					cacheResult(samlIdpSpConnection);
-				}
-				else {
-					entityCache.putResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlIdpSpConnectionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSpConnectionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return samlIdpSpConnection;
-	}
-
-	/**
-	 * Returns the saml idp sp connection with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param samlIdpSpConnectionId the primary key of the saml idp sp connection
 	 * @return the saml idp sp connection, or <code>null</code> if a saml idp sp connection with the primary key could not be found
 	 */
@@ -1598,6 +1553,11 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

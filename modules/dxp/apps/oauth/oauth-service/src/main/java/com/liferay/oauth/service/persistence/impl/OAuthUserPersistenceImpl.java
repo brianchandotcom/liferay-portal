@@ -1549,6 +1549,9 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 
 	public OAuthUserPersistenceImpl() {
 		setModelClass(OAuthUser.class);
+
+		setModelImplClass(OAuthUserImpl.class);
+		setEntityCacheEnabled(OAuthUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1976,54 +1979,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 	/**
 	 * Returns the o auth user with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the o auth user
-	 * @return the o auth user, or <code>null</code> if a o auth user with the primary key could not be found
-	 */
-	@Override
-	public OAuthUser fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
-				OAuthUserImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		OAuthUser oAuthUser = (OAuthUser)serializable;
-
-		if (oAuthUser == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				oAuthUser = (OAuthUser)session.get(OAuthUserImpl.class,
-						primaryKey);
-
-				if (oAuthUser != null) {
-					cacheResult(oAuthUser);
-				}
-				else {
-					entityCache.putResult(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
-						OAuthUserImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthUserImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return oAuthUser;
-	}
-
-	/**
-	 * Returns the o auth user with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param oAuthUserId the primary key of the o auth user
 	 * @return the o auth user, or <code>null</code> if a o auth user with the primary key could not be found
 	 */
@@ -2315,6 +2270,11 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -2819,6 +2819,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	public SourcePersistenceImpl() {
 		setModelClass(Source.class);
 
+		setModelImplClass(SourceImpl.class);
+		setEntityCacheEnabled(SourceModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3286,53 +3289,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	/**
 	 * Returns the source with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the source
-	 * @return the source, or <code>null</code> if a source with the primary key could not be found
-	 */
-	@Override
-	public Source fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
-				SourceImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Source source = (Source)serializable;
-
-		if (source == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				source = (Source)session.get(SourceImpl.class, primaryKey);
-
-				if (source != null) {
-					cacheResult(source);
-				}
-				else {
-					entityCache.putResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
-						SourceImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
-					SourceImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return source;
-	}
-
-	/**
-	 * Returns the source with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param sourceId the primary key of the source
 	 * @return the source, or <code>null</code> if a source with the primary key could not be found
 	 */
@@ -3628,6 +3584,11 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

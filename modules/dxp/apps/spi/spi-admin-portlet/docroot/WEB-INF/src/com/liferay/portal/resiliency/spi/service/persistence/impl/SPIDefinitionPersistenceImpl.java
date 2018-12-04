@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2907,6 +2908,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	public SPIDefinitionPersistenceImpl() {
 		setModelClass(SPIDefinition.class);
+
+		setModelImplClass(SPIDefinitionImpl.class);
+		setEntityCacheEnabled(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -2956,7 +2960,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * Clears the cache for all spi definitions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2972,7 +2976,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * Clears the cache for the spi definition.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -3356,54 +3360,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	/**
 	 * Returns the spi definition with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the spi definition
-	 * @return the spi definition, or <code>null</code> if a spi definition with the primary key could not be found
-	 */
-	@Override
-	public SPIDefinition fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SPIDefinition spiDefinition = (SPIDefinition)serializable;
-
-		if (spiDefinition == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				spiDefinition = (SPIDefinition)session.get(SPIDefinitionImpl.class,
-						primaryKey);
-
-				if (spiDefinition != null) {
-					cacheResult(spiDefinition);
-				}
-				else {
-					EntityCacheUtil.putResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						SPIDefinitionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				EntityCacheUtil.removeResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					SPIDefinitionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return spiDefinition;
-	}
-
-	/**
-	 * Returns the spi definition with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param spiDefinitionId the primary key of the spi definition
 	 * @return the spi definition, or <code>null</code> if a spi definition with the primary key could not be found
 	 */
@@ -3695,6 +3651,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return EntityCacheUtil.getEntityCache();
 	}
 
 	@Override

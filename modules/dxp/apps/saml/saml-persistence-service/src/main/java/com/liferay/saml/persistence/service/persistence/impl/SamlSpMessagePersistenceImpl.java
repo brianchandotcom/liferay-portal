@@ -921,6 +921,9 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	public SamlSpMessagePersistenceImpl() {
 		setModelClass(SamlSpMessage.class);
+
+		setModelImplClass(SamlSpMessageImpl.class);
+		setEntityCacheEnabled(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1254,54 +1257,6 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	/**
 	 * Returns the saml sp message with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the saml sp message
-	 * @return the saml sp message, or <code>null</code> if a saml sp message with the primary key could not be found
-	 */
-	@Override
-	public SamlSpMessage fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-				SamlSpMessageImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SamlSpMessage samlSpMessage = (SamlSpMessage)serializable;
-
-		if (samlSpMessage == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				samlSpMessage = (SamlSpMessage)session.get(SamlSpMessageImpl.class,
-						primaryKey);
-
-				if (samlSpMessage != null) {
-					cacheResult(samlSpMessage);
-				}
-				else {
-					entityCache.putResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-						SamlSpMessageImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpMessageImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return samlSpMessage;
-	}
-
-	/**
-	 * Returns the saml sp message with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param samlSpMessageId the primary key of the saml sp message
 	 * @return the saml sp message, or <code>null</code> if a saml sp message with the primary key could not be found
 	 */
@@ -1593,6 +1548,11 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

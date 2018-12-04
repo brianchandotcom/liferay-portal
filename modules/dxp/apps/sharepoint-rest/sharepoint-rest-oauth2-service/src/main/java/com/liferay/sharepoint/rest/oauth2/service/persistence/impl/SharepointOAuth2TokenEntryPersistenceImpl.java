@@ -343,6 +343,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 	public SharepointOAuth2TokenEntryPersistenceImpl() {
 		setModelClass(SharepointOAuth2TokenEntry.class);
+
+		setModelImplClass(SharepointOAuth2TokenEntryImpl.class);
+		setEntityCacheEnabled(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -688,55 +691,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	/**
 	 * Returns the sharepoint o auth2 token entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the sharepoint o auth2 token entry
-	 * @return the sharepoint o auth2 token entry, or <code>null</code> if a sharepoint o auth2 token entry with the primary key could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-				SharepointOAuth2TokenEntryImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = (SharepointOAuth2TokenEntry)serializable;
-
-		if (sharepointOAuth2TokenEntry == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				sharepointOAuth2TokenEntry = (SharepointOAuth2TokenEntry)session.get(SharepointOAuth2TokenEntryImpl.class,
-						primaryKey);
-
-				if (sharepointOAuth2TokenEntry != null) {
-					cacheResult(sharepointOAuth2TokenEntry);
-				}
-				else {
-					entityCache.putResult(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-						SharepointOAuth2TokenEntryImpl.class, primaryKey,
-						nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SharepointOAuth2TokenEntryImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return sharepointOAuth2TokenEntry;
-	}
-
-	/**
-	 * Returns the sharepoint o auth2 token entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
 	 * @return the sharepoint o auth2 token entry, or <code>null</code> if a sharepoint o auth2 token entry with the primary key could not be found
 	 */
@@ -1030,6 +984,11 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

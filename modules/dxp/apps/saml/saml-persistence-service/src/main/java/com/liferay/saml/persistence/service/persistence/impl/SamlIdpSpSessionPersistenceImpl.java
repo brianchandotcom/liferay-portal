@@ -1419,6 +1419,9 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 
 	public SamlIdpSpSessionPersistenceImpl() {
 		setModelClass(SamlIdpSpSession.class);
+
+		setModelImplClass(SamlIdpSpSessionImpl.class);
+		setEntityCacheEnabled(SamlIdpSpSessionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1811,54 +1814,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 	/**
 	 * Returns the saml idp sp session with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the saml idp sp session
-	 * @return the saml idp sp session, or <code>null</code> if a saml idp sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSpSession fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(SamlIdpSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-				SamlIdpSpSessionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		SamlIdpSpSession samlIdpSpSession = (SamlIdpSpSession)serializable;
-
-		if (samlIdpSpSession == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				samlIdpSpSession = (SamlIdpSpSession)session.get(SamlIdpSpSessionImpl.class,
-						primaryKey);
-
-				if (samlIdpSpSession != null) {
-					cacheResult(samlIdpSpSession);
-				}
-				else {
-					entityCache.putResult(SamlIdpSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlIdpSpSessionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(SamlIdpSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSpSessionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return samlIdpSpSession;
-	}
-
-	/**
-	 * Returns the saml idp sp session with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param samlIdpSpSessionId the primary key of the saml idp sp session
 	 * @return the saml idp sp session, or <code>null</code> if a saml idp sp session with the primary key could not be found
 	 */
@@ -2150,6 +2105,11 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

@@ -2833,6 +2833,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public DefinitionPersistenceImpl() {
 		setModelClass(Definition.class);
 
+		setModelImplClass(DefinitionImpl.class);
+		setEntityCacheEnabled(DefinitionModelImpl.ENTITY_CACHE_ENABLED);
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
@@ -3311,54 +3314,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	/**
 	 * Returns the definition with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the definition
-	 * @return the definition, or <code>null</code> if a definition with the primary key could not be found
-	 */
-	@Override
-	public Definition fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionImpl.class, primaryKey);
-
-		if (serializable == nullModel) {
-			return null;
-		}
-
-		Definition definition = (Definition)serializable;
-
-		if (definition == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				definition = (Definition)session.get(DefinitionImpl.class,
-						primaryKey);
-
-				if (definition != null) {
-					cacheResult(definition);
-				}
-				else {
-					entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						DefinitionImpl.class, primaryKey, nullModel);
-				}
-			}
-			catch (Exception e) {
-				entityCache.removeResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					DefinitionImpl.class, primaryKey);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return definition;
-	}
-
-	/**
-	 * Returns the definition with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param definitionId the primary key of the definition
 	 * @return the definition, or <code>null</code> if a definition with the primary key could not be found
 	 */
@@ -3655,6 +3610,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
 	}
 
 	@Override

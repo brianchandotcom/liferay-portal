@@ -16,34 +16,40 @@ package com.liferay.portal.spring.aop;
 
 import java.lang.reflect.Method;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public abstract class ChainableMethodAdvice implements MethodInterceptor {
+public abstract class ChainableMethodAdvice {
 
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 	}
 
 	public void afterThrowing(
-			MethodInvocation methodInvocation, Throwable throwable)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Throwable throwable)
 		throws Throwable {
 	}
 
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		return null;
 	}
 
-	public void duringFinally(MethodInvocation methodInvocation) {
+	public void duringFinally(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 	}
 
-	@Override
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		Object returnValue = before(methodInvocation);
+	public Object invoke(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
+		Object returnValue = before(serviceBeanMethodInvocation);
 
 		if (returnValue != null) {
 			if (returnValue == nullResult) {
@@ -54,17 +60,17 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		}
 
 		try {
-			returnValue = methodInvocation.proceed();
+			returnValue = serviceBeanMethodInvocation.proceed();
 
-			afterReturning(methodInvocation, returnValue);
+			afterReturning(serviceBeanMethodInvocation, returnValue);
 		}
 		catch (Throwable throwable) {
-			afterThrowing(methodInvocation, throwable);
+			afterThrowing(serviceBeanMethodInvocation, throwable);
 
 			throw throwable;
 		}
 		finally {
-			duringFinally(methodInvocation);
+			duringFinally(serviceBeanMethodInvocation);
 		}
 
 		return returnValue;

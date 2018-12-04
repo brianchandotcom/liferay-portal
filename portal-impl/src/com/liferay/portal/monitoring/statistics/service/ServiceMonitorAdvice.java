@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Michael C. Han
@@ -52,7 +51,9 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 
 		DataSample dataSample = _dataSampleThreadLocal.get();
@@ -64,7 +65,8 @@ public class ServiceMonitorAdvice
 
 	@Override
 	public void afterThrowing(
-			MethodInvocation methodInvocation, Throwable throwable)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Throwable throwable)
 		throws Throwable {
 
 		DataSample dataSample = _dataSampleThreadLocal.get();
@@ -75,19 +77,22 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		if (!_monitorServiceRequest) {
 			return null;
 		}
 
-		boolean included = isIncluded(methodInvocation);
+		boolean included = isIncluded(serviceBeanMethodInvocation);
 
 		if ((!_inclusiveMode && included) || (_inclusiveMode && !included)) {
 			return null;
 		}
 
 		MethodSignature methodSignature = new MethodSignature(
-			methodInvocation.getMethod());
+			serviceBeanMethodInvocation.getMethod());
 
 		DataSample dataSample =
 			DataSampleFactoryUtil.createServiceRequestDataSample(
@@ -103,7 +108,9 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
+	public void duringFinally(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
 		DataSample dataSample = _dataSampleThreadLocal.get();
 
 		if (dataSample != null) {
@@ -152,8 +159,10 @@ public class ServiceMonitorAdvice
 		_monitorServiceRequest = monitorServiceRequest;
 	}
 
-	protected boolean isIncluded(MethodInvocation methodInvocation) {
-		Method method = methodInvocation.getMethod();
+	protected boolean isIncluded(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?> declaringClass = method.getDeclaringClass();
 

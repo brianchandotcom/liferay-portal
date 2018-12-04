@@ -19,10 +19,9 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -35,27 +34,33 @@ public class ClusterableAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;
 		}
 
-		Clusterable clusterable = findAnnotation(methodInvocation);
+		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
 
 		ClusterableInvokerUtil.invokeOnCluster(
-			clusterable.acceptor(), methodInvocation.getThis(),
-			methodInvocation.getMethod(), methodInvocation.getArguments());
+			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
+			serviceBeanMethodInvocation.getMethod(),
+			serviceBeanMethodInvocation.getArguments());
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return null;
 		}
 
-		Clusterable clusterable = findAnnotation(methodInvocation);
+		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
 
 		if (!clusterable.onMaster()) {
 			return null;
@@ -64,15 +69,16 @@ public class ClusterableAdvice
 		Object result = null;
 
 		if (ClusterMasterExecutorUtil.isMaster()) {
-			result = methodInvocation.proceed();
+			result = serviceBeanMethodInvocation.proceed();
 		}
 		else {
 			result = ClusterableInvokerUtil.invokeOnMaster(
-				clusterable.acceptor(), methodInvocation.getThis(),
-				methodInvocation.getMethod(), methodInvocation.getArguments());
+				clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
+				serviceBeanMethodInvocation.getMethod(),
+				serviceBeanMethodInvocation.getArguments());
 		}
 
-		Method method = methodInvocation.getMethod();
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 

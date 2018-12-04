@@ -19,12 +19,10 @@ import java.lang.reflect.Method;
 
 import java.util.Objects;
 
-import org.aopalliance.intercept.MethodInvocation;
-
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanMethodInvocation implements MethodInvocation {
+public class ServiceBeanMethodInvocation {
 
 	public ServiceBeanMethodInvocation(
 		AopMethod aopMethod, Object[] arguments) {
@@ -55,7 +53,6 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return false;
 	}
 
-	@Override
 	public Object[] getArguments() {
 		return _arguments;
 	}
@@ -64,17 +61,14 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _index;
 	}
 
-	@Override
 	public Method getMethod() {
 		return _aopMethod.getMethod();
 	}
 
-	@Override
 	public AccessibleObject getStaticPart() {
 		return _aopMethod.getMethod();
 	}
 
-	@Override
 	public Object getThis() {
 		return _aopMethod.getTarget();
 	}
@@ -84,7 +78,6 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _aopMethod.hashCode();
 	}
 
-	@Override
 	public Object proceed() throws Throwable {
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			_aopMethod.getChainableMethodAdvices();

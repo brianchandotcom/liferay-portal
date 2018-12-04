@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
-import org.aopalliance.intercept.MethodInvocation;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -38,10 +38,10 @@ public class CounterCallbackPreferringTransactionExecutor
 		CallbackPreferringPlatformTransactionManager
 			callbackPreferringPlatformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
-		MethodInvocation methodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		return new CounterCallbackPreferringTransactionCallback(
-			transactionAttributeAdapter, methodInvocation);
+			transactionAttributeAdapter, serviceBeanMethodInvocation);
 	}
 
 	private static class CounterCallbackPreferringTransactionCallback
@@ -50,7 +50,7 @@ public class CounterCallbackPreferringTransactionExecutor
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
 			try {
-				return _methodInvocation.proceed();
+				return _serviceBeanMethodInvocation.proceed();
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttributeAdapter.rollbackOn(throwable)) {
@@ -69,13 +69,13 @@ public class CounterCallbackPreferringTransactionExecutor
 
 		private CounterCallbackPreferringTransactionCallback(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation) {
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 			_transactionAttributeAdapter = transactionAttributeAdapter;
-			_methodInvocation = methodInvocation;
+			_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
 		}
 
-		private final MethodInvocation _methodInvocation;
+		private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
 
 	}

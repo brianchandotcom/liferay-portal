@@ -16,13 +16,12 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Callable;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -63,7 +62,8 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 
 	private static TransactionExecutor _transactionExecutor;
 
-	private static class CallableMethodInvocation implements MethodInvocation {
+	private static class CallableMethodInvocation
+		extends ServiceBeanMethodInvocation {
 
 		@Override
 		public Object[] getArguments() {
@@ -91,6 +91,8 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 		}
 
 		private CallableMethodInvocation(Callable<?> callable) {
+			super(null, null);
+
 			_callable = callable;
 		}
 

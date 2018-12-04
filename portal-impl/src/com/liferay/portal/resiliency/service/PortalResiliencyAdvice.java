@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlThreadLoca
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -30,8 +31,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Future;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -44,14 +43,17 @@ public class PortalResiliencyAdvice
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
 
 		if (!remoteAccess) {
 			return null;
 		}
 
-		Object targetObject = methodInvocation.getThis();
+		Object targetObject = serviceBeanMethodInvocation.getThis();
 
 		Class<?> targetClass = targetObject.getClass();
 
@@ -64,15 +66,16 @@ public class PortalResiliencyAdvice
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
 				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
-					methodInvocation.getThis(), methodInvocation.getMethod(),
-					methodInvocation.getArguments()));
+					serviceBeanMethodInvocation.getThis(),
+					serviceBeanMethodInvocation.getMethod(),
+					serviceBeanMethodInvocation.getArguments()));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);
 
 		Object result = future.get();
 
-		Method method = methodInvocation.getMethod();
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 

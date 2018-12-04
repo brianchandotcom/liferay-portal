@@ -17,14 +17,13 @@ package com.liferay.portal.internal.messaging.async;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -36,15 +35,17 @@ public class AsyncProcessCallable
 		this(null);
 	}
 
-	public AsyncProcessCallable(MethodInvocation methodInvocation) {
-		_methodInvocation = methodInvocation;
+	public AsyncProcessCallable(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
+		_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
 	}
 
 	@Override
 	public Serializable call() {
 		try {
-			if (_methodInvocation != null) {
-				_methodInvocation.proceed();
+			if (_serviceBeanMethodInvocation != null) {
+				_serviceBeanMethodInvocation.proceed();
 			}
 			else {
 				AsyncInvokeThreadLocal.setEnabled(true);
@@ -78,14 +79,15 @@ public class AsyncProcessCallable
 		if (methodHandler == null) {
 			methodHandler =
 				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
-					_methodInvocation.getThis(), _methodInvocation.getMethod(),
-					_methodInvocation.getArguments());
+					_serviceBeanMethodInvocation.getThis(),
+					_serviceBeanMethodInvocation.getMethod(),
+					_serviceBeanMethodInvocation.getArguments());
 		}
 
 		objectOutput.writeObject(methodHandler);
 	}
 
 	private MethodHandler _methodHandler;
-	private final MethodInvocation _methodInvocation;
+	private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 
 }

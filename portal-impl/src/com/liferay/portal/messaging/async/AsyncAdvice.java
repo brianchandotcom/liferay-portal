@@ -22,13 +22,12 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -41,14 +40,15 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 	}
 
 	@Override
-	public Object before(final MethodInvocation methodInvocation)
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
 		if (AsyncInvokeThreadLocal.isEnabled()) {
 			return null;
 		}
 
-		Method method = methodInvocation.getMethod();
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		if (method.getReturnType() != void.class) {
 			if (_log.isWarnEnabled()) {
@@ -63,7 +63,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		String destinationName = null;
 
 		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
-			Object thisObject = methodInvocation.getThis();
+			Object thisObject = serviceBeanMethodInvocation.getThis();
 
 			destinationName = _destinationNames.get(thisObject.getClass());
 		}
@@ -81,7 +81,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 				public Void call() throws Exception {
 					MessageBusUtil.sendMessage(
 						callbackDestinationName,
-						new AsyncProcessCallable(methodInvocation));
+						new AsyncProcessCallable(serviceBeanMethodInvocation));
 
 					return null;
 				}

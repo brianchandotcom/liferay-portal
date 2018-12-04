@@ -102,14 +102,18 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 						<div id="<%= criteriaBuilderId %>"></div>
 
-						<aui:script position="inline" require="<%= segmentsJsRequire %>">
-							segmentsJsRequire.default('<%= criteriaBuilderId %>', {
-								inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
-								properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>,
-								query: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>'
-							}, {
-								spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-							});
+						<aui:script require="<%= segmentsJsRequire %>">
+							segmentsJsRequire.default(
+								'<%= criteriaBuilderId %>',
+								{
+									inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
+									properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>,
+									query: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>'
+								},
+								{
+									spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+								}
+							);
 						</aui:script>
 					<%
 					}

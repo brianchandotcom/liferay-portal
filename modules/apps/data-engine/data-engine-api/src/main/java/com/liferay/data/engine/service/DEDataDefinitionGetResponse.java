@@ -14,12 +14,13 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.executor.DEGetResponse;
 import com.liferay.data.engine.model.DEDataDefinition;
 
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionGetResponse {
+public final class DEDataDefinitionGetResponse implements DEGetResponse {
 
 	public DEDataDefinition getDeDataDefinition() {
 		return _deDataDefinition;

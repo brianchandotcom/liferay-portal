@@ -16,6 +16,7 @@ package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.constants.DEDataDefinitionConstants;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.executor.DEGetRequestExecutor;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
@@ -86,7 +87,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.VIEW);
 
-			return deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
+			return deGetRequestExecutor.execute(deDataDefinitionGetRequest);
 		}
 		catch (DEDataDefinitionException dde)
 		{
@@ -188,6 +189,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 	@Reference
 	protected DEDataEnginePermissionSupport deDataEnginePermissionSupport;
+
+	@Reference
+	protected DEGetRequestExecutor deGetRequestExecutor;
 
 	@Reference
 	protected Portal portal;

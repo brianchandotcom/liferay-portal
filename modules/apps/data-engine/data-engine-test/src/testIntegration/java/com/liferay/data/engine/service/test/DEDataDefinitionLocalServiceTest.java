@@ -16,6 +16,7 @@ package com.liferay.data.engine.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.executor.DEGetRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
@@ -191,7 +192,7 @@ public class DEDataDefinitionLocalServiceTest {
 				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
-				_deDataDefinitionLocalService.get(deDataDefinitionGetRequest);
+				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
 
 			Assert.assertEquals(
 				expectedDEDataDefinition,
@@ -414,6 +415,9 @@ public class DEDataDefinitionLocalServiceTest {
 
 	@Inject(type = DEDataDefinitionLocalService.class)
 	private DEDataDefinitionLocalService _deDataDefinitionLocalService;
+
+	@Inject(type = DEGetRequestExecutor.class)
+	private DEGetRequestExecutor _deGetRequestExecutor;
 
 	@DeleteAfterTestRun
 	private Group _group;

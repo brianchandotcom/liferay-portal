@@ -81,7 +81,7 @@
 		<return value="${contentXML}" />
 	</command>
 
-	<command name="addWebContent" summary="Add a WC Article via JSON">
+	<command name="addWebContent" summary="Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON">
 		<if>
 			<not>
 				<isset var="content" />

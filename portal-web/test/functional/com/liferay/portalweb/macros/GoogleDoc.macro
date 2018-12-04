@@ -1,4 +1,10 @@
 <definition>
+	<command name="discardChanges">
+		<execute function="AssertClick" locator1="Button#ANY">
+			<var name="key_text" value="Discard Changs" />
+		</execute>
+	</command>
+
 	<command name="edit">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

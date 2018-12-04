@@ -79,6 +79,72 @@
 		</execute>
 	</set-up>
 
+	<command name="CancelGoogleDocCreation" priority="5">
+		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+	</command>
+
+	<command name="CancelGoogleSheetCreation" priority="5">
+		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+	</command>
+
+	<command name="CancelGoogleSlideCreation" priority="5">
+		<description message="This test ensures no document is generated if a user cancels creating a Google Doc." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+	</command>
+
 	<command name="EditGoogleDoc" priority="4">
 		<description message="This test ensures a Google Doc title can be changed through the editor" />
 

@@ -420,6 +420,7 @@ public class LibraryReferenceTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (!dirName.endsWith("-compat") &&
+						!dirName.endsWith("-test-util") &&
 						Files.exists(dirPath.resolve(".lfrbuild-portal-pre"))) {
 
 						Path sourceDirPath = dirPath.resolve(

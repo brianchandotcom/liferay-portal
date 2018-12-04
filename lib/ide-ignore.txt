@@ -13,5 +13,6 @@ tmp/lib-pre/com.liferay.petra.nio.jar
 tmp/lib-pre/com.liferay.petra.process.jar
 tmp/lib-pre/com.liferay.petra.reflect.jar
 tmp/lib-pre/com.liferay.petra.string.jar
+tmp/lib-pre/com.liferay.petra.test.util.jar
 tmp/lib-pre/com.liferay.petra.xml.jar
 tmp/lib-pre/com.liferay.registry.api.jar

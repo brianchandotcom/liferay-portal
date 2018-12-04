@@ -61,7 +61,7 @@ public class StrutsActionRegistryUtilTest {
 
 		_atomicState.reset();
 
-		actionAdapter.execute(null, null, null, null);
+		actionAdapter.execute(null, null, null);
 
 		Assert.assertTrue(_atomicState.isSet());
 
@@ -87,7 +87,7 @@ public class StrutsActionRegistryUtilTest {
 
 		_atomicState.reset();
 
-		actionAdapter.execute(null, null, null, null);
+		actionAdapter.execute(null, null, null);
 
 		Assert.assertTrue(_atomicState.isSet());
 

@@ -281,6 +281,80 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Document" />
 	</command>
 
+	<command name="EditGoogleSheet" priority="4">
+		<description message="This test ensures a Google Sheet title can be changed through the editor" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="Edited Google Sheet" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Sheet" />
+	</command>
+
+	<command name="EditGoogleSlide" priority="4">
+		<description message="This test ensures a Google Slide title can be changed through the editor" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="Edited Google Slide" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Slide" />
+	</command>
+
 	<command name="GoogleDocSmoke" priority="5">
 		<description message="This test ensures that a document is checked out when the Google Doc editor is being used" />
 

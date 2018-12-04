@@ -12,6 +12,7 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -includeresource:\
+	com/liferay/counter/service.xml=../../../portal-impl/src/com/liferay/counter/service.xml,\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/journal/journal-service/service.xml,\
@@ -30,7 +31,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/counter/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/mail/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/service.xml,\

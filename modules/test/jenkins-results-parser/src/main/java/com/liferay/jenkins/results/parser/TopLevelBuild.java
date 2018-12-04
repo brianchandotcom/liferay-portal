@@ -1288,7 +1288,7 @@ public class TopLevelBuild extends BaseBuild {
 			String.valueOf(getDownstreamBuildCountByResult(null) + 1),
 			" jobs PASSED");
 
-		if (!result.equals("SUCCESS")) {
+		if ((result != null) && !result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(
 				detailsElement, getFailedJobSummaryElement());
 		}
@@ -1300,7 +1300,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());
 
-		if (!result.equals("SUCCESS")) {
+		if ((result != null) && !result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(
 				detailsElement, (Object[])getBuildFailureElements());
 		}

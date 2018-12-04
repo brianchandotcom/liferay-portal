@@ -98,7 +98,40 @@
 
 		<execute macro="GoogleDoc#discardChanges" />
 
-		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+	</command>
+
+	<command name="CancelGoogleDocEdit" priority="5">
+		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Doc." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="This title should not be saved" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Untitled" />
 	</command>
 
 	<command name="CancelGoogleSheetCreation" priority="5">
@@ -120,7 +153,40 @@
 
 		<execute macro="GoogleDoc#discardChanges" />
 
-		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+	</command>
+
+	<command name="CancelGoogleSheetEdit" priority="5">
+		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Sheet." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Sheets" />
+		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="This title should not be saved" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Untitled" />
 	</command>
 
 	<command name="CancelGoogleSlideCreation" priority="5">
@@ -142,7 +208,40 @@
 
 		<execute macro="GoogleDoc#discardChanges" />
 
-		<execute function="AssertElementPresent" value="Message#EMPTY_INFO" />
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+	</command>
+
+	<command name="CancelGoogleSlideEdit" priority="5">
+		<description message="This test ensures the title of a document is not changed if a user cancels editing a Google Slide." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Slides" />
+		</execute>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="This title should not be saved" />
+		</execute>
+
+		<execute macro="GoogleDoc#discardChanges" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Untitled" />
 	</command>
 
 	<command name="EditGoogleDoc" priority="4">

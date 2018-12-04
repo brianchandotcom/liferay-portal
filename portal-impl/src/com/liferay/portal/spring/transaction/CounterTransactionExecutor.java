@@ -107,11 +107,10 @@ public class CounterTransactionExecutor
 	}
 
 	private Throwable _rollback(
-			PlatformTransactionManager platformTransactionManager,
-			Throwable throwable,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			TransactionStatusAdapter transactionStatusAdapter)
-		throws Throwable {
+		PlatformTransactionManager platformTransactionManager,
+		Throwable throwable,
+		TransactionAttributeAdapter transactionAttributeAdapter,
+		TransactionStatusAdapter transactionStatusAdapter) {
 
 		if (transactionAttributeAdapter.rollbackOn(throwable)) {
 			try {

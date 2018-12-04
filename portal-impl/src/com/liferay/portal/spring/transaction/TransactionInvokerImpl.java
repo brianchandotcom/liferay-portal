@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
-import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Callable;
@@ -72,11 +71,6 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 
 		@Override
 		public Method getMethod() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public AccessibleObject getStaticPart() {
 			throw new UnsupportedOperationException();
 		}
 

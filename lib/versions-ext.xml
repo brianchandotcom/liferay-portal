@@ -997,18 +997,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/aopalliance.jar</file-name>
-				<version>1.0</version>
-				<project-name>AOP Alliance</project-name>
-				<project-url>http://aopalliance.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Public Domain</license-name>
-						<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/asm-debug-all.jar</file-name>
 				<version>5.0.4</version>
 				<project-name>ASM</project-name>

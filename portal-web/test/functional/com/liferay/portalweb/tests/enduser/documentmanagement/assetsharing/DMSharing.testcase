@@ -208,4 +208,109 @@
 			<var name="dmDocumentTitle" value="DM Document Title Edited" />
 		</execute>
 	</command>
+
+	<command name="ViewAndRemoveCollaborators" priority="5">
+		<description message="This test makes sure only owners see the Collaborators List. Collaborators will only see the owner of the document. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed." />
+
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="viewableBy" value="Owner" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleTitle" value="Guest" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#sharePG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="userEmailAddress" value="userea@liferay.com,userea2@liferay.com" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocumentSharing#viewCollaborators">
+			<var name="collaboratorList" value="userfn,userfn2" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentUploader" value="Test Test" />
+		</execute>
+
+		<var name="key_collaborator" value="userfn" />
+		<var name="key_text" value="Manage Collaborators" />
+
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaShare#COLLABORATOR_TOOLTIP" value1="userfn" />
+		<execute function="AssertElementNotPresent" locator1="Button#ANY" value1="Manage Collaborators" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentUploader" value="Test Test" />
+		</execute>
+
+		<execute macro="DMDocumentSharing#removeCollaborator">
+			<var name="collaboratorList" value="userfn,userfn2" />
+			<var name="emptyStateMessage" value="true" />
+		</execute>
+	</command>
 </definition>

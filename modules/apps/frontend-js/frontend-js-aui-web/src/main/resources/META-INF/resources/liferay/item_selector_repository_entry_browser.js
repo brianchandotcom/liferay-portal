@@ -127,7 +127,7 @@ AUI.add(
 							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance)
 						];
 
-						var uploadItemURL = instance.get('uploadItemURL')
+						var uploadItemURL = instance.get('uploadItemURL');
 
 						if (uploadItemURL) {
 							instance._eventHandles.push(
@@ -376,6 +376,8 @@ AUI.add(
 
 						var validExtensions = instance.get('validExtensions');
 
+						var message;
+
 						if (validExtensions === '*' || validExtensions.indexOf(fileExtension) != -1) {
 							var maxFileSize = instance.get('maxFileSize');
 
@@ -383,13 +385,13 @@ AUI.add(
 								instance._previewFile(file);
 							}
 							else {
-								var message =  Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
 
 								instance._showError(message);
 							}
 						}
 						else {
-							var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
+							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
 
 							instance._showError(message);
 						}

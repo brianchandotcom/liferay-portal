@@ -1148,11 +1148,13 @@ AUI.add(
 
 						var documentLibrarySelectorURL = form.get('documentLibrarySelectorURL');
 
+						var retVal = instance.getDocumentLibraryURL('com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
+
 						if (documentLibrarySelectorURL) {
-							return documentLibrarySelectorURL;
+							retVal = documentLibrarySelectorURL;
 						}
 
-						return instance.getDocumentLibraryURL('com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
+						return retVal;
 					},
 
 					getDocumentLibraryURL: function(criteria) {
@@ -2508,11 +2510,13 @@ AUI.add(
 
 						var imageSelectorURL = form.get('imageSelectorURL');
 
+						var retVal = instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
+
 						if (imageSelectorURL) {
-							return imageSelectorURL;
+							retVal = imageSelectorURL;
 						}
 
-						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
+						return retVal;
 					},
 
 					getDocumentLibraryURL: function(criteria) {
@@ -2992,7 +2996,7 @@ AUI.add(
 						setter: A.one
 					},
 
-					defaultEditLocale :{
+					defaultEditLocale: {
 					},
 
 					documentLibrarySelectorURL: {
@@ -3175,11 +3179,13 @@ AUI.add(
 
 										var dragNodeAncestor = dragNode.ancestor();
 
+										var retVal = dropNode.getData('fieldName') === fieldName;
+
 										if (dropNodeAncestor.get('id') !== dragNodeAncestor.get('id')) {
-											return false;
+											retVal = false;
 										}
 
-										return dropNode.getData('fieldName') === fieldName;
+										return retVal;
 									}
 								}
 							);

@@ -17,13 +17,13 @@ AUI.add(
 
 		var availableLanguages = Liferay.Language.available;
 
-		var availableLanguageIds = A.Array.dedupe(
-			[defaultLanguageId, userLanguageId].concat(A.Object.keys(availableLanguages))
-		);
-
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 		var userLanguageId = themeDisplay.getLanguageId();
+
+		var availableLanguageIds = A.Array.dedupe(
+			[defaultLanguageId, userLanguageId].concat(A.Object.keys(availableLanguages))
+		);
 
 		var InputLocalized = A.Component.create(
 			{
@@ -222,7 +222,7 @@ AUI.add(
 
 						instance._fillDefaultLanguage = !defaultLanguageValue;
 
-						instance.set('selected', parseInt(instance.get('items').indexOf(languageId)));
+						instance.set('selected', parseInt(instance.get('items').indexOf(languageId), 10));
 
 						if (editor) {
 							editor.setHTML(inputLanguageValue);
@@ -284,7 +284,7 @@ AUI.add(
 
 							setTimeout(
 								function() {
-									input.addClass(animateClass)
+									input.addClass(animateClass);
 
 									if (shouldFocus) {
 										input.focus();
@@ -323,10 +323,10 @@ AUI.add(
 					_getInputLanguage: function(languageId) {
 						var instance = this;
 
-						var inputBox = instance.get('inputBox');
 						var fieldPrefix = instance.get('fieldPrefix');
 						var fieldPrefixSeparator = instance.get('fieldPrefixSeparator');
 						var id = instance.get('id');
+						var inputBox = instance.get('inputBox');
 						var name = instance.get('name');
 						var namespace = instance.get('namespace');
 
@@ -477,7 +477,7 @@ AUI.add(
 						var translationStatus = Liferay.Language.get('untranslated');
 						var translationStatusCssClass = 'warning';
 
-						if (translatedLanguages.has(languageId)) {
+						if (translatedLanguages.has(languageId)) {
 							translationStatus = Liferay.Language.get('translated');
 							translationStatusCssClass = 'success';
 						}

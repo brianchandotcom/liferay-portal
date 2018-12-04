@@ -514,8 +514,10 @@ public class InvokerFilterHelper {
 
 			Set<Dispatcher> dispatcherSet = new HashSet<>();
 
-			for (String dispatcher : dispatchers) {
-				dispatcherSet.add(Dispatcher.valueOf(dispatcher));
+			if (dispatchers != null) {
+				for (String dispatcher : dispatchers) {
+					dispatcherSet.add(Dispatcher.valueOf(dispatcher));
+				}
 			}
 
 			FilterMapping filterMapping = new FilterMapping(

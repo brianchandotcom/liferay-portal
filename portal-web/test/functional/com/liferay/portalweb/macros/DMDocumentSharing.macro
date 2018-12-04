@@ -31,4 +31,39 @@
 			<var name="successMessage" value="Permissions Changed" />
 		</execute>
 	</command>
+
+	<command name="removeCollaborator">
+		<execute macro="DMDocumentSharing#_manageCollaborators" />
+
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+
+		<for list="${collaboratorList}" param="collaborator">
+			<var name="key_userName" value="${collaborator}" />
+
+			<execute function="Click" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_REMOVE_BUTTON" />
+		</for>
+
+		<if>
+			<isset var="emptyStateMessage" />
+			<then>
+				<execute function="AssertElementPresent" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE" />
+			</then>
+		</if>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="Permissions Changed" />
+		</execute>
+	</command>
+
+	<command name="viewCollaborators">
+		<execute function="Click" locator1="Button#INFO" />
+
+		<for list="${collaboratorList}" param="collaborator">
+			<var name="key_collaborator" value="${collaborator}" />
+
+			<execute function="AssertElementPresent" locator1="DocumentsAndMediaShare#COLLABORATOR_TOOLTIP" value1="${collaborator}" />
+		</for>
+	</command>
 </definition>

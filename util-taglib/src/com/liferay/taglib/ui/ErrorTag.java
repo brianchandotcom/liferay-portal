@@ -264,17 +264,17 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 
 	private String _getAlertTitle() {
 		if ((_key != null) && Validator.isNull(_message)) {
-			return LanguageUtil.get(request, "error-colon");
+			return LanguageUtil.get(request, "error");
 		}
 
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (SessionErrors.contains(portletRequest, "warning")) {
-			return LanguageUtil.get(request, "warning-colon");
+			return LanguageUtil.get(request, "warning");
 		}
 
-		return LanguageUtil.get(request, "error-colon");
+		return LanguageUtil.get(request, "error");
 	}
 
 	private String _getBodyContentString() {

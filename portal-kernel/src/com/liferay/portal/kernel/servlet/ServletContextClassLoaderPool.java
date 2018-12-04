@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,7 +32,20 @@ public class ServletContextClassLoaderPool {
 			return null;
 		}
 
-		return _classLoaders.get(servletContextName);
+		ClassLoader classLoader = _classLoaders.get(servletContextName);
+
+		if (classLoader != null) {
+			return classLoader;
+		}
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK))) {
+
+			return ClassLoaderPool.getClassLoader(servletContextName);
+		}
+
+		return null;
 	}
 
 	public static String getServletContextName(ClassLoader classLoader) {
@@ -35,7 +53,20 @@ public class ServletContextClassLoaderPool {
 			return null;
 		}
 
-		return _servletContextNames.get(classLoader);
+		String servletContextName = _servletContextNames.get(classLoader);
+
+		if (servletContextName != null) {
+			return servletContextName;
+		}
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK))) {
+
+			return ClassLoaderPool.getContextName(classLoader);
+		}
+
+		return null;
 	}
 
 	public static void register(

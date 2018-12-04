@@ -69,8 +69,11 @@ public class AssetEntryAssetCategoryRelUpdateTest {
 	@Test
 	public void testUserCategoryIds() throws Exception {
 		_assertSize(1, ArrayUtil.subset(_assetCategoryIds, 0, 1));
+
 		_assertSize(2, _assetCategoryIds);
+
 		_assertSize(2, null);
+
 		_assertSize(0, new long[0]);
 	}
 

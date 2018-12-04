@@ -30,12 +30,11 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Zsolt Berentey
@@ -48,20 +47,22 @@ public class SystemEventAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 
-		SystemEvent systemEvent = findAnnotation(methodInvocation);
+		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
 
 		if (!systemEvent.send()) {
 			return;
 		}
 
-		if (!isValid(methodInvocation, _PHASE_AFTER_RETURNING)) {
+		if (!isValid(serviceBeanMethodInvocation, _PHASE_AFTER_RETURNING)) {
 			return;
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -115,15 +116,18 @@ public class SystemEventAdvice
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		SystemEvent systemEvent = findAnnotation(methodInvocation);
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
+		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
-			if (!isValid(methodInvocation, _PHASE_BEFORE)) {
+			if (!isValid(serviceBeanMethodInvocation, _PHASE_BEFORE)) {
 				return null;
 			}
 
-			Object[] arguments = methodInvocation.getArguments();
+			Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 			ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -141,10 +145,12 @@ public class SystemEventAdvice
 	}
 
 	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
-		SystemEvent systemEvent = findAnnotation(methodInvocation);
+	public void duringFinally(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		if (!isValid(methodInvocation, _PHASE_DURING_FINALLY)) {
+		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+
+		if (!isValid(serviceBeanMethodInvocation, _PHASE_DURING_FINALLY)) {
 			return;
 		}
 
@@ -152,7 +158,7 @@ public class SystemEventAdvice
 			return;
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -243,15 +249,17 @@ public class SystemEventAdvice
 		return (String)getUuidMethod.invoke(classedModel, new Object[0]);
 	}
 
-	protected boolean isValid(MethodInvocation methodInvocation, int phase) {
-		Method method = methodInvocation.getMethod();
+	protected boolean isValid(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation, int phase) {
+
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		if (parameterTypes.length == 0) {
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The method " + methodInvocation +
+					"The method " + serviceBeanMethodInvocation +
 						" must have at least one parameter");
 			}
 
@@ -263,14 +271,14 @@ public class SystemEventAdvice
 		if (!ClassedModel.class.isAssignableFrom(parameterType)) {
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The first parameter of " + methodInvocation +
+					"The first parameter of " + serviceBeanMethodInvocation +
 						" must implement ClassedModel");
 			}
 
 			return false;
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -279,7 +287,7 @@ public class SystemEventAdvice
 
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The first parameter of " + methodInvocation +
+					"The first parameter of " + serviceBeanMethodInvocation +
 						" must be a long");
 			}
 
@@ -298,7 +306,7 @@ public class SystemEventAdvice
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("If send is true, the first parameter of ");
-				sb.append(methodInvocation);
+				sb.append(serviceBeanMethodInvocation);
 				sb.append(" must implement AuditedModel, GroupedModel, or ");
 				sb.append("StagedModel");
 

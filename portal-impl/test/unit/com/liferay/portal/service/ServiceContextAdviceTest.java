@@ -17,11 +17,10 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -125,7 +124,8 @@ public class ServiceContextAdviceTest {
 
 	}
 
-	private static class TestMethodInvocation implements MethodInvocation {
+	private static class TestMethodInvocation
+		extends ServiceBeanMethodInvocation {
 
 		@Override
 		public Object[] getArguments() {
@@ -162,6 +162,8 @@ public class ServiceContextAdviceTest {
 		}
 
 		private TestMethodInvocation(Method method, Object... arguments) {
+			super(null, null);
+
 			_method = method;
 			_arguments = arguments;
 		}

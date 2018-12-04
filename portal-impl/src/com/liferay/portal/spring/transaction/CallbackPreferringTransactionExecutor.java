@@ -15,8 +15,7 @@
 package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
-
-import org.aopalliance.intercept.MethodInvocation;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -39,12 +38,12 @@ public class CallbackPreferringTransactionExecutor
 	@Override
 	public Object execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
 		return _execute(
 			_platformTransactionManager, transactionAttributeAdapter,
-			methodInvocation);
+			serviceBeanMethodInvocation);
 	}
 
 	@Override
@@ -56,11 +55,11 @@ public class CallbackPreferringTransactionExecutor
 		CallbackPreferringPlatformTransactionManager
 			callbackPreferringPlatformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
-		MethodInvocation methodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		return new CallbackPreferringTransactionCallback(
 			callbackPreferringPlatformTransactionManager,
-			transactionAttributeAdapter, methodInvocation);
+			transactionAttributeAdapter, serviceBeanMethodInvocation);
 	}
 
 	protected static class ThrowableHolder {
@@ -88,7 +87,7 @@ public class CallbackPreferringTransactionExecutor
 	private Object _execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
 		CallbackPreferringPlatformTransactionManager
@@ -102,7 +101,8 @@ public class CallbackPreferringTransactionExecutor
 					transactionAttributeAdapter,
 					createTransactionCallback(
 						callbackPreferringPlatformTransactionManager,
-						transactionAttributeAdapter, methodInvocation));
+						transactionAttributeAdapter,
+						serviceBeanMethodInvocation));
 
 			if (result instanceof ThrowableHolder) {
 				ThrowableHolder throwableHolder = (ThrowableHolder)result;
@@ -136,7 +136,7 @@ public class CallbackPreferringTransactionExecutor
 			boolean rollback = false;
 
 			try {
-				return _methodInvocation.proceed();
+				return _serviceBeanMethodInvocation.proceed();
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttributeAdapter.rollbackOn(throwable)) {
@@ -172,15 +172,15 @@ public class CallbackPreferringTransactionExecutor
 		private CallbackPreferringTransactionCallback(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation) {
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 			_platformTransactionManager = platformTransactionManager;
 			_transactionAttributeAdapter = transactionAttributeAdapter;
-			_methodInvocation = methodInvocation;
+			_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
 		}
 
-		private final MethodInvocation _methodInvocation;
 		private final PlatformTransactionManager _platformTransactionManager;
+		private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
 
 	}

@@ -18,10 +18,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.util.Map;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Tomas Polesovsky
@@ -38,18 +37,25 @@ public class AccessControlAdvice
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		incrementServiceDepth();
 
-		AccessControlled accessControlled = findAnnotation(methodInvocation);
+		AccessControlled accessControlled = findAnnotation(
+			serviceBeanMethodInvocation);
 
-		_accessControlAdvisor.accept(methodInvocation, accessControlled);
+		_accessControlAdvisor.accept(
+			serviceBeanMethodInvocation, accessControlled);
 
 		return null;
 	}
 
 	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
+	public void duringFinally(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
 		decrementServiceDepth();
 	}
 

@@ -22,7 +22,8 @@ import java.lang.reflect.Method;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.aopalliance.intercept.MethodInvocation;
+
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 /**
  * @author Preston Crary
@@ -30,14 +31,17 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		Integer index = _indexCache.get(methodInvocation.getMethod());
+	public Object invoke(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
+		Integer index = _indexCache.get(serviceBeanMethodInvocation.getMethod());
 
 		if (index == null) {
-			return methodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed();
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ServiceContext serviceContext = (ServiceContext)arguments[index];
 
@@ -46,7 +50,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 		}
 
 		try {
-			return methodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed();
 		}
 		finally {
 			if (serviceContext != null) {

@@ -19,11 +19,10 @@ import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -39,15 +38,19 @@ public class DynamicDataSourceAdvice
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		Operation operation = Operation.WRITE;
 
-		MasterDataSource masterDataSource = findAnnotation(methodInvocation);
+		MasterDataSource masterDataSource = findAnnotation(
+			serviceBeanMethodInvocation);
 
 		if (masterDataSource == null) {
 			TransactionAttribute transactionAttribute =
 				_transactionInterceptor.getTransactionAttribute(
-					methodInvocation);
+					serviceBeanMethodInvocation);
 
 			if (transactionAttribute.isReadOnly()) {
 				operation = Operation.READ;
@@ -60,7 +63,9 @@ public class DynamicDataSourceAdvice
 	}
 
 	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
+	public void duringFinally(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
 		_dynamicDataSourceTargetSource.popOperation();
 	}
 
@@ -83,12 +88,12 @@ public class DynamicDataSourceAdvice
 
 	@Override
 	protected MasterDataSource findAnnotation(
-		MethodInvocation methodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		Object target = methodInvocation.getThis();
+		Object target = serviceBeanMethodInvocation.getThis();
 
 		return serviceBeanAopCacheManager.findAnnotation(
-			target.getClass(), methodInvocation.getMethod(),
+			target.getClass(), serviceBeanMethodInvocation.getMethod(),
 			MasterDataSource.class);
 	}
 

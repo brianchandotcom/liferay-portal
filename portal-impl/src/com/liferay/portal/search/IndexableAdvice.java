@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -41,7 +40,9 @@ public class IndexableAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 
 		if (result == null) {
@@ -64,7 +65,7 @@ public class IndexableAdvice
 			return;
 		}
 
-		Method method = methodInvocation.getMethod();
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 
@@ -85,7 +86,7 @@ public class IndexableAdvice
 			return;
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		for (int i = arguments.length - 1; i >= 0; i--) {
 			if (arguments[i] instanceof ServiceContext) {
@@ -99,7 +100,7 @@ public class IndexableAdvice
 			}
 		}
 
-		Indexable indexable = findAnnotation(methodInvocation);
+		Indexable indexable = findAnnotation(serviceBeanMethodInvocation);
 
 		if (indexable.type() == IndexableType.DELETE) {
 			indexer.delete(result);

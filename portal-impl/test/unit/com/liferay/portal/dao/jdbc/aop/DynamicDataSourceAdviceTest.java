@@ -111,16 +111,16 @@ public class DynamicDataSourceAdviceTest {
 		TestClass testClass = new TestClass();
 
 		for (int i = 1; i <= 6; i++) {
-			MethodInvocation methodInvocation = createMethodInvocation(
-				testClass, "method" + i);
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+				createMethodInvocation(testClass, "method" + i);
 
-			methodInvocation.proceed();
+			serviceBeanMethodInvocation.proceed();
 		}
 
 		testClass.assertExecutions();
 	}
 
-	protected MethodInvocation createMethodInvocation(
+	protected ServiceBeanMethodInvocation createMethodInvocation(
 			TestClass testClass, String methodName)
 		throws Exception {
 

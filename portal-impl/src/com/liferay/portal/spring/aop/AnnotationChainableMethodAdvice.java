@@ -23,8 +23,6 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.aopalliance.intercept.MethodInvocation;
-
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
@@ -54,11 +52,14 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		return true;
 	}
 
-	protected T findAnnotation(MethodInvocation methodInvocation) {
-		Object target = methodInvocation.getThis();
+	protected T findAnnotation(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+
+		Object target = serviceBeanMethodInvocation.getThis();
 
 		return _annotations.get(
-			new CacheKey(target.getClass(), methodInvocation.getMethod()));
+			new CacheKey(
+				target.getClass(), serviceBeanMethodInvocation.getMethod()));
 	}
 
 	private final Class<? extends Annotation> _annotationClass;

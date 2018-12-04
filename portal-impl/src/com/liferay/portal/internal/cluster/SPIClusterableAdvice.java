@@ -20,14 +20,13 @@ import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Future;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -40,10 +39,12 @@ public class SPIClusterableAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
+	public void afterReturning(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object result)
 		throws Throwable {
 
-		Clusterable clusterable = findAnnotation(methodInvocation);
+		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
 
 		SPI spi = SPIUtil.getSPI();
 
@@ -51,14 +52,18 @@ public class SPIClusterableAdvice
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(), methodInvocation.getThis(),
-					methodInvocation.getMethod(),
-					methodInvocation.getArguments())));
+					clusterable.acceptor(),
+					serviceBeanMethodInvocation.getThis(),
+					serviceBeanMethodInvocation.getMethod(),
+					serviceBeanMethodInvocation.getArguments())));
 	}
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		Clusterable clusterable = findAnnotation(methodInvocation);
+	public Object before(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
+		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
 
 		if (!clusterable.onMaster()) {
 			return null;
@@ -70,13 +75,14 @@ public class SPIClusterableAdvice
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(), methodInvocation.getThis(),
-					methodInvocation.getMethod(),
-					methodInvocation.getArguments())));
+					clusterable.acceptor(),
+					serviceBeanMethodInvocation.getThis(),
+					serviceBeanMethodInvocation.getMethod(),
+					serviceBeanMethodInvocation.getArguments())));
 
 		Object result = futureResult.get();
 
-		Method method = methodInvocation.getMethod();
+		Method method = serviceBeanMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 

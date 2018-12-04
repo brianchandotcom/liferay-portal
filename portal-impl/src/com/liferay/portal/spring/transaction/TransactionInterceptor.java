@@ -17,14 +17,13 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -39,28 +38,32 @@ public class TransactionInterceptor
 	}
 
 	public TransactionAttribute getTransactionAttribute(
-		MethodInvocation methodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		Object target = methodInvocation.getThis();
+		Object target = serviceBeanMethodInvocation.getThis();
 
 		return _transactionAttributes.get(
-			new CacheKey(target.getClass(), methodInvocation.getMethod()));
+			new CacheKey(
+				target.getClass(), serviceBeanMethodInvocation.getMethod()));
 	}
 
 	@Override
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+	public Object invoke(
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+		throws Throwable {
+
 		TransactionAttribute transactionAttribute = getTransactionAttribute(
-			methodInvocation);
+			serviceBeanMethodInvocation);
 
 		if (transactionAttribute == null) {
-			return methodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed();
 		}
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
 			new TransactionAttributeAdapter(transactionAttribute);
 
 		return transactionExecutor.execute(
-			transactionAttributeAdapter, methodInvocation);
+			transactionAttributeAdapter, serviceBeanMethodInvocation);
 	}
 
 	@Override

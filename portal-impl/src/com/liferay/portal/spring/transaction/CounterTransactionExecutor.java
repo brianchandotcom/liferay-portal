@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
-import org.aopalliance.intercept.MethodInvocation;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -41,12 +41,12 @@ public class CounterTransactionExecutor
 	@Override
 	public Object execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
 		return _execute(
 			_platformTransactionManager, transactionAttributeAdapter,
-			methodInvocation);
+			serviceBeanMethodInvocation);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class CounterTransactionExecutor
 	private Object _execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
 		TransactionStatusAdapter transactionStatusAdapter = _start(
@@ -93,7 +93,7 @@ public class CounterTransactionExecutor
 		Object returnValue = null;
 
 		try {
-			returnValue = methodInvocation.proceed();
+			returnValue = serviceBeanMethodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
 			throw _rollback(

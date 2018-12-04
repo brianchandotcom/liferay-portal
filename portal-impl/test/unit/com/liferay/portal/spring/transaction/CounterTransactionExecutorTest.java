@@ -17,6 +17,7 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -24,8 +25,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.function.Predicate;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -327,24 +326,17 @@ public class CounterTransactionExecutorTest {
 	protected final Exception commitException = new Exception();
 	protected final Exception rollbackException = new Exception();
 
-	private static MethodInvocation _newMethodInvocation(Callable<?> callable) {
-		return (MethodInvocation)ProxyUtil.newProxyInstance(
-			MethodInvocation.class.getClassLoader(),
-			new Class<?>[] {MethodInvocation.class},
-			new InvocationHandler() {
+	private static ServiceBeanMethodInvocation _newMethodInvocation(
+		Callable<?> callable) {
 
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Exception {
+		return new ServiceBeanMethodInvocation(null, null) {
 
-					if ("proceed".equals(method.getName())) {
-						return callable.call();
-					}
+			@Override
+			public Object proceed() throws Exception {
+				return callable.call();
+			}
 
-					throw new UnsupportedOperationException(method.toString());
-				}
-
-			});
+		};
 	}
 
 	private static TransactionAttributeAdapter _newTransactionAttributeAdapter(

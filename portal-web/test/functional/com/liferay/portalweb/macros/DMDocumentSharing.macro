@@ -1,0 +1,9 @@
+<definition>
+	<command name="_manageCollaborators">
+		<execute function="Click" locator1="Button#INFO" />
+
+		<var name="key_text" value="Manage Collaborators" />
+
+		<execute function="AssertClick" locator1="Button#ANY" value1="Manage Collaborators" />
+	</command>
+</definition>

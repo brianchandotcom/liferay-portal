@@ -56,7 +56,7 @@
 
 				userNameFields.insertAdjacentHTML('beforebegin', '<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
 
-				userNameFields.style.display = 'none';
+				userNameFields.classList.add('hide');
 
 				const cleanUp = function() {
 					const loadingAnimation = document.getElementById('<portlet:namespace />loadingUserNameFields');
@@ -65,8 +65,8 @@
 						loadingAnimation.parentNode.removeChild(loadingAnimation);
 					}
 
-					if (userNameFields.style.display === 'none') {
-						userNameFields.style.display = '';
+					if (userNameFields.classList.contains('hide')) {
+						userNameFields.classList.remove('hide');
 					}
 
 					for (const tuple of currentFormData) {

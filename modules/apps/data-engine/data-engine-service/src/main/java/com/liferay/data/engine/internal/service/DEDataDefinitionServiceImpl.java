@@ -16,14 +16,15 @@ package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.constants.DEDataDefinitionConstants;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.executor.DEDeleteRequestExecutor;
 import com.liferay.data.engine.executor.DEGetRequestExecutor;
+import com.liferay.data.engine.executor.DESaveRequestExecutor;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
-import com.liferay.data.engine.service.DEDataDefinitionLocalService;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
@@ -58,7 +59,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.DELETE);
 
-			return deDataDefinitionLocalService.delete(
+			return deDeleteRequestExecutor.execute(
 				deDataDefinitionDeleteRequest);
 		}
 		catch (DEDataDefinitionException dde)
@@ -127,7 +128,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			}
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
+				deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
 
 			return DEDataDefinitionSaveResponse.Builder.of(
 				deDataDefinitionSaveResponse.getDEDataDefinitionId());
@@ -184,14 +185,18 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		_modelResourcePermission = modelResourcePermission;
 	}
 
-	@Reference
-	protected DEDataDefinitionLocalService deDataDefinitionLocalService;
 
 	@Reference
 	protected DEDataEnginePermissionSupport deDataEnginePermissionSupport;
 
 	@Reference
 	protected DEGetRequestExecutor deGetRequestExecutor;
+
+	@Reference
+	protected DESaveRequestExecutor deSaveRequestExecutor;
+
+	@Reference
+	protected DEDeleteRequestExecutor deDeleteRequestExecutor;
 
 	@Reference
 	protected Portal portal;

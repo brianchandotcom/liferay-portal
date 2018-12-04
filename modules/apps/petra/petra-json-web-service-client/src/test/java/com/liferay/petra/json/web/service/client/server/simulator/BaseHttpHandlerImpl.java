@@ -26,10 +26,13 @@ import java.io.OutputStream;
 
 import java.net.URI;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * @author Igor Beslic
@@ -38,16 +41,18 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
-		Map<String, String> parameters = getParameters(httpExchange);
+		List<NameValuePair> parameters = getParameters(httpExchange);
 
 		int responseHTTPStatus = 400;
 
-		if (parameters.containsKey(
-				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS)) {
+		if (_containsParameter(
+				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS,
+				parameters)) {
 
 			responseHTTPStatus = Integer.parseInt(
-				parameters.get(
-					SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS));
+				_getFirstValue(
+					SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS,
+					parameters));
 
 			if (responseHTTPStatus == 400) {
 				httpExchange.sendResponseHeaders(responseHTTPStatus, -1);
@@ -58,12 +63,14 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 
 		boolean returnParamsInJSON = false;
 
-		if (parameters.containsKey(
-				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON)) {
+		if (_containsParameter(
+				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
+				parameters)) {
 
 			returnParamsInJSON = Boolean.parseBoolean(
-				parameters.get(
-					SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON));
+				_getFirstValue(
+					SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
+					parameters));
 		}
 
 		if ((responseHTTPStatus == 204) || (responseHTTPStatus == 401) ||
@@ -125,16 +132,16 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 		return "plain/text";
 	}
 
-	protected String getAsJSON(Map<String, String> parameters) {
+	protected String getAsJSON(List<NameValuePair> parameters) {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("{");
 
-		for (Map.Entry parameterEntry : parameters.entrySet()) {
+		for (NameValuePair nameValuePair : parameters) {
 			sb.append("\"");
-			sb.append(parameterEntry.getKey());
+			sb.append(nameValuePair.getName());
 			sb.append("\":\"");
-			sb.append(parameterEntry.getValue());
+			sb.append(nameValuePair.getValue());
 			sb.append("\",");
 		}
 
@@ -145,13 +152,13 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 		return sb.toString();
 	}
 
-	protected String getAsPlainText(Map<String, String> parameters) {
+	protected String getAsPlainText(List<NameValuePair> parameters) {
 		StringBuffer sb = new StringBuffer();
 
-		for (Map.Entry parameterEntry : parameters.entrySet()) {
-			sb.append(parameterEntry.getKey());
+		for (NameValuePair nameValuePair : parameters) {
+			sb.append(nameValuePair.getName());
 			sb.append("=");
-			sb.append(parameterEntry.getValue());
+			sb.append(nameValuePair.getValue());
 			sb.append("\n");
 		}
 
@@ -177,16 +184,16 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 		return sb.toString();
 	}
 
-	protected Map<String, String> getParameters(HttpExchange httpExchange)
+	protected List<NameValuePair> getParameters(HttpExchange httpExchange)
 		throws IOException {
 
 		String body = getBody(httpExchange);
 		String query = getQuery(httpExchange);
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
-		parameters.putAll(_parseParameters(body));
-		parameters.putAll(_parseParameters(query));
+		parameters.addAll(_parseParameters(body));
+		parameters.addAll(_parseParameters(query));
 
 		return parameters;
 	}
@@ -214,7 +221,7 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 	}
 
 	protected String getResponseBody(
-		Map<String, String> parameters, HttpExchange httpExchange) {
+		List<NameValuePair> parameters, HttpExchange httpExchange) {
 
 		String acceptContentType = getAccept(httpExchange);
 
@@ -249,27 +256,63 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 		return false;
 	}
 
-	private Map<String, String> _parseParameters(
+	private boolean _containsParameter(
+		String name, int expected, List<NameValuePair> parameters) {
+
+		int actual = 0;
+
+		for (NameValuePair nameValuePair : parameters) {
+			if (name.equals(nameValuePair.getName())) {
+				actual++;
+			}
+		}
+
+		if (expected == actual) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _containsParameter(
+		String name, List<NameValuePair> parameters) {
+
+		return _containsParameter(name, 1, parameters);
+	}
+
+	private String _getFirstValue(String name, List<NameValuePair> parameters) {
+		for (NameValuePair nameValuePair : parameters) {
+			if (name.equals(nameValuePair.getName())) {
+				return nameValuePair.getValue();
+			}
+		}
+
+		return null;
+	}
+
+	private List<NameValuePair> _parseParameters(
 		String parameterEntriesString) {
 
 		if (parameterEntriesString == null) {
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
 
 		parameterEntriesString = parameterEntriesString.trim();
 
 		if (parameterEntriesString.length() == 0) {
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
 		String[] parameterEntries = parameterEntriesString.split("&");
 
 		for (String parameterEntry : parameterEntries) {
 			String[] parameterKeyValues = parameterEntry.split("=");
 
-			parameters.put(parameterKeyValues[0], parameterKeyValues[1]);
+			parameters.add(
+				new BasicNameValuePair(
+					parameterKeyValues[0], parameterKeyValues[1]));
 		}
 
 		return parameters;

@@ -4,6 +4,5 @@ copyLibs {
 
 dependencies {
 	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
-	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

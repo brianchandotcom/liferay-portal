@@ -303,7 +303,7 @@
 				<var name="userMiddleName" value="${userMiddleName}" />
 				<var name="userScreenName" value="${userName}" />
 				<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-			</execute>fextension
+			</execute>
 		</for>
 	</command>
 

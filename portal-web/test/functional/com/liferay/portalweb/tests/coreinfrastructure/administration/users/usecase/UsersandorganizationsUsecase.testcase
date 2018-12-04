@@ -446,7 +446,7 @@
 			<var name="contactType" value="Add Address" />
 			<var name="makePrimary" value="true" />
 			<var name="postalCode" value="60606" />
-			<var name="street1" value="205 West Wacker Dr" />a
+			<var name="street1" value="205 West Wacker Dr" />
 		</execute>
 
 		<execute macro="User#viewIsPrimary">
@@ -457,7 +457,7 @@
 			<var name="city" value="Raleigh" />
 			<var name="contactType" value="Add Address" />
 			<var name="postalCode" value="27607" />
-			<var name="street1" value="4000 Westchase Blvd" />a
+			<var name="street1" value="4000 Westchase Blvd" />
 		</execute>
 
 		<execute macro="User#viewNotPrimary">

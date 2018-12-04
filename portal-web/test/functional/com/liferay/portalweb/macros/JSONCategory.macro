@@ -387,7 +387,6 @@
 			</not>
 			<then>
 				<fail message="Please set 'vocabularyName'." />
-			>
 			</then>
 		</if>
 

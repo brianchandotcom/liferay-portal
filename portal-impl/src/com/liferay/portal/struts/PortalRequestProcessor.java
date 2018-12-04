@@ -94,7 +94,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ActionConfig;
@@ -552,7 +551,7 @@ public class PortalRequestProcessor {
 
 		try {
 			ActionForward actionForward = action.execute(
-				actionMapping, null, request, response);
+				actionMapping, request, response);
 
 			if (actionForward != null) {
 				_internalModuleRelativeForward(

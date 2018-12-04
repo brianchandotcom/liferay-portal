@@ -16,25 +16,24 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.ActionConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UpdateTermsOfUseAction extends Action {
+public class UpdateTermsOfUseAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		long userId = PortalUtil.getUserId(request);

@@ -25,7 +25,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 /**
@@ -35,8 +34,8 @@ public class RateEntryAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		String className = getClassName(request);

@@ -30,7 +30,6 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -41,9 +40,8 @@ public class RSSAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionMapping actionMapping, PortletConfig portletConfig,
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		if (!isRSSFeedsEnabled(actionRequest)) {
@@ -71,9 +69,8 @@ public class RSSAction extends PortletAction {
 
 	@Override
 	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
+			ActionMapping actionMapping, PortletConfig portletConfig,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		if (!isRSSFeedsEnabled(resourceRequest)) {
@@ -96,8 +93,8 @@ public class RSSAction extends PortletAction {
 
 	@Override
 	public ActionForward strutsExecute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		if (!PortalUtil.isRSSFeedsEnabled()) {

@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 /**
@@ -52,8 +51,8 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		UploadException uploadException = (UploadException)request.getAttribute(

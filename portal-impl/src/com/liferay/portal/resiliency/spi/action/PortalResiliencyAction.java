@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentResponse;
+import com.liferay.portal.struts.Action;
 
 import java.util.List;
 
@@ -34,20 +35,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Shuyang Zhou
  */
-public class PortalResiliencyAction extends Action {
+public class PortalResiliencyAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		SPIAgentRequest spiAgentRequest = (SPIAgentRequest)request.getAttribute(

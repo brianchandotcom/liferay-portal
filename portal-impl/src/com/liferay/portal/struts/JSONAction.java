@@ -45,8 +45,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -55,12 +53,12 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-public abstract class JSONAction extends Action {
+public abstract class JSONAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		if (rerouteExecute(request, response)) {
@@ -74,7 +72,7 @@ public abstract class JSONAction extends Action {
 		try {
 			checkAuthToken(request);
 
-			json = getJSON(actionMapping, actionForm, request, response);
+			json = getJSON(actionMapping, request, response);
 
 			if (Validator.isNotNull(callback)) {
 				StringBundler sb = new StringBundler(5);
@@ -136,8 +134,8 @@ public abstract class JSONAction extends Action {
 	}
 
 	public abstract String getJSON(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception;
 
 	public void setServletContext(ServletContext servletContext) {

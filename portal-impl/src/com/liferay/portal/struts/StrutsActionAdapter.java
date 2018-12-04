@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -30,12 +28,9 @@ import org.apache.struts.action.ActionMapping;
  */
 public class StrutsActionAdapter extends BaseStrutsAction {
 
-	public StrutsActionAdapter(
-		Action action, ActionMapping actionMapping, ActionForm actionForm) {
-
+	public StrutsActionAdapter(Action action, ActionMapping actionMapping) {
 		_action = action;
 		_actionMapping = actionMapping;
-		_actionForm = actionForm;
 	}
 
 	@Override
@@ -52,7 +47,7 @@ public class StrutsActionAdapter extends BaseStrutsAction {
 
 		try {
 			ActionForward actionForward = _action.execute(
-				_actionMapping, _actionForm, request, response);
+				_actionMapping, request, response);
 
 			if (actionForward == null) {
 				return null;
@@ -66,7 +61,6 @@ public class StrutsActionAdapter extends BaseStrutsAction {
 	}
 
 	private final Action _action;
-	private final ActionForm _actionForm;
 	private final ActionMapping _actionMapping;
 
 }

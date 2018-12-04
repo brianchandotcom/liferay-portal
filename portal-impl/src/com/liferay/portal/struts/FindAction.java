@@ -22,15 +22,13 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class FindAction extends Action {
+public abstract class FindAction implements Action {
 
 	public FindAction() {
 		_findActionHelper = new BaseStrutsPortletFindActionHelper() {
@@ -78,8 +76,8 @@ public abstract class FindAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		_findActionHelper.execute(request, response);

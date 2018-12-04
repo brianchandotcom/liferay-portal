@@ -59,7 +59,7 @@ public class JSONServlet extends HttpServlet {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
 			if (_pluginClassLoader == null) {
-				_jsonAction.execute(null, null, request, response);
+				_jsonAction.execute(null, request, response);
 			}
 			else {
 				Thread currentThread = Thread.currentThread();
@@ -70,7 +70,7 @@ public class JSONServlet extends HttpServlet {
 				try {
 					currentThread.setContextClassLoader(_pluginClassLoader);
 
-					_jsonAction.execute(null, null, request, response);
+					_jsonAction.execute(null, request, response);
 				}
 				finally {
 					currentThread.setContextClassLoader(contextClassLoader);

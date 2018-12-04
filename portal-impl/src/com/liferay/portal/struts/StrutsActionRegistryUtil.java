@@ -31,8 +31,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.struts.action.Action;
-
 /**
  * @author Mika Koivisto
  * @author Raymond Augé

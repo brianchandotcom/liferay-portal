@@ -20,15 +20,13 @@ import com.liferay.portal.kernel.util.Validator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Mika Koivisto
  */
-public class ActionAdapter extends Action {
+public class ActionAdapter implements Action {
 
 	public ActionAdapter(StrutsAction strutsAction) {
 		_strutsAction = strutsAction;
@@ -36,15 +34,15 @@ public class ActionAdapter extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		StrutsAction originalStrutsAction = null;
 
 		if (_originalAction != null) {
 			originalStrutsAction = new StrutsActionAdapter(
-				_originalAction, actionMapping, actionForm);
+				_originalAction, actionMapping);
 		}
 
 		String forward = _strutsAction.execute(

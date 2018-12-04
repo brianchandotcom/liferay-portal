@@ -25,7 +25,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -40,16 +39,15 @@ public class PortletActionAdapter extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionMapping actionMapping, PortletConfig portletConfig,
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		StrutsPortletAction originalStrutsPortletAction = null;
 
 		if (_originalPortletAction != null) {
 			originalStrutsPortletAction = new StrutsPortletActionAdapter(
-				_originalPortletAction, actionMapping, actionForm);
+				_originalPortletAction, actionMapping);
 		}
 
 		_strutsPortletAction.processAction(
@@ -59,16 +57,15 @@ public class PortletActionAdapter extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			ActionMapping actionMapping, PortletConfig portletConfig,
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
 		StrutsPortletAction originalStrutsPortletAction = null;
 
 		if (_originalPortletAction != null) {
 			originalStrutsPortletAction = new StrutsPortletActionAdapter(
-				_originalPortletAction, actionMapping, actionForm);
+				_originalPortletAction, actionMapping);
 		}
 
 		String forward = _strutsPortletAction.render(
@@ -90,16 +87,15 @@ public class PortletActionAdapter extends PortletAction {
 
 	@Override
 	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
+			ActionMapping actionMapping, PortletConfig portletConfig,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		StrutsPortletAction originalStrutsPortletAction = null;
 
 		if (_originalPortletAction != null) {
 			originalStrutsPortletAction = new StrutsPortletActionAdapter(
-				_originalPortletAction, actionMapping, actionForm);
+				_originalPortletAction, actionMapping);
 		}
 
 		_strutsPortletAction.serveResource(

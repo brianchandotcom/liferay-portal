@@ -25,7 +25,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -35,12 +34,10 @@ import org.apache.struts.action.ActionMapping;
 public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 
 	public StrutsPortletActionAdapter(
-		PortletAction portletAction, ActionMapping actionMapping,
-		ActionForm actionForm) {
+		PortletAction portletAction, ActionMapping actionMapping) {
 
 		_portletAction = portletAction;
 		_actionMapping = actionMapping;
-		_actionForm = actionForm;
 	}
 
 	@Override
@@ -63,8 +60,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 
 		try {
 			_portletAction.processAction(
-				_actionMapping, _actionForm, portletConfig, actionRequest,
-				actionResponse);
+				_actionMapping, portletConfig, actionRequest, actionResponse);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -86,8 +82,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 
 		try {
 			ActionForward actionForward = _portletAction.render(
-				_actionMapping, _actionForm, portletConfig, renderRequest,
-				renderResponse);
+				_actionMapping, portletConfig, renderRequest, renderResponse);
 
 			if (actionForward != null) {
 				return actionForward.getPath();
@@ -115,7 +110,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 
 		try {
 			_portletAction.serveResource(
-				_actionMapping, _actionForm, portletConfig, resourceRequest,
+				_actionMapping, portletConfig, resourceRequest,
 				resourceResponse);
 		}
 		finally {
@@ -123,7 +118,6 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 		}
 	}
 
-	private final ActionForm _actionForm;
 	private final ActionMapping _actionMapping;
 	private final PortletAction _portletAction;
 

@@ -129,7 +129,7 @@ class DocumentLibrary extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string()
+		value: Config.object()
 	};
 }
 

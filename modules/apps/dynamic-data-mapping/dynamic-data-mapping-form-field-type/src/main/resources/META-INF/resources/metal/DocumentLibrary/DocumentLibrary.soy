@@ -13,7 +13,7 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param? value: string}
+	{@param? value: ?}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -47,9 +47,12 @@
 	{@param? readOnly: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
-	{@param? value: string}
+	{@param? value: ?}
 
 	{let $attributes kind="attributes"}
+		{if $id}
+			id="{$id}"
+		{/if}
 
 		name="{$name}"
 
@@ -69,11 +72,12 @@
 	<div class="liferay-ddm-form-field-document-library">
 		<div class="input-group">
 			<div class="input-group-item input-group-prepend">
-				<input class="field form-control"
-						disabled
-						id="inputFile"
-						type="text"
-				>
+				<input
+					class="field form-control"
+					disabled
+					id="{$name}inputFile"
+					type="text"
+				/>
 			</div>
 
 			{call .button_group}
@@ -82,7 +86,7 @@
 			{/call}
 		</div>
 
-		<input {$attributes}>
+		<input {$attributes} />
 	</div>
 
 	{if $showLabel}

@@ -90,6 +90,11 @@
 	<td>//button[contains(@aria-label,'Confirm')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXT_FORMATTING_LINK_BROWSE_BUTTON</td>
+	<td>//button[contains(@aria-label,'Browse')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

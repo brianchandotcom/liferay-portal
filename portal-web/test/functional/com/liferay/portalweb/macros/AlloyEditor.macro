@@ -13,6 +13,17 @@
 		</execute>
 	</command>
 
+	<command name="addLinkViaBrowseButton">
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK_BROWSE_BUTTON" />
+
+		<execute macro="ItemSelector#selectDMImage">
+			<var name="imageFileName" value="${imageFileName}" />
+			<var name="navTab" value="${navTab}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addSourceContent">
 		<execute macro="AlloyEditor#clickContentField" />
 

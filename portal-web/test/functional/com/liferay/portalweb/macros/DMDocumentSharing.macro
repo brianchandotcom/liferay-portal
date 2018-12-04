@@ -6,4 +6,29 @@
 
 		<execute function="AssertClick" locator1="Button#ANY" value1="Manage Collaborators" />
 	</command>
+
+	<command name="changePermission">
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="DMDocument#_manageCollaborators" />
+
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+
+		<var name="key_userName" value="${userName}" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_NAME" value1="${userName}" />
+
+		<execute function="Select" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN" value1="${selectPermission}" />
+
+		<execute function="AssertSelectedLabel" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN" value1="${selectPermission}" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="Permissions Changed" />
+		</execute>
+	</command>
 </definition>

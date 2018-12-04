@@ -13,6 +13,36 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Documents and Media" />
+			<var name="configurationName" value="Google Drive" />
+			<var name="configurationScope" value="System Scope" />
+		</execute>
+
+		<var method="PropsUtil#get('google.client.id.1')" name="googleClientID" />
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${googleClientID}">
+			<var name="key_text" value="clientId" />
+		</execute>
+
+		<var method="PropsUtil#get('google.client.secret.1')" name="googleClientSecret" />
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${googleClientSecret}">
+			<var name="key_text" value="clientSecret" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />

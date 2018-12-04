@@ -109,6 +109,12 @@
 		</execute>
 	</command>
 
+	<command name="clickShare">
+		<execute macro="Button#click">
+			<var name="button" value="Share" />
+		</execute>
+	</command>
+
 	<command name="clickSubmitForPublication">
 		<execute macro="Button#click">
 			<var name="button" value="Submit for Publication" />

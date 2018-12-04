@@ -59,8 +59,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.felix.cm.file.ConfigurationHandler;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Ruben Pulido
@@ -112,6 +117,7 @@ public class StructuredContentApioTestBundleActivator
 				DDMFormDeserializerTracker.class));
 
 		try {
+			_deployOAuthConfiguration(bundleContext);
 			_prepareTest();
 		}
 		catch (Exception e) {
@@ -245,6 +251,33 @@ public class StructuredContentApioTestBundleActivator
 		}
 	}
 
+	private void _deployOAuthConfiguration(BundleContext bundleContext)
+		throws Exception {
+
+		ServiceReference<ConfigurationAdmin> serviceReference =
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
+
+		ConfigurationAdmin configurationAdmin = bundleContext.getService(
+			serviceReference);
+
+		String pid =
+			"com.liferay.apio.architect.internal.application.ApioApplication";
+
+		Configuration[] configurations = configurationAdmin.listConfigurations(
+			bundleContext.createFilter(
+				"(service.factoryPid=" + pid + ")").toString());
+
+		InputStream inputStream = _readInputStream(pid + "-default.config");
+
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				configuration.update(ConfigurationHandler.read(inputStream));
+			}
+		}
+
+		bundleContext.ungetService(serviceReference);
+	}
+
 	private DDMStructure _getDDMStructure(Group group, String fileName)
 		throws Exception {
 
@@ -333,6 +366,10 @@ public class StructuredContentApioTestBundleActivator
 	}
 
 	private String _read(String fileName) throws Exception {
+		return StringUtil.read(_readInputStream(fileName));
+	}
+
+	private InputStream _readInputStream(String fileName) {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -341,7 +378,7 @@ public class StructuredContentApioTestBundleActivator
 			"/com/liferay/structured/content/apio/client/test/activator/" +
 				fileName);
 
-		return StringUtil.read(inputStream);
+		return inputStream;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -148,11 +148,6 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public void persist() {
-		_counter.persist();
-	}
-
-	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_counter.setCachedModel(cachedModel);
 	}

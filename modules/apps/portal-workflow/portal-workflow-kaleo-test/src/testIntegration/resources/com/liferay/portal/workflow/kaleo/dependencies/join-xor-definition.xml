@@ -28,10 +28,34 @@
 				<name>task2</name>
 				<target>task2</target>
 			</transition>
+			<transition>
+				<name>task3</name>
+				<target>task3</target>
+			</transition>
+			<transition>
+				<name>task4</name>
+				<target>task4</target>
+			</transition>
 		</transitions>
 	</fork>
 	<task>
 		<name>task1</name>
+		<actions>
+			<notification>
+				<name>Review Notification</name>
+				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>im</notification-type>
+				<notification-type>private-message</notification-type>
+				<notification-type>user-notification</notification-type>
+				<notification-type>push-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
 		<assignments>
 			<roles>
 				<role>
@@ -77,6 +101,144 @@
 	</task>
 	<task>
 		<name>task2</name>
+		<actions>
+			<notification>
+				<name>Review Notification</name>
+				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>im</notification-type>
+				<notification-type>private-message</notification-type>
+				<notification-type>user-notification</notification-type>
+				<notification-type>push-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Administrator</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Owner</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Portal Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Administrator</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Owner</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>join-xor</name>
+				<target>join-xor</target>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>task3</name>
+		<actions>
+			<notification>
+				<name>Review Notification</name>
+				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>im</notification-type>
+				<notification-type>private-message</notification-type>
+				<notification-type>user-notification</notification-type>
+				<notification-type>push-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Administrator</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Owner</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Portal Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Administrator</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Owner</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>join-xor</name>
+				<target>join-xor</target>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>task4</name>
+		<actions>
+			<notification>
+				<name>Review Notification</name>
+				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>im</notification-type>
+				<notification-type>private-message</notification-type>
+				<notification-type>user-notification</notification-type>
+				<notification-type>push-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
 		<assignments>
 			<roles>
 				<role>

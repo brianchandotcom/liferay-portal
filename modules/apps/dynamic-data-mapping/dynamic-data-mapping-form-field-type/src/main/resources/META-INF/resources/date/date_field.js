@@ -11,6 +11,18 @@ AUI.add(
 			dateFormat = customDateFormat;
 		}
 
+		var dateDelimiter = '/';
+		var endDelimiter = false;
+		if (dateFormat.indexOf('.') != -1) {
+			dateDelimiter = '.';
+			if (dateFormat.lastIndexOf('.') == dateFormat.length - 1) {
+				endDelimiter = true;
+			}
+		}
+		if (dateFormat.indexOf('-') != -1) {
+			dateDelimiter = '-';
+		}
+
 		var DateField = A.Component.create(
 			{
 				ATTRS: {
@@ -90,7 +102,7 @@ AUI.add(
 
 						var dateMask = [];
 
-						var items = mask.split('/');
+						var items = mask.split(dateDelimiter);
 
 						items.forEach(
 							function(item, index) {
@@ -101,11 +113,15 @@ AUI.add(
 									dateMask.push(/\d/, /\d/);
 								}
 
-								if (index < (items.length - 1)) {
-									dateMask.push('/');
+								if (index < 2) {
+									dateMask.push(dateDelimiter);
 								}
 							}
 						);
+
+						if (endDelimiter) {
+							dateMask.push(dateDelimiter);
+						}
 
 						return dateMask;
 					},

@@ -94,7 +94,7 @@ public interface ${entity.name}${sessionTypeName}Service
 
 	<#assign overrideMethodNames = [] />
 
-	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns()>
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
 		<#if entity.isPermissionedModel()>
 			, PermissionedModelLocalService
 		<#elseif entity.isResourcedModel()>

@@ -17,7 +17,7 @@
 		<#include "spring_xml_session.ftl">
 	</#if>
 
-	<#if entity.hasEntityColumns()>
+	<#if entity.hasEntityColumns() && entity.hasPersistence()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"${parent}>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
@@ -33,7 +33,7 @@
 		</#if>
 	</#if>
 
-	<#if entity.hasFinderClassName()>
+	<#if entity.hasFinderClassName() && entity.hasPersistence()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"${parent}>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>

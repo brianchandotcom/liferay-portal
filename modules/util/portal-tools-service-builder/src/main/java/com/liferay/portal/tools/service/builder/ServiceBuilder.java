@@ -2534,7 +2534,9 @@ public class ServiceBuilder {
 		boolean hasDeprecated = false;
 
 		for (Entity entity : _entities) {
-			if (entity.hasEntityColumns()) {
+			if (entity.hasEntityColumns() &&
+				(entity.hasFinderClassName() || entity.hasPersistence())) {
+
 				if (entity.isDeprecated()) {
 					hasDeprecated = true;
 				}
@@ -2546,6 +2548,8 @@ public class ServiceBuilder {
 
 		if (entities.isEmpty()) {
 			if (!hasDeprecated) {
+				System.out.println("Removing " + xmlFile);
+
 				xmlFile.delete();
 			}
 
@@ -2838,48 +2842,67 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/persistence/impl/", entity.getName(),
-				"PersistenceImpl.java"));
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("methods", _getMethods(javaClass));
-
-		context = _putDeprecatedKeys(context, javaClass);
-
-		String content = _processTemplate(_tplPersistence, context);
-
 		File file = new File(
 			StringBundler.concat(
 				_serviceOutputPath, "/service/persistence/", entity.getName(),
 				"Persistence.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (entity.hasPersistence()) {
+			JavaClass javaClass = _getJavaClass(
+				StringBundler.concat(
+					_outputPath, "/service/persistence/impl/", entity.getName(),
+					"PersistenceImpl.java"));
+
+			Map<String, Object> context = _getContext();
+
+			context.put("entity", entity);
+			context.put("methods", _getMethods(javaClass));
+
+			context = _putDeprecatedKeys(context, javaClass);
+
+			String content = _processTemplate(_tplPersistence, context);
+
+			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
+		else {
+			System.out.println("Removing " + file);
+
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("referenceEntities", _mergeReferenceEntities(entity));
-
-		JavaClass modelImplJavaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/model/impl/", entity.getName(), "Impl.java"));
-
-		context = _putDeprecatedKeys(context, modelImplJavaClass);
-
-		String content = _processTemplate(_tplPersistenceImpl, context);
-
 		File file = new File(
 			StringBundler.concat(
 				_outputPath, "/service/persistence/impl/", entity.getName(),
 				"PersistenceImpl.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (entity.hasPersistence()) {
+			Map<String, Object> context = _getContext();
+
+			context.put("entity", entity);
+			context.put("referenceEntities", _mergeReferenceEntities(entity));
+
+			JavaClass modelImplJavaClass = _getJavaClass(
+				StringBundler.concat(
+					_outputPath, "/model/impl/", entity.getName(),
+					"Impl.java"));
+
+			context = _putDeprecatedKeys(context, modelImplJavaClass);
+
+			String content = _processTemplate(_tplPersistenceImpl, context);
+
+			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
+		else {
+			System.out.println("Removing " + file);
+
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 
 		file = new File(
 			StringBundler.concat(
@@ -2899,7 +2922,9 @@ public class ServiceBuilder {
 				_testOutputPath, "/service/persistence/test/", entity.getName(),
 				"PersistenceTest.java"));
 
-		if (entity.isDeprecated()) {
+		if (entity.isDeprecated() || !entity.hasPersistence()) {
+			System.out.println("Removing " + file);
+
 			file.delete();
 		}
 		else {
@@ -2932,26 +2957,35 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistenceUtil(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/persistence/impl/", entity.getName(),
-				"PersistenceImpl.java"));
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("methods", _getMethods(javaClass));
-
-		context = _putDeprecatedKeys(context, javaClass);
-
-		String content = _processTemplate(_tplPersistenceUtil, context);
-
 		File file = new File(
 			StringBundler.concat(
 				_serviceOutputPath, "/service/persistence/", entity.getName(),
 				"Util.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (entity.hasPersistence()) {
+			JavaClass javaClass = _getJavaClass(
+				StringBundler.concat(
+					_outputPath, "/service/persistence/impl/", entity.getName(),
+					"PersistenceImpl.java"));
+
+			Map<String, Object> context = _getContext();
+
+			context.put("entity", entity);
+			context.put("methods", _getMethods(javaClass));
+
+			context = _putDeprecatedKeys(context, javaClass);
+
+			String content = _processTemplate(_tplPersistenceUtil, context);
+
+			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
+		else {
+			System.out.println("Removing " + file);
+
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 	}
 
 	private void _createPool(Entity entity) {
@@ -3474,6 +3508,10 @@ public class ServiceBuilder {
 				continue;
 			}
 
+			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
+				continue;
+			}
+
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
 			for (EntityFinder entityFinder : entityFinders) {
@@ -3655,6 +3693,10 @@ public class ServiceBuilder {
 				continue;
 			}
 
+			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
+				continue;
+			}
+
 			List<EntityColumn> entityColumns = entity.getEntityColumns();
 
 			for (EntityColumn entityColumn : entityColumns) {
@@ -3717,6 +3759,10 @@ public class ServiceBuilder {
 			}
 
 			if (entity.isDeprecated()) {
+				continue;
+			}
+
+			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
 				continue;
 			}
 
@@ -5253,6 +5299,8 @@ public class ServiceBuilder {
 			entityElement.attributeValue("local-service"));
 		boolean remoteService = GetterUtil.getBoolean(
 			entityElement.attributeValue("remote-service"), true);
+		boolean persistence = GetterUtil.getBoolean(
+			entityElement.attributeValue("persistence"), true);
 		String persistenceClassName = GetterUtil.getString(
 			entityElement.attributeValue("persistence-class"),
 			StringBundler.concat(
@@ -5352,7 +5400,14 @@ public class ServiceBuilder {
 
 			if (!mvccEnabled) {
 				throw new IllegalArgumentException(
-					"Cannot use versioned entity with mvccEnabled disabled");
+					"Cannot use versioned entity with mvccEnabled disabled " +
+						"for " + entityName);
+			}
+
+			if (!persistence) {
+				throw new IllegalArgumentException(
+					"Cannot use versioned entity with persistence disabled " +
+						"for " + entityName);
 			}
 		}
 
@@ -5418,6 +5473,12 @@ public class ServiceBuilder {
 			columnElement.addAttribute("type", "String");
 
 			derivedColumnElements.add(columnElement);
+
+			if (!persistence) {
+				throw new IllegalArgumentException(
+					"Cannot use localized-entity with persistence disabled " +
+						"for " + entityName);
+			}
 		}
 
 		columnElements.addAll(0, derivedColumnElements);
@@ -5448,6 +5509,12 @@ public class ServiceBuilder {
 				"mapping-table");
 
 			if (Validator.isNotNull(mappingTableName)) {
+				if (!persistence) {
+					throw new IllegalArgumentException(
+						"Cannot have mapping-table without persistence for " +
+							"entity " + entityName);
+				}
+
 				if (_badTableNames.contains(mappingTableName)) {
 					mappingTableName += StringPool.UNDERLINE;
 				}
@@ -5878,7 +5945,7 @@ public class ServiceBuilder {
 		Entity entity = new Entity(
 			this, _packagePath, _apiPackagePath, _portletShortName, entityName,
 			humanName, tableName, alias, uuid, uuidAccessor,
-			externalReferenceCode, localService, remoteService,
+			externalReferenceCode, localService, remoteService, persistence,
 			persistenceClassName, finderClassName, dataSource, sessionFactory,
 			txManager, cacheEnabled, dynamicUpdateEnabled, jsonEnabled,
 			mvccEnabled, trashEnabled, uadApplicationName, uadAutoDelete,

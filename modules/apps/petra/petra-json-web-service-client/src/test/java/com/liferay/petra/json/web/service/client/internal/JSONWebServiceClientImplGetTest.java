@@ -19,9 +19,14 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
 import com.liferay.petra.json.web.service.client.server.simulator.HTTPServerSimulator;
 import com.liferay.petra.json.web.service.client.server.simulator.SimulatorConstants;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -105,6 +110,41 @@ public class JSONWebServiceClientImplGetTest
 			json,
 			json.contains(
 				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS));
+	}
+
+	@Test
+	public void testResponse200OnGetWithMultiNames() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
+		Map<String, Object> properties = getBaseProperties();
+
+		properties.put(
+			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		properties.put("protocol", "http");
+
+		jsonWebServiceClientImpl.activate(properties);
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+		params.add(
+			new BasicNameValuePair(
+				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200"));
+		params.add(
+			new BasicNameValuePair(
+				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
+				"true"));
+		params.add(new BasicNameValuePair("multi", "first"));
+		params.add(new BasicNameValuePair("multi", "second"));
+		params.add(new BasicNameValuePair("multi", "third"));
+		params.add(new BasicNameValuePair("multi", "fourth"));
+
+		String json = jsonWebServiceClientImpl.doGet("/testGet/", params);
+
+		Assert.assertTrue(json, json.contains("first"));
+		Assert.assertTrue(json, json.contains("second"));
+		Assert.assertTrue(json, json.contains("third"));
+		Assert.assertTrue(json, json.contains("fourth"));
 	}
 
 	@Test

@@ -254,6 +254,72 @@
 		</execute>
 	</command>
 
+	<command name="AddBlogsEntryWithDMLink" priority="4">
+		<description message="This is a use case for LPS-70143." />
+
+		<for list="1,2" param="entryCount">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMDocument#addCP">
+				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
+			</execute>
+
+			<execute macro="DMDocument#getDMLatestVersionURL">
+				<return name="dmDocument${entryCount}URL" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
+
+		<execute macro="AlloyEditor#addLinkViaBrowseButton">
+			<var name="imageFileName" value="Document_1.jpg" />
+			<var name="navTab" value="Documents and Media" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDMLink">
+			<var name="dmDocumentURL" value="${dmDocument1URL}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="AlloyEditor#addLinkViaBrowseButton">
+			<var name="imageFileName" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDMLink">
+			<var name="dmDocumentURL" value="${dmDocument2URL}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
 	<command name="AddBlogsEntryWithInlineImageViaURL" priority="4">
 		<execute macro="Navigator#openURL" />
 

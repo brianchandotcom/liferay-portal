@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.data.engine.service;
+package com.liferay.data.engine.executor;
 
 import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jeyvison Nascimento
  */
-public interface DEDataDefinitionGetRequestExecutor {
+public interface DESaveRequestExecutor {
 
-	public DEDataDefinitionGetResponse execute(
-			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
+	public <T extends DESaveResponse> T execute(DESaveRequest deSaveRequest)
+		throws PortalException;
+
+	public DEDataDefinitionSaveResponse executeSaveRequest(
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException;
 
 }

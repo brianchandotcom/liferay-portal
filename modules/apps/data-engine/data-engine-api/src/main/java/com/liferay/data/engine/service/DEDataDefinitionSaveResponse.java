@@ -14,10 +14,12 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.executor.DESaveResponse;
+
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionSaveResponse {
+public final class DEDataDefinitionSaveResponse implements DESaveResponse {
 
 	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;

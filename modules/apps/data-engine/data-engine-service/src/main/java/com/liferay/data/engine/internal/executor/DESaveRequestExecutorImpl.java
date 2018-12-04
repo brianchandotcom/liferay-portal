@@ -15,12 +15,12 @@
 package com.liferay.data.engine.internal.executor;
 
 import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.executor.DEDataDefinitionGetRequestExecutor;
-import com.liferay.data.engine.executor.DEGetRequest;
-import com.liferay.data.engine.executor.DEGetRequestExecutor;
-import com.liferay.data.engine.executor.DEGetResponse;
-import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
-import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
+import com.liferay.data.engine.executor.DEDataDefinitionSaveRequestExecutor;
+import com.liferay.data.engine.executor.DESaveRequest;
+import com.liferay.data.engine.executor.DESaveRequestExecutor;
+import com.liferay.data.engine.executor.DESaveResponse;
+import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,27 +29,27 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(immediate = true, service = DEGetRequestExecutor.class)
-public class DEGetRequestExecutorImpl implements DEGetRequestExecutor {
+@Component(immediate = true, service = DESaveRequestExecutor.class)
+public class DESaveRequestExecutorImpl implements DESaveRequestExecutor {
 
 	@Override
-	public <T extends DEGetResponse> T execute(DEGetRequest deGetRequest)
+	public <T extends DESaveResponse> T execute(DESaveRequest deSaveRequest)
 		throws PortalException {
 
-		return deGetRequest.accept(this);
+		return deSaveRequest.accept(this);
 	}
 
 	@Override
-	public DEDataDefinitionGetResponse executeGetRequest(
-			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
+	public DEDataDefinitionSaveResponse executeSaveRequest(
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException {
 
-		return deDataDefinitionGetRequestExecutor.execute(
-			deDataDefinitionGetRequest);
+		return deDataDefinitionSaveRequestExecutor.execute(
+			deDataDefinitionSaveRequest);
 	}
 
 	@Reference
-	protected DEDataDefinitionGetRequestExecutor
-		deDataDefinitionGetRequestExecutor;
+	protected DEDataDefinitionSaveRequestExecutor
+		deDataDefinitionSaveRequestExecutor;
 
 }

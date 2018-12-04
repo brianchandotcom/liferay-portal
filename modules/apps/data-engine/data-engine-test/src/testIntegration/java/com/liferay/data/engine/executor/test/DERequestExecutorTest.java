@@ -16,6 +16,7 @@ package com.liferay.data.engine.executor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.executor.DEGetRequestExecutor;
+import com.liferay.data.engine.executor.DESaveRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
@@ -25,9 +26,14 @@ import com.liferay.data.engine.service.DEDataDefinitionLocalService;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -123,7 +129,7 @@ public class DERequestExecutorTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				_deDataDefinitionLocalService.save(deDataDefinitionSaveRequest);
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
 
 			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
@@ -142,6 +148,187 @@ public class DERequestExecutorTest {
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testInsert() throws Exception {
+		Map<String, String> expectedNameLabels = new HashMap() {
+			{
+				put("pt_BR", "Nome");
+				put("en_US", "Name");
+			}
+		};
+
+		DEDataDefinitionField expectedDEDataDefinitionField1 =
+			new DEDataDefinitionField("name", "string");
+
+		expectedDEDataDefinitionField1.addLabels(expectedNameLabels);
+
+		Map<String, String> expectedEmailLabels = new HashMap() {
+			{
+				put("pt_BR", "Endereço de Email");
+				put("en_US", "Email Address");
+			}
+		};
+
+		DEDataDefinitionField expectedDEDataDefinitionField2 =
+			new DEDataDefinitionField("email", "string");
+
+		expectedDEDataDefinitionField1.addLabels(expectedEmailLabels);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(
+				expectedDEDataDefinitionField1,
+				expectedDEDataDefinitionField2));
+
+		expectedDEDataDefinition.addDescription(
+			LocaleUtil.US, "Contact description");
+		expectedDEDataDefinition.addDescription(
+			LocaleUtil.BRAZIL, "Descrição do contato");
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Contact");
+		expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Contato");
+		expectedDEDataDefinition.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
+			);
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
+
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
+
+			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
+
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
+
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
+
+			DEDataDefinition deDataDefinition =
+				deDataDefinitionGetResponse.getDeDataDefinition();
+
+			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
+
+			Role ownerRole = _roleLocalService.getRole(
+				_group.getCompanyId(), RoleConstants.OWNER);
+
+			ResourcePermission resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					_group.getCompanyId(), DEDataDefinition.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(deDataDefinitionId), ownerRole.getRoleId());
+
+			Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+
+			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testUpdate() throws Exception {
+		Map<String, String> expectedTitleLabels = new HashMap() {
+			{
+				put("pt_BR", "Título");
+				put("en_US", "Title");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("title", "string");
+
+		deDataDefinitionField1.addLabels(expectedTitleLabels);
+		deDataDefinitionField1.setLocalizable(true);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
+		expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
+		expectedDEDataDefinition.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionSaveRequest.Builder.of(
+				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
+			);
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
+
+			long dataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
+
+			expectedDEDataDefinition.setPrimaryKeyObj(dataDefinitionId);
+
+			Map<String, String> expectedDescriptionLabels = new HashMap() {
+				{
+					put("pt_BR", "Descrição");
+					put("en_US", "Description");
+				}
+			};
+
+			DEDataDefinitionField deDataDefinitionField2 =
+				new DEDataDefinitionField("description", "string");
+
+			deDataDefinitionField2.addLabels(expectedDescriptionLabels);
+			deDataDefinitionField2.setLocalizable(true);
+
+			expectedDEDataDefinition = new DEDataDefinition(
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
+
+			expectedDEDataDefinition.setDataDefinitionId(dataDefinitionId);
+			expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
+			expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
+			expectedDEDataDefinition.setStorageType("json");
+
+			deDataDefinitionSaveRequest =
+				DEDataDefinitionSaveRequest.Builder.of(
+					_user.getUserId(), _group.getGroupId(),
+					expectedDEDataDefinition
+				);
+
+			_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
+
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionGetRequest.Builder.of(dataDefinitionId);
+
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
+
+			DEDataDefinition deDataDefinition =
+				deDataDefinitionGetResponse.getDeDataDefinition();
+
+			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
 
 			_deDataDefinitionLocalService.delete(deDataDefinitionDeleteRequest);
 		}
@@ -180,8 +367,17 @@ public class DERequestExecutorTest {
 	@Inject(type = DEGetRequestExecutor.class)
 	private DEGetRequestExecutor _deGetRequestExecutor;
 
+	@Inject(type = DESaveRequestExecutor.class)
+	private DESaveRequestExecutor _deSaveRequestExecutor;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(type = ResourcePermissionLocalService.class)
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

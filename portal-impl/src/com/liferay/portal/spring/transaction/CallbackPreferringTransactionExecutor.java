@@ -58,7 +58,6 @@ public class CallbackPreferringTransactionExecutor
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		return new CallbackPreferringTransactionCallback(
-			callbackPreferringPlatformTransactionManager,
 			transactionAttributeAdapter, serviceBeanMethodInvocation);
 	}
 
@@ -170,16 +169,13 @@ public class CallbackPreferringTransactionExecutor
 		}
 
 		private CallbackPreferringTransactionCallback(
-			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-			_platformTransactionManager = platformTransactionManager;
 			_transactionAttributeAdapter = transactionAttributeAdapter;
 			_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
 		}
 
-		private final PlatformTransactionManager _platformTransactionManager;
 		private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
 

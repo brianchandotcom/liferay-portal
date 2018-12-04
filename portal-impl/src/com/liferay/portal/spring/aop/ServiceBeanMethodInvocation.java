@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
@@ -62,10 +61,6 @@ public class ServiceBeanMethodInvocation {
 	}
 
 	public Method getMethod() {
-		return _aopMethod.getMethod();
-	}
-
-	public AccessibleObject getStaticPart() {
 		return _aopMethod.getMethod();
 	}
 

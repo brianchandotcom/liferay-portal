@@ -36,8 +36,6 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.aopalliance.intercept.MethodInvocation;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -232,21 +230,22 @@ public class DynamicDataSourceAdviceTest {
 
 		@Transactional(readOnly = true)
 		public void method6() throws Throwable {
-			MethodInvocation methodInvocation = createMethodInvocation(
-				this, "method3");
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+				createMethodInvocation(this, "method3");
 
-			methodInvocation.proceed();
+			serviceBeanMethodInvocation.proceed();
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			methodInvocation = createMethodInvocation(this, "method1");
+			serviceBeanMethodInvocation = createMethodInvocation(
+				this, "method1");
 
 			_callerOperation.set(Operation.READ);
 
-			methodInvocation.proceed();
+			serviceBeanMethodInvocation.proceed();
 
 			_callerOperation.remove();
 
@@ -255,18 +254,20 @@ public class DynamicDataSourceAdviceTest {
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			methodInvocation = createMethodInvocation(this, "method2");
+			serviceBeanMethodInvocation = createMethodInvocation(
+				this, "method2");
 
-			methodInvocation.proceed();
+			serviceBeanMethodInvocation.proceed();
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			methodInvocation = createMethodInvocation(this, "method4");
+			serviceBeanMethodInvocation = createMethodInvocation(
+				this, "method4");
 
-			methodInvocation.proceed();
+			serviceBeanMethodInvocation.proceed();
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());

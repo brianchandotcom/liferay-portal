@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
-import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
 import org.junit.Assert;
@@ -139,11 +138,6 @@ public class ServiceContextAdviceTest {
 
 		public ServiceContext getServiceContext() {
 			return _serviceContext;
-		}
-
-		@Override
-		public AccessibleObject getStaticPart() {
-			throw new UnsupportedOperationException();
 		}
 
 		@Override

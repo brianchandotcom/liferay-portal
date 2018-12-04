@@ -124,7 +124,7 @@ AUI.add(
 						instance._eventHandles = [
 							itemViewer.get(STR_LINKS).on('click', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after('currentIndexChange', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
-							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance)
 						];
 
 						var uploadItemURL = instance.get('uploadItemURL')

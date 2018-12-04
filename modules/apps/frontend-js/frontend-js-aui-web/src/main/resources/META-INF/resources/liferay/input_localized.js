@@ -512,7 +512,7 @@ AUI.add(
 							instance.TRIGGER_TEMPLATE,
 							{
 								flag: Liferay.Util.getLexiconIconTpl(languageId.toLowerCase()),
-								languageId: languageId,
+								languageId: languageId
 							}
 						);
 

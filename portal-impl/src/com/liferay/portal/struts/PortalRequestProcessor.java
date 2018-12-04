@@ -624,10 +624,6 @@ public class PortalRequestProcessor {
 			String path)
 		throws IOException {
 
-		if (path == null) {
-			return null;
-		}
-
 		Action action = StrutsActionRegistryUtil.getAction(path);
 
 		if (action != null) {

@@ -5,7 +5,21 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="titleMap"><![CDATA[{"en_US":"${title}"}]]></var>
+		<if>
+			<isset var="contentMap" />
+			<then>
+				<execute macro="JSONWebcontent#_localizedConvertToXML">
+					<var name="contentMap" value="${contentMap}" />
+					<return name="contentXML" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="JSONWebcontent#_convertToXML">
+					<var name="content" value="${content}" />
+					<return name="contentXML" />
+				</execute>
+			</else>
+		</if>
 
 		<if>
 			<isset var="description" />
@@ -35,10 +49,18 @@
 			</then>
 		</if>
 
-		<execute macro="JSONWebcontent#_convertToXML">
-			<var name="content" value="${content}" />
-			<return name="contentXML" />
-		</execute>
+		<if>
+			<isset var="titleMap" />
+			<then>
+				<execute macro="JSONWebcontent#_convertLocalizedListToMap">
+					<return name="titleMap" />
+					<var name="listMap" value="${titleMap}" />
+				</execute>
+			</then>
+			<else>
+				<var name="titleMap"><![CDATA[{"en_US":"${title}"}]]></var>
+			</else>
+		</if>
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
@@ -75,10 +97,122 @@
 		</execute>
 	</command>
 
+	<command name="_convertLocalizedListToMap" summary="Helper function to convert a localized list into JSON">
+		<!-- Create list using '${listMap' -->
+
+		<var name="localizedMap" value="{" />
+
+		<for list="${listMap}" param="i">
+			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
+			<var method="StringUtil#extractLast('${i}', ':')" name="translated" />
+
+			<var name="localizedMap"><![CDATA[${localizedMap}"${locale}":"${translated}",]]></var>
+		</for>
+
+		<!-- Replace last comma with } -->
+
+		<var method="RegexUtil#replace('${localizedMap}','(.*)(?=,)','1')" name="localizedMap" />
+
+		<var name="localizedMap" value="${localizedMap}}" />
+
+		<return value="${localizedMap}" />
+	</command>
+
 	<command name="_convertToXML" summary="Helper function to help input content html info">
 		<var name="contentXML"><![CDATA[<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ]]></var>
 
 		<return value="${contentXML}" />
+	</command>
+
+	<command name="_exclusiveOrCheck" summary="checks if either A or B is set, but not both">
+		<if>
+			<or>
+				<and>
+					<isset var="A" />
+					<isset var="B" />
+				</and>
+				<and>
+					<not>
+						<isset var="B" />
+					</not>
+					<not>
+						<isset var="A" />
+					</not>
+				</and>
+			</or>
+			<then>
+				<fail message="${failMessage}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="_localizedConvertToXML" summary="Helper function to help input localized content html info">
+		<!-- Get list of localizations used -->
+
+		<var name="localeList" value="" />
+
+		<for list="${contentMap}" param="i">
+			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
+
+			<var name="localeList" value="${localeList},${locale}" />
+		</for>
+
+		<var method="RegexUtil#replace('${localeList}',',(.*)','1')" name="localeList" />
+
+		<!-- Build dynamic content -->
+
+		<var name="dynamicContent" value="" />
+
+		<for list="${contentMap}" param="i">
+			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
+			<var method="StringUtil#extractLast('${i}', ':')" name="translated" />
+
+			<var name="dynamicContent"><![CDATA[${dynamicContent} <dynamic-content language-id="${locale}">${translated}</dynamic-content>]]></var>
+		</for>
+
+		<!-- Build XML -->
+
+		<var name="contentXML"><![CDATA[<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ]]></var>
+
+		<return value="${contentXML}" />
+	</command>
+
+	<command name="addBasicWebContentLocalized" summary="Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'">
+		<execute macro="JSONWebcontent#_exclusiveOrCheck">
+			<var name="A" value="${title}" />
+			<var name="B" value="${titleMap}" />
+			<var name="failMessage" value="Please only set 'title' or only 'titleMap' but not both or none." />
+		</execute>
+
+		<execute macro="JSONWebcontent#_exclusiveOrCheck">
+			<var name="A" value="${content}" />
+			<var name="B" value="${contentMap}" />
+			<var name="failMessage" value="Please only set 'content' or only 'contentMap' but not both or none." />
+		</execute>
+
+		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#_getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'groupName' to get groupId." />
+			</else>
+		</if>
+
+		<execute macro="JSONWebcontent#_addWebContent">
+			<var name="content" value="${content}" />
+			<var name="contentMap" value="${contentMap}" />
+			<var name="description" value="${description}" />
+			<var name="folderId" value="${folderId}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="serviceContext" value="${serviceContext}" />
+			<var name="title" value="${title}" />
+			<var name="titleMap" value="${titleMap}" />
+		</execute>
 	</command>
 
 	<command name="addWebContent" summary="Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON">

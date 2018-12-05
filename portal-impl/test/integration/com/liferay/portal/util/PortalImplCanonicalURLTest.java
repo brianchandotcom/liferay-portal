@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -136,6 +137,36 @@ public class PortalImplCanonicalURLTest {
 			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
 				_defaultGroup.getGroupId());
 		}
+	}
+
+	@Test
+	public void testCanonicalURLForWebContent() throws Exception {
+		String contentFriendlyURL = "content-name";
+		String portalDomain = "localhost";
+
+		String completeURL = generateURL(
+			portalDomain, "8080", "/en", _group.getFriendlyURL(), null, false);
+
+		completeURL =
+			completeURL + Portal.FRIENDLY_URL_SEPARATOR + contentFriendlyURL;
+
+		completeURL = HttpUtil.addParameter(
+			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
+
+		ThemeDisplay themeDisplay = createThemeDisplay(
+			portalDomain, _group, 8080, false);
+
+		String canonicalURL = PortalUtil.getCanonicalURL(
+			completeURL, themeDisplay, _layout1, true, false);
+
+		Assert.assertTrue(
+			canonicalURL,
+			canonicalURL.contains(
+				Portal.FRIENDLY_URL_SEPARATOR + contentFriendlyURL));
+
+		Assert.assertTrue(
+			canonicalURL,
+			Validator.isNull(HttpUtil.getParameter(canonicalURL, "_ga")));
 	}
 
 	@Test
@@ -447,7 +478,9 @@ public class PortalImplCanonicalURLTest {
 			sb.append(groupFriendlyURL);
 		}
 
-		sb.append(layoutFriendlyURL);
+		if (Validator.isNotNull(layoutFriendlyURL)) {
+			sb.append(layoutFriendlyURL);
+		}
 
 		return sb.toString();
 	}

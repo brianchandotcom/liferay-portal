@@ -5,7 +5,9 @@ import {
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
 import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {
 	add,
 	getColumn,

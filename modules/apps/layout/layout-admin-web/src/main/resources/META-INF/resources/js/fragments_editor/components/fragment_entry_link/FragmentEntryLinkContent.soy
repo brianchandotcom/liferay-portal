@@ -1,0 +1,16 @@
+{namespace com.liferay.layout.admin.web.FragmentEntryLinkContent}
+
+/**
+ * FragmentEntryLink
+ */
+{template .render}
+	{@param? fragmentEntryLinkId: string}
+
+	<div
+		class="drag-fragment fragment-entry-link-content" ref="content"
+		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
+	>
+		<div class="loading-animation"></div>
+	</div>
+
+{/template}

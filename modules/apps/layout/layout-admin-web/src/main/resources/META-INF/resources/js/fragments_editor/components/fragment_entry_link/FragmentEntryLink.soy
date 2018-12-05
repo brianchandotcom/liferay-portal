@@ -9,9 +9,19 @@
 	{@param? _handleFragmentHoverStart: any}
 	{@param? _handleFragmentHoverEnd: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? styleModifier: string}
+	{@param? content: ?}
+	{@param? defaultEditorConfigurations: ?}
+	{@param? defaultLanguageId: ?}
+	{@param? editableValues: ?}
+	{@param? imageSelectorURL: ?}
+	{@param? languageId: string}
 	{@param? name: string}
+	{@param? portletNamespace: ?}
+	{@param? selectedMappingTypes: ?}
 	{@param? showControlBar: bool}
+	{@param? showMapping: bool}
+	{@param? store: ?}
+	{@param? styleModifier: string}
 
 	{let $wrapperClasses kind="text"}
 		drag-fragment
@@ -48,11 +58,19 @@
 			</nav>
 		{/if}
 
-		<div
-			class="drag-fragment fragment-entry-link-content" ref="content"
-			data-fragment-entry-link-id="{$fragmentEntryLinkId}"
-		>
-			<div class="loading-animation"></div>
-		</div>
+		{call com.liferay.layout.admin.web.FragmentEntryLinkContent.render}
+			{param content: $content /}
+			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+			{param defaultLanguageId: $defaultLanguageId /}
+			{param editableValues: $editableValues /}
+			{param fragmentEntryLinkId: $fragmentEntryLinkId /}
+			{param imageSelectorURL: $imageSelectorURL /}
+			{param languageId: $languageId /}
+			{param portletNamespace: $portletNamespace /}
+			{param selectedMappingTypes: $selectedMappingTypes /}
+			{param showMapping: $showMapping /}
+			{param spritemap: $spritemap /}
+			{param store: $store /}
+		{/call}
 	</div>
 {/template}

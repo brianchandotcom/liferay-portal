@@ -72,6 +72,8 @@ function addSectionReducer(state, actionType, payload) {
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!string} payload.sectionId
+ * @param {!string} payload.targetBorder
+ * @param {!string} payload.targetItemId
  * @return {object}
  * @review
  */
@@ -84,8 +86,8 @@ function moveSectionReducer(state, actionType, payload) {
 				const nextData = _moveSection(
 					payload.sectionId,
 					state.layoutData,
-					state.dropTargetItemId,
-					state.dropTargetBorder
+					payload.targetItemId,
+					payload.targetBorder
 				);
 
 				updateLayoutData(

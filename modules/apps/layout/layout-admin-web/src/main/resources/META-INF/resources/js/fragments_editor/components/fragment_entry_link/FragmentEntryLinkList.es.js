@@ -258,7 +258,9 @@ class FragmentEntryLinkList extends Component {
 			if (itemData.itemType === DROP_TARGET_ITEM_TYPES.section) {
 				moveItemAction = MOVE_SECTION;
 				moveItemPayload = {
-					sectionId: itemData.itemId
+					sectionId: itemData.itemId,
+					targetBorder: this.dropTargetBorder,
+					targetItemId: this.dropTargetItemId
 				};
 			}
 			else if (itemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
@@ -447,6 +449,26 @@ class FragmentEntryLinkList extends Component {
  * @type {!Object}
  */
 FragmentEntryLinkList.STATE = {
+
+	/**
+	 * Border of the target item where another item is being dragged to
+	 * @default {string}
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {string}
+	 */
+	dropTargetBorder: state.dropTargetBorder,
+
+	/**
+	 * Id of the element where a fragment is being dragged over
+	 * @default {string}
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {string}
+	 */
+	dropTargetItemId: state.dropTargetItemId,
 
 	/**
 	 * Id of the last element that was hovered

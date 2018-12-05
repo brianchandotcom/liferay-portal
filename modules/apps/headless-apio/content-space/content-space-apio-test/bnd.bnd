@@ -23,10 +23,12 @@ Import-Package:\
 	\
 	!org.skyscreamer.jsonassert.*,\
 	\
-	*
+	*;resolution:=optional
 -includeresource:\
 	test-classes/integration,\
 	@lib/assertj-core.jar,\
 	@lib/com.liferay.apio.architect.test.util.jar,\
 	@lib/cxf-rt-frontend-jaxrs.jar,\
-	@lib/jackson-databind.jar
+	@lib/jackson-databind.jar,\
+	@lib/rest-assured-common.jar,\
+	@lib/rest-assured.jar

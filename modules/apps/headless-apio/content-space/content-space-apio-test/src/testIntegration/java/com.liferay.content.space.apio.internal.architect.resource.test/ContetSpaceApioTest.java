@@ -14,22 +14,17 @@
 
 package com.liferay.content.space.apio.internal.architect.resource.test;
 
-import com.jayway.jsonpath.JsonPath;
-
-import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import io.restassured.RestAssured;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.List;
+import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,45 +38,63 @@ public class ContetSpaceApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
-		_jsonWebServiceClient = new JSONWebServiceClientImpl();
-
 		_rootEndpointURL = new URL(_url, "/o/api");
-
-		_jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
-		_jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
-
-		_jsonWebServiceClient.setLogin("test@liferay.com");
-		_jsonWebServiceClient.setPassword("test");
-		_jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
 	}
 
 	@Test
-	public void testContentSpaceLiferayExists() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toString(
-				JsonPath.read(
-					_toString(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == 'Liferay')]");
-
-		Assert.assertNotNull(hrefs.get(0));
+	public void testContentSpaceLiferayExists() {
+		RestAssured.given(
+		).auth(
+		).basic(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			(String)RestAssured.given(
+			).auth(
+			).basic(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				_rootEndpointURL.toExternalForm()
+			).then(
+			).log(
+			).ifError(
+			).extract(
+			).path(
+				"_links.content-space.href"
+			)
+		).then(
+		).body(
+			"_embedded.ContentSpace.find { it.name == 'Liferay' }",
+			IsNull.notNullValue()
+		).log(
+		).ifError();
 	}
 
 	@Test
-	public void testContentSpaceLinkExistsInRootEndpoint() throws Exception {
-		Assert.assertNotNull(
-			JsonPath.read(
-				_toString(_rootEndpointURL.toExternalForm()),
-				"$._links.content-space.href"));
+	public void testContentSpaceLinkExistsInRootEndpoint() {
+		RestAssured.given(
+		).auth(
+		).basic(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_links.content-space.href", IsNull.notNullValue()
+		).log(
+		).ifError();
 	}
 
-	private String _toString(String url) throws Exception {
-		return _jsonWebServiceClient.doGet(
-			url, Collections.emptyMap(),
-			Collections.singletonMap("Accept", "application/hal+json"));
-	}
-
-	private JSONWebServiceClient _jsonWebServiceClient;
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

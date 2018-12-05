@@ -491,7 +491,17 @@ public class PortalRequestProcessor {
 
 		response.setContentType("text/html; charset=UTF-8");
 
-		ActionMapping actionMapping = _processMapping(request, response, path);
+		ActionMapping actionMapping =
+			(ActionMapping)_moduleConfig.findActionConfig(path);
+
+		if ((StrutsActionRegistryUtil.getAction(path) != null) &&
+			(actionMapping == null)) {
+
+			actionMapping = new ActionMapping();
+
+			actionMapping.setModuleConfig(_moduleConfig);
+			actionMapping.setPath(path);
+		}
 
 		if (!_processRoles(request, response, actionMapping)) {
 			return;
@@ -574,26 +584,6 @@ public class PortalRequestProcessor {
 		if (locale != null) {
 			session.setAttribute(Globals.LOCALE_KEY, locale);
 		}
-	}
-
-	private ActionMapping _processMapping(
-			HttpServletRequest request, HttpServletResponse response,
-			String path)
-		throws IOException {
-
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
-
-		if ((StrutsActionRegistryUtil.getAction(path) != null) &&
-			(actionMapping == null)) {
-
-			actionMapping = new ActionMapping();
-
-			actionMapping.setModuleConfig(_moduleConfig);
-			actionMapping.setPath(path);
-		}
-
-		return actionMapping;
 	}
 
 	private String _processPath(

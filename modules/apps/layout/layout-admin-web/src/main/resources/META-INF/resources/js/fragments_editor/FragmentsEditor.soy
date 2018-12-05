@@ -8,7 +8,13 @@
 	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
-	{@param fragmentCollections: list<[
+	{@param fragmentEntryLinks: ?}
+	{@param imageSelectorURL: string}
+	{@param languageId: string}
+	{@param layoutData: ?}
+	{@param portletNamespace: string}
+	{@param redirectURL: string}
+	{@param sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
 			imagePreviewURL: string,
@@ -17,12 +23,6 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
-	{@param fragmentEntryLinks: ?}
-	{@param imageSelectorURL: string}
-	{@param languageId: string}
-	{@param layoutData: ?}
-	{@param portletNamespace: string}
-	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? activeItemId: string}
@@ -83,11 +83,11 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param fragmentCollections: $fragmentCollections /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}
 			{param ref: 'sidebar' /}
+			{param sections: $sections /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}

@@ -4,7 +4,7 @@
  * SidebarAvailableFragments
  */
 {template .render}
-	{@param fragmentCollections: list<[
+	{@param sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
 			imagePreviewURL: string,
@@ -18,7 +18,7 @@
 	{@param? store: ?}
 
 	<div class="sidebar-fragment-collections">
-		{foreach $fragmentCollection in $fragmentCollections}
+		{foreach $fragmentCollection in $sections}
 			{let $collapseId kind="text"}
 				fragment-collection-{$fragmentCollection.fragmentCollectionId}
 			{/let}

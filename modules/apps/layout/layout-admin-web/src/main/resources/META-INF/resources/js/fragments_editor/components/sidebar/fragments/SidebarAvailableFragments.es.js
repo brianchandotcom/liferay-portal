@@ -238,7 +238,7 @@ class SidebarAvailableFragments extends Component {
 SidebarAvailableFragments.STATE = {
 
 	/**
-	 * Available entries that can be dragged inside the existing Page Template,
+	 * Available sections that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default undefined
 	 * @instance
@@ -253,7 +253,7 @@ SidebarAvailableFragments.STATE = {
 	 *   name: !string
 	 * }>}
 	 */
-	fragmentCollections: Config.arrayOf(
+	sections: Config.arrayOf(
 		Config.shapeOf(
 			{
 				fragmentCollectionId: Config.string().required(),

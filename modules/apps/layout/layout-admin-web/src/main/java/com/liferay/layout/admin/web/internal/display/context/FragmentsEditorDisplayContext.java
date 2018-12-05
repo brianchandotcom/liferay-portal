@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -139,8 +140,6 @@ public class FragmentsEditorDisplayContext {
 			"editFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/edit_fragment_entry_link"));
 		soyContext.put(
-			"fragmentCollections", _getSoyContextFragmentCollections());
-		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 		soyContext.put(
 			"getAssetDisplayContributorsURL",
@@ -182,6 +181,10 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
+		soyContext.put(
+			"sections",
+			_getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_SECTION));
 
 		if (_showMapping) {
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
@@ -441,7 +444,7 @@ public class FragmentsEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getSoyContextFragmentCollections() {
+	private List<SoyContext> _getSoyContextFragmentCollections(int type) {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		long groupId = _getGroupId();
@@ -451,8 +454,8 @@ public class FragmentsEditorDisplayContext {
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntries(
-					groupId, fragmentCollection.getFragmentCollectionId(),
+				FragmentEntryServiceUtil.getFragmentEntriesByType(
+					groupId, fragmentCollection.getFragmentCollectionId(), type,
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {

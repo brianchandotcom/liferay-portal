@@ -4,9 +4,9 @@
  * SidebarFragmentsSection
  */
 {template .render}
-	{@param fragmentCollections: ?}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
+	{@param sections: ?}
 	{@param sidebarTabs: list<[
 		enabled:bool,
 		id:string,
@@ -40,8 +40,8 @@
 
 		{if $_selectedTab == 'available'}
 			{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-				{param fragmentCollections: $fragmentCollections /}
 				{param ref: 'sidebarTab' /}
+				{param sections: $sections /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
 			{/call}

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
@@ -33,8 +32,7 @@ public class RateEntryAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String className = getClassName(request);

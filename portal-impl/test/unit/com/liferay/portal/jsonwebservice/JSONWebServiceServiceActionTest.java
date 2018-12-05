@@ -93,7 +93,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			null, mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("{}", json);
 	}
@@ -120,7 +120,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			null, mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -224,7 +224,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		json = _jsonWebServiceServiceAction.getJSON(
-			null, mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -251,7 +251,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		String json = _jsonWebServiceServiceAction.getJSON(
-			null, mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -275,7 +275,7 @@ public class JSONWebServiceServiceActionTest
 			new MockHttpServletResponse();
 
 		String json = _jsonWebServiceServiceAction.getJSON(
-			null, mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}

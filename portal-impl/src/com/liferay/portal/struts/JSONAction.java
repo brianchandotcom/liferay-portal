@@ -71,7 +71,7 @@ public abstract class JSONAction implements Action {
 		try {
 			checkAuthToken(request);
 
-			json = getJSON(actionMapping, request, response);
+			json = getJSON(request, response);
 
 			if (Validator.isNotNull(callback)) {
 				StringBundler sb = new StringBundler(5);
@@ -134,8 +134,7 @@ public abstract class JSONAction implements Action {
 	}
 
 	public abstract String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
 	public void setServletContext(ServletContext servletContext) {

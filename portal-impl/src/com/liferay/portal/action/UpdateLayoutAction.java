@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -72,8 +71,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -263,15 +261,15 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 
 		if (cmd.equals(Constants.ADD) && (portletId != null)) {
-			addPortlet(actionMapping, request, response, portletId);
+			addPortlet(request, response, portletId);
 		}
 
 		return StringPool.BLANK;
 	}
 
 	protected void addPortlet(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response, String portletId)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId)
 		throws Exception {
 
 		// Run the render portlet action to add a portlet without refreshing.
@@ -312,7 +310,7 @@ public class UpdateLayoutAction extends JSONAction {
 				new BufferCacheServletResponse(response);
 
 			renderPortletAction.execute(
-				actionMapping, dynamicRequest, bufferCacheServletResponse);
+				null, dynamicRequest, bufferCacheServletResponse);
 
 			String portletHTML = bufferCacheServletResponse.getString();
 
@@ -326,8 +324,7 @@ public class UpdateLayoutAction extends JSONAction {
 			ServletResponseUtil.write(response, jsonObject.toString());
 		}
 		else {
-			renderPortletAction.execute(
-				actionMapping, dynamicRequest, response);
+			renderPortletAction.execute(null, dynamicRequest, response);
 		}
 	}
 

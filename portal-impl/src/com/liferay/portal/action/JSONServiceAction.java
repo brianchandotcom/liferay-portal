@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -83,8 +82,7 @@ public class JSONServiceAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String className = ParamUtil.getString(request, "serviceClassName");

@@ -17,7 +17,6 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +31,7 @@ public class GetLayoutsAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);

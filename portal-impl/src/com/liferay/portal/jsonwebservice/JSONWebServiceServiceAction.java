@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;
@@ -50,8 +49,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		UploadException uploadException = (UploadException)request.getAttribute(

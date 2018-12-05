@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portlet.InvokerPortletUtil;
 
 import javax.portlet.PortletPreferences;
@@ -40,8 +39,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		HttpSession session = request.getSession();

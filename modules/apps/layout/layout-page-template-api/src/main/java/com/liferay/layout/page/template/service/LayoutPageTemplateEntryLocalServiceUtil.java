@@ -42,6 +42,11 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addGlobalLayoutPageTemplateEntry(
+		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addGlobalLayoutPageTemplateEntry(layoutPrototype);
+	}
 
 	/**
 	* Adds the layout page template entry to the database. Also notifies the appropriate model listeners.

@@ -51,22 +51,23 @@ boolean latestVersion = JournalArticleLocalServiceUtil.isLatestVersion(article.g
 	</c:if>
 
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
-		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		</liferay-portlet:renderURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
+		String previewURL = journalDisplayContext.getPreviewURL(article);
 		%>
 
-		<liferay-ui:icon
-			message="preview"
-			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
-		/>
+		<c:if test="<%= Validator.isNotNull(previewURL) %>">
+
+			<%
+			String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewURL) + "'});";
+			%>
+
+			<liferay-ui:icon
+				message="preview"
+				onClick="<%= taglibOnClick %>"
+				url="javascript:;"
+			/>
+		</c:if>
 
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 			<portlet:renderURL var="copyURL">

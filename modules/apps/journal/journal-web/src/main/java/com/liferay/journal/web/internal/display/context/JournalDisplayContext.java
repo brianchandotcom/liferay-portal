@@ -758,7 +758,10 @@ public class JournalDisplayContext {
 				PortalUtil.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey());
 
-		if ((assetDisplayPageEntry != null) &&
+		if (JournalArticleLocalServiceUtil.isLatestVersion(
+				article.getGroupId(), article.getArticleId(),
+				article.getVersion()) &&
+			(assetDisplayPageEntry != null) &&
 			(assetDisplayPageEntry.getLayoutPageTemplateEntryId() > 0)) {
 
 			AssetRendererFactory assetRendererFactory =

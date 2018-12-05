@@ -184,7 +184,9 @@ public class JobFactory {
 			return _jobs.get(jobName);
 		}
 
-		throw new IllegalArgumentException("Invalid job name " + jobName);
+		_jobs.put(jobName, new DefaultPortalJob(jobName));
+
+		return _jobs.get(jobName);
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

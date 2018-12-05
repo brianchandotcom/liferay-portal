@@ -111,7 +111,7 @@ exports[`Select should have a placeholder 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder">Placeholder</div>
+      <div class="option-selected">Placeholder</div>
       <a class="select-arrow-down-container" href="javascript:;">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
           <title>caret-double</title>

@@ -177,6 +177,8 @@ public class PortalRequestProcessor {
 			return;
 		}
 
+		path = _processPath(path, request, response);
+
 		_process(path, request, response);
 
 		try {
@@ -486,8 +488,6 @@ public class PortalRequestProcessor {
 			String path, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException, ServletException {
-
-		path = _processPath(path, request, response);
 
 		_processLocale(request);
 

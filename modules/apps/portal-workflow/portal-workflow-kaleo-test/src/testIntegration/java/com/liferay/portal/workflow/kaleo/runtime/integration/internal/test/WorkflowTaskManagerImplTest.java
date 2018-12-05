@@ -49,10 +49,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -853,6 +856,27 @@ public class WorkflowTaskManagerImplTest
 		int total = searchCountByUserRoles(siteContentReviewerUser);
 
 		Assert.assertEquals(1, total);
+
+		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
+	}
+
+	@Test
+	public void testUpdateDueDate() throws Exception {
+		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+
+		BlogsEntry blogsEntry = addBlogsEntry();
+
+		WorkflowTask workflowTask = getWorkflowTask();
+
+		Date date = new Date(System.currentTimeMillis() + Time.DAY);
+
+		workflowTask = WorkflowTaskManagerUtil.updateDueDate(
+			siteAdminUser.getCompanyId(), siteAdminUser.getUserId(),
+			workflowTask.getWorkflowTaskId(), StringPool.BLANK, date);
+
+		Assert.assertEquals(date, workflowTask.getDueDate());
+
+		BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry);
 
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}

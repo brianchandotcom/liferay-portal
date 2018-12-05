@@ -109,6 +109,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Level;
 
@@ -656,17 +657,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			long classPK)
 		throws Exception {
 
-		List<WorkflowTask> workflowTasks = new ArrayList<>();
-
-		workflowTasks.addAll(
-			WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
-				user.getCompanyId(), user.getUserId(), completed,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
-
-		workflowTasks.addAll(
-			WorkflowTaskManagerUtil.getWorkflowTasksByUser(
-				user.getCompanyId(), user.getUserId(), completed,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+		List<WorkflowTask> workflowTasks = _getWorkflowTasks(user, completed);
 
 		WorkflowInstance workflowInstance = null;
 
@@ -846,6 +837,35 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected ServiceContext serviceContext;
 	protected User siteAdminUser;
 	protected User siteContentReviewerUser;
+
+	private List<WorkflowTask> _getWorkflowTasks(User user, boolean completed)
+		throws Exception {
+
+		List<WorkflowTask> workflowTasks = new ArrayList<>();
+
+		long deadline =
+			System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+
+		while (workflowTasks.isEmpty()) {
+			workflowTasks.addAll(
+				WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
+					user.getCompanyId(), user.getUserId(), completed,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+
+			workflowTasks.addAll(
+				WorkflowTaskManagerUtil.getWorkflowTasksByUser(
+					user.getCompanyId(), user.getUserId(), completed,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+
+			if (System.currentTimeMillis() > deadline) {
+				break;
+			}
+
+			Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+		}
+
+		return workflowTasks;
+	}
 
 	private static final String _MAIL_ENGINE_CLASS_NAME =
 		"com.liferay.util.mail.MailEngine";

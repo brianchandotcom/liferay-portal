@@ -1018,6 +1018,7 @@
 
 		<execute macro="Staging#publishViaSAP">
 			<var name="assetTitle" value="Web Content Title" />
+			<var name="confirmMessage" value="Are you sure you want to publish the selected web content?" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

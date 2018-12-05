@@ -122,8 +122,13 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Blogs#publishEntryViaSAP">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="Cards" />
+		</execute>
+
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="confirmMessage" value="Are you sure you want to publish to live?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite" />

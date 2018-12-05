@@ -155,8 +155,9 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMFolder#publishFolderViaSAP">
-			<var name="dmFolderName" value="DM Folder 1" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="DM Folder 1" />
+			<var name="confirmMessage" value="Are you sure you want to publish the selected folder?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite" />
@@ -262,8 +263,9 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMFolder#publishFolderViaSAP">
-			<var name="dmFolderName" value="DM Folder 1" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="DM Folder 1" />
+			<var name="confirmMessage" value="Are you sure you want to publish the selected folder?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite" />

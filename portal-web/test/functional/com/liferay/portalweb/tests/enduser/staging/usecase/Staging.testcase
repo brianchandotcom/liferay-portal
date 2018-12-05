@@ -3280,6 +3280,7 @@
 
 		<execute macro="Staging#publishViaSAP">
 			<var name="assetTitle" value="Web Content Title" />
+			<var name="confirmMessage" value="Are you sure you want to publish the selected web content?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -3290,6 +3291,7 @@
 
 		<execute macro="Staging#publishViaSAP">
 			<var name="assetTitle" value="Test Bookmark" />
+			<var name="confirmMessage" value="Are you sure you want to publish to live?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -3300,6 +3302,7 @@
 
 		<execute macro="Staging#publishViaSAP">
 			<var name="assetTitle" value="DM Document Title" />
+			<var name="confirmMessage" value="Are you sure you want to publish the selected document?" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

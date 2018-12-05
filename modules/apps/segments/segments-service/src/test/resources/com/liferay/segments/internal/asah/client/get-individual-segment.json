@@ -1,0 +1,17 @@
+{
+	"author": {
+		"id": "132184",
+		"name": "David Arques"
+	},
+	"dateCreated": "2018-11-28T10:55:00.440Z",
+	"dateModified": "2018-11-28T10:55:00.440Z",
+	"filter": "(((demographics/country/value eq 'GB') and (contains(demographics/jobTitle/value,'Developer'))))",
+	"filterMetadata": "149072",
+	"id": "324849894334623092",
+	"individualCount": 8,
+	"name": "British Developers",
+	"scope": "PROJECT",
+	"segmentType": "DYNAMIC",
+	"state": "READY",
+	"status": "ACTIVE"
+}

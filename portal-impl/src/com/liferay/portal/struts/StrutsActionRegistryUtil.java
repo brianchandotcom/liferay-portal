@@ -20,16 +20,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.ServiceTrackerMapFactory;
 import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Mika Koivisto
@@ -53,62 +47,6 @@ public class StrutsActionRegistryUtil {
 		return null;
 	}
 
-	public static Map<String, Action> getActions() {
-		Map<String, Action> map = new HashMap<>();
-
-		for (String key : _actions.keySet()) {
-			map.put(key, _actions.getService(key));
-		}
-
-		return map;
-	}
-
-	public static void register(String path, StrutsAction strutsAction) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("path", path);
-
-		ServiceRegistration<StrutsAction> serviceRegistration =
-			registry.registerService(
-				StrutsAction.class, strutsAction, properties);
-
-		_strutsActionServiceRegistrations.put(path, serviceRegistration);
-	}
-
-	public static void register(
-		String path, StrutsPortletAction strutsPortletAction) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("path", path);
-
-		ServiceRegistration<StrutsPortletAction> serviceRegistration =
-			registry.registerService(
-				StrutsPortletAction.class, strutsPortletAction, properties);
-
-		_strutsPortletActionServiceRegistrations.put(path, serviceRegistration);
-	}
-
-	public static void unregister(String path) {
-		ServiceRegistration<?> serviceRegistration =
-			_strutsActionServiceRegistrations.remove(path);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-
-		serviceRegistration = _strutsPortletActionServiceRegistrations.remove(
-			path);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private static String[] _getPaths(
 		ServiceReference<Object> serviceReference) {
 
@@ -122,12 +60,6 @@ public class StrutsActionRegistryUtil {
 	}
 
 	private static final ServiceTrackerMap<String, Action> _actions;
-	private static final StringServiceRegistrationMap<StrutsAction>
-		_strutsActionServiceRegistrations =
-			new StringServiceRegistrationMapImpl<>();
-	private static final StringServiceRegistrationMap<StrutsPortletAction>
-		_strutsPortletActionServiceRegistrations =
-			new StringServiceRegistrationMapImpl<>();
 
 	private static class ActionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Action> {

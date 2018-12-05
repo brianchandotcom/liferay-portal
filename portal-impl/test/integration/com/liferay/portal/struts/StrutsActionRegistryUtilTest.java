@@ -19,8 +19,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.test.AtomicState;
 
-import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -48,33 +46,6 @@ public class StrutsActionRegistryUtilTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_atomicState.close();
-	}
-
-	@Test
-	public void testGetActions() throws Exception {
-		Map<String, ?> actions = StrutsActionRegistryUtil.getActions();
-
-		ActionAdapter actionAdapter = (ActionAdapter)actions.get(
-			"TestStrutsAction");
-
-		Assert.assertNotNull(actionAdapter);
-
-		_atomicState.reset();
-
-		actionAdapter.execute(null, null, null);
-
-		Assert.assertTrue(_atomicState.isSet());
-
-		PortletActionAdapter portletActionAdapter =
-			(PortletActionAdapter)actions.get("TestStrutsPortletAction");
-
-		Assert.assertNotNull(portletActionAdapter);
-
-		_atomicState.reset();
-
-		portletActionAdapter.isCheckMethodOnProcessAction();
-
-		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test

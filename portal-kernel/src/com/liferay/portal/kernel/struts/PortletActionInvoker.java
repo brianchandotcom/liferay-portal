@@ -14,11 +14,6 @@
 
 package com.liferay.portal.kernel.struts;
 
-import com.liferay.petra.lang.ClassResolverUtil;
-import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.PortalClassInvoker;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -34,24 +29,6 @@ public class PortletActionInvoker {
 			String className, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		MethodKey methodKey = new MethodKey(
-			ClassResolverUtil.resolve(className, portalClassLoader),
-			"processAction",
-			new Class<?>[] {
-				ClassResolverUtil.resolve(
-					"org.apache.struts.action.ActionMapping",
-					portalClassLoader),
-				ClassResolverUtil.resolve(
-					"org.apache.struts.action.ActionForm", portalClassLoader),
-				PortletConfig.class, ActionRequest.class, ActionResponse.class
-			});
-
-		PortalClassInvoker.invoke(
-			methodKey, null, null, portletConfig, actionRequest,
-			actionResponse);
 	}
 
 }

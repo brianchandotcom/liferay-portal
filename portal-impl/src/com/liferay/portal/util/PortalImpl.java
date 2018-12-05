@@ -1459,10 +1459,13 @@ public class PortalImpl implements Portal {
 			sb.append(canonicalLayoutFriendlyURL);
 
 			if (includeQueryString) {
-				sb.append(parametersURL);
+				sb.append(
+					_removeSlashForConcatURLPath(sb.toString(), parametersURL));
 			}
 			else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
-				sb.append(_removeAllParameters(parametersURL));
+				sb.append(
+					_removeSlashForConcatURLPath(
+						sb.toString(), _removeAllParameters(parametersURL)));
 			}
 
 			return sb.toString();
@@ -1471,19 +1474,13 @@ public class PortalImpl implements Portal {
 		groupFriendlyURL = groupFriendlyURL.concat(canonicalLayoutFriendlyURL);
 
 		if (includeQueryString) {
-			if (groupFriendlyURL.endsWith(StringPool.SLASH) &&
-				parametersURL.startsWith(StringPool.SLASH)) {
-
-				groupFriendlyURL = groupFriendlyURL.concat(
-					parametersURL.substring(1));
-			}
-			else {
-				groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
-			}
+			groupFriendlyURL = groupFriendlyURL.concat(
+				_removeSlashForConcatURLPath(groupFriendlyURL, parametersURL));
 		}
 		else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
 			groupFriendlyURL = groupFriendlyURL.concat(
-				_removeAllParameters(parametersURL));
+				_removeSlashForConcatURLPath(
+					groupFriendlyURL, _removeAllParameters(parametersURL)));
 		}
 
 		return groupFriendlyURL;
@@ -9039,6 +9036,18 @@ public class PortalImpl implements Portal {
 		}
 
 		return url;
+	}
+
+	private String _removeSlashForConcatURLPath(
+		String baseURL, String parametersURL) {
+
+		if (baseURL.endsWith(StringPool.SLASH) &&
+			parametersURL.startsWith(StringPool.SLASH)) {
+
+			return parametersURL.substring(1);
+		}
+
+		return parametersURL;
 	}
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(

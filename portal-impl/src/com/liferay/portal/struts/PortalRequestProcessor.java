@@ -95,8 +95,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
@@ -568,14 +566,14 @@ public class PortalRequestProcessor {
 	private void _processLocale(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute(Globals.LOCALE_KEY) != null) {
+		if (session.getAttribute(WebKeys.LOCALE) != null) {
 			return;
 		}
 
 		Locale locale = request.getLocale();
 
 		if (locale != null) {
-			session.setAttribute(Globals.LOCALE_KEY, locale);
+			session.setAttribute(WebKeys.LOCALE, locale);
 		}
 	}
 

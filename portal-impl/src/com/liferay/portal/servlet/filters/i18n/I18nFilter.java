@@ -44,8 +44,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -220,7 +218,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		HttpSession session = request.getSession();
 
-		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
+		Locale locale = (Locale)session.getAttribute(WebKeys.LOCALE);
 
 		String requestedLanguageId = null;
 

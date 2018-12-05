@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentType;
 import com.liferay.portal.kernel.xml.Element;
@@ -76,8 +77,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -976,7 +975,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
+			locale = (Locale)session.getAttribute(WebKeys.LOCALE);
 		}
 
 		if (locale == null) {

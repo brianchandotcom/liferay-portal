@@ -53,8 +53,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -355,7 +353,7 @@ public class I18nServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		session.setAttribute(Globals.LOCALE_KEY, locale);
+		session.setAttribute(WebKeys.LOCALE, locale);
 
 		LanguageUtil.updateCookie(request, response, locale);
 	}

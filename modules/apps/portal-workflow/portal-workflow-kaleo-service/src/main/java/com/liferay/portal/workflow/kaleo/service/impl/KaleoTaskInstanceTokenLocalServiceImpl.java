@@ -702,9 +702,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			kaleoTaskInstance.setDueDate(cal.getTime());
 		}
 
-		kaleoTaskInstanceTokenPersistence.update(kaleoTaskInstance);
-
-		return kaleoTaskInstance;
+		return kaleoTaskInstanceTokenPersistence.update(kaleoTaskInstance);
 	}
 
 	protected void addCompletedCriterion(

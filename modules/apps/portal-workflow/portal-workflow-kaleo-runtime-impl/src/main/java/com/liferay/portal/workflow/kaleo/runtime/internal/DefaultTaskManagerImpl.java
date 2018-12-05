@@ -249,16 +249,21 @@ public class DefaultTaskManagerImpl
 			}
 
 			if (dueDate != null) {
-				KaleoTaskInstanceToken kaleoTaskInstanceNewToken =
+				kaleoTaskInstanceToken =
 					kaleoTaskInstanceTokenLocalService.updateDueDate(
 						workflowTaskInstanceId, dueDate, serviceContext);
-
-				return _getWorkflowTask(
-					comment, serviceContext, kaleoTaskInstanceNewToken);
 			}
 
-			return _getWorkflowTask(
-				comment, serviceContext, kaleoTaskInstanceToken);
+			Map<String, Serializable> workflowContext =
+				WorkflowContextUtil.convert(
+					kaleoTaskInstanceToken.getWorkflowContext());
+
+			kaleoLogLocalService.addTaskUpdateKaleoLog(
+				kaleoTaskInstanceToken, comment, workflowContext,
+				serviceContext);
+
+			return _kaleoWorkflowModelConverter.toWorkflowTask(
+				kaleoTaskInstanceToken, workflowContext);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -288,8 +293,9 @@ public class DefaultTaskManagerImpl
 		}
 
 		if (dueDate != null) {
-			kaleoTaskInstanceTokenLocalService.updateDueDate(
-				workflowTaskInstanceId, dueDate, serviceContext);
+			kaleoTaskInstanceToken =
+				kaleoTaskInstanceTokenLocalService.updateDueDate(
+					workflowTaskInstanceId, dueDate, serviceContext);
 		}
 
 		kaleoTaskInstanceToken =
@@ -412,21 +418,6 @@ public class DefaultTaskManagerImpl
 		}
 
 		return workflowContext;
-	}
-
-	private WorkflowTask _getWorkflowTask(
-			String comment, ServiceContext serviceContext,
-			KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
-			kaleoTaskInstanceToken.getWorkflowContext());
-
-		kaleoLogLocalService.addTaskUpdateKaleoLog(
-			kaleoTaskInstanceToken, comment, workflowContext, serviceContext);
-
-		return _kaleoWorkflowModelConverter.toWorkflowTask(
-			kaleoTaskInstanceToken, workflowContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

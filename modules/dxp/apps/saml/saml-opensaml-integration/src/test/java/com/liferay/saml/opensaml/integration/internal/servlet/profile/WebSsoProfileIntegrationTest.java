@@ -14,8 +14,10 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
@@ -59,6 +61,7 @@ import org.mockito.Mockito;
 
 import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.handler.MessageHandlerException;
 import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
 import org.opensaml.saml.common.messaging.context.SAMLMessageInfoContext;
 import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
@@ -453,6 +456,70 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		Assert.assertEquals(2, identifiers.size());
 		Assert.assertFalse(authnRequest.isForceAuthn());
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
+	}
+
+	@Test(expected = MessageHandlerException.class)
+	public void testDecodeAuthnRequestVerifiesSignature() throws Exception {
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
+			getMockPortletService(
+				SamlSpIdpConnectionLocalServiceUtil.class,
+				SamlSpIdpConnectionLocalService.class);
+
+		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
+
+		metadataManagerImpl = new MetadataManagerImpl();
+
+		metadataManagerImpl.setCredentialResolver(credentialResolver);
+
+		metadataManagerImpl.setParserPool(parserPool);
+
+		metadataManagerImpl.setMetadataResolver(
+			new MockMetadataResolver(false));
+
+		metadataManagerImpl.setSamlProviderConfigurationHelper(
+			samlProviderConfigurationHelper);
+
+		metadataManagerImpl.setHttp(HttpUtil.getHttp());
+
+		metadataManagerImpl.activate();
+
+		_webSsoProfileImpl.setMetadataManager(metadataManagerImpl);
+
+		when(
+			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
+		).thenReturn(
+			samlSpIdpConnection
+		);
+
+		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+			samlSpIdpConnectionLocalService);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(LOGIN_URL);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_webSsoProfileImpl.doSendAuthnRequest(
+			mockHttpServletRequest, mockHttpServletResponse, RELAY_STATE);
+
+		String redirect = mockHttpServletResponse.getRedirectedUrl();
+
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		mockHttpServletRequest = getMockHttpServletRequest(redirect);
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		when(
+			samlProviderConfiguration.authnRequestSignatureRequired()
+		).thenReturn(
+			true
+		);
+
+		_webSsoProfileImpl.decodeAuthnRequest(
+			mockHttpServletRequest, mockHttpServletResponse);
 	}
 
 	@Test

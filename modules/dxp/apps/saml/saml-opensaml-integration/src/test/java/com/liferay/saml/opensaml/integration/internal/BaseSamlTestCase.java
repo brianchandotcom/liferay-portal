@@ -693,9 +693,13 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
 	protected UserLocalService userLocalService;
 
-	private class MockMetadataResolver extends DBMetadataResolver {
+	protected class MockMetadataResolver extends DBMetadataResolver {
 
 		public MockMetadataResolver() {
+		}
+
+		public MockMetadataResolver(boolean idpNeedsSignature) {
+			_idpNeedsSignature = idpNeedsSignature;
 		}
 
 		protected XMLObject getMetadata(String entityId) throws Exception {
@@ -719,8 +723,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			if (entityId.equals(IDP_ENTITY_ID)) {
 				EntityDescriptor entityDescriptor =
 					MetadataGeneratorUtil.buildIdpEntityDescriptor(
-						mockHttpServletRequest, entityId, true, true, false,
-						credential);
+						mockHttpServletRequest, entityId, _idpNeedsSignature,
+						true, false, credential);
 
 				IDPSSODescriptor idpSSODescriptor =
 					entityDescriptor.getIDPSSODescriptor(
@@ -766,6 +770,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 			return null;
 		}
+
+		private boolean _idpNeedsSignature = true;
 
 	}
 

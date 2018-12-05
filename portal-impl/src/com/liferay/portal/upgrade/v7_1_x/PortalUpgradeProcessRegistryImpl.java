@@ -47,6 +47,9 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version("2.0.2"), new UpgradePasswordPolicyRegex());
+
+		upgradeProcesses.put(
+			new Version("2.0.3"), new UpgradePortalPreferences());
 	}
 
 }

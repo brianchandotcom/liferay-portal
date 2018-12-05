@@ -32,8 +32,6 @@ import javax.servlet.jsp.PageContext;
  */
 public class StrutsUtil {
 
-	public static final String STRUTS_PACKAGE = "org.apache.struts.";
-
 	public static final String TEXT_HTML_DIR = "/html";
 
 	public static void forward(

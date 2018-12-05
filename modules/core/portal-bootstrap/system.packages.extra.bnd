@@ -252,7 +252,6 @@ Export-Package:\
 	org.apache.log4j.xml;version='1.2.17',\
 	org.apache.naming.java,\
 	org.apache.regexp;version='2.7.1',\
-	org.apache.struts.*;version='1.3.10',\
 	org.apache.tools.ant.*;version='1.8.4',\
 	org.apache.xalan.*;version='2.7.1',\
 	org.apache.xerces.*;version='2.11.0',\
@@ -397,7 +396,6 @@ Provide-Capability:\
 	@../../../lib/portal/spring-web.jar,\
 	@../../../lib/portal/spring-webmvc-portlet.jar,\
 	@../../../lib/portal/spring-webmvc.jar,\
-	@../../../lib/portal/struts-core.jar,\
 	@../../../lib/portal/tika-core.jar,\
 	@../../../lib/portal/tika-parsers.jar,\
 	@../../../lib/portal/xalan.jar,\

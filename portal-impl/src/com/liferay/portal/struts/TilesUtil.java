@@ -33,10 +33,10 @@ import javax.servlet.ServletContext;
 public class TilesUtil {
 
 	public static final String DEFINITION =
-		"org.apache.struts.tiles.definition";
+		"com.liferay.portal.struts.definition";
 
 	public static final String DEFINITIONS =
-		"org.apache.struts.tiles.definitions";
+		"com.liferay.portal.struts.definitions";
 
 	public static void loadDefinitions(ServletContext servletContext)
 		throws Exception {

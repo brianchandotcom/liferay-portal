@@ -877,13 +877,6 @@ public class PortalRequestProcessor {
 			return _PATH_PORTAL_LOGIN;
 		}
 
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
-
-		if (actionMapping != null) {
-			path = actionMapping.getPath();
-		}
-
 		// Define the portlet objects
 
 		if (_isPortletPath(path)) {

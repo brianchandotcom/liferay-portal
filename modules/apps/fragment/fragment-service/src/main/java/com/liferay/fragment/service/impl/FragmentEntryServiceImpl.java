@@ -312,6 +312,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int status) {
+
+		return fragmentEntryPersistence.findByG_FCI_T_S(
+			groupId, fragmentCollectionId, type, status);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntriesByType(
 		long groupId, long fragmentCollectionId, int type, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 

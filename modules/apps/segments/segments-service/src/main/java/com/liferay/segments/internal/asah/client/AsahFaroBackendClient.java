@@ -27,13 +27,14 @@ import java.util.List;
 public interface AsahFaroBackendClient {
 
 	/**
-	 * Returns active individual segments with members
+	 * Returns a {@link Results} of active {@link IndividualSegment} with
+	 * members.
 	 *
-	 * @param cur - Current page (one-based numbering)
-	 * @param delta - Page size
-	 * @param orderByFields - Sort fields
-	 * @return <code>{@link Results} of {@link IndividualSegment}</code>
-	 *
+	 * @param  cur the current page (one-based numbering)
+	 * @param  delta the page size
+	 * @param  orderByFields the sort fields
+	 * @return a {@link Results} of active {@link IndividualSegment} with
+	 *         members
 	 * @review
 	 */
 	public Results<IndividualSegment> getIndividualSegments(

@@ -543,20 +543,6 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
-	<command name="publishViaSAP">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${bookmarkName}" />
-		</execute>
-
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Publish to Live" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to publish to live?" />
-
-		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
-	</command>
-
 	<command name="searchNullCP">
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${nullBookmarkName}" />

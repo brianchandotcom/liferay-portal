@@ -897,7 +897,7 @@
 			<var name="menuItem" value="Publish to Live" />
 		</execute>
 
-		<execute function="AssertConfirm" value1="Are you sure you want to publish the selected web content?" />
+		<execute function="AssertConfirm" value1="${confirmMessage}" />
 
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 	</command>

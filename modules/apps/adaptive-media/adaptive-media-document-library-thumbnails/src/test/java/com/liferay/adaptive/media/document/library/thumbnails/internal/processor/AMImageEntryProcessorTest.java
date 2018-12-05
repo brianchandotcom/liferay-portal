@@ -22,10 +22,13 @@ import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.io.InputStream;
+
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -130,6 +133,41 @@ public class AMImageEntryProcessorTest {
 		).triggerProcess(
 			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
 		);
+	}
+
+	@Test
+	public void testGetPreviewAsStreamReturnsTheOriginalStreamWhenNoAmImageExists()
+		throws Exception {
+
+		Mockito.when(
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
+		).thenAnswer(
+			invocation -> Stream.empty()
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageValidator.isValid(_fileVersion)
+		).thenReturn(
+			true
+		);
+
+		InputStream originalInputStream = Mockito.mock(InputStream.class);
+
+		Mockito.when(
+			_fileVersion.getContentStream(false)
+		).thenReturn(
+			originalInputStream
+		);
+
+		Assert.assertEquals(
+			originalInputStream,
+			_amImageEntryProcessor.getPreviewAsStream(_fileVersion));
 	}
 
 	@Test

@@ -1452,16 +1452,6 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.UserPortraitTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>elementClasses</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>position</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>size</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

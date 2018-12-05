@@ -133,6 +133,16 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFragmentEntryLinks(long[] fragmentEntryLinkIds)
+		throws PortalException {
+
+		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLinkId);
+		}
+	}
+
+	@Override
 	public List<FragmentEntryLink>
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long classNameId, long classPK) {

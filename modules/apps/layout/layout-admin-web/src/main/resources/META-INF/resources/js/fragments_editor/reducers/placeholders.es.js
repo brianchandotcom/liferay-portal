@@ -1,7 +1,9 @@
 import {
-	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET,
-	UPDATE_HIGHLIGHT_MAPPING_STATUS
+	CLEAR_DROP_TARGET,
+	CLEAR_HOVERED_ITEM,
+	UPDATE_DROP_TARGET,
+	UPDATE_HIGHLIGHT_MAPPING_STATUS,
+	UPDATE_HOVERED_ITEM
 } from '../actions/actions.es';
 
 /**
@@ -9,7 +11,7 @@ import {
  * @review
  * @type {!object}
  */
-const DRAG_POSITIONS = {
+const DROP_TARGET_BORDERS = {
 	bottom: 'drag-bottom',
 	top: 'drag-top'
 };
@@ -19,7 +21,7 @@ const DRAG_POSITIONS = {
  * @review
  * @type {!object}
  */
-const DROP_TARGET_TYPES = {
+const DROP_TARGET_ITEM_TYPES = {
 	column: 'layout-column',
 	fragment: 'fragment-entry-link',
 	fragmentList: 'fragment-entry-link-list',
@@ -27,28 +29,28 @@ const DROP_TARGET_TYPES = {
 };
 
 /**
- * Updates hover status with the information sent.
+ * Updates drop target element with the information sent.
  * @param {!object} state
- * @param {CLEAR_DRAG_TARGET|UPDATE_DRAG_TARGET} actionType
+ * @param {CLEAR_DROP_TARGET|UPDATE_DROP_TARGET} actionType
  * @param {!object} payload
- * @param {string} payload.hoveredElementBorder
- * @param {string} payload.hoveredElementId
- * @param {string} payload.hoveredElementType
+ * @param {string} payload.dropTargetBorder
+ * @param {string} payload.dropTargetItemId
+ * @param {string} payload.dropTargetItemType
  * @return {object}
  * @review
  */
-function updateDragTargetReducer(state, actionType, payload) {
+function updateDropTargetReducer(state, actionType, payload) {
 	const nextState = Object.assign({}, state);
 
-	if (actionType === CLEAR_DRAG_TARGET) {
-		nextState.hoveredElementBorder = null;
-		nextState.hoveredElementId = null;
-		nextState.hoveredElementType = null;
+	if (actionType === CLEAR_DROP_TARGET) {
+		nextState.dropTargetBorder = null;
+		nextState.dropTargetItemId = null;
+		nextState.dropTargetItemType = null;
 	}
-	else if (actionType === UPDATE_DRAG_TARGET) {
-		nextState.hoveredElementBorder = payload.hoveredElementBorder;
-		nextState.hoveredElementId = payload.hoveredElementId;
-		nextState.hoveredElementType = payload.hoveredElementType;
+	else if (actionType === UPDATE_DROP_TARGET) {
+		nextState.dropTargetBorder = payload.dropTargetBorder;
+		nextState.dropTargetItemId = payload.dropTargetItemId;
+		nextState.dropTargetItemType = payload.dropTargetItemType;
 	}
 
 	return nextState;
@@ -78,9 +80,35 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 	return nextState;
 }
 
+/**
+ * Updates hovered element data with the information sent.
+ * @param {!object} state
+ * @param {UPDATE_HOVERED_ITEM} actionType
+ * @param {!object} payload
+ * @param {string} payload.hoveredItemId
+ * @param {string} payload.hoveredItemType
+ * @return {object}
+ * @review
+ */
+function updateHoveredItemReducer(state, actionType, payload) {
+	const nextState = Object.assign({}, state);
+
+	if (actionType === CLEAR_HOVERED_ITEM) {
+		nextState.hoveredItemId = null;
+		nextState.hoveredItemType = null;
+	}
+	else if (actionType === UPDATE_HOVERED_ITEM) {
+		nextState.hoveredItemId = payload.hoveredItemId;
+		nextState.hoveredItemType = payload.hoveredItemType;
+	}
+
+	return nextState;
+}
+
 export {
-	DRAG_POSITIONS,
-	DROP_TARGET_TYPES,
-	updateDragTargetReducer,
-	updateHighlightMappingReducer
+	DROP_TARGET_BORDERS,
+	DROP_TARGET_ITEM_TYPES,
+	updateDropTargetReducer,
+	updateHighlightMappingReducer,
+	updateHoveredItemReducer
 };

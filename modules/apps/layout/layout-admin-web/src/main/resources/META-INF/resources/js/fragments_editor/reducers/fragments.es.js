@@ -4,8 +4,10 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {DRAG_POSITIONS, DROP_TARGET_TYPES} from './placeholders.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
+import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {
 	add,
 	getColumn,
@@ -49,9 +51,9 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 
 							nextData = _addFragment(
 								fragmentEntryLink.fragmentEntryLinkId,
-								state.hoveredElementBorder,
-								state.hoveredElementId,
-								state.hoveredElementType,
+								state.dropTargetBorder,
+								state.dropTargetItemId,
+								state.dropTargetItemType,
 								state.layoutData
 							);
 
@@ -130,9 +132,9 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 
 				nextData = _addFragment(
 					payload.fragmentEntryLinkId,
-					state.hoveredElementBorder,
-					state.hoveredElementId,
-					state.hoveredElementType,
+					state.dropTargetBorder,
+					state.dropTargetItemId,
+					state.dropTargetItemType,
 					nextData
 				);
 
@@ -303,45 +305,45 @@ function updateEditableValueReducer(state, actionType, payload) {
 /**
  * Adds a fragment at the corresponding container in the layout
  * @param {string} fragmentEntryLinkId
- * @param {string} hoveredElementBorder
- * @param {string} hoveredElementId
- * @param {string} hoveredElementType
+ * @param {string} dropTargetBorder
+ * @param {string} dropTargetItemId
+ * @param {string} dropTargetItemType
  * @param {object} layoutData
  * @private
  * @review
  */
 function _addFragment(
 	fragmentEntryLinkId,
-	hoveredElementBorder,
-	hoveredElementId,
-	hoveredElementType,
+	dropTargetBorder,
+	dropTargetItemId,
+	dropTargetItemType,
 	layoutData
 ) {
 	let nextData = layoutData;
 
-	if (hoveredElementType === DROP_TARGET_TYPES.column) {
+	if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.column) {
 		const fragmentColumn = getColumn(
 			layoutData.structure,
-			hoveredElementId
+			dropTargetItemId
 		);
 
 		nextData = _addFragmentToColumn(
 			layoutData,
 			fragmentEntryLinkId,
-			hoveredElementId,
+			dropTargetItemId,
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
 	}
-	else if (hoveredElementType === DROP_TARGET_TYPES.fragment) {
+	else if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.fragment) {
 		const fragmentColumn = getFragmentColumn(
 			layoutData.structure,
-			hoveredElementId
+			dropTargetItemId
 		);
 
 		const position = _getDropFragmentPosition(
 			fragmentColumn.fragmentEntryLinkIds,
-			hoveredElementId,
-			hoveredElementBorder
+			dropTargetItemId,
+			dropTargetBorder
 		);
 
 		nextData = _addFragmentToColumn(
@@ -351,11 +353,11 @@ function _addFragment(
 			position
 		);
 	}
-	else if (hoveredElementType === DROP_TARGET_TYPES.section) {
+	else if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.section) {
 		const position = getDropSectionPosition(
 			layoutData.structure,
-			hoveredElementId,
-			hoveredElementBorder
+			dropTargetItemId,
+			dropTargetBorder
 		);
 
 		nextData = _addSingleFragmentRow(
@@ -430,7 +432,7 @@ function _getDropFragmentPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DRAG_POSITIONS.top) {
+		if (targetBorder === DROP_TARGET_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {

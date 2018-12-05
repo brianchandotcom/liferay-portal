@@ -25,11 +25,16 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
+	{@param? _handleSectionHoverStart: any}
+	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
-	{@param? hoveredElementBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
+	{@param? dropTargetBorder: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -63,15 +68,20 @@
 			{foreach $row in $layoutData.structure}
 				{call .row}
 					{param _handleFragmentMove: $_handleFragmentMove /}
+					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
+					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
+					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
-					{param dropTargetTypes: $dropTargetTypes /}
+					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param hoveredElementBorder: $hoveredElementBorder /}
-					{param hoveredElementId: $hoveredElementId /}
-					{param hoveredElementType: $hoveredElementType /}
+					{param hoveredItemId: $hoveredItemId /}
+					{param hoveredItemType: $hoveredItemType /}
+					{param dropTargetBorder: $dropTargetBorder /}
+					{param dropTargetItemId: $dropTargetItemId /}
+					{param dropTargetItemType: $dropTargetItemType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $row.rowId /}
 					{param languageId: $languageId /}
@@ -107,11 +117,16 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
+	{@param? _handleSectionHoverStart: any}
+	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
-	{@param? hoveredElementBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? dropTargetBorder: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -126,26 +141,48 @@
 	{@param? store: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $rowId and $hoveredElementType == $dropTargetTypes.section}
-			{$hoveredElementBorder}
+		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
+			{$dropTargetBorder}
 		{/if}
 	{/let}
 
 	{let $sectionClasses kind="text"}
-		fragment-entry-link-list__row-section
-		fragment-entry-link-drop-target
+		drag-section
+		{sp}fragment-entry-link-list__row-section
+		{sp}fragment-entry-link-drop-target
 		{sp}layouts-drop-target
 		{sp}{$styleModifier}
 
 		{if $empty}
 			{sp}fragment-entry-link-list__row-section--empty
 		{/if}
+		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
+			{sp}fragment-entry-link-list__row-section--hovered
+		{/if}
 	{/let}
 
 	<section
 		class="{$sectionClasses}"
 		data-layout-section-id="{$rowId}"
+		data-onmouseout="{$_handleSectionHoverEnd}"
+		data-onmouseover="{$_handleSectionHoverStart}"
 	>
+		<nav class="section-control tbar">
+			<ul class="tbar-nav">
+				<li class="drag-handler tbar-item tbar-item-expand"></li>
+				<li class="tbar-item">
+					<button
+						class="btn btn-small btn-unstyled"
+						data-onclick="{$_handleSectionRemoveButtonClick}"
+					>
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap}#times-circle"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</nav>
+
 		<div class="container row-container">
 			<div class="row">
 				{foreach $column in $columns}
@@ -154,12 +191,14 @@
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultLanguageId: $defaultLanguageId /}
-						{param dropTargetTypes: $dropTargetTypes /}
+						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
-						{param hoveredElementBorder: $hoveredElementBorder /}
-						{param hoveredElementId: $hoveredElementId /}
-						{param hoveredElementType: $hoveredElementType /}
+						{param dropTargetBorder: $dropTargetBorder /}
+						{param dropTargetItemId: $dropTargetItemId /}
+						{param dropTargetItemType: $dropTargetItemType /}
+						{param hoveredItemId: $hoveredItemId /}
+						{param hoveredItemType: $hoveredItemType /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param key: $column.columnId /}
 						{param languageId: $languageId /}
@@ -191,10 +230,12 @@
 	{@param size: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
-	{@param? hoveredElementBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? dropTargetItemTypes: ?}
+	{@param? dropTargetBorder: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -224,12 +265,14 @@
 					{param content: $fragmentEntryLink.content /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
-					{param dropTargetTypes: $dropTargetTypes /}
+					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
-					{param hoveredElementBorder: $hoveredElementBorder /}
-					{param hoveredElementId: $hoveredElementId /}
-					{param hoveredElementType: $hoveredElementType /}
+					{param dropTargetBorder: $dropTargetBorder /}
+					{param dropTargetItemId: $dropTargetItemId /}
+					{param dropTargetItemType: $dropTargetItemType /}
+					{param hoveredItemId: $hoveredItemId /}
+					{param hoveredItemType: $hoveredItemType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param languageId: $languageId /}
@@ -255,9 +298,9 @@
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param imageSelectorURL: ?}
-	{@param hoveredElementBorder: ?}
-	{@param hoveredElementId: ?}
-	{@param hoveredElementType: ?}
+	{@param dropTargetBorder: ?}
+	{@param dropTargetItemId: ?}
+	{@param dropTargetItemType: ?}
 	{@param languageId: ?}
 	{@param mappingFieldsURL: ?}
 	{@param name: string}
@@ -265,13 +308,18 @@
 	{@param selectedMappingTypes: ?}
 	{@param spritemap: ?}
 	{@param store: ?}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
-	{@param? dropTargetTypes: ?}
+	{@param? dropTargetItemTypes: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $fragmentEntryLinkId and $hoveredElementType == $dropTargetTypes.fragment}
-			{$hoveredElementBorder}
+		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
+			{$dropTargetBorder}
+		{/if}
+		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}
+			{sp}fragment-entry-link-wrapper--hovered
 		{/if}
 	{/let}
 

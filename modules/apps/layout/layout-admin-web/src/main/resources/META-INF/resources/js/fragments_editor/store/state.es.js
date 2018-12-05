@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {DRAG_POSITIONS} from '../reducers/placeholders.es';
+import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 
 /**
  * Initial state
@@ -92,14 +92,14 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
-	 * Position where a fragment is being dragged to
+	 * Border of the target item where another item is being dragged to
 	 * @default null
 	 * @instance
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementBorder: Config
-		.oneOf(Object.values(DRAG_POSITIONS))
+	dropTargetBorder: Config
+		.oneOf(Object.values(DROP_TARGET_BORDERS))
 		.value(null),
 
 	/**
@@ -109,7 +109,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementId: Config
+	dropTargetItemId: Config
 		.string()
 		.value(null),
 
@@ -120,7 +120,29 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementType: Config
+	dropTargetItemType: Config
+		.string()
+		.value(null),
+
+	/**
+	 * Id of the last element that was hovered
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	hoveredItemId: Config
+		.string()
+		.value(null),
+
+	/**
+	 * Type of the last element that was hovered
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	hoveredItemType: Config
 		.string()
 		.value(null),
 

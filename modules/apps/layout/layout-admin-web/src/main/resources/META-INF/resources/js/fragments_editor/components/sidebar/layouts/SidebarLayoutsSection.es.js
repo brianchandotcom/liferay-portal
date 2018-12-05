@@ -4,10 +4,10 @@ import Soy from 'metal-soy';
 
 import {
 	ADD_SECTION,
-	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET
+	CLEAR_DROP_TARGET,
+	UPDATE_DROP_TARGET
 } from '../../../actions/actions.es';
-import {DROP_TARGET_TYPES} from '../../../reducers/placeholders.es';
+import {DROP_TARGET_ITEM_TYPES} from '../../../reducers/placeholders.es';
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarLayoutsSection.soy';
@@ -43,11 +43,11 @@ class SidebarLayoutsSection extends Component {
 		const {hoveredSectionBorder, hoveredSectionId} = eventData;
 
 		this.store.dispatchAction(
-			UPDATE_DRAG_TARGET,
+			UPDATE_DROP_TARGET,
 			{
-				hoveredElementBorder: hoveredSectionBorder,
-				hoveredElementId: hoveredSectionId,
-				hoveredElementType: DROP_TARGET_TYPES.section
+				dropTargetBorder: hoveredSectionBorder,
+				dropTargetItemId: hoveredSectionId,
+				dropTargetItemType: DROP_TARGET_ITEM_TYPES.section
 			}
 		);
 	}
@@ -68,7 +68,7 @@ class SidebarLayoutsSection extends Component {
 				layoutColumns
 			}
 		).dispatchAction(
-			CLEAR_DRAG_TARGET
+			CLEAR_DROP_TARGET
 		);
 
 		requestAnimationFrame(
@@ -86,7 +86,7 @@ class SidebarLayoutsSection extends Component {
 	 */
 	_handleLeaveLayoutTarget() {
 		this.store.dispatchAction(
-			CLEAR_DRAG_TARGET
+			CLEAR_DROP_TARGET
 		);
 	}
 

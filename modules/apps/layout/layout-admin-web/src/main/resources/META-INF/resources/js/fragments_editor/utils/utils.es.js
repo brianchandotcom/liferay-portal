@@ -1,4 +1,4 @@
-import {DRAG_POSITIONS} from '../reducers/placeholders.es';
+import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -51,7 +51,7 @@ function getDropSectionPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DRAG_POSITIONS.top) {
+		if (targetBorder === DROP_TARGET_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {
@@ -103,6 +103,41 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 					);
 				}
 			);
+		}
+	);
+}
+
+/**
+ * Get the fragmentEntryLinkIds of the fragments inside the given section
+ * @param {array} structure
+ * @param {string} sectionId
+ */
+function getSectionFragmentEntryLinkIds(structure, sectionId) {
+	const section = structure[getSectionIndex(structure, sectionId)];
+
+	let fragmentEntryLinkIds = [];
+
+	section.columns.forEach(
+		column => {
+			fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
+				column.fragmentEntryLinkIds
+			);
+		}
+	);
+
+	return fragmentEntryLinkIds;
+}
+
+/**
+ * Returns the index of the section with the given rowId
+ * @param {array} structure
+ * @param {string} sectionId
+ * @return {number}
+ */
+function getSectionIndex(structure, sectionId) {
+	return structure.findIndex(
+		row => {
+			return row.rowId === sectionId;
 		}
 	);
 }
@@ -183,6 +218,7 @@ function updateIn(object, keyPath, updater, defaultValue) {
  * @param {!string} classNameId
  * @param {!string} classPK
  * @param {!object} data
+ * @param {!array} fragmentEntryLinkIds
  * @return {Promise}
  * @review
  */
@@ -191,7 +227,8 @@ function updateLayoutData(
 	portletNamespace,
 	classNameId,
 	classPK,
-	data
+	data,
+	fragmentEntryLinkIds
 ) {
 	const formData = new FormData();
 
@@ -202,6 +239,13 @@ function updateLayoutData(
 		`${portletNamespace}data`,
 		JSON.stringify(data)
 	);
+
+	if (fragmentEntryLinkIds) {
+		formData.append(
+			`${portletNamespace}fragmentEntryLinkIds`,
+			JSON.stringify(fragmentEntryLinkIds)
+		);
+	}
 
 	return fetch(
 		updateLayoutPageTemplateDataURL,
@@ -219,6 +263,8 @@ export {
 	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
+	getSectionFragmentEntryLinkIds,
+	getSectionIndex,
 	remove,
 	setIn,
 	updateIn,

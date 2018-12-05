@@ -1,4 +1,4 @@
-import {DROP_TARGET_TYPES} from './LayoutDragDrop.es';
+import {DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 import {
 	getColumnActiveItem,
 	getHomeItem,
@@ -74,7 +74,7 @@ function clearPath(
 
 	let targetColumnIndex = targetId;
 
-	if (targetType === DROP_TARGET_TYPES.item) {
+	if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 		targetColumnIndex = getItemColumnIndex(
 			nextLayoutColumns,
 			targetId

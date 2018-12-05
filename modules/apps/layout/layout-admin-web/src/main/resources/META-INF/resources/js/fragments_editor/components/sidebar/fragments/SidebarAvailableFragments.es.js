@@ -7,14 +7,14 @@ import Soy from 'metal-soy';
 import './FragmentsEditorSidebarCard.es';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
-	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET,
+	CLEAR_DROP_TARGET,
+	UPDATE_DROP_TARGET,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {
-	DRAG_POSITIONS,
-	DROP_TARGET_TYPES
+	DROP_TARGET_BORDERS,
+	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarAvailableFragments.soy';
@@ -61,34 +61,34 @@ class SidebarAvailableFragments extends Component {
 			const mouseY = eventData.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DRAG_POSITIONS.bottom;
+			let nearestBorder = DROP_TARGET_BORDERS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
-				nearestBorder = DRAG_POSITIONS.top;
+				nearestBorder = DROP_TARGET_BORDERS.top;
 			}
 
-			let hoveredElementId = null;
-			let hoveredElementType = null;
+			let dropTargetItemId = null;
+			let dropTargetItemType = null;
 
 			if (targetIsColumn) {
-				hoveredElementId = data.columnId;
-				hoveredElementType = DROP_TARGET_TYPES.column;
+				dropTargetItemId = data.columnId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if (targetIsFragment) {
-				hoveredElementId = data.fragmentEntryLinkId;
-				hoveredElementType = DROP_TARGET_TYPES.fragment;
+				dropTargetItemId = data.fragmentEntryLinkId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
 			else if (targetIsSection) {
-				hoveredElementId = data.layoutSectionId;
-				hoveredElementType = DROP_TARGET_TYPES.section;
+				dropTargetItemId = data.layoutSectionId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.section;
 			}
 
 			this.store.dispatchAction(
-				UPDATE_DRAG_TARGET,
+				UPDATE_DROP_TARGET,
 				{
-					hoveredElementBorder: nearestBorder,
-					hoveredElementId,
-					hoveredElementType
+					dropTargetBorder: nearestBorder,
+					dropTargetItemId,
+					dropTargetItemType
 				}
 			);
 		}
@@ -101,7 +101,7 @@ class SidebarAvailableFragments extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatchAction(
-			CLEAR_DRAG_TARGET
+			CLEAR_DROP_TARGET
 		);
 	}
 
@@ -152,7 +152,7 @@ class SidebarAvailableFragments extends Component {
 					}
 				)
 				.dispatchAction(
-					CLEAR_DRAG_TARGET
+					CLEAR_DROP_TARGET
 				);
 		}
 	}

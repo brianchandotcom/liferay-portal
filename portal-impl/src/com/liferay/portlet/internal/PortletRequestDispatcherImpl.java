@@ -56,8 +56,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
@@ -307,7 +305,7 @@ public class PortletRequestDispatcherImpl
 				portletServletRequest.getContextPath(),
 				themeDisplay.getPathMain(),
 				(String)_liferayPortletContext.getAttribute(
-					Globals.SERVLET_KEY),
+					WebKeys.SERVLET_MAPPING),
 				liferayPortletResponse.createRenderURL());
 
 			liferayPortletResponse.setURLEncoder(strutsURLEncoderObj);

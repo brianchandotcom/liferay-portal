@@ -538,6 +538,8 @@ public interface WebKeys {
 
 	public static final String SERVLET_CONTEXT_INCLUDE_FILTER_THEME = "SERVLET_CONTEXT_INCLUDE_FILTER_THEME";
 
+	public static final String SERVLET_MAPPING = "SERVLET_MAPPING";
+
 	public static final String SERVLET_PATH = "SERVLET_PATH";
 
 	public static final String SESSION_LISTENER = "SESSION_LISTENER";

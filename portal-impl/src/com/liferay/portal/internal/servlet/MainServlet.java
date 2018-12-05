@@ -988,7 +988,8 @@ public class MainServlet extends HttpServlet {
 		Iterator<String> iterator = mappings.iterator();
 
 		if (iterator.hasNext()) {
-			servletContext.setAttribute(Globals.SERVLET_KEY, iterator.next());
+			servletContext.setAttribute(
+				WebKeys.SERVLET_MAPPING, iterator.next());
 		}
 	}
 

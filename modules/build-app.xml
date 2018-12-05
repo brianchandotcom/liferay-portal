@@ -633,10 +633,19 @@
 			<arg value=".releng/**/app.properties" />
 		</exec>
 
+		<loadfile
+			property="app.names.spaced"
+		>
+			<filterchain>
+				<replacestring from="," to=", " />
+			</filterchain>
+			<propertyresource name="app.names" />
+		</loadfile>
+
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="commit" />
 			<arg value="-m" />
-			<arg value="${git.commit.app.ticket} Release Apps: ${app.names}" />
+			<arg value="${git.commit.app.ticket} Release Apps: ${app.names.spaced}" />
 		</exec>
 	</target>
 

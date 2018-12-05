@@ -292,30 +292,26 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
-		</execute>
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
-
-		<execute macro="AlloyEditor#addLinkViaBrowseButton">
+		<execute macro="BlogsEntry#addEntryExternalLinkViaBrowseButton">
 			<var name="imageFileName" value="Document_1.jpg" />
 			<var name="navTab" value="Documents and Media" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDMLink">
-			<var name="dmDocumentURL" value="${dmDocument1URL}" />
+		<execute macro="BlogsEntry#viewEntryExternalURL">
 			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryExternalURL" value="${dmDocument1URL}" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="AlloyEditor#addLinkViaBrowseButton">
+		<execute macro="BlogsEntry#addEntryExternalLinkViaBrowseButton">
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="imageFileName" value="Document_2.jpg" />
+			<var name="navTab" value="Documents and Media" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDMLink">
-			<var name="dmDocumentURL" value="${dmDocument2URL}" />
+		<execute macro="BlogsEntry#viewEntryExternalURL">
 			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryExternalURL" value="${dmDocument2URL}" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>

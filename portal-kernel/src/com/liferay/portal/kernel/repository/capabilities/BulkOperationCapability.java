@@ -39,6 +39,9 @@ public interface BulkOperationCapability extends Capability {
 		public interface CreateDate extends Field<Date> {
 		}
 
+		public interface FolderId extends Field<Long> {
+		}
+
 	}
 
 	public class Filter<T> {

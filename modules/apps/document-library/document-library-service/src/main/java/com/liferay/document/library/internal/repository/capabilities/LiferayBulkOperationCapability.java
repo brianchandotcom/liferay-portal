@@ -98,6 +98,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		new HashMap<Class<? extends Field<?>>, String>() {
 			{
 				put(Field.CreateDate.class, "createDate");
+				put(Field.FolderId.class, "folderId");
 			}
 		};
 

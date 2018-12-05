@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaParameter;
+import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
@@ -66,6 +69,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		annotation = _formatAnnotationParameterProperties(annotation);
+		annotation = _formatConfigurationPolicyAttribute(javaClass, annotation);
 		annotation = _formatServiceAttribute(
 			fileName, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
@@ -189,6 +193,41 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
+	private String _formatConfigurationPolicyAttribute(
+		JavaClass javaClass, String annotation) {
+
+		List<String> imports = javaClass.getImports();
+
+		if (imports.contains(
+				"org.osgi.service.component.annotations.Modified") ||
+			(_getAttributeValue(annotation, "configurationPid") != null) ||
+			(_getAttributeValue(annotation, "configurationPolicy ") != null)) {
+
+			return annotation;
+		}
+
+		JavaMethod activateMethod = _getActivateMethod(javaClass);
+
+		if (activateMethod == null) {
+			return annotation;
+		}
+
+		JavaSignature signature = activateMethod.getSignature();
+
+		for (JavaParameter parameter : signature.getParameters()) {
+			String parameterType = parameter.getParameterType();
+
+			if (parameterType.equals("ComponentContext") ||
+				parameterType.startsWith("Map<")) {
+
+				return annotation;
+			}
+		}
+
+		return _addAttribute(
+			annotation, "configurationPolicy", "ConfigurationPolicy.IGNORE");
+	}
+
 	private String _formatServiceAttribute(
 		String fileName, String className, String annotation,
 		List<String> implementedClassNames) {
@@ -224,6 +263,18 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return annotation;
+	}
+
+	private JavaMethod _getActivateMethod(JavaClass javaClass) {
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if ((javaTerm instanceof JavaMethod) &&
+				javaTerm.hasAnnotation("Activate")) {
+
+				return (JavaMethod)javaTerm;
+			}
+		}
+
+		return null;
 	}
 
 	private String _getAttributeValue(String annotation, String attributeName) {

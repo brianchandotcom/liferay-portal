@@ -89,7 +89,8 @@ public class UpdateLanguageAction implements Action {
 
 		// Send redirect
 
-		String redirect = ParamUtil.getString(request, "redirect");
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(request, "redirect"));
 
 		String layoutURL = StringPool.BLANK;
 		String queryString = StringPool.BLANK;

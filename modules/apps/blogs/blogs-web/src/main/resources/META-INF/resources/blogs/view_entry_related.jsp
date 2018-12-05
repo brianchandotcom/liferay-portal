@@ -76,7 +76,7 @@ BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute("view_entry_related.jsp
 						}
 						%>
 
-						<liferay-frontend:user-portrait
+						<liferay-ui:user-portrait
 							user="<%= blogsEntryUser %>"
 						/>
 					</div>

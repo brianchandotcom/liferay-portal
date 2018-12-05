@@ -40,8 +40,9 @@
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= displayStyle.endsWith("image") %>'>
-						<liferay-frontend:user-portrait
+						<liferay-ui:user-portrait
 							userId="<%= entry.getUserId() %>"
+							userName="<%= entry.getUserName() %>"
 						/>
 
 						<div class="entry-info text-muted ">

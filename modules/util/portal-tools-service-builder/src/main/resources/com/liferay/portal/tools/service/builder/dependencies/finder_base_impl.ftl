@@ -32,7 +32,7 @@ public class ${entity.name}FinderBaseImpl
 	public ${entity.name}FinderBaseImpl() {
 		setModelClass(${entity.name}.class);
 
-		<#if entity.badEntityColumns?size != 0>
+		<#if serviceBuilder.isVersionLTE_7_1_0() && (entity.badEntityColumns?size != 0)>
 			try {
 				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
 

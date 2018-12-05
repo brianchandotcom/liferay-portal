@@ -231,9 +231,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if !serviceBuilder.isVersionLTE_7_1_0()>
 			setModelImplClass(${entity.name}Impl.class);
 			setEntityCacheEnabled(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED);
-		</#if>
-
-		<#if entity.badEntityColumns?size != 0>
+		<#elseif entity.badEntityColumns?size != 0>
 			try {
 				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
 

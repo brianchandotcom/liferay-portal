@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Adolfo Pérez
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
 	localization = "content/Language",

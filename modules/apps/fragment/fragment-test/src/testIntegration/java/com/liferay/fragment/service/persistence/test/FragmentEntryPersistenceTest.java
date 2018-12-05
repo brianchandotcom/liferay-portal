@@ -311,6 +311,15 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_T_S() throws Exception {
+		_persistence.countByG_FCI_T_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_FCI_T_S(0L, 0L, 0, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentEntry newFragmentEntry = addFragmentEntry();
 

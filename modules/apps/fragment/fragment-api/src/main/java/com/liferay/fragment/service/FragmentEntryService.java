@@ -156,6 +156,10 @@ public interface FragmentEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntriesByType(long groupId,
+		long fragmentCollectionId, int type, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntriesByType(long groupId,
 		long fragmentCollectionId, int type, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator);
 

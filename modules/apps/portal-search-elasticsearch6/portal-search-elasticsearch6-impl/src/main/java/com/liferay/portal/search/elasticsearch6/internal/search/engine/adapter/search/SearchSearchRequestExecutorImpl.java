@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -51,12 +53,19 @@ public class SearchSearchRequestExecutorImpl
 
 		String searchRequestBuilderString = searchRequestBuilder.toString();
 
+		searchRequestBuilderString = StringUtil.replace(
+			searchRequestBuilderString, ZERO_TERMS_QUERY_STRING,
+			StringPool.BLANK);
+
 		searchSearchResponseAssembler.assemble(
 			searchResponse, searchSearchResponse, searchSearchRequest,
 			searchRequestBuilderString);
 
 		return searchSearchResponse;
 	}
+
+	protected static final String ZERO_TERMS_QUERY_STRING =
+		",\"zero_terms_query\":\"NONE\"";
 
 	@Reference
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;

@@ -66,24 +66,16 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	@Activate
 	protected void activate() {
-		_jsonWebServiceClient.setBaseURI(_ASAH_FARO_BACKEND_URL);
-	}
-
-	private static String _getSystemEnv(String name, String fallbackValue) {
-		String value = System.getenv(name);
-
-		if (Validator.isNull(value)) {
-			return fallbackValue;
-		}
-
-		return value;
+		_jsonWebServiceClient.setBaseURI(
+			_SYSTEM_PROPERTY_VALUE_ASAH_FARO_BACKEND_URL);
 	}
 
 	private Map<String, String> _getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 
 		headers.put(
-			_ASAH_SECURITY_SIGNATURE_HEADER, _ASAH_SECURITY_SIGNATURE_VALUE);
+			_ASAH_FARO_BACKEND_SECURITY_SIGNATURE_HEADER,
+			_SYSTEM_PROPERTY_VALUE_ASAH_FARO_BACKEND_SECURITY_SIGNATURE);
 
 		return headers;
 	}
@@ -142,20 +134,15 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
-	private static final String _ASAH_FARO_BACKEND_URL = _getSystemEnv(
-		"ASAH_FARO_BACKEND_URL",
-		AsahFaroBackendClientImpl._ASAH_FARO_BACKEND_URL_DEV);
+	private static final String _ASAH_FARO_BACKEND_SECURITY_SIGNATURE_HEADER =
+		"OSB-Asah-Faro-Backend-Security-Signature";
 
-	private static final String _ASAH_FARO_BACKEND_URL_DEV =
-		"https://osbasahfarobackend-asah93fdaf9914e34506bf664b9ab652fc01." +
-			"eu-west-1.lfr.cloud";
+	private static final String
+		_SYSTEM_PROPERTY_VALUE_ASAH_FARO_BACKEND_SECURITY_SIGNATURE =
+			System.getProperty("asah.faro.backend.security.signature");
 
-	private static final String _ASAH_SECURITY_SIGNATURE_HEADER = _getSystemEnv(
-		"ASAH_SECURITY_SIGNATURE_HEADER",
-		"OSB-Asah-Faro-Backend-Security-Signature");
-
-	private static final String _ASAH_SECURITY_SIGNATURE_VALUE = System.getenv(
-		"ASAH_SECURITY_SIGNATURE_VALUE");
+	private static final String _SYSTEM_PROPERTY_VALUE_ASAH_FARO_BACKEND_URL =
+		System.getProperty("asah.faro.backend.url");
 
 	private static final AsahJSONMapper _asahJSONMapper = new AsahJSONMapper();
 

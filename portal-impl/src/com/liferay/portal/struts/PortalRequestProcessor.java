@@ -95,7 +95,6 @@ import javax.servlet.jsp.PageContext;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ModuleConfig;
 
 /**
@@ -425,10 +424,16 @@ public class PortalRequestProcessor {
 	}
 
 	private Action _getOriginalAction(ActionMapping actionMapping) {
+		String type = actionMapping.getType();
+
+		if (type == null) {
+			return null;
+		}
+
 		ClassLoader classLoader = PortalRequestProcessor.class.getClassLoader();
 
 		return _actions.computeIfAbsent(
-			actionMapping.getType(),
+			type,
 			classNameKey -> {
 				try {
 					Class<? extends Action> clazz =
@@ -542,13 +547,7 @@ public class PortalRequestProcessor {
 				actionMapping.getPath());
 
 		if (actionAdapter != null) {
-			ActionConfig actionConfig = _moduleConfig.findActionConfig(
-				actionMapping.getPath());
-
-			if (actionConfig != null) {
-				actionAdapter.setOriginalAction(
-					_getOriginalAction(actionMapping));
-			}
+			actionAdapter.setOriginalAction(_getOriginalAction(actionMapping));
 
 			return actionAdapter;
 		}

@@ -22,7 +22,7 @@ import com.liferay.data.engine.model.DEDataDefinition;
  */
 public final class DEDataDefinitionGetResponse implements DEGetResponse {
 
-	public DEDataDefinition getDeDataDefinition() {
+	public DEDataDefinition getDEDataDefinition() {
 		return _deDataDefinition;
 	}
 

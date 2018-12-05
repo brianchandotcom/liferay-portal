@@ -80,7 +80,7 @@ public class DEDataDefinitionGetRequestExecutorImpl
 					deDataDefinitionFieldsDeserializerApplyRequest);
 
 		return deDataDefinitionFieldsDeserializerApplyResponse.
-			getDeDataDefinitionFields();
+			getDEDataDefinitionFields();
 	}
 
 	protected DEDataDefinition map(DDMStructure ddmStructure)

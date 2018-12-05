@@ -215,7 +215,7 @@ public class DERequestExecutorTest {
 
 			Assert.assertEquals(
 				expectedDEDataDefinition,
-				deDataDefinitionGetResponse.getDeDataDefinition());
+				deDataDefinitionGetResponse.getDEDataDefinition());
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionRequestBuilder.deleteBuilder(
@@ -302,7 +302,7 @@ public class DERequestExecutorTest {
 				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
 
 			DEDataDefinition deDataDefinition =
-				deDataDefinitionGetResponse.getDeDataDefinition();
+				deDataDefinitionGetResponse.getDEDataDefinition();
 
 			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
 
@@ -417,7 +417,7 @@ public class DERequestExecutorTest {
 				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
 
 			DEDataDefinition deDataDefinition =
-				deDataDefinitionGetResponse.getDeDataDefinition();
+				deDataDefinitionGetResponse.getDEDataDefinition();
 
 			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
 

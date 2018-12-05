@@ -25,7 +25,7 @@ import java.util.List;
  */
 public final class DEDataDefinitionFieldsDeserializerApplyResponse {
 
-	public List<DEDataDefinitionField> getDeDataDefinitionFields() {
+	public List<DEDataDefinitionField> getDEDataDefinitionFields() {
 		return Collections.unmodifiableList(_deDataDefinitionFields);
 	}
 

@@ -53,7 +53,7 @@ public class DEDataDefinitionFieldsJSONDeserializerTest extends BaseTestCase {
 
 		List<DEDataDefinitionField> deDataDefinitionFields =
 			deDataDefinitionFieldsDeserializerApplyResponse.
-				getDeDataDefinitionFields();
+				getDEDataDefinitionFields();
 
 		Assert.assertEquals(
 			deDataDefinitionFields.toString(), 2,

@@ -20,6 +20,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -110,6 +111,9 @@ public class FragmentPortlet extends MVCPortlet {
 				themeDisplay.getScopeGroupId());
 
 		renderRequest.setAttribute(
+			FragmentWebKeys.RESOLVED_MODULE_NAME,
+				_npmResolver.resolveModuleName("fragment-web"));
+		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS, fragmentCollections);
 
 		renderRequest.setAttribute(
@@ -160,6 +164,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

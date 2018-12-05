@@ -119,10 +119,9 @@ function getSectionFragmentEntryLinkIds(structure, sectionId) {
 
 	section.columns.forEach(
 		column => {
-			fragmentEntryLinkIds = [
-				...fragmentEntryLinkIds,
-				...column.fragmentEntryLinkIds
-			];
+			fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
+				column.fragmentEntryLinkIds
+			);
 		}
 	);
 

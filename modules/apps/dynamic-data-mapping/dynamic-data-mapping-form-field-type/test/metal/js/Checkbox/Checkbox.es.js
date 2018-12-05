@@ -1,5 +1,4 @@
 import Checkbox from 'source/Checkbox/Checkbox.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -7,6 +6,12 @@ const spritemap = 'icons.svg';
 describe(
 	'Field Checkbox',
 	() => {
+		beforeEach(
+			() => {
+				jest.useFakeTimers();
+			}
+		);
+
 		afterEach(
 			() => {
 				if (component) {
@@ -185,10 +190,10 @@ describe(
 
 		it(
 			'should emit field edit event on field change',
-			() => {
-				const handleFieldChanged = jest.fn();
+			done => {
+				const handleFieldEdited = jest.fn();
 
-				const events = {fieldEdited: handleFieldChanged};
+				const events = {fieldEdited: handleFieldEdited};
 
 				component = new Checkbox(
 					{
@@ -197,13 +202,24 @@ describe(
 					}
 				);
 
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('input'),
-					'change',
-					{}
+				component.on(
+					'fieldEdited',
+					() => {
+						expect(handleFieldEdited).toHaveBeenCalled();
+
+						done();
+					}
 				);
 
-				expect(handleFieldChanged).toHaveBeenCalled();
+				component.handleInputChangeEvent(
+					{
+						delegateTarget: {
+							checked: true
+						}
+					}
+				);
+
+				jest.runAllTimers();
 			}
 		);
 
@@ -218,10 +234,12 @@ describe(
 
 				const spy = jest.spyOn(component, 'emit');
 
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('input'),
-					'change',
-					{}
+				component.handleInputChangeEvent(
+					{
+						delegateTarget: {
+							checked: true
+						}
+					}
 				);
 
 				expect(spy).toHaveBeenCalled();

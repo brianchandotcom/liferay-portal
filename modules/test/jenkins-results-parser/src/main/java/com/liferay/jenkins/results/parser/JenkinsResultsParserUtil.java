@@ -1899,7 +1899,7 @@ public class JenkinsResultsParserUtil {
 
 	public static JSONObject toJSONObject(String url) throws IOException {
 		return toJSONObject(
-			url, true, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			url, true, _MAX_RETRIES_DEFAULT, null, null, _RETRY_PERIOD_DEFAULT,
 			_TIMEOUT_DEFAULT, null);
 	}
 
@@ -1907,8 +1907,17 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toJSONObject(
-			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT, null);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, null,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, HttpRequestMethod method)
+		throws IOException {
+
+		return toJSONObject(
+			url, checkCache, _MAX_RETRIES_DEFAULT, method, null,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONObject toJSONObject(
@@ -1916,32 +1925,14 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toJSONObject(
-			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			timeout, null);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, null,
+			_RETRY_PERIOD_DEFAULT, timeout, null);
 	}
 
 	public static JSONObject toJSONObject(
-			String url, boolean checkCache, int maxRetries, int retryPeriod,
-			int timeout)
-		throws IOException {
-
-		return toJSONObject(
-			url, checkCache, maxRetries, null, retryPeriod, timeout, null);
-	}
-
-	public static JSONObject toJSONObject(
-			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout)
-		throws IOException {
-
-		return toJSONObject(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			null);
-	}
-
-	public static JSONObject toJSONObject(
-			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
+			String url, boolean checkCache, int maxRetries,
+			HttpRequestMethod method, String postContent, int retryPeriod,
+			int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		String response = toString(
@@ -1957,11 +1948,31 @@ public class JenkinsResultsParserUtil {
 		return createJSONObject(response);
 	}
 
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, int maxRetries, int retryPeriod,
+			int timeout)
+		throws IOException {
+
+		return toJSONObject(
+			url, checkCache, maxRetries, null, null, retryPeriod, timeout,
+			null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, int maxRetries, String postContent,
+			int retryPeriod, int timeout)
+		throws IOException {
+
+		return toJSONObject(
+			url, checkCache, maxRetries, null, postContent, retryPeriod,
+			timeout, null);
+	}
+
 	public static JSONObject toJSONObject(String url, String postContent)
 		throws IOException {
 
 		return toJSONObject(
-			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			url, false, _MAX_RETRIES_DEFAULT, null, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
@@ -1970,7 +1981,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toJSONObject(
-			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			url, false, _MAX_RETRIES_DEFAULT, null, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
@@ -2163,8 +2174,10 @@ public class JenkinsResultsParserUtil {
 						urlConnection.getHeaderField("X-RateLimit-Reset"));
 
 					System.out.println(
-						_getGitHubAPIRateLimitStatusMessage(
-							limit, remaining, reset));
+						combine(
+							_getGitHubAPIRateLimitStatusMessage(
+								limit, remaining, reset),
+							"\n    ", url));
 				}
 
 				StringBuilder sb = new StringBuilder();

@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -309,7 +310,7 @@ public class StructuredContentNestedCollectionResource
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			ddmStructureId);
 
-		Locale locale = themeDisplay.getLocale();
+		Locale locale = _getLocale(acceptLanguage, contentSpaceId);
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
@@ -346,8 +347,7 @@ public class StructuredContentNestedCollectionResource
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
 			serviceContext);
 
-		return new JournalArticleWrapper(
-			journalArticle, acceptLanguage.getPreferredLocale(), themeDisplay);
+		return new JournalArticleWrapper(journalArticle, locale, themeDisplay);
 	}
 
 	private ClassNameClassPK _createClassNameClassPK(
@@ -522,19 +522,30 @@ public class StructuredContentNestedCollectionResource
 		);
 	}
 
+	private Locale _getLocale(
+			AcceptLanguage acceptLanguage, long contentSpaceId)
+		throws PortalException {
+
+		return Optional.ofNullable(
+			acceptLanguage.getPreferredLocale()
+		).orElse(
+			_portal.getSiteDefaultLocale(contentSpaceId)
+		);
+	}
+
 	private PageItems<JournalArticleWrapper> _getPageItems(
 			Pagination pagination, long contentSpaceId,
 			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay,
 			Filter filter, Sort sort)
 		throws PortalException {
 
+		Locale locale = _getLocale(acceptLanguage, contentSpaceId);
+
 		SearchContext searchContext = _createSearchContext(
-			themeDisplay.getCompanyId(), contentSpaceId,
-			acceptLanguage.getPreferredLocale(), sort,
+			themeDisplay.getCompanyId(), contentSpaceId, locale, sort,
 			pagination.getStartPosition(), pagination.getEndPosition());
 
-		Query fullQuery = _getFullQuery(
-			filter, acceptLanguage.getPreferredLocale(), searchContext);
+		Query fullQuery = _getFullQuery(filter, locale, searchContext);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -564,8 +575,7 @@ public class StructuredContentNestedCollectionResource
 			List::stream
 		).map(
 			journalArticle -> new JournalArticleWrapper(
-				journalArticle, acceptLanguage.getPreferredLocale(),
-				themeDisplay)
+				journalArticle, locale, themeDisplay)
 		).collect(
 			Collectors.toList()
 		);
@@ -740,7 +750,7 @@ public class StructuredContentNestedCollectionResource
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Locale locale = acceptLanguage.getPreferredLocale();
+		Locale locale = _getLocale(acceptLanguage, journalArticle.getGroupId());
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
@@ -831,6 +841,9 @@ public class StructuredContentNestedCollectionResource
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SearchResultPermissionFilterFactory

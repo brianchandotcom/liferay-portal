@@ -37,7 +37,7 @@ if (notificationUnread) {
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:user-portrait
+			<liferay-ui:user-portrait
 				userId="<%= 0 %>"
 			/>
 		</liferay-ui:search-container-column-text>

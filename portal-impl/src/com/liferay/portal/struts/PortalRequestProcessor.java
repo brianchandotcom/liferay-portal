@@ -177,7 +177,7 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		_process(request, response);
+		_process(path, request, response);
 
 		try {
 			if (_isPortletPath(path)) {
@@ -508,10 +508,11 @@ public class PortalRequestProcessor {
 	}
 
 	private void _process(
-			HttpServletRequest request, HttpServletResponse response)
+			String path, HttpServletRequest request,
+			HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _processPath(request, response);
+		path = _processPath(path, request, response);
 
 		if (path == null) {
 			return;
@@ -635,10 +636,9 @@ public class PortalRequestProcessor {
 	}
 
 	private String _processPath(
-			HttpServletRequest request, HttpServletResponse response)
+			String path, HttpServletRequest request,
+			HttpServletResponse response)
 		throws IOException {
-
-		String path = _findPath(request);
 
 		HttpSession session = request.getSession();
 

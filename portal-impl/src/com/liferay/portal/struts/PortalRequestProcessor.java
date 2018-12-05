@@ -158,7 +158,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _processPath(_findPath(request), request, response);
+		String path = _processPath(request, response);
 
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
@@ -613,9 +613,10 @@ public class PortalRequestProcessor {
 	}
 
 	private String _processPath(
-			String path, HttpServletRequest request,
-			HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
+
+		String path = _findPath(request);
 
 		HttpSession session = request.getSession();
 

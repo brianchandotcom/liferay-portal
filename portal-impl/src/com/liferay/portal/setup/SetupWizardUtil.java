@@ -55,8 +55,6 @@ import javax.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Manuel de la Peña
  * @author Julio Camarero
@@ -127,7 +125,7 @@ public class SetupWizardUtil {
 
 		HttpSession session = request.getSession();
 
-		session.setAttribute(Globals.LOCALE_KEY, locale);
+		session.setAttribute(WebKeys.LOCALE, locale);
 		session.setAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE, languageId);
 
 		LanguageUtil.updateCookie(request, response, locale);

@@ -35,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.Globals;
-
 /**
  * @author Raymond Augé
  */
@@ -119,7 +117,7 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 
 				// User locale
 
-				session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
+				session.setAttribute(WebKeys.LOCALE, user.getLocale());
 			}
 			catch (Exception e) {
 				_log.error(e, e);

@@ -91,8 +91,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.Globals;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -528,7 +526,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			HttpSession session = request.getSession();
 
-			session.removeAttribute(Globals.LOCALE_KEY);
+			session.removeAttribute(WebKeys.LOCALE);
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 

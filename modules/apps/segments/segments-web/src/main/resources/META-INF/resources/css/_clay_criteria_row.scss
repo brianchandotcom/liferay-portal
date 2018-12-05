@@ -3,14 +3,14 @@
 }
 
 .criterion-row {
-	padding: 8px 16px;
+	border-left: 3px solid $chartBlue;
 	display: flex;
 	flex: 1;
-	border-left: 3px solid #4B9BFF;
+	padding: 8px 16px;
 }
 
 .criteria-string {
-	color: #6B6C7E;
+	color: $mainLighten28;
 	font-size: 14px;
 	font-weight: 500;
 }
@@ -43,6 +43,6 @@
 }
 
 .property-string, .value-string {
-	color: #272833;
+	color: $main;
 	font-weight: 700;
 }

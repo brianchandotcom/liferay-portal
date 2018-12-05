@@ -10,11 +10,11 @@
 }
 
 .empty-state {
-	background-color: #F1F2F5;
-	border: 1px solid #E7E7ED;
-	border-left: 3px solid #4B9BFF;
+	background-color: $lightBackground;
+	border: 1px solid $mainLighten74;
+	border-left: 3px solid $chartBlue;
 	border-radius: 4px;
-	color: #6B6C7E;
+	color: $mainLighten28;
 	cursor: pointer;
 	font-weight: 600;
 	padding: 16px 32px;

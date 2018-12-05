@@ -66,12 +66,13 @@ class ClayODataQueryBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {query} = props;
+		const {initialQuery} = props;
 
 		this.state = {
-			criteriaMap: query && query !== '()' ? translateToCriteria(query) : null,
-			initialQuery: query,
-			query
+			criteriaMap: initialQuery && initialQuery !== '()' ?
+				translateToCriteria(initialQuery) :
+				null,
+			query: initialQuery
 		};
 	}
 
@@ -121,7 +122,6 @@ ClayODataQueryBuilder.propTypes = {
 	inputId: PropTypes.string,
 	operators: PropTypes.array,
 	properties: PropTypes.array,
-	query: PropTypes.string,
 	readOnly: PropTypes.bool
 };
 

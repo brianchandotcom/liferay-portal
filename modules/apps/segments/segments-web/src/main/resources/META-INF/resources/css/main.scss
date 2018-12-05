@@ -1,6 +1,8 @@
 .clay-query-builder-root {
-	@import "_clay_button";
-	@import "_clay_criteria_builder";
-	@import "_clay_criteria_group";
-	@import "_clay_criteria_row";
+	@import "variables";
+
+	@import "clay_button";
+	@import "clay_criteria_builder";
+	@import "clay_criteria_group";
+	@import "clay_criteria_row";
 }

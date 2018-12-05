@@ -8,8 +8,7 @@ class ClayCriteriaBuilder extends React.Component {
 		super(props);
 
 		this.state = {
-			editing: false,
-			initialCriteria: this.props.criteria
+			editing: false
 		};
 	}
 
@@ -82,12 +81,12 @@ class ClayCriteriaBuilder extends React.Component {
 			.map(
 				item => {
 					return item.items ?
-						Object.assign(
-							item,
-							{
+						{
+							...item,
+							...{
 								items: this._cleanCriteria(item.items)
 							}
-						) :
+						} :
 						item;
 				}
 			);

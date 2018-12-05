@@ -27,7 +27,7 @@ class ClayCriteriaGroup extends React.Component {
 					(criterion, index) => {
 						return (
 							<div className="criterion" key={index}>
-								{index != 0 && (
+								{index !== 0 && (
 									<ClayButton
 										className="btn-sm btn btn-secondary conjunction"
 										label={this._getConjunctionLabel(
@@ -98,12 +98,12 @@ class ClayCriteriaGroup extends React.Component {
 		};
 
 		onChange(
-			Object.assign(
-				criteria,
-				{
+			{
+				...criteria,
+				...{
 					items: insertAtIndex(emptyItem, criteria.items, index + 1)
 				}
-			)
+			}
 		);
 	};
 
@@ -121,12 +121,12 @@ class ClayCriteriaGroup extends React.Component {
 			conjunctions[index + 1].name;
 
 		onChange(
-			Object.assign(
-				criteria,
-				{
+			{
+				...criteria,
+				...{
 					conjunctionName: conjunctionSelected
 				}
-			)
+			}
 		);
 	};
 
@@ -134,9 +134,9 @@ class ClayCriteriaGroup extends React.Component {
 		const {criteria, onChange} = this.props;
 
 		onChange(
-			Object.assign(
-				criteria,
-				{
+			{
+				...criteria,
+				...{
 					items: newCriterion ?
 						Object.assign(
 							criteria.items,
@@ -148,12 +148,12 @@ class ClayCriteriaGroup extends React.Component {
 							(fItem, fIndex) => fIndex !== index
 						)
 				}
-			)
+			}
 		);
 	};
 
 	_updateCriteria = (index, criterion) => newCriteria => {
-		this._updateCriterion(index)(Object.assign(criterion, newCriteria));
+		this._updateCriterion(index)({...criterion, ...newCriteria});
 	};
 }
 

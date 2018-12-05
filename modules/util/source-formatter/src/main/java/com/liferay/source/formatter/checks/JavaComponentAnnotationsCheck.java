@@ -73,13 +73,13 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private String _addServiceAttribute(
-		String annotation, String serviceAttribute) {
+	private String _addAttribute(
+		String annotation, String attributeName, String attributeValue) {
 
 		if (!annotation.contains("(")) {
 			return StringBundler.concat(
 				annotation.substring(0, annotation.length() - 1), "(",
-				serviceAttribute, ")\n");
+				attributeName, " = ", attributeValue, ")\n");
 		}
 
 		Matcher matcher = _attributePattern.matcher(annotation);
@@ -89,11 +89,14 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				(getLevel(annotation.substring(0, matcher.end()), "{", "}") ==
 					0)) {
 
-				String attributeName = matcher.group(1);
+				String curAttributeName = matcher.group(1);
 
-				if (attributeName.compareTo("service") > 0) {
+				if (curAttributeName.compareTo(attributeName) > 0) {
 					return StringUtil.insert(
-						annotation, serviceAttribute + ", ", matcher.start(1));
+						annotation,
+						StringBundler.concat(
+							attributeName, " = ", attributeValue, ", "),
+						matcher.start(1));
 				}
 			}
 		}
@@ -104,11 +107,16 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			int pos = annotation.lastIndexOf("\n", annotation.length() - 2);
 
 			return StringUtil.insert(
-				annotation, ",\n\t" + indent + serviceAttribute, pos);
+				annotation,
+				StringBundler.concat(
+					",\n\t", indent, attributeName, " = ", attributeValue),
+				pos);
 		}
 
 		return StringUtil.replaceLast(
-			annotation, ')', ", " + serviceAttribute + ")");
+			annotation, ')',
+			StringBundler.concat(
+				", ", attributeName, " = ", attributeValue, ")"));
 	}
 
 	private String _formatAnnotationParameterProperties(String annotation) {
@@ -185,30 +193,29 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, String className, String annotation,
 		List<String> implementedClassNames) {
 
-		String expectedServiceAttribute = _getExpectedServiceAttribute(
-			implementedClassNames);
+		String expectedServiceAttributeValue =
+			_getExpectedServiceAttributeValue(implementedClassNames);
 
-		Matcher matcher = _serviceAttributePattern.matcher(annotation);
+		String serviceAttributeValue = _getAttributeValue(
+			annotation, "service");
 
-		if (!matcher.find()) {
-			return _addServiceAttribute(annotation, expectedServiceAttribute);
+		if (serviceAttributeValue == null) {
+			return _addAttribute(
+				annotation, "service", expectedServiceAttributeValue);
 		}
 
 		if (!_checkMismatchedServiceAttribute && !_checkSelfRegistration) {
 			return annotation;
 		}
 
-		String serviceAttribute = _getServiceAttribute(
-			annotation, matcher.start() + 1);
-
 		if (_checkMismatchedServiceAttribute &&
-			!serviceAttribute.equals(expectedServiceAttribute)) {
+			!serviceAttributeValue.equals(expectedServiceAttributeValue)) {
 
 			addMessage(fileName, "Mismatched @Component 'service' attribute");
 		}
 
 		if (_checkSelfRegistration &&
-			serviceAttribute.matches(".*\\W" + className + "\\.class.*")) {
+			serviceAttributeValue.matches(".*\\b" + className + "\\.class.*")) {
 
 			addMessage(
 				fileName,
@@ -219,37 +226,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private String _getExpectedServiceAttribute(
-		List<String> implementedClassNames) {
+	private String _getAttributeValue(String annotation, String attributeName) {
+		Pattern pattern = Pattern.compile("\\W" + attributeName + "\\s*=");
 
-		if (implementedClassNames.isEmpty()) {
-			return "service = {}";
+		Matcher matcher = pattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return null;
 		}
 
-		if (implementedClassNames.size() == 1) {
-			return StringBundler.concat(
-				"service = ", implementedClassNames.get(0), ".class");
-		}
+		int start = matcher.end() + 1;
 
-		StringBundler sb = new StringBundler(
-			implementedClassNames.size() * 3 + 1);
-
-		sb.append("service = {");
-
-		for (String implementedClassName : implementedClassNames) {
-			sb.append(implementedClassName);
-			sb.append(".class");
-			sb.append(", ");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _getServiceAttribute(String annotation, int start) {
 		int end = start;
 
 		while (true) {
@@ -268,24 +255,51 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			}
 		}
 
-		String serviceAttribute = StringUtil.trim(
+		String attributeValue = StringUtil.trim(
 			annotation.substring(start, end));
 
-		if (!serviceAttribute.contains("\n")) {
-			return serviceAttribute;
+		if (!attributeValue.contains("\n")) {
+			return attributeValue;
 		}
 
 		return StringUtil.replace(
-			serviceAttribute, new String[] {"\t", "=\n", ",\n", "\n"},
-			new String[] {"", "= ", ", ", ""});
+			attributeValue, new String[] {"\t", ",\n", "\n"},
+			new String[] {"", ", ", ""});
+	}
+
+	private String _getExpectedServiceAttributeValue(
+		List<String> implementedClassNames) {
+
+		if (implementedClassNames.isEmpty()) {
+			return "{}";
+		}
+
+		if (implementedClassNames.size() == 1) {
+			return implementedClassNames.get(0) + ".class";
+		}
+
+		StringBundler sb = new StringBundler(
+			implementedClassNames.size() * 3 + 1);
+
+		sb.append("{");
+
+		for (String implementedClassName : implementedClassNames) {
+			sb.append(implementedClassName);
+			sb.append(".class");
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static final Pattern _annotationParameterPropertyPattern =
 		Pattern.compile("\t(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
-	private static final Pattern _serviceAttributePattern = Pattern.compile(
-		"\\Wservice\\s*=");
 
 	private boolean _checkMismatchedServiceAttribute;
 	private boolean _checkSelfRegistration;

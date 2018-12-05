@@ -1,4 +1,5 @@
 dependencies {
+	compileInclude group: "aopalliance", name: "aopalliance", version: "1.0"
 	compileInclude group: "com.google.inject", name: "guice", version: "2.0"
 	compileInclude group: "net.sourceforge.nekohtml", name: "nekohtml", version: "1.9.10"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.1"

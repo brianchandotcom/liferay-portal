@@ -9,7 +9,6 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.1"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
 
-	compileOnly group: "aopalliance", name: "aopalliance", version: "1.0"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.google.inject", name: "guice", version: "2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -9,6 +9,7 @@ configurations {
 dependencies {
 	asmCommons group: "org.ow2.asm", name: "asm-commons", version: "6.0"
 
+	compileInclude group: "aopalliance", name: "aopalliance", version: "1.0"
 	compileInclude group: "args4j", name: "args4j", version: "2.0.23"
 	compileInclude group: "com.google.code.findbugs", name: "jsr305", version: "2.0.3"
 	compileInclude group: "com.google.code.gson", name: "gson", version: "2.7"

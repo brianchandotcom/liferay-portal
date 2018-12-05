@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.internal.asah.client.data.binding;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -32,22 +32,20 @@ import java.util.List;
 /**
  * @author David Arques
  */
-public class AsahJSONMapper {
+public class IndividualSegmentJSONObjectMapper {
 
-	public AsahJSONMapper() {
+	public IndividualSegmentJSONObjectMapper() {
 		_objectMapper = new ObjectMapper();
 
 		_objectMapper.configure(
 			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
-	public IndividualSegment mapToIndividualSegment(String json)
-		throws IOException {
-
+	public IndividualSegment map(String json) throws IOException {
 		return _objectMapper.readValue(json, IndividualSegment.class);
 	}
 
-	public Results<IndividualSegment> mapToIndividualSegmentResults(String json)
+	public Results<IndividualSegment> mapToResults(String json)
 		throws IOException {
 
 		JsonNode responseJsonNode = _objectMapper.readTree(json);

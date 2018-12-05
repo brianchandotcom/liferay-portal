@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.internal.asah.client.data.binding;
 
 import com.liferay.segments.internal.asah.client.model.Author;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
@@ -33,12 +33,12 @@ import org.junit.Test;
 /**
  * @author David Arques
  */
-public class AsahJSONMapperTest {
+public class IndividualSegmentJSONObjectMapperTest {
 
 	@Test
-	public void testMapToIndividualSegment() throws Exception {
+	public void testmap() throws Exception {
 		IndividualSegment individualSegment =
-			_asahJSONMapper.mapToIndividualSegment(
+			_individualSegmentJSONObjectMapper.map(
 				_read("get-individual-segment.json"));
 
 		Assert.assertNotNull(individualSegment);
@@ -53,9 +53,9 @@ public class AsahJSONMapperTest {
 	}
 
 	@Test
-	public void testMapToIndividualSegmentResults() throws Exception {
+	public void testmapResults() throws Exception {
 		Results<IndividualSegment> results =
-			_asahJSONMapper.mapToIndividualSegmentResults(
+			_individualSegmentJSONObjectMapper.mapToResults(
 				_read("get-individual-segments.json"));
 
 		Assert.assertEquals(2, results.getTotal());
@@ -74,15 +74,13 @@ public class AsahJSONMapperTest {
 	}
 
 	@Test(expected = IOException.class)
-	public void testMapToIndividualSegmentResultsWithInvalidJSON()
-		throws Exception {
-
-		_asahJSONMapper.mapToIndividualSegmentResults("invalid json");
+	public void testmapResultsWithInvalidJSON() throws Exception {
+		_individualSegmentJSONObjectMapper.mapToResults("invalid json");
 	}
 
 	@Test(expected = IOException.class)
-	public void testMapToIndividualSegmentWithInvalidJSON() throws Exception {
-		_asahJSONMapper.mapToIndividualSegment("invalid json");
+	public void testmapWithInvalidJSON() throws Exception {
+		_individualSegmentJSONObjectMapper.map("invalid json");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -95,6 +93,8 @@ public class AsahJSONMapperTest {
 		return new String(bytes, "UTF-8");
 	}
 
-	private static final AsahJSONMapper _asahJSONMapper = new AsahJSONMapper();
+	private static final IndividualSegmentJSONObjectMapper
+		_individualSegmentJSONObjectMapper =
+			new IndividualSegmentJSONObjectMapper();
 
 }

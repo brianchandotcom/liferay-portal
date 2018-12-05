@@ -17,6 +17,7 @@ package com.liferay.segments.internal.asah.client;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.internal.asah.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
 import com.liferay.segments.internal.asah.client.model.Rels;
 import com.liferay.segments.internal.asah.client.model.Results;
@@ -56,7 +57,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 					orderByFields),
 				_getHeaders());
 
-			return _asahJSONMapper.mapToIndividualSegmentResults(response);
+			return _individualSegmentJSONObjectMapper.mapToResults(response);
 		}
 		catch (IOException ioe) {
 			throw new NestableRuntimeException(
@@ -144,7 +145,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final String _SYSTEM_PROPERTY_VALUE_ASAH_FARO_BACKEND_URL =
 		System.getProperty("asah.faro.backend.url");
 
-	private static final AsahJSONMapper _asahJSONMapper = new AsahJSONMapper();
+	private static final IndividualSegmentJSONObjectMapper
+		_individualSegmentJSONObjectMapper =
+			new IndividualSegmentJSONObjectMapper();
 
 	@Reference
 	private JSONWebServiceClient _jsonWebServiceClient;

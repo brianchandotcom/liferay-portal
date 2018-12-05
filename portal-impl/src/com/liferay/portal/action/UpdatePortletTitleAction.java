@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portlet.InvokerPortletUtil;
 
 import javax.portlet.PortletPreferences;
@@ -31,8 +32,6 @@ import javax.portlet.PortletPreferences;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Ming-Gih Lam

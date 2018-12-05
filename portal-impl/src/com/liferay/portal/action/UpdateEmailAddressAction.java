@@ -28,13 +28,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portlet.admin.util.AdminUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Julio Camarero
@@ -52,27 +51,29 @@ public class UpdateEmailAddressAction implements Action {
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			return actionMapping.findForward("portal.update_email_address");
+			return actionMapping.getActionForward(
+				"portal.update_email_address");
 		}
 
 		try {
 			updateEmailAddress(request);
 
-			return actionMapping.findForward(
+			return actionMapping.getActionForward(
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserEmailAddressException) {
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward("portal.update_email_address");
+				return actionMapping.getActionForward(
+					"portal.update_email_address");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward("portal.error");
+				return actionMapping.getActionForward("portal.error");
 			}
 
 			PortalUtil.sendError(e, request, response);

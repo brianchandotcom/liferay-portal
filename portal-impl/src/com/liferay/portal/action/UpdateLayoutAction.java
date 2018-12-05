@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.JSONAction;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -63,8 +64,6 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan

@@ -26,13 +26,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,20 +47,21 @@ public class UpdateReminderQueryAction implements Action {
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			return actionMapping.findForward("portal.update_reminder_query");
+			return actionMapping.getActionForward(
+				"portal.update_reminder_query");
 		}
 
 		try {
 			updateReminderQuery(request, response);
 
-			return actionMapping.findForward(
+			return actionMapping.getActionForward(
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserReminderQueryException) {
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward(
+				return actionMapping.getActionForward(
 					"portal.update_reminder_query");
 			}
 			else if (e instanceof NoSuchUserException ||
@@ -69,7 +69,7 @@ public class UpdateReminderQueryAction implements Action {
 
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward("portal.error");
+				return actionMapping.getActionForward("portal.error");
 			}
 
 			PortalUtil.sendError(e, request, response);

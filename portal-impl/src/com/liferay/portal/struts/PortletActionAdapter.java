@@ -16,6 +16,8 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -24,9 +26,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Mika Koivisto
@@ -76,10 +75,10 @@ public class PortletActionAdapter extends PortletAction {
 			return null;
 		}
 
-		ActionForward actionForward = actionMapping.findForward(forward);
+		ActionForward actionForward = actionMapping.getActionForward(forward);
 
 		if (actionForward == null) {
-			actionForward = new ActionForward(forward);
+			actionForward = new ActionForward(null, forward);
 		}
 
 		return actionForward;

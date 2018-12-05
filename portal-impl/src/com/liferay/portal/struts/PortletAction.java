@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 
 import java.io.IOException;
 
@@ -55,9 +57,6 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -121,7 +120,7 @@ public class PortletAction implements Action {
 					(ResourceResponse)portletResponse);
 			}
 
-			return actionMapping.findForward(ActionConstants.COMMON_NULL);
+			return actionMapping.getActionForward(ActionConstants.COMMON_NULL);
 		}
 	}
 
@@ -146,7 +145,7 @@ public class PortletAction implements Action {
 			_log.debug("Forward to " + getForward(renderRequest));
 		}
 
-		return actionMapping.findForward(getForward(renderRequest));
+		return actionMapping.getActionForward(getForward(renderRequest));
 	}
 
 	public void serveResource(

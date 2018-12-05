@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.RenderParametersPool;
@@ -64,9 +66,6 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -179,7 +178,7 @@ public class LayoutAction implements Action {
 		try {
 			forwardLayout(request);
 
-			return actionMapping.findForward(
+			return actionMapping.getActionForward(
 				ActionConstants.COMMON_FORWARD_JSP);
 		}
 		catch (Exception e) {
@@ -408,7 +407,7 @@ public class LayoutAction implements Action {
 				}
 			}
 
-			return actionMapping.findForward("portal.layout");
+			return actionMapping.getActionForward("portal.layout");
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.pwd.PwdToolkitUtilThreadLocal;
 import com.liferay.portal.struts.Action;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,9 +52,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,7 +97,7 @@ public class UpdatePasswordAction implements Action {
 				}
 			}
 
-			return actionMapping.findForward("portal.update_password");
+			return actionMapping.getActionForward("portal.update_password");
 		}
 
 		try {
@@ -122,14 +121,14 @@ public class UpdatePasswordAction implements Action {
 			if (e instanceof UserPasswordException) {
 				SessionErrors.add(request, e.getClass(), e);
 
-				return actionMapping.findForward("portal.update_password");
+				return actionMapping.getActionForward("portal.update_password");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward("portal.error");
+				return actionMapping.getActionForward("portal.error");
 			}
 
 			PortalUtil.sendError(e, request, response);

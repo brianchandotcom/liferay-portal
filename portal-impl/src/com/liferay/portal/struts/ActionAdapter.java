@@ -16,12 +16,11 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Mika Koivisto
@@ -52,10 +51,10 @@ public class ActionAdapter implements Action {
 			return null;
 		}
 
-		ActionForward actionForward = actionMapping.findForward(forward);
+		ActionForward actionForward = actionMapping.getActionForward(forward);
 
 		if (actionForward == null) {
-			actionForward = new ActionForward(forward);
+			actionForward = new ActionForward(null, forward);
 		}
 
 		return actionForward;

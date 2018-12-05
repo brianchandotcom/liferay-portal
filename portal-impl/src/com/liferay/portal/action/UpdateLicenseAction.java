@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.struts.Action;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.LicenseUtil;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 
@@ -34,9 +36,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Amos Fong
@@ -83,7 +82,7 @@ public class UpdateLicenseAction implements Action {
 				return null;
 			}
 
-			return actionMapping.findForward("portal.license");
+			return actionMapping.getActionForward("portal.license");
 		}
 
 		response.sendRedirect(PortalUtil.getPathContext() + "/c/portal/layout");

@@ -62,6 +62,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
+import com.liferay.portal.struts.model.ModuleConfig;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.LiferayPortletUtil;
@@ -93,9 +96,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.config.ModuleConfig;
 
 /**
  * @author Brian Wing Shun Chan
@@ -159,8 +159,7 @@ public class PortalRequestProcessor {
 
 		String path = _processPath(request, response);
 
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
+		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
 		if ((actionMapping == null) &&
 			(StrutsActionRegistryUtil.getAction(path) == null)) {
@@ -404,9 +403,8 @@ public class PortalRequestProcessor {
 		String contextPath = lastPath.getContextPath();
 
 		if (contextPath.equals(themeDisplay.getPathMain())) {
-			ActionMapping actionMapping =
-				(ActionMapping)_moduleConfig.findActionConfig(
-					lastPath.getPath());
+			ActionMapping actionMapping = _moduleConfig.getActionMapping(
+				lastPath.getPath());
 
 			if ((actionMapping == null) || parameters.isEmpty()) {
 				return sb.toString();
@@ -496,16 +494,12 @@ public class PortalRequestProcessor {
 
 		response.setContentType("text/html; charset=UTF-8");
 
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
+		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
 		if ((StrutsActionRegistryUtil.getAction(path) != null) &&
 			(actionMapping == null)) {
 
-			actionMapping = new ActionMapping();
-
-			actionMapping.setModuleConfig(_moduleConfig);
-			actionMapping.setPath(path);
+			actionMapping = new ActionMapping(_moduleConfig, null, path, null);
 		}
 
 		if (!_processRoles(request, response, actionMapping)) {
@@ -957,7 +951,7 @@ public class PortalRequestProcessor {
 		}
 
 		if (!authorized) {
-			ActionForward actionForward = actionMapping.findForward(
+			ActionForward actionForward = actionMapping.getActionForward(
 				_PATH_PORTAL_ERROR);
 
 			if (actionForward != null) {

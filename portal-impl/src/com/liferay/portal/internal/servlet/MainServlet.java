@@ -85,6 +85,9 @@ import com.liferay.portal.setup.SetupWizardSampleDataUtil;
 import com.liferay.portal.struts.PortalRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.struts.TilesUtil;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
+import com.liferay.portal.struts.model.ModuleConfig;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -131,10 +134,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.config.impl.ModuleConfigImpl;
 
 /**
  * @author Brian Wing Shun Chan
@@ -851,7 +850,7 @@ public class MainServlet extends HttpServlet {
 	}
 
 	private ModuleConfig _initModuleConfig() throws Exception {
-		ModuleConfig moduleConfig = new ModuleConfigImpl("");
+		ModuleConfig moduleConfig = new ModuleConfig();
 
 		ServletContext servletContext = getServletContext();
 
@@ -868,10 +867,10 @@ public class MainServlet extends HttpServlet {
 			for (Element forwardElement :
 					globalForwardsElement.elements("forward")) {
 
-				moduleConfig.addForwardConfig(
+				moduleConfig.addActionForward(
 					new ActionForward(
 						forwardElement.attributeValue("name"),
-						forwardElement.attributeValue("path"), false));
+						forwardElement.attributeValue("path")));
 			}
 
 			Element actionMappingsElement = rootElement.element(
@@ -880,27 +879,23 @@ public class MainServlet extends HttpServlet {
 			for (Element actionElement :
 					actionMappingsElement.elements("action")) {
 
-				ActionMapping actionMapping = new ActionMapping();
-
-				actionMapping.setForward(
-					actionElement.attributeValue("forward"));
-				actionMapping.setPath(actionElement.attributeValue("path"));
-				actionMapping.setType(actionElement.attributeValue("type"));
+				ActionMapping actionMapping = new ActionMapping(
+					moduleConfig, actionElement.attributeValue("forward"),
+					actionElement.attributeValue("path"),
+					actionElement.attributeValue("type"));
 
 				for (Element forwardElement :
 						actionElement.elements("forward")) {
 
-					actionMapping.addForwardConfig(
+					actionMapping.addActionForward(
 						new ActionForward(
 							forwardElement.attributeValue("name"),
-							forwardElement.attributeValue("path"), false));
+							forwardElement.attributeValue("path")));
 				}
 
-				moduleConfig.addActionConfig(actionMapping);
+				moduleConfig.addActionMapping(actionMapping);
 			}
 		}
-
-		moduleConfig.freeze();
 
 		return moduleConfig;
 	}

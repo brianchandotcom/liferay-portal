@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,7 +41,8 @@ public class LogoutAction implements Action {
 
 			request.setAttribute(WebKeys.LOGOUT, Boolean.TRUE);
 
-			return actionMapping.findForward(ActionConstants.COMMON_REFERER);
+			return actionMapping.getActionForward(
+				ActionConstants.COMMON_REFERER);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

@@ -29,15 +29,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.Action;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Manuel de la Peña
@@ -62,12 +61,12 @@ public class SetupWizardAction implements Action {
 
 		try {
 			if (Validator.isNull(cmd)) {
-				return actionMapping.findForward("portal.setup_wizard");
+				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TRANSLATE)) {
 				SetupWizardUtil.updateLanguage(request, response);
 
-				return actionMapping.findForward("portal.setup_wizard");
+				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TEST)) {
 				testDatabase(request, response);
@@ -91,7 +90,7 @@ public class SetupWizardAction implements Action {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(request, e.getClass());
 
-				return actionMapping.findForward("portal.setup_wizard");
+				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 
 			PortalUtil.sendError(e, request, response);

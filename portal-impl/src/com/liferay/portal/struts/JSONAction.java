@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
+import com.liferay.portal.struts.model.ActionForward;
+import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.OutputStream;
@@ -44,9 +46,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Ming-Gih Lam
@@ -114,7 +113,8 @@ public abstract class JSONAction implements Action {
 		boolean refresh = ParamUtil.getBoolean(request, "refresh");
 
 		if (refresh) {
-			return actionMapping.findForward(ActionConstants.COMMON_REFERER);
+			return actionMapping.getActionForward(
+				ActionConstants.COMMON_REFERER);
 		}
 		else if (Validator.isNotNull(json)) {
 			response.setCharacterEncoding(StringPool.UTF8);

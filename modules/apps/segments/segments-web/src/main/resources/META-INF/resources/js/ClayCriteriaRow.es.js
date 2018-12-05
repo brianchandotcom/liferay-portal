@@ -40,7 +40,6 @@ class ClayCriteriaRow extends React.Component {
 					<div className="edit-container">
 						<ClaySelect
 							className="criterion-input form-control"
-							key="property"
 							onChange={this._handleInputChange(
 								'propertyName'
 							)}
@@ -55,7 +54,6 @@ class ClayCriteriaRow extends React.Component {
 
 						<ClaySelect
 							className="criterion-input operator-input form-control"
-							key="operator"
 							onChange={this._handleInputChange(
 								'operatorName'
 							)}
@@ -71,7 +69,6 @@ class ClayCriteriaRow extends React.Component {
 						<input
 							className="criterion-input form-control"
 							id="queryRowValue"
-							key="value"
 							onChange={this._handleInputChange('value')}
 							type="text"
 							value={criterion && criterion.value}
@@ -80,14 +77,14 @@ class ClayCriteriaRow extends React.Component {
 						<ClayButton
 							className="btn-monospaced delete-button"
 							iconName="trash"
-							key="delete"
 							onClick={this._handleDelete}
 						/>
 					</div>
 				) : (
 					<div className="read-only-container">
 						<span className="criteria-string">
-							{'Property '}
+							{`${Liferay.Language.get('property')} `}
+
 							<strong className="property-string">
 								{`${selectedProperty && selectedProperty.label} `}
 							</strong>
@@ -110,14 +107,13 @@ class ClayCriteriaRow extends React.Component {
 		onChange(
 			{
 				conjunctionName: conjunctions[0].name,
-				items: [Object.assign({}, criterion)]
+				items: [{...criterion}]
 			}
 		);
 	}
 
-	_getSelectedItem(list, idSelected) {
-		return list.find(item => item.name === idSelected);
-	}
+	_getSelectedItem = (list, idSelected) =>
+		list.find(item => item.name === idSelected)
 
 	_handleInputChange = propertyName => event => {
 		this._updateCriteria({[propertyName]: event.target.value});
@@ -126,15 +122,13 @@ class ClayCriteriaRow extends React.Component {
 	_handleDelete = event => {
 		event.preventDefault();
 
-		const {onChange} = this.props;
-
-		onChange();
+		this.props.onChange();
 	}
 
 	_updateCriteria = newCriteria => {
 		const {criterion, onChange} = this.props;
 
-		onChange(Object.assign(criterion, newCriteria));
+		onChange({...criterion, ...newCriteria});
 	};
 }
 

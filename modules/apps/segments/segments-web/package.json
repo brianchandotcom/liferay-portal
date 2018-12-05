@@ -2,41 +2,24 @@
 	"csfConfig": {
 		"js": {
 			"lint": {
-				"parserOptions": {
-					"ecmaVersion": 7
-				},
 				"env": {
 					"browser": true,
 					"es6": true,
 					"node": true
 				},
-				"parser": "babel-eslint"
+				"parser": "babel-eslint",
+				"parserOptions": {
+					"ecmaVersion": 7
+				}
 			}
 		}
-	},
-	"jest": {
-		"setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
-		"testMatch": [
-			"<rootDir>/test/js/**/*.js"
-		]
-	},
-	"version": "1.0.0",
-	"description": "",
-	"main": "js/index.es.js",
-	"name": "segments-web",
-	"scripts": {
-		"build": "babel --source-maps --verbose -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"build:libs": "webpack",
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.es.js",
-		"format": "npm run csf -- -i",
-		"test": "jest"
 	},
 	"dependencies": {
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3"
 	},
+	"description": "",
 	"devDependencies": {
 		"@babel/cli": "^7.0.0",
 		"@babel/core": "^7.1.6",
@@ -61,5 +44,22 @@
 		"webpack": "^4.27.0",
 		"webpack-cli": "^3.1.2"
 	},
-	"private": true
+	"jest": {
+		"setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
+		"testMatch": [
+			"<rootDir>/test/js/**/*.js"
+		]
+	},
+	"main": "js/index.es.js",
+	"name": "segments-web",
+	"private": true,
+	"scripts": {
+		"build": "babel --source-maps --verbose -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"build:libs": "webpack",
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.es.js",
+		"format": "npm run csf -- -i",
+		"test": "jest"
+	},
+	"version": "1.0.0"
 }

@@ -106,15 +106,16 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 							segmentsJsRequire.default(
 								'<%= criteriaBuilderId %>',
 								{
+									initialQuery: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>',
 									inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
-									properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>,
-									query: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>'
+									properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>
 								},
 								{
 									spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 								}
 							);
 						</aui:script>
+
 					<%
 					}
 					%>

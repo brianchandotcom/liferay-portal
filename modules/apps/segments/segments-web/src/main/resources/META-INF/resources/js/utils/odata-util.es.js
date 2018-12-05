@@ -216,41 +216,42 @@ const oDataTransformationMap = {
 };
 
 export const buildQueryString = (queryItems, queryConjunction) => {
-	let queryString = '';
+	return queryItems
+		.filter(Boolean)
+		.reduce(
+			(queryString, item, index) => {
+				const {
+					conjunctionName,
+					items,
+					operatorName,
+					propertyName,
+					value
+				} = item;
 
-	queryItems.forEach(
-		(item, index) => {
-			const {
-				conjunctionName,
-				items,
-				operatorName,
-				propertyName,
-				value
-			} = item;
+				if (index > 0) {
+					queryString = queryString.concat(` ${queryConjunction} `);
+				}
 
-			if (index > 0) {
-				queryString = queryString.concat(` ${queryConjunction} `);
-			}
+				if (conjunctionName) {
+					queryString = queryString.concat(
+						`(${buildQueryString(items, conjunctionName)})`
+					);
+				}
+				else if (RELATIONAL_OPERATORS.includes(operatorName)) {
+					queryString = queryString.concat(
+						`${propertyName} ${operatorName} '${value}'`
+					);
+				}
+				else if (FUNCTIONAL_OPERATORS.includes(operatorName)) {
+					queryString = queryString.concat(
+						`${operatorName} (${propertyName}, '${value}')`
+					);
+				}
 
-			if (conjunctionName) {
-				queryString = queryString.concat(
-					`(${buildQueryString(items, conjunctionName)})`
-				);
-			}
-			else if (RELATIONAL_OPERATORS.includes(operatorName)) {
-				queryString = queryString.concat(
-					`${propertyName} ${operatorName} '${value}'`
-				);
-			}
-			else if (FUNCTIONAL_OPERATORS.includes(operatorName)) {
-				queryString = queryString.concat(
-					`${operatorName} (${propertyName}, '${value}')`
-				);
-			}
-		}
-	);
-
-	return queryString;
+				return queryString;
+			},
+			''
+		);
 };
 
 export const translateToCriteria = query => {

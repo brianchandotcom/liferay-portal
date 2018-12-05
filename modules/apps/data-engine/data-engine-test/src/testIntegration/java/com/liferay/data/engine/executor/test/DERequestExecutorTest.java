@@ -24,6 +24,7 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
+import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.portal.kernel.model.Group;
@@ -96,9 +97,13 @@ public class DERequestExecutorTest {
 		deDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
-			DEDataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), deDataDefinition
-			);
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinition
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
 
 		try {
 			ServiceContext serviceContext = createServiceContext(
@@ -113,12 +118,18 @@ public class DERequestExecutorTest {
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
-				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
-				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
 		}
@@ -171,9 +182,13 @@ public class DERequestExecutorTest {
 		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
-			DEDataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
-			);
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				expectedDEDataDefinition
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
 
 		try {
 			ServiceContext serviceContext = createServiceContext(
@@ -190,7 +205,10 @@ public class DERequestExecutorTest {
 			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
-				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
 				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
@@ -200,7 +218,10 @@ public class DERequestExecutorTest {
 				deDataDefinitionGetResponse.getDeDataDefinition());
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
-				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}
@@ -249,9 +270,13 @@ public class DERequestExecutorTest {
 		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
-			DEDataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
-			);
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				expectedDEDataDefinition
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
 
 		try {
 			ServiceContext serviceContext = createServiceContext(
@@ -268,7 +293,10 @@ public class DERequestExecutorTest {
 			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
-				DEDataDefinitionGetRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
 				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
@@ -290,7 +318,10 @@ public class DERequestExecutorTest {
 			Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
-				DEDataDefinitionDeleteRequest.Builder.of(deDataDefinitionId);
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}
@@ -322,9 +353,13 @@ public class DERequestExecutorTest {
 		expectedDEDataDefinition.setStorageType("json");
 
 		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
-			DEDataDefinitionSaveRequest.Builder.of(
-				_user.getUserId(), _group.getGroupId(), expectedDEDataDefinition
-			);
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				expectedDEDataDefinition
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
 
 		try {
 			ServiceContext serviceContext = createServiceContext(
@@ -335,10 +370,10 @@ public class DERequestExecutorTest {
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
 				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
 
-			long dataDefinitionId =
+			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
 
-			expectedDEDataDefinition.setPrimaryKeyObj(dataDefinitionId);
+			expectedDEDataDefinition.setPrimaryKeyObj(deDataDefinitionId);
 
 			Map<String, String> expectedDescriptionLabels = new HashMap() {
 				{
@@ -356,21 +391,27 @@ public class DERequestExecutorTest {
 			expectedDEDataDefinition = new DEDataDefinition(
 				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
 
-			expectedDEDataDefinition.setDataDefinitionId(dataDefinitionId);
+			expectedDEDataDefinition.setDataDefinitionId(deDataDefinitionId);
 			expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
 			expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
 			expectedDEDataDefinition.setStorageType("json");
 
 			deDataDefinitionSaveRequest =
-				DEDataDefinitionSaveRequest.Builder.of(
-					_user.getUserId(), _group.getGroupId(),
+				DEDataDefinitionRequestBuilder.saveBuilder(
 					expectedDEDataDefinition
-				);
+				).onBehalfOf(
+					_user.getUserId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
 
 			_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
-				DEDataDefinitionGetRequest.Builder.of(dataDefinitionId);
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
 				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
@@ -381,7 +422,10 @@ public class DERequestExecutorTest {
 			Assert.assertEquals(expectedDEDataDefinition, deDataDefinition);
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
-				DEDataDefinitionDeleteRequest.Builder.of(dataDefinitionId);
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
 
 			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
 		}

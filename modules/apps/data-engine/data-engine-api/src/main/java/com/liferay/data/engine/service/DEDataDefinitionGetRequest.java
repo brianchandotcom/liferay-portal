@@ -37,26 +37,18 @@ public final class DEDataDefinitionGetRequest implements DEGetRequest {
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long deDataDefinitionId) {
-			return new Builder(deDataDefinitionId);
-		}
-
-		public static DEDataDefinitionGetRequest of(long deDataDefinitionId) {
-			return newBuilder(
-				deDataDefinitionId
-			).build();
-		}
-
 		public DEDataDefinitionGetRequest build() {
 			return _deDataDefinitionGetRequest;
 		}
 
-		private Builder(long deDataDefinitionId) {
+		public Builder byId(long deDataDefinitionId) {
 			_deDataDefinitionGetRequest._deDataDefinitionId =
 				deDataDefinitionId;
+
+			return this;
 		}
 
-		private DEDataDefinitionGetRequest _deDataDefinitionGetRequest =
+		private final DEDataDefinitionGetRequest _deDataDefinitionGetRequest =
 			new DEDataDefinitionGetRequest();
 
 	}

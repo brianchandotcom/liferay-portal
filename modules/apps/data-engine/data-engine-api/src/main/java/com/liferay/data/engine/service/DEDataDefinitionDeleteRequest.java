@@ -37,25 +37,15 @@ public final class DEDataDefinitionDeleteRequest implements DEDeleteRequest {
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long deDataDefinitionId) {
-			return new Builder(deDataDefinitionId);
-		}
-
-		public static DEDataDefinitionDeleteRequest of(
-			long deDataDefinitionId) {
-
-			return newBuilder(
-				deDataDefinitionId
-			).build();
-		}
-
 		public DEDataDefinitionDeleteRequest build() {
 			return _deDataDefinitionDeleteRequest;
 		}
 
-		private Builder(long deDataDefinitionId) {
+		public Builder byId(long deDataDefinitionId) {
 			_deDataDefinitionDeleteRequest._deDataDefinitionId =
 				deDataDefinitionId;
+
+			return this;
 		}
 
 		private final DEDataDefinitionDeleteRequest

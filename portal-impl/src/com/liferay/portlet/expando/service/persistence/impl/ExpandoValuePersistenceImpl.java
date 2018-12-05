@@ -45,7 +45,6 @@ import com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4871,25 +4870,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 		setModelImplClass(ExpandoValueImpl.class);
 		setEntityCacheEnabled(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("rowId", "rowId_");
-			dbColumnNames.put("data", "data_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

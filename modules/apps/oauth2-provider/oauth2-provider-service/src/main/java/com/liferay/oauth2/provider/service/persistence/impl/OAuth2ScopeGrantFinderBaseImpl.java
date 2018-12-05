@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
-import java.lang.reflect.Field;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,25 +31,6 @@ import java.util.Set;
 public class OAuth2ScopeGrantFinderBaseImpl extends BasePersistenceImpl<OAuth2ScopeGrant> {
 	public OAuth2ScopeGrantFinderBaseImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("oAuth2ApplicationScopeAliasesId",
-				"oA2AScopeAliasesId");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	@Override

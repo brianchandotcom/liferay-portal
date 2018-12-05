@@ -47,7 +47,6 @@ import com.liferay.portal.model.impl.EmailAddressModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3996,25 +3995,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 		setModelImplClass(EmailAddressImpl.class);
 		setEntityCacheEnabled(EmailAddressModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-			dbColumnNames.put("primary", "primary_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

@@ -49,7 +49,6 @@ import com.liferay.wiki.service.persistence.WikiNodePersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4525,24 +4524,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		setModelImplClass(WikiNodeImpl.class);
 		setEntityCacheEnabled(WikiNodeModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

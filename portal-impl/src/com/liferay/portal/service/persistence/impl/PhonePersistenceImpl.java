@@ -47,7 +47,6 @@ import com.liferay.portal.model.impl.PhoneModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3958,26 +3957,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		setModelImplClass(PhoneImpl.class);
 		setEntityCacheEnabled(PhoneModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-			dbColumnNames.put("number", "number_");
-			dbColumnNames.put("primary", "primary_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

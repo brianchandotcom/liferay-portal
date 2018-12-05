@@ -65,6 +65,33 @@
 		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM" />
 	</command>
 
+	<command name="addEntryExternalLinkViaBrowseButton">
+		<if>
+			<isset var="entryContent" />
+			<then>
+				<execute function="DoubleClick" locator1="BlogsEntry#CONTENT_LINK">
+					<var name="key_entryContent" value="${entryContent}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
+					<var name="key_editor" value="content" />
+				</execute>
+			</else>
+		</if>
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK_BROWSE_BUTTON" />
+
+		<execute macro="ItemSelector#selectDMImage">
+			<var name="imageFileName" value="${imageFileName}" />
+			<var name="navTab" value="${navTab}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addRelatedAsset">
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
@@ -624,21 +651,6 @@
 		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" />
 	</command>
 
-	<command name="viewDMLink">
-		<var name="key_dmDocumentURL" value="${dmDocumentURL}" />
-		<var name="key_entryContent" value="${entryContent}" />
-
-		<execute macro="BlogsNavigator#gotoEditCP">
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute function="DoubleClick" locator1="BlogsEntry#CONTENT_LINK" />
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
-
-		<execute function="AssertTextEquals" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT" value1="${dmDocumentURL}" />
-	</command>
-
 	<command name="viewEntry">
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entrySubtitle" value="${entrySubtitle}" />
@@ -719,6 +731,20 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_AUTHOR" value1="${entryAuthorFullName}" />
+	</command>
+
+	<command name="viewEntryExternalURL">
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute function="DoubleClick" locator1="BlogsEntry#CONTENT_LINK">
+			<var name="key_entryContent" value="${entryContent}" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
+
+		<execute function="AssertTextEquals" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT" value1="${entryExternalURL}" />
 	</command>
 
 	<command name="viewEntryTable">

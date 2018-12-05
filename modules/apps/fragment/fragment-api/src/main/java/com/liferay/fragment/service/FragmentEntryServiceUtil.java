@@ -225,6 +225,13 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int status) {
+		return getService()
+				   .getFragmentEntriesByType(groupId, fragmentCollectionId,
+			type, status);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
 		long groupId, long fragmentCollectionId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return getService()

@@ -228,6 +228,13 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int status) {
+		return _fragmentEntryService.getFragmentEntriesByType(groupId,
+			fragmentCollectionId, type, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
 		long groupId, long fragmentCollectionId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return _fragmentEntryService.getFragmentEntriesByType(groupId,

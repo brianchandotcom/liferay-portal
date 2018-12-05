@@ -456,6 +456,23 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap[] getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int status)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.getFragmentEntriesByType(groupId,
+					fragmentCollectionId, type, status);
+
+			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentEntrySoap[] getFragmentEntriesByType(
 		long groupId, long fragmentCollectionId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator)
 		throws RemoteException {

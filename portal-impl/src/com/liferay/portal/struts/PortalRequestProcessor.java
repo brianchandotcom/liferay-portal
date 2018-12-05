@@ -256,12 +256,6 @@ public class PortalRequestProcessor {
 			return actionMapping;
 		}
 
-		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
-			if (actionConfig.getUnknown()) {
-				return (ActionMapping)actionConfig;
-			}
-		}
-
 		response.sendError(
 			HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
 

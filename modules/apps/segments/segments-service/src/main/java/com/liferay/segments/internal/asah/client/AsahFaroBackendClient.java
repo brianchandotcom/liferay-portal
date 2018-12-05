@@ -24,7 +24,7 @@ import java.util.List;
  * @author Shinn Lok
  * @author David Arques
  */
-public interface AsahClient {
+public interface AsahFaroBackendClient {
 
 	/**
 	 * Returns active individual segments with members

@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = AsahClient.class)
-public class AsahClientImpl implements AsahClient {
+@Component(immediate = true, service = AsahFaroBackendClient.class)
+public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	@Override
 	public Results<IndividualSegment> getIndividualSegments(
@@ -143,7 +143,8 @@ public class AsahClientImpl implements AsahClient {
 	}
 
 	private static final String _ASAH_FARO_BACKEND_URL = _getSystemEnv(
-		"ASAH_FARO_BACKEND_URL", AsahClientImpl._ASAH_FARO_BACKEND_URL_DEV);
+		"ASAH_FARO_BACKEND_URL",
+		AsahFaroBackendClientImpl._ASAH_FARO_BACKEND_URL_DEV);
 
 	private static final String _ASAH_FARO_BACKEND_URL_DEV =
 		"https://osbasahfarobackend-asah93fdaf9914e34506bf664b9ab652fc01." +

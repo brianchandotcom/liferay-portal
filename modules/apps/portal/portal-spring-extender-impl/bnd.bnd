@@ -21,8 +21,6 @@ Import-Package:\
 	\
 	javax.sql,\
 	\
-	org.aopalliance.aop,\
-	\
 	org.apache.commons.logging.impl,\
 	\
 	org.hibernate,\

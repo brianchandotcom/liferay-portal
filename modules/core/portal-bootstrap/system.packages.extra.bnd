@@ -182,8 +182,6 @@ Export-Package:\
 	\
 	jodd.util.*;version='3.6.4',\
 	\
-	org.aopalliance.*;version='1.0',\
-	\
 	org.apache.bcel.*;version='2.7.1',\
 	org.apache.commons.beanutils;version='1.8.2',\
 	org.apache.commons.beanutils.converters;version='1.8.2',\
@@ -350,7 +348,6 @@ Provide-Capability:\
 	@../../../lib/development/servlet-api.jar,\
 	@../../../lib/global/portlet.jar,\
 	@../../../lib/portal/ant.jar,\
-	@../../../lib/portal/aopalliance.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
 	@../../../lib/portal/aspectj-rt.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\

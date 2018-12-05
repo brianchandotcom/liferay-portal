@@ -281,6 +281,45 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Edited Google Document" />
 	</command>
 
+	<command name="EditGoogleDocWithSpecialCharacters" priority="4">
+		<description message="This test ensures that special characters  can be saved through the Google Doc editor" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addGoogleApp">
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<execute macro="Google#signIn">
+			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="GoogleDoc#gotoEdit">
+			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmGoogleApp" value="Google Docs" />
+		</execute>
+
+		<var name="dmDocumentTitle"><![CDATA[Special Characters Title 12345`~!@#$%^&*(){}[],.<>/?|]]></var>
+
+		<execute macro="GoogleDoc#editTitleInGoogleDoc">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="GoogleDoc#saveAndExit" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
 	<command name="EditGoogleSheet" priority="4">
 		<description message="This test ensures a Google Sheet title can be changed through the editor" />
 

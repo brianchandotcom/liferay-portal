@@ -67,44 +67,38 @@ public class ThemeHelper {
 				servletContext.getServletContextName());
 		}
 
-		String extension = theme.getTemplateExtension();
+		sb.append(theme.getFreeMarkerTemplateLoader());
+		sb.append(theme.getTemplatesPath());
 
-		if (extension.equals(TEMPLATE_EXTENSION_FTL)) {
-			sb.append(theme.getFreeMarkerTemplateLoader());
-			sb.append(theme.getTemplatesPath());
-
-			if (Validator.isNotNull(servletContextName) &&
-				!path.startsWith(StringPool.SLASH.concat(servletContextName))) {
-
-				sb.append(StringPool.SLASH);
-				sb.append(servletContextName);
-			}
+		if (Validator.isNotNull(servletContextName) &&
+			!path.startsWith(StringPool.SLASH.concat(servletContextName))) {
 
 			sb.append(StringPool.SLASH);
-
-			int start = 0;
-
-			if (path.startsWith(StringPool.SLASH)) {
-				start = 1;
-			}
-
-			int end = path.lastIndexOf(CharPool.PERIOD);
-
-			sb.append(path.substring(start, end));
-
-			sb.append(StringPool.PERIOD);
-
-			if (Validator.isNotNull(portletId)) {
-				sb.append(portletId);
-				sb.append(StringPool.PERIOD);
-			}
-
-			sb.append(TEMPLATE_EXTENSION_FTL);
-
-			return sb.toString();
+			sb.append(servletContextName);
 		}
 
-		return path;
+		sb.append(StringPool.SLASH);
+
+		int start = 0;
+
+		if (path.startsWith(StringPool.SLASH)) {
+			start = 1;
+		}
+
+		int end = path.lastIndexOf(CharPool.PERIOD);
+
+		sb.append(path.substring(start, end));
+
+		sb.append(StringPool.PERIOD);
+
+		if (Validator.isNotNull(portletId)) {
+			sb.append(portletId);
+			sb.append(StringPool.PERIOD);
+		}
+
+		sb.append(TEMPLATE_EXTENSION_FTL);
+
+		return sb.toString();
 	}
 
 	public static boolean resourceExists(
@@ -146,17 +140,9 @@ public class ThemeHelper {
 			return false;
 		}
 
-		String resourcePath = getResourcePath(
-			servletContext, theme, portletId, path);
-
-		String extension = theme.getTemplateExtension();
-
-		if (extension.equals(TEMPLATE_EXTENSION_FTL)) {
-			return TemplateResourceLoaderUtil.hasTemplateResource(
-				TemplateConstants.LANG_TYPE_FTL, resourcePath);
-		}
-
-		return false;
+		return TemplateResourceLoaderUtil.hasTemplateResource(
+			TemplateConstants.LANG_TYPE_FTL,
+			getResourcePath(servletContext, theme, portletId, path));
 	}
 
 }

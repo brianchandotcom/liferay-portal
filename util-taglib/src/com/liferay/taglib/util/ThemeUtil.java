@@ -75,11 +75,7 @@ public class ThemeUtil {
 			HttpServletResponse response, String path, Theme theme)
 		throws Exception {
 
-		String extension = theme.getTemplateExtension();
-
-		if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
-			includeFTL(servletContext, request, response, path, theme, true);
-		}
+		includeFTL(servletContext, request, response, path, theme, true);
 	}
 
 	public static String includeFTL(
@@ -152,13 +148,8 @@ public class ThemeUtil {
 		}
 
 		try {
-			if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
-				return doIncludeFTL(
-					servletContext, request, response, path, theme, false,
-					write);
-			}
-
-			return null;
+			return doIncludeFTL(
+				servletContext, request, response, path, theme, false, write);
 		}
 		finally {
 			if ((pluginClassLoader != null) &&

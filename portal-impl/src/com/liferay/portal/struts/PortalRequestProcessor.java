@@ -880,14 +880,7 @@ public class PortalRequestProcessor {
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
 
-		if (actionMapping == null) {
-			Action strutsAction = StrutsActionRegistryUtil.getAction(path);
-
-			if (strutsAction == null) {
-				return null;
-			}
-		}
-		else {
+		if (actionMapping != null) {
 			path = actionMapping.getPath();
 		}
 

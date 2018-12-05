@@ -493,10 +493,6 @@ public class PortalRequestProcessor {
 
 		ActionMapping actionMapping = _processMapping(request, response, path);
 
-		if (actionMapping == null) {
-			return;
-		}
-
 		if (!_processRoles(request, response, actionMapping)) {
 			return;
 		}
@@ -595,18 +591,6 @@ public class PortalRequestProcessor {
 
 			actionMapping.setModuleConfig(_moduleConfig);
 			actionMapping.setPath(path);
-		}
-
-		if (actionMapping == null) {
-			response.sendError(
-				HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
-
-			_log.error("Current URL " + PortalUtil.getCurrentURL(request));
-			_log.error("Referer " + request.getHeader("Referer"));
-			_log.error("Remote address " + request.getRemoteAddr());
-			_log.error("User ID " + request.getRemoteUser());
-
-			_log.error("Invalid path was requested: " + path);
 		}
 
 		return actionMapping;

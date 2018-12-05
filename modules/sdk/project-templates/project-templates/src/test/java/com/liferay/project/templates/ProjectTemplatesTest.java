@@ -4566,7 +4566,6 @@ public class ProjectTemplatesTest {
 			_testExists(zipFile, "css/main.css");
 			_testExists(zipFile, "css/main_rtl.css");
 
-			_testExists(zipFile, "WEB-INF/lib/aopalliance-1.0.jar");
 			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
 
 			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {

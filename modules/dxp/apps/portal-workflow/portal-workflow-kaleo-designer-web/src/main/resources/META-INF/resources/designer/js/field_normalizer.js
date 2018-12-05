@@ -123,8 +123,13 @@ AUI.add(
 							if (item1 !== 'receptionType' && AArray.some(
 								assignmentValue,
 								function(item2, index2, collection2) {
-									return valid = isValue(item2) &&
-										AArray.some(AObject.values(item2), isValue);
+									var valid = isValue(item2);
+
+									if (valid && (['user','roleId','roleType'].indexOf(item1) > -1)) {
+										valid = AArray.some(AObject.values(item2), isValue);
+									}
+
+									return valid;
 								}
 							)) {
 								assignments.assignmentType = AArray(item1);

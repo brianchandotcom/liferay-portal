@@ -632,6 +632,8 @@ AUI.add(
 
 						instance.removeAllViews('user');
 
+						instance.addViewUser(instance._countUserViews(val));
+
 						if (val) {
 							instance.showView(val.assignmentType);
 						}

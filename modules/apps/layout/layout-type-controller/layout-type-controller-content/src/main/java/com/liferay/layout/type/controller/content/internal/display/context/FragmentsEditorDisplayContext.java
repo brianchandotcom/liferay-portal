@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.content.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -128,8 +129,6 @@ public class FragmentsEditorDisplayContext {
 			_getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link"));
 		soyContext.put(
-			"fragmentCollections", _getSoyContextFragmentCollections());
-		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
@@ -152,6 +151,11 @@ public class FragmentsEditorDisplayContext {
 		String redirect = ParamUtil.getString(_request, "redirect");
 
 		soyContext.put("redirectURL", redirect);
+
+		soyContext.put(
+			"sections",
+			_getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_SECTION));
 
 		soyContext.put(
 			"spritemap",
@@ -197,12 +201,14 @@ public class FragmentsEditorDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
-			"fragmentCollections", _getSoyContextFragmentCollections());
-		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 		soyContext.put("sidebarTabs", _getSidebarTabs());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put(
+			"sections",
+			_getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_SECTION));
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -360,7 +366,7 @@ public class FragmentsEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getSoyContextFragmentCollections() {
+	private List<SoyContext> _getSoyContextFragmentCollections(int type) {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		List<FragmentCollection> fragmentCollections =
@@ -369,9 +375,9 @@ public class FragmentsEditorDisplayContext {
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntries(
+				FragmentEntryServiceUtil.getFragmentEntriesByType(
 					_themeDisplay.getScopeGroupId(),
-					fragmentCollection.getFragmentCollectionId(),
+					fragmentCollection.getFragmentCollectionId(), type,
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {

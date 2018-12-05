@@ -130,32 +130,6 @@ FragmentsEditor.STATE = Object.assign(
 		editFragmentEntryLinkURL: Config.string().required(),
 
 		/**
-		 * Available entries that can be used, organized by collections.
-		 * @default undefined
-		 * @instance
-		 * @memberOf FragmentsEditor
-		 * @review
-		 * @type {!Array<object>}
-		 */
-
-		fragmentCollections: Config.arrayOf(
-			Config.shapeOf(
-				{
-					entries: Config.arrayOf(
-						Config.shapeOf(
-							{
-								fragmentEntryId: Config.string().required(),
-								name: Config.string().required()
-							}
-						)
-					).required(),
-					fragmentCollectionId: Config.string().required(),
-					name: Config.string().required()
-				}
-			)
-		).required(),
-
-		/**
 		 * URL for obtaining the class types of an asset
 		 * created.
 		 * @default undefined
@@ -222,6 +196,32 @@ FragmentsEditor.STATE = Object.assign(
 		 */
 
 		redirectURL: Config.string().required(),
+
+		/**
+		 * Available sections that can be used, organized by collections.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!Array<object>}
+		 */
+
+		sections: Config.arrayOf(
+			Config.shapeOf(
+				{
+					entries: Config.arrayOf(
+						Config.shapeOf(
+							{
+								fragmentEntryId: Config.string().required(),
+								name: Config.string().required()
+							}
+						)
+					).required(),
+					fragmentCollectionId: Config.string().required(),
+					name: Config.string().required()
+				}
+			)
+		).required(),
 
 		/**
 		 * Selected mapping types

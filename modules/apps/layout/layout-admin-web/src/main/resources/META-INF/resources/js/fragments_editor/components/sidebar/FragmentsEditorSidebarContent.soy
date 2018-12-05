@@ -4,9 +4,9 @@
  * FragmentsEditorSidebarContent
  */
 {template .render}
-	{@param fragmentCollections: ?}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
+	{@param sections: ?}
 	{@param sidebarTabs: list<[
 		enabled:bool,
 		id:string,
@@ -28,9 +28,9 @@
 		<div class="fragments-editor-sidebar-section">
 			{if $_sectionId == 'fragments'}
 				{call com.liferay.layout.admin.web.SidebarFragmentsSection.render}
-					{param fragmentCollections: $fragmentCollections /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param layoutData: $layoutData /}
+					{param sections: $sections /}
 					{param sidebarTabs: $sidebarTabs /}
 					{param spritemap: $spritemap /}
 					{param highlightMapping: $highlightMapping /}

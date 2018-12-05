@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 	@Override
-	public DEDataDefinitionDeleteResponse delete(
+	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
 		throws DEDataDefinitionException {
 
@@ -77,7 +77,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	}
 
 	@Override
-	public DEDataDefinitionGetResponse get(
+	public DEDataDefinitionGetResponse execute(
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
 		throws DEDataDefinitionException {
 
@@ -105,7 +105,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	}
 
 	@Override
-	public DEDataDefinitionSaveResponse save(
+	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException {
 
@@ -185,18 +185,17 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		_modelResourcePermission = modelResourcePermission;
 	}
 
-
 	@Reference
 	protected DEDataEnginePermissionSupport deDataEnginePermissionSupport;
+
+	@Reference
+	protected DEDeleteRequestExecutor deDeleteRequestExecutor;
 
 	@Reference
 	protected DEGetRequestExecutor deGetRequestExecutor;
 
 	@Reference
 	protected DESaveRequestExecutor deSaveRequestExecutor;
-
-	@Reference
-	protected DEDeleteRequestExecutor deDeleteRequestExecutor;
 
 	@Reference
 	protected Portal portal;

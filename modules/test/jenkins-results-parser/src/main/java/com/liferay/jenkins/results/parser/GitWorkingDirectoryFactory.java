@@ -34,27 +34,26 @@ public class GitWorkingDirectoryFactory {
 				"Directory path not found " + gitRepositoryDir);
 		}
 
-		String gitRepositoryDirName = gitRepositoryDir.getName();
-
-		if (_gitWorkingDirectories.containsKey(gitRepositoryDirName)) {
-			return _gitWorkingDirectories.get(gitRepositoryDirName);
-		}
-
 		try {
-			GitWorkingDirectory gitWorkingDirectory = null;
 			String gitRepositoryDirPath = gitRepositoryDir.getCanonicalPath();
 
-			if (gitRepositoryDirName.startsWith("com-liferay-")) {
+			if (_gitWorkingDirectories.containsKey(gitRepositoryDirPath)) {
+				return _gitWorkingDirectories.get(gitRepositoryDirPath);
+			}
+
+			GitWorkingDirectory gitWorkingDirectory = null;
+
+			if (gitRepositoryName.startsWith("com-liferay-")) {
 				gitWorkingDirectory = new GitSubrepositoryGitWorkingDirectory(
 					upstreamBranchName, gitRepositoryDirPath,
 					gitRepositoryName);
 			}
-			else if (gitRepositoryDirName.startsWith("liferay-plugins")) {
+			else if (gitRepositoryName.startsWith("liferay-plugins")) {
 				gitWorkingDirectory = new PluginsGitWorkingDirectory(
 					upstreamBranchName, gitRepositoryDirPath,
 					gitRepositoryName);
 			}
-			else if (gitRepositoryDirName.startsWith("liferay-portal")) {
+			else if (gitRepositoryName.startsWith("liferay-portal")) {
 				gitWorkingDirectory = new PortalGitWorkingDirectory(
 					upstreamBranchName, gitRepositoryDirPath,
 					gitRepositoryName);
@@ -66,9 +65,9 @@ public class GitWorkingDirectoryFactory {
 			}
 
 			_gitWorkingDirectories.put(
-				gitRepositoryDirName, gitWorkingDirectory);
+				gitRepositoryDirPath, gitWorkingDirectory);
 
-			return gitWorkingDirectory;
+			return _gitWorkingDirectories.get(gitRepositoryDirPath);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

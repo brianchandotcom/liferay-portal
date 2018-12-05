@@ -35,6 +35,7 @@ dependencies {
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.7"
 	testCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testCompile project(":apps:portal-search:portal-search")
+	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-reflect")
 }

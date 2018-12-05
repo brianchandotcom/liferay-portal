@@ -489,10 +489,6 @@ public class PortalRequestProcessor {
 
 		path = _processPath(path, request, response);
 
-		if (path == null) {
-			return;
-		}
-
 		_processLocale(request);
 
 		response.setContentType("text/html; charset=UTF-8");

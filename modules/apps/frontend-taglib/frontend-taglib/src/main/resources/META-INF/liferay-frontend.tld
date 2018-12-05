@@ -1447,15 +1447,9 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a user portrait based in clay sticker component.</description>
 		<name>user-portrait</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.UserPortraitTag</tag-class>
 		<body-content>JSP</body-content>
-		<attribute>
-			<name>size</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<attribute>
 			<name>user</name>
 			<required>true</required>

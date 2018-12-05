@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String commonTagNames = (String)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_COMMON_TAG_NAMES);
 
+long repositoryId = ParamUtil.getLong(request, "repositoryId");
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
@@ -54,6 +56,7 @@ Selection<FileEntry> selection = (Selection<FileEntry>)request.getAttribute(DLWe
 				<aui:fieldset>
 					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= String.valueOf(selection.serialize()) %>" />
 					<aui:input name="commonTagNames" type="hidden" value="<%= commonTagNames %>" />
+					<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 
 					<%= selection.describe(themeDisplay.getLocale()) %>
 

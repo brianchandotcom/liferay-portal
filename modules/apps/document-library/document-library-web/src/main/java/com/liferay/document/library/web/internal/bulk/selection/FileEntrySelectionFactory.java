@@ -18,6 +18,7 @@ import com.liferay.bulk.selection.Selection;
 import com.liferay.bulk.selection.SelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -45,6 +46,36 @@ public class FileEntrySelectionFactory implements SelectionFactory<FileEntry> {
 
 		String[] values = parameterMap.get("rowIdsFileEntry");
 
+		if (values.length > 1) {
+			return _getFileEntrySelection(values);
+		}
+
+		String value = values[0];
+
+		if (!value.startsWith("all:")) {
+			return _getFileEntrySelection(values);
+		}
+
+		if (!parameterMap.containsKey("repositoryId")) {
+			throw new IllegalArgumentException();
+		}
+
+		String[] repositoryIds = parameterMap.get("repositoryId");
+
+		long repositoryId = GetterUtil.getLong(repositoryIds[0]);
+
+		if (repositoryId == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		long folderId = GetterUtil.getLong(value.substring(4));
+
+		return new FolderFileEntrySelection(
+			repositoryId, folderId, _resourceBundleLoader, _language,
+			_repositoryProvider, _dlAppService);
+	}
+
+	private Selection<FileEntry> _getFileEntrySelection(String[] values) {
 		if (values.length == 1) {
 			values = StringUtil.split(values[0]);
 		}
@@ -66,6 +97,9 @@ public class FileEntrySelectionFactory implements SelectionFactory<FileEntry> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private RepositoryProvider _repositoryProvider;
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.document.library.web)"

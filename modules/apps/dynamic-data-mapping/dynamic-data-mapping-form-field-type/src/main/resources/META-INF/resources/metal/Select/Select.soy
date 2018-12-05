@@ -117,7 +117,12 @@
 		{/let}
 
 		<div {$attributes}>
-			<div class="option-selected option-selected-placeholder">{$selectedLabel ? $selectedLabel : $placeholder}</div>
+			{if $selectedLabel}
+				<div class="option-selected">{$selectedLabel}</div>
+			{else}
+				<div class="option-selected option-selected-placeholder">{$placeholder}</div>
+			{/if}
+
 			<a class="select-arrow-down-container" href="javascript:;">
 				{if $spritemap}
 					{call ClayIcon.render}

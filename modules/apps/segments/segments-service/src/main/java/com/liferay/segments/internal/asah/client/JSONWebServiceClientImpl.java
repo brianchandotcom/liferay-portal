@@ -19,6 +19,8 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -89,7 +91,9 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	private void _validateResponse(Response response) {
 		int status = response.getStatus();
 
-		if (status < 200 || status >= 300) {
+		if ((status < HttpServletResponse.SC_OK) &&
+			(status >= HttpServletResponse.SC_MULTIPLE_CHOICES)) {
+
 			throw new ClientErrorException(
 				"Unexpected response status: " + status, status);
 		}

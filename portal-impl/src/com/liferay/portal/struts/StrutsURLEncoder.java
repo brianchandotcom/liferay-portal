@@ -196,20 +196,15 @@ public class StrutsURLEncoder implements URLEncoder {
 	}
 
 	private void _setServletMapping(String servletMapping) {
-		if (servletMapping != null) {
+		if ((servletMapping != null) && servletMapping.endsWith("/*")) {
+			int pos = 0;
 
-			// See org.apache.struts.util.RequestUtils.getActionMappingURL
-
-			if (servletMapping.endsWith("/*")) {
-				int pos = 0;
-
-				if (servletMapping.startsWith(_mainPath)) {
-					pos = _mainPath.length() - 2;
-				}
-
-				_servletMapping = servletMapping.substring(
-					pos, servletMapping.length() - 1);
+			if (servletMapping.startsWith(_mainPath)) {
+				pos = _mainPath.length() - 2;
 			}
+
+			_servletMapping = servletMapping.substring(
+				pos, servletMapping.length() - 1);
 		}
 	}
 

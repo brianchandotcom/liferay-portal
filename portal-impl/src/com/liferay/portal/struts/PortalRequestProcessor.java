@@ -539,20 +539,20 @@ public class PortalRequestProcessor {
 		}
 	}
 
-	private Action _processActionCreate(ActionMapping actionMapping)
-		throws IOException {
+	private Action _processActionCreate(ActionMapping actionMapping) {
+		Action action = _getOriginalAction(actionMapping);
 
 		ActionAdapter actionAdapter =
 			(ActionAdapter)StrutsActionRegistryUtil.getAction(
 				actionMapping.getPath());
 
 		if (actionAdapter != null) {
-			actionAdapter.setOriginalAction(_getOriginalAction(actionMapping));
+			actionAdapter.setOriginalAction(action);
 
 			return actionAdapter;
 		}
 
-		return _getOriginalAction(actionMapping);
+		return action;
 	}
 
 	private boolean _processForward(

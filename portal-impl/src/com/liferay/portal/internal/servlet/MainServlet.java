@@ -193,10 +193,6 @@ public class MainServlet extends HttpServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-
-		ServletContext servletContext = getServletContext();
-
-		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
 	}
 
 	@Override
@@ -746,13 +742,7 @@ public class MainServlet extends HttpServlet {
 		try {
 			_initServlet();
 
-			ServletContext servletContext = getServletContext();
-
-			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
-			servletContext.setAttribute(
-				Globals.MODULE_PREFIXES_KEY, StringPool.EMPTY_ARRAY);
-
-			TilesUtil.loadDefinitions(servletContext);
+			TilesUtil.loadDefinitions(getServletContext());
 
 			return _initModuleConfig();
 		}

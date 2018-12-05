@@ -122,7 +122,6 @@
 	<classpathentry kind="lib" path="lib/portal/antlr2.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr3.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr3-runtime.jar"/>
-	<classpathentry kind="lib" path="lib/portal/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm-debug-all.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-rt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-weaver.jar"/>

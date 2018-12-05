@@ -280,6 +280,21 @@ public class EditSegmentsEntryDisplayContext {
 		return _segmentsEntry;
 	}
 
+	public int getSegmentsEntryClassPKsCount() throws PortalException {
+		if (_segmentsEntryClassPksCount != null) {
+			return _segmentsEntryClassPksCount;
+		}
+
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry == null) {
+			return 0;
+		}
+
+		return _segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+			segmentsEntry.getSegmentsEntryId());
+	}
+
 	public long getSegmentsEntryId() {
 		if (_segmentsEntryId != null) {
 			return _segmentsEntryId;
@@ -475,6 +490,7 @@ public class EditSegmentsEntryDisplayContext {
 	private final SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
 	private SegmentsEntry _segmentsEntry;
+	private Integer _segmentsEntryClassPksCount;
 	private Long _segmentsEntryId;
 	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;

@@ -223,6 +223,8 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_7_1_10_BUILD_NUMBER = 7110;
 
+	public static final int RELEASE_7_2_0_BUILD_NUMBER = 7200;
+
 	public static final Date getBuildDate() {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 
@@ -272,7 +274,7 @@ public class ReleaseInfo {
 		return _VERSION;
 	}
 
-	private static final String _BUILD = "7102";
+	private static final String _BUILD = "7200";
 
 	private static final int _BUILD_NUMBER = GetterUtil.getInteger(_BUILD);
 
@@ -292,9 +294,9 @@ public class ReleaseInfo {
 
 	private static final String _VENDOR = "Liferay, Inc.";
 
-	private static final String _VERSION = "7.1.2";
+	private static final String _VERSION = "7.2.0";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.1.2 CE GA3";
+	private static final String _VERSION_DISPLAY_NAME = "7.2.0 CE M1";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

@@ -25,7 +25,7 @@
 		</if>
 
 		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="${menuItem}}" />
+			<var name="menuItem" value="${menuItem}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

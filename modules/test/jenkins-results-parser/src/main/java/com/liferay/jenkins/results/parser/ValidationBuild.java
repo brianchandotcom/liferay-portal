@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
@@ -267,11 +268,24 @@ public class ValidationBuild extends BaseBuild {
 					sourceFormatFailureMessageGenerator.getMessageElement(this);
 			}
 			else {
-				GenericFailureMessageGenerator genericFailureMessageGenerator =
-					new GenericFailureMessageGenerator();
+				GradleTaskFailureMessageGenerator
+					gradleTaskFailureMessageGenerator =
+						new GradleTaskFailureMessageGenerator();
 
-				messageElement =
-					genericFailureMessageGenerator.getMessageElement(console);
+				if (gradleTaskFailureMessageGenerator != null) {
+					messageElement =
+						gradleTaskFailureMessageGenerator.getMessageElement(
+							this);
+				}
+				else {
+					GenericFailureMessageGenerator
+						genericFailureMessageGenerator =
+							new GenericFailureMessageGenerator();
+
+					messageElement =
+						genericFailureMessageGenerator.getMessageElement(
+							console);
+				}
 			}
 		}
 

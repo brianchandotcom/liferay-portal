@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param name: string}
+	{@param? _updateValue: any}
 	{@param? id: string}
 	{@param? spritemap: string}
 	{@param? dataType: string}
@@ -10,10 +11,6 @@
 	{@param? label: string}
 	{@param? parameterMessage: string}
 	{@param? strings: [chooseAnOption: string, email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
-	{@param? _handleEnableValidationEdited: any}
-	{@param? _handleValidationValueEdited: any}
-	{@param? _handleParameterMessageEdited: any}
-	{@param? _handleErrorMessageEdited: any}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
 	{@param? validations: list<[
 		checked: bool,
@@ -27,13 +24,10 @@
 	]>}
 
 	{call .content}
-		{param _handleEnableValidationEdited: $_handleEnableValidationEdited /}
-		{param _handleErrorMessageEdited: $_handleErrorMessageEdited /}
-		{param _handleParameterMessageEdited: $_handleParameterMessageEdited /}
+		{param _updateValue: $_updateValue /}
 		{param dataType: $dataType /}
 		{param enableValidation: $enableValidation /}
 		{param errorMessage: $errorMessage /}
-		{param _handleValidationValueEdited: $_handleValidationValueEdited /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}
@@ -48,10 +42,7 @@
 
 {template .content}
 	{@param name: string}
-	{@param? _handleEnableValidationEdited: any}
-	{@param? _handleErrorMessageEdited: any}
-	{@param? _handleParameterMessageEdited: any}
-	{@param? _handleValidationValueEdited: any}
+	{@param? _updateValue: any}
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
@@ -74,7 +65,7 @@
 	<div class="form-group lfr-ddm-form-field-validation">
 		{call Checkbox.render}
 			{param events: [
-				'fieldEdited': $_handleEnableValidationEdited
+				'fieldEdited': $_updateValue
 			] /}
 			{param label: $label /}
 			{param ref: 'enableValidation' /}
@@ -86,7 +77,7 @@
 		{call Select.render}
 			{param disableEmptyOption: true /}
 			{param events: [
-				'fieldEdited': $_handleValidationValueEdited
+				'fieldEdited': $_updateValue
 			] /}
 			{param label: $strings.ifInput /}
 			{param options: $validations /}
@@ -102,7 +93,7 @@
 			{call Text.render}
 				{param dataType: $dataType /}
 				{param events: [
-					'fieldEdited': $_handleParameterMessageEdited
+					'fieldEdited': $_updateValue
 				] /}
 				{param label: $strings?.theValue /}
 				{param name: $name + '_parameterMessage' /}
@@ -117,7 +108,7 @@
 			{call Numeric.render}
 				{param dataType: $dataType /}
 				{param events: [
-					'fieldEdited': $_handleParameterMessageEdited
+					'fieldEdited': $_updateValue
 				] /}
 				{param label: $strings?.theValue /}
 				{param name: $name + '_parameterMessage' /}
@@ -132,13 +123,13 @@
 
 		{call Text.render}
 			{param events: [
-				'fieldEdited': $_handleErrorMessageEdited
+				'fieldEdited': $_updateValue
 			] /}
 			{param label: $strings?.showErrorMessage /}
 			{param name: $name + '_errorMessage' /}
 			{param placeholder: $strings?.showErrorMessage /}
 			{param ref: 'errorMessage' /}
-			{param required: true /}
+			{param required: false /}
 			{param spritemap: $spritemap /}
 			{param value: $errorMessage /}
 			{param visible: $enableValidation /}

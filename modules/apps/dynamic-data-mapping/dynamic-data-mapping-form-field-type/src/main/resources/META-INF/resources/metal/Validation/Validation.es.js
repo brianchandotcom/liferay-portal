@@ -37,6 +37,28 @@ class Validation extends Component {
 			.valueFn('_enableValidationValueFn'),
 
 		/**
+		 * @default ''
+		 * @instance
+		 * @memberof Validation
+		 * @type {String}
+		 */
+
+		errorMessage: Config.string()
+			.internal()
+			.value(''),
+
+		/**
+		 * @default ''
+		 * @instance
+		 * @memberof Validation
+		 * @type {String}
+		 */
+
+		expression: Config.string()
+			.internal()
+			.value(''),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Validation
@@ -71,6 +93,17 @@ class Validation extends Component {
 		 */
 
 		name: Config.string().required(),
+
+		/**
+		 * @default ''
+		 * @instance
+		 * @memberof Validation
+		 * @type {String}
+		 */
+
+		parameterMessage: Config.string()
+			.internal()
+			.value(''),
 
 		/**
 		 * @default undefined
@@ -134,11 +167,11 @@ class Validation extends Component {
 		).value({})
 	};
 
-	prepareStateForRender(state) {
-		const {enableValidation, value} = state;
+	_getStateFromValue(value) {
 		const {errorMessage, expression} = value;
 		let parameterMessage = '';
 		let selectedValidation;
+		const enableValidation = !!expression;
 
 		if (enableValidation) {
 			selectedValidation = this._parseValidationFromExpression(expression);
@@ -155,15 +188,35 @@ class Validation extends Component {
 		}
 
 		return {
-			...state,
 			enableValidation,
 			errorMessage,
+			expression,
 			parameterMessage,
 			selectedValidation
 		};
 	}
 
-	willReceiveState({dataType, validation}) {
+	prepareStateForRender(state) {
+		const parsedState = this._getStateFromValue(state.value);
+
+		if (parsedState.enableValidation) {
+			this.context = {
+				...this.context,
+				validation: parsedState
+			};
+		}
+
+		return {
+			...state,
+			...parsedState
+		};
+	}
+
+	willReceiveState({dataType, validation, value}) {
+		if (value && value.newVal) {
+			this.setState({value: value.newVal});
+		}
+
 		if (
 			(dataType && dataType.newVal !== dataType.prevVal) ||
 			(validation && validation.newVal.dataType !== validation.prevVal.dataType)
@@ -199,7 +252,6 @@ class Validation extends Component {
 	}
 
 	_getSelectedValidation() {
-		const {enableValidation} = this;
 		let selectedValidationValue = this.refs.selectedValidation.value;
 
 		if (Array.isArray(selectedValidationValue)) {
@@ -210,7 +262,7 @@ class Validation extends Component {
 			({name}) => name === selectedValidationValue
 		);
 
-		if (enableValidation && !selectedValidation) {
+		if (!selectedValidation) {
 			selectedValidation = this.validations[0];
 		}
 
@@ -218,65 +270,43 @@ class Validation extends Component {
 	}
 
 	_getValue() {
-		let expression = '';
+		let expression;
 		const {
 			validation: {fieldName: name}
 		} = this;
-
-		const selectedValidation = this._getSelectedValidation();
-		const {template} = selectedValidation;
 		let parameterMessage = '';
 
 		if (this.refs.parameterMessage) {
 			parameterMessage = this.refs.parameterMessage.value;
 		}
 
-		expression = subWords(
-			template,
-			{
-				name,
-				parameter: parameterMessage
-			}
-		);
+		const enableValidation = this.refs.enableValidation.value;
+		let selectedValidation = this._getSelectedValidation();
+
+		if (enableValidation && !this.value.expression && this.context.validation) {
+			selectedValidation = this.validations.find(
+				validation => validation.regex.test(this.context.validation.expression)
+			);
+			parameterMessage = this.context.validation.parameterMessage;
+		}
+
+		const {template} = selectedValidation;
+
+		if (enableValidation) {
+			expression = subWords(
+				template,
+				{
+					name,
+					parameter: parameterMessage
+				}
+			);
+		}
 
 		return {
+			enableValidation,
 			errorMessage: this.refs.errorMessage.value,
 			expression
 		};
-	}
-
-	@autobind
-	_handleEnableValidationEdited({value}) {
-		this.setState(
-			{
-				enableValidation: value
-			},
-			() => {
-				if (!value) {
-					this._emitFieldEdited(
-						{
-							errorMessage: '',
-							expression: ''
-						}
-					);
-				}
-			}
-		);
-	}
-
-	@autobind
-	_handleErrorMessageEdited() {
-		this._updateValue();
-	}
-
-	@autobind
-	_handleParameterMessageEdited() {
-		this._updateValue();
-	}
-
-	@autobind
-	_handleValidationValueEdited() {
-		this._updateValue();
 	}
 
 	_normalizeValidationsOptions(validations) {
@@ -298,21 +328,25 @@ class Validation extends Component {
 	}
 
 	_parseValidationFromExpression(expression) {
+		const {validations} = this;
 		let validation;
 
-		if (expression) {
-			const {validations} = this;
+		if (!expression && this.context.validation) {
+			expression = this.context.validation.expression;
+		}
 
+		if (expression) {
 			validation = validations.find(validation => validation.regex.test(expression));
 		}
 
 		return validation;
 	}
 
+	@autobind
 	_updateValue() {
 		const value = this._getValue();
 
-		this._emitFieldEdited(value);
+		this.setState(value, () => this._emitFieldEdited(value));
 	}
 
 	_validationsValueFn() {

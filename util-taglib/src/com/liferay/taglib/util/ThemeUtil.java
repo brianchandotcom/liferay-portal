@@ -163,7 +163,9 @@ public class ThemeUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #include(ServletContext, HttpServletRequest,
+	 * 					HttpServletResponse, String, Theme, boolean)}
 	 */
 	@Deprecated
 	protected static String doDispatch(
@@ -172,7 +174,7 @@ public class ThemeUtil {
 			boolean write, String extension)
 		throws Exception {
 
-		throw new UnsupportedOperationException(extension);
+		return include(servletContext, request, response, path, theme, write);
 	}
 
 	protected static String doIncludeFTL(

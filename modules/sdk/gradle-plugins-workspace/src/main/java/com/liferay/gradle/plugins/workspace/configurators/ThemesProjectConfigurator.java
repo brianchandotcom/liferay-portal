@@ -48,10 +48,8 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.bundling.War;
 
 /**
  * @author Andrea Di Giorgi

@@ -118,6 +118,15 @@ class Builder extends Component {
 						value: fieldType.name
 					};
 				}
+				else if (fieldName === 'validation') {
+					field = {
+						...field,
+						validation: {
+							...field.validation,
+							fieldName: newFieldName
+						}
+					};
+				}
 				return {
 					...field
 				};
@@ -158,6 +167,15 @@ class Builder extends Component {
 							}
 							else if (fieldName === 'label') {
 								field.type = 'text';
+							}
+							else if (fieldName === 'validation') {
+								field = {
+									...field,
+									validation: {
+										...field.validation,
+										fieldName: fieldProperties.fieldName
+									}
+								};
 							}
 
 							return field;

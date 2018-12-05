@@ -3124,8 +3124,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#publishViaSAP">
-			<var name="webContentTitle" value="Web Content Title" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -3134,8 +3134,8 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#publishViaSAP">
-			<var name="bookmarkName" value="Test Bookmark" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="Test Bookmark" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -3144,8 +3144,8 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#publishViaSAP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

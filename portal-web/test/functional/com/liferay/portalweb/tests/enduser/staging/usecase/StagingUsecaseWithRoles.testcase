@@ -1016,8 +1016,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#publishViaSAP">
-			<var name="webContentTitle" value="Web Content Title" />
+		<execute macro="Staging#publishViaSAP">
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

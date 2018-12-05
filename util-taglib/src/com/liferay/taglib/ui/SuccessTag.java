@@ -104,7 +104,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		Map<String, String> values = new HashMap<>();
 
 		values.put("pathThemeImages", themeDisplay.getPathThemeImages());
-		values.put("title", LanguageUtil.get(resourceBundle, "success"));
+		values.put("title", LanguageUtil.get(resourceBundle, "success-colon"));
 
 		if (_embed) {
 			values.put("message", HtmlUtil.escape(message));

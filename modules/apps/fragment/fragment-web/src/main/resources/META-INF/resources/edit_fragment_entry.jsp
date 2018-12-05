@@ -22,6 +22,8 @@ FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentDisplayContext.getRedirect());
 
+String moduleName = (String)request.getAttribute(FragmentWebKeys.RESOLVED_MODULE_NAME);
+
 String title = fragmentDisplayContext.getFragmentEntryTitle();
 
 if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
@@ -33,6 +35,6 @@ renderResponse.setTitle(title);
 
 <soy:component-renderer
 	context="<%= fragmentDisplayContext.getFragmentEditorDisplayContext() %>"
-	module="fragment-web/js/FragmentEditor.es"
+	module='<%= moduleName + "/js/FragmentEditor.es" %>'
 	templateNamespace="com.liferay.fragment.web.FragmentEditor.render"
 />

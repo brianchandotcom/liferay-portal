@@ -330,7 +330,9 @@
 		<!-- Module checks -->
 
 		<check name="JSPModuleIllegalImportsCheck" />
-		<check name="JSPServiceUtilCheck" />
+		<check name="JSPServiceUtilCheck">
+			<property name="enabled" value="false" />
+		</check>
 
 		<!-- Plugins checks -->
 

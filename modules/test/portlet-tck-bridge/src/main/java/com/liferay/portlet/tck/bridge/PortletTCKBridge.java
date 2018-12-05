@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration;
 import com.liferay.portlet.tck.bridge.struts.PortletTCKStrutsAction;
 
@@ -35,12 +36,15 @@ import java.net.SocketTimeoutException;
 
 import java.nio.charset.Charset;
 
+import java.util.Dictionary;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -63,7 +67,14 @@ public class PortletTCKBridge {
 	protected void activate(ComponentContext componentContext) {
 		deactivate();
 
-		StrutsActionRegistryUtil.register(_PATH, new PortletTCKStrutsAction());
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("path", _PATH);
+
+		_serviceRegistration = bundleContext.registerService(
+			StrutsAction.class, new PortletTCKStrutsAction(), properties);
 
 		FutureTask<Void> futureTask = new FutureTask<>(
 			new HandshakeServerCallable(
@@ -89,7 +100,12 @@ public class PortletTCKBridge {
 			handshakeServerFuture.cancel(true);
 		}
 
-		StrutsActionRegistryUtil.unregister(_PATH);
+		ServiceRegistration<StrutsAction> serviceRegistration =
+			_serviceRegistration;
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -103,6 +119,7 @@ public class PortletTCKBridge {
 		PortletTCKBridge.class);
 
 	private volatile Future<Void> _handshakeServerFuture;
+	private volatile ServiceRegistration<StrutsAction> _serviceRegistration;
 
 	private static class HandshakeServerCallable implements Callable<Void> {
 

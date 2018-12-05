@@ -39,7 +39,7 @@ if (message.isAnonymous()) {
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
 					<liferay-frontend:user-portrait
-						userId="<%= !message.isAnonymous() ? message.getUserId() : UserConstants.USER_ID_DEFAULT %>"
+						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
 					/>
 				</div>
 			</div>

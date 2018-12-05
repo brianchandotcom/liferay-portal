@@ -39,6 +39,13 @@ import java.util.regex.Pattern;
  */
 public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
+	public void setCheckConfigurationPolicyAttribute(
+		String checkConfigurationPolicyAttribute) {
+
+		_checkConfigurationPolicyAttribute = GetterUtil.getBoolean(
+			checkConfigurationPolicyAttribute);
+	}
+
 	public void setCheckMismatchedServiceAttribute(
 		String checkMismatchedServiceAttribute) {
 
@@ -196,6 +203,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private String _formatConfigurationPolicyAttribute(
 		JavaClass javaClass, String annotation) {
 
+		if (!_checkConfigurationPolicyAttribute) {
+			return annotation;
+		}
+
 		List<String> imports = javaClass.getImports();
 
 		if (imports.contains(
@@ -352,6 +363,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
 
+	private boolean _checkConfigurationPolicyAttribute;
 	private boolean _checkMismatchedServiceAttribute;
 	private boolean _checkSelfRegistration;
 

@@ -77,6 +77,7 @@ public class PullRequest {
 
 	public Comment addComment(String body) {
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
+		body = body.replace("&quot;", "\\&quot;");
 
 		JSONObject dataJSONObject = new JSONObject();
 
@@ -371,6 +372,28 @@ public class PullRequest {
 		}
 	}
 
+	public void removeComment(Comment comment) {
+		removeComment(comment.getId());
+	}
+
+	public void removeComment(String id) {
+		String editCommentURL = _jsonObject.getString("issue_url");
+
+		editCommentURL = editCommentURL.replaceFirst("issues/\\d+", "issues");
+
+		try {
+			JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.combine(
+					editCommentURL, "/comments/", id),
+				false, HttpRequestMethod.DELETE);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to delete comment in GitHub pull request " + getURL(),
+				ioe);
+		}
+	}
+
 	public void removeLabel(String labelName) {
 		if (!hasLabel(labelName)) {
 			return;
@@ -498,6 +521,33 @@ public class PullRequest {
 
 		gitHubRemoteGitCommit.setStatus(
 			status, context, sb.toString(), targetURL);
+	}
+
+	public Comment updateComment(Comment comment) {
+		return updateComment(comment.getBody(), comment.getId());
+	}
+
+	public Comment updateComment(String body, String id) {
+		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
+		body = body.replace("&quot;", "\\&quot;");
+
+		try {
+			String editCommentURL = _jsonObject.getString("issue_url");
+
+			editCommentURL = editCommentURL.replaceFirst(
+				"issues/\\d+", "issues");
+
+			return new Comment(
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						editCommentURL, "/comments/", id),
+					false, HttpRequestMethod.PATCH));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to update comment in GitHub pull request " + getURL(),
+				ioe);
+		}
 	}
 
 	public static class Comment {

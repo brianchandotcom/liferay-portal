@@ -16,7 +16,6 @@ package com.liferay.segments.internal.asah.client;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.internal.asah.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
 import com.liferay.segments.internal.asah.client.model.Rels;
@@ -53,7 +52,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			String response = _jsonWebServiceClient.doGet(
 				Rels.INDIVIDUAL_SEGMENTS,
 				_getParameters(
-					IndividualSegment.Status.ACTIVE.name(), 1L, cur, delta,
+					IndividualSegment.Status.ACTIVE.name(), 1, cur, delta,
 					orderByFields),
 				_getHeaders());
 
@@ -83,7 +82,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	private MultivaluedMap<String, Object> _getParameters(
 		String individualSegmentStatus,
-		Long individualSegmentMinIndividualCount, int cur, int delta,
+		long individualSegmentMinIndividualCount, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
 		MultivaluedMap<String, Object> uriVariables = _getUriVariables(
@@ -91,18 +90,13 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		if (Validator.isNotNull(individualSegmentStatus)) {
-			filterBuilder.addFilter(
-				"status", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-				individualSegmentStatus);
-		}
-
-		if (Validator.isNotNull(individualSegmentMinIndividualCount)) {
-			filterBuilder.addFilter(
-				"individualCount",
-				FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL,
-				individualSegmentMinIndividualCount);
-		}
+		filterBuilder.addFilter(
+			"individualCount",
+			FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL,
+			individualSegmentMinIndividualCount);
+		filterBuilder.addFilter(
+			"status", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+			individualSegmentStatus);
 
 		uriVariables.putSingle("filter", filterBuilder.build());
 

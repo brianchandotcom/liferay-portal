@@ -132,7 +132,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string()
+		value: Config.internal().string()
 	};
 
 	_handleFieldChanged(event) {

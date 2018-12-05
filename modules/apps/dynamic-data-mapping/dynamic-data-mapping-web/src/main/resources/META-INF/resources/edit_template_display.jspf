@@ -64,6 +64,7 @@ if (Validator.isNotNull(scriptContent)) {
 							Bundle bundle = FrameworkUtil.getBundle(clazz);
 
 							ResourceBundleLoader resourceBundleLoader = ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(bundle.getSymbolicName());
+
 							if (resourceBundleLoader == null) {
 								resourceBundleLoader = new AggregateResourceBundleLoader(ResourceBundleUtil.getResourceBundleLoader("content.Language", clazz.getClassLoader()), LanguageResources.RESOURCE_BUNDLE_LOADER);
 							}

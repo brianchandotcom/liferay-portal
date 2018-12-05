@@ -243,31 +243,6 @@ public class PortalRequestProcessor {
 		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
 	}
 
-	private ActionMapping _findMapping(
-			HttpServletRequest request, HttpServletResponse response,
-			String path)
-		throws IOException {
-
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
-
-		if (actionMapping != null) {
-			return actionMapping;
-		}
-
-		response.sendError(
-			HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
-
-		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
-		_log.error("Referer " + request.getHeader("Referer"));
-		_log.error("Remote address " + request.getRemoteAddr());
-		_log.error("User ID " + request.getRemoteUser());
-
-		_log.error("Invalid path was requested: " + path);
-
-		return null;
-	}
-
 	private String _findPath(HttpServletRequest request) throws IOException {
 		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
 
@@ -632,7 +607,24 @@ public class PortalRequestProcessor {
 			return actionMapping;
 		}
 
-		return _findMapping(request, response, path);
+		ActionMapping actionMapping =
+			(ActionMapping)_moduleConfig.findActionConfig(path);
+
+		if (actionMapping != null) {
+			return actionMapping;
+		}
+
+		response.sendError(
+			HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
+
+		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
+		_log.error("Referer " + request.getHeader("Referer"));
+		_log.error("Remote address " + request.getRemoteAddr());
+		_log.error("User ID " + request.getRemoteUser());
+
+		_log.error("Invalid path was requested: " + path);
+
+		return null;
 	}
 
 	private String _processPath(

@@ -55,7 +55,7 @@ if (portletTitleBasedNavigation) {
 			<div class="card-row">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
-						<liferay-frontend:user-portrait
+						<liferay-ui:user-portrait
 							userId="<%= entry.getUserId() %>"
 						/>
 					</div>

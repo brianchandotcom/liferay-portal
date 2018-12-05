@@ -97,7 +97,6 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ActionConfig;
-import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 
 /**
@@ -1028,12 +1027,12 @@ public class PortalRequestProcessor {
 		}
 
 		if (!authorized) {
-			ForwardConfig forwardConfig = actionMapping.findForward(
+			ActionForward actionForward = actionMapping.findForward(
 				_PATH_PORTAL_ERROR);
 
-			if (forwardConfig != null) {
+			if (actionForward != null) {
 				_internalModuleRelativeForward(
-					forwardConfig.getPath(), request, response);
+					actionForward.getPath(), request, response);
 			}
 
 			return false;

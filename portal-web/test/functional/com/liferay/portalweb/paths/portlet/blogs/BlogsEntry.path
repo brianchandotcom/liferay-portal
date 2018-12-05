@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>CONTENT_LINK</td>
-	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a[contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@id,'contentEditor')]//a[contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

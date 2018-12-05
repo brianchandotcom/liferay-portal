@@ -1,0 +1,30 @@
+{namespace EditTags}
+
+{template .render}
+	{@param spritemap: string}
+	{@param commonTags: string}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+			<h4>Modal Body</h4>
+			<p>Common Tags: {$commonTags}</p>
+		{/param}
+
+		{param dialogClasses: 'modal-dialog-sm' /}
+
+		{param header kind="html"}
+			{msg desc=""}edit-tags{/msg}
+		{/param}
+
+		{param footer kind="html"}
+			<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+			<button class="btn btn-primary" type="button">{msg desc=""}save{/msg}</button>
+		{/param}
+
+		{param ref: 'modal' /}
+
+		{param spritemap: $spritemap /}
+
+		{param visible: true /}
+	{/call}
+{/template}

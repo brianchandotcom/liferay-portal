@@ -6,5 +6,12 @@ Import-Package:\
 	\
 	*
 Liferay-JS-Config: /META-INF/resources/document_library/js/config.js
+Provide-Capability:\
+	soy;\
+		type="document-library-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	soy;\
+		filter:="(type=frontend-js-web)"
 Web-ContextPath: /document-library-web
 -dsannotations-options: inherit

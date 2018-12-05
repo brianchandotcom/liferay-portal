@@ -113,6 +113,10 @@ AUI.add(
 
 						if (action === 'editTags') {
 							url = instance.get('editTagsUrl');
+
+							instance._openModalTags();
+
+							return;
 						}
 
 						if (action === 'move' || action === 'moveEntries') {
@@ -224,6 +228,30 @@ AUI.add(
 
 							}
 						);
+					},
+
+					_openModalTags: function() {
+						var instance = this;
+
+						var editTagsComponent = instance._editTagsComponent;
+
+						if (!editTagsComponent) {
+							Liferay.Loader.require(
+								'document-library-web/document_library/tags/EditTags.es',
+								function(EditTags) {
+									instance._editTagsComponent = new EditTags.default(
+										{
+											commonTags: 'aaa, bbbb',//TODO
+											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+										},
+										'#' + instance.NS + 'documentLibraryModal'
+									);
+								}
+							);
+						}
+						else {
+							editTagsComponent.open();
+						}
 					},
 
 					_plugUpload: function(event, config) {

@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatfor
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -53,6 +54,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpHeaders;
 
 import org.gradle.api.Action;
@@ -325,7 +327,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
-		binds.put(dockerDir.getAbsolutePath(), "/etc/liferay/mount");
+		String dockerPath = dockerDir.getAbsolutePath();
+
+		if (OSDetector.isWindows()) {
+			String prefix = FilenameUtils.getPrefix(dockerPath);
+
+			if (prefix.contains(":")) {
+				dockerPath = '/' + dockerPath.replace(":", "");
+			}
+
+			dockerPath = dockerPath.replace('\\', '/');
+		}
+
+		binds.put(dockerPath, "/etc/liferay/mount");
 
 		dockerCreateContainer.setBinds(binds);
 
@@ -334,7 +348,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		dockerCreateContainer.setDescription(
 			"Creates a Docker container from your liferay image and mounts " +
-				dockerDir.toString() + " to /etc/liferay.");
+				dockerPath + " to /etc/liferay.");
 
 		List<String> ports = new ArrayList<>();
 

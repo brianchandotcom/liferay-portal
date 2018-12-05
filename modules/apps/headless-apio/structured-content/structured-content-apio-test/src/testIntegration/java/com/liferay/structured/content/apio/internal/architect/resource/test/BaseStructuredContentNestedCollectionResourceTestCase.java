@@ -153,6 +153,25 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		}
 	}
 
+	protected Locale getLocale(
+			AcceptLanguage acceptLanguage, long contentSpaceId)
+		throws Exception {
+
+		NestedCollectionResource nestedCollectionResource =
+			_getNestedCollectionResource();
+
+		Class<? extends NestedCollectionResource> clazz =
+			nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_getLocale", AcceptLanguage.class, long.class);
+
+		method.setAccessible(true);
+
+		return (Locale)method.invoke(
+			nestedCollectionResource, acceptLanguage, contentSpaceId);
+	}
+
 	protected PageItems<JournalArticle> getPageItems(
 			Pagination pagination, long contentSpaceId,
 			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay,

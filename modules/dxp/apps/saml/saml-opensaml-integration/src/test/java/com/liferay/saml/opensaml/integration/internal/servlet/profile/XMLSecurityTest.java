@@ -14,17 +14,47 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
+import com.liferay.saml.persistence.model.SamlSpIdpConnection;
+import com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionImpl;
+import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService;
+import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
+import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil;
+import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
+import com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil;
 
-import org.junit.Ignore;
+import java.io.ByteArrayOutputStream;
+
+import java.util.Base64;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+
+import org.apache.xml.security.algorithms.JCEMapper;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.mockito.Mockito;
+
+import org.opensaml.messaging.context.InOutOperationContext;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.decoder.MessageDecodingException;
+import org.opensaml.saml.saml2.core.AuthnRequest;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.crypto.SigningUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Mika Koivisto
  */
-@Ignore
 public class XMLSecurityTest extends BaseSamlTestCase {
 
-	/*@Before
+	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -52,8 +82,8 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setIdentifierGenerationStrategy(
-			identifierGenerationStrategy);
+		_webSsoProfileImpl.setIdentifierGenerationStrategyFactory(
+			identifierGenerationStrategyFactory);
 		_webSsoProfileImpl.setMetadataManager(metadataManagerImpl);
 		_webSsoProfileImpl.setPortal(portal);
 		_webSsoProfileImpl.setSamlBindings(samlBindings);
@@ -250,8 +280,9 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		deflaterOutputStream.finish();
 
-		return Base64.encodeBytes(
-			byteArrayOutputStream.toByteArray(), Base64.DONT_BREAK_LINES);
+		Base64.Encoder encoder = _getEncoder();
+
+		return encoder.encodeToString(byteArrayOutputStream.toByteArray());
 	}
 
 	protected String generateSignature(
@@ -263,7 +294,9 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			signingCredential, JCEMapper.translateURItoJCEID(algorithmURI),
 			false, queryString.getBytes("UTF-8"));
 
-		return Base64.encodeBytes(signatureBytes, Base64.DONT_BREAK_LINES);
+		Base64.Encoder encoder = _getEncoder();
+
+		return encoder.encodeToString(signatureBytes);
 	}
 
 	protected AuthnRequest getAuthnRequest(String redirectURL)
@@ -315,7 +348,13 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		return mockHttpServletResponse.getRedirectedUrl();
 	}
 
+	private static Base64.Encoder _getEncoder() {
+		Base64.Encoder encoder = Base64.getEncoder();
+
+		return encoder.withoutPadding();
+	}
+
 	private final WebSsoProfileImpl _webSsoProfileImpl =
-		new WebSsoProfileImpl();*/
+		new WebSsoProfileImpl();
 
 }

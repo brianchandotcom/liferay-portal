@@ -2,23 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClayCriteriaBuilder from './ClayCriteriaBuilder.es';
 import {
-	AND,
-	BOOLEAN,
-	DATE,
-	EQ,
-	GE,
-	GT,
-	LE,
-	LT,
-	NE,
-	NUMBER,
-	OR,
-	STRING
+	CONJUNCTIONS,
+	RELATIONAL_OPERATORS
 } from './utils/constants.es';
-import {buildQueryString, translateToCriteria} from './utils/odata-util.es';
-import './libs/odata-parser.js';
+import {buildQueryString, translateQueryToCriteria} from './utils/odata.es';
 
-const conjunctions = [
+const {AND, OR} = CONJUNCTIONS;
+const {EQ, GE, GT, LE, LT, NE} = RELATIONAL_OPERATORS;
+
+const SUPPORTED_CONJUNCTIONS = [
 	{
 		label: Liferay.Language.get('and'),
 		name: AND
@@ -29,38 +21,39 @@ const conjunctions = [
 	}
 ];
 
-const operators = [
+const SUPPORTED_OPERATORS = [
 	{
 		label: Liferay.Language.get('equals'),
-		name: EQ,
-		supportedTypes: [BOOLEAN, DATE, NUMBER, STRING]
+		name: EQ
 	},
 	{
 		label: Liferay.Language.get('greater-than-or-equals'),
-		name: GE,
-		supportedTypes: [DATE, NUMBER]
+		name: GE
 	},
 	{
 		label: Liferay.Language.get('greater-than'),
-		name: GT,
-		supportedTypes: [DATE, NUMBER]
+		name: GT
 	},
 	{
 		label: Liferay.Language.get('less-than-or-equals'),
-		name: LE,
-		supportedTypes: [DATE, NUMBER]
+		name: LE
 	},
 	{
 		label: Liferay.Language.get('less-than'),
-		name: LT,
-		supportedTypes: [DATE, NUMBER]
+		name: LT
 	},
 	{
 		label: Liferay.Language.get('not-equals'),
-		name: NE,
-		supportedTypes: [BOOLEAN, DATE, NUMBER, STRING]
+		name: NE
 	}
 ];
+
+const SUPPORTED_PROPERTY_TYPES = {
+	BOOLEAN: [EQ, NE],
+	DATE: [EQ, GE, GT, LE, LT, NE],
+	NUMBER: [EQ, GE, GT, LE, LT, NE],
+	STRING: [EQ, NE]
+};
 
 class ClayODataQueryBuilder extends React.Component {
 	constructor(props) {
@@ -70,7 +63,7 @@ class ClayODataQueryBuilder extends React.Component {
 
 		this.state = {
 			criteriaMap: initialQuery && initialQuery !== '()' ?
-				translateToCriteria(initialQuery) :
+				translateQueryToCriteria(initialQuery) :
 				null,
 			query: initialQuery
 		};
@@ -85,12 +78,13 @@ class ClayODataQueryBuilder extends React.Component {
 			<div className="clay-query-builder-root">
 				<div className="form-group">
 					<ClayCriteriaBuilder
-						conjunctions={conjunctions}
 						criteria={criteriaMap}
 						onChange={this._updateQuery}
-						operators={operators}
-						properties={properties}
 						readOnly={readOnly}
+						supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+						supportedOperators={SUPPORTED_OPERATORS}
+						supportedProperties={properties}
+						supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 					/>
 				</div>
 
@@ -120,7 +114,6 @@ class ClayODataQueryBuilder extends React.Component {
 ClayODataQueryBuilder.propTypes = {
 	initialQuery: PropTypes.string,
 	inputId: PropTypes.string,
-	operators: PropTypes.array,
 	properties: PropTypes.array,
 	readOnly: PropTypes.bool
 };

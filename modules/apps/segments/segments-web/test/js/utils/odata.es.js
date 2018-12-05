@@ -1,10 +1,12 @@
-import * as Util from '../../../src/main/resources/META-INF/resources/js/utils/odata-util.es';
+import * as Util from '../../../src/main/resources/META-INF/resources/js/utils/odata.es';
 import {
-	AND,
-	EQ,
-	OR
+	CONJUNCTIONS,
+	RELATIONAL_OPERATORS
 } from '../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 import '../../../src/main/resources/META-INF/resources/js/libs/odata-parser';
+
+const {AND, OR} = CONJUNCTIONS;
+const {EQ} = RELATIONAL_OPERATORS;
 
 function generateItems(times) {
 	let items = [];
@@ -95,12 +97,12 @@ describe(
 		);
 
 		describe(
-			'translateToCriteria',
+			'translateQueryToCriteria',
 			() => {
 				it(
 					'should translate a query string into a criteria map',
 					() => {
-						expect(Util.translateToCriteria(`(firstName eq 'test')`))
+						expect(Util.translateQueryToCriteria(`(firstName eq 'test')`))
 							.toEqual(
 								{
 									'conjunctionName': 'and',
@@ -119,7 +121,7 @@ describe(
 				it(
 					'should handle a query string with empty groups',
 					() => {
-						expect(Util.translateToCriteria(`(((firstName eq 'test')))`))
+						expect(Util.translateQueryToCriteria(`(((firstName eq 'test')))`))
 							.toEqual(
 								{
 									'conjunctionName': 'and',
@@ -138,13 +140,13 @@ describe(
 				it(
 					'should return null if the query is empty or invalid',
 					() => {
-						expect(Util.translateToCriteria())
+						expect(Util.translateQueryToCriteria())
 							.toEqual(null);
-						expect(Util.translateToCriteria(`()`))
+						expect(Util.translateQueryToCriteria(`()`))
 							.toEqual(null);
-						expect(Util.translateToCriteria(`(firstName eq 'test' eq 'test')`))
+						expect(Util.translateQueryToCriteria(`(firstName eq 'test' eq 'test')`))
 							.toEqual(null);
-						expect(Util.translateToCriteria(`(firstName = 'test')`))
+						expect(Util.translateQueryToCriteria(`(firstName = 'test')`))
 							.toEqual(null);
 					}
 				);
@@ -157,7 +159,7 @@ describe(
 				it(
 					'should be able to translate a query string to map and back to string',
 					() => {
-						const translatedMap = Util.translateToCriteria(`(firstName eq 'test')`);
+						const translatedMap = Util.translateQueryToCriteria(`(firstName eq 'test')`);
 
 						const translatedString = Util.buildQueryString([translatedMap]);
 
@@ -169,7 +171,7 @@ describe(
 				it(
 					'should be able to translate a complex query string to map and back to string',
 					() => {
-						const translatedMap = Util.translateToCriteria(`((firstName eq 'test' or firstName eq 'test') and firstName eq 'test')`);
+						const translatedMap = Util.translateQueryToCriteria(`((firstName eq 'test' or firstName eq 'test') and firstName eq 'test')`);
 
 						const translatedString = Util.buildQueryString([translatedMap]);
 

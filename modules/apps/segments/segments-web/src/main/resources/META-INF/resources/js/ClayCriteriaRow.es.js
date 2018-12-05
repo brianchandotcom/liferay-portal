@@ -18,17 +18,17 @@ class ClayCriteriaRow extends React.Component {
 		const {
 			criterion,
 			editing,
-			operators,
-			properties
+			supportedOperators,
+			supportedProperties
 		} = this.props;
 
 		const selectedProperty = this._getSelectedItem(
-			properties,
+			supportedProperties,
 			criterion.propertyName
 		);
 
 		const selectedOperator = this._getSelectedItem(
-			operators,
+			supportedOperators,
 			criterion.operatorName
 		);
 
@@ -43,7 +43,7 @@ class ClayCriteriaRow extends React.Component {
 							onChange={this._handleInputChange(
 								'propertyName'
 							)}
-							options={properties.map(
+							options={supportedProperties.map(
 								({label, name}) => ({
 									label,
 									value: name
@@ -57,7 +57,7 @@ class ClayCriteriaRow extends React.Component {
 							onChange={this._handleInputChange(
 								'operatorName'
 							)}
-							options={operators.map(
+							options={supportedOperators.map(
 								({label, name}) => ({
 									label,
 									value: name
@@ -102,11 +102,11 @@ class ClayCriteriaRow extends React.Component {
 	}
 
 	_createPlaceholderGroup = criterion => {
-		const {conjunctions, onChange} = this.props;
+		const {onChange, supportedConjunctions} = this.props;
 
 		onChange(
 			{
-				conjunctionName: conjunctions[0].name,
+				conjunctionName: supportedConjunctions[0].name,
 				items: [{...criterion}]
 			}
 		);
@@ -133,14 +133,14 @@ class ClayCriteriaRow extends React.Component {
 }
 
 ClayCriteriaRow.propTypes = {
-	conjunctions: PropTypes.array,
-	criteriaTypes: PropTypes.object,
 	criterion: PropTypes.object,
 	editing: PropTypes.bool,
 	onChange: PropTypes.func,
-	operators: PropTypes.array,
-	properties: PropTypes.array,
-	root: PropTypes.bool
+	root: PropTypes.bool,
+	supportedConjunctions: PropTypes.array,
+	supportedOperators: PropTypes.array,
+	supportedProperties: PropTypes.array,
+	supportedPropertyTypes: PropTypes.object
 };
 
 ClayCriteriaRow.defaultProps = {

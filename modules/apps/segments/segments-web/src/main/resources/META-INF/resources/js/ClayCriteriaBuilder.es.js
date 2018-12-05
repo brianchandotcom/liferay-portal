@@ -13,7 +13,13 @@ class ClayCriteriaBuilder extends React.Component {
 	}
 
 	render() {
-		const {conjunctions, criteria, operators, properties} = this.props;
+		const {
+			criteria,
+			supportedConjunctions,
+			supportedOperators,
+			supportedProperties,
+			supportedPropertyTypes
+		} = this.props;
 
 		const {editing} = this.state;
 
@@ -28,16 +34,14 @@ class ClayCriteriaBuilder extends React.Component {
 
 				{this._isCriteriaEmpty() ? (
 					<ClayCriteriaGroup
-						conjunctions={conjunctions}
 						criteria={criteria}
-						criteriaTypes={ClayCriteriaBuilder._buildCriteriaTypes(
-							operators
-						)}
 						editing={editing}
 						onChange={this._updateCriteria}
-						operators={operators}
-						properties={properties}
 						root
+						supportedConjunctions={supportedConjunctions}
+						supportedOperators={supportedOperators}
+						supportedProperties={supportedProperties}
+						supportedPropertyTypes={supportedPropertyTypes}
 					/>
 				) : (
 					<div
@@ -95,11 +99,11 @@ class ClayCriteriaBuilder extends React.Component {
 	}
 
 	_handleNewCriteria = () => {
-		const {onChange, operators, properties} = this.props;
+		const {onChange, supportedOperators, supportedProperties} = this.props;
 
 		const emptyItem = {
-			operatorName: operators[0].name,
-			propertyName: properties[0].name,
+			operatorName: supportedOperators[0].name,
+			propertyName: supportedProperties[0].name,
 			value: ''
 		};
 
@@ -144,14 +148,6 @@ const CRITERION_SHAPE = {
 };
 
 ClayCriteriaBuilder.propTypes = {
-	conjunctions: PropTypes.arrayOf(
-		PropTypes.shape(
-			{
-				label: PropTypes.string,
-				value: PropTypes.string
-			}
-		)
-	),
 	criteria: PropTypes.shape(
 		{
 			conjunctionId: PropTypes.string,
@@ -166,27 +162,28 @@ ClayCriteriaBuilder.propTypes = {
 		}
 	),
 	onChange: PropTypes.func,
-	operators: PropTypes.arrayOf(
+	readOnly: PropTypes.bool,
+	supportedConjunctions: PropTypes.arrayOf(
 		PropTypes.shape(
 			{
-				supportedTypes: PropTypes.arrayOf(PropTypes.string),
-				value: PropTypes.string
+				label: PropTypes.string,
+				name: PropTypes.string.isRequired
 			}
 		)
 	),
-	properties: PropTypes.arrayOf(
+	supportedOperators: PropTypes.array,
+	supportedProperties: PropTypes.arrayOf(
 		PropTypes.shape(
 			{
 				entityUrl: PropTypes.string,
 				label: PropTypes.string,
 				name: PropTypes.string.isRequired,
 				options: PropTypes.array,
-				type: PropTypes.string
+				type: PropTypes.string.isRequired
 			}
 		)
 	).isRequired,
-	readOnly: PropTypes.bool,
-	spritemap: PropTypes.string
+	supportedPropertyTypes: PropTypes.object
 };
 
 ClayCriteriaBuilder.defaultProps = {

@@ -10,13 +10,13 @@ function insertAtIndex(item, list, index) {
 class ClayCriteriaGroup extends React.Component {
 	render() {
 		const {
-			conjunctions,
 			criteria,
-			criteriaTypes,
 			editing,
-			operators,
-			properties,
-			root
+			root,
+			supportedConjunctions,
+			supportedOperators,
+			supportedProperties,
+			supportedPropertyTypes
 		} = this.props;
 
 		return (
@@ -31,8 +31,7 @@ class ClayCriteriaGroup extends React.Component {
 									<ClayButton
 										className="btn-sm btn btn-secondary conjunction"
 										label={this._getConjunctionLabel(
-											criteria.conjunctionName,
-											conjunctions
+											criteria.conjunctionName
 										)}
 										onClick={this._handleConjunctionClick}
 									/>
@@ -41,24 +40,24 @@ class ClayCriteriaGroup extends React.Component {
 								<div className="criterion-container">
 									{criterion.items ? (
 										<ClayCriteriaGroup
-											conjunctions={conjunctions}
 											criteria={criterion}
-											criteriaTypes={criteriaTypes}
 											editing={editing}
 											onChange={this._updateCriteria(index, criterion)}
-											operators={operators}
-											properties={properties}
+											supportedConjunctions={supportedConjunctions}
+											supportedOperators={supportedOperators}
+											supportedProperties={supportedProperties}
+											supportedPropertyTypes={supportedPropertyTypes}
 										/>
 									) : (
 										<ClayCriteriaRow
-											conjunctions={conjunctions}
-											criteriaTypes={criteriaTypes}
 											criterion={criterion}
 											editing={editing}
 											onChange={this._updateCriterion(index)}
-											operators={operators}
-											properties={properties}
 											root={root}
+											supportedConjunctions={supportedConjunctions}
+											supportedOperators={supportedOperators}
+											supportedProperties={supportedProperties}
+											supportedPropertyTypes={supportedPropertyTypes}
 										/>
 									)}
 
@@ -78,8 +77,10 @@ class ClayCriteriaGroup extends React.Component {
 		);
 	}
 
-	_getConjunctionLabel(conjunctionName, conjunctions) {
-		const conjunction = conjunctions.find(
+	_getConjunctionLabel(conjunctionName) {
+		const {supportedConjunctions} = this.props;
+
+		const conjunction = supportedConjunctions.find(
 			({name}) => name === conjunctionName
 		);
 
@@ -89,11 +90,16 @@ class ClayCriteriaGroup extends React.Component {
 	_handleAddCriteria = index => event => {
 		event.preventDefault();
 
-		const {criteria, onChange, operators, properties} = this.props;
+		const {
+			criteria,
+			onChange,
+			supportedOperators,
+			supportedProperties
+		} = this.props;
 
 		const emptyItem = {
-			operatorName: operators[0].name,
-			propertyName: properties[0].name,
+			operatorName: supportedOperators[0].name,
+			propertyName: supportedProperties[0].name,
 			value: ''
 		};
 
@@ -110,15 +116,15 @@ class ClayCriteriaGroup extends React.Component {
 	_handleConjunctionClick = event => {
 		event.preventDefault();
 
-		const {conjunctions, criteria, onChange} = this.props;
+		const {criteria, onChange, supportedConjunctions} = this.props;
 
-		const index = conjunctions.findIndex(
+		const index = supportedConjunctions.findIndex(
 			item => item.name === criteria.conjunctionName
 		);
 
-		const conjunctionSelected = index === conjunctions.length - 1 ?
-			conjunctions[0].name :
-			conjunctions[index + 1].name;
+		const conjunctionSelected = index === supportedConjunctions.length - 1 ?
+			supportedConjunctions[0].name :
+			supportedConjunctions[index + 1].name;
 
 		onChange(
 			{
@@ -158,16 +164,15 @@ class ClayCriteriaGroup extends React.Component {
 }
 
 ClayCriteriaGroup.propTypes = {
-	conjunctions: PropTypes.array,
 	criteria: PropTypes.object,
-	criteriaTypes: PropTypes.object,
 	editing: PropTypes.bool,
 	onChange: PropTypes.func,
-	operators: PropTypes.array,
-	properties: PropTypes.array,
 	root: PropTypes.bool,
-	selectedConjunctionName: PropTypes.string,
-	spritemap: PropTypes.string
+	spritemap: PropTypes.string,
+	supportedConjunctions: PropTypes.array,
+	supportedOperators: PropTypes.array,
+	supportedProperties: PropTypes.array,
+	supportedPropertyTypes: PropTypes.object
 };
 
 ClayCriteriaGroup.defaultProps = {

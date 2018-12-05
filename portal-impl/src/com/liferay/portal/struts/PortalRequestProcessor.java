@@ -591,40 +591,31 @@ public class PortalRequestProcessor {
 			String path)
 		throws IOException {
 
-		Action action = StrutsActionRegistryUtil.getAction(path);
-
-		if (action != null) {
-			ActionMapping actionMapping =
-				(ActionMapping)_moduleConfig.findActionConfig(path);
-
-			if (actionMapping == null) {
-				actionMapping = new ActionMapping();
-
-				actionMapping.setModuleConfig(_moduleConfig);
-				actionMapping.setPath(path);
-			}
-
-			return actionMapping;
-		}
-
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
 
-		if (actionMapping != null) {
-			return actionMapping;
+		if ((StrutsActionRegistryUtil.getAction(path) != null) &&
+			(actionMapping == null)) {
+
+			actionMapping = new ActionMapping();
+
+			actionMapping.setModuleConfig(_moduleConfig);
+			actionMapping.setPath(path);
 		}
 
-		response.sendError(
-			HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
+		if (actionMapping == null) {
+			response.sendError(
+				HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
 
-		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
-		_log.error("Referer " + request.getHeader("Referer"));
-		_log.error("Remote address " + request.getRemoteAddr());
-		_log.error("User ID " + request.getRemoteUser());
+			_log.error("Current URL " + PortalUtil.getCurrentURL(request));
+			_log.error("Referer " + request.getHeader("Referer"));
+			_log.error("Remote address " + request.getRemoteAddr());
+			_log.error("User ID " + request.getRemoteUser());
 
-		_log.error("Invalid path was requested: " + path);
+			_log.error("Invalid path was requested: " + path);
+		}
 
-		return null;
+		return actionMapping;
 	}
 
 	private String _processPath(

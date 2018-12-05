@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
@@ -265,10 +266,16 @@ public class SourceFormatterUtil {
 
 			String value = properties.getProperty(propertyName);
 
-			if (value != null) {
-				sb.append(value);
-				sb.append(CharPool.COMMA);
+			if (value == null) {
+				continue;
 			}
+
+			if (Validator.isBoolean(value) || Validator.isNumber(value)) {
+				return value;
+			}
+
+			sb.append(value);
+			sb.append(CharPool.COMMA);
 		}
 
 		if (sb.index() > 0) {

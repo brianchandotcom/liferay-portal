@@ -653,6 +653,7 @@
 	</command>
 
 	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange" priority="4">
+		<property name="portal.release" value="false" />
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange" />
 
 		<execute macro="DMRepository#gotoCP">
@@ -701,6 +702,7 @@
 	</command>
 
 	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval" priority="4">
+		<property name="portal.release" value="false" />
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval" />
 
 		<execute macro="DMRepository#gotoCP">

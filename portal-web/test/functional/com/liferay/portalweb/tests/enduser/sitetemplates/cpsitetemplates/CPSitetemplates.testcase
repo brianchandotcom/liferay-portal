@@ -55,6 +55,8 @@
 	</command>
 
 	<command name="AddSiteTemplateApplySiteTemplateChangesToSite" priority="4">
+		<property name="portal.release" value="false" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />

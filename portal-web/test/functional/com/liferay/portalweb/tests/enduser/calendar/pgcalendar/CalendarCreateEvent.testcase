@@ -155,6 +155,8 @@
 	</command>
 
 	<command name="AddAllDayWithRemindersEnabled" priority="3">
+		<property name="portal.release" value="false" />
+
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
@@ -991,6 +993,8 @@
 
 	<command name="AddRepeatingYearly" priority="4">
 		<description message="This is a use case for LPS-51402." />
+
+		<property name="portal.release" value="false" />
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 

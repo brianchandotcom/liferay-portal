@@ -996,6 +996,7 @@
 	</command>
 
 	<command name="EditAndDeleteGoogleDoc" priority="5">
+		<property name="portal.release" value="false" />
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#EditAndDeleteGoogleDoc" />
 
 		<execute macro="ProductMenu#gotoPortlet">

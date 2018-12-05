@@ -150,6 +150,8 @@
 	</command>
 
 	<command name="ResizeAddedEventsViaEventBlock" priority="5">
+		<property name="portal.release" value="false" />
+
 		<description message="This is a use case for LPS-45062." />
 
 		<execute macro="CalendarNavigator#gotoView">

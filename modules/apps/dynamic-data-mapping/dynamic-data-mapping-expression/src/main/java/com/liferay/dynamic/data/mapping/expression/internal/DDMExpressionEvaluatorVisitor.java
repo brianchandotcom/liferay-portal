@@ -268,6 +268,17 @@ public class DDMExpressionEvaluatorVisitor
 
 		Object variableValue = _variables.get(variable);
 
+		if ((variableValue == null) && (_variables.size() > 1)) {
+			for (Map.Entry<String, Object> entry : _variables.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+
+				if (key.startsWith(variable) && (value != null)) {
+					variableValue = value;
+				}
+			}
+		}
+
 		if ((variableValue == null) &&
 			_ddmExpressionFieldAccessor.isField(variable)) {
 

@@ -158,7 +158,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _findPath(request);
+		String path = _processPath(_findPath(request), request, response);
 
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
@@ -176,8 +176,6 @@ public class PortalRequestProcessor {
 
 			return;
 		}
-
-		path = _processPath(path, request, response);
 
 		_process(path, request, response);
 

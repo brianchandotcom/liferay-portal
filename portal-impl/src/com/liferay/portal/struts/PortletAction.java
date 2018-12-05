@@ -56,10 +56,8 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.config.ModuleConfig;
 
 /**
  * @author Brian Wing Shun Chan
@@ -217,10 +215,6 @@ public class PortletAction implements Action {
 		}
 
 		return forward;
-	}
-
-	protected ModuleConfig getModuleConfig(PortletRequest portletRequest) {
-		return (ModuleConfig)portletRequest.getAttribute(Globals.MODULE_KEY);
 	}
 
 	protected PortletPreferences getStrictPortletSetup(

@@ -14,8 +14,6 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -752,24 +750,18 @@ public class JournalDisplayContext {
 	}
 
 	public String getPreviewURL(JournalArticle article) throws Exception {
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
-				_themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey());
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		if (JournalArticleLocalServiceUtil.isLatestVersion(
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion()) &&
-			(assetDisplayPageEntry != null) &&
-			(assetDisplayPageEntry.getLayoutPageTemplateEntryId() > 0)) {
-
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-					JournalArticle.class);
-
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
+			AssetDisplayPageHelper.hasAssetDisplayPage(
+				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
 			StringBundler sb = new StringBundler(4);
 

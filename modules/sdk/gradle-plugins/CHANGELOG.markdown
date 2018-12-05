@@ -6135,6 +6135,14 @@ to version 1.0.25.
 ### Fixed
 - [LPS-87978]: Quote URL arguments in Gogo shell commands.
 
+## 3.13.27 - 2018-12-03
+
+### Changed
+- [LPS-86406]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.2.1.
+- [LPS-86406]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.249.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

@@ -5123,6 +5123,12 @@ version 2.2.8.
 - [LPS-87978]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.26.
 
+## 5.5.129 - 2018-12-03
+
+### Changed
+- [LPS-86406]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.27.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

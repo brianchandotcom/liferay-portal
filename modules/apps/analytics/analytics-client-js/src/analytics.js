@@ -3,7 +3,6 @@ import middlewares from './middlewares/defaults';
 
 // Gateways
 import AsahClient from './AsahClient/AsahClient';
-import LCSClient from './LCSClient/LCSClient';
 
 import defaultPlugins from './plugins/defaults';
 import fingerprint from './utils/fingerprint';
@@ -42,28 +41,19 @@ class Analytics {
 			instance = this;
 		}
 
-		const {dataSourceId, endpointUrl, flushInterval, uri} = config;
+		const {endpointUrl, flushInterval} = config;
 
-		const lcsClient = new LCSClient(uri);
-		const asahClient =
-			dataSourceId && endpointUrl && new AsahClient(endpointUrl);
+		const asahClient = new AsahClient(endpointUrl);
 
-		instance.client = lcsClient;
+		instance.client = asahClient;
 
 		instance._sendData = userId => {
-			if (asahClient) {
-				asahClient.send(instance, userId);
-			}
-
-			return lcsClient.send(instance, userId);
+			return asahClient.send(instance, userId);
 		};
 
 		instance.config = config;
 
-		instance.asahIdentityEndpoint =
-			dataSourceId && endpointUrl && `${endpointUrl}/identity`;
-		instance.lcsIdentityEndpoint =
-			'https://analytics-gw.liferay.com/api/identitycontextgateway/send-identity-context';
+		instance.asahIdentityEndpoint = `${endpointUrl}/identity`;
 
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.contexts = storage.get(STORAGE_KEY_CONTEXTS) || [];
@@ -195,11 +185,10 @@ class Analytics {
 	 * @return {Promise} A promise returned by the fetch request.
 	 */
 	_sendIdentity(identity, userId) {
-		const {analyticsKey = '', dataSourceId} = this.config;
+		const {dataSourceId} = this.config;
 
 		const bodyData = {
 			...fingerprint(),
-			analyticsKey,
 			dataSourceId,
 			identity,
 			userId,
@@ -225,11 +214,8 @@ class Analytics {
 				mode: 'cors',
 			};
 
-			if (this.asahIdentityEndpoint) {
-				fetch(this.asahIdentityEndpoint, request);
-			}
 
-			return fetch(this.lcsIdentityEndpoint, request).then(
+			return fetch(this.asahIdentityEndpoint, request).then(
 				() => newIdentityHash
 			);
 		}
@@ -390,10 +376,9 @@ class Analytics {
 	 * @example
 	 * Analytics.create(
 	 *   {
+	 *	   endpointUrl: 'https://osbasahcerebropublisher-projectname.lfr.io'
 	 *	   flushInterval: 2000,
-	 *	   uri: 'https://analytics-gw.liferay.com/api/analyticsgateway/send-analytics-events'
 	 *	   userId: 'id-s7uatimmxgo',
-	 *     analyticsKey: 'MyAnalyticsKey',
 	 *     dataSourceId: 'MyDataSourceId',
 	 *   }
 	 * );

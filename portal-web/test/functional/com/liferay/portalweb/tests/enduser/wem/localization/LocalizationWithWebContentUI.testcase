@@ -12,12 +12,6 @@
 			<var name="groupName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
 		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Test Page Name" />
@@ -45,12 +39,8 @@
 		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContent#AddWCWithTranslation" />
 		<property name="testray.component.names" value="Localization,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -72,8 +62,9 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Content#addPG">

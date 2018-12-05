@@ -34,7 +34,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 				</svg>
 			</span>
 
-			<strong class="lead"><%= alertTitle %>:</strong><%= alertMessage %>
+			<strong class="lead"><%= alertTitle %></strong><%= alertMessage %>
 		</div>
 
 		<%= rowBreak %>

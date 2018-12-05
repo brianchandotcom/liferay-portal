@@ -202,17 +202,17 @@ class FragmentEntryLinkList extends Component {
 				targetItem.dataset
 			);
 
-			this._targetBorder = DROP_TARGET_BORDERS.bottom;
+			let targetBorder = DROP_TARGET_BORDERS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <=
 				Math.abs(mouseY - targetItemRegion.bottom)) {
-				this._targetBorder = DROP_TARGET_BORDERS.top;
+				targetBorder = DROP_TARGET_BORDERS.top;
 			}
 
 			this.store.dispatchAction(
 				UPDATE_DROP_TARGET,
 				{
-					dropTargetBorder: this._targetBorder,
+					dropTargetBorder: targetBorder,
 					dropTargetItemId: dropTargetItemData.itemId,
 					dropTargetItemType: dropTargetItemData.itemType
 				}
@@ -476,17 +476,7 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-	_dragDrop: Config.internal().value(null),
-
-	/**
-	 * Nearest border of the hovered fragment while dragging
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {!string}
-	 */
-	_targetBorder: Config.internal().string()
+	_dragDrop: Config.internal().value(null)
 };
 
 Soy.register(FragmentEntryLinkList, templates);

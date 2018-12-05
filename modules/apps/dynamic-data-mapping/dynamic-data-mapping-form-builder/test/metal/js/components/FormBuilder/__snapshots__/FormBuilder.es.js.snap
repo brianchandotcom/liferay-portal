@@ -1,12 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Builder should render the default markup 1`] = `
-<div class="form-builder"><button class="btn btn-default lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-      <title>plus</title>
-      <use xlink:href="icons.svg#plus"></use>
-    </svg></button>
-  <div class="form-builder-canvas">
-    <div class="container sheet">
+<div>
+  <div class="container">
+    <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
           <div class="ddm-page-settings" role="group">
@@ -218,12 +215,9 @@ exports[`Builder should render the default markup 1`] = `
 `;
 
 exports[`Builder should show modal when trash button gets clicked 1`] = `
-<div class="form-builder"><button class="btn btn-default lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
-      <title>plus</title>
-      <use xlink:href="icons.svg#plus"></use>
-    </svg></button>
-  <div class="form-builder-canvas">
-    <div class="container sheet">
+<div>
+  <div class="container">
+    <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
           <div class="ddm-page-settings" role="group">

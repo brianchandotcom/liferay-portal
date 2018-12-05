@@ -1,5 +1,4 @@
 import Validation from 'source/Validation/Validation.es';
-import {dom} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -33,7 +32,7 @@ describe(
 
 		it(
 			'should enable validation after click on toogle',
-			() => {
+			done => {
 				jest.useFakeTimers();
 
 				component = new Validation(
@@ -41,25 +40,33 @@ describe(
 						dataType: 'string',
 						label: 'Validator',
 						name: 'validation',
-						spritemap
+						spritemap,
+						validation: {
+							fieldName: 'textfield'
+						}
 					}
-				);
-
-				dom.triggerEvent(
-					component.element.querySelector('input[type=checkbox]'),
-					'change',
-					{}
 				);
 
 				jest.runAllTimers();
 
-				expect(component).toMatchSnapshot();
+				component.once(
+					'stateSynced',
+					() => {
+						expect(component.enableValidation).toBe(true);
+						done();
+					}
+				);
+
+				component.refs.enableValidation.value = true;
+				component.refs.enableValidation.emit('fieldEdited');
+
+				jest.runAllTimers();
 			}
 		);
 
 		it(
 			'should render parameter field with TextField element',
-			() => {
+			done => {
 				jest.useFakeTimers();
 
 				component = new Validation(
@@ -68,11 +75,24 @@ describe(
 						enableValidation: true,
 						label: 'Validator',
 						name: 'validation',
-						spritemap
+						spritemap,
+						validation: {
+							fieldName: 'textfield'
+						}
 					}
 				);
 
+				component.once(
+					'stateSynced',
+					() => {
+						expect(component.expression).toMatchSnapshot();
+						done();
+					}
+				);
+
+				component.refs.enableValidation.value = true;
 				component.refs.selectedValidation.value = 'notContains';
+				component.refs.selectedValidation.emit('fieldEdited');
 
 				jest.runAllTimers();
 
@@ -82,7 +102,7 @@ describe(
 
 		it(
 			'should render parameter field with Numeric element',
-			() => {
+			done => {
 				jest.useFakeTimers();
 
 				component = new Validation(
@@ -91,11 +111,24 @@ describe(
 						enableValidation: true,
 						label: 'Validator',
 						name: 'validation',
-						spritemap
+						spritemap,
+						validation: {
+							fieldName: 'textfield'
+						}
 					}
 				);
 
+				component.once(
+					'stateSynced',
+					() => {
+						expect(component.expression).toMatchSnapshot();
+						done();
+					}
+				);
+
+				component.refs.enableValidation.value = true;
 				component.refs.selectedValidation.value = 'lt';
+				component.refs.selectedValidation.emit('fieldEdited');
 
 				jest.runAllTimers();
 
@@ -105,7 +138,7 @@ describe(
 
 		it(
 			'should render parameter field with Text element and then with Numeric after update dataType',
-			() => {
+			done => {
 				jest.useFakeTimers();
 
 				component = new Validation(
@@ -121,219 +154,60 @@ describe(
 					}
 				);
 
+				component.once(
+					'stateSynced',
+					() => {
+						expect(component.expression).toMatchSnapshot();
+						done();
+					}
+				);
+
+				component.refs.enableValidation.value = true;
 				component.refs.selectedValidation.value = 'notContains';
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-
+				component.refs.selectedValidation.emit('fieldEdited');
 				component.dataType = 'numeric';
 
 				jest.runAllTimers();
-
-				component.refs.selectedValidation.value = 'lt';
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
 			}
 		);
 
-		it(
-			'should not render parameter field if validation is isUrl',
+		describe(
+			'Regression Tests',
 			() => {
-				jest.useFakeTimers();
+				describe(
+					'LPS-88007',
+					() => {
+						it(
+							'should not render "Show Error Message" and "The Value" as required fields',
+							() => {
+								jest.useFakeTimers();
 
-				component = new Validation(
-					{
-						dataType: 'string',
-						enableValidation: true,
-						label: 'Validator',
-						name: 'validation',
-						spritemap
+								component = new Validation(
+									{
+										dataType: 'string',
+										enableValidation: true,
+										label: 'Validator',
+										name: 'validation',
+										spritemap,
+										validation: {
+											dataType: 'string',
+											fieldName: 'textfield'
+										},
+										value: {
+											errorMessage: 'An error message',
+											expression: 'NOT(contains(textfield, ""))'
+										}
+									}
+								);
+
+								jest.runAllTimers();
+
+								expect(component.refs.errorMessage.required).toBe(false);
+								expect(component.refs.parameterMessage.required).toBe(false);
+							}
+						);
 					}
 				);
-
-				component.refs.selectedValidation.value = 'url';
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should not render parameter field if validation is isEmailAddress',
-			() => {
-				jest.useFakeTimers();
-
-				component = new Validation(
-					{
-						dataType: 'string',
-						enableValidation: true,
-						label: 'Validator',
-						name: 'validation',
-						spritemap
-					}
-				);
-
-				component.refs.selectedValidation.value = 'email';
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should render filled fields when value is filled',
-			() => {
-				jest.useFakeTimers();
-
-				component = new Validation(
-					{
-						dataType: 'string',
-						label: 'Validator',
-						name: 'validation',
-						spritemap,
-						value: {
-							errorMessage: 'Error message',
-							expression: 'NOT(contains(textfield, "forbiddenWord"))'
-						}
-					}
-				);
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should update parameter message and emit a field edited event',
-			() => {
-				jest.useFakeTimers();
-
-				const handleFieldEdited = jest.fn();
-
-				const events = {fieldEdited: handleFieldEdited};
-
-				component = new Validation(
-					{
-						dataType: 'string',
-						enableValidation: true,
-						events,
-						label: 'Validator',
-						name: 'validation',
-						spritemap,
-						validation: {
-							fieldName: 'textfield'
-						},
-						value: {
-							errorMessage: 'Error message',
-							expression: 'NOT(contains(textfield, "forbiddenWord"))'
-						}
-					}
-				);
-
-				jest.runAllTimers();
-
-				const parameterComponent = component.element.querySelector(
-					'input[name="validation_parameterMessage"]'
-				);
-
-				parameterComponent.value = 'new Parameter Message';
-
-				dom.triggerEvent(parameterComponent, 'input', {});
-
-				jest.runAllTimers();
-
-				expect(handleFieldEdited).toHaveBeenCalled();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should update error message and emit a field edited event',
-			() => {
-				jest.useFakeTimers();
-
-				const handleFieldEdited = jest.fn();
-
-				const events = {fieldEdited: handleFieldEdited};
-
-				component = new Validation(
-					{
-						dataType: 'string',
-						enableValidation: true,
-						events,
-						label: 'Validator',
-						name: 'validation',
-						spritemap,
-						validation: {
-							fieldName: 'textfield'
-						},
-						value: {
-							errorMessage: 'Error message',
-							expression: 'NOT(contains(textfield, "forbiddenWord"))'
-						}
-					}
-				);
-
-				jest.runAllTimers();
-
-				const errorComponent = component.element.querySelector(
-					'input[name="validation_errorMessage"]'
-				);
-
-				errorComponent.value = 'new Error Message';
-
-				dom.triggerEvent(errorComponent, 'input', {});
-
-				jest.runAllTimers();
-
-				expect(handleFieldEdited).toHaveBeenCalled();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should propagate the field edit event',
-			() => {
-				jest.useFakeTimers();
-
-				component = new Validation(
-					{
-						dataType: 'string',
-						enableValidation: true,
-						name: 'validation',
-						spritemap,
-						validation: {
-							fieldName: 'textfield'
-						},
-						value: {
-							errorMessage: 'Error message',
-							expression: 'NOT(contains(textfield, "forbiddenWord"))'
-						}
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				jest.runAllTimers();
-
-				const errorComponent = component.element.querySelector(
-					'input[name="validation_errorMessage"]'
-				);
-
-				errorComponent.value = 'new Error Message';
-
-				dom.triggerEvent(errorComponent, 'input', {});
-
-				jest.runAllTimers();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 			}
 		);
 	}

@@ -268,6 +268,8 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 	}
 
 	protected String encodeRequest(String requestXML) throws Exception {
+		Base64.Encoder encoder = _getEncoder();
+
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -280,8 +282,6 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		deflaterOutputStream.finish();
 
-		Base64.Encoder encoder = _getEncoder();
-
 		return encoder.encodeToString(byteArrayOutputStream.toByteArray());
 	}
 
@@ -290,11 +290,11 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			String queryString)
 		throws Exception {
 
+		Base64.Encoder encoder = _getEncoder();
+
 		byte[] signatureBytes = SigningUtil.sign(
 			signingCredential, JCEMapper.translateURItoJCEID(algorithmURI),
 			false, queryString.getBytes("UTF-8"));
-
-		Base64.Encoder encoder = _getEncoder();
 
 		return encoder.encodeToString(signatureBytes);
 	}

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -42,10 +41,6 @@ public class UserPortraitTag extends StickerTag {
 	public void setUser(User user) {
 		putValue("title", user.getFullName());
 		putValue("imageSrc", _getPortraitURL(user));
-	}
-
-	public void setUserId(long userId) {
-		setUser(UserLocalServiceUtil.fetchUser(userId));
 	}
 
 	private String _getPortraitURL(User user) {

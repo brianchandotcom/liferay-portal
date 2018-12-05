@@ -350,12 +350,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			"Creates a Docker container from your liferay image and mounts " +
 				dockerPath + " to /etc/liferay.");
 
-		List<String> ports = new ArrayList<>();
+		List<String> portBindings = new ArrayList<>();
 
-		ports.add("8080:8080");
-		ports.add("11311:11311");
+		portBindings.add("8080:8080");
+		portBindings.add("11311:11311");
 
-		dockerCreateContainer.setPortBindings(ports);
+		dockerCreateContainer.setPortBindings(portBindings);
 
 		dockerCreateContainer.targetImageId(
 			new Callable<String>() {

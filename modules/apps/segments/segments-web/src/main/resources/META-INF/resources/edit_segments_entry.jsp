@@ -107,10 +107,18 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 		</aui:fieldset-group>
 	</div>
 
+	<div class="segments-entry-class-pks-count-container">
+		<h5 class="text-default">
+			<liferay-ui:message key="member-count" />: <span id="<portlet:namespace />segmentsEntryClassPKsCount"><%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %></span>
+		</h5>
+	</div>
+
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
 		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSegmentsEntryAndContinue();" %>' value="save-and-continue" />
+
+		<aui:button cssClass="btn-lg" name="preview" value="preview" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
@@ -130,6 +138,29 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 		submitForm(document.<portlet:namespace />fm);
 	}
+</aui:script>
+
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getSegmentsEntryClassPKsCount" var="getSegmentsEntryClassPKsCountURL" />
+
+<aui:script use="aui-base,aui-io-request">
+	A.one('#<portlet:namespace />preview').on(
+		'click',
+		function(event) {
+			A.io.request(
+				'<%= getSegmentsEntryClassPKsCountURL %>',
+				{
+					form: {id: '<portlet:namespace />fm'},
+					method: 'POST',
+					on: {
+						success: function() {
+							var responseData = this.get('responseData');
+
+							A.one('#<portlet:namespace />segmentsEntryClassPKsCount').html(responseData);
+						}
+					}
+				}
+			);
+		});
 </aui:script>
 
 <c:if test="<%= segmentsEntry == null %>">

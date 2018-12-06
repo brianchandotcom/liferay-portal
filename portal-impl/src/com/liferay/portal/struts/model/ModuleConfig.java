@@ -14,6 +14,9 @@
 
 package com.liferay.portal.struts.model;
 
+import com.liferay.portal.struts.ActionAdapter;
+import com.liferay.portal.struts.StrutsActionRegistryUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +38,24 @@ public class ModuleConfig {
 	}
 
 	public ActionMapping getActionMapping(String path) {
-		return _actionMappings.get(path);
+		ActionMapping actionMapping = _actionMappings.get(path);
+
+		ActionAdapter actionAdapter = (ActionAdapter)
+			StrutsActionRegistryUtil.getAction(path);
+
+		if ((actionMapping == null) && (actionAdapter == null)) {
+			return null;
+		}
+
+		if (actionAdapter == null) {
+			return actionMapping;
+		}
+
+		if (actionMapping != null) {
+			actionAdapter.setOriginalAction(actionMapping.getAction());
+		}
+
+		return new ActionMapping(this, null, path, actionAdapter);
 	}
 
 	private final Map<String, ActionForward> _actionForwards = new HashMap<>();

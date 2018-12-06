@@ -47,26 +47,26 @@ public final class DEDataDefinitionSaveRequest implements DESaveRequest {
 	public static final class Builder {
 
 		public Builder(DEDataDefinition deDataDefinition) {
-			_dataDefinitionSaveRequest._deDataDefinition = deDataDefinition;
+			_deDataDefinitionSaveRequest._deDataDefinition = deDataDefinition;
 		}
 
 		public DEDataDefinitionSaveRequest build() {
-			return _dataDefinitionSaveRequest;
+			return _deDataDefinitionSaveRequest;
 		}
 
 		public Builder inGroup(long groupId) {
-			_dataDefinitionSaveRequest._groupId = groupId;
+			_deDataDefinitionSaveRequest._groupId = groupId;
 
 			return this;
 		}
 
 		public Builder onBehalfOf(long userId) {
-			_dataDefinitionSaveRequest._userId = userId;
+			_deDataDefinitionSaveRequest._userId = userId;
 
 			return this;
 		}
 
-		private final DEDataDefinitionSaveRequest _dataDefinitionSaveRequest =
+		private final DEDataDefinitionSaveRequest _deDataDefinitionSaveRequest =
 			new DEDataDefinitionSaveRequest();
 
 	}

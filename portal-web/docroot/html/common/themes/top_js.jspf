@@ -586,51 +586,40 @@ private static String _getDateFormatPattern(Locale locale) {
 	String dateFormatPattern = _dateFormatPatterns.get(languageId);
 
 	if (dateFormatPattern == null) {
+		boolean endDelimiter = false;
+
+		String delimiterString = StringPool.FORWARD_SLASH;
+
 		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT, locale);
 
 		dateFormatPattern = simpleDateFormat.toPattern();
-		String lowerCaseDFP = StringUtil.toLowerCase(dateFormatPattern);
-
-		boolean endDelimiter = false;
-		char dateFormatSymbol = CharPool.FORWARD_SLASH;
 
 		for (char dateDelimiter : _DATE_DELIMITERS) {
-			if (lowerCaseDFP.indexOf(dateDelimiter) != -1) {
-				dateFormatSymbol = dateDelimiter;
+			if (dateFormatPattern.indexOf(dateDelimiter) != -1) {
+				delimiterString = String.valueOf(dateDelimiter);
 
-				if (lowerCaseDFP.lastIndexOf(dateDelimiter) ==
-					lowerCaseDFP.length() - 1) {
+				endDelimiter = dateFormatPattern.endsWith(delimiterString);
 
-					endDelimiter = true;
-				}
+				break;
 			}
 		}
 
-		int dayOrder = lowerCaseDFP.indexOf("d");
-		int monthOrder = lowerCaseDFP.indexOf("m");
-		int yearOrder = lowerCaseDFP.indexOf("y");
+		int dayOrder = dateFormatPattern.indexOf('d');
+		int monthOrder = dateFormatPattern.indexOf('M');
+		int yearOrder = dateFormatPattern.indexOf('y');
 
 		if ((yearOrder < dayOrder) && (yearOrder < monthOrder)) {
-			dateFormatPattern =
-				"%y" + dateFormatSymbol + "%m" + dateFormatSymbol + "%d";
+			dateFormatPattern = StringBundler.concat("%Y", delimiterString, "%m", delimiterString, "%d");
 		}
 		else if (dayOrder < monthOrder) {
-			dateFormatPattern =
-				"%d" + dateFormatSymbol + "%m" + dateFormatSymbol + "%y";
+			dateFormatPattern = StringBundler.concat("%d", delimiterString, "%m", delimiterString, "%Y");
 		}
 		else {
-			dateFormatPattern =
-				"%m" + dateFormatSymbol + "%d" + dateFormatSymbol + "%y";
+			dateFormatPattern = StringBundler.concat("%m", delimiterString, "%d", delimiterString, "%Y");
 		}
 
 		if (endDelimiter) {
-			dateFormatPattern += dateFormatSymbol;
-		}
-
-		boolean fullYear = lowerCaseDFP.contains("yyyy");
-
-		if (fullYear) {
-			dateFormatPattern.replace("y", "Y");
+			dateFormatPattern += delimiterString;
 		}
 
 		_dateFormatPatterns.put(languageId, dateFormatPattern);

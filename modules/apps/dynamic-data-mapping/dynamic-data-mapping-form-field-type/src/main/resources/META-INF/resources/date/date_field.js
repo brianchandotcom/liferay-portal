@@ -3,22 +3,28 @@ AUI.add(
 	function(A) {
 		var isArray = Array.isArray;
 
-		var langId = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
-		var customDateFormat = A.Intl.get('datatype-date-format', 'x', langId);
-		var dateFormat = Liferay.AUI.getDateFormat();
+		var languageId = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+		var dateFormat;
+		var customDateFormat = A.Intl.get('datatype-date-format', 'x', languageId);
 
 		if (customDateFormat) {
 			dateFormat = customDateFormat;
 		}
+		else {
+			dateFormat = Liferay.AUI.getDateFormat();
+		}
 
 		var dateDelimiter = '/';
 		var endDelimiter = false;
+
 		if (dateFormat.indexOf('.') != -1) {
 			dateDelimiter = '.';
+
 			if (dateFormat.lastIndexOf('.') == dateFormat.length - 1) {
 				endDelimiter = true;
 			}
 		}
+
 		if (dateFormat.indexOf('-') != -1) {
 			dateDelimiter = '-';
 		}
@@ -109,7 +115,7 @@ AUI.add(
 								if (item == '%Y') {
 									dateMask.push(/\d/, /\d/, /\d/, /\d/);
 								}
-								else {
+								else if (item) {
 									dateMask.push(/\d/, /\d/);
 								}
 

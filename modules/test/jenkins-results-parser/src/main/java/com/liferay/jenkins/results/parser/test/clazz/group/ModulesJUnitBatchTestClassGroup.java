@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
@@ -85,11 +87,11 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
 
-		List<File> modifiedModuleDirsList = null;
+		Set<File> modifiedModuleDirsList = new HashSet<>();
 
 		try {
-			modifiedModuleDirsList =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
+			modifiedModuleDirsList.addAll(
+				portalGitWorkingDirectory.getModifiedModuleDirsList());
 		}
 		catch (IOException ioe) {
 			File workingDirectory =
@@ -102,17 +104,10 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				ioe);
 		}
 
-		String requiredModules = getFirstPropertyValue(
-			"modules.includes.required");
-
-		if (requiredModules != null) {
-			File modulesDir = new File(
-				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-
-			for (String requiredModule : requiredModules.split(",")) {
-				modifiedModuleDirsList.add(
-					new File(modulesDir, requiredModule));
-			}
+		if (testRelevantChanges) {
+			modifiedModuleDirsList.addAll(
+				getRequiredModuleDirs(
+					Lists.newArrayList(modifiedModuleDirsList)));
 		}
 
 		Matcher matcher = _singleModuleBatchNamePattern.matcher(batchName);

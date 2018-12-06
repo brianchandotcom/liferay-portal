@@ -28,32 +28,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MantaStoreConfiguration {
 
-	@Meta.AD(
-		description = "manta-url-help", name = "manta-url", required = true
-	)
+	@Meta.AD(description = "manta-url-help", name = "manta-url")
 	public String mantaURL();
 
-	@Meta.AD(
-		description = "manta-user-help", name = "manta-user", required = true
-	)
+	@Meta.AD(description = "manta-user-help", name = "manta-user")
 	public String mantaUser();
 
-	@Meta.AD(
-		description = "manta-key-id-help", name = "manta-key-id",
-		required = true
-	)
+	@Meta.AD(description = "manta-key-id-help", name = "manta-key-id")
 	public String mantaKeyId();
 
 	@Meta.AD(
-		description = "manta-key-store-path-help",
-		name = "manta-key-store-path", required = true
+		description = "manta-key-store-path-help", name = "manta-key-store-path"
 	)
 	public String mantaKeyStorePath();
 
-	@Meta.AD(
-		description = "manta-base-path-help", name = "manta-base-path",
-		required = true
-	)
+	@Meta.AD(description = "manta-base-path-help", name = "manta-base-path")
 	public String mantaBasePath();
 
 	@Meta.AD(

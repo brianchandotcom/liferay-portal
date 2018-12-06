@@ -14,14 +14,17 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Yi-Chen Tsai
@@ -63,11 +66,11 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		List<File> modifiedDirsList = null;
+		Set<File> modifiedDirsList = new HashSet<>();
 
 		try {
-			modifiedDirsList =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
+			modifiedDirsList.addAll(
+				portalGitWorkingDirectory.getModifiedModuleDirsList());
 		}
 		catch (IOException ioe) {
 			File workingDirectory =
@@ -89,6 +92,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				JenkinsResultsParserUtil.toPathMatchers(
 					null, modulesDir.getAbsolutePath()),
 				null));
+
+		modifiedDirsList.addAll(
+			getRequiredModuleDirs(Lists.newArrayList(modifiedDirsList)));
 
 		StringBuilder sb = new StringBuilder();
 

@@ -66,6 +66,14 @@ class Numeric extends Component {
 		placeholder: Config.string(),
 
 		/**
+		 * @instance
+		 * @memberof Numeric
+		 * @type {?(string)}
+		 */
+
+		predefinedValue: Config.string(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Numeric
@@ -154,16 +162,33 @@ class Numeric extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string()
+		value: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		_value: Config.string().internal().valueFn('_internalValueFn')
 	};
 
 	attached() {
 		this.applyMask();
 	}
 
-	willReceiveState(event) {
-		if (event.dataType && event.dataType.newVal) {
+	willReceiveState(changes) {
+		if (changes.dataType && changes.dataType.newVal) {
 			this.applyMask();
+		}
+
+		if (changes.value) {
+			this.setState(
+				{
+					_value: changes.value.newVal
+				}
+			);
 		}
 	}
 
@@ -224,6 +249,12 @@ class Numeric extends Component {
 				}
 			)
 		);
+	}
+
+	_internalValueFn() {
+		const {value} = this;
+
+		return value;
 	}
 }
 

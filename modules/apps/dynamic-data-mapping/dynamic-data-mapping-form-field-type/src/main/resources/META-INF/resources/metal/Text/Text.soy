@@ -3,6 +3,7 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
+	{@param? _value: string}
 	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? label: string}
@@ -15,7 +16,6 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param? value: string}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -27,7 +27,7 @@
 				{param placeholder: $placeholder /}
 				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
-				{param value: $value /}
+				{param value: $_value /}
 			{/call}
 		{/param}
 		{param id: $id /}

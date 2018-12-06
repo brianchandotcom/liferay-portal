@@ -58,7 +58,7 @@ class Text extends Component {
 		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
-		 */ 
+		 */
 
 		placeholder: Config.string(),
 
@@ -69,7 +69,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		predefinedValue: Config.string().value(""),
+		predefinedValue: Config.string().value(''),
 
 		/**
 		 * @default false
@@ -141,25 +141,49 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.internal().string().value("")
+		value: Config.string().value(''),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		_value: Config.string().internal().valueFn('_internalValueFn')
 	};
 
-	_handleFieldChanged(event) {
-		const value = event.target.value;
+	willReceiveState(changes) {
+		if (changes.value) {
+			this.setState(
+				{
+					_value: changes.value.newVal
+				}
+			);
+		}
+	}
 
+	_handleFieldChanged(event) {
 		this.setState(
 			{
-				value
-			},
-			() => this.emit(
-				'fieldEdited',
-				{
-					fieldInstance: this,
-					originalEvent: event,
-					value
-				}
-			)
+				value: event.target.value
+			}
 		);
+
+		this.emit(
+			'fieldEdited',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
+		);
+	}
+
+	_internalValueFn() {
+		const {value} = this;
+
+		return value;
 	}
 }
 

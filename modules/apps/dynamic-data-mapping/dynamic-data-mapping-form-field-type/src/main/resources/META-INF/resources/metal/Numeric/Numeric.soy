@@ -3,9 +3,11 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
+	{@param? _value: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
+	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
@@ -13,7 +15,6 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param? value: string}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -22,8 +23,9 @@
 				{param id: $id /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
-				{param value: $value /}
+				{param value: $_value /}
 			{/call}
 		{/param}
 		{param id: $id /}
@@ -42,6 +44,7 @@
 	{@param? _handleFieldChanged: any}
 	{@param? id: string}
 	{@param? placeholder: string}
+	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? value: string}
 
@@ -68,6 +71,8 @@
 
 		{if $value}
 			value="{$value}"
+		{elseif $predefinedValue}
+			value="{$predefinedValue}"
 		{else}
 			value=""
 		{/if}

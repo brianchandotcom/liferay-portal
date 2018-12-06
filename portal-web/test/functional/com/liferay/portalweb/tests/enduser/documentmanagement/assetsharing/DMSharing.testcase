@@ -81,6 +81,94 @@
 		</if>
 	</tear-down>
 
+	<command name="AssertNotifications" priority="4">
+		<description message="This test ensures that users receive a notification in portal when a document is shared to them. This test also asserts that users do not lose previous notifications even after the document is no longer shared." />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="viewableBy" value="Owner" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleTitle" value="Guest" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#sharePG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewNewSharedDocument">
+			<var name="assetSharingPermission" value="viewing" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentUploader" value="Test Test" />
+		</execute>
+
+		<execute macro="DMDocumentSharing#removeCollaborator">
+			<var name="collaboratorList" value="userfn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute macro="Notifications#viewNewSharedDocument">
+			<var name="assetSharingPermission" value="viewing" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="user" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="ManageCollaborators" priority="5">
 		<description message="This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. " />
 

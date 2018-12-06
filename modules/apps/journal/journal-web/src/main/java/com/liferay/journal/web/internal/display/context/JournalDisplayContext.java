@@ -785,11 +785,11 @@ public class JournalDisplayContext {
 
 		Map<String, String[]> parameters = new HashMap<>();
 
-		parameters.put(
-			"mvcPath", new String[] {"/preview_article_content.jsp"});
+		parameters.put("articleId", new String[] {article.getArticleId()});
 		parameters.put(
 			"groupId", new String[] {String.valueOf(article.getGroupId())});
-		parameters.put("articleId", new String[] {article.getArticleId()});
+		parameters.put(
+			"mvcPath", new String[] {"/preview_article_content.jsp"});
 		parameters.put(
 			"version", new String[] {String.valueOf(article.getVersion())});
 

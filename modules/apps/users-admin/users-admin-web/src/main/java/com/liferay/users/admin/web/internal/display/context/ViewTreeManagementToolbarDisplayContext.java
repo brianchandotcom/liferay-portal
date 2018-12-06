@@ -90,7 +90,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 							StringBundler.concat(
 								"javascript:", _renderResponse.getNamespace(),
 								"delete();"));
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

@@ -84,7 +84,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 							StringBundler.concat(
 								"javascript:", _renderResponse.getNamespace(),
 								"deleteOrganizations();"));
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

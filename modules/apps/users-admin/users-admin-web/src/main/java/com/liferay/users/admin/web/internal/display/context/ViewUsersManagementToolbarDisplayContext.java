@@ -97,9 +97,11 @@ public class ViewUsersManagementToolbarDisplayContext {
 								(UserSearchTerms)_userSearch.getSearchTerms();
 
 							String action = Constants.DELETE;
+							String icon = "times-circle";
 
 							if (userSearchTerms.isActive()) {
 								action = Constants.DEACTIVATE;
+								icon = "hidden";
 							}
 
 							dropdownItem.setHref(
@@ -107,7 +109,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 									"javascript:",
 									_renderResponse.getNamespace(),
 									"deleteUsers('", action, "');"));
-							dropdownItem.setIcon("hidden");
+							dropdownItem.setIcon(icon);
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, action));
 							dropdownItem.setQuickAction(true);

@@ -219,19 +219,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		JavaMethod activateMethod = _getActivateMethod(javaClass);
 
-		if (activateMethod == null) {
-			return annotation;
-		}
+		if (activateMethod != null) {
+			JavaSignature signature = activateMethod.getSignature();
 
-		JavaSignature signature = activateMethod.getSignature();
+			for (JavaParameter parameter : signature.getParameters()) {
+				String parameterType = parameter.getParameterType();
 
-		for (JavaParameter parameter : signature.getParameters()) {
-			String parameterType = parameter.getParameterType();
+				if (parameterType.equals("ComponentContext") ||
+					parameterType.startsWith("Map<")) {
 
-			if (parameterType.equals("ComponentContext") ||
-				parameterType.startsWith("Map<")) {
-
-				return annotation;
+					return annotation;
+				}
 			}
 		}
 

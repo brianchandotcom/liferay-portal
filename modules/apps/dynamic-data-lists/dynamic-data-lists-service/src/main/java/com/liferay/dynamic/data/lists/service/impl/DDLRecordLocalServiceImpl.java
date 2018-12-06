@@ -256,7 +256,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord addRecord(
-			long userId, long groupId, long ddlRecordSetId, long ddmStorageId,
+			long groupId, long userId, long ddmStorageId, long ddlRecordSetId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1068,7 +1068,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord updateRecord(
-			long userId, long ddlRecordId, long ddmStorageId,
+			long ddlRecordId, long userId, long ddmStorageId,
 			ServiceContext serviceContext)
 		throws PortalException {
 

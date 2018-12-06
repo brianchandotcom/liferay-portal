@@ -116,10 +116,10 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 			deDataDefinition.getDescription());
 
 		return ddmStructureLocalService.addStructure(
-			userId, groupId, classNameId,
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, null, nameMap,
-			descriptionMap, serialize(deDataDefinition),
-			deDataDefinition.getStorageType(), serviceContext);
+			groupId, userId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameId, null, nameMap, descriptionMap,
+			serialize(deDataDefinition), deDataDefinition.getStorageType(),
+			serviceContext);
 	}
 
 	protected Map<Locale, String> createLocalizedMap(Map<String, String> map) {
@@ -165,7 +165,7 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 			deDataDefinition.getDescription());
 
 		ddmStructureLocalService.updateStructure(
-			userId, deDataDefinition.getDataDefinitionId(),
+			deDataDefinition.getDataDefinitionId(), userId,
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}

@@ -118,6 +118,7 @@
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
 		<check name="JavaAggregateTestRuleParameterOrderCheck" />
+		<check name="JavaAnnotationDefaultAttributeCheck" />
 		<check name="JavaAnnotationsCheck" />
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />
@@ -176,7 +177,6 @@
 		<check name="JavaSeeAnnotationCheck" />
 		<check name="JavaServiceImplCheck" />
 		<check name="JavaSignatureStylingCheck" />
-		<check name="JavaSpringFrameworkAnnotationsCheck" />
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStaticImportsCheck" />
 		<check name="JavaStaticVariableDependencyCheck">

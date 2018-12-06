@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * @author Peter Shin
  * @author Hugo Huijser
  */
-public class JavaSpringFrameworkAnnotationsCheck extends JavaAnnotationsCheck {
+public class JavaAnnotationDefaultAttributeCheck extends JavaAnnotationsCheck {
 
 	@Override
 	protected String doProcess(

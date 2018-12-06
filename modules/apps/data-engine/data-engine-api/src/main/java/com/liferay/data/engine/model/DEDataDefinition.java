@@ -36,7 +36,19 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 	public DEDataDefinition(
 		List<DEDataDefinitionField> deDataDefinitionFields) {
 
-		_fields.addAll(deDataDefinitionFields);
+		_deDataDefinitionFields.addAll(deDataDefinitionFields);
+	}
+
+	public void addDEDataDefinitionField(
+		DEDataDefinitionField deDataDefinitionField) {
+
+		_deDataDefinitionFields.add(deDataDefinitionField);
+	}
+
+	public void addDEDataDefinitionFields(
+		List<DEDataDefinitionField> deDataDefinitionFields) {
+
+		_deDataDefinitionFields.addAll(deDataDefinitionFields);
 	}
 
 	public void addDescription(Locale locale, String description) {
@@ -48,14 +60,6 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 			_description.put(
 				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 		}
-	}
-
-	public void addField(DEDataDefinitionField field) {
-		_fields.add(field);
-	}
-
-	public void addFields(List<DEDataDefinitionField> fields) {
-		_fields.addAll(fields);
 	}
 
 	public void addName(Locale locale, String name) {
@@ -84,9 +88,11 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		if (Objects.equals(_name, deDataDefinition._name) &&
 			Objects.equals(_description, deDataDefinition._description) &&
 			Objects.equals(
-				_dataDefinitionId, deDataDefinition._dataDefinitionId) &&
+				_deDataDefinitionId, deDataDefinition._deDataDefinitionId) &&
 			Objects.equals(_storageType, deDataDefinition._storageType) &&
-			Objects.equals(_fields, deDataDefinition._fields)) {
+			Objects.equals(
+				_deDataDefinitionFields,
+				deDataDefinition._deDataDefinitionFields)) {
 
 			return true;
 		}
@@ -94,8 +100,12 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		return false;
 	}
 
-	public long getDataDefinitionId() {
-		return _dataDefinitionId;
+	public List<DEDataDefinitionField> getDEDataDefinitionFields() {
+		return _deDataDefinitionFields;
+	}
+
+	public long getDEDataDefinitionId() {
+		return _deDataDefinitionId;
 	}
 
 	public Map<String, String> getDescription() {
@@ -105,10 +115,6 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		throw new UnsupportedOperationException();
-	}
-
-	public List<DEDataDefinitionField> getFields() {
-		return _fields;
 	}
 
 	@Override
@@ -127,7 +133,7 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _dataDefinitionId;
+		return _deDataDefinitionId;
 	}
 
 	public String getStorageType() {
@@ -140,15 +146,25 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 
 		hash = HashUtil.hash(hash, _description.hashCode());
 
-		hash = HashUtil.hash(hash, _dataDefinitionId);
+		hash = HashUtil.hash(hash, _deDataDefinitionId);
 
 		hash = HashUtil.hash(hash, _storageType.hashCode());
 
-		return HashUtil.hash(hash, _fields.hashCode());
+		return HashUtil.hash(hash, _deDataDefinitionFields.hashCode());
 	}
 
-	public void setDataDefinitionId(long dataDefinitionId) {
-		_dataDefinitionId = dataDefinitionId;
+	public void setDEDataDefinitionFields(
+		List<DEDataDefinitionField> deDataDefinitionFields) {
+
+		_deDataDefinitionFields = deDataDefinitionFields;
+
+		if (_deDataDefinitionFields == null) {
+			_deDataDefinitionFields = new ArrayList<>();
+		}
+	}
+
+	public void setDEDataDefinitionId(long deDataDefinitionId) {
+		_deDataDefinitionId = deDataDefinitionId;
 	}
 
 	public void setDescription(Map<String, String> description) {
@@ -156,14 +172,6 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 
 		if (_description == null) {
 			_description = new HashMap<>();
-		}
-	}
-
-	public void setFields(List<DEDataDefinitionField> fields) {
-		_fields = fields;
-
-		if (_fields == null) {
-			_fields = new ArrayList<>();
 		}
 	}
 
@@ -177,16 +185,17 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dataDefinitionId = ((Long)primaryKeyObj).longValue();
+		_deDataDefinitionId = ((Long)primaryKeyObj).longValue();
 	}
 
 	public void setStorageType(String storageType) {
 		_storageType = storageType;
 	}
 
-	private long _dataDefinitionId;
+	private List<DEDataDefinitionField> _deDataDefinitionFields =
+		new ArrayList<>();
+	private long _deDataDefinitionId;
 	private Map<String, String> _description = new HashMap<>();
-	private List<DEDataDefinitionField> _fields = new ArrayList<>();
 	private Map<String, String> _name = new HashMap<>();
 	private String _storageType = "json";
 

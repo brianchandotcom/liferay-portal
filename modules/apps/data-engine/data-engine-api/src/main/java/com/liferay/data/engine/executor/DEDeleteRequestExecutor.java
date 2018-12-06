@@ -29,7 +29,7 @@ public interface DEDeleteRequestExecutor {
 		throws PortalException;
 
 	public DEDataDefinitionDeleteResponse executeDeleteRequest(
-			DEDataDefinitionDeleteRequest dataDefinitionDeleteRequest)
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
 		throws DEDataDefinitionException;
 
 }

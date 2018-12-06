@@ -92,7 +92,7 @@ public class DEDataDefinitionGetRequestExecutorImpl
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			deDataDefinitionFields);
 
-		deDataDefinition.setDataDefinitionId(ddmStructure.getStructureId());
+		deDataDefinition.setDEDataDefinitionId(ddmStructure.getStructureId());
 		deDataDefinition.addDescriptions(ddmStructure.getDescriptionMap());
 		deDataDefinition.addNames(ddmStructure.getNameMap());
 		deDataDefinition.setStorageType(ddmStructure.getStorageType());

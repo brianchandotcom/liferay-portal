@@ -1,6 +1,8 @@
 import {Config} from 'metal-state';
+import {debounce} from 'metal-debounce';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
+import {formatFieldName} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
@@ -9,7 +11,6 @@ import dom from 'metal-dom';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
-import {formatFieldName} from '../../util/fieldSupport.es';
 
 /**
  * Builder.
@@ -211,6 +212,54 @@ class Builder extends Component {
 		this.emit('pageAdded');
 	}
 
+	_processFieldUpdates(fieldInstance, value) {
+		const {focusedField, namespace} = this.props;
+		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
+		const properties = {columnIndex,
+			pageIndex,
+			rowIndex};
+		const {fieldName, initialConfig_: {locale}} = fieldInstance;
+
+		if (fieldName === 'name') {
+			properties[fieldName] = formatFieldName(instanceId, locale, value);
+			properties.fieldName = value;
+		}
+		else {
+			properties[fieldName] = value;
+		}
+
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+
+		properties.settingsContext = {
+			...settingsContext,
+			columnIndex,
+			pageIndex,
+			pages: visitor.mapFields(
+				field => {
+					if (field.fieldName === fieldName) {
+						field = {
+							...field,
+							value
+						};
+						if (field.localizable) {
+							field.localizedValue = {
+								...field.localizedValue,
+								[translationManager.get('editingLocale')]: value
+							};
+						}
+					}
+
+					return field;
+				}
+			),
+			rowIndex
+		};
+
+		this.emit('fieldEdited', properties);
+	}
+
 	rendered() {
 		const {sidebar} = this.refs;
 
@@ -273,55 +322,7 @@ class Builder extends Component {
 	 */
 
 	_handleFieldEdited({fieldInstance, value}) {
-		const {focusedField, namespace} = this.props;
-		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
-		const properties = {columnIndex,
-			pageIndex,
-			rowIndex};
-		const {fieldName, initialConfig_: {locale}} = fieldInstance;
-
-		if (fieldName === 'name') {
-			properties[fieldName] = formatFieldName(instanceId, locale, value);
-			properties.fieldName = value;
-		}
-		else {
-			properties[fieldName] = value;
-		}
-
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-
-		properties.settingsContext = {
-			...settingsContext,
-			columnIndex,
-			pageIndex,
-			pages: visitor.mapFields(
-				field => {
-					if (field.fieldName === fieldName) {
-						field = {
-							...field,
-							value
-						};
-						if (field.localizable) {
-							field.localizedValue = {
-								...field.localizedValue,
-								[translationManager.get('editingLocale')]: value
-							};
-						}
-					}
-
-					return field;
-				}
-			),
-			rowIndex
-		};
-
-		if (fieldName === 'predefinedValue') {
-			properties.value = value;
-		}
-
-		this.emit('fieldEdited', properties);
+		this._processFieldUpdates(fieldInstance, value);
 	}
 
 	_handleActivePageUpdated(activePage) {
@@ -369,6 +370,7 @@ class Builder extends Component {
 				openSidebar = true;
 			}
 		}
+
 		if (
 			changes.pages &&
 			changes.pages.prevVal &&
@@ -486,6 +488,8 @@ class Builder extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
+
+		this._processFieldUpdates = debounce(this._processFieldUpdates.bind(this), 100);
 	}
 
 	/**

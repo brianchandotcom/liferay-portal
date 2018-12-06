@@ -157,9 +157,7 @@ public class PortalRequestProcessor {
 
 		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
-		if ((actionMapping == null) &&
-			(StrutsActionRegistryUtil.getAction(path) == null)) {
-
+		if (actionMapping == null) {
 			String lastPath = _getLastPath(request);
 
 			if (_log.isDebugEnabled()) {
@@ -467,12 +465,6 @@ public class PortalRequestProcessor {
 
 		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
-		if ((StrutsActionRegistryUtil.getAction(path) != null) &&
-			(actionMapping == null)) {
-
-			actionMapping = new ActionMapping(_moduleConfig, null, path, null);
-		}
-
 		if (!_processRoles(request, response, actionMapping)) {
 			return;
 		}
@@ -481,7 +473,7 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		Action action = _processActionCreate(actionMapping);
+		Action action = actionMapping.getAction();
 
 		try {
 			ActionForward actionForward = action.execute(
@@ -498,22 +490,6 @@ public class PortalRequestProcessor {
 		catch (Exception e) {
 			throw new ServletException(e);
 		}
-	}
-
-	private Action _processActionCreate(ActionMapping actionMapping) {
-		Action action = actionMapping.getAction();
-
-		ActionAdapter actionAdapter =
-			(ActionAdapter)StrutsActionRegistryUtil.getAction(
-				actionMapping.getPath());
-
-		if (actionAdapter != null) {
-			actionAdapter.setOriginalAction(action);
-
-			return actionAdapter;
-		}
-
-		return action;
 	}
 
 	private boolean _processForward(

@@ -677,13 +677,6 @@ public class LicenseUtil {
 				if (sigar != null) {
 					sigar.close();
 				}
-
-				try {
-					SigarNativeLoader.unload();
-				}
-				catch (Exception e) {
-					throw new ProcessException(e);
-				}
 			}
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.portal.license.sigar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -24,11 +23,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
-import java.util.Vector;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarLoader;
@@ -40,14 +34,6 @@ import org.hyperic.sigar.SigarLoader;
 public class SigarNativeLoader {
 
 	public static synchronized void load() throws Exception {
-		if (_isNativeLibraryLoaded()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Sigar native library is already loaded");
-			}
-
-			return;
-		}
-
 		File targetDirectory = _getTargetDirectory();
 
 		if (!targetDirectory.exists()) {
@@ -86,49 +72,6 @@ public class SigarNativeLoader {
 		}
 	}
 
-	public static void unload() throws Exception {
-		Field nativeLibrariesField = ClassLoader.class.getDeclaredField(
-			"nativeLibraries");
-
-		nativeLibrariesField.setAccessible(true);
-
-		Vector<?> nativeLibraries = (Vector<?>)nativeLibrariesField.get(
-			SigarNativeLoader.class.getClassLoader());
-
-		SigarLoader sigarLoader = new SigarLoader(Sigar.class);
-
-		String libraryName = sigarLoader.getLibraryName();
-
-		for (Object nativeLibrary : nativeLibraries) {
-			Class<?> nativeLibraryClass = nativeLibrary.getClass();
-
-			Field nameField = nativeLibraryClass.getDeclaredField("name");
-
-			nameField.setAccessible(true);
-
-			File file = new File((String)nameField.get(nativeLibrary));
-
-			String name = file.getName();
-
-			if (name.contains(libraryName)) {
-				Method finalizeMethod = nativeLibraryClass.getDeclaredMethod(
-					"finalize");
-
-				finalizeMethod.setAccessible(true);
-
-				finalizeMethod.invoke(nativeLibrary);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Sigar native library " + libraryName +
-							" has been unloaded");
-				}
-			}
-		}
-
-		FileUtil.deltree(_getTargetDirectory());
-	}
-
 	private static void _copy(
 			InputStream inputStream, OutputStream outputStream)
 		throws Exception {
@@ -158,44 +101,6 @@ public class SigarNativeLoader {
 		sb.append("sigar");
 
 		return new File(sb.toString());
-	}
-
-	@SuppressWarnings("unchecked")
-	private static synchronized boolean _isNativeLibraryLoaded() {
-		try {
-			Field loadedLibraryNamesField = ClassLoader.class.getDeclaredField(
-				"loadedLibraryNames");
-
-			loadedLibraryNamesField.setAccessible(true);
-
-			Vector<String> libraryNames =
-				(Vector<String>)loadedLibraryNamesField.get(
-					SigarNativeLoader.class.getClassLoader());
-
-			SigarLoader sigarLoader = new SigarLoader(Sigar.class);
-
-			for (String libraryName : libraryNames) {
-				if (libraryName.contains(sigarLoader.getLibraryName())) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-		catch (Throwable t) {
-			try {
-				Sigar sigar = new Sigar();
-
-				sigar.getPid();
-
-				sigar.close();
-
-				return true;
-			}
-			catch (Throwable t1) {
-				return false;
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

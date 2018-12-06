@@ -47,7 +47,7 @@ exports[`Validation should render parameter field with Numeric element 2`] = `
 <div class="form-group lfr-ddm-form-field-validation">
   <div class="form-group">
     <label class="ddm-toggle-switch toggle-switch">
-      <input class="toggle-switch-check" type="checkbox">
+      <input class="toggle-switch-check" type="checkbox" checked="">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
         <span class="toggle-switch-text toggle-switch-text-right">Validator</span>
@@ -58,7 +58,7 @@ exports[`Validation should render parameter field with Numeric element 2`] = `
     <label>if-input </label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
-        <div class="option-selected">choose-an-option</div>
+        <div class="option-selected">is-greater-than-or-equal-to</div>
         <a class="select-arrow-down-container" href="javascript:;">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
             <title>caret-double</title>
@@ -92,7 +92,7 @@ exports[`Validation should render parameter field with TextField element 2`] = `
 <div class="form-group lfr-ddm-form-field-validation">
   <div class="form-group">
     <label class="ddm-toggle-switch toggle-switch">
-      <input class="toggle-switch-check" type="checkbox">
+      <input class="toggle-switch-check" type="checkbox" checked="">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
         <span class="toggle-switch-text toggle-switch-text-right">Validator</span>
@@ -103,7 +103,7 @@ exports[`Validation should render parameter field with TextField element 2`] = `
     <label>if-input </label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
-        <div class="option-selected">choose-an-option</div>
+        <div class="option-selected">contains</div>
         <a class="select-arrow-down-container" href="javascript:;">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
             <title>caret-double</title>

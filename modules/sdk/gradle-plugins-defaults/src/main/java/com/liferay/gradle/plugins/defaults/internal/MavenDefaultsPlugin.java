@@ -107,7 +107,9 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 				File releaseRelengDir = LiferayRelengPlugin.getRelengDir(
 					releaseProjectDir);
 
-				if ((relengDir == null) && releaseRelengDir.isDirectory()) {
+				if ((relengDir == null) && (releaseRelengDir != null) &&
+					releaseRelengDir.isDirectory()) {
+
 					throw new GradleException(
 						"Please run this task from " + releaseProjectDir +
 							" instead");

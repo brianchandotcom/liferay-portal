@@ -51,6 +51,16 @@ public class JavaAnnotationDefaultAttributeCheck extends JavaAnnotationsCheck {
 		annotation = _formatDefaultAttribute(annotation);
 
 		annotation = _formatDefaultValue(
+			annotation, javaClass, "aQute.bnd.annotation.metatype", "Meta.AD",
+			"cardinality", "0");
+		annotation = _formatDefaultValue(
+			annotation, javaClass, "aQute.bnd.annotation.metatype", "Meta.AD",
+			"required", "true");
+		annotation = _formatDefaultValue(
+			annotation, javaClass, "aQute.bnd.annotation.metatype", "Meta.OCD",
+			"factory", "false");
+
+		annotation = _formatDefaultValue(
 			annotation, javaClass, "org.springframework.web.bind.annotation",
 			"DeleteMapping");
 		annotation = _formatDefaultValue(

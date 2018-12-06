@@ -28,51 +28,34 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface JCRStoreConfiguration {
 
-	@Meta.AD(deflt = "false", name = "initialize-on-startup", required = true)
+	@Meta.AD(deflt = "false", name = "initialize-on-startup")
 	public boolean initializeOnStartup();
 
-	@Meta.AD(deflt = "true", name = "wrap-session", required = true)
+	@Meta.AD(deflt = "true", name = "wrap-session")
 	public boolean wrapSession();
 
-	@Meta.AD(deflt = "false", name = "move-version-labels", required = true)
+	@Meta.AD(deflt = "false", name = "move-version-labels")
 	public boolean moveVersionLabels();
 
-	@Meta.AD(deflt = "liferay", name = "workspace-name", required = true)
+	@Meta.AD(deflt = "liferay", name = "workspace-name")
 	public String workspaceName();
 
-	@Meta.AD(
-		deflt = "documentlibrary", name = "node-documentlibrary",
-		required = true
-	)
+	@Meta.AD(deflt = "documentlibrary", name = "node-documentlibrary")
 	public String nodeDocumentlibrary();
 
-	@Meta.AD(
-		deflt = "data/jackrabbit", name = "jackrabbit-repository-root",
-		required = true
-	)
+	@Meta.AD(deflt = "data/jackrabbit", name = "jackrabbit-repository-root")
 	public String jackrabbitRepositoryRoot();
 
-	@Meta.AD(
-		deflt = "repository.xml", name = "jackrabbit-config-file-path",
-		required = true
-	)
+	@Meta.AD(deflt = "repository.xml", name = "jackrabbit-config-file-path")
 	public String jackrabbitConfigFilePath();
 
-	@Meta.AD(
-		deflt = "home", name = "jackrabbit-repository-home", required = true
-	)
+	@Meta.AD(deflt = "home", name = "jackrabbit-repository-home")
 	public String jackrabbitRepositoryHome();
 
-	@Meta.AD(
-		deflt = "none", name = "jackrabbit-credentials-username",
-		required = true
-	)
+	@Meta.AD(deflt = "none", name = "jackrabbit-credentials-username")
 	public String jackrabbitCredentialsUsername();
 
-	@Meta.AD(
-		deflt = "none", name = "jackrabbit-credentials-password",
-		required = true
-	)
+	@Meta.AD(deflt = "none", name = "jackrabbit-credentials-password")
 	public String jackrabbitCredentialsPassword();
 
 }

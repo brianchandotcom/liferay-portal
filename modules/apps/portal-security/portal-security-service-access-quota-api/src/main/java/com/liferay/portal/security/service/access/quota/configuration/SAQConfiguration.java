@@ -40,15 +40,11 @@ public interface SAQConfiguration {
 	)
 	public String serviceSignature();
 
-	@Meta.AD(
-		deflt = "60", min = "1", name = "saq-configuration-service-max",
-		required = true
-	)
+	@Meta.AD(deflt = "60", min = "1", name = "saq-configuration-service-max")
 	public int max();
 
 	@Meta.AD(
-		deflt = "60000", name = "saq-configuration-service-interval-millis",
-		required = true
+		deflt = "60000", name = "saq-configuration-service-interval-millis"
 	)
 	public long intervalMillis();
 

@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DestinationWorkerConfiguration {
 
-	@Meta.AD(deflt = "", name = "destination-name", required = true)
+	@Meta.AD(deflt = "", name = "destination-name")
 	public String destinationName();
 
 	@Meta.AD(

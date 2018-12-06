@@ -52,7 +52,7 @@ public interface OpenIdConnectProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "openid email profile", description = "scopes-help",
-		name = "scopes", required = true
+		name = "scopes"
 	)
 	public String scopes();
 

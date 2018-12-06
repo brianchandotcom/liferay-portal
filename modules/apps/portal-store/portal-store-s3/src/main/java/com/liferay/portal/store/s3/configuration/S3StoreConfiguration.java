@@ -38,9 +38,7 @@ public interface S3StoreConfiguration {
 	)
 	public String secretKey();
 
-	@Meta.AD(
-		description = "bucket-name-help", name = "bucket-name", required = true
-	)
+	@Meta.AD(description = "bucket-name-help", name = "bucket-name")
 	public String bucketName();
 
 	@Meta.AD(

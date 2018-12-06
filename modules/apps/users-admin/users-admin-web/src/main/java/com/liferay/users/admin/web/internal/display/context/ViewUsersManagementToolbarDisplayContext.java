@@ -107,7 +107,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 									"javascript:",
 									_renderResponse.getNamespace(),
 									"deleteUsers('", action, "');"));
-							dropdownItem.setIcon("trash");
+							dropdownItem.setIcon("hidden");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, action));
 							dropdownItem.setQuickAction(true);

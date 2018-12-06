@@ -53,18 +53,6 @@
 		</execute>
 	</command>
 
-	<command name="addEntryExternalURL">
-		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
-		</execute>
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
-
-		<execute function="Type" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT" value1="${entryExternalURL}" />
-
-		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM" />
-	</command>
-
 	<command name="addEntryExternalLinkViaBrowseButton">
 		<if>
 			<isset var="entryContent" />
@@ -90,6 +78,18 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
+	</command>
+
+	<command name="addEntryExternalURL">
+		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK" />
+
+		<execute function="Type" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT" value1="${entryExternalURL}" />
+
+		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM" />
 	</command>
 
 	<command name="addRelatedAsset">

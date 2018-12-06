@@ -81,7 +81,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			<ModelSearchConfigurator, ModelSearchConfigurator> {
 
 	@Override
-	@SuppressWarnings(value = "unchecked")
+	@SuppressWarnings("unchecked")
 	public ModelSearchConfigurator addingService(
 		ServiceReference<ModelSearchConfigurator> serviceReference) {
 

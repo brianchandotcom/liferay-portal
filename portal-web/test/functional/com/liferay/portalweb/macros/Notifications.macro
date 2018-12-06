@@ -149,6 +149,10 @@
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
+	<command name="viewNewSharedDocument">
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="${user} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}." />
+	</command>
+	
 	<command name="viewNoNotificationEntry">
 		<execute function="AssertElementNotPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
 		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT_GENERIC" />

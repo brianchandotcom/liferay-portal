@@ -88,9 +88,9 @@
 		<description message="This is a use case for LPS-50557." />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">

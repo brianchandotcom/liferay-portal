@@ -49,13 +49,13 @@
 
 	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
+			<var name="navItem" value="Configuration" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
@@ -414,9 +414,9 @@
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -425,9 +425,9 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#viewDefinition">
@@ -627,9 +627,9 @@
 		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#AddWebContentWithCategorySpecificDefinition" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -1037,9 +1037,9 @@
 		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#UnpublishAndDeleteUploadedDefinition" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -1056,9 +1056,9 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#viewDefinitionUnpublished">
@@ -1076,9 +1076,9 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#unpublishWorkflowDefinition">
@@ -1086,9 +1086,9 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#viewDefinitionUnpublished">
@@ -1209,9 +1209,9 @@
 		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#ViewInvalidDefinitionAlert" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
@@ -1300,9 +1300,9 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1428,13 +1428,13 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
+			<var name="navItem" value="Configuration" />
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
@@ -1495,13 +1495,13 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Schemes" />
+			<var name="navItem" value="Configuration" />
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">

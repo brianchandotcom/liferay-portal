@@ -20,6 +20,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoConfiguration">
+		<execute macro="NavItem#click">
+			<var name="navItem" value="Configuration" />
+		</execute>
+	</command>
+
 	<command name="gotoDisplayPages">
 		<execute macro="NavItem#click">
 			<var name="navItem" value="Display Pages" />
@@ -41,12 +47,6 @@
 	<command name="gotoPageTemplates">
 		<execute macro="NavItem#click">
 			<var name="navItem" value="Page Templates" />
-		</execute>
-	</command>
-
-	<command name="gotoSchemes">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Schemes" />
 		</execute>
 	</command>
 

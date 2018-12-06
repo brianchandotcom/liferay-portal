@@ -15,9 +15,9 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#gotoEditWorkflowDefinition">
@@ -52,9 +52,9 @@
 		<execute macro="PortletEntry#update" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
+			<var name="portlet" value="Process Builder" />
 		</execute>
 
 		<execute macro="Workflow#viewDefinitionPublished">

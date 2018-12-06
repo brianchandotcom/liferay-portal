@@ -439,13 +439,9 @@
 		<execute macro="User#deleteCP" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
+			<var name="category" value="Workflow" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Monitoring" />
+			<var name="portlet" value="Submissions" />
 		</execute>
 
 		<execute macro="Workflow#withdrawTaskByActions">

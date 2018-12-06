@@ -50,7 +50,7 @@ public class DEDataDefinitionModelResourcePermission
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker,
 				DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
-				deDataDefinition.getDataDefinitionId(), actionId);
+				deDataDefinition.getDEDataDefinitionId(), actionId);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class DEDataDefinitionModelResourcePermission
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			Collections.emptyList());
 
-		deDataDefinition.setDataDefinitionId(primaryKey);
+		deDataDefinition.setDEDataDefinitionId(primaryKey);
 
 		check(permissionChecker, deDataDefinition, actionId);
 	}
@@ -75,11 +75,11 @@ public class DEDataDefinitionModelResourcePermission
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			deDataDefinition.getDataDefinitionId());
+			deDataDefinition.getDEDataDefinitionId());
 
 		if (permissionChecker.hasOwnerPermission(
 				ddmStructure.getCompanyId(), DEDataDefinition.class.getName(),
-				deDataDefinition.getDataDefinitionId(),
+				deDataDefinition.getDEDataDefinitionId(),
 				ddmStructure.getUserId(), actionId)) {
 
 			return true;
@@ -87,7 +87,7 @@ public class DEDataDefinitionModelResourcePermission
 
 		return permissionChecker.hasPermission(
 			ddmStructure.getGroupId(), DEDataDefinition.class.getName(),
-			deDataDefinition.getDataDefinitionId(), actionId);
+			deDataDefinition.getDEDataDefinitionId(), actionId);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class DEDataDefinitionModelResourcePermission
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			Collections.emptyList());
 
-		deDataDefinition.setDataDefinitionId(primaryKey);
+		deDataDefinition.setDEDataDefinitionId(primaryKey);
 
 		return contains(permissionChecker, deDataDefinition, actionId);
 	}

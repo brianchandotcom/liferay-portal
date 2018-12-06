@@ -262,7 +262,7 @@ public class DDMStructureLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructure addStructure(
-			long userId, long groupId, long classNameId, long parentStructureId,
+			long groupId, long userId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String definition,
 			String storageType, ServiceContext serviceContext)
@@ -293,8 +293,8 @@ public class DDMStructureLocalServiceImpl
 		ddmStructure.setClassNameId(classNameId);
 		ddmStructure.setStructureKey(structureKey);
 		ddmStructure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
-		ddmStructure.setDescriptionMap(descriptionMap);
 		ddmStructure.setNameMap(nameMap);
+		ddmStructure.setDescriptionMap(descriptionMap);
 		ddmStructure.setDefinition(definition);
 		ddmStructure.setStorageType(storageType);
 		ddmStructure.setType(DDMStructureConstants.TYPE_DEFAULT);
@@ -1514,7 +1514,7 @@ public class DDMStructureLocalServiceImpl
 
 	@Override
 	public DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
+			long structureId, long userId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String definition, ServiceContext serviceContext)
 		throws PortalException {

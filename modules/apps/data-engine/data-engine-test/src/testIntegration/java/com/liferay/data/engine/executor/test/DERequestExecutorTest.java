@@ -391,7 +391,7 @@ public class DERequestExecutorTest {
 			expectedDEDataDefinition = new DEDataDefinition(
 				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
 
-			expectedDEDataDefinition.setDataDefinitionId(deDataDefinitionId);
+			expectedDEDataDefinition.setDEDataDefinitionId(deDataDefinitionId);
 			expectedDEDataDefinition.addName(LocaleUtil.US, "Story");
 			expectedDEDataDefinition.addName(LocaleUtil.BRAZIL, "Estória");
 			expectedDEDataDefinition.setStorageType("json");

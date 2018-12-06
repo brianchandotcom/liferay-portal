@@ -141,11 +141,11 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
-		long userId, long groupId, long ddlRecordSetId, long ddmStorageId,
+		long groupId, long userId, long ddmStorageId, long ddlRecordSetId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addRecord(userId, groupId, ddlRecordSetId, ddmStorageId,
+				   .addRecord(groupId, userId, ddmStorageId, ddlRecordSetId,
 			serviceContext);
 	}
 
@@ -889,11 +889,11 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
-		long userId, long ddlRecordId, long ddmStorageId,
+		long ddlRecordId, long userId, long ddmStorageId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateRecord(userId, ddlRecordId, ddmStorageId,
+				   .updateRecord(ddlRecordId, userId, ddmStorageId,
 			serviceContext);
 	}
 

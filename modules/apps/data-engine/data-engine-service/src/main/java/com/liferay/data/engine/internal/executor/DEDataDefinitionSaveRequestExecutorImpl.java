@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = DEDataDefinitionSaveRequestExecutor.class
 )
-public class DEDetaDefinitionSaveRequestExecutorImpl
+public class DEDataDefinitionSaveRequestExecutorImpl
 	implements DEDataDefinitionSaveRequestExecutor {
 
 	@Override
@@ -69,7 +69,7 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionSaveRequest.getDEDataDefinition();
 
-			long deDataDefinitionId = deDataDefinition.getDataDefinitionId();
+			long deDataDefinitionId = deDataDefinition.getDEDataDefinitionId();
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -116,10 +116,10 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 			deDataDefinition.getDescription());
 
 		return ddmStructureLocalService.addStructure(
-			userId, groupId, classNameId,
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, null, nameMap,
-			descriptionMap, serialize(deDataDefinition),
-			deDataDefinition.getStorageType(), serviceContext);
+			groupId, userId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameId, null, nameMap, descriptionMap,
+			serialize(deDataDefinition), deDataDefinition.getStorageType(),
+			serviceContext);
 	}
 
 	protected Map<Locale, String> createLocalizedMap(Map<String, String> map) {
@@ -143,7 +143,7 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 		DEDataDefinitionFieldsSerializerApplyRequest
 			deDataDefinitionFieldsSerializerApplyRequest =
 				DEDataDefinitionFieldsSerializerApplyRequest.Builder.of(
-					deDataDefinition.getFields());
+					deDataDefinition.getDEDataDefinitionFields());
 
 		DEDataDefinitionFieldsSerializerApplyResponse
 			deDataDefinitionFieldsSerializerApplyResponse =
@@ -165,7 +165,7 @@ public class DEDetaDefinitionSaveRequestExecutorImpl
 			deDataDefinition.getDescription());
 
 		ddmStructureLocalService.updateStructure(
-			userId, deDataDefinition.getDataDefinitionId(),
+			deDataDefinition.getDEDataDefinitionId(), userId,
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}

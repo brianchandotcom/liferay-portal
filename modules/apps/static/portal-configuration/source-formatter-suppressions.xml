@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="modules/apps/static/portal-configuration/portal-configuration-metatype-api/src/test/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtilTest\.java" />
+	</source-check>
+</suppressions>

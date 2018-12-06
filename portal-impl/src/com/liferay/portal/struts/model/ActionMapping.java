@@ -14,6 +14,8 @@
 
 package com.liferay.portal.struts.model;
 
+import com.liferay.portal.struts.Action;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,16 +25,20 @@ import java.util.Map;
 public class ActionMapping {
 
 	public ActionMapping(
-		ModuleConfig moduleConfig, String forward, String path, String type) {
+		ModuleConfig moduleConfig, String forward, String path, Action action) {
 
 		_moduleConfig = moduleConfig;
 		_forward = forward;
 		_path = path;
-		_type = type;
+		_action = action;
 	}
 
 	public void addActionForward(ActionForward actionForward) {
 		_actionForwards.put(actionForward.getName(), actionForward);
+	}
+
+	public Action getAction() {
+		return _action;
 	}
 
 	public ActionForward getActionForward(String name) {
@@ -53,14 +59,10 @@ public class ActionMapping {
 		return _path;
 	}
 
-	public String getType() {
-		return _type;
-	}
-
+	private final Action _action;
 	private final Map<String, ActionForward> _actionForwards = new HashMap<>();
 	private final String _forward;
 	private final ModuleConfig _moduleConfig;
 	private final String _path;
-	private final String _type;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
@@ -79,7 +78,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -419,31 +417,6 @@ public class PortalRequestProcessor {
 		return lastPathSB.toString();
 	}
 
-	private Action _getOriginalAction(ActionMapping actionMapping) {
-		String type = actionMapping.getType();
-
-		if (type == null) {
-			return null;
-		}
-
-		ClassLoader classLoader = PortalRequestProcessor.class.getClassLoader();
-
-		return _actions.computeIfAbsent(
-			type,
-			classNameKey -> {
-				try {
-					Class<? extends Action> clazz =
-						(Class<? extends Action>)classLoader.loadClass(
-							classNameKey);
-
-					return clazz.newInstance();
-				}
-				catch (ReflectiveOperationException roe) {
-					return ReflectionUtil.throwException(roe);
-				}
-			});
-	}
-
 	private void _internalModuleRelativeForward(
 			String uri, HttpServletRequest request,
 			HttpServletResponse response)
@@ -532,7 +505,7 @@ public class PortalRequestProcessor {
 	}
 
 	private Action _processActionCreate(ActionMapping actionMapping) {
-		Action action = _getOriginalAction(actionMapping);
+		Action action = actionMapping.getAction();
 
 		ActionAdapter actionAdapter =
 			(ActionAdapter)StrutsActionRegistryUtil.getAction(
@@ -1036,7 +1009,6 @@ public class PortalRequestProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
-	private final Map<String, Action> _actions = new ConcurrentHashMap<>();
 	private final Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
 	private final ModuleConfig _moduleConfig;

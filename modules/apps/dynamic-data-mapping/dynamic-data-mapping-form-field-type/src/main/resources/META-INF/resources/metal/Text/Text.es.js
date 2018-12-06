@@ -58,9 +58,18 @@ class Text extends Component {
 		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
-		 */
+		 */ 
 
 		placeholder: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		predefinedValue: Config.string().value(""),
 
 		/**
 		 * @default false
@@ -132,7 +141,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.internal().string()
+		value: Config.internal().string().value("")
 	};
 
 	_handleFieldChanged(event) {

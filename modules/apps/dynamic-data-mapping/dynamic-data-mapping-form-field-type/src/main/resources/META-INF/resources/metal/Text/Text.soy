@@ -7,6 +7,7 @@
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
+	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
@@ -24,6 +25,7 @@
 				{param id: $id /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
 				{param value: $value /}
 			{/call}
@@ -45,6 +47,7 @@
 	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? placeholder: string}
+	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? value: string}
 
@@ -72,7 +75,7 @@
 		{if $value}
 			value="{$value}"
 		{else}
-			value=""
+			value="{$predefinedValue}"
 		{/if}
 	{/let}
 

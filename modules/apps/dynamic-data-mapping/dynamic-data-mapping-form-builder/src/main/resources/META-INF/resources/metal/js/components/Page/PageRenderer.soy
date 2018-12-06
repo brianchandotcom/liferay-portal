@@ -312,6 +312,7 @@
 					{param events: [
 						'fieldEdited': $_handleFieldEdited
 					] /}
+					{param ref: $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			{/for}
@@ -357,10 +358,9 @@
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 						{param readOnly: true  /}
 						{param events: [
-							'visibleChanged': $_handleFieldEdited,
 							'fieldEdited': $_handleFieldEdited
 						] /}
-						{param ref: 'field' /}
+						{param ref: $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
 						{param spritemap: $spritemap /}
 					{/delcall}
 				{/for}

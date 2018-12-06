@@ -21,5 +21,4 @@ import com.liferay.change.tracking.engine.service.base.CTECollectionLocalService
  */
 public class CTECollectionLocalServiceImpl
 	extends CTECollectionLocalServiceBaseImpl {
-
 }

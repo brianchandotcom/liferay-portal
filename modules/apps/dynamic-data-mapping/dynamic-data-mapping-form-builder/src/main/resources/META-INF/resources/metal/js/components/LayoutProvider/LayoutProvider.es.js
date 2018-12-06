@@ -110,7 +110,18 @@ class LayoutProvider extends Component {
 	};
 
 	_pagesValueFn() {
-		return this.props.initialPages;
+		const visitor = new PagesVisitor(this.props.initialPages);
+
+		return visitor.mapFields(
+			field => {
+				const newField = {...field};
+
+				delete newField.localizedValue;
+				delete newField.value;
+
+				return newField;
+			}
+		);
 	}
 
 	_paginationModeValueFn() {

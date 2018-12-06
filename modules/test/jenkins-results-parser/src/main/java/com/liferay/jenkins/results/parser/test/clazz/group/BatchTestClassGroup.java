@@ -28,10 +28,12 @@ import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -241,6 +243,49 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return JenkinsResultsParserUtil.toPathMatchers(
 			workingDirectory.getAbsolutePath() + File.separator,
 			JenkinsResultsParserUtil.getGlobsFromProperty(relativeGlobs));
+	}
+
+	protected List<File> getRequiredModuleDirs(List<File> moduleDirs) {
+		Set<File> requiredModuleDirs = new HashSet<>(moduleDirs);
+
+		File modulesBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+		for (File moduleDir : moduleDirs) {
+			Properties moduleDirTestProperties =
+				JenkinsResultsParserUtil.getProperties(
+					new File(moduleDir, "test.properties"));
+
+			String requiredModuleDirPaths = moduleDirTestProperties.getProperty(
+				"modules.includes.required[" + testSuiteName + "]");
+
+			if (requiredModuleDirPaths == null) {
+				continue;
+			}
+
+			for (String requiredModuleDirPath :
+					requiredModuleDirPaths.split(",")) {
+
+				File requiredModuleDir = new File(
+					modulesBaseDir, requiredModuleDirPath);
+
+				if (!requiredModuleDir.exists()) {
+					continue;
+				}
+
+				if (requiredModuleDirs.contains(requiredModuleDir)) {
+					continue;
+				}
+
+				requiredModuleDirs.add(requiredModuleDir);
+
+				requiredModuleDirs.addAll(
+					getRequiredModuleDirs(
+						Lists.newArrayList(requiredModuleDirs)));
+			}
+		}
+
+		return Lists.newArrayList(requiredModuleDirs);
 	}
 
 	protected void setAxisTestClassGroups() {

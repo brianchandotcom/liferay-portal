@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
-
 import org.dom4j.Element;
 
 /**
@@ -25,10 +23,6 @@ public class GenericFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
-		return getMessageElement(build.getConsoleText());
-	}
-
 	public Element getMessageElement(String consoleText) {
 		Element message = getExceptionSnippetElement(consoleText);
 

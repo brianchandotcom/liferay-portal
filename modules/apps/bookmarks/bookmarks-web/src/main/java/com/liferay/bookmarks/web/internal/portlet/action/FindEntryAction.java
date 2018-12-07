@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = "path=/bookmarks/find_entry", service = StrutsAction.class
 )
-public class FindEntryAction extends BaseStrutsAction {
+public class FindEntryAction implements StrutsAction {
 
 	@Override
 	public String execute(

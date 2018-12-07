@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/portal/wedeploy/access_token",
 	service = StrutsAction.class
 )
-public class WeDeployAccessTokenAction extends BaseStrutsAction {
+public class WeDeployAccessTokenAction implements StrutsAction {
 
 	@Override
 	public String execute(

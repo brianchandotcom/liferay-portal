@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "path=/document_library/get_file",
 	service = StrutsAction.class
 )
-public class GetFileStrutsAction extends BaseStrutsAction {
+public class GetFileStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

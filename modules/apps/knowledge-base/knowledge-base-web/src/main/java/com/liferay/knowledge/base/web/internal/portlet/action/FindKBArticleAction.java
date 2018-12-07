@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -74,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/knowledge_base/find_kb_article",
 	service = StrutsAction.class
 )
-public class FindKBArticleAction extends BaseStrutsAction {
+public class FindKBArticleAction implements StrutsAction {
 
 	@Override
 	public String execute(

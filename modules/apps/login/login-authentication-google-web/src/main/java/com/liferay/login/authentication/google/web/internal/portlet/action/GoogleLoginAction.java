@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -53,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/portal/google_login",
 	service = StrutsAction.class
 )
-public class GoogleLoginAction extends BaseStrutsAction {
+public class GoogleLoginAction implements StrutsAction {
 
 	@Override
 	public String execute(

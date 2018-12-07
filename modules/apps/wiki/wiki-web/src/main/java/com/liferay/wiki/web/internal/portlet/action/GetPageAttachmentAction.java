@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "path=/wiki/get_page_attachment", service = StrutsAction.class
 )
-public class GetPageAttachmentAction extends BaseStrutsAction {
+public class GetPageAttachmentAction implements StrutsAction {
 
 	@Override
 	public String execute(

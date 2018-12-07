@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
 
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/document_library/find_file_entry",
 	service = StrutsAction.class
 )
-public class FindFileEntryAction extends BaseStrutsAction {
+public class FindFileEntryAction implements StrutsAction {
 
 	@Override
 	public String execute(

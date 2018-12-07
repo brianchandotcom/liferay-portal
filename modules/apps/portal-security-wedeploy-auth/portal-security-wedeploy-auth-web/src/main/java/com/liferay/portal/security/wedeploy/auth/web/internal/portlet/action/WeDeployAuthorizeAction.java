@@ -16,7 +16,6 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "path=/portal/wedeploy/authorize",
 	service = StrutsAction.class
 )
-public class WeDeployAuthorizeAction extends BaseStrutsAction {
+public class WeDeployAuthorizeAction implements StrutsAction {
 
 	@Override
 	public String execute(

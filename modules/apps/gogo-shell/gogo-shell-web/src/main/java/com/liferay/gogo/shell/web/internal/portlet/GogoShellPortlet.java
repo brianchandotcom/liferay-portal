@@ -264,7 +264,8 @@ public class GogoShellPortlet extends MVCPortlet {
 	private static final InputStream _emptyInputStream =
 		new UnsyncByteArrayInputStream(new byte[0]);
 	private static final Pattern _pattern = Pattern.compile(
-		"\\b(close|disconnect|exit|shutdown)\\b");
+		".*(close|disconnect|exit|shutdown).*",
+		Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
 	@Reference
 	private CommandProcessor _commandProcessor;

@@ -16,6 +16,38 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+JSONArray breadcrumbEntriesJSONArray = layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray();
+%>
+
+<ol class="breadcrumb">
+
+	<%
+	for (int i = 0; i < breadcrumbEntriesJSONArray.length(); i++) {
+		JSONObject breadcrumbEntryJSONObject = breadcrumbEntriesJSONArray.getJSONObject(i);
+	%>
+
+		<c:choose>
+			<c:when test="<%= i < (breadcrumbEntriesJSONArray.length() - 1) %>">
+				<li class="breadcrumb-item">
+					<a class="breadcrumb-link" href="<%= breadcrumbEntryJSONObject.getString("url") %>">
+						<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(breadcrumbEntryJSONObject.getString("title")) %></span>
+					</a>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li class="active breadcrumb-item">
+					<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(breadcrumbEntryJSONObject.getString("title")) %></span>
+				</li>
+			</c:otherwise>
+		</c:choose>
+
+	<%
+	}
+	%>
+
+</ol>
+
 <liferay-ui:search-container
 	id="pages"
 	searchContainer="<%= layoutsAdminDisplayContext.getLayoutsSearchContainer() %>"

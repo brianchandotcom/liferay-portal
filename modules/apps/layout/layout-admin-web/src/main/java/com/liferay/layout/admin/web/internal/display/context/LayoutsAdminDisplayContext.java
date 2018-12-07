@@ -724,6 +724,12 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter(
 			"privateLayout", String.valueOf(isPrivateLayout()));
 
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
 		return portletURL;
 	}
 

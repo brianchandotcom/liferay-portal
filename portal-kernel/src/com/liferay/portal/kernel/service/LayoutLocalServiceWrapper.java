@@ -1072,6 +1072,15 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			types, start, end, obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
+		return _layoutLocalService.getLayouts(groupId, leftPlid, rightPlid,
+			privateLayout, start, end, obc);
+	}
+
 	/**
 	* Returns the layout references for all the layouts that belong to the
 	* company and belong to the portlet that matches the preferences.
@@ -1177,6 +1186,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getLayoutsCount(group, privateLayout,
 			keywords, types);
+	}
+
+	@Override
+	public int getLayoutsCount(long groupId, long leftPlid, long rightPlid,
+		boolean privateLayout) {
+		return _layoutLocalService.getLayoutsCount(groupId, leftPlid,
+			rightPlid, privateLayout);
 	}
 
 	@Override

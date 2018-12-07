@@ -410,6 +410,16 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_GtLP_LtRP() throws Exception {
+		_persistence.countByG_P_GtLP_LtRP(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P_GtLP_LtRP(0L, 0L, 0L,
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_P_P_LtP() throws Exception {
 		_persistence.countByG_P_P_LtP(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),

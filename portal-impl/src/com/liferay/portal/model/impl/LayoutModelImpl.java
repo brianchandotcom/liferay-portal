@@ -174,13 +174,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final long ICONIMAGEID_COLUMN_BITMASK = 8L;
 	public static final long LAYOUTID_COLUMN_BITMASK = 16L;
 	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 32L;
-	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 64L;
-	public static final long PARENTPLID_COLUMN_BITMASK = 128L;
-	public static final long PRIORITY_COLUMN_BITMASK = 256L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 512L;
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 1024L;
-	public static final long TYPE_COLUMN_BITMASK = 2048L;
-	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long LEFTPLID_COLUMN_BITMASK = 64L;
+	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 128L;
+	public static final long PARENTPLID_COLUMN_BITMASK = 256L;
+	public static final long PRIORITY_COLUMN_BITMASK = 512L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 1024L;
+	public static final long RIGHTPLID_COLUMN_BITMASK = 2048L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 4096L;
+	public static final long TYPE_COLUMN_BITMASK = 8192L;
+	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -732,7 +734,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public void setLeftPlid(long leftPlid) {
+		_columnBitmask |= LEFTPLID_COLUMN_BITMASK;
+
+		if (!_setOriginalLeftPlid) {
+			_setOriginalLeftPlid = true;
+
+			_originalLeftPlid = _leftPlid;
+		}
+
 		_leftPlid = leftPlid;
+	}
+
+	public long getOriginalLeftPlid() {
+		return _originalLeftPlid;
 	}
 
 	@JSON
@@ -743,7 +757,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public void setRightPlid(long rightPlid) {
+		_columnBitmask |= RIGHTPLID_COLUMN_BITMASK;
+
+		if (!_setOriginalRightPlid) {
+			_setOriginalRightPlid = true;
+
+			_originalRightPlid = _rightPlid;
+		}
+
 		_rightPlid = rightPlid;
+	}
+
+	public long getOriginalRightPlid() {
+		return _originalRightPlid;
 	}
 
 	@JSON
@@ -1912,6 +1938,14 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalParentPlid = false;
 
+		layoutModelImpl._originalLeftPlid = layoutModelImpl._leftPlid;
+
+		layoutModelImpl._setOriginalLeftPlid = false;
+
+		layoutModelImpl._originalRightPlid = layoutModelImpl._rightPlid;
+
+		layoutModelImpl._setOriginalRightPlid = false;
+
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -2373,7 +2407,11 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _originalParentPlid;
 	private boolean _setOriginalParentPlid;
 	private long _leftPlid;
+	private long _originalLeftPlid;
+	private boolean _setOriginalLeftPlid;
 	private long _rightPlid;
+	private long _originalRightPlid;
+	private boolean _setOriginalRightPlid;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

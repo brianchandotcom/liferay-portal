@@ -1030,6 +1030,15 @@ public class LayoutLocalServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
+		return getService()
+				   .getLayouts(groupId, leftPlid, rightPlid, privateLayout,
+			start, end, obc);
+	}
+
 	/**
 	* Returns the layout references for all the layouts that belong to the
 	* company and belong to the portlet that matches the preferences.
@@ -1130,6 +1139,12 @@ public class LayoutLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLayoutsCount(group, privateLayout, keywords, types);
+	}
+
+	public static int getLayoutsCount(long groupId, long leftPlid,
+		long rightPlid, boolean privateLayout) {
+		return getService()
+				   .getLayoutsCount(groupId, leftPlid, rightPlid, privateLayout);
 	}
 
 	public static int getLayoutsCount(

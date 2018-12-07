@@ -6,6 +6,6 @@ Import-Package:\
 	!org.apache.poi.ss.usermodel.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -includeresource: @poi-[0-9]*.jar

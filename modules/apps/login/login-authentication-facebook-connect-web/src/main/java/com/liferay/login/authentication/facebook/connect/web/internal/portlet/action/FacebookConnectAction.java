@@ -50,7 +50,6 @@ import com.liferay.portal.security.sso.facebook.connect.exception.MustVerifyEmai
 import com.liferay.portal.security.sso.facebook.connect.exception.StrangersNotAllowedException;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -110,9 +109,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
-		"path=/portal/facebook_connect_oauth",
-		"portlet.login.login=portlet.login.login",
-		"portlet.login.update_account=portlet.login.update_account"
+		"path=/portal/facebook_connect_oauth"
 	},
 	service = StrutsAction.class
 )
@@ -151,7 +148,7 @@ public class FacebookConnectAction implements StrutsAction {
 				_log.debug("Authentication error: " + request.getQueryString());
 			}
 
-			return _forwards.get("/common/referer_jsp.jsp");
+			return _forward;
 		}
 
 		String redirect = stateJSONObject.getString("redirect");
@@ -189,7 +186,7 @@ public class FacebookConnectAction implements StrutsAction {
 			}
 		}
 		else {
-			return _forwards.get("/common/referer_jsp.jsp");
+			return _forward;
 		}
 
 		response.sendRedirect(redirect);
@@ -199,15 +196,7 @@ public class FacebookConnectAction implements StrutsAction {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_forwards.put(
-			"/common/referer_jsp.jsp",
-			GetterUtil.getString(properties, "/common/referer_jsp.jsp"));
-		_forwards.put(
-			"portlet.login.login",
-			GetterUtil.getString(properties, "portlet.login.login"));
-		_forwards.put(
-			"portlet.login.update_account",
-			GetterUtil.getString(properties, "portlet.login.update_account"));
+		_forward = GetterUtil.getString(properties, "/common/referer_jsp.jsp");
 	}
 
 	protected User addUser(
@@ -479,7 +468,7 @@ public class FacebookConnectAction implements StrutsAction {
 	private CompanyLocalService _companyLocalService;
 
 	private FacebookConnect _facebookConnect;
-	private final Map<String, String> _forwards = new HashMap<>();
+	private String _forward;
 
 	@Reference
 	private Portal _portal;

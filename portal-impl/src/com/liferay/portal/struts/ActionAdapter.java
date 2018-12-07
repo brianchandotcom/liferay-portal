@@ -37,15 +37,7 @@ public class ActionAdapter implements Action {
 			HttpServletResponse response)
 		throws Exception {
 
-		StrutsAction originalStrutsAction = null;
-
-		if (_originalAction != null) {
-			originalStrutsAction = new StrutsActionAdapter(
-				_originalAction, actionMapping);
-		}
-
-		String forward = _strutsAction.execute(
-			originalStrutsAction, request, response);
+		String forward = _strutsAction.execute(request, response);
 
 		if (Validator.isNull(forward)) {
 			return null;
@@ -60,11 +52,6 @@ public class ActionAdapter implements Action {
 		return actionForward;
 	}
 
-	public void setOriginalAction(Action originalAction) {
-		_originalAction = originalAction;
-	}
-
-	private Action _originalAction;
 	private final StrutsAction _strutsAction;
 
 }

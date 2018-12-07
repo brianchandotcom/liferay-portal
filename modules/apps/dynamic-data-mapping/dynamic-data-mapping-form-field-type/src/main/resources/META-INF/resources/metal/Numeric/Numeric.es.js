@@ -178,6 +178,12 @@ class Numeric extends Component {
 		this.applyMask();
 	}
 
+	disposed() {
+		if (this.maskInstance) {
+			this.maskInstance.destroy();
+		}
+	}
+
 	willReceiveState(changes) {
 		if (changes.dataType && changes.dataType.newVal) {
 			this.applyMask();

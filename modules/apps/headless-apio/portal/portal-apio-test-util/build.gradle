@@ -1,0 +1,8 @@
+dependencies {
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

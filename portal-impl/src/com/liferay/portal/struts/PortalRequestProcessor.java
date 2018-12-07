@@ -151,7 +151,7 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		_process(path, request, response);
+		_process(actionMapping, request, response);
 	}
 
 	private String _findPath(HttpServletRequest request) {
@@ -374,15 +374,13 @@ public class PortalRequestProcessor {
 	}
 
 	private void _process(
-			String path, HttpServletRequest request,
+			ActionMapping actionMapping, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException, ServletException {
 
 		_processLocale(request);
 
 		response.setContentType("text/html; charset=UTF-8");
-
-		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
 		if (!_processRoles(request, response, actionMapping)) {
 			return;

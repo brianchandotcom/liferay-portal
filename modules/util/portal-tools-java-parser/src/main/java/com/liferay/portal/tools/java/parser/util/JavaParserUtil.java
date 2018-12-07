@@ -46,6 +46,7 @@ import com.liferay.portal.tools.java.parser.JavaNewArrayInstantiation;
 import com.liferay.portal.tools.java.parser.JavaNewClassInstantiation;
 import com.liferay.portal.tools.java.parser.JavaOperator;
 import com.liferay.portal.tools.java.parser.JavaOperatorExpression;
+import com.liferay.portal.tools.java.parser.JavaPackageDefinition;
 import com.liferay.portal.tools.java.parser.JavaParameter;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
@@ -480,6 +481,20 @@ public class JavaParserUtil {
 		return javaMethodDefinition;
 	}
 
+	public static JavaPackageDefinition parseJavaPackageDefinition(
+		DetailAST packageDefinitionDetailAST) {
+
+		JavaPackageDefinition javaPackageDefinition = new JavaPackageDefinition(
+			_getName(packageDefinitionDetailAST));
+
+		javaPackageDefinition.setJavaAnnotations(
+			_parseJavaAnnotations(
+				packageDefinitionDetailAST.findFirstToken(
+					TokenTypes.ANNOTATIONS)));
+
+		return javaPackageDefinition;
+	}
+
 	public static JavaReturnStatement parseJavaReturnStatement(
 		DetailAST literalReturnDetailAST) {
 
@@ -862,13 +877,13 @@ public class JavaParserUtil {
 	}
 
 	private static List<JavaAnnotation> _parseJavaAnnotations(
-		DetailAST modifiersDetailAST) {
+		DetailAST detailAST) {
 
 		List<JavaAnnotation> javaAnnotations = new ArrayList<>();
 
 		List<DetailAST> annotationDetailASTList =
 			DetailASTUtil.getAllChildTokens(
-				modifiersDetailAST, false, TokenTypes.ANNOTATION);
+				detailAST, false, TokenTypes.ANNOTATION);
 
 		for (DetailAST annotationDetailAST : annotationDetailASTList) {
 			javaAnnotations.add(_parseJavaAnnotation(annotationDetailAST));

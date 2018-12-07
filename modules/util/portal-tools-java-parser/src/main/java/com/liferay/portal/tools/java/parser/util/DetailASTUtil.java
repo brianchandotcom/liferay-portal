@@ -37,6 +37,16 @@ public class DetailASTUtil {
 	}
 
 	public static DetailAST getClosingDetailAST(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.RCURLY) {
+			return null;
+		}
+
+		if (detailAST.getType() == TokenTypes.LABELED_STAT) {
+			detailAST = detailAST.getFirstChild();
+
+			detailAST = detailAST.getNextSibling();
+		}
+
 		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
 		if (slistDetailAST != null) {
@@ -77,12 +87,6 @@ public class DetailASTUtil {
 	}
 
 	public static Position getEndPosition(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.LABELED_STAT) {
-			detailAST = detailAST.getFirstChild();
-
-			detailAST = detailAST.getNextSibling();
-		}
-
 		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
 
 		if (closingDetailAST != null) {

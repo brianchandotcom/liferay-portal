@@ -25,18 +25,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
-import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.InterruptedPortletRequestWhitelistUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -44,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -52,7 +44,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -66,9 +57,6 @@ import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.struts.model.ModuleConfig;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.LiferayPortletUtil;
-import com.liferay.portlet.RenderRequestFactory;
-import com.liferay.portlet.RenderResponseFactory;
 
 import java.io.IOException;
 
@@ -79,19 +67,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -153,7 +135,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _processPath(request, response);
+		String path = _processPath(request);
 
 		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
@@ -170,72 +152,9 @@ public class PortalRequestProcessor {
 		}
 
 		_process(path, request, response);
-
-		try {
-			if (_isPortletPath(path)) {
-				_cleanUp(request);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
-	private void _cleanUp(HttpServletRequest request) throws Exception {
-
-		// Clean up portlet objects that may have been created by defineObjects
-		// for portlets that are called directly from a Struts path
-
-		LiferayRenderRequest liferayRenderRequest =
-			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
-				(PortletRequest)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST));
-
-		if (liferayRenderRequest != null) {
-			liferayRenderRequest.cleanUp();
-		}
-	}
-
-	private void _defineObjects(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
-		throws Exception {
-
-		String portletId = portlet.getPortletId();
-
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
-
-		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
-			portlet, servletContext);
-
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				request, portletId);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.getStrictPreferences(
-				portletPreferencesIds);
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, servletContext);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
-			request, portlet, invokerPortlet, portletContext,
-			WindowState.MAXIMIZED, PortletMode.VIEW, portletPreferences);
-
-		LiferayRenderResponse liferayRenderResponse =
-			RenderResponseFactory.create(liferayRenderRequest, response);
-
-		liferayRenderRequest.defineObjects(
-			portletConfig, liferayRenderResponse);
-
-		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
-	}
-
-	private String _findPath(HttpServletRequest request) throws IOException {
+	private String _findPath(HttpServletRequest request) {
 		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
 
 		if (path == null) {
@@ -522,10 +441,7 @@ public class PortalRequestProcessor {
 		}
 	}
 
-	private String _processPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
+	private String _processPath(HttpServletRequest request) {
 		String path = _findPath(request);
 
 		HttpSession session = request.getSession();
@@ -765,36 +681,6 @@ public class PortalRequestProcessor {
 			return _PATH_PORTAL_LOGIN;
 		}
 
-		// Define the portlet objects
-
-		if (_isPortletPath(path)) {
-			try {
-				Portlet portlet = null;
-
-				if (Validator.isNotNull(portletId)) {
-					portlet = PortletLocalServiceUtil.getPortletById(
-						companyId, portletId);
-				}
-
-				if (portlet == null) {
-					String strutsPath = path.substring(
-						1, path.lastIndexOf(CharPool.SLASH));
-
-					portlet = PortletLocalServiceUtil.getPortletByStrutsPath(
-						companyId, strutsPath);
-				}
-
-				if ((portlet != null) && portlet.isActive()) {
-					_defineObjects(request, response, portlet);
-				}
-			}
-			catch (Exception e) {
-				request.setAttribute(PageContext.EXCEPTION, e);
-
-				path = _PATH_COMMON_ERROR;
-			}
-		}
-
 		// Authenticated users must have access to at least one layout
 
 		if (SessionErrors.contains(
@@ -911,8 +797,6 @@ public class PortalRequestProcessor {
 	private static final String _PATH_C = "/c";
 
 	private static final String _PATH_COMMON = "/common";
-
-	private static final String _PATH_COMMON_ERROR = "/common/error";
 
 	private static final String _PATH_J_SECURITY_CHECK = "/j_security_check";
 

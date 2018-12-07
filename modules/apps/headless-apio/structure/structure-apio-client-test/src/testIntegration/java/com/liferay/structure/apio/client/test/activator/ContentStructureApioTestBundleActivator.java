@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -68,6 +69,8 @@ public class ContentStructureApioTestBundleActivator
 				DDMFormDeserializerTracker.class));
 
 		try {
+			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
+
 			_prepareTest();
 		}
 		catch (Exception e) {

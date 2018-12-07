@@ -1,7 +1,7 @@
-{namespace com.liferay.layout.admin.web.SidebarFragmentsSection}
+{namespace com.liferay.layout.admin.web.SidebarSectionsSection}
 
 /**
- * SidebarFragmentsSection
+ * SidebarSectionsSection
  */
 {template .render}
 	{@param fragmentEntryLinks: ?}
@@ -39,7 +39,7 @@
 		</nav>
 
 		{if $_selectedTab == 'available'}
-			{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
+			{call com.liferay.layout.admin.web.SidebarAvailableSections.render}
 				{param ref: 'sidebarTab' /}
 				{param sections: $sections /}
 				{param spritemap: $spritemap /}

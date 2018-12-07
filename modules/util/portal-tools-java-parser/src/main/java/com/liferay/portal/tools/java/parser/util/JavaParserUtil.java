@@ -35,6 +35,7 @@ import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
+import com.liferay.portal.tools.java.parser.JavaImport;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
@@ -440,6 +441,12 @@ public class JavaParserUtil {
 			parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
 		return javaIfStatement;
+	}
+
+	public static JavaImport parseJavaImport(
+		DetailAST importDetailAST, boolean isStatic) {
+
+		return new JavaImport(_getName(importDetailAST), isStatic);
 	}
 
 	public static JavaLoopStatement parseJavaLabeledStatement(

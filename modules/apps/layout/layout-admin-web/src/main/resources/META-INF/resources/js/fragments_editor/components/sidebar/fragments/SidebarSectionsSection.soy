@@ -15,8 +15,6 @@
 	{@param spritemap: string}
 	{@param? _handleTabClick: any}
 	{@param? _selectedTab: string}
-	{@param? highlightMapping: bool}
-	{@param? selectedMappingTypes: ?}
 	{@param? store: ?}
 
 	<div class="sidebar-fragments-section sidebar-section">
@@ -50,14 +48,6 @@
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param layoutData: $layoutData /}
 				{param ref: 'sidebarTab' /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{elseif $_selectedTab == 'mapping'}
-			{call com.liferay.layout.admin.web.SidebarMapping.render}
-				{param highlightMapping: $highlightMapping ?: false /}
-				{param ref: 'sidebarTab' /}
-				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
 				{param store: $store /}
 			{/call}

@@ -432,19 +432,6 @@ public class FragmentsEditorDisplayContext {
 
 		soyContexts.add(addedSoyContext);
 
-		if (_showMapping) {
-			SoyContext mappingSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
-
-			mappingSoyContext.put("enabled", true);
-			mappingSoyContext.put("id", "mapping");
-			mappingSoyContext.put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "mapping"));
-
-			soyContexts.add(mappingSoyContext);
-		}
-
 		return soyContexts;
 	}
 

@@ -4,7 +4,6 @@ import Soy from 'metal-soy';
 
 import './SidebarAddedFragments.es';
 import './SidebarAvailableSections.es';
-import './SidebarMapping.es';
 import templates from './SidebarSectionsSection.soy';
 
 /**

@@ -17,7 +17,6 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryService;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "path=/bookmarks/open_entry", service = StrutsAction.class
 )
-public class OpenEntryAction extends BaseStrutsAction {
+public class OpenEntryAction implements StrutsAction {
 
 	@Override
 	public String execute(

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -62,7 +61,7 @@ import javax.servlet.http.HttpServletResponse;
 	property = "path=/portal/comment/edit_discussion",
 	service = StrutsAction.class
 )
-public class EditDiscussionStrutsAction extends BaseStrutsAction {
+public class EditDiscussionStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

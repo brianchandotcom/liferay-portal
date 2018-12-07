@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/portal/wedeploy/user",
 	service = StrutsAction.class
 )
-public class WeDeployUserInfoAction extends BaseStrutsAction {
+public class WeDeployUserInfoAction implements StrutsAction {
 
 	@Override
 	public String execute(

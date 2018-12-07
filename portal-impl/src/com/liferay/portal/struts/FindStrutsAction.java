@@ -16,7 +16,7 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 
 import javax.portlet.PortletURL;
 
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
-public abstract class FindStrutsAction extends BaseStrutsAction {
+public abstract class FindStrutsAction implements StrutsAction {
 
 	public FindStrutsAction() {
 		_findActionHelper = new BaseStrutsPortletFindActionHelper() {

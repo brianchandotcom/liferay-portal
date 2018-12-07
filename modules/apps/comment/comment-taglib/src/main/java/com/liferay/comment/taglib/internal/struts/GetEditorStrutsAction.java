@@ -15,7 +15,6 @@
 package com.liferay.comment.taglib.internal.struts;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/portal/comment/discussion/get_editor",
 	service = StrutsAction.class
 )
-public class GetEditorStrutsAction extends BaseStrutsAction {
+public class GetEditorStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

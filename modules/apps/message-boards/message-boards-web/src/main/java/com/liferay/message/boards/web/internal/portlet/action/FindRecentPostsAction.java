@@ -16,7 +16,6 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = StrutsAction.class
 )
-public class FindRecentPostsAction extends BaseStrutsAction {
+public class FindRecentPostsAction implements StrutsAction {
 
 	@Override
 	public String execute(

@@ -15,7 +15,6 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
 
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = StrutsAction.class
 )
-public class FindCategoryAction extends BaseStrutsAction {
+public class FindCategoryAction implements StrutsAction {
 
 	@Override
 	public String execute(

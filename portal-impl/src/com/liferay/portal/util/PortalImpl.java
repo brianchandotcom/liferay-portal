@@ -6911,18 +6911,20 @@ public class PortalImpl implements Portal {
 				_logWebServerServlet.warn(e, e);
 			}
 		}
-		else if ((e instanceof PortalException) && _log.isDebugEnabled()) {
-			if (e instanceof NoSuchLayoutException ||
-				e instanceof PrincipalException) {
+		else if (e instanceof PortalException) {
+			if (_log.isDebugEnabled()) {
+				if (e instanceof NoSuchLayoutException ||
+					e instanceof PrincipalException) {
 
-				String msg = e.getMessage();
+					String msg = e.getMessage();
 
-				if (Validator.isNotNull(msg)) {
-					_log.debug(msg);
+					if (Validator.isNotNull(msg)) {
+						_log.debug(msg);
+					}
 				}
-			}
-			else {
-				_log.debug(e, e);
+				else {
+					_log.debug(e, e);
+				}
 			}
 		}
 		else if (_log.isWarnEnabled()) {

@@ -241,7 +241,6 @@ AUI.add(
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{
-											commonTags: 'aaa, bbbb',//TODO
 											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 										},
 										'#' + instance.NS + 'documentLibraryModal'
@@ -252,6 +251,21 @@ AUI.add(
 						else {
 							editTagsComponent.open();
 						}
+
+						instance._getCommonTags()
+					},
+
+					_getCommonTags: function() {
+						//TODO peticion al servidor para obtener los tags.
+						//TODO getFileEntries
+						var instance = this;
+
+						setTimeout(() => {
+							var editTagsComponent = instance._editTagsComponent;
+
+							editTagsComponent.commonTags = 'aaaaa, bbbb';
+						}
+						, 3000);
 					},
 
 					_plugUpload: function(event, config) {

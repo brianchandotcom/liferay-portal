@@ -2,6 +2,6 @@ import React from 'react';
 
 export default React.createContext(
 	{
-		spriteMapPath: ''
+		spritemap: ''
 	}
 );

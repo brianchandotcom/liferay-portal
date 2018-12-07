@@ -14,7 +14,7 @@ class ClayIcon extends React.Component {
 				className={`lexicon-icon ${className}`}
 				viewBox="0 0 512 512"
 			>
-				<use xlinkHref={`${this.context.spriteMapPath}#${iconName}`} />
+				<use xlinkHref={`${this.context.spritemap}#${iconName}`} />
 			</svg>
 		);
 	}

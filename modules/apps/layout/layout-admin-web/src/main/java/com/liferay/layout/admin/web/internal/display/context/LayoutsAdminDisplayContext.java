@@ -549,15 +549,34 @@ public class LayoutsAdminDisplayContext {
 
 		layoutsSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
-		int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-			getSelGroup(), isPrivateLayout(), getKeywords(),
-			new String[] {"content", "portlet"});
+		Layout layout = getSelLayout();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			getSelGroupId(), isPrivateLayout(), getKeywords(),
-			new String[] {"content", "portlet"},
-			layoutsSearchContainer.getStart(), layoutsSearchContainer.getEnd(),
-			layoutsSearchContainer.getOrderByComparator());
+		int layoutsCount = 0;
+		List<Layout> layouts = null;
+
+		if (Validator.isNotNull(getKeywords()) || (layout == null)) {
+			layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				getSelGroup(), isPrivateLayout(), getKeywords(),
+				new String[] {"content", "portlet"});
+
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				getSelGroupId(), isPrivateLayout(), getKeywords(),
+				new String[] {"content", "portlet"},
+				layoutsSearchContainer.getStart(),
+				layoutsSearchContainer.getEnd(),
+				layoutsSearchContainer.getOrderByComparator());
+		}
+		else {
+			layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				getSelGroupId(), layout.getLeftPlid(), layout.getRightPlid(),
+				isPrivateLayout());
+
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				getSelGroupId(), layout.getLeftPlid(), layout.getRightPlid(),
+				isPrivateLayout(), layoutsSearchContainer.getStart(),
+				layoutsSearchContainer.getEnd(),
+				layoutsSearchContainer.getOrderByComparator());
+		}
 
 		layoutsSearchContainer.setTotal(layoutsCount);
 		layoutsSearchContainer.setResults(layouts);

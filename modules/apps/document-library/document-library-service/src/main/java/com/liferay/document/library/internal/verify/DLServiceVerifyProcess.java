@@ -285,11 +285,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.document.library.service)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
 		unbind = "-"
@@ -384,15 +379,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings}
-	 */
-	@Deprecated
-	protected void updateStagedPortletNames() throws PortalException {
-		throw new UnsupportedOperationException();
-	}
-
 	private static final String _MS_OFFICE_2010_TEXT_XML_UTF8 =
 		"text/xml; charset=\"utf-8\"";
 
@@ -404,6 +390,5 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
-	private GroupLocalService _groupLocalService;
 
 }

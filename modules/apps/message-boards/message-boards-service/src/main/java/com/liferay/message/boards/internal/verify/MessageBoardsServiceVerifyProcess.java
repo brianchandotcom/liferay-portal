@@ -45,25 +45,11 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		verifyGroupedModels();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(&(release.schema.version>=2.0.0)(!(release.schema.version>=2.1.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings}
-	 */
-	@Deprecated
-	protected void updateStagedPortletNames() throws PortalException {
-		throw new UnsupportedOperationException();
 	}
 
 	protected void verifyAuditedModels() throws Exception {
@@ -83,7 +69,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	private GroupLocalService _groupLocalService;
 	private final VerifyAuditedModel _verifyAuditedModel =
 		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =

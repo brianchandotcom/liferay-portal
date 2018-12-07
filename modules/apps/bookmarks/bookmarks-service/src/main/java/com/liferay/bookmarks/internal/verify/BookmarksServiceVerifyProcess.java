@@ -54,11 +54,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected void updateFolderAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<BookmarksFolder> folders =
@@ -90,15 +85,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings}
-	 */
-	@Deprecated
-	protected void updateStagedPortletNames() throws PortalException {
-		throw new UnsupportedOperationException();
-	}
-
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds =
@@ -114,7 +100,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		BookmarksServiceVerifyProcess.class);
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

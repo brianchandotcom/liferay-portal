@@ -49,7 +49,7 @@ import org.junit.runners.model.Statement;
  */
 public class JUnitBridgeObserver {
 
-	public void aroundTest(final @Observes EventContext<Test> eventContext)
+	public void aroundTest(@Observes final EventContext<Test> eventContext)
 		throws Throwable {
 
 		Test test = eventContext.getEvent();

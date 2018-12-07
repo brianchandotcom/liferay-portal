@@ -918,11 +918,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				page.getTitle() + StringPool.SPACE + page.getVersion();
 
 			if (page.isMinorEdit()) {
-				title +=
-					StringBundler.concat(
-						StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-						LanguageUtil.get(locale, "minor-edit"),
-						StringPool.CLOSE_PARENTHESIS);
+				title += StringBundler.concat(
+					StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+					LanguageUtil.get(locale, "minor-edit"),
+					StringPool.CLOSE_PARENTHESIS);
 			}
 
 			syndEntry.setTitle(title);

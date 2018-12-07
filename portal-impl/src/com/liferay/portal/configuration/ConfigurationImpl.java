@@ -380,10 +380,9 @@ public class ConfigurationImpl
 			String info = "Loading " + source;
 
 			if (companyId > CompanyConstants.SYSTEM) {
-				info +=
-					StringBundler.concat(
-						" for {companyId=", String.valueOf(companyId),
-						", webId=", webId, "}");
+				info += StringBundler.concat(
+					" for {companyId=", String.valueOf(companyId), ", webId=",
+					webId, "}");
 			}
 
 			System.out.println(info);

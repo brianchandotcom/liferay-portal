@@ -1682,7 +1682,7 @@ public class IntrabandProxyUtilTest {
 							"Unknow method index ", String.valueOf(i),
 							" for proxy methods mappings ",
 							ReflectionTestUtil.getFieldValue(
-									skeletonClass, "_PROXY_METHODS_MAPPING")),
+								skeletonClass, "_PROXY_METHODS_MAPPING")),
 						throwable.getMessage());
 				}
 

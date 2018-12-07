@@ -173,8 +173,8 @@ public class AssignScopesDisplayContext
 		return StringUtil.merge(scopesList, delimiter);
 	}
 
-	public Map<AssignableScopes, Relations>
-		getAssignableScopesRelations(String applicationName) {
+	public Map<AssignableScopes, Relations> getAssignableScopesRelations(
+		String applicationName) {
 
 		Set<AssignableScopes> localAssignableScopes =
 			_localAssignableScopesByApplicationName.get(applicationName);

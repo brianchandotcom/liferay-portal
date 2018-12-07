@@ -279,8 +279,8 @@ public class BeanPortletExtension implements Extension {
 
 	@SuppressWarnings({"serial", "unchecked"})
 	public void step4ApplicationScopedInitialized(
-		@Initialized(ApplicationScoped.class)
-			@Observes ServletContext servletContext,
+		@Initialized(ApplicationScoped.class) @Observes ServletContext
+			servletContext,
 		BeanManager beanManager) {
 
 		BundleContext bundleContext =

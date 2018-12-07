@@ -123,9 +123,8 @@ public class UpgradeMySQL extends UpgradeProcess {
 					modifyClause += StringPool.COMMA;
 				}
 
-				modifyClause +=
-					StringBundler.concat(
-						" MODIFY ", columnName, " datetime(6)");
+				modifyClause += StringBundler.concat(
+					" MODIFY ", columnName, " datetime(6)");
 			}
 
 			if (modifyClause.equals(StringPool.BLANK)) {

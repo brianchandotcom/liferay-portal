@@ -271,8 +271,8 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected Function<Function<WebTarget, Invocation.Builder>, Response>
-		getCodeFunction(Function<WebTarget, WebTarget>
-		authorizeRequestFunction) {
+		getCodeFunction(
+			Function<WebTarget, WebTarget> authorizeRequestFunction) {
 
 		return invocationBuilderFunction -> {
 			Invocation.Builder invocationBuilder =

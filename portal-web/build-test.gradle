@@ -47,6 +47,9 @@ dependencies {
 				else if (portalVersion.startsWith("7.0")) {
 					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20180516094443-ebc78fb"
 				}
+				else if (portalVersion.startsWith("7.1")) {
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.1.x", version: "20181128102607-5b0ef97"
+				}
 			}
 		}
 	}

@@ -2,12 +2,18 @@
 
 {template .render}
 	{@param spritemap: string}
-	{@param commonTags: string}
+	{@param? commonTags: string}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
-			<h4>Modal Body</h4>
-			<p>Common Tags: {$commonTags}</p>
+
+			{if $commonTags}
+				{call .tags}
+					{param commonTags: $commonTags /}
+				{/call}
+			{else}
+				{call .loading /}
+			{/if}
 		{/param}
 
 		{param dialogClasses: 'modal-dialog-sm' /}
@@ -27,4 +33,17 @@
 
 		{param visible: true /}
 	{/call}
+{/template}
+
+{template .loading}
+	<div class="loading-indicator">
+		<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+	</div>
+{/template}
+
+{template .tags}
+	{@param? commonTags: string}
+
+	<h4>Modal Body</h4>
+	<p>Common Tags: {$commonTags}</p>
 {/template}

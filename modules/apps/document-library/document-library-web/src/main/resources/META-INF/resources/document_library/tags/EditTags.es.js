@@ -17,7 +17,7 @@ EditTags.STATE = {
 	 *
 	 * @type {String}
 	 */
-	commonTags: Config.string().required(),
+	commonTags: Config.string(),
 
 	/**
 	 * Path to images.

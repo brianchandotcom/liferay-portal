@@ -1,0 +1,111 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Site Pages Administration" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="SearchPages" priority="5">
+		<description message="This is a test for LPS-76825. A user can search for a page from pages admin." />
+
+		<echo message="# Add two pages to root and add one child page." />
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Page One" />
+		</execute>
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Page Two" />
+		</execute>
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Page Three" />
+			<var name="parentLayoutName" value="Page One" />
+		</execute>
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<echo message="# Search for all three pages and assert they all appear." />
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="page" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page One" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Two" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Three" />
+		</execute>
+
+		<echo message="# Search for one page and assert only that page appears." />
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="one" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page One" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Two" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Three" />
+		</execute>
+
+		<echo message="# Search for child page and assert that page appears." />
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="three" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page One" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Two" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Page Three" />
+		</execute>
+	</command>
+</definition>

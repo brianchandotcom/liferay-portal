@@ -696,6 +696,12 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
+		<finder name="G_P_GtLP_LtRP" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="leftPlid" />
+			<finder-column comparator="&lt;" name="rightPlid" />
+			<finder-column name="privateLayout" />
+		</finder>
 		<finder name="G_P_P_LtP" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />

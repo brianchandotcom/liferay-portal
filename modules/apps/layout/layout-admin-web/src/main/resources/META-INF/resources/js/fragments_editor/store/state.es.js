@@ -11,6 +11,28 @@ import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 const INITIAL_STATE = {
 
 	/**
+	 * Id of the active item
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	activeItemId: Config
+		.string()
+		.value(null),
+
+	/**
+	 * Type of the active item
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	activeItemType: Config
+		.string()
+		.value(null),
+
+	/**
 	 * URL for associating fragment entries to the underlying model.
 	 * @default undefined
 	 * @instance

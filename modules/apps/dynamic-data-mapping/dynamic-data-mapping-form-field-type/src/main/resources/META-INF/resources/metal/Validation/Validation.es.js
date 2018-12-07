@@ -212,11 +212,7 @@ class Validation extends Component {
 		};
 	}
 
-	willReceiveState({dataType, validation, value}) {
-		if (value && value.newVal) {
-			this.setState({value: value.newVal});
-		}
-
+	willReceiveState({dataType, validation}) {
 		if (
 			(dataType && dataType.newVal !== dataType.prevVal) ||
 			(validation && validation.newVal.dataType !== validation.prevVal.dataType)
@@ -346,7 +342,12 @@ class Validation extends Component {
 	_updateValue() {
 		const value = this._getValue();
 
-		this.setState(value, () => this._emitFieldEdited(value));
+		this.setState(
+			{
+				value
+			},
+			() => this._emitFieldEdited(value)
+		);
 	}
 
 	_validationsValueFn() {

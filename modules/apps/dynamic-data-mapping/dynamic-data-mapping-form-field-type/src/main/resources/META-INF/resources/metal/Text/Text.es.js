@@ -167,16 +167,15 @@ class Text extends Component {
 		this.setState(
 			{
 				value: event.target.value
-			}
-		);
-
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.target.value
-			}
+			},
+			() => this.emit(
+				'fieldEdited',
+				{
+					fieldInstance: this,
+					originalEvent: event,
+					value: event.target.value
+				}
+			)
 		);
 	}
 

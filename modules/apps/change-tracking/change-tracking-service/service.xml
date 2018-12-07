@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
 
-<service-builder auto-namespace-tables="false" package-path="com.liferay.change.tracking.engine">
-	<namespace>ChangeTrackingEngine</namespace>
-	<entity local-service="true" name="CTECollection" remote-service="false" trash-enabled="false" uuid="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.change.tracking">
+	<namespace>ChangeTracking</namespace>
+	<entity local-service="true" name="ChangeTrackingCollection" remote-service="false" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 
-		<column name="cteCollectionId" primary="true" type="long" />
+		<column name="changeTrackingCollectionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -28,17 +28,17 @@
 
 		<!-- Relationships -->
 
-		<column entity="CTEEntry" mapping-table="Collections_Entries" name="entries" type="Collection" />
+		<column entity="ChangeTrackingEntry" mapping-table="Collections_Entries" name="entries" type="Collection" />
 
 		<!-- References -->
 
-		<reference entity="CTEEntry" package-path="com.liferay.change.tracking.engine" />
+		<reference entity="ChangeTrackingEntry" package-path="com.liferay.change.tracking" />
 	</entity>
-	<entity local-service="true" name="CTEEntry" remote-service="false" trash-enabled="false" uuid="false">
+	<entity local-service="true" name="ChangeTrackingEntry" remote-service="false" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 
-		<column name="cteEntryId" primary="true" type="long" />
+		<column name="changeTrackingEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -56,10 +56,10 @@
 
 		<!-- Relationships -->
 
-		<column entity="CTECollection" mapping-table="Collections_Entries" name="collections" type="Collection" />
+		<column entity="ChangeTrackingCollection" mapping-table="Collections_Entries" name="collections" type="Collection" />
 
 		<!-- References -->
 
-		<reference entity="CTECollection" package-path="com.liferay.change.tracking.engine" />
+		<reference entity="ChangeTrackingCollection" package-path="com.liferay.change.tracking" />
 	</entity>
 </service-builder>

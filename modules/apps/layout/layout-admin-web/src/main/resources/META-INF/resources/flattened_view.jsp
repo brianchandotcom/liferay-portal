@@ -73,6 +73,10 @@ JSONArray breadcrumbEntriesJSONArray = layoutsAdminDisplayContext.getBreadcrumbE
 		sb.append("../ ");
 
 		for (Layout curLayout : curLayouts) {
+			if (curLayout.getPlid() == layoutsAdminDisplayContext.getSelPlid()) {
+				break;
+			}
+
 			sb.append(curLayout.getName(locale));
 			sb.append(" / ");
 		}

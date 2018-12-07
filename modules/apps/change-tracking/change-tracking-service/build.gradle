@@ -1,12 +1,12 @@
 buildService {
-	apiDir = "../change-tracking-engine-api/src/main/java"
-	testDir = "../change-tracking-engine-test/src/testIntegration/java"
+	apiDir = "../change-tracking-api/src/main/java"
+	testDir = "../change-tracking-test/src/testIntegration/java"
 }
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly project(":apps:change-tracking:change-tracking-engine-api")
+	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

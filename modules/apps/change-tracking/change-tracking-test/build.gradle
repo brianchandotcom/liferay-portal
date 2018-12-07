@@ -1,2 +1,4 @@
 dependencies {
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-engine-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

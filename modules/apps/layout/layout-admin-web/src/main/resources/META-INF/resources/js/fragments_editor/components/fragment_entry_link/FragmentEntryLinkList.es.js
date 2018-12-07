@@ -20,7 +20,8 @@ import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
-import {getFragmentRowIndex, setIn} from '../../utils/utils.es';
+import {getFragmentRowIndex} from '../../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 

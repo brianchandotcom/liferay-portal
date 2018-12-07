@@ -10,14 +10,16 @@ import {
 } from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {
 	add,
-	getColumn,
-	getDropSectionPosition,
-	getFragmentColumn,
 	remove,
 	setIn,
 	updateIn,
 	updateLayoutData
-} from '../utils/utils.es';
+} from '../utils/FragmentsEditorUpdateUtils.es';
+import {
+	getColumn,
+	getDropSectionPosition,
+	getFragmentColumn
+} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
  * @param {!object} state

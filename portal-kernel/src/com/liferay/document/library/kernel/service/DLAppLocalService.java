@@ -90,6 +90,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry addFileEntry(long userId, long repositoryId,
 		long folderId, String sourceFileName, String mimeType, String title,
@@ -125,6 +126,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry addFileEntry(long userId, long repositoryId,
 		long folderId, String sourceFileName, String mimeType, String title,
@@ -162,6 +164,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry addFileEntry(long userId, long repositoryId,
 		long folderId, String sourceFileName, String mimeType, String title,
@@ -197,6 +200,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileShortcut addFileShortcut(long userId, long repositoryId,
 		long folderId, long toFileEntryId, ServiceContext serviceContext)
@@ -215,6 +219,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	specifying whether the folder is a facade for mounting a
 	third-party repository
 	* @return the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Folder addFolder(long userId, long repositoryId,
 		long parentFolderId, String name, String description,
@@ -225,6 +230,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* supported by the Liferay repository.
 	*
 	* @param repositoryId the primary key of the data's repository
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteAll(long repositoryId) throws PortalException;
 
@@ -234,6 +240,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* Deletes the file entry.
 	*
 	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
@@ -264,6 +271,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* repository.
 	*
 	* @param fileShortcut the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFileShortcut(FileShortcut fileShortcut)
 		throws PortalException;
@@ -273,6 +281,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* repository.
 	*
 	* @param fileShortcutId the primary key of the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException;
@@ -282,6 +291,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* only supported by the Liferay repository.
 	*
 	* @param toFileEntryId the primary key of the associated file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFileShortcuts(long toFileEntryId)
 		throws PortalException;
@@ -291,6 +301,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* approved and there are other approved file versions available.
 	*
 	* @param fileVersionId the primary key of the file version
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFileVersion(long fileVersionId) throws PortalException;
 
@@ -298,6 +309,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* Deletes the folder and all of its subfolders and file entries.
 	*
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteFolder(long folderId) throws PortalException;
 
@@ -306,6 +318,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @return the file entry with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
@@ -317,6 +330,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param folderId the primary key of the file entry's folder
 	* @param title the file entry's title
 	* @return the file entry with the title in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntry(long groupId, long folderId, String title)
@@ -328,6 +342,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param uuid the file entry's UUID
 	* @param groupId the primary key of the file entry's group
 	* @return the file entry with the UUID and group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
@@ -353,6 +368,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	*
 	* @param fileShortcutId the primary key of the file shortcut
 	* @return the file shortcut with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileShortcut getFileShortcut(long fileShortcutId)
@@ -363,6 +379,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	*
 	* @param fileVersionId the primary key of the file version
 	* @return the file version with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileVersion getFileVersion(long fileVersionId)
@@ -373,6 +390,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	*
 	* @param folderId the primary key of the folder
 	* @return the folder with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getFolder(long folderId) throws PortalException;
@@ -384,6 +402,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	* @return the folder with the name in the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getFolder(long repositoryId, long parentFolderId, String name)
@@ -395,6 +414,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	*
 	* @param repositoryId the primary key of the repository
 	* @return the folder used for mounting third-party repositories
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getMountFolder(long repositoryId) throws PortalException;
@@ -414,6 +434,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param newFolderId the primary key of the new folder
 	* @param serviceContext the service context to be applied
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry moveFileEntry(long userId, long fileEntryId,
 		long newFolderId, ServiceContext serviceContext)
@@ -429,6 +450,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void subscribeFileEntryType(long userId, long groupId,
 		long fileEntryTypeId) throws PortalException;
@@ -440,6 +462,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void subscribeFolder(long userId, long groupId, long folderId)
 		throws PortalException;
@@ -451,6 +474,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void unsubscribeFileEntryType(long userId, long groupId,
 		long fileEntryTypeId) throws PortalException;
@@ -462,6 +486,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void unsubscribeFolder(long userId, long groupId, long folderId)
 		throws PortalException;
@@ -476,6 +501,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @param assetCategoryIds the primary keys of the new asset categories
 	* @param assetTagNames the new asset tag names
 	* @param assetLinkEntryIds the primary keys of the new asset link entries
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void updateAsset(long userId, FileEntry fileEntry,
 		FileVersion fileVersion, long[] assetCategoryIds,
@@ -483,7 +509,9 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, long, String, String, String, String,
+	String, DLVersionNumberIncrease, byte[], ServiceContext)}
 	*/
 	@Deprecated
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
@@ -492,7 +520,9 @@ public interface DLAppLocalService extends BaseLocalService {
 		byte[] bytes, ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, long, String, String, String, String,
+	String, DLVersionNumberIncrease, File, ServiceContext)}
 	*/
 	@Deprecated
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
@@ -501,7 +531,9 @@ public interface DLAppLocalService extends BaseLocalService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, long, String, String, String, String, String, boolean, InputStream, long, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, long, String, String, String, String,
+	String, boolean, InputStream, long, ServiceContext)}
 	*/
 	@Deprecated
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
@@ -544,6 +576,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
@@ -585,6 +618,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
@@ -627,6 +661,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileEntry updateFileEntry(long userId, long fileEntryId,
 		String sourceFileName, String mimeType, String title,
@@ -663,6 +698,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	public FileShortcut updateFileShortcut(long userId, long fileShortcutId,
 		long folderId, long toFileEntryId, ServiceContext serviceContext)
@@ -673,7 +709,9 @@ public interface DLAppLocalService extends BaseLocalService {
 	* entry. This method is only supported by the Liferay repository.
 	*
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
-	* @param newToFileEntryId the primary key of the new file entry to point to
+	* @param newToFileEntryId the primary key of the new file entry to point
+	to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException;
@@ -706,6 +744,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	<code>fileEntryTypeId</code> (optionally <code>0</code>).</li>
 	</ul>
 	* @return the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Folder updateFolder(long folderId, long parentFolderId, String name,
 		String description, ServiceContext serviceContext)

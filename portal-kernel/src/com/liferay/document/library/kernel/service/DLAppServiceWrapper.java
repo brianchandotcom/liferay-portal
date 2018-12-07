@@ -61,6 +61,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -103,6 +104,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -146,6 +148,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -170,6 +173,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
@@ -191,6 +195,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	repository, it may include boolean mountPoint specifying whether
 	folder is a facade for mounting a third-party repository
 	* @return the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
@@ -219,6 +224,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param file the file's data (optionally <code>null</code>)
 	* @param mimeType the file's MIME type
 	* @return the temporary file entry
+	* @throws PortalException if a portal exception occurred
 	* @see TempFileEntryUtil
 	*/
 	@Override
@@ -248,6 +254,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param inputStream the file's data
 	* @param mimeType the file's MIME type
 	* @return the temporary file entry
+	* @throws PortalException if a portal exception occurred
 	* @see TempFileEntryUtil
 	*/
 	@Override
@@ -276,6 +283,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileEntryId the primary key of the file entry to cancel the
 	checkout
+	* @throws PortalException if a portal exception occurred
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
@@ -286,7 +294,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#checkInFileEntry(long, DLVersionNumberIncrease, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -318,6 +328,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	apply for these changes.
 	* @param changeLog the file's version change log
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
@@ -350,6 +361,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param fileEntryId the primary key of the file entry to check in
 	* @param lockUuid the lock's UUID
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
@@ -376,6 +388,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileEntryId the file entry to check out
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	*/
@@ -408,6 +421,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	be used from <code>portal.properties</code>.
 	* @param serviceContext the service context to be applied
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkInFileEntry(long, String)
 	*/
@@ -430,6 +444,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param description the new folder's description
 	* @param serviceContext the service context to be applied
 	* @return the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder copyFolder(
@@ -445,6 +460,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* Deletes the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFileEntry(long fileEntryId)
@@ -458,6 +474,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file entry's parent folder
 	* @param title the file entry's title
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFileEntryByTitle(long repositoryId, long folderId,
@@ -471,6 +488,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* supported by the Liferay repository.
 	*
 	* @param fileShortcutId the primary key of the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFileShortcut(long fileShortcutId)
@@ -483,7 +501,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* approved and there are other approved file versions available.
 	*
 	* @param fileVersionId the primary key of the file version
-	* @review
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFileVersion(long fileVersionId)
@@ -498,6 +516,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version label of the file version
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
@@ -510,6 +529,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* file entries.
 	*
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFolder(long folderId)
@@ -524,6 +544,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the repository
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteFolder(long repositoryId, long parentFolderId, String name)
@@ -539,6 +560,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	eventually to reside
 	* @param folderName the temporary folder's name
 	* @param fileName the file's original name
+	* @throws PortalException if a portal exception occurred
 	* @see TempFileEntryUtil
 	*/
 	@Override
@@ -555,6 +577,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the file entry's repository
 	* @param folderId the primary key of the file entry's folder
 	* @return the file entries in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -580,6 +603,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of file entries in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -608,6 +632,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of file entries in the folder ordered by comparator
 	<code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -625,6 +650,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param folderId the primary key of the file entry's folder
 	* @param fileEntryTypeId the primary key of the file entry type
 	* @return the file entries with the file entry type in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -644,6 +670,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of the file entries in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -666,6 +693,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of file entries with the file entry type in the folder
 	ordered by <code>null</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -712,6 +740,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of file entries and shortcuts in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<Object> getFileEntriesAndFileShortcuts(
@@ -728,6 +757,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param folderId the primary key of the folder
 	* @param status the workflow status
 	* @return the number of file entries and shortcuts in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
@@ -745,6 +775,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param status the workflow status
 	* @param mimeTypes allowed media types
 	* @return the number of file entries and shortcuts in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
@@ -760,6 +791,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the file entry's repository
 	* @param folderId the primary key of the file entry's folder
 	* @return the number of file entries in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFileEntriesCount(long repositoryId, long folderId)
@@ -775,6 +807,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param folderId the primary key of the file entry's folder
 	* @param fileEntryTypeId the primary key of the file entry type
 	* @return the number of file entries with the file entry type in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFileEntriesCount(long repositoryId, long folderId,
@@ -797,6 +830,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @return the file entry with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
@@ -812,6 +846,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param folderId the primary key of the file entry's folder
 	* @param title the file entry's title
 	* @return the file entry with the title in the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
@@ -826,6 +861,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param uuid the file entry's UUID
 	* @param groupId the primary key of the file entry's group
 	* @return the file entry with the UUID and group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByUuidAndGroupId(
@@ -840,6 +876,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileShortcutId the primary key of the file shortcut
 	* @return the file shortcut with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
@@ -853,6 +890,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param fileVersionId the primary key of the file version
 	* @return the file version with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
@@ -866,6 +904,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param folderId the primary key of the folder
 	* @return the folder with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
@@ -881,6 +920,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	* @return the folder with the name in the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
@@ -895,6 +935,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the folder's repository
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @return the immediate subfolders of the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -912,6 +953,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param includeMountFolders whether to include mount folders for
 	third-party repositories
 	* @return the immediate subfolders of the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -943,6 +985,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of immediate subfolders of the parent
 	folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -976,6 +1019,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of immediate subfolders of the parent folder ordered by
 	comparator <code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -1011,6 +1055,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of immediate subfolders of the parent folder ordered by
 	comparator <code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -1041,6 +1086,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of immediate subfolders of the parent
 	folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -1070,6 +1116,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of immediate subfolders of the parent folder ordered by
 	comparator <code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -1102,6 +1149,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of immediate subfolders, file entries, and
 	file shortcuts in the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -1137,6 +1185,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the range of immediate subfolders, file entries, and file
 	shortcuts in the parent folder ordered by comparator
 	<code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -1180,6 +1229,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	third-party repositories
 	* @return the number of immediate subfolders, file entries, and file
 	shortcuts in the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -1214,6 +1264,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the folder's repository
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @return the number of immediate subfolders of the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFoldersCount(long repositoryId, long parentFolderId)
@@ -1230,6 +1281,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param includeMountFolders whether to include mount folders for
 	third-party repositories
 	* @return the number of immediate subfolders of the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFoldersCount(long repositoryId, long parentFolderId,
@@ -1249,6 +1301,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param includeMountFolders whether to include mount folders for
 	third-party repositories
 	* @return the number of immediate subfolders of the parent folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFoldersCount(long repositoryId, long parentFolderId,
@@ -1268,6 +1321,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param status the workflow status
 	* @return the number of immediate subfolders and file entries across the
 	folders
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getFoldersFileEntriesCount(long repositoryId,
@@ -1299,6 +1353,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching file entries ordered by date modified
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
@@ -1331,6 +1386,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of matching file entries ordered by comparator
 	<code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
@@ -1364,6 +1420,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching file entries ordered by date modified
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
@@ -1399,6 +1456,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>null</code>)
 	* @return the range of matching file entries ordered by comparator
 	<code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
@@ -1429,6 +1487,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param userId the primary key of the user who created the file
 	(optionally <code>0</code>)
 	* @return the number of matching file entries
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getGroupFileEntriesCount(long groupId, long userId)
@@ -1448,6 +1507,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param rootFolderId the primary key of the root folder to begin the
 	search
 	* @return the number of matching file entries
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getGroupFileEntriesCount(long groupId, long userId,
@@ -1474,6 +1534,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @return the immediate subfolders of the parent folder that are used for
 	mounting third-party repositories
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
@@ -1502,6 +1563,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the name-ordered range of immediate subfolders of the parent
 	folder that are used for mounting third-party repositories
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
@@ -1534,6 +1596,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the range of immediate subfolders of the parent folder that are
 	used for mounting third-party repositories ordered by comparator
 	<code>obc</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
@@ -1553,6 +1616,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param parentFolderId the primary key of the parent folder
 	* @return the number of folders of the parent folder that are used for
 	mounting third-party repositories
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public int getMountFoldersCount(long repositoryId, long parentFolderId)
@@ -1583,6 +1647,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the folder
 	* @return the descendant folders of the folder with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<Long> getSubfolderIds(long repositoryId, long folderId)
@@ -1598,6 +1663,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param folderId the primary key of the folder
 	* @param recurse whether to recurse through each subfolder
 	* @return the descendant folders of the folder with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<Long> getSubfolderIds(long repositoryId,
@@ -1614,6 +1680,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	eventually reside
 	* @param folderName the temporary folder's name
 	* @return the temporary file entry names
+	* @throws PortalException if a portal exception occurred
 	* @see #addTempFileEntry(long, long, String, String, File, String)
 	* @see TempFileEntryUtil
 	*/
@@ -1630,6 +1697,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the folder
 	* @return the lock object
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long repositoryId,
@@ -1650,6 +1718,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties</code>.
 	* @return the lock object
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long repositoryId,
@@ -1666,6 +1735,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param newFolderId the primary key of the new folder
 	* @param serviceContext the service context to be applied
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(
@@ -1683,6 +1753,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param parentFolderId the primary key of the new parent folder
 	* @param serviceContext the service context to be applied
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
@@ -1702,6 +1773,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties</code>.
 	* @return the lock object
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
@@ -1721,6 +1793,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties</code>.
 	* @return the lock object
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
@@ -1737,6 +1810,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version to revert back to
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void revertFileEntry(long fileEntryId, String version,
@@ -1783,6 +1857,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void subscribeFileEntryType(long groupId, long fileEntryTypeId)
@@ -1796,6 +1871,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void subscribeFolder(long groupId, long folderId)
@@ -1809,6 +1885,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the folder
 	* @param lockUuid the lock's UUID
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void unlockFolder(long repositoryId, long folderId, String lockUuid)
@@ -1823,6 +1900,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param parentFolderId the primary key of the parent folder
 	* @param name the folder's name
 	* @param lockUuid the lock's UUID
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void unlockFolder(long repositoryId, long parentFolderId,
@@ -1837,6 +1915,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void unsubscribeFileEntryType(long groupId, long fileEntryTypeId)
@@ -1850,6 +1929,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void unsubscribeFolder(long groupId, long folderId)
@@ -1858,7 +1938,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, String, String, String, String,
+	String, DLVersionNumberIncrease, byte[], ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -1874,7 +1956,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, String, String, String, String,
+	String, DLVersionNumberIncrease, File, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -1890,7 +1974,10 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, String, String, String, String, String, DLVersionNumberIncrease, InputStream, long, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntry(long, String, String, String, String,
+	String, DLVersionNumberIncrease, InputStream, long,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -1938,6 +2025,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -1985,6 +2073,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -2033,6 +2122,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -2048,7 +2138,10 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x),  As of Judson (7.1.x), replaced by {@link #updateFileEntryAndCheckIn(long, String, String, String, String, String, DLVersionNumberIncrease, File, ServiceContext)}
+	* @deprecated As of Judson (7.1.x),  As of Judson (7.1.x), replaced by
+	{@link #updateFileEntryAndCheckIn(long, String, String,
+	String, String, String, DLVersionNumberIncrease, File,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -2064,7 +2157,10 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntryAndCheckIn(long, String, String, String, String, String, DLVersionNumberIncrease, InputStream, long, ServiceContext)}
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateFileEntryAndCheckIn(long, String, String, String,
+	String, String, DLVersionNumberIncrease, InputStream, long,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -2116,6 +2212,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
@@ -2145,6 +2242,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>fileEntryTypeId</code> (optionally <code>0</code>).</li>
 	</ul>
 	* @return the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
@@ -2164,6 +2262,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param lockUuid the lock's UUID
 	* @return <code>true</code> if the file entry is checked out;
 	<code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public boolean verifyFileEntryCheckOut(long repositoryId, long fileEntryId,
@@ -2190,6 +2289,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param lockUuid the lock's UUID
 	* @return <code>true</code> if the inheritable lock exists;
 	<code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public boolean verifyInheritableLock(long repositoryId, long folderId,

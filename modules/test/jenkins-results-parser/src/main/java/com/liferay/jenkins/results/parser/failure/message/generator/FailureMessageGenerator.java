@@ -25,4 +25,6 @@ public interface FailureMessageGenerator {
 
 	public Element getMessageElement(Build build);
 
+	public Element getMessageElement(String consoleText);
+
 }

@@ -34,7 +34,14 @@ public abstract class BaseFailureMessageGenerator
 	implements FailureMessageGenerator {
 
 	@Override
-	public abstract Element getMessageElement(Build build);
+	public Element getMessageElement(Build build) {
+		return getMessageElement(build.getConsoleText());
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		return null;
+	}
 
 	protected Element getBaseBranchAnchorElement(TopLevelBuild topLevelBuild) {
 		StringBuilder sb = new StringBuilder();

@@ -178,6 +178,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	workflow actions for the web content article. Can also set
 	whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle addArticle(long userId, long groupId, long folderId,
@@ -289,6 +290,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	workflow actions for the web content article. Can also set
 	whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long userId, long groupId, long folderId,
 		long classNameId, long classPK, String articleId,
@@ -332,6 +334,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long userId, long groupId, long folderId,
 		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -344,6 +347,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param article the web content article
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void addArticleResources(JournalArticle article,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -354,6 +358,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* @param article the web content article to add resources to
 	* @param modelPermissions the model permissions
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void addArticleResources(JournalArticle article,
 		ModelPermissions modelPermissions) throws PortalException;
@@ -364,6 +369,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param article the web content article to add resources to
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#addArticleResources(JournalArticle, ModelPermissions)}
 	*/
@@ -379,6 +385,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void addArticleResources(long groupId, String articleId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -392,6 +399,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#addArticleResources(JournalArticle, ModelPermissions)}
 	*/
@@ -418,6 +426,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle checkArticleResourcePrimKey(long groupId,
 		String articleId, double version) throws PortalException;
@@ -436,6 +445,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void checkNewLine(long groupId, String articleId, double version)
 		throws PortalException;
@@ -448,6 +458,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void checkStructure(long groupId, String articleId, double version)
 		throws PortalException;
@@ -464,6 +475,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param autoArticleId whether to auto-generate the web content article ID
 	* @param version the web content article's version
 	* @return the new web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle copyArticle(long userId, long groupId,
@@ -484,6 +496,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* @param article the web content article
 	* @return the deleted web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(JournalArticle article)
@@ -501,6 +514,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	email information to notify recipients of the unapproved web
 	content's denial.
 	* @return the deleted web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
@@ -521,6 +535,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
 	* @return the deleted web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle deleteArticle(long groupId, String articleId,
 		double version, String articleURL, ServiceContext serviceContext)
@@ -536,6 +551,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticle(long groupId, String articleId,
 		ServiceContext serviceContext) throws PortalException;
@@ -544,6 +560,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* Deletes all the group's web content articles and resources.
 	*
 	* @param groupId the primary key of the web content article's group
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticles(long groupId) throws PortalException;
 
@@ -553,6 +570,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticles(long groupId, long folderId)
 		throws PortalException;
@@ -565,6 +583,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param folderId the primary key of the web content article folder
 	* @param includeTrashedEntries whether to include recycled web content
 	articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticles(long groupId, long folderId,
 		boolean includeTrashedEntries) throws PortalException;
@@ -583,6 +602,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	class name is given as the <code>className</code> parameter, the
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticles(long groupId, String className, long classPK)
 		throws PortalException;
@@ -707,6 +727,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle expireArticle(long userId, long groupId,
@@ -727,10 +748,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the service
-	context's command to {@link Constants#UPDATE}, the invocation is
-	considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	article. With respect to social activities, by setting the
+	service context's command to {@link Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void expireArticle(long userId, long groupId, String articleId,
 		String articleURL, ServiceContext serviceContext)
@@ -855,6 +877,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* @param id the primary key of the web content article
 	* @return the web content article with the ID
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long id) throws PortalException;
@@ -867,6 +890,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String articleId)
@@ -880,6 +904,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String articleId,
@@ -900,6 +925,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String className,
@@ -913,6 +939,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param urlTitle the web content article's accessible URL title
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
@@ -931,6 +958,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param themeDisplay the theme display
 	* @return the web content from the web content article associated with the
 	portlet request model and the DDM template
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleContent(JournalArticle article,
@@ -949,6 +977,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(JournalArticle, String, String, String,
 	PortletRequestModel,ThemeDisplay)}
@@ -974,6 +1003,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleContent(long groupId, String articleId,
@@ -996,6 +1026,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, double, String, String,
 	String, PortletRequestModel, ThemeDisplay)}
@@ -1017,6 +1048,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, double, String, String,
 	String, PortletRequestModel, ThemeDisplay)}
@@ -1041,6 +1073,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the latest web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleContent(long groupId, String articleId,
@@ -1060,6 +1093,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the latest web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, String, String, String,
 	PortletRequestModel, ThemeDisplay)}
@@ -1080,6 +1114,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the latest web content from the matching web content article
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, String, String, String,
 	PortletRequestModel, ThemeDisplay)}
@@ -1116,6 +1151,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(JournalArticle article,
@@ -1142,6 +1178,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1167,6 +1204,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1190,6 +1228,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1215,6 +1254,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1238,6 +1278,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1258,6 +1299,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article display, or <code>null</code> if the
 	article has expired or if article's display date/time is after
 	the current date/time
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleDisplay getArticleDisplay(long groupId,
@@ -1622,6 +1664,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the matching web content article currently displayed, or the next
 	one to be displayed if no version of the article is currently
 	displayed
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getDisplayArticle(long groupId, String articleId)
@@ -1636,6 +1679,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the web content article matching the URL title that is currently
 	displayed, or next one to be displayed if no version of the
 	article is currently displayed
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getDisplayArticleByUrlTitle(long groupId,
@@ -1741,6 +1785,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param resourcePrimKey the primary key of the resource instance
 	* @return the latest web content article matching the resource primary key,
 	preferring articles with approved workflow status
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long resourcePrimKey)
@@ -1757,6 +1802,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the latest web content article matching the resource primary key
 	and workflow status, preferring articles with approved workflow
 	status
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long resourcePrimKey, int status)
@@ -1778,6 +1824,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return the latest web content article matching the resource primary key
 	and workflow status, optionally preferring articles with approved
 	workflow status
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long resourcePrimKey, int status,
@@ -1789,6 +1836,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long groupId, String articleId)
@@ -1804,6 +1852,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long groupId, String articleId,
@@ -1823,6 +1872,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long groupId, String className,
@@ -1838,6 +1888,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticleByUrlTitle(long groupId,
@@ -1850,6 +1901,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the latest version number of the matching web content
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public double getLatestVersion(long groupId, String articleId)
@@ -1865,6 +1917,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest version number of the matching web content
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public double getLatestVersion(long groupId, String articleId, int status)
@@ -1892,6 +1945,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the oldest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getOldestArticle(long groupId, String articleId)
@@ -1907,6 +1961,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the oldest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getOldestArticle(long groupId, String articleId,
@@ -2073,6 +2128,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @param urlTitle the web content article's accessible URL title
 	* @return the web content article's unique URL title
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueUrlTitle(long groupId, String articleId,
@@ -2098,6 +2154,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param version the web content article's version
 	* @return <code>true</code> if the specified web content article is the
 	latest version; <code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isLatestVersion(long groupId, String articleId,
@@ -2115,6 +2172,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	with the "STATUS_" prefix.
 	* @return <code>true</code> if the specified web content article is the
 	latest version; <code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isLatestVersion(long groupId, String articleId,
@@ -2137,6 +2195,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	folder
 	* @return the updated web content article, which was moved to a new
 	folder
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#moveArticle(long, String, long, ServiceContext)}
 	*/
@@ -2162,6 +2221,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content update activity; otherwise it is considered a web content
 	add activity.
 	* @return the updated web content article, which was moved to a new folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle moveArticle(long groupId, String articleId,
@@ -2186,6 +2246,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to a new folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle moveArticleFromTrash(long userId, long groupId,
@@ -2201,6 +2262,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param article the web content article
 	* @return the updated web content article, which was moved to the Recycle
 	Bin
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle moveArticleToTrash(long userId, JournalArticle article)
@@ -2216,6 +2278,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param articleId the primary key of the web content article
 	* @return the moved web content article or <code>null</code> if no matching
 	article was found
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle moveArticleToTrash(long userId, long groupId,
 		String articleId) throws PortalException;
@@ -2236,6 +2299,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* </pre></p>
 	*
 	* @param companyId the primary key of the web content article's company
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -2248,6 +2312,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param version the web content article's version
 	* @param languageId the primary key of the language locale to remove
 	* @return the updated web content article with the locale removed
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle removeArticleLocale(long groupId, String articleId,
@@ -2260,6 +2325,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	article
 	* @param article the web content article
 	* @return the restored web content article from the Recycle Bin
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle restoreArticleFromTrash(long userId,
@@ -2703,6 +2769,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
 	* @return the matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long groupId, long userId, long creatorUserId,
@@ -2942,6 +3009,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return a {@link BaseModelSearchResult} containing the total number of
 	hits and an ordered range of all the matching web content
 	articles ordered by <code>sort</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
@@ -3013,6 +3081,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return a {@link BaseModelSearchResult} containing the total number of
 	hits and an ordered range of all the matching web content
 	articles ordered by <code>sort</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
@@ -3059,6 +3128,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @return a {@link BaseModelSearchResult} containing the total number of
 	hits and an ordered range of all the matching web content
 	articles ordered by <code>sort</code>
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
@@ -3082,6 +3152,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user to be subscribed
 	* @param groupId the primary key of the folder's group
 	* @param articleId the primary key of the article to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void subscribe(long userId, long groupId, long articleId)
 		throws PortalException;
@@ -3093,6 +3164,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void subscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws PortalException;
@@ -3104,6 +3176,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user to be subscribed
 	* @param groupId the primary key of the folder's group
 	* @param articleId the primary key of the article to unsubscribe from
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void unsubscribe(long userId, long groupId, long articleId)
 		throws PortalException;
@@ -3115,6 +3188,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void unsubscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws PortalException;
@@ -3202,6 +3276,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content update activity; otherwise it is considered a web content
 	add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateArticle(long userId, long groupId,
@@ -3250,6 +3325,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content update activity; otherwise it is considered a web content
 	add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long userId, long groupId,
 		long folderId, String articleId, double version,
@@ -3338,6 +3414,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content update activity; otherwise it is considered a web content
 	add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateArticle(long userId, long groupId,
@@ -3380,6 +3457,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	content update activity; otherwise it is considered a web content
 	add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long userId, long groupId,
 		long folderId, String articleId, double version, String content,
@@ -3391,6 +3469,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param id the primary key of the web content article
 	* @param urlTitle the web content article's URL title
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateArticle(long id, String urlTitle)
@@ -3415,6 +3494,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date and URL title for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateArticleTranslation(long groupId,
@@ -3433,6 +3513,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param assetTagNames the new asset tag names
 	* @param assetLinkEntryIds the primary keys of the new asset link
 	entries
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#updateAsset(long, JournalArticle, long[], String[], long[],
 	Double)}
@@ -3453,6 +3534,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param assetTagNames the new asset tag names
 	* @param assetLinkEntryIds the primary keys of the new asset link entries
 	* @param priority the priority of the asset
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void updateAsset(long userId, JournalArticle article,
 		long[] assetCategoryIds, String[] assetTagNames,
@@ -3472,6 +3554,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	int, int, boolean, int, int, int, int, int, boolean, boolean,
 	boolean, String, File, Map, String, ServiceContext)} description.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateContent(long groupId, String articleId,
@@ -3523,6 +3606,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param workflowContext the web content article's configured workflow
 	context
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateStatus(long userId, JournalArticle article,
@@ -3546,6 +3630,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateStatus(long userId, long classPK, int status,
 		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
@@ -3569,6 +3654,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateStatus(long userId, long groupId,
 		String articleId, double version, int status, String articleURL,

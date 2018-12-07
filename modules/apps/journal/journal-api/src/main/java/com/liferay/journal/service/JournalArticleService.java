@@ -143,6 +143,7 @@ public interface JournalArticleService extends BaseService {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long groupId, long folderId,
 		long classNameId, long classPK, String articleId,
@@ -235,6 +236,7 @@ public interface JournalArticleService extends BaseService {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long groupId, long folderId,
 		long classNameId, long classPK, String articleId,
@@ -321,6 +323,7 @@ public interface JournalArticleService extends BaseService {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long groupId, long folderId,
 		long classNameId, long classPK, String articleId,
@@ -337,9 +340,7 @@ public interface JournalArticleService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Adds a web content article with additional parameters. All scheduling
-	* parameters (display date, expiration date, and review date) use the
-	* current user's timezone.
+	* Adds a web content article.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -361,6 +362,7 @@ public interface JournalArticleService extends BaseService {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle addArticle(long groupId, long folderId,
 		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -378,6 +380,7 @@ public interface JournalArticleService extends BaseService {
 	* @param autoArticleId whether to auto-generate the web content article ID
 	* @param version the web content article's version
 	* @return the new web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle copyArticle(long groupId, String oldArticleId,
 		String newArticleId, boolean autoArticleId, double version)
@@ -395,6 +398,7 @@ public interface JournalArticleService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticle(long groupId, String articleId, double version,
 		String articleURL, ServiceContext serviceContext)
@@ -411,6 +415,7 @@ public interface JournalArticleService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteArticle(long groupId, String articleId,
 		String articleURL, ServiceContext serviceContext)
@@ -433,6 +438,7 @@ public interface JournalArticleService extends BaseService {
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle expireArticle(long groupId, String articleId,
 		double version, String articleURL, ServiceContext serviceContext)
@@ -450,11 +456,12 @@ public interface JournalArticleService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the service
-	context's command to {@link
+	article. With respect to social activities, by setting the
+	service context's command to {@link
 	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void expireArticle(long groupId, String articleId,
 		String articleURL, ServiceContext serviceContext)
@@ -469,6 +476,7 @@ public interface JournalArticleService extends BaseService {
 	*
 	* @param id the primary key of the web content article
 	* @return the web content article with the ID
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long id) throws PortalException;
@@ -481,6 +489,7 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String articleId)
@@ -494,6 +503,7 @@ public interface JournalArticleService extends BaseService {
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String articleId,
@@ -514,6 +524,7 @@ public interface JournalArticleService extends BaseService {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticle(long groupId, String className,
@@ -527,6 +538,7 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the web content article's group
 	* @param urlTitle the web content article's accessible URL title
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
@@ -543,6 +555,7 @@ public interface JournalArticleService extends BaseService {
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the matching web content
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleContent(long groupId, String articleId,
@@ -560,6 +573,7 @@ public interface JournalArticleService extends BaseService {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, double, String,
 	PortletRequestModel, ThemeDisplay)}
@@ -580,6 +594,7 @@ public interface JournalArticleService extends BaseService {
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the matching web content
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleContent(long groupId, String articleId,
@@ -595,6 +610,7 @@ public interface JournalArticleService extends BaseService {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#getArticleContent(long, String, String, PortletRequestModel,
 	ThemeDisplay)}
@@ -752,6 +768,9 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the web content article's group
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
 	* @param start the lower bound of the range of web content articles to
 	return
 	* @param end the upper bound of the range of web content articles to
@@ -889,6 +908,7 @@ public interface JournalArticleService extends BaseService {
 	* @return the web content article matching the URL title that is currently
 	displayed, or next one to be displayed if no version of the
 	article is currently displayed
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getDisplayArticleByUrlTitle(long groupId,
@@ -917,6 +937,7 @@ public interface JournalArticleService extends BaseService {
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
+	* @param includeOwner whether to include the user's web content
 	* @param start the lower bound of the range of web content articles to
 	return
 	* @param end the upper bound of the range of web content articles to
@@ -925,6 +946,7 @@ public interface JournalArticleService extends BaseService {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getGroupArticles(long groupId, long userId,
@@ -961,6 +983,7 @@ public interface JournalArticleService extends BaseService {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getGroupArticles(long groupId, long userId,
@@ -994,6 +1017,7 @@ public interface JournalArticleService extends BaseService {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getGroupArticles(long groupId, long userId,
@@ -1010,6 +1034,7 @@ public interface JournalArticleService extends BaseService {
 	* @param rootFolderId the primary key of the root folder to begin the
 	search
 	* @return the number of matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupArticlesCount(long groupId, long userId,
@@ -1027,6 +1052,7 @@ public interface JournalArticleService extends BaseService {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the number of matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupArticlesCount(long groupId, long userId,
@@ -1043,8 +1069,10 @@ public interface JournalArticleService extends BaseService {
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
+	* @param includeOwner whether to include the user's web content
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupArticlesCount(long groupId, long userId,
@@ -1058,6 +1086,7 @@ public interface JournalArticleService extends BaseService {
 	* @param resourcePrimKey the primary key of the resource instance
 	* @return the latest web content article matching the resource primary key,
 	preferring articles with approved workflow status
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long resourcePrimKey)
@@ -1073,6 +1102,7 @@ public interface JournalArticleService extends BaseService {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long groupId, String articleId,
@@ -1092,6 +1122,7 @@ public interface JournalArticleService extends BaseService {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticle getLatestArticle(long groupId, String className,
@@ -1122,6 +1153,7 @@ public interface JournalArticleService extends BaseService {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#moveArticle(long, String, long, ServiceContext)}
 	*/
@@ -1137,14 +1169,15 @@ public interface JournalArticleService extends BaseService {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
-	* @param serviceContext the service context to be applied. Can set the user
-	ID, language ID, portlet preferences, portlet request, portlet
-	response, theme display, and can set whether to add the default
-	command update for the web content article. With respect to social
-	activities, by setting the service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	* @param serviceContext the service context to be applied. Can set the
+	user ID, language ID, portlet preferences, portlet request,
+	portlet response, theme display, and can set whether to add the
+	default command update for the web content article. With respect
+	to social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void moveArticle(long groupId, String articleId, long newFolderId,
 		ServiceContext serviceContext) throws PortalException;
@@ -1166,6 +1199,7 @@ public interface JournalArticleService extends BaseService {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle moveArticleFromTrash(long groupId,
 		long resourcePrimKey, long newFolderId, ServiceContext serviceContext)
@@ -1188,6 +1222,7 @@ public interface JournalArticleService extends BaseService {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle moveArticleFromTrash(long groupId, String articleId,
 		long newFolderId, ServiceContext serviceContext)
@@ -1201,6 +1236,7 @@ public interface JournalArticleService extends BaseService {
 	* @param articleId the primary key of the web content article
 	* @return the moved web content article or <code>null</code> if no matching
 	article was found
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle moveArticleToTrash(long groupId, String articleId)
 		throws PortalException;
@@ -1211,6 +1247,7 @@ public interface JournalArticleService extends BaseService {
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param languageId the primary key of the language locale to remove
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void removeArticleLocale(long companyId, String languageId)
 		throws PortalException;
@@ -1224,6 +1261,7 @@ public interface JournalArticleService extends BaseService {
 	* @param version the web content article's version
 	* @param languageId the primary key of the language locale to remove
 	* @return the updated web content article with the locale removed
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle removeArticleLocale(long groupId, String articleId,
 		double version, String languageId) throws PortalException;
@@ -1233,6 +1271,7 @@ public interface JournalArticleService extends BaseService {
 	* from the Recycle Bin.
 	*
 	* @param resourcePrimKey the primary key of the resource instance
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void restoreArticleFromTrash(long resourcePrimKey)
 		throws PortalException;
@@ -1242,6 +1281,7 @@ public interface JournalArticleService extends BaseService {
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void restoreArticleFromTrash(long groupId, String articleId)
 		throws PortalException;
@@ -1273,6 +1313,7 @@ public interface JournalArticleService extends BaseService {
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
 	* @return the matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long groupId, long creatorUserId, int status, int start,
@@ -1648,6 +1689,7 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void subscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws PortalException;
@@ -1662,6 +1704,7 @@ public interface JournalArticleService extends BaseService {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void unsubscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws PortalException;
@@ -1694,6 +1737,7 @@ public interface JournalArticleService extends BaseService {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long userId, long groupId,
 		long folderId, String articleId, double version,
@@ -1779,6 +1823,7 @@ public interface JournalArticleService extends BaseService {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long groupId, long folderId,
 		String articleId, double version, Map<Locale, String> titleMap,
@@ -1870,6 +1915,7 @@ public interface JournalArticleService extends BaseService {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long groupId, long folderId,
 		String articleId, double version, Map<Locale, String> titleMap,
@@ -1922,6 +1968,7 @@ public interface JournalArticleService extends BaseService {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticle(long groupId, long folderId,
 		String articleId, double version, String content,
@@ -1943,6 +1990,7 @@ public interface JournalArticleService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date and URL title for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateArticleTranslation(long groupId,
 		String articleId, double version, Locale locale, String title,
@@ -1960,6 +2008,7 @@ public interface JournalArticleService extends BaseService {
 	see the content example in the {@link #updateArticle(long, long,
 	String, double, String, ServiceContext)} description.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateContent(long groupId, String articleId,
 		double version, String content) throws PortalException;
@@ -1979,6 +2028,7 @@ public interface JournalArticleService extends BaseService {
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public JournalArticle updateStatus(long groupId, String articleId,
 		double version, int status, String articleURL,

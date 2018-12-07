@@ -141,6 +141,7 @@ public class JournalArticleServiceSoap {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap addArticle(
 		long groupId, long folderId, long classNameId, long classPK,
@@ -185,9 +186,7 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
-	* Adds a web content article with additional parameters. All scheduling
-	* parameters (display date, expiration date, and review date) use the
-	* current user's timezone.
+	* Adds a web content article.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -209,6 +208,7 @@ public class JournalArticleServiceSoap {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap addArticle(
 		long groupId, long folderId, String[] titleMapLanguageIds,
@@ -247,6 +247,7 @@ public class JournalArticleServiceSoap {
 	* @param autoArticleId whether to auto-generate the web content article ID
 	* @param version the web content article's version
 	* @return the new web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap copyArticle(
 		long groupId, String oldArticleId, String newArticleId,
@@ -276,6 +277,7 @@ public class JournalArticleServiceSoap {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteArticle(long groupId, String articleId,
 		double version, String articleURL,
@@ -303,6 +305,7 @@ public class JournalArticleServiceSoap {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteArticle(long groupId, String articleId,
 		String articleURL,
@@ -336,6 +339,7 @@ public class JournalArticleServiceSoap {
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
 	* @return the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap expireArticle(
 		long groupId, String articleId, double version, String articleURL,
@@ -366,11 +370,12 @@ public class JournalArticleServiceSoap {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the service
-	context's command to {@link
+	article. With respect to social activities, by setting the
+	service context's command to {@link
 	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void expireArticle(long groupId, String articleId,
 		String articleURL,
@@ -407,6 +412,7 @@ public class JournalArticleServiceSoap {
 	*
 	* @param id the primary key of the web content article
 	* @return the web content article with the ID
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getArticle(
 		long id) throws RemoteException {
@@ -430,6 +436,7 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getArticle(
 		long groupId, String articleId) throws RemoteException {
@@ -454,6 +461,7 @@ public class JournalArticleServiceSoap {
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getArticle(
 		long groupId, String articleId, double version)
@@ -486,6 +494,7 @@ public class JournalArticleServiceSoap {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getArticle(
 		long groupId, String className, long classPK) throws RemoteException {
@@ -510,6 +519,7 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param urlTitle the web content article's accessible URL title
 	* @return the matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getArticleByUrlTitle(
 		long groupId, String urlTitle) throws RemoteException {
@@ -765,6 +775,9 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the web content article's group
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
 	* @param start the lower bound of the range of web content articles to
 	return
 	* @param end the upper bound of the range of web content articles to
@@ -998,6 +1011,7 @@ public class JournalArticleServiceSoap {
 	* @return the web content article matching the URL title that is currently
 	displayed, or next one to be displayed if no version of the
 	article is currently displayed
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getDisplayArticleByUrlTitle(
 		long groupId, String urlTitle) throws RemoteException {
@@ -1049,6 +1063,7 @@ public class JournalArticleServiceSoap {
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
+	* @param includeOwner whether to include the user's web content
 	* @param start the lower bound of the range of web content articles to
 	return
 	* @param end the upper bound of the range of web content articles to
@@ -1057,6 +1072,7 @@ public class JournalArticleServiceSoap {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap[] getGroupArticles(
 		long groupId, long userId, long rootFolderId, int status,
@@ -1107,6 +1123,7 @@ public class JournalArticleServiceSoap {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap[] getGroupArticles(
 		long groupId, long userId, long rootFolderId, int status, int start,
@@ -1153,6 +1170,7 @@ public class JournalArticleServiceSoap {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap[] getGroupArticles(
 		long groupId, long userId, long rootFolderId, int start, int end,
@@ -1181,6 +1199,7 @@ public class JournalArticleServiceSoap {
 	* @param rootFolderId the primary key of the root folder to begin the
 	search
 	* @return the number of matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId) throws RemoteException {
@@ -1209,6 +1228,7 @@ public class JournalArticleServiceSoap {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the number of matching web content articles
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId, int status) throws RemoteException {
@@ -1236,8 +1256,10 @@ public class JournalArticleServiceSoap {
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
+	* @param includeOwner whether to include the user's web content
 	* @return the range of matching web content articles ordered by the
 	comparator
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId, int status, boolean includeOwner)
@@ -1262,6 +1284,7 @@ public class JournalArticleServiceSoap {
 	* @param resourcePrimKey the primary key of the resource instance
 	* @return the latest web content article matching the resource primary key,
 	preferring articles with approved workflow status
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getLatestArticle(
 		long resourcePrimKey) throws RemoteException {
@@ -1287,6 +1310,7 @@ public class JournalArticleServiceSoap {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getLatestArticle(
 		long groupId, String articleId, int status) throws RemoteException {
@@ -1317,6 +1341,7 @@ public class JournalArticleServiceSoap {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the latest matching web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap getLatestArticle(
 		long groupId, String className, long classPK) throws RemoteException {
@@ -1389,6 +1414,7 @@ public class JournalArticleServiceSoap {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	#moveArticle(long, String, long, ServiceContext)}
 	*/
@@ -1414,14 +1440,15 @@ public class JournalArticleServiceSoap {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
-	* @param serviceContext the service context to be applied. Can set the user
-	ID, language ID, portlet preferences, portlet request, portlet
-	response, theme display, and can set whether to add the default
-	command update for the web content article. With respect to social
-	activities, by setting the service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	* @param serviceContext the service context to be applied. Can set the
+	user ID, language ID, portlet preferences, portlet request,
+	portlet response, theme display, and can set whether to add the
+	default command update for the web content article. With respect
+	to social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void moveArticle(long groupId, String articleId,
 		long newFolderId,
@@ -1455,6 +1482,7 @@ public class JournalArticleServiceSoap {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap moveArticleFromTrash(
 		long groupId, long resourcePrimKey, long newFolderId,
@@ -1490,6 +1518,7 @@ public class JournalArticleServiceSoap {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap moveArticleFromTrash(
 		long groupId, String articleId, long newFolderId,
@@ -1516,6 +1545,7 @@ public class JournalArticleServiceSoap {
 	* @param articleId the primary key of the web content article
 	* @return the moved web content article or <code>null</code> if no matching
 	article was found
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap moveArticleToTrash(
 		long groupId, String articleId) throws RemoteException {
@@ -1538,6 +1568,7 @@ public class JournalArticleServiceSoap {
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param languageId the primary key of the language locale to remove
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void removeArticleLocale(long companyId, String languageId)
 		throws RemoteException {
@@ -1560,6 +1591,7 @@ public class JournalArticleServiceSoap {
 	* @param version the web content article's version
 	* @param languageId the primary key of the language locale to remove
 	* @return the updated web content article with the locale removed
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap removeArticleLocale(
 		long groupId, String articleId, double version, String languageId)
@@ -1582,6 +1614,7 @@ public class JournalArticleServiceSoap {
 	* from the Recycle Bin.
 	*
 	* @param resourcePrimKey the primary key of the resource instance
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void restoreArticleFromTrash(long resourcePrimKey)
 		throws RemoteException {
@@ -1600,6 +1633,7 @@ public class JournalArticleServiceSoap {
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void restoreArticleFromTrash(long groupId, String articleId)
 		throws RemoteException {
@@ -2088,6 +2122,7 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void subscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws RemoteException {
@@ -2121,6 +2156,7 @@ public class JournalArticleServiceSoap {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void unsubscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws RemoteException {
@@ -2163,6 +2199,7 @@ public class JournalArticleServiceSoap {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap updateArticle(
 		long userId, long groupId, long folderId, String articleId,
@@ -2227,6 +2264,7 @@ public class JournalArticleServiceSoap {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap updateArticle(
 		long groupId, long folderId, String articleId, double version,
@@ -2257,6 +2295,7 @@ public class JournalArticleServiceSoap {
 	see the content example in the {@link #updateArticle(long, long,
 	String, double, String, ServiceContext)} description.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap updateContent(
 		long groupId, String articleId, double version, String content)
@@ -2289,6 +2328,7 @@ public class JournalArticleServiceSoap {
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article.
 	* @return the updated web content article
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap updateStatus(
 		long groupId, String articleId, double version, int status,

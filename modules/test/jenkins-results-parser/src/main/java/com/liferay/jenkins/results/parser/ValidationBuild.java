@@ -265,19 +265,19 @@ public class ValidationBuild extends BaseBuild {
 						new SourceFormatFailureMessageGenerator();
 
 				messageElement =
-					sourceFormatFailureMessageGenerator.getMessageElement(this);
+					sourceFormatFailureMessageGenerator.getMessageElement(
+						console);
 			}
 			else {
 				GradleTaskFailureMessageGenerator
 					gradleTaskFailureMessageGenerator =
 						new GradleTaskFailureMessageGenerator();
 
-				if (gradleTaskFailureMessageGenerator != null) {
-					messageElement =
-						gradleTaskFailureMessageGenerator.getMessageElement(
-							this);
-				}
-				else {
+				messageElement =
+					gradleTaskFailureMessageGenerator.getMessageElement(
+						console);
+
+				if (messageElement == null) {
 					GenericFailureMessageGenerator
 						genericFailureMessageGenerator =
 							new GenericFailureMessageGenerator();

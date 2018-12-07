@@ -257,25 +257,41 @@
 	<command name="AddBlogsEntryWithDMLink" priority="4">
 		<description message="This is a use case for LPS-70143." />
 
-		<for list="1,2" param="entryCount">
-			<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openURL" />
 
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Documents and Media" />
-			</execute>
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
 
-			<execute macro="DMDocument#addCP">
-				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
-			</execute>
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="Document_1.jpg" />
+		</execute>
 
-			<execute macro="DMDocument#getDMLatestVersionURL">
-				<return name="dmDocument${entryCount}URL" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
-			</execute>
-		</for>
+		<execute macro="DMDocument#getDMLatestVersionURL">
+			<return name="dmDocument1URL" />
+			<var name="dmDocumentTitle" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="DMDocument#getDMLatestVersionURL">
+			<return name="dmDocument2URL" />
+			<var name="dmDocumentTitle" value="Document_2.jpg" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 

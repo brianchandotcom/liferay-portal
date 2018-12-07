@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.portlet.AdministratorControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,5 +29,5 @@ import org.osgi.service.component.annotations.Component;
 	service = ControlPanelEntry.class
 )
 public class ControlPanelWorkflowControlPanelEntry
-	extends WorkflowControlPanelEntry {
+	extends AdministratorControlPanelEntry {
 }

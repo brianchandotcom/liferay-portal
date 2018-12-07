@@ -1591,6 +1591,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layouts;
 	}
 
+	@Override
+	public List<Layout> getLayouts(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
+		int start, int end, OrderByComparator<Layout> obc) {
+
+		return layoutPersistence.findByG_P_GtLP_LtRP(
+			groupId, leftPlid, rightPlid, privateLayout, start, end, obc);
+	}
+
 	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
@@ -1722,6 +1731,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
 		return hits.getLength();
+	}
+
+	@Override
+	public int getLayoutsCount(
+		long groupId, long leftPlid, long rightPlid, boolean privateLayout) {
+
+		return layoutPersistence.countByG_P_GtLP_LtRP(
+			groupId, leftPlid, rightPlid, privateLayout);
 	}
 
 	@Override

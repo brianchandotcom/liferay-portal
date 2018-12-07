@@ -22,16 +22,12 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequestDispatcher;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.URLEncoder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.DynamicServletRequestUtil;
-import com.liferay.portal.struts.StrutsURLEncoder;
 import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletServletRequest;
 import com.liferay.portlet.PortletServletResponse;
@@ -45,6 +41,7 @@ import java.util.Set;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,7 +59,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Raymond Augé
  */
 public class PortletRequestDispatcherImpl
-	implements LiferayPortletRequestDispatcher, RequestDispatcher {
+	implements PortletRequestDispatcher, RequestDispatcher {
 
 	public PortletRequestDispatcherImpl(
 		RequestDispatcher requestDispatcher, boolean named,
@@ -107,7 +104,7 @@ public class PortletRequestDispatcherImpl
 			throw new IllegalStateException("Response is already committed");
 		}
 
-		dispatch(portletRequest, portletResponse, false, false);
+		dispatch(portletRequest, portletResponse, false);
 	}
 
 	@Override
@@ -123,16 +120,7 @@ public class PortletRequestDispatcherImpl
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, PortletException {
 
-		dispatch(portletRequest, portletResponse, false, true);
-	}
-
-	@Override
-	public void include(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			boolean strutsURLEncoder)
-		throws IOException, PortletException {
-
-		dispatch(portletRequest, portletResponse, strutsURLEncoder, true);
+		dispatch(portletRequest, portletResponse, true);
 	}
 
 	@Override
@@ -140,7 +128,7 @@ public class PortletRequestDispatcherImpl
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		dispatch(renderRequest, renderResponse, false, true);
+		dispatch(renderRequest, renderResponse, true);
 	}
 
 	@Override
@@ -176,7 +164,7 @@ public class PortletRequestDispatcherImpl
 
 	protected void dispatch(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			boolean strutsURLEncoder, boolean include)
+			boolean include)
 		throws IOException, PortletException {
 
 		checkCalledFlushBuffer(include, portletResponse);
@@ -295,20 +283,6 @@ public class PortletRequestDispatcherImpl
 
 		if (urlEncoder != null) {
 			liferayPortletResponse.setURLEncoder(urlEncoder);
-		}
-		else if (strutsURLEncoder) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			URLEncoder strutsURLEncoderObj = new StrutsURLEncoder(
-				portletServletRequest.getContextPath(),
-				themeDisplay.getPathMain(),
-				(String)_liferayPortletContext.getAttribute(
-					WebKeys.SERVLET_MAPPING),
-				liferayPortletResponse.createRenderURL());
-
-			liferayPortletResponse.setURLEncoder(strutsURLEncoderObj);
 		}
 
 		try {

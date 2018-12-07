@@ -507,7 +507,7 @@
 				dir="${modules.dir}"
 			>
 				<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Bundle: true" />
-				<containsregexp casesensitive="false" expression="Liferay-Releng-Suite:\s*\w+$" multiline="true" />
+				<containsregexp casesensitive="false" expression="Liferay-Releng-Suite:\s*[\w-]+$" multiline="true" />
 				<include name="apps/**/app.bnd" />
 				<include name="private/apps/**/app.bnd" />
 				<present targetdir="${modules.dir}/.releng">

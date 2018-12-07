@@ -54,6 +54,10 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public T getAssetObject();
 
+	public default T getAssetObject(long versionClassPK) {
+		return getAssetObject();
+	}
+
 	public AssetRendererFactory<T> getAssetRendererFactory();
 
 	public int getAssetRendererType();

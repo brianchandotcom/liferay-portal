@@ -114,12 +114,11 @@ class LayoutProvider extends Component {
 
 		return visitor.mapFields(
 			field => {
-				const newField = {...field};
-
-				delete newField.localizedValue;
-				delete newField.value;
-
-				return newField;
+				return {
+					...field,
+					localizedValue: {},
+					value: undefined
+				};
 			}
 		);
 	}

@@ -42,6 +42,13 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!hasColumn("JournalArticle", "title") ||
+			!hasColumn("JournalArticle", "description")) {
+
+			throw new IllegalStateException(
+				"JournalArticle must have title and description columns");
+		}
+
 		updateJournalArticleDefaultLanguageId();
 
 		updateJournalArticleLocalizedFields();
@@ -53,7 +60,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	protected void dropDescriptionColumn() throws Exception {
 		try {
 			if (hasColumn("JournalArticle", "description")) {
-				runSQL("alter table JournalArticle drop column description");
+				runSQL(_DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE);
 			}
 		}
 		catch (SQLException sqle) {
@@ -66,7 +73,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	protected void dropTitleColumn() throws Exception {
 		try {
 			if (hasColumn("JournalArticle", "title")) {
-				runSQL("alter table JournalArticle drop column title");
+				runSQL(_DROP_COLUMN_TITLE_FROM_JOURNALARTICLE);
 			}
 		}
 		catch (SQLException sqle) {
@@ -78,9 +85,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void updateJournalArticleDefaultLanguageId() throws Exception {
 		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
-			runSQL(
-				"alter table JournalArticle add defaultLanguageId " +
-					"VARCHAR(75)null");
+			runSQL(_ADD_COLUMN_DEFAULTLANGUAID_TO_JOURNALARTICLE);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -112,13 +117,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
-		if (hasColumn("JournalArticle", "description") &&
-			hasColumn("JournalArticle", "title") &&
-			hasTable("JournalArticleLocalization")) {
-
-			runSQL("drop table JournalArticleLocalization");
-		}
-
 		_upgradeSchema();
 
 		StringBundler sb = new StringBundler(3);
@@ -214,12 +212,28 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
+		if (hasTable("JournalArticleLocalization")) {
+			runSQL(_DROP_JOURNALARTICLELOCALIZATION);
+		}
+
 		String template = StringUtil.read(
 			UpgradeJournalArticleLocalizedValues.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
 	}
+
+	private static final String _ADD_COLUMN_DEFAULTLANGUAID_TO_JOURNALARTICLE =
+		"alter table JournalArticle add defaultLanguageId VARCHAR(75) null";
+
+	private static final String _DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE =
+		"alter table JournalArticle drop column description";
+
+	private static final String _DROP_COLUMN_TITLE_FROM_JOURNALARTICLE =
+		"alter table JournalArticle drop column title";
+
+	private static final String _DROP_JOURNALARTICLELOCALIZATION =
+		"drop table JournalArticleLocalization";
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;
 

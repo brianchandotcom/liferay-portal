@@ -238,6 +238,13 @@ class Builder extends Component {
 			pageIndex,
 			pages: visitor.mapFields(
 				field => {
+					if (fieldName === 'dataType' && field.fieldName === 'validation') {
+						field.validation = {
+							...field.validation,
+							dataType: value
+						};
+					}
+
 					if (field.fieldName === fieldName) {
 						field = {
 							...field,

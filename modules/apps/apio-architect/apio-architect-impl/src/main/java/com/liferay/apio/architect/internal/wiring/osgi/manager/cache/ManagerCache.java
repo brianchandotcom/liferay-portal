@@ -805,7 +805,7 @@ public class ManagerCache {
 	}
 
 	private static final MediaType _MEDIA_TYPE = MediaType.valueOf(
-		"application/ld+json");
+		"application/hal+json");
 
 	private Map<MediaType, BatchResultMessageMapper> _batchResultMessageMappers;
 	private Map<String, CollectionRoutes> _collectionRoutes;

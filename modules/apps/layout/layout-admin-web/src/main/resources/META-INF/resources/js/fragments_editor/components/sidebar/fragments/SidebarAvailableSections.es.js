@@ -17,12 +17,12 @@ import {
 	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {Store} from '../../../store/store.es';
-import templates from './SidebarAvailableFragments.soy';
+import templates from './SidebarAvailableSections.soy';
 
 /**
- * SidebarAvailableFragments
+ * SidebarAvailableSections
  */
-class SidebarAvailableFragments extends Component {
+class SidebarAvailableSections extends Component {
 
 	/**
 	 * @inheritDoc
@@ -235,14 +235,14 @@ class SidebarAvailableFragments extends Component {
  * @type {!Object}
  * @static
  */
-SidebarAvailableFragments.STATE = {
+SidebarAvailableSections.STATE = {
 
 	/**
 	 * Available sections that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarAvailableFragments
+	 * @memberOf SidebarAvailableSections
 	 * @type {!Array<{
 	 *   fragmentCollectionId: !string,
 	 *   fragmentEntries: Array<{
@@ -275,7 +275,7 @@ SidebarAvailableFragments.STATE = {
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarAvailableFragments
+	 * @memberOf SidebarAvailableSections
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
@@ -284,7 +284,7 @@ SidebarAvailableFragments.STATE = {
 	 * Store instance
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarAvailableFragments
+	 * @memberOf SidebarAvailableSections
 	 * @review
 	 * @type {Store}
 	 */
@@ -294,14 +294,14 @@ SidebarAvailableFragments.STATE = {
 	 * Internal DragDrop instance.
 	 * @default null
 	 * @instance
-	 * @memberOf SidebarAvailableFragments
+	 * @memberOf SidebarAvailableSections
 	 * @review
 	 * @type {object|null}
 	 */
 	_dragDrop: Config.internal().value(null)
 };
 
-Soy.register(SidebarAvailableFragments, templates);
+Soy.register(SidebarAvailableSections, templates);
 
-export {SidebarAvailableFragments};
-export default SidebarAvailableFragments;
+export {SidebarAvailableSections};
+export default SidebarAvailableSections;

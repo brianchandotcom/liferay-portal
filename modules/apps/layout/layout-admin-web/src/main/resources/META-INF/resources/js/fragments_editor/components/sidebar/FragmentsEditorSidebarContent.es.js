@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './fragments/SidebarFragmentsSection.es';
+import './fragments/SidebarSectionsSection.es';
 import './layouts/SidebarLayoutsSection.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
@@ -54,8 +54,8 @@ FragmentsEditorSidebarContent.STATE = {
 			[
 				{
 					icon: 'cards',
-					label: 'Fragments',
-					sectionId: 'fragments'
+					label: 'Sections',
+					sectionId: 'sections'
 				},
 				{
 					icon: 'page-template',
@@ -67,7 +67,7 @@ FragmentsEditorSidebarContent.STATE = {
 
 	/**
 	 * Sidebar active section ID
-	 * @default fragments
+	 * @default sections
 	 * @memberof FragmentsEditorSidebarContent
 	 * @private
 	 * @review
@@ -76,7 +76,7 @@ FragmentsEditorSidebarContent.STATE = {
 	_sectionId: Config
 		.string()
 		.internal()
-		.value('fragments')
+		.value('sections')
 };
 
 Soy.register(FragmentsEditorSidebarContent, templates);

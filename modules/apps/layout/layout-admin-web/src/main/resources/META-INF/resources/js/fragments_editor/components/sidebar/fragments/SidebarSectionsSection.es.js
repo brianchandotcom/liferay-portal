@@ -3,9 +3,9 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './SidebarAddedFragments.es';
-import './SidebarAvailableFragments.es';
+import './SidebarAvailableSections.es';
 import './SidebarMapping.es';
-import templates from './SidebarFragmentsSection.soy';
+import templates from './SidebarSectionsSection.soy';
 
 /**
  * Added tab ID
@@ -22,9 +22,9 @@ const ADDED_TAB_ID = 'added';
 const DEFAULT_TAB_ID = 'available';
 
 /**
- * SidebarFragmentsSection
+ * SidebarSectionsSection
  */
-class SidebarFragmentsSection extends Component {
+class SidebarSectionsSection extends Component {
 
 	/**
 	 * @inheritDoc
@@ -95,13 +95,13 @@ class SidebarFragmentsSection extends Component {
  * @static
  * @type {!Object}
  */
-SidebarFragmentsSection.STATE = {
+SidebarSectionsSection.STATE = {
 
 	/**
 	 * Tabs being shown in sidebar
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarFragmentsSection
+	 * @memberOf SidebarSectionsSection
 	 * @review
 	 * @type {!Array<{
 	 *   enabled: bool,
@@ -123,7 +123,7 @@ SidebarFragmentsSection.STATE = {
 	 * Whether to show added tab or not
 	 * @default null
 	 * @instance
-	 * @memberOf SidebarFragmentsSection
+	 * @memberOf SidebarSectionsSection
 	 * @private
 	 * @review
 	 * @type {bool}
@@ -137,7 +137,7 @@ SidebarFragmentsSection.STATE = {
 	 * Tab selected inside sidebar
 	 * @default DEFAULT_TAB_ID
 	 * @instance
-	 * @memberOf SidebarFragmentsSection
+	 * @memberOf SidebarSectionsSection
 	 * @private
 	 * @review
 	 * @type {string}
@@ -148,7 +148,7 @@ SidebarFragmentsSection.STATE = {
 		.value(DEFAULT_TAB_ID)
 };
 
-Soy.register(SidebarFragmentsSection, templates);
+Soy.register(SidebarSectionsSection, templates);
 
-export {SidebarFragmentsSection};
-export default SidebarFragmentsSection;
+export {SidebarSectionsSection};
+export default SidebarSectionsSection;

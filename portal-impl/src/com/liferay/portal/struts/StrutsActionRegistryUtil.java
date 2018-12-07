@@ -15,8 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -47,75 +45,43 @@ public class StrutsActionRegistryUtil {
 		return null;
 	}
 
-	private static String[] _getPaths(
-		ServiceReference<Object> serviceReference) {
-
-		Object object = serviceReference.getProperty("path");
-
-		if (object instanceof String[]) {
-			return (String[])object;
-		}
-
-		return new String[] {(String)object};
-	}
-
 	private static final ServiceTrackerMap<String, Action> _actions;
 
-	private static class ActionServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Action> {
-
-		@Override
-		public Action addingService(ServiceReference<Object> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Object service = registry.getService(serviceReference);
-
-			Action action = null;
-
-			if (service instanceof StrutsAction) {
-				action = new ActionAdapter((StrutsAction)service);
-			}
-			else if (service instanceof StrutsPortletAction) {
-				action = new PortletActionAdapter((StrutsPortletAction)service);
-			}
-
-			return action;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, Action service) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, Action service) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-		}
-
-	}
-
 	static {
-		String filterString = StringBundler.concat(
-			"(&(|(objectClass=", StrutsAction.class.getName(), ")(objectClass=",
-			StrutsPortletAction.class.getName(), "))(path=*))");
-
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
 			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
 		_actions = serviceTrackerMapFactory.openSingleValueMap(
-			null, filterString,
-			(serviceReference, emitter) -> {
-				String[] paths = _getPaths(serviceReference);
+			StrutsAction.class, "path",
+			new ServiceTrackerCustomizer<StrutsAction, Action>() {
 
-				for (String path : paths) {
-					emitter.emit(path);
+				@Override
+				public Action addingService(
+					ServiceReference<StrutsAction> serviceReference) {
+
+					Registry registry = RegistryUtil.getRegistry();
+
+					return new ActionAdapter(
+						registry.getService(serviceReference));
 				}
-			},
-			new ActionServiceTrackerCustomizer());
+
+				@Override
+				public void modifiedService(
+					ServiceReference<StrutsAction> serviceReference,
+					Action service) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<StrutsAction> serviceReference,
+					Action service) {
+
+					Registry registry = RegistryUtil.getRegistry();
+
+					registry.ungetService(serviceReference);
+				}
+
+			});
 	}
 
 }

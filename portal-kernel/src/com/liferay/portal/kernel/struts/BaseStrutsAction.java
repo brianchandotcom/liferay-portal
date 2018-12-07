@@ -30,6 +30,11 @@ public class BaseStrutsAction implements StrutsAction {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #execute(HttpServletRequest, HttpServletResponse)}
+	 */
+	@Deprecated
 	@Override
 	public String execute(
 			StrutsAction originalStrutsAction, HttpServletRequest request,

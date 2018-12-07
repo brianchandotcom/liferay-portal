@@ -38,24 +38,14 @@ public class ModuleConfig {
 	}
 
 	public ActionMapping getActionMapping(String path) {
-		ActionMapping actionMapping = _actionMappings.get(path);
-
 		ActionAdapter actionAdapter = (ActionAdapter)
 			StrutsActionRegistryUtil.getAction(path);
 
-		if ((actionMapping == null) && (actionAdapter == null)) {
-			return null;
+		if (actionAdapter != null) {
+			return new ActionMapping(this, null, path, actionAdapter);
 		}
 
-		if (actionAdapter == null) {
-			return actionMapping;
-		}
-
-		if (actionMapping != null) {
-			actionAdapter.setOriginalAction(actionMapping.getAction());
-		}
-
-		return new ActionMapping(this, null, path, actionAdapter);
+		return _actionMappings.get(path);
 	}
 
 	private final Map<String, ActionForward> _actionForwards = new HashMap<>();

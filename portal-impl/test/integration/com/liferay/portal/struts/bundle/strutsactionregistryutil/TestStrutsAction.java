@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts.bundle.strutsactionregistryutil;
 
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -34,19 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = StrutsAction.class
 )
-public class TestStrutsAction implements StrutsAction {
+public class TestStrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
 		HttpServletRequest request, HttpServletResponse response) {
-
-		return null;
-	}
-
-	@Override
-	public String execute(
-		StrutsAction originalStrutsAction, HttpServletRequest request,
-		HttpServletResponse response) {
 
 		_atomicBoolean.set(Boolean.TRUE);
 

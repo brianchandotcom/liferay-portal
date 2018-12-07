@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -1128,8 +1127,9 @@ public class MainServlet extends HttpServlet {
 			Throwable cause = e.getCause();
 
 			if (cause instanceof NoSuchLayoutException) {
-				_sendError(
-					HttpServletResponse.SC_NOT_FOUND, cause, request, response);
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, (Exception)cause, request,
+					response);
 
 				return true;
 			}
@@ -1185,8 +1185,9 @@ public class MainServlet extends HttpServlet {
 		if ((userId > 0) ||
 			(ParamUtil.getInteger(request, "p_p_lifecycle") == 2)) {
 
-			_sendError(
-				HttpServletResponse.SC_UNAUTHORIZED, t, request, response);
+			PortalUtil.sendError(
+				HttpServletResponse.SC_UNAUTHORIZED, (Exception)t, request,
+				response);
 
 			return;
 		}
@@ -1280,25 +1281,6 @@ public class MainServlet extends HttpServlet {
 			registry.registerService(
 				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
 				properties);
-	}
-
-	private void _sendError(
-			int status, Throwable t, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
-
-		DynamicServletRequest dynamicRequest = new DynamicServletRequest(
-			request);
-
-		// Reset layout params or there will be an infinite loop
-
-		dynamicRequest.setParameter("p_l_id", StringPool.BLANK);
-
-		dynamicRequest.setParameter("groupId", StringPool.BLANK);
-		dynamicRequest.setParameter("layoutId", StringPool.BLANK);
-		dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
-
-		PortalUtil.sendError(status, (Exception)t, dynamicRequest, response);
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =

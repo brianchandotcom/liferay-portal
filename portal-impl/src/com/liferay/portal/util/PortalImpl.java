@@ -6969,6 +6969,19 @@ public class PortalImpl implements Portal {
 			redirect = PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND;
 		}
 		else if (PropsValues.LAYOUT_SHOW_HTTP_STATUS) {
+			DynamicServletRequest dynamicRequest = new DynamicServletRequest(
+				request);
+
+			// Reset layout params or there will be an infinite loop
+
+			dynamicRequest.setParameter("p_l_id", StringPool.BLANK);
+
+			dynamicRequest.setParameter("groupId", StringPool.BLANK);
+			dynamicRequest.setParameter("layoutId", StringPool.BLANK);
+			dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
+
+			request = dynamicRequest;
+
 			redirect = PATH_MAIN + "/portal/status";
 		}
 

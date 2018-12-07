@@ -4,6 +4,7 @@ import Soy from 'metal-soy';
 
 import './fragments/SidebarSectionsSection.es';
 import './layouts/SidebarLayoutsSection.es';
+import './mapping/SidebarMappingSection.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**
@@ -59,8 +60,13 @@ FragmentsEditorSidebarContent.STATE = {
 				},
 				{
 					icon: 'page-template',
-					label: 'layouts',
+					label: 'Layouts',
 					sectionId: 'layouts'
+				},
+				{
+					icon: 'simulation-menu',
+					label: 'Mapping',
+					sectionId: 'mapping'
 				}
 			]
 		),

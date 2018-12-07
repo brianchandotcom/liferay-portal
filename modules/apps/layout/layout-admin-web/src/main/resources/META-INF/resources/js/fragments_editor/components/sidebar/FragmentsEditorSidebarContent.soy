@@ -41,6 +41,13 @@
 				{call com.liferay.layout.admin.web.SidebarLayoutsSection.render}
 					{param store: $store /}
 				{/call}
+			{elseif $_sectionId == 'mapping'}
+				{call com.liferay.layout.admin.web.SidebarMappingSection.render}
+					{param highlightMapping: $highlightMapping ?: false /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
 			{/if}
 		</div>
 

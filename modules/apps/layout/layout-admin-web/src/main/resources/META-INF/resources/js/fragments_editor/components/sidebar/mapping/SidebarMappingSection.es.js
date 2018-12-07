@@ -5,12 +5,12 @@ import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {OPEN_ASSET_TYPE_DIALOG, UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../../actions/actions.es';
 import {Store} from '../../../store/store.es';
-import templates from './SidebarMapping.soy';
+import templates from './SidebarMappingSection.soy';
 
 /**
- * SidebarMapping
+ * SidebarMappingSection
  */
-class SidebarMapping extends Component {
+class SidebarMappingSection extends Component {
 
 	/**
 	 * @inheritDoc
@@ -58,7 +58,7 @@ class SidebarMapping extends Component {
  * @type {!Object}
  */
 
-SidebarMapping.STATE = {
+SidebarMappingSection.STATE = {
 
 	/**
 	 * If true, editable values should be highlighted.
@@ -76,7 +76,7 @@ SidebarMapping.STATE = {
 	 * Selected mapping type label
 	 * @default {}
 	 * @instance
-	 * @memberOf SidebarMapping
+	 * @memberOf SidebarMappingSection
 	 * @review
 	 * @type {{
 	 *   subtype: {
@@ -112,14 +112,14 @@ SidebarMapping.STATE = {
 	 * Store instance
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarMapping
+	 * @memberOf SidebarMappingSection
 	 * @review
 	 * @type {Store}
 	 */
 	store: Config.instanceOf(Store)
 };
 
-Soy.register(SidebarMapping, templates);
+Soy.register(SidebarMappingSection, templates);
 
-export {SidebarMapping};
-export default SidebarMapping;
+export {SidebarMappingSection};
+export default SidebarMappingSection;

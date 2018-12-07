@@ -194,6 +194,9 @@ public class CentralGitSubrepository {
 		else if (gitSubrepositoryUpstreamBranchName.contains("7.1")) {
 			gitSubrepositoryUpstreamBranchName = "7.1.x";
 		}
+		else if (gitSubrepositoryUpstreamBranchName.contains("7.2")) {
+			gitSubrepositoryUpstreamBranchName = "7.2.x";
+		}
 		else if (gitSubrepositoryUpstreamBranchName.contains("master")) {
 			gitSubrepositoryUpstreamBranchName = "master";
 		}

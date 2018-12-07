@@ -21,7 +21,7 @@ import {
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {getFragmentRowIndex} from '../../utils/FragmentsEditorGetUtils.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
@@ -271,35 +271,7 @@ class FragmentEntryLinkList extends Component {
 				};
 			}
 
-			this.store
-				.dispatchAction(
-					UPDATE_SAVING_CHANGES_STATUS,
-					{
-						savingChanges: true
-					}
-				)
-				.dispatchAction(
-					moveItemAction,
-					moveItemPayload
-				)
-				.dispatchAction(
-					UPDATE_LAST_SAVE_DATE,
-					{
-						lastSaveDate: new Date()
-					}
-				)
-				.dispatchAction(
-					UPDATE_SAVING_CHANGES_STATUS,
-					{
-						savingChanges: false
-					}
-				)
-				.dispatchAction(
-					CLEAR_DROP_TARGET
-				)
-				.dispatchAction(
-					CLEAR_HOVERED_ITEM
-				);
+			moveItem(this.store, moveItemAction, moveItemPayload);
 		}
 	}
 

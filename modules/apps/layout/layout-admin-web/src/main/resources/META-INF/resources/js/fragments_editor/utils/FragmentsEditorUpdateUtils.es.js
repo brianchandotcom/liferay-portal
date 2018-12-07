@@ -1,3 +1,10 @@
+import {
+	CLEAR_DROP_TARGET,
+	CLEAR_HOVERED_ITEM,
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from '../actions/actions.es';
+
 /**
  * Inserts an element in the given position of a given array and returns
  * a copy of the array
@@ -11,6 +18,45 @@ function add(array, element, position) {
 	newArray.splice(position, 0, element);
 
 	return newArray;
+}
+
+/**
+ * Dispatches necessary actions to move an item to another position
+ * @param {!Object} store Store instance that dispatches the actions
+ * @param {!string} moveItemAction
+ * @param {!Object} moveItemPayload Data that is passed to the reducer
+ * @review
+ */
+function moveItem(store, moveItemAction, moveItemPayload) {
+	store
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: true
+			}
+		)
+		.dispatchAction(
+			moveItemAction,
+			moveItemPayload
+		)
+		.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{
+				lastSaveDate: new Date()
+			}
+		)
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: false
+			}
+		)
+		.dispatchAction(
+			CLEAR_DROP_TARGET
+		)
+		.dispatchAction(
+			CLEAR_HOVERED_ITEM
+		);
 }
 
 /**
@@ -130,6 +176,7 @@ function updateLayoutData(
 
 export {
 	add,
+	moveItem,
 	remove,
 	setIn,
 	updateIn,

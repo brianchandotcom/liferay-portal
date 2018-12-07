@@ -202,6 +202,10 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		if (permissionChecker == null) {
+			return;
+		}
+
 		if (!permissionChecker.isCompanyAdmin()) {
 			throw new PrincipalException.MustBeCompanyAdmin(
 				permissionChecker.getUserId());

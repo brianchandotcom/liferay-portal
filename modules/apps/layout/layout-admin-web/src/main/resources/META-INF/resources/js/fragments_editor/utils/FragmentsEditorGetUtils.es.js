@@ -1,5 +1,14 @@
 import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 
+const ARROW_DOWN_KEYCODE = 40;
+
+const ARROW_UP_KEYCODE = 38;
+
+const MOVE_ITEM_DIRECTIONS = {
+	DOWN: 1,
+	UP: -1
+};
+
 /**
  * Returns the column with the given columnId
  * @param {Object} structure
@@ -92,6 +101,19 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 	);
 }
 
+function getItemMoveDirection(keycode) {
+	let direction = null;
+
+	if (keycode === ARROW_UP_KEYCODE) {
+		direction = MOVE_ITEM_DIRECTIONS.UP;
+	}
+	else if (keycode === ARROW_DOWN_KEYCODE) {
+		direction = MOVE_ITEM_DIRECTIONS.DOWN;
+	}
+
+	return direction;
+}
+
 /**
  * Get the fragmentEntryLinkIds of the fragments inside the given section
  * @param {array} structure
@@ -132,6 +154,7 @@ export {
 	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
+	getItemMoveDirection,
 	getSectionFragmentEntryLinkIds,
 	getSectionIndex
 };

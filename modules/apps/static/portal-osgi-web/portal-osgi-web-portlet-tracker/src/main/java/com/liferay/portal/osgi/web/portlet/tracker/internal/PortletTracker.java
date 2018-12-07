@@ -1371,7 +1371,9 @@ public class PortletTracker
 
 	private String _httpServiceEndpoint = StringPool.BLANK;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	@Reference(
+		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
+	)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference

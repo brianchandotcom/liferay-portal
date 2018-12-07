@@ -57,8 +57,16 @@ JSONArray breadcrumbEntriesJSONArray = layoutsAdminDisplayContext.getBreadcrumbE
 		keyProperty="plid"
 		modelVar="layout"
 	>
+
+		<%
+		PortletURL portletURL = layoutsAdminDisplayContext.getPortletURL();
+
+		portletURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+		%>
+
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200 table-title"
+			href="<%= portletURL %>"
 			name="title"
 			value="<%= layout.getName(locale) %>"
 		/>

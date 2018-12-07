@@ -731,7 +731,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * approved and there are other approved file versions available.
 	 *
 	 * @param  fileVersionId the primary key of the file version
-	 * @review
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void deleteFileVersion(long fileVersionId) throws PortalException {

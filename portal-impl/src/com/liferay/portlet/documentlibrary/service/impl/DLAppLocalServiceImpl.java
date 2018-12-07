@@ -504,7 +504,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file version. File versions can only be deleted if it is
 	 * approved and there are other approved file versions available.
 	 *
-	 * @param fileVersionId the primary key of the file version
+	 * @param  fileVersionId the primary key of the file version
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void deleteFileVersion(long fileVersionId) throws PortalException {

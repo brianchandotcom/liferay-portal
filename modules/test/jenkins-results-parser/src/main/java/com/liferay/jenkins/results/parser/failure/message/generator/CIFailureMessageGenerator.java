@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import org.dom4j.Element;
@@ -25,9 +24,7 @@ import org.dom4j.Element;
 public class CIFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public Element getMessageElement(String consoleText) {
 		int index = consoleText.indexOf(_TOKEN_CI_ERROR);
 
 		if (index == -1) {

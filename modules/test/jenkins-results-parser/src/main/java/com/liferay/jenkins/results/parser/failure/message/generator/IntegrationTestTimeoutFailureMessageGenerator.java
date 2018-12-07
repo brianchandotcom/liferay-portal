@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import java.util.regex.Matcher;
@@ -29,8 +28,8 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
-		Matcher matcher = _pattern.matcher(build.getConsoleText());
+	public Element getMessageElement(String consoleText) {
+		Matcher matcher = _pattern.matcher(consoleText);
 
 		if (!matcher.find()) {
 			return null;

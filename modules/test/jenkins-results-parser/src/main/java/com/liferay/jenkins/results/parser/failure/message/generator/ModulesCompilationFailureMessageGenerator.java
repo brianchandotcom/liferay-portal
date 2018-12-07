@@ -26,12 +26,18 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
 		String jobName = build.getJobName();
 
-		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG) ||
-			!jobName.contains("modules-compile")) {
+		if (!jobName.contains("modules-compile")) {
+			return null;
+		}
 
+		return getMessageElement(build.getConsoleText());
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
 			return null;
 		}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import java.util.regex.Matcher;
@@ -29,9 +28,8 @@ public class PoshiValidationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
-		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
-			build.getConsoleText());
+	public Element getMessageElement(String consoleText) {
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
 
 		if (!poshiFailureMatcher.find()) {
 			return null;

@@ -32,9 +32,12 @@ public interface StrutsAction {
 	 *             #execute(HttpServletRequest, HttpServletResponse)}
 	 */
 	@Deprecated
-	public String execute(
+	public default String execute(
 			StrutsAction originalStrutsAction, HttpServletRequest request,
 			HttpServletResponse response)
-		throws Exception;
+		throws Exception {
+
+		return execute(request, response);
+	}
 
 }

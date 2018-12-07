@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -82,6 +84,23 @@ public class WorkflowDefinitionDisplayContext {
 			renderRequest);
 	}
 
+	public boolean canPublishWorkflowDefinition() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (_companyAdministratorCanPublish &&
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getActive(WorkflowDefinition workflowDefinition) {
 		HttpServletRequest request =
 			_workflowDefinitionRequestHelper.getRequest();
@@ -113,6 +132,10 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public JSPCreationMenu getCreationMenu(PageContext pageContext) {
+		if (!canPublishWorkflowDefinition()) {
+			return null;
+		}
+
 		LiferayPortletResponse response =
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
 
@@ -464,6 +487,12 @@ public class WorkflowDefinitionDisplayContext {
 		return !searchContainer.hasResults();
 	}
 
+	public void setCompanyAdministratorCanPublish(
+		boolean companyAdministratorCanPublish) {
+
+		_companyAdministratorCanPublish = companyAdministratorCanPublish;
+	}
+
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(
 		String description, String title, int status, boolean andOperator) {
 
@@ -626,6 +655,7 @@ public class WorkflowDefinitionDisplayContext {
 	private static final String _HTML =
 		"<a class='alert-link' href='[$RENDER_URL$]'>[$MESSAGE$]</a>";
 
+	private boolean _companyAdministratorCanPublish;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionRequestHelper

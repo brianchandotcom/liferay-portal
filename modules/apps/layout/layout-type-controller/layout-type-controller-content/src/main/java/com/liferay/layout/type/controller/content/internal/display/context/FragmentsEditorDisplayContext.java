@@ -129,6 +129,10 @@ public class FragmentsEditorDisplayContext {
 			_getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link"));
 		soyContext.put(
+			"elements",
+			_getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_ELEMENT));
+		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
@@ -200,6 +204,10 @@ public class FragmentsEditorDisplayContext {
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+		soyContext.put(
+			"elements",
+			_getSoyContextFragmentCollections(
+				FragmentEntryTypeConstants.TYPE_ELEMENT));
 		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 		soyContext.put("sidebarTabs", _getSidebarTabs());

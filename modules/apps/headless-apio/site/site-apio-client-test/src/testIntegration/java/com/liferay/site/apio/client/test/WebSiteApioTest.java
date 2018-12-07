@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.site.apio.test;
+package com.liferay.site.apio.client.test;
 
 import com.jayway.jsonpath.JsonPath;
 
+import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.site.apio.client.test.activator.WebSiteApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,9 +27,11 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,6 +45,12 @@ import org.junit.runner.RunWith;
 @RunAsClient
 @RunWith(Arquillian.class)
 public class WebSiteApioTest {
+
+	@Deployment
+	public static Archive<?> getArchive() throws Exception {
+		return OAuth2ProviderTestUtil.getArchive(
+			WebSiteApioTestBundleActivator.class);
+	}
 
 	@Before
 	public void setUp() throws MalformedURLException {

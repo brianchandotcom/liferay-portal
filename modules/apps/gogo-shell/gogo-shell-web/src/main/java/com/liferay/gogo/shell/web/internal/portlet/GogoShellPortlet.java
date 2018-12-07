@@ -168,6 +168,16 @@ public class GogoShellPortlet extends MVCPortlet {
 		super.processAction(actionRequest, actionResponse);
 	}
 
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		checkOmniAdmin();
+
+		super.render(renderRequest, renderResponse);
+	}
+
 	protected void checkCommand(String command, ThemeDisplay themeDisplay)
 		throws Exception {
 

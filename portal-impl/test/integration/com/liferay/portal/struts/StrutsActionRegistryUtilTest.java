@@ -61,18 +61,6 @@ public class StrutsActionRegistryUtilTest {
 		actionAdapter.execute(null, null, null);
 
 		Assert.assertTrue(_atomicState.isSet());
-
-		PortletActionAdapter portletActionAdapter =
-			(PortletActionAdapter)StrutsActionRegistryUtil.getAction(
-				"TestStrutsPortletAction");
-
-		Assert.assertNotNull(portletActionAdapter);
-
-		_atomicState.reset();
-
-		portletActionAdapter.isCheckMethodOnProcessAction();
-
-		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	private static AtomicState _atomicState;

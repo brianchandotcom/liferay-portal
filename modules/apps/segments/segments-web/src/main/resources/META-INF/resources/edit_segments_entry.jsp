@@ -111,7 +111,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 									properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>
 								},
 								{
-									spriteMapPath: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+									spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 								}
 							);
 						</aui:script>

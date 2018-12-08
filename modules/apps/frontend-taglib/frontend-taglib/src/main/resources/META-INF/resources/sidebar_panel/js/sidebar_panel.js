@@ -52,9 +52,12 @@ AUI.add(
 							Liferay.after(
 								'refreshInfoPanel',
 								function() {
-									setTimeout(function() {
-										instance._getSidebarContent()
-									}, 0);
+									setTimeout(
+										function() {
+											instance._getSidebarContent();
+										},
+										0
+									);
 								}
 							)
 						];

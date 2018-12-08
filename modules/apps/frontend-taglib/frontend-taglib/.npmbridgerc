@@ -1,14 +1,10 @@
 {
 	"frontend-taglib": {
-		"dest-file-mapper": {
-			"from": "(.*)\\$(.*)@.*/lib/(.*)",
-			"to": "$2/src/$3"
-		},
 		"dest-mod-name-mapper": {
 			"from": "(.*)\\.js$",
 			"to": "bridge/frontend-taglib/$1"
 		},
-		"file-globs": "**/*.js",
+		"file-globs": "**/*.es.js,**/*.soy.js",
 		"input": "classes/META-INF/resources",
 		"output": "classes/META-INF/resources/bridge/frontend-taglib",
 		"src-mod-name-mapper": {

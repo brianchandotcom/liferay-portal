@@ -1,8 +1,6 @@
 import Soy from 'metal-soy';
 import Treeview from 'frontend-js-web/liferay/compat/treeview/Treeview.es';
-import core from 'metal';
-import dom from 'metal-dom';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './CardsTreeview.soy';
 
@@ -18,6 +16,7 @@ import templates from './CardsTreeview.soy';
  * @review
  */
 class CardsTreeview extends Treeview {
+
 	/**
 	 * @inheritDoc
 	 * @review
@@ -81,8 +80,8 @@ class CardsTreeview extends Treeview {
 	 * @review
 	 */
 	expandSelectedNodesParentNodes_(nodes) {
-		let expanded,
-			expandedParent;
+		let expanded;
+		let expandedParent;
 
 		nodes.forEach(
 			(node) => {
@@ -195,11 +194,9 @@ class CardsTreeview extends Treeview {
 				this.selectNode_(node);
 			}
 		}
-		else {
-			if (!node.selected) {
-				this.deselectAll_();
-				this.selectNode_(node);
-			}
+		else if (!node.selected) {
+			this.deselectAll_();
+			this.selectNode_(node);
 		}
 
 		this.nodes = this.nodes;
@@ -221,13 +218,23 @@ class CardsTreeview extends Treeview {
 		let node = event.delegateTarget.parentNode.parentNode.parentNode;
 
 		if (event.keyCode === 37) {
-			this.setNodeExpandedState_(node, {expanded: false});
+			this.setNodeExpandedState_(
+				node,
+				{
+					expanded: false
+				}
+			);
 		}
 		else if (event.keyCode === 38) {
 			this.focusPrevNode_(node);
 		}
 		else if (event.keyCode === 39) {
-			this.setNodeExpandedState_(node, {expanded: true});
+			this.setNodeExpandedState_(
+				node,
+				{
+					expanded: true
+				}
+			);
 		}
 		else if (event.keyCode === 40) {
 			this.focusNextNode_(node);
@@ -286,6 +293,7 @@ class CardsTreeview extends Treeview {
  * @static
  */
 CardsTreeview.STATE = {
+
 	/**
 	 * Enables multiple selection of tree elements
 	 * @review

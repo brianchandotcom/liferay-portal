@@ -76,6 +76,11 @@
 	<td>//section[contains(@class,'drag-section')][${key_position}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SECTION_HEADER_DELETE_BUTTON</td>
+	<td>//section[contains(@class,'drag-section')][${key_position}]/nav//button</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -116,6 +116,16 @@
 		</execute>
 	</command>
 
+	<command name="removeSection">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="PageEditor#SECTION">
+			<var name="key_position" value="${position}" />
+		</execute>
+
+		<execute function="Click" locator1="PageEditor#SECTION_HEADER_DELETE_BUTTON">
+			<var name="key_position" value="${position}" />
+		</execute>
+	</command>
+
 	<command name="viewAutoSaveMessage">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PageEditor#AUTOSAVE_MESSAGE" value1="Changes saved at" />
 	</command>

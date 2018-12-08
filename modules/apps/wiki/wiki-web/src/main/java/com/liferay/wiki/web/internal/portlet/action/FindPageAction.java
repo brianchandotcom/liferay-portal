@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.FindStrutsAction;
@@ -54,19 +56,23 @@ public class FindPageAction extends FindStrutsAction {
 	}
 
 	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "pageResourcePrimKey";
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return new BasePortletLayoutFinder() {
+
+			@Override
+			protected String[] getPortletIds() {
+				return new String[] {
+					WikiPortletKeys.WIKI_ADMIN, WikiPortletKeys.WIKI,
+					WikiPortletKeys.WIKI_DISPLAY
+				};
+			}
+
+		};
 	}
 
 	@Override
-	protected String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			WikiPortletKeys.WIKI_ADMIN, WikiPortletKeys.WIKI,
-			WikiPortletKeys.WIKI_DISPLAY
-		};
+	protected String getPrimaryKeyParameterName() {
+		return "pageResourcePrimKey";
 	}
 
 	@Override

@@ -2655,7 +2655,7 @@ ${tomcat-gc-log}
 
 			<local name="top.level.job.name" />
 
-			<condition else="test-portal-acceptance-upstream(${portal.branch.name})" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
+			<condition else="default" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
 				<isset property="env.TOP_LEVEL_JOB_NAME" />
 			</condition>
 
@@ -9913,7 +9913,7 @@ if (ppstate.equals("normal")) {
 
 		<local name="top.level.job.name" />
 
-		<condition else="test-portal-acceptance-upstream(${portal.branch.name})" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
+		<condition else="default" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
 			<isset property="env.TOP_LEVEL_JOB_NAME" />
 		</condition>
 

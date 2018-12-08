@@ -17,13 +17,14 @@ package com.liferay.wiki.web.internal.portlet.action;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.rss.util.RSSUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -32,6 +33,7 @@ import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.internal.util.WikiUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +42,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(property = "path=/wiki/rss", service = StrutsAction.class)
-public class RSSAction extends BaseRSSStrutsAction {
+public class RSSAction implements StrutsAction {
 
 	@Override
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		if (!isRSSFeedsEnabled(request)) {
+			_portal.sendRSSFeedsDisabledError(request, response);
+
+			return null;
+		}
+
+		try {
+			ServletResponseUtil.sendFile(
+				request, response, null, getRSS(request),
+				ContentTypes.TEXT_XML_UTF8);
+
+			return null;
+		}
+		catch (Exception e) {
+			_portal.sendError(e, request, response);
+
+			return null;
+		}
+	}
+
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -96,7 +122,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	@Override
 	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
 		throws Exception {
 

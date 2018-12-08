@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Constructor;
@@ -151,38 +150,30 @@ public class LiferayPortletURLPrivilegedAction {
 		if (portletId.equals(_portletName) &&
 			Validator.isNotNull(portletURLClass)) {
 
-			if (portletURLClass.equals(
-					StrutsActionPortletURL.class.getName())) {
+			try {
+				Constructor<? extends PortletURLImpl> constructor =
+					_constructors.get(portletURLClass);
 
-				portletURL = new StrutsActionPortletURL(
-					_portletResponseImpl, plid, _lifecycle);
+				if (constructor == null) {
+					Class<?> portletURLClassObj = Class.forName(
+						portletURLClass);
+
+					constructor =
+						(Constructor<? extends PortletURLImpl>)
+							portletURLClassObj.getConstructor(
+								new Class<?>[] {
+									PortletResponseImpl.class, long.class,
+									String.class
+								});
+
+					_constructors.put(portletURLClass, constructor);
+				}
+
+				portletURL = constructor.newInstance(
+					new Object[] {_portletResponseImpl, plid, _lifecycle});
 			}
-			else {
-				try {
-					Constructor<? extends PortletURLImpl> constructor =
-						_constructors.get(portletURLClass);
-
-					if (constructor == null) {
-						Class<?> portletURLClassObj = Class.forName(
-							portletURLClass);
-
-						constructor =
-							(Constructor<? extends PortletURLImpl>)
-								portletURLClassObj.getConstructor(
-									new Class<?>[] {
-										PortletResponseImpl.class, long.class,
-										String.class
-									});
-
-						_constructors.put(portletURLClass, constructor);
-					}
-
-					portletURL = constructor.newInstance(
-						new Object[] {_portletResponseImpl, plid, _lifecycle});
-				}
-				catch (Exception e) {
-					_log.error("Unable to create portlet URL", e);
-				}
+			catch (Exception e) {
+				_log.error("Unable to create portlet URL", e);
 			}
 		}
 

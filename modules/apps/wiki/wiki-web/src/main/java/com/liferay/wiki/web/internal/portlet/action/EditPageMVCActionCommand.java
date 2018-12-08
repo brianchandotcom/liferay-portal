@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portlet.LiferayPortletUtil;
+import com.liferay.portlet.PortletURLImplWrapper;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -247,7 +247,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				((ActionResponseWrapper)actionResponse).getResponse();
 		}
 
-		LiferayPortletURL liferayPortletURL = new StrutsActionPortletURL(
+		LiferayPortletURL liferayPortletURL = new PortletURLImplWrapper(
 			LiferayPortletUtil.getLiferayPortletResponse(actionResponse),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 

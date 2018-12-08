@@ -17,6 +17,8 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindStrutsAction;
 
@@ -51,13 +53,20 @@ public class FindFolderAction extends FindStrutsAction {
 	}
 
 	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "folderId";
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return new BasePortletLayoutFinder() {
+
+			@Override
+			protected String[] getPortletIds() {
+				return new String[] {BookmarksPortletKeys.BOOKMARKS};
+			}
+
+		};
 	}
 
 	@Override
-	protected String[] initPortletIds() {
-		return new String[] {BookmarksPortletKeys.BOOKMARKS};
+	protected String getPrimaryKeyParameterName() {
+		return "folderId";
 	}
 
 	@Reference(unbind = "-")

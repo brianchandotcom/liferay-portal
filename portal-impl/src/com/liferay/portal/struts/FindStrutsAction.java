@@ -14,11 +14,33 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sites.kernel.util.SitesUtil;
 
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,60 +50,104 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class FindStrutsAction implements StrutsAction {
 
-	public FindStrutsAction() {
-		_findActionHelper = new BaseFindActionHelper() {
-
-			@Override
-			public long getGroupId(long primaryKey) throws Exception {
-				return FindStrutsAction.this.getGroupId(primaryKey);
-			}
-
-			@Override
-			public String getPrimaryKeyParameterName() {
-				return FindStrutsAction.this.getPrimaryKeyParameterName();
-			}
-
-			@Override
-			public PortletURL processPortletURL(
-					HttpServletRequest request, PortletURL portletURL)
-				throws Exception {
-
-				return FindStrutsAction.this.processPortletURL(
-					request, portletURL);
-			}
-
-			@Override
-			public void setPrimaryKeyParameter(
-					PortletURL portletURL, long primaryKey)
-				throws Exception {
-
-				FindStrutsAction.this.setPrimaryKeyParameter(
-					portletURL, primaryKey);
-			}
-
-			@Override
-			protected void addRequiredParameters(
-				HttpServletRequest request, String portletId,
-				PortletURL portletURL) {
-
-				FindStrutsAction.this.addRequiredParameters(
-					request, portletId, portletURL);
-			}
-
-			@Override
-			protected PortletLayoutFinder getPortletLayoutFinder() {
-				return FindStrutsAction.this._portletLayoutFinder;
-			}
-
-		};
-	}
-
 	@Override
 	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			long primaryKey = ParamUtil.getLong(
+				request, getPrimaryKeyParameterName());
+
+			long groupId = ParamUtil.getLong(
+				request, "groupId", themeDisplay.getScopeGroupId());
+
+			if (primaryKey > 0) {
+				try {
+					long overrideGroupId = getGroupId(primaryKey);
+
+					if (overrideGroupId > 0) {
+						groupId = overrideGroupId;
+					}
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
+				}
+			}
+
+			PortletLayoutFinder portletLayoutFinder = getPortletLayoutFinder();
+
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, groupId);
+
+			long plid = result.getPlid();
+
+			Layout layout = _setTargetLayout(request, groupId, plid);
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout, true,
+				ActionKeys.VIEW);
+
+			String portletId = result.getPortletId();
+
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				request, portletId, layout, PortletRequest.RENDER_PHASE);
+
+			addRequiredParameters(request, portletId, portletURL);
+
+			boolean inheritRedirect = ParamUtil.getBoolean(
+				request, "inheritRedirect");
+
+			String redirect = null;
+
+			if (inheritRedirect) {
+				String noSuchEntryRedirect = ParamUtil.getString(
+					request, "noSuchEntryRedirect");
+
+				redirect = HttpUtil.getParameter(
+					noSuchEntryRedirect, "redirect", false);
+
+				redirect = HttpUtil.decodeURL(redirect);
+			}
+			else {
+				redirect = ParamUtil.getString(request, "redirect");
+			}
+
+			if (Validator.isNotNull(redirect)) {
+				portletURL.setParameter("redirect", redirect);
+			}
+
+			setPrimaryKeyParameter(portletURL, primaryKey);
+
+			portletURL.setPortletMode(PortletMode.VIEW);
+			portletURL.setWindowState(WindowState.NORMAL);
+
+			portletURL = processPortletURL(request, portletURL);
+
+			response.sendRedirect(portletURL.toString());
+		}
+		catch (Exception e) {
+			String noSuchEntryRedirect = ParamUtil.getString(
+				request, "noSuchEntryRedirect");
+
+			noSuchEntryRedirect = PortalUtil.escapeRedirect(
+				noSuchEntryRedirect);
+
+			if (Validator.isNotNull(noSuchEntryRedirect) &&
+				(e instanceof NoSuchLayoutException ||
+				 e instanceof PrincipalException)) {
+
+				response.sendRedirect(noSuchEntryRedirect);
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
+		}
 
 		return null;
 	}
@@ -91,9 +157,9 @@ public abstract class FindStrutsAction implements StrutsAction {
 
 	protected abstract long getGroupId(long primaryKey) throws Exception;
 
-	protected abstract String getPrimaryKeyParameterName();
+	protected abstract PortletLayoutFinder getPortletLayoutFinder();
 
-	protected abstract String[] initPortletIds();
+	protected abstract String getPrimaryKeyParameterName();
 
 	protected PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
@@ -110,16 +176,36 @@ public abstract class FindStrutsAction implements StrutsAction {
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
-	private final FindActionHelper _findActionHelper;
+	private static Layout _setTargetLayout(
+			HttpServletRequest request, long groupId, long plid)
+		throws Exception {
 
-	private final PortletLayoutFinder _portletLayoutFinder =
-		new BasePortletLayoutFinder() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			@Override
-			protected String[] getPortletIds() {
-				return FindStrutsAction.this.initPortletIds();
-			}
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
-		};
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if ((groupId == layout.getGroupId()) ||
+			(group.getParentGroupId() == layout.getGroupId()) ||
+			(layout.isPrivateLayout() &&
+			 !SitesUtil.isUserGroupLayoutSetViewable(
+				 permissionChecker, layout.getGroup()))) {
+
+			return layout;
+		}
+
+		layout = new VirtualLayout(layout, group);
+
+		request.setAttribute(WebKeys.LAYOUT, layout);
+
+		return layout;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FindStrutsAction.class);
 
 }

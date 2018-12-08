@@ -65,6 +65,17 @@
 	<td>//div[contains(@class,'open-admin-panel') and not(contains(@class,'transition'))]//div[contains(@id,'ContentPageEditorPortlet_sidebar')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SECTION-->
+<tr>
+	<td>SECTION</td>
+	<td>//section[contains(@class,'drag-section')][${key_position}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -96,7 +96,7 @@
 	</command>
 
 	<command name="AssertDisplayPageEditorFunctionality" priority="5">
-		<description message="In the display page editor, user can add and remove fragments, and user can edit text in fragment editable fields." />
+		<description message="In the display page editor, user can add and remove fragments, user can remove sections, and user can edit text in fragment editable fields." />
 
 		<execute macro="PageEditor#addFragment">
 			<var name="collectionName" value="Collection Name" />
@@ -146,14 +146,24 @@
 			<var name="key_position" value="2" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
+		<execute function="AssertVisible" locator1="PageEditor#SECTION">
+			<var name="key_position" value="3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
 			<var name="key_position" value="3" />
 		</execute>
 
 		<execute macro="Button#viewNotPresent">
 			<var name="button" value="Submit" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="4" />
 		</execute>
 	</command>
 
@@ -239,14 +249,24 @@
 			<var name="key_position" value="2" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
+		<execute function="AssertVisible" locator1="PageEditor#SECTION">
+			<var name="key_position" value="3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
 			<var name="key_position" value="3" />
 		</execute>
 
 		<execute macro="Button#viewNotPresent">
 			<var name="button" value="Submit" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="4" />
 		</execute>
 	</command>
 

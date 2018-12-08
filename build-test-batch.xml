@@ -5170,7 +5170,7 @@ ${output.content}</echo>
 										<isset property="junit.failure.count" />
 									</condition>
 
-									<condition else="" property="junit.failure.message" value="${junit.failure.message}">
+									<condition else="" property="junit.failure.message.element" value="&lt;failure message=&quot;${junit.failure.message}&quot; /&gt;">
 										<isset property="junit.failure.message" />
 									</condition>
 
@@ -5183,7 +5183,7 @@ ${output.content}</echo>
 <testsuite errors="${junit.failure.count}" failures="${junit.failure.count}" hostname="localhost" name="portal.startup.space.in.path" skipped="0" tests="1" time="0.0" timestamp="${junit.timestamp}">
 	<properties />
 	<testcase classname="PortalStartup" name="portalStartupSpaceInPath" time="0.0">
-		${junit.failure.message}
+		${junit.failure.message.element}
 	</testcase>
 	<system-out></system-out>
 	<system-err></system-err>

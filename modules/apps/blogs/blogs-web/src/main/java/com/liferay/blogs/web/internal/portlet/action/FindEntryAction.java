@@ -14,11 +14,17 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
+import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.struts.FindStrutsAction;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,26 +36,77 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/blogs/find_entry",
 	service = StrutsAction.class
 )
-public class FindEntryAction implements StrutsAction {
+public class FindEntryAction extends FindStrutsAction {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+	public long getGroupId(long primaryKey) throws Exception {
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(primaryKey);
+
+		return entry.getGroupId();
+	}
+
+	@Override
+	public String getPrimaryKeyParameterName() {
+		return "entryId";
+	}
+
+	@Override
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(primaryKey);
 
-		return null;
+		if (Validator.isNotNull(entry.getUrlTitle())) {
+			portletURL.setParameter("urlTitle", entry.getUrlTitle());
+		}
+		else {
+			portletURL.setParameter(
+				"entryId", String.valueOf(entry.getEntryId()));
+		}
+	}
+
+	@Override
+	protected void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
+
+		String mvcRenderCommandName = null;
+
+		if (portletId.equals(BlogsPortletKeys.BLOGS)) {
+			mvcRenderCommandName = "/blogs/view_entry";
+		}
+		else if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
+			mvcRenderCommandName = "/blogs_admin/view_entry";
+		}
+		else {
+			mvcRenderCommandName = "/blogs_aggregator/view";
+		}
+
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+	}
+
+	@Override
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletLayoutFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
 	@Reference(
 		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
 		unbind = "-"
 	)
-	protected void setFindActionHelper(FindActionHelper findActionHelper) {
-		_findActionHelper = findActionHelper;
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletLayoutFinder = portletPageFinder;
 	}
 
-	private FindActionHelper _findActionHelper;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private PortletLayoutFinder _portletLayoutFinder;
 
 }

@@ -41,38 +41,6 @@
 		</if>
 	</tear-down>
 
-	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
-		<description message="Add and remove a fragment in the page editor." />
-		<property name="portal.acceptance" value="false" />
-
-		<execute macro="PageTemplatesAdmin#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="PageTemplatesAdmin#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PageEditor#viewAutoSaveMessage" />
-
-		<execute macro="PageEditor#removeFragment">
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PageEditor#viewAutoSaveMessage" />
-
-		<execute macro="PageEditor#viewEditorEmpty" />
-	</command>
-
 	<command name="ChangeEditableImage" priority="5">
 		<description message="Change a fragment's editable image field." />
 

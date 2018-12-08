@@ -22,18 +22,21 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.rss.util.RSSUtil;
 
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,9 +47,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, property = "path=/blogs/rss", service = StrutsAction.class
 )
-public class RSSAction extends BaseRSSStrutsAction {
+public class RSSAction implements StrutsAction {
 
 	@Override
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		if (!isRSSFeedsEnabled(request)) {
+			_portal.sendRSSFeedsDisabledError(request, response);
+
+			return null;
+		}
+
+		try {
+			ServletResponseUtil.sendFile(
+				request, response, null, getRSS(request),
+				ContentTypes.TEXT_XML_UTF8);
+
+			return null;
+		}
+		catch (Exception e) {
+			_portal.sendError(e, request, response);
+
+			return null;
+		}
+	}
+
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -118,7 +145,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	@Override
 	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
 		throws Exception {
 
@@ -150,5 +176,8 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 	private BlogsEntryService _blogsEntryService;
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

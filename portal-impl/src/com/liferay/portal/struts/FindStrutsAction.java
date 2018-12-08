@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class FindStrutsAction implements StrutsAction {
 
 	public FindStrutsAction() {
-		_findActionHelper = new BaseStrutsPortletFindActionHelper() {
+		_findActionHelper = new BaseFindActionHelper() {
 
 			@Override
 			public long getGroupId(long primaryKey) throws Exception {
@@ -39,14 +39,6 @@ public abstract class FindStrutsAction implements StrutsAction {
 			@Override
 			public String getPrimaryKeyParameterName() {
 				return FindStrutsAction.this.getPrimaryKeyParameterName();
-			}
-
-			@Override
-			public String getStrutsAction(
-				HttpServletRequest request, String portletId) {
-
-				return FindStrutsAction.this.getStrutsAction(
-					request, portletId);
 			}
 
 			@Override
@@ -68,6 +60,15 @@ public abstract class FindStrutsAction implements StrutsAction {
 			}
 
 			@Override
+			protected void addRequiredParameters(
+				HttpServletRequest request, String portletId,
+				PortletURL portletURL) {
+
+				FindStrutsAction.this.addRequiredParameters(
+					request, portletId, portletURL);
+			}
+
+			@Override
 			protected PortletLayoutFinder getPortletLayoutFinder() {
 				return FindStrutsAction.this._portletLayoutFinder;
 			}
@@ -85,12 +86,12 @@ public abstract class FindStrutsAction implements StrutsAction {
 		return null;
 	}
 
+	protected abstract void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL);
+
 	protected abstract long getGroupId(long primaryKey) throws Exception;
 
 	protected abstract String getPrimaryKeyParameterName();
-
-	protected abstract String getStrutsAction(
-		HttpServletRequest request, String portletId);
 
 	protected abstract String[] initPortletIds();
 

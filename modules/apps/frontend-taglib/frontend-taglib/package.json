@@ -1,4 +1,18 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"$": true,
+						"AlloyEditor": true,
+						"CKEDITOR": true,
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"metal": "^2.5.18",
 		"metal-ajax": "^2.1.1",
@@ -8,9 +22,23 @@
 		"metal-structs": "^1.0.1"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "1.3.3",
-		"metal-cli": "4.4.0"
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"check-source-formatting": "^2.0.4",
+		"cross-env": "^5.2.0",
+		"liferay-npm-bridge-generator": "^2.0.0",
+		"liferay-npm-bundler": "~2.5.1",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
+		"metal-tools-soy": "^4.0.0",
+		"rimraf": "^2.6.2"
 	},
 	"name": "frontend-taglib",
+	"scripts": {
+		"build": "metalsoy --soyDeps \"./node_modules/com.liferay.frontend.js.web/META-INF/resources/liferay/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
+		"checkFormat": "npm run csf",
+		"cleanSoy": "rimraf src/**/*.soy.js",
+		"csf": "csf src/**/*.js",
+		"format": "npm run csf -- -i"
+	},
 	"version": "4.0.0"
 }

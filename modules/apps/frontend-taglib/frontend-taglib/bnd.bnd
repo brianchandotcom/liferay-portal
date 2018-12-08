@@ -7,6 +7,11 @@ Export-Package:\
 	com.liferay.frontend.taglib.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.servlet.taglib.util
 Liferay-JS-Config: /META-INF/resources/config.js
+Liferay-JS-Submodules-Bridge:\
+	frontend-taglib/cards_treeview/CardsTreeview.es,\
+	frontend-taglib/contextual_sidebar/ContextualSidebar.es,\
+	frontend-taglib/diff_version_comparator/DiffVersionComparator.es,\
+	frontend-taglib/translation_manager/TranslationManager.es
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

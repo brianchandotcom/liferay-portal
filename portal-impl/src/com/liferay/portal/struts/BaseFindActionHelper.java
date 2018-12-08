@@ -156,9 +156,12 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 	public abstract String getPrimaryKeyParameterName();
 
 	@Override
-	public abstract PortletURL processPortletURL(
+	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
-		throws Exception;
+		throws Exception {
+
+		return portletURL;
+	}
 
 	@Override
 	public abstract void setPrimaryKeyParameter(

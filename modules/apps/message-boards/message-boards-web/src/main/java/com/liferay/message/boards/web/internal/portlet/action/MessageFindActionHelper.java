@@ -50,14 +50,6 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception {
-
-		return portletURL;
-	}
-
-	@Override
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 

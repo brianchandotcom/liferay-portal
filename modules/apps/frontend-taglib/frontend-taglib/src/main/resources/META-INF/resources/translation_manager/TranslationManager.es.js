@@ -1,8 +1,8 @@
 import 'frontend-js-web/liferay/compat/dropdown/Dropdown.es';
-import CompatibilityEventProxy from 'frontend-js-web/liferay/CompatibilityEventProxy.es'
+import CompatibilityEventProxy from 'frontend-js-web/liferay/CompatibilityEventProxy.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { core } from 'metal';
+import {core} from 'metal';
 
 import templates from './TranslationManager.soy';
 
@@ -14,6 +14,7 @@ import templates from './TranslationManager.soy';
  * @review
  */
 class TranslationManager extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -148,6 +149,7 @@ class TranslationManager extends Component {
  * @type {!Object}
  */
 TranslationManager.STATE = {
+
 	/**
 	 * Current editing language key.
 	 * @review

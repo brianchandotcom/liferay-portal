@@ -15,6 +15,7 @@ import templates from './DiffVersionComparator.soy';
  * @review
  */
 class DiffVersionComparator extends Component {
+
 	/**
 	 * Returns diffVerson object of passed version.
 	 * @param {String} version
@@ -149,6 +150,7 @@ class DiffVersionComparator extends Component {
 }
 
 DiffVersionComparator.STATE = {
+
 	/**
 	 * List of locales that are available for the current asset. Used to render
 	 * locale selector.
@@ -249,7 +251,7 @@ DiffVersionComparator.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	targetVersion: Config.string(),
+	targetVersion: Config.string()
 };
 
 Soy.register(DiffVersionComparator, templates);

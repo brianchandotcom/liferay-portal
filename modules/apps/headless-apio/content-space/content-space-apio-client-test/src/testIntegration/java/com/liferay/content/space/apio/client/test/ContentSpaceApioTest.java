@@ -113,32 +113,32 @@ public class ContentSpaceApioTest {
 		).statusCode(
 			200
 		).body(
+			"availableLanguages", Matchers.hasItem("en-US")
+		).body(
 			"name",
 			IsEqual.equalTo(ContentSpaceTestActivator.CONTENT_SPACE_NAME)
 		).body(
-			"availableLanguages", Matchers.hasItem("en-US")
+			"_links.blogPosts.href", IsNull.notNullValue()
 		).body(
-			"_links.self.href", IsNull.notNullValue()
+			"_links.contentStructures.href", IsNull.notNullValue()
 		).body(
 			"_links.creator.href", IsNull.notNullValue()
 		).body(
 			"_links.documentsRepository.href", IsNull.notNullValue()
 		).body(
-			"_links.webSite.href", IsNull.notNullValue()
-		).body(
 			"_links.forms.href", IsNull.notNullValue()
-		).body(
-			"_links.vocabularies.href", IsNull.notNullValue()
-		).body(
-			"_links.structuredContents.href", IsNull.notNullValue()
-		).body(
-			"_links.contentStructures.href", IsNull.notNullValue()
-		).body(
-			"_links.keywords.href", IsNull.notNullValue()
 		).body(
 			"_links.formStructures.href", IsNull.notNullValue()
 		).body(
-			"_links.blogPosts.href", IsNull.notNullValue()
+			"_links.keywords.href", IsNull.notNullValue()
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		).body(
+			"_links.structuredContents.href", IsNull.notNullValue()
+		).body(
+			"_links.vocabularies.href", IsNull.notNullValue()
+		).body(
+			"_links.webSite.href", IsNull.notNullValue()
 		);
 	}
 

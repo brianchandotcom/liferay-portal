@@ -15,11 +15,16 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.struts.FindStrutsAction;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,26 +40,72 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = StrutsAction.class
 )
-public class FindThreadAction implements StrutsAction {
+public class FindThreadAction extends FindStrutsAction {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+	public long getGroupId(long primaryKey) throws Exception {
+		MBThread thread = _mbThreadLocalService.getThread(primaryKey);
+
+		return thread.getGroupId();
+	}
+
+	@Override
+	public String getPrimaryKeyParameterName() {
+		return "threadId";
+	}
+
+	@Override
+	public PortletURL processPortletURL(
+			HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		long threadId = ParamUtil.getLong(
+			request, getPrimaryKeyParameterName());
 
-		return null;
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
+
+		portletURL.setParameter(
+			"messageId", String.valueOf(thread.getRootMessageId()));
+
+		return portletURL;
+	}
+
+	@Override
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
+		throws Exception {
+	}
+
+	@Override
+	protected void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/view_message");
+	}
+
+	@Override
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
 	}
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBThread)",
 		unbind = "-"
 	)
-	protected void setFindActionHelper(FindActionHelper findActionHelper) {
-		_findActionHelper = findActionHelper;
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletPageFinder = portletPageFinder;
 	}
 
-	private FindActionHelper _findActionHelper;
+	private MBThreadLocalService _mbThreadLocalService;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

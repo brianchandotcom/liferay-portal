@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -133,7 +133,7 @@ public class PortletLayoutFinderTest {
 		HttpServletRequest request = getHttpServletRequest();
 
 		ReflectionTestUtil.invoke(
-			BaseFindActionHelper.class, "setTargetLayout",
+			FindStrutsAction.class, "_setTargetLayout",
 			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
 			request, _blogsEntryGroupId, _blogLayout.getPlid());
 
@@ -150,7 +150,7 @@ public class PortletLayoutFinderTest {
 		HttpServletRequest request = getHttpServletRequest();
 
 		ReflectionTestUtil.invoke(
-			BaseFindActionHelper.class, "setTargetLayout",
+			FindStrutsAction.class, "_setTargetLayout",
 			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
 			request, _blogsEntryGroupId, _blogLayout.getPlid());
 

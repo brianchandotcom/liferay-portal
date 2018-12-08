@@ -14,11 +14,18 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.FindStrutsAction;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,26 +41,70 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = StrutsAction.class
 )
-public class FindFolderAction implements StrutsAction {
+public class FindFolderAction extends FindStrutsAction {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+	public long getGroupId(long primaryKey) throws Exception {
+		Folder folder = _dlAppLocalService.getFolder(primaryKey);
+
+		return folder.getRepositoryId();
+	}
+
+	@Override
+	public String getPrimaryKeyParameterName() {
+		return "folderId";
+	}
+
+	@Override
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		if (primaryKey != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
-		return null;
+			primaryKey = folder.getFolderId();
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(primaryKey));
+	}
+
+	@Override
+	protected void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
+
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
+
+		if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/image_gallery_display/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+	}
+
+	@Override
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
 	}
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)",
 		unbind = "-"
 	)
-	protected void setFindActionHelper(FindActionHelper findActionHelper) {
-		_findActionHelper = findActionHelper;
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletPageFinder = portletPageFinder;
 	}
 
-	private FindActionHelper _findActionHelper;
+	private DLAppLocalService _dlAppLocalService;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

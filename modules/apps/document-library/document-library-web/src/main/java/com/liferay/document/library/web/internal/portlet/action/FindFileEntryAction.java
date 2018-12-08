@@ -14,11 +14,15 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.FindStrutsAction;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,26 +35,57 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "path=/document_library/find_file_entry",
 	service = StrutsAction.class
 )
-public class FindFileEntryAction implements StrutsAction {
+public class FindFileEntryAction extends FindStrutsAction {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+	public long getGroupId(long primaryKey) throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(primaryKey);
+
+		return fileEntry.getGroupId();
+	}
+
+	@Override
+	public String getPrimaryKeyParameterName() {
+		return "fileEntryId";
+	}
+
+	@Override
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		portletURL.setParameter(
+			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
+	}
 
-		return null;
+	@Override
+	protected void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_file_entry");
+	}
+
+	@Override
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
 	}
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
 		unbind = "-"
 	)
-	protected void setFindActionHelper(FindActionHelper findActionHelper) {
-		_findActionHelper = findActionHelper;
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletPageFinder = portletPageFinder;
 	}
 
-	private FindActionHelper _findActionHelper;
+	private DLAppLocalService _dlAppLocalService;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

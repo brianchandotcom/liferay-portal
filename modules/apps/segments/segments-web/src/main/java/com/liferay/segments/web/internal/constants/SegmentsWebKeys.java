@@ -22,10 +22,10 @@ public class SegmentsWebKeys {
 	public static final String EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT =
 		"EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT";
 
+	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
+
 	public static final String SEGMENTS_DISPLAY_CONTEXT =
 		"SEGMENTS_DISPLAY_CONTEXT";
-
-	public static final String SEGMENTS_JS_REQUIRE = "SEGMENTS_JS_REQUIRE";
 
 	public static final String
 		SELECT_SEGMENTS_ENTRY_ORGANIZATIONS_DISPLAY_CONTEXT =

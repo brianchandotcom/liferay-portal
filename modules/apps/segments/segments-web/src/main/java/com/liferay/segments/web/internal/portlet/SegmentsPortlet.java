@@ -14,7 +14,6 @@
 
 package com.liferay.segments.web.internal.portlet;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,11 +76,9 @@ public class SegmentsPortlet extends MVCPortlet {
 				httpServletRequest, renderRequest, renderResponse,
 				_segmentsEntryService);
 
-		JSPackage jsPackage = _npmResolver.getJSPackage();
-
 		renderRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_JS_REQUIRE,
-			jsPackage.getResolvedId() + " as segmentsJsRequire");
+			SegmentsWebKeys.RESOLVED_MODULE_NAME,
+			_npmResolver.resolveModuleName("segments-web"));
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);

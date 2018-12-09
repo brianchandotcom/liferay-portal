@@ -1,8 +1,15 @@
 dependencies {
+	compileInclude group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
+	compileInclude group: "io.rest-assured", name: "rest-assured-common", version: "3.2.0"
+
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/test")
+}
+
+liferayOSGi {
+	expandCompileInclude = true
 }

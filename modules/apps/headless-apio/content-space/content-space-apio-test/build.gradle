@@ -4,7 +4,6 @@ copyLibs {
 
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.6.7.1"
-	compileOnly group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.4"
 	compileOnly group: "org.assertj", name: "assertj-core", version: "3.10.0"
 	compileOnly project(":apps:apio-architect:apio-architect-test-util")

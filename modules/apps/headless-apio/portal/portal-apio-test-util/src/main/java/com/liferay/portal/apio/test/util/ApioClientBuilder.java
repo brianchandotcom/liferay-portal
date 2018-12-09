@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.space.apio.client.test.util;
+package com.liferay.portal.apio.test.util;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;

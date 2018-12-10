@@ -38,10 +38,7 @@ public class ServletContextClassLoaderPool {
 			return classLoader;
 		}
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK))) {
-
+		if (_SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK) {
 			return ClassLoaderPool.getClassLoader(servletContextName);
 		}
 
@@ -59,10 +56,7 @@ public class ServletContextClassLoaderPool {
 			return servletContextName;
 		}
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK))) {
-
+		if (_SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK) {
 			return ClassLoaderPool.getContextName(classLoader);
 		}
 
@@ -83,6 +77,11 @@ public class ServletContextClassLoaderPool {
 			_servletContextNames.remove(classLoader);
 		}
 	}
+
+	private static final boolean _SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK));
 
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();

@@ -37,11 +37,11 @@ describe(
 
 				component = new Validation(
 					{
-						dataType: 'string',
 						label: 'Validator',
 						name: 'validation',
 						spritemap,
 						validation: {
+							dataType: 'string',
 							fieldName: 'textfield'
 						}
 					}
@@ -52,7 +52,7 @@ describe(
 				component.once(
 					'stateSynced',
 					() => {
-						expect(component.enableValidation).toBe(true);
+						expect(component.value).toMatchSnapshot();
 						done();
 					}
 				);
@@ -71,12 +71,12 @@ describe(
 
 				component = new Validation(
 					{
-						dataType: 'string',
 						enableValidation: true,
 						label: 'Validator',
 						name: 'validation',
 						spritemap,
 						validation: {
+							dataType: 'string',
 							fieldName: 'textfield'
 						}
 					}
@@ -85,7 +85,7 @@ describe(
 				component.once(
 					'stateSynced',
 					() => {
-						expect(component.expression).toMatchSnapshot();
+						expect(component.value.expression).toMatchSnapshot();
 						done();
 					}
 				);
@@ -95,8 +95,6 @@ describe(
 				component.refs.selectedValidation.emit('fieldEdited');
 
 				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
 			}
 		);
 
@@ -113,7 +111,8 @@ describe(
 						name: 'validation',
 						spritemap,
 						validation: {
-							fieldName: 'textfield'
+							dataType: 'integer',
+							fieldName: 'numericfield'
 						}
 					}
 				);
@@ -121,7 +120,7 @@ describe(
 				component.once(
 					'stateSynced',
 					() => {
-						expect(component.expression).toMatchSnapshot();
+						expect(component.value.expression).toMatchSnapshot();
 						done();
 					}
 				);
@@ -131,8 +130,6 @@ describe(
 				component.refs.selectedValidation.emit('fieldEdited');
 
 				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
 			}
 		);
 
@@ -143,13 +140,12 @@ describe(
 
 				component = new Validation(
 					{
-						dataType: 'string',
 						enableValidation: true,
 						label: 'Validator',
 						name: 'validation',
 						spritemap,
 						validation: {
-							dataType: undefined
+							dataType: 'string'
 						}
 					}
 				);
@@ -157,7 +153,7 @@ describe(
 				component.once(
 					'stateSynced',
 					() => {
-						expect(component.expression).toMatchSnapshot();
+						expect(component.value.expression).toMatchSnapshot();
 						done();
 					}
 				);
@@ -165,7 +161,10 @@ describe(
 				component.refs.enableValidation.value = true;
 				component.refs.selectedValidation.value = 'notContains';
 				component.refs.selectedValidation.emit('fieldEdited');
-				component.dataType = 'numeric';
+				component.validation = {
+					...component.validation,
+					dataType: 'integer'
+				};
 
 				jest.runAllTimers();
 			}
@@ -184,7 +183,6 @@ describe(
 
 								component = new Validation(
 									{
-										dataType: 'string',
 										enableValidation: true,
 										label: 'Validator',
 										name: 'validation',

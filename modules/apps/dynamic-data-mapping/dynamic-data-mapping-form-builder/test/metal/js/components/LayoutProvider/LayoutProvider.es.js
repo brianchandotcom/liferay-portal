@@ -57,7 +57,7 @@ describe.only(
 					}
 				);
 
-				expect(component.state.pages).toEqual(pages);
+				expect(component.state.pages).toEqual(component.props.initialPages);
 			}
 		);
 

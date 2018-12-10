@@ -1,5 +1,4 @@
 import Text from 'source/Text/Text.es';
-import {dom} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -143,48 +142,6 @@ describe(
 		);
 
 		it(
-			'should have a key',
-			() => {
-				component = new Text(
-					{
-						...defaultTextConfig,
-						key: 'key'
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should emit a field edit event on field value change',
-			() => {
-				jest.useFakeTimers();
-
-				const handleFieldEdited = jest.fn();
-
-				const events = {fieldEdited: handleFieldEdited};
-
-				component = new Text(
-					{
-						...defaultTextConfig,
-						events
-					}
-				);
-
-				dom.triggerEvent(
-					component.element.querySelector('input'),
-					'input',
-					{}
-				);
-
-				jest.runAllTimers();
-
-				expect(handleFieldEdited).toHaveBeenCalled();
-			}
-		);
-
-		it(
 			'should emit a field edit with correct parameters',
 			done => {
 				const handleFieldEdited = data => {
@@ -210,38 +167,13 @@ describe(
 					}
 				);
 
-				dom.triggerEvent(
-					component.element.querySelector('input'),
-					'input',
-					{}
-				);
-			}
-		);
-
-		it(
-			'should propagate the field edit event',
-			() => {
-				jest.useFakeTimers();
-
-				component = new Text(
+				component._handleFieldChanged(
 					{
-						...defaultTextConfig,
-						key: 'input'
+						target: {
+							value: 'test'
+						}
 					}
 				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				dom.triggerEvent(
-					component.element.querySelector('input'),
-					'input',
-					{}
-				);
-
-				jest.runAllTimers();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 			}
 		);
 	}

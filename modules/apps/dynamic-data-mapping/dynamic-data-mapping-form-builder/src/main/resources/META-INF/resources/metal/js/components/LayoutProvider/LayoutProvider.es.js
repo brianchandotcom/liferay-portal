@@ -24,7 +24,7 @@ class LayoutProvider extends Component {
 		 * @type {?(array|undefined)}
 		 */
 
-		initialPages: Config.arrayOf(pageStructure).value([]),
+		initialPages: Config.arrayOf(pageStructure).setter('_setInitialPages').value([]),
 
 		/**
 		 * @default 'wizard'
@@ -110,7 +110,17 @@ class LayoutProvider extends Component {
 	};
 
 	_pagesValueFn() {
-		const visitor = new PagesVisitor(this.props.initialPages);
+		const {initialPages} = this.props;
+
+		return initialPages;
+	}
+
+	_paginationModeValueFn() {
+		return this.props.initialPaginationMode;
+	}
+
+	_setInitialPages(initialPages) {
+		const visitor = new PagesVisitor(initialPages);
 
 		return visitor.mapFields(
 			field => {
@@ -121,10 +131,6 @@ class LayoutProvider extends Component {
 				};
 			}
 		);
-	}
-
-	_paginationModeValueFn() {
-		return this.props.initialPaginationMode;
 	}
 
 	_successPageSettingsValueFn() {

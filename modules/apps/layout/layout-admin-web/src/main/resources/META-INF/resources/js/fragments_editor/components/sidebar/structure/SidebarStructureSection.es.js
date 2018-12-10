@@ -2,19 +2,19 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './FragmentsEditorSidebarCard.es';
+import '../fragments/FragmentsEditorSidebarCard.es';
 import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {Store} from '../../../store/store.es';
-import templates from './SidebarAddedFragments.soy';
+import templates from './SidebarStructureSection.soy';
 
 /**
- * SidebarAddedFragments
+ * SidebarStructureSection
  */
-class SidebarAddedFragments extends Component {
+class SidebarStructureSection extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
@@ -58,20 +58,20 @@ class SidebarAddedFragments extends Component {
  * @static
  * @type {!Object}
  */
-SidebarAddedFragments.STATE = {
+SidebarStructureSection.STATE = {
 
 	/**
 	 * Store instance
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarAddedFragments
+	 * @memberOf SidebarStructureSection
 	 * @review
 	 * @type {Store}
 	 */
 	store: Config.instanceOf(Store)
 };
 
-Soy.register(SidebarAddedFragments, templates);
+Soy.register(SidebarStructureSection, templates);
 
-export {SidebarAddedFragments};
-export default SidebarAddedFragments;
+export {SidebarStructureSection};
+export default SidebarStructureSection;

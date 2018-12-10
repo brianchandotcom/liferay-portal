@@ -48,6 +48,13 @@
 					{param spritemap: $spritemap /}
 					{param store: $store /}
 				{/call}
+			{elseif $_sectionId == 'structure'}
+				{call com.liferay.layout.admin.web.SidebarStructureSection.render}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
 			{/if}
 		</div>
 

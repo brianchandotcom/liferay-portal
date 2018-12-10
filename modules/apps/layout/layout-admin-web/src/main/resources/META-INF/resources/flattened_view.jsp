@@ -71,32 +71,44 @@ JSONArray breadcrumbEntriesJSONArray = layoutsAdminDisplayContext.getBreadcrumbE
 			value="<%= layout.getName(locale) %>"
 		/>
 
-		<%
-		List<Layout> curLayouts = layout.getAncestors();
-
-		Collections.reverse(curLayouts);
-
-		StringBundler sb = new StringBundler((layouts.size() * 2) + 2);
-
-		sb.append("../ ");
-
-		for (Layout curLayout : curLayouts) {
-			if (curLayout.getPlid() == layoutsAdminDisplayContext.getSelPlid()) {
-				break;
-			}
-
-			sb.append(curLayout.getName(locale));
-			sb.append(" / ");
-		}
-
-		sb.append(HtmlUtil.escape(layout.getName(locale)));
-		%>
-
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200"
 			name="path"
-			value="<%= sb.toString() %>"
-		/>
+		>
+			<ol class="breadcrumb">
+
+				<%
+				List<Layout> curLayouts = layout.getAncestors();
+
+				Collections.reverse(curLayouts);
+
+				boolean showLayoutPath = false;
+
+				if (layoutsAdminDisplayContext.getSelPlid() <= 0) {
+					showLayoutPath = true;
+				}
+
+				for (Layout curLayout : curLayouts) {
+				%>
+
+					<c:if test="<%= showLayoutPath %>">
+						<li class="breadcrumb-item">
+							<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(curLayout.getName(locale)) %></span>
+						</li>
+					</c:if>
+
+				<%
+					if (curLayout.getPlid() == layoutsAdminDisplayContext.getSelPlid()) {
+						showLayoutPath = true;
+					}
+				}
+				%>
+
+				<li class="active breadcrumb-item">
+					<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(layout.getName(locale)) %></span>
+				</li>
+			</ol>
+		</liferay-ui:search-container-column-text>
 
 		<%
 		LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(layout.getType());

@@ -10,31 +10,30 @@
   <ul>
     <li>subrepository-compile-jdk8 -  :x:
       <pre>
-        <code>     [echo] :private:apps:osb-customer:osb-customer-api:replaceSoyTranslation UP-TO-DATE
-     [echo] :private:apps:osb-customer:osb-customer-api:wrapSoyAlloyTemplate SKIPPED
-     [echo] :private:apps:osb-customer:osb-customer-api:classes
-     [echo] :private:apps:osb-customer:osb-customer-api:jar
-     [echo] :private:apps:osb-customer:osb-customer-auto-deploy-listener:compileJava
-     [echo] Download http://repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.knowledge.base.api/4.5.0/com.liferay.knowledge.base.api-4.5.0.pom
-     [echo] Download http://repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.knowledge.base.api/4.5.0/com.liferay.knowledge.base.api-4.5.0.jar
-     [echo] :private:apps:osb-customer:osb-customer-qa-infrastructure:compileJava
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:compileJava
-     [echo] Download http://repository.liferay.com/nexus/content/groups/public/com/rabbitmq/amqp-client/3.6.1/amqp-client-3.6.1.pom
-     [echo] Download http://repository.liferay.com/nexus/content/groups/public/com/rabbitmq/amqp-client/3.6.1/amqp-client-3.6.1.jar
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:buildCSS UP-TO-DATE
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:processResources
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:transpileJS SKIPPED
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:configJSModules SKIPPED
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:copyLibs SKIPPED
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:replaceSoyTranslation UP-TO-DATE
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:wrapSoyAlloyTemplate SKIPPED
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:classes
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-connector:osb-customer-rabbitmq-connector-api:jar
-     [echo] :private:apps:osb-customer:osb-customer-rabbitmq-message-processors:compileJava FAILED
+        <code>     [echo] * What went wrong:
+     [echo] Execution failed for task ':private:apps:osb-customer:osb-customer-rabbitmq-message-processors:compileJava'.
+     [echo] &gt; Compilation failed; see the compiler error output for details.
      [echo]
-     [echo] BUILD FAILED
+     [echo] * Try:
+     [echo] Run with --info or --debug option to get more log output.
      [echo]
-     [echo] </code>
+     [echo] * Exception is:
+     [echo] org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':private:apps:osb-customer:osb-customer-rabbitmq-message-processors:compileJava'.
+     [echo] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:84)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:55)
+     [echo] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:62)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+     [echo] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:88)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ResolveTaskArtifactStateTaskExecuter.execute(ResolveTaskArtifactStateTaskExecuter.java:46)
+     [echo] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:51)
+     [echo] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:54)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+     [echo] 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:34)
+     [echo] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker$1.execute(DefaultTaskGraphExecuter.java:236)
+     [echo] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker$1.execute(DefaultTaskGraphExecuter.java:228)
+     [echo] 	at org.gradle.internal.Transformers$4.transform(Transformers.java:169)
+     [echo] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:106)
+     [echo] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:61)</code>
       </pre>
     </li>
     <li>subrepository-semantic-versioning-jdk8 -  :heavy_check_mark:</li>

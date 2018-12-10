@@ -602,32 +602,7 @@
               <div>
                 <a href="${dependencies.url}/GitHubMessageTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-20/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/151990//consoleText">AXIS_VARIABLE=0,label_exp=!master #151990</a>
                 <pre>
-                  <code>     [exec] Successfully installed compass-core-1.0.3
-     [exec]     Compass is charityware. If you love it, please donate on our behalf at http://umdf.org/compass Thanks!
-     [exec] Successfully installed compass-1.0.1
-     [exec] 9 gems installed
-     [exec] :util:ruby-gems:replaceSoyTranslation UP-TO-DATE
-     [exec] :util:ruby-gems:wrapSoyAlloyTemplate SKIPPED
-     [exec] :util:ruby-gems:classes
-     [exec] :util:ruby-gems:jar
-     [exec] :util:ruby-gems:jarSources
-     [exec] :util:ruby-gems:assemble
-     [exec] Finished building to format: amd
-     [exec] Finished 'build'...
-     [exec] :apps:adaptive-media:adaptive-media-web:downloadLiferayModuleConfigGenerator SKIPPED
-     [exec] :apps:adaptive-media:adaptive-media-web:configJSModules
-     [exec] :apps:adaptive-media:adaptive-media-web:copyLibs SKIPPED
-     [exec] :apps:adaptive-media:adaptive-media-web:replaceSoyTranslation
-     [exec] :apps:adaptive-media:adaptive-media-web:wrapSoyAlloyTemplate SKIPPED
-     [exec] :apps:adaptive-media:adaptive-media-web:classes
-     [exec] :apps:adaptive-media:adaptive-media-web:jar
-     [exec] :apps:adaptive-media:adaptive-media-blogs-web:compileJava
-     [exec] :apps:adaptive-media:adaptive-media-blogs-web:copyLibs SKIPPED
-     [exec] :apps:adaptive-media:adaptive-media-blogs-web:classes
-     [exec]
-     [exec] FAILURE: Build failed with an exception.
-     [exec]
-     [exec] * Where:
+                  <code>     [exec] * Where:
      [exec] Build file '/opt/dev/projects/github/liferay-portal/modules/util/portal-tools-sample-sql-builder/build.gradle' line: 49
      [exec]
      [exec] * What went wrong:
@@ -641,7 +616,18 @@
      [exec] org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':util:portal-tools-sample-sql-builder:writeReleases'.
      [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:84)
      [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:55)
-     [exec] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:62)</code>
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:62)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:88)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ResolveTaskArtifactStateTaskExecuter.execute(ResolveTaskArtifactStateTaskExecuter.java:46)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:51)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:54)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+     [exec] 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:34)
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker$1.execute(DefaultTaskGraphExecuter.java:236)
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker$1.execute(DefaultTaskGraphExecuter.java:228)
+     [exec] 	at org.gradle.internal.Transformers$4.transform(Transformers.java:169)
+     [exec] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:106)</code>
                 </pre>
               </div>
             </li>

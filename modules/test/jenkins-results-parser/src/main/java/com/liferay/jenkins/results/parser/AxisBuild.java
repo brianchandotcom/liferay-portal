@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.CIFailureMes
 import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.IntegrationTestTimeoutFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.LocalGitMirrorFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.ModulesCompilationFailureMessageGenerator;
@@ -525,7 +526,6 @@ public class AxisBuild extends BaseBuild {
 		{
 			new ModulesCompilationFailureMessageGenerator(),
 
-			new CIFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
 			new IntegrationTestTimeoutFailureMessageGenerator(),
 			new LocalGitMirrorFailureMessageGenerator(),
@@ -535,6 +535,9 @@ public class AxisBuild extends BaseBuild {
 			new SourceFormatFailureMessageGenerator(),
 			new StartupFailureMessageGenerator(),
 
+			new GradleTaskFailureMessageGenerator(),
+
+			new CIFailureMessageGenerator(),
 			new GenericFailureMessageGenerator()
 		};
 

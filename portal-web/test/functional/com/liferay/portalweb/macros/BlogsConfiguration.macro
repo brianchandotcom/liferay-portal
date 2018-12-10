@@ -16,6 +16,28 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="enableReadingTime">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Blogs" />
+			<var name="configurationName" value="Blogs" />
+			<var name="configurationScope" value="Widget Scope" />
+		</execute>
+
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="enableReadingTime" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="enableSocialBookmarkSites">
 		<for list="${enableSocialBookmarkSites}" param="socialBookmarkSite">
 			<execute function="AddSelection" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT" value1="${socialBookmarkSite}" />

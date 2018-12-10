@@ -209,22 +209,23 @@ public class GitWorkingDirectory {
 	public void cleanTempBranches() {
 		checkoutUpstreamLocalGitBranch();
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10,
-			JenkinsResultsParserUtil.combine(
-				"git branch | grep \"", getUpstreamBranchName(), "-temp\" | ",
-				"xargs git branch -D --"));
+		List<String> localGitBranchNames = getLocalGitBranchNames();
 
-		System.out.println(executionResult.getStandardOut());
+		List<String> tempBranchNames = new ArrayList<>(
+			localGitBranchNames.size());
 
-		if (executionResult.getExitValue() == 123) {
-			System.out.println("No branches to delete");
+		String pattern = JenkinsResultsParserUtil.combine(
+			".*", Pattern.quote(getUpstreamBranchName()), "-temp", ".*");
+
+		for (String localGitBranchName : localGitBranchNames) {
+			if (localGitBranchName.matches(pattern)) {
+				tempBranchNames.add(localGitBranchName);
+			}
 		}
-		else if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete temporary git branches\n",
-					executionResult.getStandardError()));
+
+		if (!tempBranchNames.isEmpty()) {
+			_deleteLocalGitBranches(
+				tempBranchNames.toArray(new String[tempBranchNames.size()]));
 		}
 	}
 

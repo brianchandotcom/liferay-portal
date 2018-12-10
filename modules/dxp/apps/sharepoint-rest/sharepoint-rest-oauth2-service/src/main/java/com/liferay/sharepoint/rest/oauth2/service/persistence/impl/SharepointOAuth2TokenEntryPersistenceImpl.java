@@ -337,7 +337,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 = "sharepointOAuth2TokenEntry.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_1 = "sharepointOAuth2TokenEntry.configurationPid IS NULL";
 	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_2 = "sharepointOAuth2TokenEntry.configurationPid = ?";
 	private static final String _FINDER_COLUMN_U_C_CONFIGURATIONPID_3 = "(sharepointOAuth2TokenEntry.configurationPid IS NULL OR sharepointOAuth2TokenEntry.configurationPid = '')";
 

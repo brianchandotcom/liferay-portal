@@ -912,10 +912,8 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_1 = "samlSpMessage.samlIdpEntityId IS NULL AND ";
 	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_2 = "samlSpMessage.samlIdpEntityId = ? AND ";
 	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_3 = "(samlSpMessage.samlIdpEntityId IS NULL OR samlSpMessage.samlIdpEntityId = '') AND ";
-	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_1 = "samlSpMessage.samlIdpResponseKey IS NULL";
 	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_2 = "samlSpMessage.samlIdpResponseKey = ?";
 	private static final String _FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_3 = "(samlSpMessage.samlIdpResponseKey IS NULL OR samlSpMessage.samlIdpResponseKey = '')";
 

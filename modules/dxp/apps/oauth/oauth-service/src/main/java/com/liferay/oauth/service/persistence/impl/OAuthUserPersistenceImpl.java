@@ -1326,7 +1326,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_1 = "oAuthUser.accessToken IS NULL";
 	private static final String _FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_2 = "oAuthUser.accessToken = ?";
 	private static final String _FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_3 = "(oAuthUser.accessToken IS NULL OR oAuthUser.accessToken = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_U_OAI = new FinderPath(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,

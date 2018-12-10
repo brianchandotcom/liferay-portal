@@ -868,8 +868,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SAMLIDPSSOSESSIONKEY_SAMLIDPSSOSESSIONKEY_1 =
-		"samlIdpSsoSession.samlIdpSsoSessionKey IS NULL";
 	private static final String _FINDER_COLUMN_SAMLIDPSSOSESSIONKEY_SAMLIDPSSOSESSIONKEY_2 =
 		"samlIdpSsoSession.samlIdpSsoSessionKey = ?";
 	private static final String _FINDER_COLUMN_SAMLIDPSSOSESSIONKEY_SAMLIDPSSOSESSIONKEY_3 =

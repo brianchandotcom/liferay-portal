@@ -1413,7 +1413,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 	}
 
 	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLIDPSSOSESSIONID_2 = "samlIdpSpSession.samlIdpSsoSessionId = ? AND ";
-	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_1 = "samlIdpSpSession.samlSpEntityId IS NULL";
 	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_2 = "samlIdpSpSession.samlSpEntityId = ?";
 	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_3 = "(samlIdpSpSession.samlSpEntityId IS NULL OR samlIdpSpSession.samlSpEntityId = '')";
 

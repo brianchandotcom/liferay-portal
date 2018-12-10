@@ -861,7 +861,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	}
 
 	private static final String _FINDER_COLUMN_C_SIEI_COMPANYID_2 = "samlSpIdpConnection.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_SIEI_SAMLIDPENTITYID_1 = "samlSpIdpConnection.samlIdpEntityId IS NULL";
 	private static final String _FINDER_COLUMN_C_SIEI_SAMLIDPENTITYID_2 = "samlSpIdpConnection.samlIdpEntityId = ?";
 	private static final String _FINDER_COLUMN_C_SIEI_SAMLIDPENTITYID_3 = "(samlSpIdpConnection.samlIdpEntityId IS NULL OR samlSpIdpConnection.samlIdpEntityId = '')";
 

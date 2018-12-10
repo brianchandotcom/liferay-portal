@@ -49,7 +49,6 @@ import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessP
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -633,7 +632,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "kaleoProcess.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "kaleoProcess.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(kaleoProcess.uuid IS NULL OR kaleoProcess.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
@@ -877,7 +875,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "kaleoProcess.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "kaleoProcess.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(kaleoProcess.uuid IS NULL OR kaleoProcess.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "kaleoProcess.groupId = ?";
@@ -1460,7 +1457,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "kaleoProcess.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "kaleoProcess.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(kaleoProcess.uuid IS NULL OR kaleoProcess.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "kaleoProcess.companyId = ?";
@@ -2541,24 +2537,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 
 		setModelImplClass(KaleoProcessImpl.class);
 		setEntityCacheEnabled(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

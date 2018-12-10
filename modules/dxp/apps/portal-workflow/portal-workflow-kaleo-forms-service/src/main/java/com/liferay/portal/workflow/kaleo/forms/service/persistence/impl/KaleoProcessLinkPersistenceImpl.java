@@ -851,7 +851,6 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	}
 
 	private static final String _FINDER_COLUMN_KPI_WTN_KALEOPROCESSID_2 = "kaleoProcessLink.kaleoProcessId = ? AND ";
-	private static final String _FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_1 = "kaleoProcessLink.workflowTaskName IS NULL";
 	private static final String _FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_2 = "kaleoProcessLink.workflowTaskName = ?";
 	private static final String _FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3 = "(kaleoProcessLink.workflowTaskName IS NULL OR kaleoProcessLink.workflowTaskName = '')";
 

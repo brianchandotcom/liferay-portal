@@ -911,11 +911,8 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_1 = "samlSpAuthRequest.samlIdpEntityId IS NULL AND ";
 	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_2 = "samlSpAuthRequest.samlIdpEntityId = ? AND ";
 	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_3 = "(samlSpAuthRequest.samlIdpEntityId IS NULL OR samlSpAuthRequest.samlIdpEntityId = '') AND ";
-	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_1 =
-		"samlSpAuthRequest.samlSpAuthRequestKey IS NULL";
 	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_2 =
 		"samlSpAuthRequest.samlSpAuthRequestKey = ?";
 	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_3 =

@@ -48,7 +48,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -633,7 +632,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "definition.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "definition.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
@@ -877,7 +875,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "definition.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "definition.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "definition.groupId = ?";
@@ -1461,7 +1458,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "definition.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "definition.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "definition.companyId = ?";
@@ -2835,24 +2831,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 		setModelImplClass(DefinitionImpl.class);
 		setEntityCacheEnabled(DefinitionModelImpl.ENTITY_CACHE_ENABLED);
-
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
-
-			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-
-			field.set(this, dbColumnNames);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 	}
 
 	/**

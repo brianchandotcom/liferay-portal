@@ -28,17 +28,16 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -55,78 +54,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eduardo Garcia
  */
 public class JournalPortletUtil {
-
-	public static void addPortletBreadcrumbEntries(
-			JournalFolder folder, HttpServletRequest request,
-			PortletURL portletURL)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String mvcPath = ParamUtil.getString(request, "mvcPath");
-
-		portletURL.setParameter(
-			"folderId",
-			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-		if (mvcPath.equals("/select_folder.jsp")) {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
-		}
-		else {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("direction-right", Boolean.TRUE.toString());
-			data.put(
-				"folder-id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString(),
-				data);
-		}
-
-		if (folder == null) {
-			return;
-		}
-
-		List<JournalFolder> ancestorFolders = folder.getAncestors();
-
-		Collections.reverse(ancestorFolders);
-
-		for (JournalFolder ancestorFolder : ancestorFolders) {
-			portletURL.setParameter(
-				"folderId", String.valueOf(ancestorFolder.getFolderId()));
-
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("direction-right", Boolean.TRUE.toString());
-			data.put("folder-id", ancestorFolder.getFolderId());
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorFolder.getName(), portletURL.toString(), data);
-		}
-
-		portletURL.setParameter(
-			"folderId", String.valueOf(folder.getFolderId()));
-
-		if (folder.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			JournalFolder unescapedFolder = folder.toUnescapedModel();
-
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("direction-right", Boolean.TRUE.toString());
-			data.put("folder-id", folder.getFolderId());
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, unescapedFolder.getName(), portletURL.toString(),
-				data);
-		}
-	}
 
 	public static String getAddMenuFavItemKey(
 			PortletRequest portletRequest, PortletResponse portletResponse)
@@ -183,6 +110,66 @@ public class JournalPortletUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
+			JournalFolder folder, HttpServletRequest request,
+			PortletURL portletURL)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(request, "home"));
+
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		if (folder == null) {
+			return breadcrumbEntries;
+		}
+
+		List<JournalFolder> ancestorFolders = folder.getAncestors();
+
+		Collections.reverse(ancestorFolders);
+
+		for (JournalFolder ancestorFolder : ancestorFolders) {
+			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
+
+			folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
+
+			portletURL.setParameter(
+				"folderId", String.valueOf(ancestorFolder.getFolderId()));
+
+			folderBreadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(folderBreadcrumbEntry);
+		}
+
+		if (folder.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
+
+			JournalFolder unescapedFolder = folder.toUnescapedModel();
+
+			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
+
+			portletURL.setParameter(
+				"folderId", String.valueOf(folder.getFolderId()));
+
+			folderBreadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(folderBreadcrumbEntry);
+		}
+
+		return breadcrumbEntries;
 	}
 
 	protected static long getAddMenuFavItemFolderId(long folderId)

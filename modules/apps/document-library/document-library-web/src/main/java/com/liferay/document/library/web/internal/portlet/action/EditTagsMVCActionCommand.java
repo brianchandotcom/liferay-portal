@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -95,6 +100,12 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		Stream<FileEntry> fileEntryStream = selection.stream();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		boolean append = ParamUtil.getBoolean(actionRequest, "append");
 
 		Set<String> commonTagNamesSet = SetUtil.fromArray(
@@ -117,6 +128,12 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		fileEntryStream.forEach(
 			fileEntry -> {
 				try {
+					if (!_fileEntryModelResourcePermission.contains(
+							permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+
+						return;
+					}
+
 					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId());
@@ -151,6 +168,12 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

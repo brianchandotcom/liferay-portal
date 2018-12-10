@@ -770,6 +770,8 @@ public class JournalDisplayContext {
 					_themeDisplay.getLayoutSet(), _themeDisplay));
 			sb.append("/a/");
 			sb.append(assetEntry.getEntryId());
+			sb.append(StringPool.SLASH);
+			sb.append(article.getId());
 			sb.append("?p_p_state=pop_up");
 
 			return sb.toString();

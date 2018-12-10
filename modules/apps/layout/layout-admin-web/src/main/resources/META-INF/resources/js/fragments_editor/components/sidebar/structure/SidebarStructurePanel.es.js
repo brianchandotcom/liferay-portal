@@ -9,12 +9,12 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {Store} from '../../../store/store.es';
-import templates from './SidebarStructureSection.soy';
+import templates from './SidebarStructurePanel.soy';
 
 /**
- * SidebarStructureSection
+ * SidebarStructurePanel
  */
-class SidebarStructureSection extends Component {
+class SidebarStructurePanel extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
@@ -58,20 +58,20 @@ class SidebarStructureSection extends Component {
  * @static
  * @type {!Object}
  */
-SidebarStructureSection.STATE = {
+SidebarStructurePanel.STATE = {
 
 	/**
 	 * Store instance
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarStructureSection
+	 * @memberOf SidebarStructurePanel
 	 * @review
 	 * @type {Store}
 	 */
 	store: Config.instanceOf(Store)
 };
 
-Soy.register(SidebarStructureSection, templates);
+Soy.register(SidebarStructurePanel, templates);
 
-export {SidebarStructureSection};
-export default SidebarStructureSection;
+export {SidebarStructurePanel};
+export default SidebarStructurePanel;

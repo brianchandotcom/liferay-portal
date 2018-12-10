@@ -73,7 +73,7 @@ JSONArray breadcrumbEntriesJSONArray = layoutsAdminDisplayContext.getBreadcrumbE
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200"
-			name="path"
+			name="relative-path"
 		>
 			<ol class="breadcrumb">
 

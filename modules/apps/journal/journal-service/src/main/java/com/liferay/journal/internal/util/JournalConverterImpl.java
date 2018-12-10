@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.util;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -550,7 +551,24 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Serializable serializable = null;
 
-		if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
+		if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type)) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					dynamicContentElement.getText());
+
+				String uuid = jsonObject.getString("uuid");
+
+				long groupId = jsonObject.getLong("groupId");
+
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+				serializable = jsonObject.toString();
+			}
+			catch (Exception e) {
+				return StringPool.BLANK;
+			}
+		}
+		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
@@ -1124,6 +1142,9 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

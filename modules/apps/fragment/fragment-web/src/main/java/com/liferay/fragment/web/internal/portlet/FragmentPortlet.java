@@ -112,7 +112,7 @@ public class FragmentPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			FragmentWebKeys.RESOLVED_MODULE_NAME,
-				_npmResolver.resolveModuleName("fragment-web"));
+			_npmResolver.resolveModuleName("fragment-web"));
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS, fragmentCollections);
 
@@ -166,9 +166,6 @@ public class FragmentPortlet extends MVCPortlet {
 		FragmentPortlet.class);
 
 	@Reference
-	private NPMResolver _npmResolver;
-
-	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
 
 	@Reference
@@ -181,6 +178,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private UserLocalService _userLocalService;

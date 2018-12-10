@@ -14,25 +14,17 @@
 
 package com.liferay.structured.content.apio.client.test;
 
-import com.jayway.jsonpath.JsonPath;
-
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
-import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
-
-import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -40,7 +32,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,554 +55,654 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testAdminUserSeesAllStructuredContents() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testAdminUserSeesAllStructuredContents() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsAdmin(hrefs.get(0)),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertTrue(
-			titles.contains(
+					"' }._links.structuredContents.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItems(
 				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_NO_GROUP));
-		Assert.assertTrue(
-			titles.contains(
+					TITLE_NO_GUEST_NO_GROUP,
 				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP));
-		Assert.assertTrue(
-			titles.contains(
+					TITLE_NO_GUEST_YES_GROUP,
 				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP));
+					TITLE_YES_GUEST_YES_GROUP)
+		);
 	}
 
 	@Test
-	public void testBooleanFieldDataTypeIsDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testBooleanFieldDataTypeIsDisplayed() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "en-US");
-
-		List<String> dataTypes = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
-					StructuredContentApioTestBundleActivator.
-						TITLE_2_LOCALE_DEFAULT),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
-				"[?(@.name=='MyBoolean')].dataType");
-
-		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("boolean"));
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
+				"'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		);
 	}
 
 	@Test
-	public void testBooleanFieldInputControlIsDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testBooleanFieldInputControlIsDisplayed() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "en-US");
-
-		List<String> inputControls = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
-					StructuredContentApioTestBundleActivator.
-						TITLE_2_LOCALE_DEFAULT),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
-				"[?(@.name=='MyBoolean')].inputControl");
-
-		Assert.assertEquals(inputControls.toString(), 1, inputControls.size());
-		Assert.assertTrue(inputControls.contains("checkbox"));
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
+				"'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		);
 	}
 
 	@Test
 	public void testColorFieldInputControlIsNotDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
+				"'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		);
+	}
 
-		headers.put("Accept-Language", "en-US");
+	@Test
+	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"' }._links.structuredContents.href"
+		);
 
-		List<String> inputControls = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
+				"'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.label",
+			Matchers.hasItems(
+				"NestedTextFieldNameLabel_us", "TextFieldNameLabel_us")
+		);
+	}
+
+	@Test
+	public void testDefaultStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"' }._links.structuredContents.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "de-DE"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
+				"'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.value",
+			Matchers.hasItems("NestedTextFieldValue_us", "TextFieldValue_us")
+		);
+	}
+
+	@Test
+	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"' }._links.structuredContents.href"
+		).then(
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT)
+		);
+	}
+
+	@Test
+	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "de-DE"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"' }._links.structuredContents.href"
+		).then(
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT)
+		);
+	}
+
+	@Test
+	public void testGuestUserSeesRightStructuredContents() {
+		ApioClientBuilder.given(
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"' }._links.structuredContents.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItem(
 					StructuredContentApioTestBundleActivator.
-						TITLE_2_LOCALE_DEFAULT),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
-				"[?(@.name=='MyColor')].inputControl");
-
-		Assert.assertTrue(inputControls.toString(), inputControls.isEmpty());
-	}
-
-	@Test
-	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "de-DE");
-
-		List<String> labels = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
-				"label");
-
-		Assert.assertTrue(labels.contains("NestedTextFieldNameLabel_us"));
-		Assert.assertTrue(labels.contains("TextFieldNameLabel_us"));
-	}
-
-	@Test
-	public void testDefaultStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "de-DE");
-
-		List<String> values = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
+						TITLE_NO_GUEST_NO_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItem(
 					StructuredContentApioTestBundleActivator.
-						TITLE_2_LOCALE_DEFAULT),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
-				"value");
-
-		Assert.assertTrue(values.contains("NestedTextFieldValue_us"));
-		Assert.assertTrue(values.contains("TextFieldValue_us"));
+						TITLE_NO_GUEST_NO_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItem(
+					StructuredContentApioTestBundleActivator.
+						TITLE_NO_GUEST_YES_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.
+					TITLE_YES_GUEST_YES_GROUP)
+		);
 	}
 
 	@Test
-	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testLocalizedStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
-
-		List<String> titles = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_2_LOCALE_DEFAULT));
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES, "'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.label",
+			Matchers.hasItems(
+				"NestedTextFieldNameLabel_es", "TextFieldNameLabel_es")
+		);
 	}
 
 	@Test
-	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testLocalizedStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "de-DE");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_2_LOCALE_DEFAULT));
+		ApioClientBuilder.given(
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES, "'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.value",
+			Matchers.hasItems("NestedTextFieldValue_es", "TextFieldValue_es")
+		);
 	}
 
 	@Test
-	public void testGuestUserSeesRightStructuredContents() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testLocalizedTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0)),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertFalse(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_NO_GROUP));
-		Assert.assertFalse(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP));
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP));
+					"' }._links.structuredContents.href"
+		).then(
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES)
+		);
 	}
 
 	@Test
-	public void testLocalizedStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testNotSiteMemberUserSeesRightStructuredContents() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			StructuredContentApioTestBundleActivator.
+				NOT_A_SITE_MEMBER_EMAIL_ADDRESS,
+			"test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "es-ES");
-
-		List<String> labels = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
-				"label");
-
-		Assert.assertTrue(labels.contains("NestedTextFieldNameLabel_es"));
-		Assert.assertTrue(labels.contains("TextFieldNameLabel_es"));
+					"' }._links.structuredContents.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItem(
+					StructuredContentApioTestBundleActivator.
+						TITLE_NO_GUEST_NO_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItem(
+					StructuredContentApioTestBundleActivator.
+						TITLE_NO_GUEST_YES_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.
+					TITLE_YES_GUEST_YES_GROUP)
+		);
 	}
 
 	@Test
-	public void testLocalizedStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testSetDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "es-ES");
-
-		List<String> values = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
-					StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
-				"value");
-
-		Assert.assertTrue(values.contains("NestedTextFieldValue_es"));
-		Assert.assertTrue(values.contains("TextFieldValue_es"));
+					"' }._links.structuredContents.href"
+		).then(
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItem(
+				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES)
+		);
 	}
 
 	@Test
-	public void testLocalizedTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testSiteMemberUserSeesRightStructuredContents() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			StructuredContentApioTestBundleActivator.SITE_MEMBER_EMAIL_ADDRESS,
+			"test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "es-ES");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES));
+					"' }._links.structuredContents.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.not(
+				Matchers.hasItems(
+					StructuredContentApioTestBundleActivator.
+						TITLE_NO_GUEST_NO_GROUP))
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItems(
+				StructuredContentApioTestBundleActivator.
+					TITLE_NO_GUEST_YES_GROUP)
+		).body(
+			"_embedded.StructuredContent.title",
+			Matchers.hasItems(
+				StructuredContentApioTestBundleActivator.
+					TITLE_YES_GUEST_YES_GROUP)
+		);
 	}
 
 	@Test
-	public void testNotSiteMemberUserSeesRightStructuredContents()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testStructuredContentsExistsInContentSpaceEndpoint() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsUser(
-				hrefs.get(0),
-				StructuredContentApioTestBundleActivator.
-					NOT_A_SITE_MEMBER_EMAIL_ADDRESS,
-				"test"),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertFalse(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_NO_GROUP));
-		Assert.assertFalse(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP));
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP));
+					"' }._links.structuredContents.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		);
 	}
 
 	@Test
-	public void testSetDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
+	public void testStructuredContentsMatchesSelfLink() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find { it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
+					"' }._links.structuredContents.href"
+		);
 
-		Map<String, String> headers = _getHeaders();
-
-		List<String> titles = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES));
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			href
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_links.self.href", Matchers.startsWith(href)
+		);
 	}
 
-	@Test
-	public void testSiteMemberUserSeesRightStructuredContents()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsGuest(
-				JsonPath.read(
-					_toStringAsGuest(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		List<String> titles = JsonPath.read(
-			_toStringAsUser(
-				hrefs.get(0),
-				StructuredContentApioTestBundleActivator.
-					SITE_MEMBER_EMAIL_ADDRESS,
-				"test"),
-			"$._embedded.StructuredContent[*].title");
-
-		Assert.assertFalse(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_NO_GROUP));
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP));
-		Assert.assertTrue(
-			titles.contains(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP));
-	}
-
-	@Test
-	public void testStructuredContentsExistsInContentSpaceEndpoint()
-		throws Exception {
-
-		List<String> hrefs = JsonPath.read(
-			_toStringAsGuest(
-				JsonPath.read(
-					_toStringAsGuest(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Assert.assertNotNull(hrefs.get(0));
-	}
-
-	@Test
-	public void testStructuredContentsMatchesSelfLink() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsGuest(
-				JsonPath.read(
-					_toStringAsGuest(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		String href = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0)), "$._links.self.href");
-
-		Assert.assertTrue(href.startsWith(hrefs.get(0)));
-	}
-
-	private JSONWebServiceClient _getGuestJSONWebServiceClient() {
-		JSONWebServiceClient jsonWebServiceClient =
-			new JSONWebServiceClientImpl();
-
-		jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
-		jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
-		jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
-
-		return jsonWebServiceClient;
-	}
-
-	private Map<String, String> _getHeaders() {
-		return new HashMap<String, String>() {
-			{
-				put("Accept", "application/hal+json");
-			}
-		};
-	}
-
-	private JSONWebServiceClient _getJSONWebServiceClient(
-		String login, String password) {
-
-		JSONWebServiceClient jsonWebServiceClient =
-			_jsonWebServiceClientMap.get(login);
-
-		if (jsonWebServiceClient == null) {
-			jsonWebServiceClient = _getGuestJSONWebServiceClient();
-
-			jsonWebServiceClient.setLogin(login);
-			jsonWebServiceClient.setPassword(password);
-
-			_jsonWebServiceClientMap.put(login, jsonWebServiceClient);
-		}
-
-		return jsonWebServiceClient;
-	}
-
-	private String _getURLWithFilterByTitle(String url, String title)
-		throws UnsupportedEncodingException {
-
-		return StringBundler.concat(
-			url, "?filter=(",
-			URLEncoder.encode("title eq '" + title, StringPool.UTF8), "')");
-	}
-
-	private String _toString(
-			JSONWebServiceClient jsonWebServiceClient, String url)
-		throws Exception {
-
-		return _toString(
-			jsonWebServiceClient, url,
-			Collections.singletonMap("Accept", "application/hal+json"));
-	}
-
-	private String _toString(
-			JSONWebServiceClient jsonWebServiceClient, String url,
-			Map<String, String> headers)
-		throws Exception {
-
-		return jsonWebServiceClient.doGet(url, Collections.emptyMap(), headers);
-	}
-
-	private String _toStringAsAdmin(String url) throws Exception {
-		return _toStringAsUser(url, "test@liferay.com", "test");
-	}
-
-	private String _toStringAsGuest(String url) throws Exception {
-		return _toStringAsGuest(url, _getHeaders());
-	}
-
-	private String _toStringAsGuest(String url, Map<String, String> headers)
-		throws Exception {
-
-		return _toString(_getGuestJSONWebServiceClient(), url, headers);
-	}
-
-	private String _toStringAsUser(String url, String login, String password)
-		throws Exception {
-
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			login, password);
-
-		return _toString(jsonWebServiceClient, url);
-	}
-
-	private final Map<String, JSONWebServiceClient> _jsonWebServiceClientMap =
-		new HashMap<>();
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

@@ -17,6 +17,8 @@ package com.liferay.portal.apio.test.util;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.AuthenticationSpecification;
+import io.restassured.specification.PreemptiveAuthSpec;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -125,7 +127,13 @@ public class ApioClientBuilder {
 			io.restassured.specification.RequestSpecification
 				requestSpecification) {
 
-			return requestSpecification.auth().basic(_user, _password);
+			AuthenticationSpecification authenticationSpecification =
+				requestSpecification.auth();
+
+			PreemptiveAuthSpec preemptiveAuthSpec =
+				authenticationSpecification.preemptive();
+
+			return preemptiveAuthSpec.basic(_user, _password);
 		}
 
 		protected BasicAuthentication(String user, String password) {

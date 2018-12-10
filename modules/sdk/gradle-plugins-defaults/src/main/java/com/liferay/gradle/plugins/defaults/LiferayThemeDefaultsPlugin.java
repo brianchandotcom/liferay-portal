@@ -739,4 +739,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _GROUP = "com.liferay.plugins";
 
+	private static final String[] _PARENT_THEME_PROJECT_NAMES =
+		{"frontend-theme-styled", "frontend-theme-unstyled"};
+
 }

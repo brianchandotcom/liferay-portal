@@ -102,7 +102,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 						<div id="<%= criteriaBuilderId %>"></div>
 
-						<aui:script require="<%= resolvedModuleName %>/js/index.es as CriteriaBuilder">
+						<aui:script require='<%= resolvedModuleName + "/js/index.es as CriteriaBuilder" %>'>
 							CriteriaBuilder.default(
 								'<%= criteriaBuilderId %>',
 								{

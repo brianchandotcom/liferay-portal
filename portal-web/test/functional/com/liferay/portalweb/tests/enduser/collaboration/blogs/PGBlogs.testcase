@@ -1878,6 +1878,37 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryReadingTime" priority="5">
+		<description message="Basic test that ensures reading time displays when enabled." />
+
+		<execute macro="BlogsConfiguration#enableReadingTime" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="readingTime" value="Less Than a Minute Read" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="readingTime" value="Less Than a Minute Read" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryRSS" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return name="siteName" />

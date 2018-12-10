@@ -597,6 +597,10 @@ public class DLReferencesExportImportContentProcessor
 						_companyLocalService.getCompanies();
 
 					for (Company company : companies) {
+						hostNames.add(
+							Http.HTTP_WITH_SLASH + company.getWebId());
+						hostNames.add(
+							Http.HTTPS_WITH_SLASH + company.getWebId());
 						hostNames.add(company.getWebId());
 					}
 
@@ -607,9 +611,18 @@ public class DLReferencesExportImportContentProcessor
 							curBeginPos, endPos);
 
 						if (substring.startsWith(hostName)) {
-							absolutePortalURL = true;
+							if (content.regionMatches(
+									true, curBeginPos - _OFFSET_HREF_ATTRIBUTE,
+									"href=", 0,
+									5) ||
+								content.regionMatches(
+									true, curBeginPos - _OFFSET_SRC_ATTRIBUTE,
+									"src=", 0, 4)) {
 
-							continue;
+								absolutePortalURL = true;
+
+								continue;
+							}
 						}
 					}
 				}

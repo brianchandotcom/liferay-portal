@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Gergely Mathe
  * @author Balázs Sáfrány-Kovalik
  */
-public class UpgradeStagingGroupTypeSettings extends UpgradeProcess {
+public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 
-	public UpgradeStagingGroupTypeSettings(
+	public BaseUpgradeStagingGroupTypeSettings(
 		GroupLocalService groupLocalService, String oldPortletId,
 		String newPortletId) {
 

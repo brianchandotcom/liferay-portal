@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeStagingGroupTypeSettings;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeStagingGroupTypeSettings;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +53,7 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.2.0", "1.3.0",
-			new UpgradeStagingGroupTypeSettings(
+			new BaseUpgradeStagingGroupTypeSettings(
 				_groupLocalService, BlogsPortletKeys.BLOGS,
 				BlogsPortletKeys.BLOGS_ADMIN));
 	}

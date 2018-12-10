@@ -111,9 +111,6 @@ public class FragmentPortlet extends MVCPortlet {
 				themeDisplay.getScopeGroupId());
 
 		renderRequest.setAttribute(
-			FragmentWebKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("fragment-web"));
-		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS, fragmentCollections);
 
 		renderRequest.setAttribute(
@@ -124,6 +121,9 @@ public class FragmentPortlet extends MVCPortlet {
 			_fragmentEntryProcessorRegistry);
 		renderRequest.setAttribute(
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
+		renderRequest.setAttribute(
+			FragmentWebKeys.RESOLVED_MODULE_NAME,
+			_npmResolver.resolveModuleName("fragment-web"));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

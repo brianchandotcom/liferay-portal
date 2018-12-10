@@ -554,7 +554,7 @@ public class LayoutsAdminDisplayContext {
 		int layoutsCount = 0;
 		List<Layout> layouts = null;
 
-		if (Validator.isNotNull(getKeywords()) || (layout == null)) {
+		if (isSearch() || (layout == null)) {
 			layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), isPrivateLayout(), getKeywords(),
 				new String[] {"content", "portlet"});
@@ -946,9 +946,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isFlattenedView() {
-		if (Objects.equals(getDisplayStyle(), "list") ||
-			Validator.isNotNull(getKeywords())) {
-
+		if (Objects.equals(getDisplayStyle(), "list") || isSearch()) {
 			return true;
 		}
 
@@ -998,6 +996,14 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "privateLayout");
 
 		return _privateLayout;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowAddChildPageAction(Layout layout)
@@ -1433,6 +1439,10 @@ public class LayoutsAdminDisplayContext {
 
 		_orderByCol = ParamUtil.getString(
 			_liferayPortletRequest, "orderByCol", "path");
+
+		if (isSearch()) {
+			_orderByCol = "create-date";
+		}
 
 		return _orderByCol;
 	}

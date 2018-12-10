@@ -73,7 +73,7 @@ public class BlogsAggregatorPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(release.schema.version=1.2.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=1.3.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

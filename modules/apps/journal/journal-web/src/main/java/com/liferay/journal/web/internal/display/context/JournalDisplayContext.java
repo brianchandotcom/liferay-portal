@@ -757,10 +757,7 @@ public class JournalDisplayContext {
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		if (JournalArticleLocalServiceUtil.isLatestVersion(
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion()) &&
-			AssetDisplayPageHelper.hasAssetDisplayPage(
+		if (AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
 			StringBundler sb = new StringBundler(6);

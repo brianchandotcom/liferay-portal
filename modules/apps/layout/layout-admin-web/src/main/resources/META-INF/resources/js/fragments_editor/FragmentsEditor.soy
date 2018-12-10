@@ -8,6 +8,15 @@
 	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
+	{@param elements: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
 	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
@@ -82,6 +91,7 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
+			{param elements: $elements /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}

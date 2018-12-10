@@ -130,6 +130,32 @@ FragmentsEditor.STATE = Object.assign(
 		editFragmentEntryLinkURL: Config.string().required(),
 
 		/**
+		 * Available elements that can be used, organized by collections.
+		 * @default undefined
+		 * @instance
+		 * @memberOf FragmentsEditor
+		 * @review
+		 * @type {!Array<object>}
+		 */
+
+		elements: Config.arrayOf(
+			Config.shapeOf(
+				{
+					entries: Config.arrayOf(
+						Config.shapeOf(
+							{
+								fragmentEntryId: Config.string().required(),
+								name: Config.string().required()
+							}
+						)
+					).required(),
+					fragmentCollectionId: Config.string().required(),
+					name: Config.string().required()
+				}
+			)
+		).required(),
+
+		/**
 		 * URL for obtaining the class types of an asset
 		 * created.
 		 * @default undefined

@@ -4,6 +4,15 @@
  * FragmentsEditorSidebar
  */
 {template .render}
+	{@param elements: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
 	{@param sections: list<[
@@ -35,6 +44,7 @@
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
 			{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
+				{param elements: $elements /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param highlightMapping: $highlightMapping ?: false /}
 				{param layoutData: $layoutData /}

@@ -4,6 +4,7 @@
  * FragmentsEditorSidebarContent
  */
 {template .render}
+	{@param elements: ?}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
 	{@param sections: ?}
@@ -26,6 +27,16 @@
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param layoutData: $layoutData /}
 					{param sections: $sections /}
+					{param spritemap: $spritemap /}
+					{param highlightMapping: $highlightMapping /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param store: $store /}
+				{/call}
+			{elseif $_sectionId == 'elements'}
+				{call com.liferay.layout.admin.web.SidebarElementsSection.render}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
+					{param elements: $elements /}
 					{param spritemap: $spritemap /}
 					{param highlightMapping: $highlightMapping /}
 					{param selectedMappingTypes: $selectedMappingTypes /}

@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -59,8 +60,7 @@ page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
-page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
-page import="com.liferay.trash.web.internal.util.TrashUtil" %>
+page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -80,8 +80,6 @@ page import="java.util.Map" %>
 
 <%
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
-
-TrashUtil trashUtil = (TrashUtil)request.getAttribute(TrashWebKeys.TRASH_UTIL);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 

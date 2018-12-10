@@ -72,26 +72,3 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<%
-Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-if (group.isOrganization()) {
-	Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-
-	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-}
-else {
-	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-}
-
-if (team != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-teams"), redirect);
-	PortalUtil.addPortletBreadcrumbEntry(request, team.getName(), null);
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
-}
-else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-teams"), redirect);
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-team"), currentURL);
-}
-%>

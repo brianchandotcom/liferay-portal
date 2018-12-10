@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,15 +54,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteTeamsDisplayContext {
 
 	public SiteTeamsDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request)
-		throws Exception {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
-
-		addBreadcrumbEntries();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -297,31 +290,6 @@ public class SiteTeamsDisplayContext {
 		}
 
 		return false;
-	}
-
-	protected void addBreadcrumbEntries() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (group.isOrganization()) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					group.getOrganizationId());
-
-			UsersAdminUtil.addPortletBreadcrumbEntries(
-				organization, _request, _renderResponse);
-		}
-		else {
-			PortalUtil.addPortletBreadcrumbEntry(
-				_request, group.getDescriptiveName(themeDisplay.getLocale()),
-				null);
-		}
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			_request, LanguageUtil.get(_request, "manage-teams"),
-			themeDisplay.getURLCurrent());
 	}
 
 	protected String getKeywords() {

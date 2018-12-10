@@ -41,30 +41,3 @@ renderResponse.setTitle(editSiteTeamAssignmentsDisplayContext.getTeamName());
 		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
-
-<%
-Team team = editSiteTeamAssignmentsDisplayContext.getTeam();
-
-Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
-
-if (group != null) {
-	group = StagingUtil.getLiveGroup(group.getGroupId());
-}
-
-Organization organization = null;
-
-if (group.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-}
-
-if (group.isOrganization()) {
-	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-}
-else {
-	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-teams"), redirect);
-PortalUtil.addPortletBreadcrumbEntry(request, editSiteTeamAssignmentsDisplayContext.getTeamName(), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-%>

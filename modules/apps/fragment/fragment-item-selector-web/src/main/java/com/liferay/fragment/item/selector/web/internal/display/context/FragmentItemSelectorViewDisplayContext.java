@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -253,6 +255,32 @@ public class FragmentItemSelectorViewDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
+		throws PortalException {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry fragmentCollectionsBreadcrumbEntry =
+			new BreadcrumbEntry();
+
+		fragmentCollectionsBreadcrumbEntry.setTitle(
+			LanguageUtil.get(_request, "collections"));
+		fragmentCollectionsBreadcrumbEntry.setURL(
+			getFragmentCollectionsRedirect());
+
+		breadcrumbEntries.add(fragmentCollectionsBreadcrumbEntry);
+
+		BreadcrumbEntry fragmentCollectionBreadcrumbEntry =
+			new BreadcrumbEntry();
+
+		fragmentCollectionBreadcrumbEntry.setTitle(
+			getFragmentCollectionTitle());
+
+		breadcrumbEntries.add(fragmentCollectionBreadcrumbEntry);
+
+		return breadcrumbEntries;
 	}
 
 	public PortletURL getPortletURL() {

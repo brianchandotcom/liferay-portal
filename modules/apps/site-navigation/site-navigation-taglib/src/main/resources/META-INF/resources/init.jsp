@@ -14,15 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-JournalPortletUtil.addPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, journalDisplayContext.getPortletURL());
-%>
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
-/>
+<%@ page import="java.util.List" %>

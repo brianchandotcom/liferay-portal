@@ -16,16 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = trashDisplayContext.getPortletURL();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
-
-if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + trashDisplayContext.getKeywords(), currentURL);
-}
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
@@ -117,12 +107,11 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
-		/>
+		<c:if test="<%= Validator.isNull(trashDisplayContext.getKeywords()) %>">
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= trashDisplayContext.getPortletBreadcrumbEntries() %>"
+			/>
+		</c:if>
 
 		<aui:form action="<%= deleteEntriesURL %>" name="fm">
 			<liferay-ui:search-container

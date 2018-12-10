@@ -22,14 +22,23 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -63,16 +72,19 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 			Selection<FileEntry> selection = _selectionFactory.create(
 				renderRequest.getParameterMap());
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_SELECTION, selection);
 
 			Stream<FileEntry> fileEntryStream = selection.stream();
 
 			Set<String> commonTags = fileEntryStream.map(
-				fileEntry -> SetUtil.fromArray(
-					_assetTagLocalService.getTagNames(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId()))
+				_getFileEntryTagsSet(permissionChecker)
 			).reduce(
 				SetUtil::intersect
 			).orElse(
@@ -99,8 +111,43 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
+	private Function<FileEntry, Set<String>> _getFileEntryTagsSet(
+		PermissionChecker permissionChecker) {
+
+		return fileEntry -> {
+			try {
+				if (_fileEntryModelResourcePermission.contains(
+						permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+
+					return SetUtil.fromArray(
+						_assetTagLocalService.getTagNames(
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId()));
+				}
+
+				return Collections.emptySet();
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
+
+				return Collections.emptySet();
+			}
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditTagsMVCRenderCommand.class);
+
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

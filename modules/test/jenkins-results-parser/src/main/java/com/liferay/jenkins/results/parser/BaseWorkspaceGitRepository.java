@@ -344,6 +344,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		gitWorkingDirectory.clean();
 
+		gitWorkingDirectory.cleanTempBranches();
+
 		gitWorkingDirectory.displayLog();
 	}
 

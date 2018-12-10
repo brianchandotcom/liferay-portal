@@ -166,6 +166,17 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void checkoutUpstreamLocalGitBranch() {
+		String currentBranchName = getCurrentBranchName();
+
+		if (!currentBranchName.equals(getUpstreamBranchName())) {
+			LocalGitBranch upstreamLocalGitBranch = getLocalGitBranch(
+				getUpstreamBranchName());
+
+			checkoutLocalGitBranch(upstreamLocalGitBranch);
+		}
+	}
+
 	public void cherryPick(LocalGitCommit localGitCommit) {
 		String cherryPickCommand = JenkinsResultsParserUtil.combine(
 			"git cherry-pick " + localGitCommit.getSHA());
@@ -191,6 +202,28 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to clean Git repository\n",
+					executionResult.getStandardError()));
+		}
+	}
+
+	public void cleanTempBranches() {
+		checkoutUpstreamLocalGitBranch();
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10,
+			JenkinsResultsParserUtil.combine(
+				"git branch | grep \"", getUpstreamBranchName(), "-temp\" | ",
+				"xargs git branch -D --"));
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (executionResult.getExitValue() == 123) {
+			System.out.println("No branches to delete");
+		}
+		else if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to delete temporary git branches\n",
 					executionResult.getStandardError()));
 		}
 	}

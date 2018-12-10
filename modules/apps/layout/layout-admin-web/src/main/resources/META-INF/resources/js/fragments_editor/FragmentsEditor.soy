@@ -23,7 +23,6 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
-	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -89,7 +88,6 @@
 			{param ref: 'sidebar' /}
 			{param sections: $sections /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
-			{param sidebarTabs: $sidebarTabs /}
 			{param spritemap: $spritemap /}
 			{param store: $store /}
 			{param visible: $contextualSidebarVisible ?: true /}

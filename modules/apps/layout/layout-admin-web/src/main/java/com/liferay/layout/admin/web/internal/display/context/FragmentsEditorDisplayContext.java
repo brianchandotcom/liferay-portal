@@ -194,8 +194,6 @@ public class FragmentsEditorDisplayContext {
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
 
-		soyContext.put("sidebarTabs", _getSidebarTabs());
-
 		String redirect = ParamUtil.getString(_request, "redirect");
 
 		soyContext.put("redirectURL", redirect);
@@ -403,22 +401,6 @@ public class FragmentsEditorDisplayContext {
 		}
 
 		return soyContext;
-	}
-
-	private List<SoyContext> _getSidebarTabs() {
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		SoyContext availableSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("enabled", true);
-		availableSoyContext.put("id", "available");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "available"));
-
-		soyContexts.add(availableSoyContext);
-
-		return soyContexts;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections(int type) {

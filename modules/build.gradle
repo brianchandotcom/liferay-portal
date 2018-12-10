@@ -445,11 +445,11 @@ private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipse
 
 				String fileName = path.substring(path.lastIndexOf("/") + 1)
 
-				if (!fileName.startsWith("gradle-")) {
+				if (!fileName.startsWith("gradle-") || !fileName.contains("-" + gradleVersion)) {
 					continue
 				}
 
-				String dirName = fileName.substring(7, fileName.length() - (gradleVersion.length() + 5))
+				String dirName = fileName.substring(7, fileName.lastIndexOf("-" + gradleVersion))
 
 				File sourcesDir = new File(rootProject.buildDir, "gradle-" + gradleVersion + "-sources/" + dirName)
 

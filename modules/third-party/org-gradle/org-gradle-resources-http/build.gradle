@@ -6,6 +6,10 @@ if (gradleVersion != gradle.gradleVersion) {
 	throw new GradleException("Unable to use Gradle " + gradle.gradleVersion + ", " + gradleVersion + " is required")
 }
 
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
+}
+
 dependencies {
 	compile fileTree(dir: gradle.gradleHomeDir, include: "lib/**/*.jar")
 }

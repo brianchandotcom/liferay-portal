@@ -221,6 +221,28 @@ public class LayoutsAdminDisplayContext {
 			privatePages = selLayout.isPrivateLayout();
 		}
 
+		JSONObject breadcrumbEntryJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		breadcrumbEntryJSONObject.put(
+			"title", LanguageUtil.get(_request, "pages"));
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("tabs1", getTabs1());
+		portletURL.setParameter(
+			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		breadcrumbEntryJSONObject.put("url", portletURL.toString());
+
+		breadcrumbEntriesJSONArray.put(breadcrumbEntryJSONObject);
+
 		breadcrumbEntriesJSONArray.put(
 			_getBreadcrumbEntryJSONObject(
 				LayoutConstants.DEFAULT_PLID, privatePages,

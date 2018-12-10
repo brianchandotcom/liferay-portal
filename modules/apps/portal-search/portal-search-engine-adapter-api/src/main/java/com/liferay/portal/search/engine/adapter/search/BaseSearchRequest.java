@@ -57,6 +57,14 @@ public abstract class BaseSearchRequest {
 		return _basicFacetSelection;
 	}
 
+	public boolean isExplain() {
+		return _explain;
+	}
+
+	public boolean isIncludeResponseString() {
+		return _includeResponseString;
+	}
+
 	public boolean isRequestCache() {
 		return _requestCache;
 	}
@@ -75,6 +83,14 @@ public abstract class BaseSearchRequest {
 
 	public void setBasicFacetSelection(boolean basicFacetSelection) {
 		_basicFacetSelection = basicFacetSelection;
+	}
+
+	public void setExplain(boolean explain) {
+		_explain = explain;
+	}
+
+	public void setIncludeResponseString(boolean includeResponseString) {
+		_includeResponseString = includeResponseString;
 	}
 
 	public void setIndexNames(String[] indexNames) {
@@ -106,7 +122,9 @@ public abstract class BaseSearchRequest {
 	}
 
 	private boolean _basicFacetSelection;
+	private boolean _explain;
 	private final Map<String, Facet> _facets = new HashMap<>();
+	private boolean _includeResponseString;
 	private String[] _indexNames;
 	private float _minimumScore;
 	private Filter _postFilter;

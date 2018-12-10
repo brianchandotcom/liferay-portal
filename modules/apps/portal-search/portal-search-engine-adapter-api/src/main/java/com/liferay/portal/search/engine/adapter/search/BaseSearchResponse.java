@@ -40,6 +40,10 @@ public abstract class BaseSearchResponse implements SearchResponse {
 		return _searchRequestString;
 	}
 
+	public String getSearchResponseString() {
+		return _searchResponseString;
+	}
+
 	public boolean isTerminatedEarly() {
 		return _terminatedEarly;
 	}
@@ -64,6 +68,10 @@ public abstract class BaseSearchResponse implements SearchResponse {
 		_searchRequestString = searchRequestString;
 	}
 
+	public void setSearchResponseString(String searchResponseString) {
+		_searchResponseString = searchResponseString;
+	}
+
 	public void setTerminatedEarly(boolean terminatedEarly) {
 		_terminatedEarly = terminatedEarly;
 	}
@@ -76,6 +84,7 @@ public abstract class BaseSearchResponse implements SearchResponse {
 	private Map<String, String> _executionProfile;
 	private long _executionTime;
 	private String _searchRequestString;
+	private String _searchResponseString;
 	private boolean _terminatedEarly;
 	private boolean _timedOut;
 

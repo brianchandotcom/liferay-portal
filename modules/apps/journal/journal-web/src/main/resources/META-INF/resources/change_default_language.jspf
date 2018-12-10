@@ -71,6 +71,8 @@
 					translationStatus = LanguageUtil.get(request, "default");
 					translationStatusCssClass = "info";
 				}
+
+				String linkHref = "javascript:Liferay.fire('inputLocalized:defaultLocaleChanged', {languageId: '" + curLanguageId + "'});";
 			%>
 
 				<liferay-util:buffer
@@ -89,7 +91,7 @@
 					linkCssClass="<%= linkCssClass %>"
 					markupView="lexicon"
 					message="<%= linkContent %>"
-					url="javascript:;"
+					url="<%= linkHref %>"
 				>
 				</liferay-ui:icon>
 

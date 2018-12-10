@@ -834,6 +834,45 @@ public class LayoutsAdminDisplayContext {
 		return portletURL;
 	}
 
+	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout)
+		throws PortalException {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		List<Layout> curLayouts = layout.getAncestors();
+
+		Collections.reverse(curLayouts);
+
+		boolean showLayoutPath = false;
+
+		if (getSelPlid() <= 0) {
+			showLayoutPath = true;
+		}
+
+		for (Layout curLayout : curLayouts) {
+			if (showLayoutPath) {
+				BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+				breadcrumbEntry.setTitle(
+					curLayout.getName(_themeDisplay.getLocale()));
+
+				breadcrumbEntries.add(breadcrumbEntry);
+			}
+
+			if (curLayout.getPlid() == getSelPlid()) {
+				showLayoutPath = true;
+			}
+		}
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(layout.getName(_themeDisplay.getLocale()));
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		return breadcrumbEntries;
+	}
+
 	public String getRootNodeName() {
 		if (_rootNodeName != null) {
 			return _rootNodeName;

@@ -45,9 +45,25 @@ public interface SearchResponse {
 
 	public int getPaginationStart();
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getSearchResponse()}
+	 *             and
+	 *             {@link com.liferay.portal.search.searcher.SearchResponse#getRequestString()}
+	 *
+	 * @review
+	 */
+	@Deprecated
 	public String getQueryString();
 
 	public List<String> getRelatedQueriesSuggestions();
+
+	/**
+	 * @return the search response as processed by the Liferay Search Framework
+	 *
+	 * @review
+	 */
+	public com.liferay.portal.search.searcher.SearchResponse
+		getSearchResponse();
 
 	public SearchSettings getSearchSettings();
 

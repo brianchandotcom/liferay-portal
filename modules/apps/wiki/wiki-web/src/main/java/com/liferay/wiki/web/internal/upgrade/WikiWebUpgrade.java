@@ -41,7 +41,7 @@ public class WikiWebUpgrade implements UpgradeStepRegistrator {
 			"0.0.1", "1.0.0", new UpgradePortletSettings(_settingsFactory));
 
 		registry.register(
-			"1.0.0", "1.1.0",
+			"1.0.0", "1.0.1",
 			new BaseUpgradeStagingGroupTypeSettings(
 				_companyLocalService, _groupLocalService, WikiPortletKeys.WIKI,
 				WikiPortletKeys.WIKI_ADMIN));

@@ -42,7 +42,7 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletSettings(_settingsFactory));
 
 		registry.register(
-			"1.0.0", "1.1.0",
+			"1.0.0", "1.0.1",
 			new BaseUpgradeStagingGroupTypeSettings(
 				_companyLocalService, _groupLocalService,
 				DLPortletKeys.DOCUMENT_LIBRARY,

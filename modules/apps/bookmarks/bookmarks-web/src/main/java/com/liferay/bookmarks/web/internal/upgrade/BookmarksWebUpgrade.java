@@ -41,7 +41,7 @@ public class BookmarksWebUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletPreferences());
 
 		registry.register(
-			"1.0.0", "1.1.0",
+			"1.0.0", "1.0.1",
 			new BaseUpgradeStagingGroupTypeSettings(
 				_companyLocalService, _groupLocalService,
 				BookmarksPortletKeys.BOOKMARKS,

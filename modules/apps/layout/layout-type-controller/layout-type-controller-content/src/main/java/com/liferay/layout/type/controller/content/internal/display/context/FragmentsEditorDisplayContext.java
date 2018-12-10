@@ -150,7 +150,6 @@ public class FragmentsEditorDisplayContext {
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL(
 				"/content_layout/render_fragment_entry"));
-		soyContext.put("sidebarTabs", _getSidebarTabs());
 
 		String redirect = ParamUtil.getString(_request, "redirect");
 
@@ -210,7 +209,6 @@ public class FragmentsEditorDisplayContext {
 				FragmentEntryTypeConstants.TYPE_ELEMENT));
 		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
-		soyContext.put("sidebarTabs", _getSidebarTabs());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
 		soyContext.put(
@@ -340,38 +338,6 @@ public class FragmentsEditorDisplayContext {
 					_themeDisplay.getPlid(), true);
 
 		return layoutPageTemplateStructure.getData();
-	}
-
-	private List<SoyContext> _getSidebarTabs() {
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		SoyContext availableSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("enabled", true);
-		availableSoyContext.put("id", "available");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "available"));
-
-		soyContexts.add(availableSoyContext);
-
-		SoyContext addedSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(Layout.class.getName()),
-				_themeDisplay.getPlid());
-
-		addedSoyContext.put("enabled", !fragmentEntryLinks.isEmpty());
-
-		addedSoyContext.put("id", "added");
-		addedSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "added"));
-
-		soyContexts.add(addedSoyContext);
-
-		return soyContexts;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections(int type) {

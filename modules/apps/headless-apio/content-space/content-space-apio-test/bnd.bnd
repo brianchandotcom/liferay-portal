@@ -6,7 +6,6 @@ Import-Package:\
 	\
 	!com.jayway.jsonpath.*,\
 	\
-	!com.liferay.apio.architect.internal.endpoint.*,\
 	!com.liferay.petra.json.web.service.client.internal.*,\
 	\
 	!javax.validation.*,\
@@ -27,6 +26,5 @@ Import-Package:\
 -includeresource:\
 	test-classes/integration,\
 	@lib/assertj-core.jar,\
-	@lib/com.liferay.apio.architect.test.util.jar,\
 	@lib/cxf-rt-frontend-jaxrs.jar,\
 	@lib/jackson-databind.jar

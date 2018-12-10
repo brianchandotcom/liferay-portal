@@ -118,7 +118,9 @@
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
 		<check name="JavaAggregateTestRuleParameterOrderCheck" />
-		<check name="JavaAnnotationDefaultAttributeCheck" />
+		<check name="JavaAnnotationDefaultAttributeCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaAnnotationsCheck" />
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />

@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.upgrade;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.blogs.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -54,8 +55,15 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.3.0",
 			new BaseUpgradeStagingGroupTypeSettings(
-				_groupLocalService, BlogsPortletKeys.BLOGS,
-				BlogsPortletKeys.BLOGS_ADMIN));
+				_companyLocalService, _groupLocalService,
+				BlogsPortletKeys.BLOGS, BlogsPortletKeys.BLOGS_ADMIN));
+	}
+
+	@Reference(unbind = "-")
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -75,6 +83,7 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
+	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private SettingsFactory _settingsFactory;

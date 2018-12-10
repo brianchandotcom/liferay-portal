@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,9 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 
 	public BaseUpgradeStagingGroupTypeSettings(
+		CompanyLocalService companyLocalService,
 		GroupLocalService groupLocalService, String oldPortletId,
 		String newPortletId) {
 
+		this.companyLocalServiceLocalService = companyLocalService;
 		this.groupLocalService = groupLocalService;
 		this.oldPortletId = oldPortletId;
 		this.newPortletId = newPortletId;
@@ -45,11 +49,25 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 	}
 
 	protected void updateStagedPortletNames() throws PortalException {
+		for (Company company : companyLocalServiceLocalService.getCompanies()) {
+			updateStagedPortletNames(company.getCompanyId());
+		}
+
+	}
+
+	protected void updateStagedPortletNames(Long companyId)
+		throws PortalException {
+
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			groupLocalService.getActionableDynamicQuery();
 
 		groupActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+
 				Property siteProperty = PropertyFactoryUtil.forName("site");
 
 				dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
@@ -95,6 +113,7 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 		groupActionableDynamicQuery.performActions();
 	}
 
+	protected CompanyLocalService companyLocalServiceLocalService;
 	protected GroupLocalService groupLocalService;
 	protected String newPortletId;
 	protected String oldPortletId;

@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.upgrade;
 
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -42,8 +43,15 @@ public class WikiWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "1.1.0",
 			new BaseUpgradeStagingGroupTypeSettings(
-				_groupLocalService, WikiPortletKeys.WIKI,
+				_companyLocalService, _groupLocalService, WikiPortletKeys.WIKI,
 				WikiPortletKeys.WIKI_ADMIN));
+	}
+
+	@Reference(unbind = "-")
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -56,6 +64,7 @@ public class WikiWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
+	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
 	private SettingsFactory _settingsFactory;
 

@@ -17,6 +17,7 @@ package com.liferay.bookmarks.web.internal.upgrade;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.web.internal.upgrade.v1_0_0.UpgradeAdminPortlets;
 import com.liferay.bookmarks.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeStagingGroupTypeSettings;
@@ -42,8 +43,16 @@ public class BookmarksWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "1.1.0",
 			new BaseUpgradeStagingGroupTypeSettings(
-				_groupLocalService, BookmarksPortletKeys.BOOKMARKS,
+				_companyLocalService, _groupLocalService,
+				BookmarksPortletKeys.BOOKMARKS,
 				BookmarksPortletKeys.BOOKMARKS_ADMIN));
+	}
+
+	@Reference(unbind = "-")
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -51,6 +60,7 @@ public class BookmarksWebUpgrade implements UpgradeStepRegistrator {
 		_groupLocalService = groupLocalService;
 	}
 
+	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
 
 }

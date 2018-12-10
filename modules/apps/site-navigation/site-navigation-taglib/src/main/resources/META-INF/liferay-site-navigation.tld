@@ -11,6 +11,16 @@
 	<short-name>liferay-site-navigation</short-name>
 	<uri>http://liferay.com/tld/site-navigation</uri>
 	<tag>
+		<name>breadcrumb</name>
+		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.BreadcrumbTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>breadcrumbEntries</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a component for users to navigate through a set of layouts (pages).</description>
 		<name>navigation</name>
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>

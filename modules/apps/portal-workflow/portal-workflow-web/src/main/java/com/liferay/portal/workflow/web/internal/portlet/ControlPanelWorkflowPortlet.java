@@ -22,19 +22,12 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
 
-import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,36 +72,6 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	}
 
 	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		checkCompanyAdmin();
-
-		super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		checkCompanyAdmin();
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Override
-	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		checkCompanyAdmin();
-
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-
-	@Override
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		super.addRenderRequestAttributes(renderRequest);
 
@@ -121,16 +84,18 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 			workflowNavigationDisplayContext);
 	}
 
-	protected void checkCompanyAdmin() throws PortletException {
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		super.checkPermissions(portletRequest);
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin()) {
-			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-
-			throw new PortletException(principalException);
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 	}
 

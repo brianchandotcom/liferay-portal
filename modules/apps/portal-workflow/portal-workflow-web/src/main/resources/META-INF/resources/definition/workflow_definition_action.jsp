@@ -62,41 +62,41 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		url="<%= editURL %>"
 	/>
 
-	<c:if test="<%= workflowDefinitionDisplayContext.canPublishWorkflowDefinition() %>">
-		<c:choose>
-			<c:when test="<%= workflowDefinition.isActive() %>">
-				<liferay-portlet:actionURL name="deactivateWorkflowDefinition" var="deactivateWorkflowDefinitionURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-					<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-				</liferay-portlet:actionURL>
+	<c:choose>
+		<c:when test="<%= workflowDefinition.isActive() %>">
+			<liferay-portlet:actionURL name="deactivateWorkflowDefinition" var="deactivateWorkflowDefinitionURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+			</liferay-portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unpublish"
-					url="<%= deactivateWorkflowDefinitionURL %>"
-				/>
+			<liferay-ui:icon
+				message="unpublish"
+				url="<%= deactivateWorkflowDefinitionURL %>"
+			/>
 
+			<c:if test="<%= workflowDefinitionDisplayContext.canPublishWorkflowDefinition() %>">
 				<liferay-ui:icon
 					id='<%= "duplicate" + HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>'
 					message="duplicate"
 					url="javascript:;"
 				/>
-			</c:when>
-			<c:otherwise>
-				<liferay-portlet:actionURL name="deleteWorkflowDefinition" var="deleteWorkflowDefinitionURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-					<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-				</liferay-portlet:actionURL>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<liferay-portlet:actionURL name="deleteWorkflowDefinition" var="deleteWorkflowDefinitionURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+			</liferay-portlet:actionURL>
 
-				<liferay-ui:icon
-					message="delete"
-					onClick='<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteWorkflowDefinitionURL + "'); return false;" %>'
-					url="<%= deleteWorkflowDefinitionURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+			<liferay-ui:icon
+				message="delete"
+				onClick='<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteWorkflowDefinitionURL + "'); return false;" %>'
+				url="<%= deleteWorkflowDefinitionURL %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:icon-menu>
 
 <div class="hide" id="<%= randomNamespace %>titleInputLocalized">

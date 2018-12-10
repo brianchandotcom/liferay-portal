@@ -28,14 +28,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServletContextClassLoaderPool {
 
 	public static ClassLoader getClassLoader(String servletContextName) {
-		if (servletContextName == null) {
-			return null;
-		}
+		if (servletContextName != null) {
+			ClassLoader classLoader = _classLoaders.get(servletContextName);
 
-		ClassLoader classLoader = _classLoaders.get(servletContextName);
-
-		if (classLoader != null) {
-			return classLoader;
+			if (classLoader != null) {
+				return classLoader;
+			}
 		}
 
 		if (_SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK) {
@@ -46,14 +44,12 @@ public class ServletContextClassLoaderPool {
 	}
 
 	public static String getServletContextName(ClassLoader classLoader) {
-		if (classLoader == null) {
-			return null;
-		}
+		if (classLoader != null) {
+			String servletContextName = _servletContextNames.get(classLoader);
 
-		String servletContextName = _servletContextNames.get(classLoader);
-
-		if (servletContextName != null) {
-			return servletContextName;
+			if (servletContextName != null) {
+				return servletContextName;
+			}
 		}
 
 		if (_SERVLET_CONTEXT_CLASS_LOADER_POOL_FALLBACK) {

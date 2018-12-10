@@ -256,40 +256,15 @@ public class ValidationBuild extends BaseBuild {
 			taskResult = matcher.group(1);
 		}
 
-		Element messageElement = null;
+		Element taskSummaryIndexFailureMessageElement = null;
 
 		if (taskResult.equals("FAILED")) {
-			if (taskName.contains("subrepository-source-format")) {
-				SourceFormatFailureMessageGenerator
-					sourceFormatFailureMessageGenerator =
-						new SourceFormatFailureMessageGenerator();
-
-				messageElement =
-					sourceFormatFailureMessageGenerator.getMessageElement(
-						console);
-			}
-			else {
-				GradleTaskFailureMessageGenerator
-					gradleTaskFailureMessageGenerator =
-						new GradleTaskFailureMessageGenerator();
-
-				messageElement =
-					gradleTaskFailureMessageGenerator.getMessageElement(
-						console);
-
-				if (messageElement == null) {
-					GenericFailureMessageGenerator
-						genericFailureMessageGenerator =
-							new GenericFailureMessageGenerator();
-
-					messageElement =
-						genericFailureMessageGenerator.getMessageElement(
-							console);
-				}
-			}
+			taskSummaryIndexFailureMessageElement =
+				getTaskSummaryIndexFailureMessageElement(console, taskName);
 		}
 
-		return getTaskSummaryIndexElement(taskName, taskResult, messageElement);
+		return getTaskSummaryIndexElement(
+			taskName, taskResult, taskSummaryIndexFailureMessageElement);
 	}
 
 	protected Element getTaskSummaryIndexElement(
@@ -298,6 +273,40 @@ public class ValidationBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"li", null, taskName, " - ", getTaskResultIcon(taskResult),
 			messageElement);
+	}
+
+	protected Element getTaskSummaryIndexFailureMessageElement(
+		String console, String taskName) {
+
+		Element messageElement = null;
+
+		if (taskName.contains("subrepository-source-format")) {
+			SourceFormatFailureMessageGenerator
+				sourceFormatFailureMessageGenerator =
+					new SourceFormatFailureMessageGenerator();
+
+			messageElement =
+				sourceFormatFailureMessageGenerator.getMessageElement(console);
+
+			if (messageElement != null) {
+				return messageElement;
+			}
+		}
+
+		GradleTaskFailureMessageGenerator gradleTaskFailureMessageGenerator =
+			new GradleTaskFailureMessageGenerator();
+
+		messageElement = gradleTaskFailureMessageGenerator.getMessageElement(
+			console);
+
+		if (messageElement != null) {
+			return messageElement;
+		}
+
+		GenericFailureMessageGenerator genericFailureMessageGenerator =
+			new GenericFailureMessageGenerator();
+
+		return genericFailureMessageGenerator.getMessageElement(console);
 	}
 
 	protected Element getTestSummaryElement() {

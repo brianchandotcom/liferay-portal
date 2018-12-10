@@ -5170,6 +5170,17 @@ ${output.content}</echo>
 										<isset property="junit.failure.count" />
 									</condition>
 
+									<if>
+										<isset property="junit.failure.message" />
+										<then>
+											<antelope:stringutil property="junit.failure.message" string="${junit.failure.message}">
+												<antelope:replace regex="&gt;" replacement="&amp;gt;" />
+												<antelope:replace regex="&lt;" replacement="&amp;lt;" />
+												<antelope:replace regex="&quot;" replacement="&apos;" />
+											</antelope:stringutil>
+										</then>
+									</if>
+
 									<condition else="" property="junit.failure.message.element" value="&lt;failure message=&quot;${junit.failure.message}&quot; /&gt;">
 										<isset property="junit.failure.message" />
 									</condition>

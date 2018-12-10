@@ -149,6 +149,23 @@ function getSectionIndex(structure, sectionId) {
 	);
 }
 
+/**
+ * Get target item border from the direction the item is moving in
+ * @param {!string} direction
+ */
+function getTargetBorder(direction) {
+	let targetBorder = null;
+
+	if (direction === MOVE_ITEM_DIRECTIONS.UP) {
+		targetBorder = DROP_TARGET_BORDERS.top;
+	}
+	else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+		targetBorder = DROP_TARGET_BORDERS.bottom;
+	}
+
+	return targetBorder;
+}
+
 export {
 	getColumn,
 	getDropSectionPosition,
@@ -156,5 +173,6 @@ export {
 	getFragmentRowIndex,
 	getItemMoveDirection,
 	getSectionFragmentEntryLinkIds,
-	getSectionIndex
+	getSectionIndex,
+	getTargetBorder
 };

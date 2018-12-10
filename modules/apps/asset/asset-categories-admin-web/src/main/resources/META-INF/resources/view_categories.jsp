@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
@@ -47,11 +43,8 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 </portlet:actionURL>
 
 <aui:form action="<%= deleteCategoryURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:breadcrumb
-		showCurrentGroup="<%= false %>"
-		showGuestGroup="<%= false %>"
-		showLayout="<%= false %>"
-		showParentGroups="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= AssetCategoryUtil.getAssetCategoriesBreadcrumbEntries(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse) %>"
 	/>
 
 	<liferay-ui:search-container

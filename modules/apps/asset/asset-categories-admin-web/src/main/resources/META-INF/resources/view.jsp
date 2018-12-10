@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
@@ -46,11 +42,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 </portlet:actionURL>
 
 <aui:form action="<%= deleteVocabularyURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-ui:breadcrumb
-		showCurrentGroup="<%= false %>"
-		showGuestGroup="<%= false %>"
-		showLayout="<%= false %>"
-		showParentGroups="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= AssetCategoryUtil.getAssetVocabulariesBreadcrumbEntries(request) %>"
 	/>
 
 	<liferay-ui:search-container

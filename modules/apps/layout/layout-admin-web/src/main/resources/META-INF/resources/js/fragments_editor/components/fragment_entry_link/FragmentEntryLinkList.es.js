@@ -27,7 +27,11 @@ import {
 	getSectionIndex,
 	getTargetBorder
 } from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {
+	focusItem,
+	moveItem,
+	setIn
+} from '../../utils/FragmentsEditorUpdateUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
@@ -150,6 +154,24 @@ class FragmentEntryLinkList extends Component {
 	 */
 	attached() {
 		this._initializeDragAndDrop();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+	rendered() {
+		if (this.activeItemId) {
+			requestAnimationFrame(
+				() => {
+					focusItem(
+						this.activeItemId,
+						this.activeItemType
+					);
+				}
+			);
+		}
 	}
 
 	/**
@@ -482,6 +504,26 @@ class FragmentEntryLinkList extends Component {
  * @type {!Object}
  */
 FragmentEntryLinkList.STATE = {
+
+	/**
+	 * Id of the active element
+	 * @default {string}
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {string}
+	 */
+	activeItemId: state.activeItemId,
+
+	/**
+	 * Type of the active element
+	 * @default {string}
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {string}
+	 */
+	activeItemType: state.activeItemType,
 
 	/**
 	 * Border of the target item where another item is being dragged to

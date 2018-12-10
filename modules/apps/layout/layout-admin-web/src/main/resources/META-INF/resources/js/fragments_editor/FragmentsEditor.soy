@@ -25,6 +25,8 @@
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? contextualSidebarVisible: bool}
 	{@param? highlightMapping: bool}
 	{@param? getAssetClassTypesURL: any}
@@ -95,6 +97,8 @@
 
 		<div class="contextual-sidebar-content">
 			{call com.liferay.layout.admin.web.FragmentEntryLinkList.render}
+				{param activeItemId: $activeItemId /}
+				{param activeItemType: $activeItemType /}
 				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 				{param defaultLanguageId: $defaultLanguageId /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}

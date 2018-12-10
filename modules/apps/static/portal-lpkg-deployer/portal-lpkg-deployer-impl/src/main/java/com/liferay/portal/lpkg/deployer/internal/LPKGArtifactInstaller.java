@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Dictionary;
@@ -77,8 +79,9 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			return;
 		}
 
-		Bundle existingBundle = _bundleContext.getBundle(
-			file.getCanonicalPath());
+		String canonicalPath = _getCanonicalPath(file);
+
+		Bundle existingBundle = _bundleContext.getBundle(canonicalPath);
 
 		if (existingBundle != null) {
 			update(file);
@@ -90,7 +93,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 				properties.getProperty("restart-required"), true)) {
 
 			if (existingBundle == null) {
-				_logRestartRequired(file.getCanonicalPath());
+				_logRestartRequired(canonicalPath);
 			}
 
 			return;
@@ -121,7 +124,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void uninstall(File file) throws Exception {
-		Bundle bundle = _bundleContext.getBundle(file.getCanonicalPath());
+		Bundle bundle = _bundleContext.getBundle(_getCanonicalPath(file));
 
 		if (bundle != null) {
 			bundle.uninstall();
@@ -130,7 +133,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void update(File file) throws Exception {
-		String canonicalPath = file.getCanonicalPath();
+		String canonicalPath = _getCanonicalPath(file);
 
 		Bundle bundle = _bundleContext.getBundle(canonicalPath);
 
@@ -193,6 +196,13 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 				bundle.update(_lpkgDeployer.toBundle(file));
 			}
 		}
+	}
+
+	private String _getCanonicalPath(File file) throws IOException {
+		String path = file.getCanonicalPath();
+
+		return StringUtil.replace(
+			path, CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 	}
 
 	private void _logRestartRequired(String canonicalPath) {

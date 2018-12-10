@@ -245,43 +245,19 @@ message.
 
 		<delete file="javac.output.txt" />
 
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<gradle-execute dir="modules/core" task="deploy">
-					<arg value="--info" />
-					<arg value="-Dbuild.profile=portal-pre" />
-					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-				</gradle-execute>
-			</then>
-			<else>
-				<gradle-execute dir="modules/core" task="deploy">
-					<arg value="--parallel" />
-					<arg value="-Dbuild.profile=portal-pre" />
-					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-				</gradle-execute>
-			</else>
-		</if>
+		<gradle-execute dir="modules/core" task="deploy">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.profile=portal-pre" />
+			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+		</gradle-execute>
 
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<gradle-execute dir="modules/apps" task="deploy">
-					<arg value="--info" />
-					<arg value="-Dbuild.profile=portal-pre" />
-					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-				</gradle-execute>
-			</then>
-			<else>
-				<gradle-execute dir="modules/apps" task="deploy">
-					<arg value="--parallel" />
-					<arg value="-Dbuild.profile=portal-pre" />
-					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-				</gradle-execute>
-			</else>
-		</if>
+		<gradle-execute dir="modules/apps" task="deploy">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.profile=portal-pre" />
+			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+		</gradle-execute>
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test" inheritAll="false" target="compile" />

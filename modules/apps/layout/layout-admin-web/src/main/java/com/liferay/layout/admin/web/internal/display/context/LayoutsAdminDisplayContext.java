@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -78,6 +79,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -110,19 +112,6 @@ public class LayoutsAdminDisplayContext {
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
-	}
-
-	public void addPortletBreadcrumbEntry() throws PortalException {
-		JSONArray breadcrumbEntriesJSONArray = getBreadcrumbEntriesJSONArray();
-
-		for (int i = 0; i < breadcrumbEntriesJSONArray.length(); i++) {
-			JSONObject breadcrumbEntryJSONObject =
-				breadcrumbEntriesJSONArray.getJSONObject(i);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				_request, breadcrumbEntryJSONObject.getString("title"),
-				breadcrumbEntryJSONObject.getString("url"));
-		}
 	}
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {
@@ -771,6 +760,29 @@ public class LayoutsAdminDisplayContext {
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
 			_themeDisplay.getRequest());
+	}
+
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
+		throws PortalException {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		JSONArray breadcrumbEntriesJSONArray = getBreadcrumbEntriesJSONArray();
+
+		for (int i = 0; i < breadcrumbEntriesJSONArray.length(); i++) {
+			JSONObject breadcrumbEntryJSONObject =
+				breadcrumbEntriesJSONArray.getJSONObject(i);
+
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+			breadcrumbEntry.setTitle(
+				breadcrumbEntryJSONObject.getString("title"));
+			breadcrumbEntry.setURL(breadcrumbEntryJSONObject.getString("url"));
+
+			breadcrumbEntries.add(breadcrumbEntry);
+		}
+
+		return breadcrumbEntries;
 	}
 
 	public String getPortletResource() {

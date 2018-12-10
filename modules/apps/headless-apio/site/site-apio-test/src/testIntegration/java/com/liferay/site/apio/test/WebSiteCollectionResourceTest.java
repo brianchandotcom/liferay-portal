@@ -77,6 +77,24 @@ public class WebSiteCollectionResourceTest {
 	}
 
 	@Test
+	public void testGetGroupWrapper() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			ThemeDisplay themeDisplay = getThemeDisplay(
+				group, Locale.getDefault());
+
+			Group finalGroup = _getGroupWrapper(
+				group.getGroupId(), themeDisplay);
+
+			Assert.assertEquals(group.getName(), finalGroup.getName());
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
+	@Test
 	public void testGetInactiveGroup() throws Throwable {
 		Group group = GroupTestUtil.addGroup();
 
@@ -121,6 +139,20 @@ public class WebSiteCollectionResourceTest {
 			group.isManualMembership(), group.getMembershipRestriction(),
 			group.getFriendlyURL(), group.isInheritContent(), false,
 			new ServiceContext());
+	}
+
+	private Group _getGroupWrapper(long groupId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Class<? extends CollectionResource> clazz =
+			_collectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_getGroupWrapper", long.class, ThemeDisplay.class);
+
+		method.setAccessible(true);
+
+		return (Group)method.invoke(_collectionResource, groupId, themeDisplay);
 	}
 
 	private PageItems<Group> _getPageItems(

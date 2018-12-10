@@ -14,7 +14,21 @@
 
 package com.liferay.site.apio.client.test.activator;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.callback.PermissionCheckerTestCallback;
+import com.liferay.portal.util.test.LayoutTestUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -24,18 +38,89 @@ import org.osgi.framework.BundleContext;
  */
 public class WebSiteApioTestBundleActivator implements BundleActivator {
 
+	public static final String WEB_SITE_NAME =
+		WebSiteApioTestBundleActivator.class.getSimpleName() + "WebSiteName";
+
 	@Override
 	public void start(BundleContext bundleContext) {
+		_createDemoData(bundleContext);
+	}
+
+	@Override
+	public void stop(BundleContext bundleContext) {
+		_deleteDemoData();
+	}
+
+	private void _createDemoData(BundleContext bundleContext) {
 		try {
 			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
+
+			_permissionCheckerTestCallback.beforeMethod(null, null);
+
+			_group = GroupTestUtil.addGroup(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, WEB_SITE_NAME,
+				new ServiceContext());
+
+			LayoutTestUtil.addLayout(
+				_group.getGroupId(), true,
+				new HashMap<Locale, String>() {
+					{
+						put(LocaleUtil.US, RandomTestUtil.randomString());
+						put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
+					}
+				},
+				new HashMap<Locale, String>() {
+					{
+						put(
+							LocaleUtil.US,
+							StringPool.SLASH + RandomTestUtil.randomString());
+						put(
+							LocaleUtil.SPAIN,
+							StringPool.SLASH + RandomTestUtil.randomString());
+					}
+				});
+
+			LayoutTestUtil.addLayout(
+				_group.getGroupId(), false,
+				new HashMap<Locale, String>() {
+					{
+						put(LocaleUtil.US, RandomTestUtil.randomString());
+						put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
+					}
+				},
+				new HashMap<Locale, String>() {
+					{
+						put(
+							LocaleUtil.US,
+							StringPool.SLASH + RandomTestUtil.randomString());
+						put(
+							LocaleUtil.SPAIN,
+							StringPool.SLASH + RandomTestUtil.randomString());
+					}
+				});
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@Override
-	public void stop(BundleContext bundleContext) {
+	private void _deleteDemoData() {
+		try {
+			GroupTestUtil.deleteGroup(_group);
+
+			_permissionCheckerTestCallback.afterMethod(null, null, null);
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebSiteApioTestBundleActivator.class);
+
+	private static final PermissionCheckerTestCallback
+		_permissionCheckerTestCallback = PermissionCheckerTestCallback.INSTANCE;
+
+	private Group _group;
 
 }

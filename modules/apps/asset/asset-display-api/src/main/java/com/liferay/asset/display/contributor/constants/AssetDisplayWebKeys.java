@@ -28,4 +28,6 @@ public class AssetDisplayWebKeys {
 	@Deprecated
 	public static final String ASSET_ENTRY = "ASSET_ENTRY";
 
+	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
+
 }

@@ -72,6 +72,7 @@ public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
 		if (portalUpstreamBranchName.contains("7.0.x") ||
 			portalUpstreamBranchName.contains("7.1.x") ||
+			portalUpstreamBranchName.contains("7.2.x") ||
 			portalUpstreamBranchName.contains("master")) {
 
 			return "7.0.x";

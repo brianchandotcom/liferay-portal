@@ -37,10 +37,10 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 		GroupLocalService groupLocalService, String oldPortletId,
 		String newPortletId) {
 
-		this.companyLocalServiceLocalService = companyLocalService;
-		this.groupLocalService = groupLocalService;
-		this.oldPortletId = oldPortletId;
-		this.newPortletId = newPortletId;
+		_companyLocalService = companyLocalService;
+		_groupLocalService = groupLocalService;
+		_oldPortletId = oldPortletId;
+		_newPortletId = newPortletId;
 	}
 
 	@Override
@@ -49,17 +49,16 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 	}
 
 	protected void updateStagedPortletNames() throws PortalException {
-		for (Company company : companyLocalServiceLocalService.getCompanies()) {
+		for (Company company : _companyLocalService.getCompanies()) {
 			updateStagedPortletNames(company.getCompanyId());
 		}
-
 	}
 
 	protected void updateStagedPortletNames(Long companyId)
 		throws PortalException {
 
 		ActionableDynamicQuery groupActionableDynamicQuery =
-			groupLocalService.getActionableDynamicQuery();
+			_groupLocalService.getActionableDynamicQuery();
 
 		groupActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -82,41 +81,38 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 					return;
 				}
 
-				String oldPropertyKey = _getStagedPortletId(oldPortletId);
+				String oldPropertyKey = _getStagedPortletId(_oldPortletId);
 
 				String oldPropertyValue = typeSettingsProperties.getProperty(
 					oldPropertyKey);
 
 				typeSettingsProperties.remove(oldPropertyKey);
 
-				String newPropertyKey = _getStagedPortletId(newPortletId);
+				String newPropertyKey = _getStagedPortletId(_newPortletId);
 
 				String newPropertyValue = typeSettingsProperties.getProperty(
 					newPropertyKey);
 
-				if (Validator.isNull(newPropertyValue)) {
-					if (Validator.isNotNull(oldPropertyValue)) {
-						typeSettingsProperties.put(
-							newPropertyKey, oldPropertyValue);
-					}
-					else {
-						typeSettingsProperties.put(
-							newPropertyKey, Boolean.toString(false));
-					}
+				if (Validator.isNotNull(newPropertyValue)) {
+					return;
+				}
+
+				if (Validator.isNotNull(oldPropertyValue)) {
+					typeSettingsProperties.put(
+						newPropertyKey, oldPropertyValue);
+				}
+				else {
+					typeSettingsProperties.put(
+						newPropertyKey, Boolean.toString(false));
 				}
 
 				group.setTypeSettingsProperties(typeSettingsProperties);
 
-				groupLocalService.updateGroup(group);
+				_groupLocalService.updateGroup(group);
 			});
 
 		groupActionableDynamicQuery.performActions();
 	}
-
-	protected CompanyLocalService companyLocalServiceLocalService;
-	protected GroupLocalService groupLocalService;
-	protected String newPortletId;
-	protected String oldPortletId;
 
 	private String _getStagedPortletId(String portletId) {
 		if (portletId.startsWith(StagingConstants.STAGED_PORTLET)) {
@@ -125,5 +121,10 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 
 		return StagingConstants.STAGED_PORTLET.concat(portletId);
 	}
+
+	private final CompanyLocalService _companyLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final String _newPortletId;
+	private final String _oldPortletId;
 
 }

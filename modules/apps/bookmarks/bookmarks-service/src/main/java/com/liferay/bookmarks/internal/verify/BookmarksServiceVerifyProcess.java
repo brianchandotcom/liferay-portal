@@ -18,10 +18,8 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 

@@ -52,12 +52,11 @@ public class JournalMoveEntriesDisplayContext {
 
 	public JournalMoveEntriesDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, String currentURL)
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_currentURL = currentURL;
 
 		_servletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
@@ -245,10 +244,6 @@ public class JournalMoveEntriesDisplayContext {
 	}
 
 	public void setViewAttributes() {
-		PortalUtil.addPortletBreadcrumbEntry(
-			_servletRequest,
-			LanguageUtil.get(_servletRequest, "move-web-content"), _currentURL);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -267,7 +262,6 @@ public class JournalMoveEntriesDisplayContext {
 		}
 	}
 
-	private final String _currentURL;
 	private List<JournalArticle> _invalidMoveArticles;
 	private List<JournalFolder> _invalidMoveFolders;
 	private AssetRendererFactory _journalArticleAssetRendererFactory;

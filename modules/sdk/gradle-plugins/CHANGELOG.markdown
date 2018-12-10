@@ -6199,6 +6199,14 @@ to version 2.3.293.
 - [LPS-88186]: Update the [Liferay Source Formatter] dependency to version
 1.0.765.
 
+## 3.13.35 - 2018-12-07
+
+### Changed
+- [LPS-86806]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.294.
+- [LPS-86806]: Update the [Liferay Source Formatter] dependency to version
+1.0.766.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

@@ -2,11 +2,11 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './fragments/SidebarElementsSection.es';
-import './fragments/SidebarSectionsSection.es';
-import './layouts/SidebarLayoutsSection.es';
-import './mapping/SidebarMappingSection.es';
-import './structure/SidebarStructureSection.es';
+import './fragments/SidebarElementsPanel.es';
+import './fragments/SidebarSectionsPanel.es';
+import './layouts/SidebarLayoutsPanel.es';
+import './mapping/SidebarMappingPanel.es';
+import './structure/SidebarStructurePanel.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**
@@ -16,13 +16,13 @@ import templates from './FragmentsEditorSidebarContent.soy';
 class FragmentsEditorSidebarContent extends Component {
 
 	/**
-	 * Updates active section
+	 * Updates active panel
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
 	 */
-	_handleSectionButtonClick(event) {
-		this._sectionId = event.delegateTarget.dataset.sectionId;
+	_handlePanelButtonClick(event) {
+		this._panelId = event.delegateTarget.dataset.panelId;
 	}
 }
 
@@ -35,20 +35,20 @@ class FragmentsEditorSidebarContent extends Component {
 FragmentsEditorSidebarContent.STATE = {
 
 	/**
-	 * Sidebar sections
+	 * Sidebar panels
 	 * @default []
 	 * @memberof FragmentsEditorSidebarContent
 	 * @private
 	 * @review
 	 * @type {object}
 	 */
-	_sections: Config
+	_panels: Config
 		.arrayOf(
 			Config.shapeOf(
 				{
 					icon: Config.string(),
 					label: Config.string(),
-					sectionId: Config.string()
+					panelId: Config.string()
 				}
 			)
 		)
@@ -58,40 +58,40 @@ FragmentsEditorSidebarContent.STATE = {
 				{
 					icon: 'cards',
 					label: 'Sections',
-					sectionId: 'sections'
+					panelId: 'sections'
 				},
 				{
 					icon: 'cards',
 					label: 'Elements',
-					sectionId: 'elements'
+					panelId: 'elements'
 				},
 				{
 					icon: 'page-template',
 					label: 'Layouts',
-					sectionId: 'layouts'
+					panelId: 'layouts'
 				},
 				{
 					icon: 'simulation-menu',
 					label: 'Mapping',
-					sectionId: 'mapping'
+					panelId: 'mapping'
 				},
 				{
 					icon: 'pages-tree',
 					label: 'Structure',
-					sectionId: 'structure'
+					panelId: 'structure'
 				}
 			]
 		),
 
 	/**
-	 * Sidebar active section ID
+	 * Sidebar active panel ID
 	 * @default sections
 	 * @memberof FragmentsEditorSidebarContent
 	 * @private
 	 * @review
 	 * @type {string}
 	 */
-	_sectionId: Config
+	_panelId: Config
 		.string()
 		.internal()
 		.value('sections')

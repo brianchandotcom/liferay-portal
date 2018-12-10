@@ -10,12 +10,12 @@ import {
 import {DROP_TARGET_ITEM_TYPES} from '../../../reducers/placeholders.es';
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import {Store} from '../../../store/store.es';
-import templates from './SidebarLayoutsSection.soy';
+import templates from './SidebarLayoutsPanel.soy';
 
 /**
- * SidebarLayoutsSection
+ * SidebarLayoutsPanel
  */
-class SidebarLayoutsSection extends Component {
+class SidebarLayoutsPanel extends Component {
 
 	/**
 	 * @inheritDoc
@@ -47,7 +47,7 @@ class SidebarLayoutsSection extends Component {
 			{
 				dropTargetBorder: hoveredSectionBorder,
 				dropTargetItemId: hoveredSectionId,
-				dropTargetItemType: DROP_TARGET_ITEM_TYPES.section
+				dropTargetItemType: DROP_TARGET_ITEM_TYPES.Panel
 			}
 		);
 	}
@@ -126,13 +126,13 @@ class SidebarLayoutsSection extends Component {
  * @static
  * @type {!Object}
  */
-SidebarLayoutsSection.STATE = {
+SidebarLayoutsPanel.STATE = {
 
 	/**
 	 * Store instance
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarLayoutsSection
+	 * @memberOf SidebarLayoutsPanel
 	 * @review
 	 * @type {Store}
 	 */
@@ -141,7 +141,7 @@ SidebarLayoutsSection.STATE = {
 	/**
 	 * List of layouts to be shown
 	 * @default []
-	 * @memberOf SidebarLayoutsSection
+	 * @memberOf SidebarLayoutsPanel
 	 * @private
 	 * @review
 	 * @type {Array}
@@ -166,14 +166,14 @@ SidebarLayoutsSection.STATE = {
 	 * Internal SidebarLayoutsDragDrop instance
 	 * @default null
 	 * @instance
-	 * @memberOf SidebarLayoutsSection
+	 * @memberOf SidebarLayoutsPanel
 	 * @review
 	 * @type {object|null}
 	 */
 	_sidebarLayoutsDragDrop: Config.internal().value(null)
 };
 
-Soy.register(SidebarLayoutsSection, templates);
+Soy.register(SidebarLayoutsPanel, templates);
 
-export {SidebarLayoutsSection};
-export default SidebarLayoutsSection;
+export {SidebarLayoutsPanel};
+export default SidebarLayoutsPanel;

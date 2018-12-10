@@ -12,18 +12,18 @@
 	{@param? highlightMapping: bool}
 	{@param? selectedMappingTypes: ?}
 	{@param? store: ?}
-	{@param? _handleSectionButtonClick: any}
-	{@param? _sectionId: string}
-	{@param? _sections: list<[
+	{@param? _handlePanelButtonClick: any}
+	{@param? _panelId: string}
+	{@param? _panels: list<[
 		icon: string,
 		label: string,
-		sectionId: string
+		panelId: string
 	]>}
 
 	<div class="fragments-editor-sidebar-content">
 		<div class="fragments-editor-sidebar-section">
-			{if $_sectionId == 'sections'}
-				{call com.liferay.layout.admin.web.SidebarSectionsSection.render}
+			{if $_panelId == 'sections'}
+				{call com.liferay.layout.admin.web.SidebarSectionsPanel.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param layoutData: $layoutData /}
 					{param sections: $sections /}
@@ -32,8 +32,8 @@
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
-			{elseif $_sectionId == 'elements'}
-				{call com.liferay.layout.admin.web.SidebarElementsSection.render}
+			{elseif $_panelId == 'elements'}
+				{call com.liferay.layout.admin.web.SidebarElementsPanel.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param layoutData: $layoutData /}
 					{param elements: $elements /}
@@ -42,19 +42,19 @@
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
-			{elseif $_sectionId == 'layouts'}
-				{call com.liferay.layout.admin.web.SidebarLayoutsSection.render}
+			{elseif $_panelId == 'layouts'}
+				{call com.liferay.layout.admin.web.SidebarLayoutsPanel.render}
 					{param store: $store /}
 				{/call}
-			{elseif $_sectionId == 'mapping'}
-				{call com.liferay.layout.admin.web.SidebarMappingSection.render}
+			{elseif $_panelId == 'mapping'}
+				{call com.liferay.layout.admin.web.SidebarMappingPanel.render}
 					{param highlightMapping: $highlightMapping ?: false /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param spritemap: $spritemap /}
 					{param store: $store /}
 				{/call}
-			{elseif $_sectionId == 'structure'}
-				{call com.liferay.layout.admin.web.SidebarStructureSection.render}
+			{elseif $_panelId == 'structure'}
+				{call com.liferay.layout.admin.web.SidebarStructurePanel.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param layoutData: $layoutData /}
 					{param spritemap: $spritemap /}
@@ -64,13 +64,13 @@
 		</div>
 
 		<div class="btn-group fragments-editor-sidebar-sections-buttons" role="group">
-			{if $_sections}
-				{foreach $section in $_sections}
+			{if $_panels}
+				{foreach $panel in $_panels}
 					{let $sectionButtonClasses kind="text"}
 						btn
 						{sp}btn-outline-borderless
 
-						{if $section.sectionId == $_sectionId}
+						{if $panel.panelId == $_panelId}
 							{sp}btn-outline-primary
 						{else}
 							{sp}btn-outline-secondary
@@ -79,13 +79,13 @@
 
 					<button
 						class="{$sectionButtonClasses}"
-						data-onclick="{$_handleSectionButtonClick}"
-						data-section-id="{$section.sectionId}"
-						title="{$section.label}"
+						data-onclick="{$_handlePanelButtonClick}"
+						data-panel-id="{$panel.panelId}"
+						title="{$panel.label}"
 						type="button"
 					>
 						<svg class="lexicon-icon">
-							<use xlink:href="{$spritemap}#{$section.icon}"></use>
+							<use xlink:href="{$spritemap}#{$panel.icon}"></use>
 						</svg>
 					</button>
 				{/foreach}

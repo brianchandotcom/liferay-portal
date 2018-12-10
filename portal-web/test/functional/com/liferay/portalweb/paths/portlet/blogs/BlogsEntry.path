@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>READING_TIME</td>
+	<td>//div/time[contains(@class,'reading-time') and contains(.,'${key_readingTime}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RELATED_ASSETS_TITLE</td>
 	<td>//div[contains(@class,'asset-links')]/ul//a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>

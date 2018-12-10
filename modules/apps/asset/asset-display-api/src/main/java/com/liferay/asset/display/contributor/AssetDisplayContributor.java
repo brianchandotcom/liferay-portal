@@ -43,6 +43,13 @@ public interface AssetDisplayContributor {
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException;
 
+	public default Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, long versionClassPK, Locale locale)
+		throws PortalException {
+
+		return getAssetDisplayFieldsValues(assetEntry, locale);
+	}
+
 	public String getClassName();
 
 	public default List<AssetDisplayField> getClassTypeFields(

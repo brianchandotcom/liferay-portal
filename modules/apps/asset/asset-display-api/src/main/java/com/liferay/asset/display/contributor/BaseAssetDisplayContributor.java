@@ -69,7 +69,7 @@ public abstract class BaseAssetDisplayContributor<T>
 
 	@Override
 	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
+			AssetEntry assetEntry, long versionClassPK, Locale locale)
 		throws PortalException {
 
 		// Field values for asset entry
@@ -91,23 +91,39 @@ public abstract class BaseAssetDisplayContributor<T>
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
+		T assetObject = null;
+
+		if (versionClassPK > 0) {
+			assetObject = assetRenderer.getAssetObject(versionClassPK);
+		}
+		else {
+			assetObject = assetRenderer.getAssetObject();
+		}
+
 		for (AssetDisplayContributorField assetDisplayContributorField :
 				assetDisplayContributorFields) {
 
 			parameterMap.put(
 				assetDisplayContributorField.getKey(),
-				assetDisplayContributorField.getValue(
-					assetRenderer.getAssetObject(), locale));
+				assetDisplayContributorField.getValue(assetObject, locale));
 		}
 
 		// Field values for the class type
 
 		Map<String, Object> classTypeValues = getClassTypeValues(
-			assetRenderer.getAssetObject(), locale);
+			assetObject, locale);
 
 		parameterMap.putAll(classTypeValues);
 
 		return parameterMap;
+	}
+
+	@Override
+	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		return getAssetDisplayFieldsValues(assetEntry, 0L, locale);
 	}
 
 	@Override

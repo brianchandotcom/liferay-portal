@@ -14,18 +14,14 @@
 
 package com.liferay.site.apio.client.test;
 
-import com.jayway.jsonpath.JsonPath;
-
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
-import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.site.apio.client.test.activator.WebSiteApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.List;
+import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -33,9 +29,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,46 +48,96 @@ public class WebSiteApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
-		_jsonWebServiceClient = new JSONWebServiceClientImpl();
-
 		_rootEndpointURL = new URL(_url, "/o/api");
-
-		_jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
-		_jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
-
-		_jsonWebServiceClient.setLogin("test@liferay.com");
-		_jsonWebServiceClient.setPassword("test");
-		_jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
-	}
-
-	@Ignore
-	@Test
-	public void testWebSiteLiferayExists() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toString(
-				JsonPath.read(
-					_toString(_rootEndpointURL.toExternalForm()),
-					"$._links.web-site.href")),
-			"$._embedded.WebSite[?(@.name == 'Liferay')]");
-
-		Assert.assertNotNull(hrefs.get(0));
 	}
 
 	@Test
-	public void testWebSiteLinkExistsInRootEndpoint() throws Exception {
-		Assert.assertNotNull(
-			JsonPath.read(
-				_toString(_rootEndpointURL.toExternalForm()),
-				"$._links.web-site.href"));
+	public void testWebSite() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "es-ES"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.web-site.href"
+		).follow(
+			"_embedded.WebSite.find { it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"' }._links.self.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"availableLanguages", IsNull.notNullValue()
+		).body(
+			"description", IsNull.notNullValue()
+		).body(
+			"membershipType", IsNull.notNullValue()
+		).body(
+			"name", IsNull.notNullValue()
+		).body(
+			"privateUrl", IsNull.notNullValue()
+		).body(
+			"publicUrl", IsNull.notNullValue()
+		).body(
+			"_links.contentSpace.href", IsNull.notNullValue()
+		).body(
+			"_links.creator.href", IsNull.notNullValue()
+		).body(
+			"_links.embeddedWebPages.href", IsNull.notNullValue()
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		).body(
+			"_links.webSites.href", IsNull.notNullValue()
+		);
 	}
 
-	private String _toString(String url) throws Exception {
-		return _jsonWebServiceClient.doGet(
-			url, Collections.emptyMap(),
-			Collections.singletonMap("Accept", "application/hal+json"));
+	@Test
+	public void testWebSiteExists() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.web-site.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.WebSite.find { it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"' }._links.self.href",
+			IsNull.notNullValue()
+		);
 	}
 
-	private JSONWebServiceClient _jsonWebServiceClient;
+	@Test
+	public void testWebSiteLinkExistsInRootEndpoint() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_links.web-site.href", IsNull.notNullValue()
+		);
+	}
+
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

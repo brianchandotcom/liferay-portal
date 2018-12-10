@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -154,10 +153,8 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 			properties = new HashMapDictionary<>();
 		}
 		else {
-			String value = (String)properties.get(
+			blacklistBundleSymbolicNames = (String[])properties.get(
 				"blacklistBundleSymbolicNames");
-
-			blacklistBundleSymbolicNames = StringUtil.split(value);
 		}
 
 		blacklistBundleSymbolicNames = updateFunction.apply(
@@ -172,8 +169,7 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 		}
 		else {
 			properties.put(
-				"blacklistBundleSymbolicNames",
-				StringUtil.merge(blacklistBundleSymbolicNames));
+				"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
 		}
 
 		_updateConfiguration(configuration, properties);

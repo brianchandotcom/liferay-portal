@@ -231,7 +231,8 @@ public class BundleBlacklistTest {
 
 		// Blacklist WAR wrapper
 
-		properties.put(_PROP_KEY, warWrapperBundle.getSymbolicName());
+		properties.put(
+			_PROP_KEY, new String[] {warWrapperBundle.getSymbolicName()});
 
 		_updateConfiguration(properties);
 
@@ -260,7 +261,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist WAR
 
-		properties.put(_PROP_KEY, warBundle.getSymbolicName());
+		properties.put(_PROP_KEY, new String[] {warBundle.getSymbolicName()});
 
 		_updateConfiguration(properties);
 
@@ -279,7 +280,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist JAR
 
-		properties.put(_PROP_KEY, jarBundle.getSymbolicName());
+		properties.put(_PROP_KEY, new String[] {jarBundle.getSymbolicName()});
 
 		_updateConfiguration(properties);
 
@@ -298,7 +299,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist LPKG
 
-		properties.put(_PROP_KEY, lpkgBundle.getSymbolicName());
+		properties.put(_PROP_KEY, new String[] {lpkgBundle.getSymbolicName()});
 
 		_updateConfiguration(properties);
 

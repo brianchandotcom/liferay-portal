@@ -16,6 +16,7 @@ package com.liferay.asset.display.internal.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -57,6 +58,10 @@ public class AssetEntryPublishDateAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
+		if (assetEntry.getPublishDate() == null) {
+			return StringPool.BLANK;
+		}
+
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			locale);
 

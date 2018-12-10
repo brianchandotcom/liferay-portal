@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Objects;
@@ -91,28 +94,41 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				if (_layoutsAdminDisplayContext.isShowPublicPages()) {
+				long firstLayoutPageTemplateCollectionId =
+					_layoutsAdminDisplayContext.
+						getFirstLayoutPageTemplateCollectionId();
+				long selPlid = _layoutsAdminDisplayContext.getSelPlid();
+
+				if (_layoutsAdminDisplayContext.isShowPublicPages() &&
+					(!_layoutsAdminDisplayContext.isPrivateLayout() ||
+					 _layoutsAdminDisplayContext.isFirstColumn())) {
+
 					addPrimaryDropdownItem(
 						SafeConsumer.ignore(
 							dropdownItem -> {
 								dropdownItem.setHref(
 									_layoutsAdminDisplayContext.
 										getSelectLayoutPageTemplateEntryURL(
-											false));
-								dropdownItem.setLabel(
-									LanguageUtil.get(request, "public-page"));
+											firstLayoutPageTemplateCollectionId,
+											selPlid, false));
+								dropdownItem.setLabel(_getLabel(false));
 							}));
 				}
 
-				addPrimaryDropdownItem(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_layoutsAdminDisplayContext.
-									getSelectLayoutPageTemplateEntryURL(true));
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "private-page"));
-						}));
+				if (_layoutsAdminDisplayContext.isPrivateLayout() ||
+					_layoutsAdminDisplayContext.isFirstColumn()) {
+
+					addPrimaryDropdownItem(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									_layoutsAdminDisplayContext.
+										getSelectLayoutPageTemplateEntryURL(
+											firstLayoutPageTemplateCollectionId,
+											selPlid, true));
+								dropdownItem.setLabel(_getLabel(true));
+							}));
+				}
 			}
 		};
 	}
@@ -186,6 +202,26 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		}
 
 		return super.getOrderByKeys();
+	}
+
+	private String _getLabel(boolean privateLayout) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (_layoutsAdminDisplayContext.getSelPlid() > 0) {
+			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
+
+			return LanguageUtil.format(
+				request, "add-child-page-of-x",
+				layout.getName(themeDisplay.getLocale()));
+		}
+
+		if (privateLayout) {
+			return LanguageUtil.get(request, "private-page");
+		}
+
+		return LanguageUtil.get(request, "public-page");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

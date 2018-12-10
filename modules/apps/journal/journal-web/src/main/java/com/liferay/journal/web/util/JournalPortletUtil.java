@@ -57,31 +57,6 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalPortletUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			JournalArticle article, HttpServletRequest request,
-			PortletURL portletURL)
-		throws Exception {
-
-		JournalFolder folder = article.getFolder();
-
-		if (folder.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			addPortletBreadcrumbEntries(folder, request, portletURL);
-		}
-
-		JournalArticle unescapedArticle = article.toUnescapedModel();
-
-		portletURL.setParameter("mvcPath", "/edit_article.jsp");
-		portletURL.setParameter(
-			"groupId", String.valueOf(article.getGroupId()));
-		portletURL.setParameter(
-			"articleId", String.valueOf(article.getArticleId()));
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, unescapedArticle.getTitle(), portletURL.toString());
-	}
-
-	public static void addPortletBreadcrumbEntries(
 			JournalFolder folder, HttpServletRequest request,
 			PortletURL portletURL)
 		throws Exception {
@@ -151,20 +126,6 @@ public class JournalPortletUtil {
 				request, unescapedFolder.getName(), portletURL.toString(),
 				data);
 		}
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request, PortletURL portletURL)
-		throws Exception {
-
-		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return;
-		}
-
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-			folderId);
-
-		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
 	public static String getAddMenuFavItemKey(

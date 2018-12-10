@@ -11,6 +11,7 @@ import {
 	MOVE_FRAGMENT_ENTRY_LINK,
 	MOVE_SECTION,
 	REMOVE_SECTION,
+	UPDATE_ACTIVE_ITEM,
 	UPDATE_DROP_TARGET,
 	UPDATE_HOVERED_ITEM,
 	UPDATE_LAST_SAVE_DATE,
@@ -337,6 +338,23 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Callback executed when a section is clicked.
+	 * @param {object} event
+	 * @private
+	 */
+	_handleSectionClick(event) {
+		event.stopPropagation();
+
+		this.store.dispatchAction(
+			UPDATE_ACTIVE_ITEM,
+			{
+				activeItemId: event.delegateTarget.dataset.layoutSectionId,
+				activeItemType: DROP_TARGET_ITEM_TYPES.section
+			}
+		);
+	}
+
+	/**
 	 * Callback executed when a section starts being hovered.
 	 * @param {object} event
 	 * @private
@@ -368,6 +386,8 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 */
 	_handleSectionRemoveButtonClick() {
+		event.stopPropagation();
+
 		this.store
 			.dispatchAction(
 				REMOVE_SECTION,

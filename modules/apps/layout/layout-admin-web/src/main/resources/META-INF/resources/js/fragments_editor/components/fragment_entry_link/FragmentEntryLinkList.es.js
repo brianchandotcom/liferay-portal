@@ -6,6 +6,7 @@ import Soy from 'metal-soy';
 
 import './FragmentEntryLink.es';
 import {
+	CLEAR_ACTIVE_ITEM,
 	CLEAR_DROP_TARGET,
 	CLEAR_HOVERED_ITEM,
 	MOVE_FRAGMENT_ENTRY_LINK,
@@ -362,6 +363,14 @@ class FragmentEntryLinkList extends Component {
 					}
 				);
 		}
+	}
+
+	/**
+	 * Callback executed when a section lose the focus
+	 * @private
+	 */
+	_handleSectionBlur() {
+		this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
 	}
 
 	/**

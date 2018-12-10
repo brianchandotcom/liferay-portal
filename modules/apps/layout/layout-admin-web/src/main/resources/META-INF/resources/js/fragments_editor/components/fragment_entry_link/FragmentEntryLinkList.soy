@@ -25,6 +25,7 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleSectionBlur: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
@@ -70,6 +71,7 @@
 			{foreach $row in $layoutData.structure}
 				{call .row}
 					{param _handleFragmentMove: $_handleFragmentMove /}
+					{param _handleSectionBlur: $_handleSectionBlur /}
 					{param _handleSectionClick: $_handleSectionClick /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
 					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
@@ -121,6 +123,7 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleSectionBlur: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
@@ -170,6 +173,7 @@
 	<section
 		class="{$sectionClasses}"
 		data-layout-section-id="{$rowId}"
+		data-onblur="{$_handleSectionBlur}"
 		data-onclick="{$_handleSectionClick}"
 		data-onkeyup="{$_handleSectionKeyUp}"
 		data-onmouseout="{$_handleSectionHoverEnd}"

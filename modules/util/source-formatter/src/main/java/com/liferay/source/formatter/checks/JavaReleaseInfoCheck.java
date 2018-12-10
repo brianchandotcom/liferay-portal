@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -142,16 +143,20 @@ public class JavaReleaseInfoCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatVersionDisplayName(JavaTerm javaTerm) {
-		ReleaseVersion latestReleaseVersion = _getLatestReleaseVersion(
-			javaTerm);
-
 		String versionDisplayNameValue = _getVariableValue(
 			javaTerm.getContent());
 
 		String[] versionDisplayNameParts = StringUtil.split(
 			versionDisplayNameValue, CharPool.SPACE);
 
+		if (!ArrayUtil.contains(versionDisplayNameParts, "CE")) {
+			return javaTerm.getContent();
+		}
+
 		String actualVersionNumber = versionDisplayNameParts[0];
+
+		ReleaseVersion latestReleaseVersion = _getLatestReleaseVersion(
+			javaTerm);
 
 		String expectedVersionNumber = latestReleaseVersion.toString(
 			StringPool.PERIOD);

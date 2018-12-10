@@ -3076,7 +3076,8 @@ AUI.add(
 									instance._afterUpdateRepeatableFields,
 									instance
 								),
-								Liferay.after('form:registered', instance._afterFormRegistered, instance)
+								Liferay.after('form:registered', instance._afterFormRegistered, instance),
+								Liferay.after('inputLocalized:defaultLocaleChanged', A.bind('_onDefaultLocaleChanged', instance))
 							);
 
 							if (instance.get('synchronousFormSubmission')) {
@@ -3086,6 +3087,16 @@ AUI.add(
 								);
 							}
 						}
+					},
+
+					_onDefaultLocaleChanged: function(event) {
+						var instance = this;
+
+						var definition = instance.get('definition');
+
+						definition.defaultLanguageId = event.languageId;
+
+						instance.set('definition', definition);
 					},
 
 					destructor: function() {
@@ -3222,11 +3233,13 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
+						var definition = instance.get('definition');
+
 						var fieldValues = AArray.invoke(instance.get('fields'), 'toJSON');
 
 						return {
 							availableLanguageIds: instance.get('availableLanguageIds'),
-							defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+							defaultLanguageId: definition.defaultLanguageId || themeDisplay.getDefaultLanguageId(),
 							fieldValues: fieldValues
 						};
 					},

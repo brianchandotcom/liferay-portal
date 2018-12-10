@@ -14,8 +14,12 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.AdministratorControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,4 +34,21 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ControlPanelWorkflowControlPanelEntry
 	extends AdministratorControlPanelEntry {
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		if (!super.hasAccessPermission(permissionChecker, group, portlet)) {
+			return false;
+		}
+
+		return _workflowControlPanelEntry.hasAccessPermission(
+			permissionChecker, group, portlet);
+	}
+
+	private final WorkflowControlPanelEntry _workflowControlPanelEntry =
+		new WorkflowControlPanelEntry();
+
 }

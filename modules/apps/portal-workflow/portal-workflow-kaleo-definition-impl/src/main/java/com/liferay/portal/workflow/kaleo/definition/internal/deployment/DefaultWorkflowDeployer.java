@@ -81,7 +81,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkDeploy();
+		checkPermissions();
 
 		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
 			title, name, definition, serviceContext);
@@ -198,7 +198,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
-	protected void checkDeploy() throws PrincipalException {
+	protected void checkPermissions() throws PrincipalException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

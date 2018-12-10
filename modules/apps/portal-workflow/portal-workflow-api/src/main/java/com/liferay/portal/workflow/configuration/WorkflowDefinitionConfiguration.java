@@ -31,9 +31,10 @@ public interface WorkflowDefinitionConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "company-administrator-can-publish-description",
+		description = "allow-administrators-to-publish-and-edit-workflows-description",
 		id = "company.administrator.can.publish",
-		name = "company-administrator-can-publish", required = false
+		name = "allow-administrators-to-publish-and-edit-workflows",
+		required = false
 	)
 	public boolean companyAdministratorCanPublish();
 

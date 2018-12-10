@@ -112,6 +112,19 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
+	public void addPortletBreadcrumbEntry() throws PortalException {
+		JSONArray breadcrumbEntriesJSONArray = getBreadcrumbEntriesJSONArray();
+
+		for (int i = 0; i < breadcrumbEntriesJSONArray.length(); i++) {
+			JSONObject breadcrumbEntryJSONObject =
+				breadcrumbEntriesJSONArray.getJSONObject(i);
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				_request, breadcrumbEntryJSONObject.getString("title"),
+				breadcrumbEntryJSONObject.getString("url"));
+		}
+	}
+
 	public List<DropdownItem> getAddLayoutDropdownItems() {
 		return new DropdownItemList() {
 			{

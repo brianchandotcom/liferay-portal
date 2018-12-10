@@ -19,8 +19,6 @@
 <%
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-trashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL());
-
 portletDisplay.setShowBackIcon(trashContainerModelDisplayContext.isShowBackIcon());
 portletDisplay.setURLBack(trashContainerModelDisplayContext.getBackURL());
 
@@ -32,10 +30,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerM
 </div>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
-	<liferay-ui:breadcrumb
-		showGuestGroup="<%= false %>"
-		showLayout="<%= false %>"
-		showParentGroups="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
 	/>
 
 	<aui:button-row>

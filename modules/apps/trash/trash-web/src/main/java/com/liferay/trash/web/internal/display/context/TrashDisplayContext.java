@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -42,15 +44,19 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.service.TrashEntryServiceUtil;
 import com.liferay.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.search.EntrySearch;
 import com.liferay.trash.web.internal.search.EntrySearchTerms;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +80,9 @@ public class TrashDisplayContext {
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_trashHelper = (TrashHelper)request.getAttribute(
+			TrashWebKeys.TRASH_HELPER);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -89,6 +98,44 @@ public class TrashDisplayContext {
 					});
 			}
 		};
+	}
+
+	public List<BreadcrumbEntry> getBaseModelBreadcrumbEntries()
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(_request, "recycle-bin"));
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		PortletURL containerModelURL =
+			_liferayPortletResponse.createRenderURL();
+
+		TrashHandler trashHandler = getTrashHandler();
+
+		String trashHandlerContainerModelClassName =
+			trashHandler.getContainerModelClassName(getClassPK());
+
+		containerModelURL.setParameter("mvcPath", "/view_content.jsp");
+		containerModelURL.setParameter(
+			"classNameId",
+			String.valueOf(
+				PortalUtil.getClassNameId(
+					trashHandlerContainerModelClassName)));
+
+		breadcrumbEntries.addAll(
+			getBreadcrumbEntries(
+				getClassName(), getClassPK(), "classPK", containerModelURL,
+				true));
+
+		return breadcrumbEntries;
 	}
 
 	public String getClassName() {
@@ -135,6 +182,49 @@ public class TrashDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public List<BreadcrumbEntry> getContainerModelBreadcrumbEntries(
+			String className, long classPK, PortletURL containerModelURL)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		String rootContainerModelTitle = LanguageUtil.get(
+			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
+
+		if (classPK == 0) {
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+			breadcrumbEntry.setTitle(rootContainerModelTitle);
+
+			breadcrumbEntries.add(breadcrumbEntry);
+
+			return breadcrumbEntries;
+		}
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(rootContainerModelTitle);
+
+		containerModelURL.setParameter("containerModelId", "0");
+
+		breadcrumbEntry.setURL(containerModelURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		breadcrumbEntries.addAll(
+			getBreadcrumbEntries(
+				className, classPK, "containerModelId", containerModelURL,
+				false));
+
+		return breadcrumbEntries;
 	}
 
 	public String getContainerModelRedirectURL() {
@@ -421,6 +511,22 @@ public class TrashDisplayContext {
 		return _orderByType;
 	}
 
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries() {
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(_request, "recycle-bin"));
+
+		PortletURL portletURL = getPortletURL();
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		return breadcrumbEntries;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -625,6 +731,72 @@ public class TrashDisplayContext {
 		return false;
 	}
 
+	protected List<BreadcrumbEntry> getBreadcrumbEntries(
+			String className, long classPK, String paramName,
+			PortletURL containerModelURL, boolean checkInTrashContainers)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			containerModelURL, _liferayPortletResponse);
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		List<ContainerModel> containerModels =
+			trashHandler.getParentContainerModels(classPK);
+
+		Collections.reverse(containerModels);
+
+		for (ContainerModel containerModel : containerModels) {
+			TrashHandler containerModelTrashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					containerModel.getModelClassName());
+
+			if (checkInTrashContainers &&
+				!containerModelTrashHandler.isInTrash(
+					containerModel.getContainerModelId())) {
+
+				continue;
+			}
+
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+			String name = containerModel.getContainerModelName();
+
+			if (containerModelTrashHandler.isInTrash(
+					containerModel.getContainerModelId())) {
+
+				name = _trashHelper.getOriginalTitle(name);
+			}
+
+			breadcrumbEntry.setTitle(name);
+
+			portletURL.setParameter(
+				paramName,
+				String.valueOf(containerModel.getContainerModelId()));
+
+			breadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(breadcrumbEntry);
+		}
+
+		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(
+			trashRenderer.getTitle(themeDisplay.getLocale()));
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		return breadcrumbEntries;
+	}
+
 	private List<DropdownItem> _getContentFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -708,6 +880,7 @@ public class TrashDisplayContext {
 	private final HttpServletRequest _request;
 	private TrashEntry _trashEntry;
 	private TrashHandler _trashHandler;
+	private final TrashHelper _trashHelper;
 	private TrashRenderer _trashRenderer;
 
 }

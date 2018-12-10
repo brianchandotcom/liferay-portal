@@ -17,27 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = trashDisplayContext.getViewContentRedirectURL();
-
-long classPK = trashDisplayContext.getClassPK();
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
-
-PortletURL containerModelURL = renderResponse.createRenderURL();
-
 TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
-String trashHandlerContainerModelClassName = trashHandler.getContainerModelClassName(classPK);
-
-containerModelURL.setParameter("mvcPath", "/view_content.jsp");
-containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
-
-trashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, trashDisplayContext.getClassName(), classPK, containerModelURL);
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(trashDisplayContext.getViewContentRedirectURL());
 
 TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 
@@ -56,10 +39,10 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		<clay:management-toolbar
 			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
 			componentId="trashContentWebManagementToolbar"
-			disabled="<%= (trashHandler.getTrashModelsCount(classPK) <= 0) && Validator.isNull(trashDisplayContext.getKeywords()) %>"
+			disabled="<%= (trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) <= 0) && Validator.isNull(trashDisplayContext.getKeywords()) %>"
 			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
 			infoPanelId="infoPanelId"
-			itemsTotal="<%= trashHandler.getTrashModelsCount(classPK) %>"
+			itemsTotal="<%= trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) %>"
 			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
 			searchFormName="searchFm"
 			selectable="<%= false %>"
@@ -77,11 +60,8 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			</liferay-frontend:sidebar-panel>
 
 			<div class="sidenav-content">
-				<liferay-ui:breadcrumb
-					showCurrentGroup="<%= false %>"
-					showGuestGroup="<%= false %>"
-					showLayout="<%= false %>"
-					showParentGroups="<%= false %>"
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= trashDisplayContext.getBaseModelBreadcrumbEntries() %>"
 				/>
 
 				<%
@@ -89,7 +69,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 				iteratorURL.setParameter("mvcPath", "/view_content.jsp");
 				iteratorURL.setParameter("classNameId", String.valueOf(trashDisplayContext.getClassNameId()));
-				iteratorURL.setParameter("classPK", String.valueOf(classPK));
+				iteratorURL.setParameter("classPK", String.valueOf(trashDisplayContext.getClassPK()));
 
 				String emptyResultsMessage = LanguageUtil.format(request, "this-x-does-not-contain-an-entry", ResourceActionsUtil.getModelResource(locale, trashDisplayContext.getClassName()), false);
 				%>
@@ -99,10 +79,10 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 					emptyResultsMessage="<%= emptyResultsMessage %>"
 					id="trash"
 					iteratorURL="<%= iteratorURL %>"
-					total="<%= trashHandler.getTrashModelsCount(classPK) %>"
+					total="<%= trashHandler.getTrashModelsCount(trashDisplayContext.getClassPK()) %>"
 				>
 					<liferay-ui:search-container-results
-						results="<%= trashHandler.getTrashModelTrashedModels(classPK, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+						results="<%= trashHandler.getTrashModelTrashedModels(trashDisplayContext.getClassPK(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 					/>
 
 					<liferay-ui:search-container-row

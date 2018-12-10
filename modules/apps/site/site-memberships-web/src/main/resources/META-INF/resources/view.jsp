@@ -31,10 +31,3 @@ String tabs1 = siteMembershipsDisplayContext.getTabs1();
 		<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
-
-<%
-Group group = siteMembershipsDisplayContext.getGroup();
-
-PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-%>

@@ -27,14 +27,19 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.lang.merger.LangMergerPlugin;
 import com.liferay.gradle.plugins.lang.merger.tasks.MergePropertiesTask;
+import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
+
+import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -443,6 +448,21 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					themeProject.file("src/main/resources/META-INF/resources"));
 			}
 		}
+		else if (_hasNPMParentThemesDependencies(project)) {
+			writeDigestTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+
+			writeDigestTask.setExcludeIgnoredFiles(false);
+
+			NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
+				project, NodePlugin.NPM_INSTALL_TASK_NAME);
+
+			File nodeModulesDir = npmInstallTask.getNodeModulesDir();
+
+			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+				writeDigestTask.source(
+					new File(nodeModulesDir, "liferay-" + themeProjectName));
+			}
+		}
 
 		return writeDigestTask;
 	}
@@ -729,6 +749,43 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return themeProject;
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean _hasNPMParentThemesDependencies(Project project) {
+		File packageJSONFile = project.file("package.json");
+
+		if (!packageJSONFile.exists()) {
+			return false;
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> packageJSONMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJSONFile);
+
+		Map<String, Object> devDependencies =
+			(Map<String, Object>)packageJSONMap.get("devDependencies");
+
+		if (devDependencies == null) {
+			return false;
+		}
+
+		for (String key : devDependencies.keySet()) {
+			if (key.startsWith("liferay-theme-deps-")) {
+				return true;
+			}
+		}
+
+		for (String parentThemeProjectNames : _PARENT_THEME_PROJECT_NAMES) {
+			String name = "liferay-" + parentThemeProjectNames;
+
+			if (!devDependencies.containsKey(name)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean _isGitRepo(Project project) {

@@ -16,15 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-layoutsAdminDisplayContext.addPortletBreadcrumbEntry();
-%>
-
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
+<liferay-site-navigation:breadcrumb
+	breadcrumbEntries="<%= layoutsAdminDisplayContext.getPortletBreadcrumbEntries() %>"
 />
 
 <liferay-ui:search-container

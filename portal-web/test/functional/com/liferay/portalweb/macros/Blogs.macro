@@ -32,6 +32,15 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<if>
+			<isset var="readingTime" />
+			<then>
+				<var name="key_readingTime" value="${readingTime}" />
+
+				<execute function="AssertTextEquals" locator1="BlogsEditEntry#STATUS_READING_TIME" value1="${readingTime}" />
+			</then>
+		</if>
+
 		<execute macro="PortletEntry#publish" />
 	</command>
 

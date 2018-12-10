@@ -28,6 +28,7 @@
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
@@ -72,6 +73,7 @@
 					{param _handleSectionClick: $_handleSectionClick /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
 					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
+					{param _handleSectionKeyUp: $_handleSectionKeyUp /}
 					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
@@ -122,6 +124,7 @@
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
@@ -168,6 +171,7 @@
 		class="{$sectionClasses}"
 		data-layout-section-id="{$rowId}"
 		data-onclick="{$_handleSectionClick}"
+		data-onkeyup="{$_handleSectionKeyUp}"
 		data-onmouseout="{$_handleSectionHoverEnd}"
 		data-onmouseover="{$_handleSectionHoverStart}"
 		tabindex="0"

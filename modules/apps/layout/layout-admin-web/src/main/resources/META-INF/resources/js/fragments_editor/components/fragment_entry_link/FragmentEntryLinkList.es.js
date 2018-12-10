@@ -21,7 +21,12 @@ import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
-import {getFragmentRowIndex} from '../../utils/FragmentsEditorGetUtils.es';
+import {
+	getFragmentRowIndex,
+	getItemMoveDirection,
+	getSectionIndex,
+	getTargetBorder
+} from '../../utils/FragmentsEditorGetUtils.es';
 import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -378,6 +383,41 @@ class FragmentEntryLinkList extends Component {
 	_handleSectionHoverEnd() {
 		if (this.store) {
 			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
+		}
+	}
+
+	/**
+	 * Callback executed when a key is pressed on focused section
+	 * @private
+	 * @param {object} event
+	 */
+	_handleSectionKeyUp(event) {
+		const direction = getItemMoveDirection(event.which);
+		const sectionId = document.activeElement.dataset.layoutSectionId;
+		const sectionIndex = getSectionIndex(
+			this.layoutData.structure,
+			sectionId
+		);
+		const targetItem = this.layoutData.structure[
+			sectionIndex + direction
+		];
+
+		if (direction && targetItem) {
+			const moveItemPayload = {
+				sectionId,
+				targetBorder: getTargetBorder(direction),
+				targetItemId: targetItem.rowId
+			};
+
+			this.store.dispatchAction(
+				UPDATE_ACTIVE_ITEM,
+				{
+					activeItemId: sectionId,
+					activeItemType: DROP_TARGET_ITEM_TYPES.section
+				}
+			);
+
+			moveItem(this.store, MOVE_SECTION, moveItemPayload);
 		}
 	}
 

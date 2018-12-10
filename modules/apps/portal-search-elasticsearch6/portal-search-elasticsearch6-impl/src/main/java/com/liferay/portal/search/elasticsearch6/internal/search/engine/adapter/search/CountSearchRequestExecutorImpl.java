@@ -55,10 +55,9 @@ public class CountSearchRequestExecutorImpl
 
 		countSearchResponse.setCount(searchHits.totalHits);
 
-		String searchRequestBuilderString = searchRequestBuilder.toString();
-
 		commonSearchResponseAssembler.assemble(
-			searchResponse, countSearchResponse, searchRequestBuilderString);
+			searchRequestBuilder, searchResponse, countSearchRequest,
+			countSearchResponse);
 
 		return countSearchResponse;
 	}

@@ -67,7 +67,7 @@ public class MultisearchSearchRequestExecutorImpl
 
 				SearchRequestHolder searchRequestHolder =
 					new SearchRequestHolder(
-						searchSearchRequest, searchRequestBuilder.toString());
+						searchSearchRequest, searchRequestBuilder);
 
 				searchRequestHolders.add(searchRequestHolder);
 
@@ -98,10 +98,17 @@ public class MultisearchSearchRequestExecutorImpl
 			SearchRequestHolder searchRequestHolder = searchRequestHolders.get(
 				counter);
 
+			SearchSearchRequest searchSearchRequest =
+				searchRequestHolder.getSearchSearchRequest();
+
 			searchSearchResponseAssembler.assemble(
-				searchResponse, searchSearchResponse,
-				searchRequestHolder.getSearchSearchRequest(),
-				searchRequestHolder.getSearchRequestBuilderString());
+				searchRequestHolder.getSearchRequestBuilder(), searchResponse,
+				searchSearchRequest, searchSearchResponse);
+
+			if (searchSearchRequest.isIncludeResponseString()) {
+				searchSearchResponse.setSearchResponseString(
+					searchResponse.toString());
+			}
 
 			counter++;
 		}
@@ -122,21 +129,21 @@ public class MultisearchSearchRequestExecutorImpl
 
 		public SearchRequestHolder(
 			SearchSearchRequest searchSearchRequest,
-			String searchRequestBuilderString) {
+			SearchRequestBuilder searchRequestBuilder) {
 
 			_searchSearchRequest = searchSearchRequest;
-			_searchRequestBuilderString = searchRequestBuilderString;
+			_searchRequestBuilder = searchRequestBuilder;
 		}
 
-		public String getSearchRequestBuilderString() {
-			return _searchRequestBuilderString;
+		public SearchRequestBuilder getSearchRequestBuilder() {
+			return _searchRequestBuilder;
 		}
 
 		public SearchSearchRequest getSearchSearchRequest() {
 			return _searchSearchRequest;
 		}
 
-		private final String _searchRequestBuilderString;
+		private final SearchRequestBuilder _searchRequestBuilder;
 		private final SearchSearchRequest _searchSearchRequest;
 
 	}

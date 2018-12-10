@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 
 /**
@@ -25,9 +26,8 @@ import org.elasticsearch.action.search.SearchResponse;
 public interface SearchSearchResponseAssembler {
 
 	public void assemble(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse,
-		SearchSearchRequest searchSearchRequest,
-		String searchRequestBuilderString);
+		SearchRequestBuilder searchRequestBuilder,
+		SearchResponse searchResponse, SearchSearchRequest searchSearchRequest,
+		SearchSearchResponse searchSearchResponse);
 
 }

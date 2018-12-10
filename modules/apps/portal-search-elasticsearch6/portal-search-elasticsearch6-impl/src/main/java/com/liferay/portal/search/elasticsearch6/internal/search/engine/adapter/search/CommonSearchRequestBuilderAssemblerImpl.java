@@ -44,6 +44,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
+		searchRequestBuilder.setExplain(baseSearchRequest.isExplain());
 		searchRequestBuilder.setIndices(baseSearchRequest.getIndexNames());
 
 		if (baseSearchRequest.getMinimumScore() > 0) {

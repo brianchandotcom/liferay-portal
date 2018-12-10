@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchResponse;
 
 import java.io.IOException;
@@ -26,6 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.search.FuzzyQuery;
+
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.unit.TimeValue;
@@ -33,6 +38,7 @@ import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.search.profile.ProfileShardResult;
 import org.elasticsearch.search.profile.query.QueryProfileShardResult;
 
@@ -47,13 +53,23 @@ public class CommonSearchResponseAssemblerImpl
 
 	@Override
 	public void assemble(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse,
-		String searchRequestBuilderString) {
+		SearchRequestBuilder searchRequestBuilder,
+		SearchResponse searchResponse, BaseSearchRequest baseSearchRequest,
+		BaseSearchResponse baseSearchResponse) {
 
 		setExecutionProfile(searchResponse, baseSearchResponse);
 		setExecutionTime(searchResponse, baseSearchResponse);
 
-		baseSearchResponse.setSearchRequestString(searchRequestBuilderString);
+		baseSearchResponse.setSearchRequestString(
+			StringUtil.removeSubstrings(
+				searchRequestBuilder.toString(), ADJUST_PURE_NEGATIVE_STRING,
+				FUZZY_TRANSPOSITIONS_STRING, ZERO_TERMS_QUERY_STRING));
+
+		if (baseSearchRequest.isIncludeResponseString()) {
+			baseSearchResponse.setSearchResponseString(
+				searchResponse.toString());
+		}
+
 		baseSearchResponse.setTerminatedEarly(
 			GetterUtil.getBoolean(searchResponse.isTerminatedEarly()));
 		baseSearchResponse.setTimedOut(searchResponse.isTimedOut());
@@ -125,6 +141,15 @@ public class CommonSearchResponseAssemblerImpl
 
 		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
 	}
+
+	protected static final String ADJUST_PURE_NEGATIVE_STRING =
+		",\"adjust_pure_negative\":true";
+
+	protected static final String FUZZY_TRANSPOSITIONS_STRING =
+		",\"fuzzy_transpositions\":" + FuzzyQuery.defaultTranspositions;
+
+	protected static final String ZERO_TERMS_QUERY_STRING =
+		",\"zero_terms_query\":\"" + MatchQuery.DEFAULT_ZERO_TERMS_QUERY + "\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommonSearchResponseAssemblerImpl.class);

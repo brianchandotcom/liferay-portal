@@ -18,12 +18,13 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetCategoryUtil {
 
-	public static void addPortletBreadcrumbEntry(
+	public static List<BreadcrumbEntry> getAssetCategoriesBreadcrumbEntries(
 			AssetVocabulary vocabulary, AssetCategory category,
 			HttpServletRequest request, RenderResponse renderResponse)
 		throws PortalException {
@@ -45,20 +46,33 @@ public class AssetCategoryUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry vocabulariesBreadcrumbEntry = new BreadcrumbEntry();
+
+		vocabulariesBreadcrumbEntry.setTitle(
+			LanguageUtil.get(request, "vocabularies"));
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, LanguageUtil.get(request, "vocabularies"),
-			portletURL.toString());
+		vocabulariesBreadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(vocabulariesBreadcrumbEntry);
 
 		if (category == null) {
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, vocabulary.getTitle(themeDisplay.getLocale()), null);
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			return;
+			breadcrumbEntry.setTitle(
+				vocabulary.getTitle(themeDisplay.getLocale()));
+
+			breadcrumbEntries.add(breadcrumbEntry);
+
+			return breadcrumbEntries;
 		}
+
+		BreadcrumbEntry vocabularyBreadcrumbEntry = new BreadcrumbEntry();
 
 		portletURL.setParameter("mvcPath", "/view_categories.jsp");
 
@@ -68,28 +82,56 @@ public class AssetCategoryUtil {
 			portletURL.setParameter("navigation", navigation);
 		}
 
+		vocabularyBreadcrumbEntry.setTitle(
+			vocabulary.getTitle(themeDisplay.getLocale()));
+
 		portletURL.setParameter(
 			"vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
 
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, vocabulary.getTitle(themeDisplay.getLocale()),
-			portletURL.toString());
+		vocabularyBreadcrumbEntry.setURL(portletURL.toString());
+
+		breadcrumbEntries.add(vocabularyBreadcrumbEntry);
 
 		List<AssetCategory> ancestorsCategories = category.getAncestors();
 
 		Collections.reverse(ancestorsCategories);
 
 		for (AssetCategory curCategory : ancestorsCategories) {
+			BreadcrumbEntry categoryBreadcrumbEntry = new BreadcrumbEntry();
+
+			categoryBreadcrumbEntry.setTitle(
+				curCategory.getTitle(themeDisplay.getLocale()));
+
 			portletURL.setParameter(
 				"categoryId", String.valueOf(curCategory.getCategoryId()));
 
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, curCategory.getTitle(themeDisplay.getLocale()),
-				portletURL.toString());
+			categoryBreadcrumbEntry.setURL(portletURL.toString());
+
+			breadcrumbEntries.add(categoryBreadcrumbEntry);
 		}
 
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, category.getTitle(themeDisplay.getLocale()), null);
+		BreadcrumbEntry categoryBreadcrumbEntry = new BreadcrumbEntry();
+
+		categoryBreadcrumbEntry.setTitle(
+			category.getTitle(themeDisplay.getLocale()));
+
+		breadcrumbEntries.add(categoryBreadcrumbEntry);
+
+		return breadcrumbEntries;
+	}
+
+	public static List<BreadcrumbEntry> getAssetVocabulariesBreadcrumbEntries(
+		HttpServletRequest request) {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(request, "vocabularies"));
+
+		breadcrumbEntries.add(breadcrumbEntry);
+
+		return breadcrumbEntries;
 	}
 
 }

@@ -11,6 +11,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -63,6 +64,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -80,20 +82,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -103,6 +109,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -118,6 +125,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -135,11 +143,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -153,11 +163,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -183,6 +195,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -235,6 +248,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -256,6 +270,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -271,6 +286,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -288,11 +304,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -306,11 +324,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -334,6 +354,7 @@ Array [
               Object {
                 "fieldName": "name0000",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "name": "name0000",
                 "options": Array [
                   Object {
@@ -388,6 +409,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -405,6 +427,7 @@ Array [
               Object {
                 "fieldName": "name0010",
                 "label": "copy-of-x",
+                "localizedValue": Object {},
                 "name": "name0010",
                 "options": Array [
                   Object {
@@ -460,6 +483,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -473,22 +497,26 @@ Array [
               Object {
                 "fieldName": "name0020",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "name": "name0020",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "name1020",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "name": "name1020",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -498,6 +526,7 @@ Array [
               Object {
                 "fieldName": "name0120",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "name": "name0120",
                 "options": Array [
                   Object {
@@ -514,6 +543,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -531,12 +561,14 @@ Array [
               Object {
                 "fieldName": "name0030",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "name": "name0030",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -550,12 +582,14 @@ Array [
               Object {
                 "fieldName": "name0040",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "name": "name0040",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -579,6 +613,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -631,6 +666,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -648,20 +684,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -671,6 +711,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -686,6 +727,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -703,11 +745,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -721,11 +765,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -749,6 +795,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -764,6 +811,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -777,6 +825,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -829,6 +878,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -846,20 +896,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -881,11 +935,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -899,11 +955,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -927,20 +985,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -954,6 +1016,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1006,6 +1069,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -1027,6 +1091,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1042,6 +1107,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1059,11 +1125,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1077,11 +1145,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1105,6 +1175,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1157,6 +1228,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -1174,20 +1246,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -1197,6 +1273,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1212,6 +1289,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1229,11 +1307,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1247,11 +1327,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1275,11 +1357,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1293,6 +1377,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1345,6 +1430,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -1362,20 +1448,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -1385,6 +1475,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1400,6 +1491,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1417,11 +1509,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1445,6 +1539,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1497,6 +1592,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1510,20 +1606,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -1533,6 +1633,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1548,6 +1649,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1565,11 +1667,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1583,11 +1687,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1629,20 +1735,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -1652,6 +1762,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1667,6 +1778,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1684,11 +1796,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1702,11 +1816,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1730,6 +1846,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1782,6 +1899,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -1799,20 +1917,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -1822,6 +1944,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1837,6 +1960,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -1854,11 +1978,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1872,11 +1998,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -1951,6 +2079,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2003,6 +2132,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -2020,20 +2150,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -2043,6 +2177,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2058,6 +2193,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -2075,11 +2211,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -2093,11 +2231,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -2121,6 +2261,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2173,6 +2314,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -2190,20 +2332,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -2213,6 +2359,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2228,6 +2375,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -2245,11 +2393,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -2263,11 +2413,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -2291,6 +2443,7 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2343,6 +2496,7 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "value": undefined,
               },
             ],
             "size": 3,
@@ -2360,20 +2514,24 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "text",
+                "value": undefined,
               },
             ],
             "size": 4,
@@ -2383,6 +2541,7 @@ Array [
               Object {
                 "fieldName": "select",
                 "label": "Select Field",
+                "localizedValue": Object {},
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -2398,6 +2557,7 @@ Array [
                   "pages": Array [],
                 },
                 "type": "select",
+                "value": undefined,
               },
             ],
             "size": 6,
@@ -2415,11 +2575,13 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "date",
+                "value": undefined,
               },
             ],
             "size": 12,
@@ -2433,11 +2595,13 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "localizedValue": Object {},
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
                 "type": "numeric",
+                "value": undefined,
               },
             ],
             "size": 12,

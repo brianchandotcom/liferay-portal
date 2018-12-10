@@ -30,6 +30,12 @@ public class GradleTaskFailureMessageGenerator
 
 		int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG);
 
+		int whereIndex = consoleText.lastIndexOf(_TOKEN_WHERE, start);
+
+		if (whereIndex != -1) {
+			start = whereIndex;
+		}
+
 		start = consoleText.lastIndexOf("\n", start);
 
 		int end = Math.min(
@@ -41,5 +47,7 @@ public class GradleTaskFailureMessageGenerator
 	}
 
 	private static final String _TOKEN_WHAT_WENT_WRONG = "* What went wrong:";
+
+	private static final String _TOKEN_WHERE = "* Where:";
 
 }

@@ -1,0 +1,83 @@
+{namespace com.liferay.layout.admin.web.SidebarAvailableElements}
+
+/**
+ * SidebarAvailableElements
+ */
+{template .render}
+	{@param elements: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
+	{@param spritemap: string}
+	{@param? _handleEntryClick: any}
+	{@param? store: ?}
+
+	<div class="sidebar-fragment-collections">
+		{foreach $fragmentCollection in $elements}
+			{let $collapseId kind="text"}
+				fragment-collection-{$fragmentCollection.fragmentCollectionId}
+			{/let}
+
+			<ul class="nav nav-nested" key="{$fragmentCollection.fragmentCollectionId}">
+				<li class="nav-item">
+					<a
+						aria-controls="{$collapseId}"
+						aria-expanded="false"
+						class="collapsed collapse-icon nav-link"
+						data-fragment-collection-id="{$fragmentCollection.fragmentCollectionId}"
+						data-toggle="collapse"
+						href="#{$collapseId}"
+						role="button"
+					>
+						{$fragmentCollection.name}
+
+						<span class="collapse-icon-closed">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#caret-right"></use>
+							</svg>
+						</span>
+						<span class="collapse-icon-open">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#caret-bottom"></use>
+							</svg>
+						</span>
+					</a>
+
+					<div class="collapse" id="{$collapseId}">
+						{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
+							{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+								{param events: ['itemClick': $_handleEntryClick] /}
+								{param icon: 'plus' /}
+								{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}
+								{param itemId: $fragmentEntry.fragmentEntryId /}
+								{param itemName: $fragmentEntry.name /}
+								{param key: $fragmentEntry.fragmentEntryId /}
+								{param spritemap: $spritemap /}
+								{param store: $store /}
+							{/call}
+						{/foreach}
+					</div>
+				</li>
+			</ul>
+		{ifempty}
+			<div class="alert alert-primary" role="alert">
+				<span class="alert-indicator">
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#info-circle"></use>
+					</svg>
+				</span>
+
+				<strong class="lead">
+					{msg desc=""}info{/msg}:
+				</strong>
+
+				{msg desc=""}you-do-not-have-any-fragments{/msg}
+			</div>
+		{/foreach}
+	</div>
+{/template}

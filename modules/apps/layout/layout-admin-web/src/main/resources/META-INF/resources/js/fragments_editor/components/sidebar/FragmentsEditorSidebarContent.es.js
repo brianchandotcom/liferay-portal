@@ -23,6 +23,8 @@ class FragmentsEditorSidebarContent extends Component {
 	 */
 	_handlePanelButtonClick(event) {
 		this._panelId = event.delegateTarget.dataset.panelId;
+
+		this.emit('sidebarTitleChanged', event);
 	}
 }
 

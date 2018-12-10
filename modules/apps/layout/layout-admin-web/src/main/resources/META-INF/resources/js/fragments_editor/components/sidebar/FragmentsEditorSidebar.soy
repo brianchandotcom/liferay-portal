@@ -24,10 +24,12 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param? _sidebarTitle: string}
 	{@param spritemap: string}
 	{@param? highlightMapping: bool}
 	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
+	{@param? _handleSidebarTitleChanged: any}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -45,6 +47,9 @@
 		{param body kind="html"}
 			{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
 				{param elements: $elements /}
+				{param events: [
+					'sidebarTitleChanged': $_handleSidebarTitleChanged
+				] /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param highlightMapping: $highlightMapping ?: false /}
 				{param layoutData: $layoutData /}
@@ -64,6 +69,7 @@
 		{param header kind="html"}
 			{call .sidebarHeader}
 				{param handleHideSidebarButtonClick: $_handleHideSidebarButtonClick /}
+				{param sidebarTitle: $_sidebarTitle ?: '' /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/param}
@@ -77,6 +83,7 @@
  * Sidebar header
  */
 {template .sidebarHeader}
+	{@param sidebarTitle: string}
 	{@param spritemap: string}
 	{@param? handleHideSidebarButtonClick: any}
 
@@ -84,7 +91,7 @@
 		<div class="autofit-col autofit-col-expand">
 			<h4 class="component-title">
 				<span class="text-truncate-inline">
-					{msg desc=""}fragments{/msg}
+					{$sidebarTitle}
 				</span>
 			</h4>
 		</div>

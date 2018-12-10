@@ -425,18 +425,23 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			"Writes a digest file to keep track of the parent themes used by " +
 				"this project.");
 
-		for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
-			Project themeProject = _getThemeProject(project, themeProjectName);
+		if (!_isGitRepo(project)) {
+			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+				Project themeProject = _getThemeProject(
+					project, themeProjectName);
 
-			if (themeProject == null) {
-				continue;
+				if (themeProject == null) {
+					continue;
+				}
+
+				String path = themeProject.getPath();
+
+				writeDigestTask.dependsOn(
+					path + ":" + JavaPlugin.CLASSES_TASK_NAME);
+
+				writeDigestTask.source(
+					themeProject.file("src/main/resources/META-INF/resources"));
 			}
-
-			writeDigestTask.dependsOn(
-				themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
-
-			writeDigestTask.source(
-				themeProject.file("src/main/resources/META-INF/resources"));
 		}
 
 		return writeDigestTask;
@@ -597,12 +602,15 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Project project = executeGulpTask.getProject();
 
-		for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
-			int index = themeProjectName.lastIndexOf("-");
+		if (!_isGitRepo(project)) {
+			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+				int index = themeProjectName.lastIndexOf("-");
 
-			_configureTaskExecuteGulpLocalDependenciesTheme(
-				executeGulpTask, _getThemeProject(project, themeProjectName),
-				themeProjectName.substring(index + 1));
+				_configureTaskExecuteGulpLocalDependenciesTheme(
+					executeGulpTask,
+					_getThemeProject(project, themeProjectName),
+					themeProjectName.substring(index + 1));
+			}
 		}
 	}
 
@@ -721,6 +729,24 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return themeProject;
+	}
+
+	private boolean _isGitRepo(Project project) {
+		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+
+		if (gitRepoDir != null) {
+			return true;
+		}
+
+		String[] dirNames = {"build-working-dir.xml", "portal-impl"};
+
+		for (String dirName : dirNames) {
+			if (GradleUtil.getRootDir(project, dirName) != null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =

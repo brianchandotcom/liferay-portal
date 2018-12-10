@@ -22,8 +22,9 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -157,10 +158,15 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 						assetEntry.getCategoryIds(), newTagNames);
 				}
 				catch (PortalException pe) {
-					throw new SystemException(pe);
+					if (_log.isWarnEnabled()) {
+						_log.warn(pe, pe);
+					}
 				}
 			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditTagsMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

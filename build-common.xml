@@ -1466,6 +1466,14 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.plugins.sdk:${build.sdk.version}" />
 			</gradle-execute>
 
+			<propertyregex
+				input="${sdk.zip.file}"
+				override="true"
+				property="sdk.zip.file"
+				regexp="(.*$)"
+				select="\1"
+			/>
+
 			<dirname file="${sdk.zip.file}" property="sdk.zip.dir" />
 
 			<if>

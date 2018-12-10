@@ -418,20 +418,6 @@ public class FragmentsEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		SoyContext addedSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_getGroupId(), _classNameId, _classPK);
-
-		addedSoyContext.put("enabled", !fragmentEntryLinks.isEmpty());
-
-		addedSoyContext.put("id", "added");
-		addedSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "added"));
-
-		soyContexts.add(addedSoyContext);
-
 		return soyContexts;
 	}
 

@@ -47,39 +47,9 @@
 			cssClass="table-cell-expand table-cell-minw-200"
 			name="relative-path"
 		>
-			<ol class="breadcrumb">
-
-				<%
-				List<Layout> curLayouts = layout.getAncestors();
-
-				Collections.reverse(curLayouts);
-
-				boolean showLayoutPath = false;
-
-				if (layoutsAdminDisplayContext.getSelPlid() <= 0) {
-					showLayoutPath = true;
-				}
-
-				for (Layout curLayout : curLayouts) {
-				%>
-
-					<c:if test="<%= showLayoutPath %>">
-						<li class="breadcrumb-item">
-							<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(curLayout.getName(locale)) %></span>
-						</li>
-					</c:if>
-
-				<%
-					if (curLayout.getPlid() == layoutsAdminDisplayContext.getSelPlid()) {
-						showLayoutPath = true;
-					}
-				}
-				%>
-
-				<li class="active breadcrumb-item">
-					<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(layout.getName(locale)) %></span>
-				</li>
-			</ol>
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= layoutsAdminDisplayContext.getRelativeBreadcrumbEntries(layout) %>"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<%

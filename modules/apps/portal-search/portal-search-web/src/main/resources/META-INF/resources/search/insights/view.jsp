@@ -32,6 +32,12 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 
 <div class="full-query">
 	<code>
-		<%= HtmlUtil.escape(searchInsightsDisplayContext.getQueryString()) %>
+		<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
+	</code>
+
+	<hr />
+
+	<code>
+		<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
 	</code>
 </div>

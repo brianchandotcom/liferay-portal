@@ -12,32 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.insights.display.context;
-
-import java.io.Serializable;
+package com.liferay.portal.search.web.internal.search.insights.portlet;
 
 /**
- * @author Bryan Engler
+ * @author Wade Cao
  */
-public class SearchInsightsDisplayContext implements Serializable {
+public interface SearchInsightsPortletPreferences {
 
-	public String getRequestString() {
-		return _requestString;
-	}
+	public static final String PREFERENCE_KEY_EXPLAIN = "explain";
 
-	public String getResponseString() {
-		return _responseString;
-	}
-
-	public void setRequestString(String queryString) {
-		_requestString = queryString;
-	}
-
-	public void setResponseString(String responseString) {
-		_responseString = responseString;
-	}
-
-	private String _requestString;
-	private String _responseString;
+	public boolean isExplain();
 
 }

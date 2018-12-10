@@ -111,6 +111,13 @@ public class PortletSharedSearchResponseImpl
 	}
 
 	@Override
+	public com.liferay.portal.search.searcher.SearchResponse
+		getSearchResponse() {
+
+		return _searchResponse.getSearchResponse();
+	}
+
+	@Override
 	public SearchSettings getSearchSettings() {
 		return _searchResponse.getSearchSettings();
 	}

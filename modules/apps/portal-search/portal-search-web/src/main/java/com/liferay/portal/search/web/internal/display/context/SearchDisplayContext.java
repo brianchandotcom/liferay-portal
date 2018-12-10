@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
@@ -71,6 +72,7 @@ public class SearchDisplayContext {
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory,
 			SummaryBuilderFactory summaryBuilderFactory,
+			SearchResponseBuilderFactory searchResponseBuilderFactory,
 			SearchFacetTracker searchFacetTracker)
 		throws PortletException {
 
@@ -140,7 +142,7 @@ public class SearchDisplayContext {
 
 		SearchRequestImpl searchRequestImpl = new SearchRequestImpl(
 			() -> searchContext, searchContainerOptions -> searchContainer,
-			facetedSearcherManager);
+			searchResponseBuilderFactory, facetedSearcherManager);
 
 		searchRequestImpl.addSearchSettingsContributor(
 			this::contributeSearchSettings);

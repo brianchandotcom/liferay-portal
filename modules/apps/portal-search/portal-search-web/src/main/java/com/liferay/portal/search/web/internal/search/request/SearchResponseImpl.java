@@ -76,7 +76,7 @@ public class SearchResponseImpl implements SearchResponse {
 
 	@Override
 	public String getQueryString() {
-		return _queryString;
+		return _searchResponse.getRequestString();
 	}
 
 	@Override
@@ -90,6 +90,13 @@ public class SearchResponseImpl implements SearchResponse {
 
 	public SearchContext getSearchContext() {
 		return _searchContext;
+	}
+
+	@Override
+	public com.liferay.portal.search.searcher.SearchResponse
+		getSearchResponse() {
+
+		return _searchResponse;
 	}
 
 	@Override
@@ -127,16 +134,18 @@ public class SearchResponseImpl implements SearchResponse {
 		_paginationStart = paginationStart;
 	}
 
-	public void setQueryString(String queryString) {
-		_queryString = queryString;
-	}
-
 	public void setSearchContainer(SearchContainer<Document> searchContainer) {
 		_searchContainer = searchContainer;
 	}
 
 	public void setSearchContext(SearchContext searchContext) {
 		_searchContext = searchContext;
+	}
+
+	public void setSearchResponse(
+		com.liferay.portal.search.searcher.SearchResponse searchResponse) {
+
+		_searchResponse = searchResponse;
 	}
 
 	public void setSearchSettings(SearchSettings searchSettings) {
@@ -152,9 +161,9 @@ public class SearchResponseImpl implements SearchResponse {
 	private String _keywords;
 	private int _paginationDelta;
 	private int _paginationStart;
-	private String _queryString;
 	private SearchContainer<Document> _searchContainer;
 	private SearchContext _searchContext;
+	private com.liferay.portal.search.searcher.SearchResponse _searchResponse;
 	private SearchSettings _searchSettings;
 	private int _totalHits;
 

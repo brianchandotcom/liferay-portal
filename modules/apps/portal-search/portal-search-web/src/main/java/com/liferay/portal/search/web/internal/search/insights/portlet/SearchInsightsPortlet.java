@@ -14,12 +14,14 @@
 
 package com.liferay.portal.search.web.internal.search.insights.portlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsPortletKeys;
 import com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchPortletPermissionUtil;
@@ -99,20 +101,34 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		SearchInsightsDisplayContext searchInsightsDisplayContext =
 			new SearchInsightsDisplayContext();
 
-		searchInsightsDisplayContext.setQueryString(
-			buildQueryString(portletSharedSearchResponse, renderRequest));
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		searchInsightsDisplayContext.setRequestString(
+			buildRequestString(searchResponse, renderRequest));
+
+		searchInsightsDisplayContext.setResponseString(
+			buildResponseString(searchResponse, renderRequest));
 
 		return searchInsightsDisplayContext;
 	}
 
-	protected String buildQueryString(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
+	protected String buildRequestString(
+		SearchResponse searchResponse, RenderRequest renderRequest) {
 
-		Optional<String> queryString = SearchStringUtil.maybe(
-			portletSharedSearchResponse.getQueryString());
+		Optional<String> requestString = SearchStringUtil.maybe(
+			searchResponse.getRequestString());
 
-		return queryString.orElseGet(() -> getHelp(renderRequest));
+		return requestString.orElseGet(() -> getHelp(renderRequest));
+	}
+
+	protected String buildResponseString(
+		SearchResponse searchResponse, RenderRequest renderRequest) {
+
+		Optional<String> responseString = SearchStringUtil.maybe(
+			searchResponse.getResponseString());
+
+		return responseString.orElse(StringPool.BLANK);
 	}
 
 	protected String getHelp(RenderRequest renderRequest) {

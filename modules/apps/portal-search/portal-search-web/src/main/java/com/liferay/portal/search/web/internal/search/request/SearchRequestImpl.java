@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.web.search.request.SearchRequest;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
@@ -36,10 +38,12 @@ public class SearchRequestImpl implements SearchRequest {
 	public SearchRequestImpl(
 		SearchContextBuilder searchContextBuilder,
 		SearchContainerBuilder searchContainerBuilder,
+		SearchResponseBuilderFactory searchResponseBuilderFactory,
 		FacetedSearcherManager facetedSearcherManager) {
 
 		_searchContextBuilder = searchContextBuilder;
 		_searchContainerBuilder = searchContainerBuilder;
+		_searchResponseBuilderFactory = searchResponseBuilderFactory;
 		_facetedSearcherManager = facetedSearcherManager;
 	}
 
@@ -110,12 +114,16 @@ public class SearchRequestImpl implements SearchRequest {
 		searchResponseImpl.setKeywords(searchContext.getKeywords());
 		searchResponseImpl.setPaginationDelta(searchContainer.getDelta());
 		searchResponseImpl.setPaginationStart(searchContainer.getCur());
-		searchResponseImpl.setQueryString(
-			(String)searchContext.getAttribute("queryString"));
 		searchResponseImpl.setSearchContainer(searchContainer);
 		searchResponseImpl.setSearchContext(searchContext);
 		searchResponseImpl.setSearchSettings(searchSettings);
 		searchResponseImpl.setTotalHits(hits.getLength());
+
+		SearchResponseBuilder searchResponseBuilder =
+			_searchResponseBuilderFactory.getSearchResponseBuilder(
+				searchContext);
+
+		searchResponseImpl.setSearchResponse(searchResponseBuilder.build());
 
 		return searchResponseImpl;
 	}
@@ -152,6 +160,7 @@ public class SearchRequestImpl implements SearchRequest {
 	private final FacetedSearcherManager _facetedSearcherManager;
 	private final SearchContainerBuilder _searchContainerBuilder;
 	private final SearchContextBuilder _searchContextBuilder;
+	private final SearchResponseBuilderFactory _searchResponseBuilderFactory;
 	private final Set<SearchSettingsContributor> _searchSettingsContributors =
 		new HashSet<>();
 

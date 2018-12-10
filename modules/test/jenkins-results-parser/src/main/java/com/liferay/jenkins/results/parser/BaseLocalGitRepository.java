@@ -30,6 +30,39 @@ public abstract class BaseLocalGitRepository
 	extends BaseGitRepository implements LocalGitRepository {
 
 	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+
+		if (!(o instanceof LocalGitRepository)) {
+			return false;
+		}
+
+		LocalGitRepository localGitRepository = (LocalGitRepository)o;
+
+		File directory = getDirectory();
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+		JSONObject jsonObject = getJSONObject();
+		String name = getName();
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (directory.equals(localGitRepository.getDirectory()) &&
+			gitWorkingDirectory.equals(
+				localGitRepository.getGitWorkingDirectory()) &&
+			JenkinsResultsParserUtil.isJSONObjectEqual(
+				jsonObject, localGitRepository.getJSONObject()) &&
+			name.equals(localGitRepository.getName()) &&
+			upstreamBranchName.equals(
+				localGitRepository.getUpstreamBranchName())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public File getDirectory() {
 		return getFile("directory");
 	}
@@ -50,6 +83,22 @@ public abstract class BaseLocalGitRepository
 	@Override
 	public String getUpstreamBranchName() {
 		return getString("upstream_branch_name");
+	}
+
+	@Override
+	public int hashCode() {
+		try {
+			File directory = getDirectory();
+
+			String hash = JenkinsResultsParserUtil.combine(
+				directory.getCanonicalPath(), getName(),
+				getUpstreamBranchName());
+
+			return hash.hashCode();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	protected BaseLocalGitRepository(JSONObject jsonObject) {

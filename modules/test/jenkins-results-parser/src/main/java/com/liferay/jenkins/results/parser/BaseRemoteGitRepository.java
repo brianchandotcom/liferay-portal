@@ -14,11 +14,44 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  */
 public abstract class BaseRemoteGitRepository
 	extends BaseGitRepository implements RemoteGitRepository {
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+
+		if (!(o instanceof RemoteGitRepository)) {
+			return false;
+		}
+
+		RemoteGitRepository remoteGitRepository = (RemoteGitRepository)o;
+
+		String hostname = getHostname();
+		JSONObject jsonObject = getJSONObject();
+		String name = getName();
+		String remoteURL = getRemoteURL();
+		String username = getUsername();
+
+		if (hostname.equals(remoteGitRepository.getHostname()) &&
+			JenkinsResultsParserUtil.isJSONObjectEqual(
+				jsonObject, remoteGitRepository.getJSONObject()) &&
+			name.equals(remoteGitRepository.getName()) &&
+			remoteURL.equals(remoteGitRepository.getRemoteURL()) &&
+			username.equals(remoteGitRepository.getUsername())) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public String getHostname() {
@@ -34,6 +67,14 @@ public abstract class BaseRemoteGitRepository
 	@Override
 	public String getUsername() {
 		return getString("username");
+	}
+
+	@Override
+	public int hashCode() {
+		String hash = JenkinsResultsParserUtil.combine(
+			getHostname(), getName(), getRemoteURL(), getUsername());
+
+		return hash.hashCode();
 	}
 
 	protected BaseRemoteGitRepository(GitRemote gitRemote) {

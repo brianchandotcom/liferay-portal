@@ -208,7 +208,8 @@ class Validation extends Component {
 
 		return {
 			...state,
-			...parsedState
+			...parsedState,
+			dataType: state.validation ? state.validation.dataType : state.dataType
 		};
 	}
 

@@ -15,6 +15,11 @@
 	]>}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
+	{@param panels: list<[
+		icon:string,
+		label:string,
+		panelId:string
+	]>}
 	{@param sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -53,6 +58,7 @@
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param highlightMapping: $highlightMapping ?: false /}
 				{param layoutData: $layoutData /}
+				{param panels: $panels /}
 				{param sections: $sections /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}

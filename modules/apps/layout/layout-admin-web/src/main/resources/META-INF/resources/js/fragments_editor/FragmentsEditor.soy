@@ -21,6 +21,11 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param layoutData: ?}
+	{@param panels: list<[
+		icon:string,
+		label:string,
+		panelId:string
+	]>}
 	{@param portletNamespace: string}
 	{@param redirectURL: string}
 	{@param sections: list<[
@@ -95,6 +100,7 @@
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}
+			{param panels: $panels /}
 			{param ref: 'sidebar' /}
 			{param sections: $sections /}
 			{param selectedMappingTypes: $selectedMappingTypes /}

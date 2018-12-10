@@ -37,55 +37,6 @@ class FragmentsEditorSidebarContent extends Component {
 FragmentsEditorSidebarContent.STATE = {
 
 	/**
-	 * Sidebar panels
-	 * @default []
-	 * @memberof FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {object}
-	 */
-	_panels: Config
-		.arrayOf(
-			Config.shapeOf(
-				{
-					icon: Config.string(),
-					label: Config.string(),
-					panelId: Config.string()
-				}
-			)
-		)
-		.internal()
-		.value(
-			[
-				{
-					icon: 'cards',
-					label: 'Sections',
-					panelId: 'sections'
-				},
-				{
-					icon: 'cards',
-					label: 'Elements',
-					panelId: 'elements'
-				},
-				{
-					icon: 'page-template',
-					label: 'Layouts',
-					panelId: 'layouts'
-				},
-				{
-					icon: 'simulation-menu',
-					label: 'Mapping',
-					panelId: 'mapping'
-				},
-				{
-					icon: 'pages-tree',
-					label: 'Structure',
-					panelId: 'structure'
-				}
-			]
-		),
-
-	/**
 	 * Sidebar active panel ID
 	 * @default sections
 	 * @memberof FragmentsEditorSidebarContent

@@ -109,13 +109,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Configuration frontendCSSCommonConfiguration =
 			_addConfigurationFrontendCSSCommon(project);
 
-		final Project frontendThemeStyledProject = _getThemeProject(
-			project, "frontend-theme-styled");
-		final Project frontendThemeUnstyledProject = _getThemeProject(
-			project, "frontend-theme-unstyled");
-
 		final WriteDigestTask writeDigestTask = _addTaskWriteParentThemesDigest(
-			project, frontendThemeStyledProject, frontendThemeUnstyledProject);
+			project);
 
 		final Copy expandFrontendCSSCommonTask =
 			_addTaskExpandFrontendCSSCommon(
@@ -165,9 +160,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 							isUseLocalDependencies()) {
 
 						_configureTasksExecuteGulpLocalDependencies(
-							project, expandFrontendCSSCommonTask,
-							frontendThemeStyledProject,
-							frontendThemeUnstyledProject);
+							project, expandFrontendCSSCommonTask);
 					}
 					else {
 						writeDigestTask.setEnabled(false);
@@ -423,9 +416,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private WriteDigestTask _addTaskWriteParentThemesDigest(
-		Project project, Project... parentThemeProjects) {
-
+	private WriteDigestTask _addTaskWriteParentThemesDigest(Project project) {
 		WriteDigestTask writeDigestTask = GradleUtil.addTask(
 			project, WRITE_PARENT_THEMES_DIGEST_TASK_NAME,
 			WriteDigestTask.class);
@@ -434,19 +425,18 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			"Writes a digest file to keep track of the parent themes used by " +
 				"this project.");
 
-		for (Project parentThemeProject : parentThemeProjects) {
-			if (parentThemeProject == null) {
+		for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+			Project themeProject = _getThemeProject(project, themeProjectName);
+
+			if (themeProject == null) {
 				continue;
 			}
 
 			writeDigestTask.dependsOn(
-				parentThemeProject.getPath() + ":" +
-					JavaPlugin.CLASSES_TASK_NAME);
+				themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 
-			File dir = parentThemeProject.file(
-				"src/main/resources/META-INF/resources");
-
-			writeDigestTask.source(dir);
+			writeDigestTask.source(
+				themeProject.file("src/main/resources/META-INF/resources"));
 		}
 
 		return writeDigestTask;
@@ -596,9 +586,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecuteGulpLocalDependencies(
-		ExecuteGulpTask executeGulpTask, Copy expandFrontendCSSCommonTask,
-		Project frontendThemeStyledProject,
-		Project frontendThemeUnstyledProject) {
+		ExecuteGulpTask executeGulpTask, Copy expandFrontendCSSCommonTask) {
 
 		File cssCommonDir = expandFrontendCSSCommonTask.getDestinationDir();
 
@@ -607,10 +595,15 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
 
-		_configureTaskExecuteGulpLocalDependenciesTheme(
-			executeGulpTask, frontendThemeStyledProject, "styled");
-		_configureTaskExecuteGulpLocalDependenciesTheme(
-			executeGulpTask, frontendThemeUnstyledProject, "unstyled");
+		Project project = executeGulpTask.getProject();
+
+		for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+			int index = themeProjectName.lastIndexOf("-");
+
+			_configureTaskExecuteGulpLocalDependenciesTheme(
+				executeGulpTask, _getThemeProject(project, themeProjectName),
+				themeProjectName.substring(index + 1));
+		}
 	}
 
 	private void _configureTaskExecuteGulpLocalDependenciesTheme(
@@ -657,9 +650,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecuteGulpLocalDependencies(
-		Project project, final Copy expandFrontendCSSCommonTask,
-		final Project frontendThemeStyledProject,
-		final Project frontendThemeUnstyledProject) {
+		Project project, final Copy expandFrontendCSSCommonTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -670,9 +661,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(ExecuteGulpTask executeGulpTask) {
 					_configureTaskExecuteGulpLocalDependencies(
-						executeGulpTask, expandFrontendCSSCommonTask,
-						frontendThemeStyledProject,
-						frontendThemeUnstyledProject);
+						executeGulpTask, expandFrontendCSSCommonTask);
 				}
 
 			});

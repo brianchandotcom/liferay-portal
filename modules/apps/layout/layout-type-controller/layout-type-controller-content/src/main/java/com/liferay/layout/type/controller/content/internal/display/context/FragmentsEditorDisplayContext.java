@@ -145,6 +145,7 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("languageId", _themeDisplay.getLanguageId());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put("panels", _getSoyContextPanels());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
@@ -211,6 +212,7 @@ public class FragmentsEditorDisplayContext {
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+		soyContext.put("panels", _getSoyContextPanels());
 		soyContext.put(
 			"sections",
 			_getSoyContextFragmentCollections(
@@ -422,6 +424,58 @@ public class FragmentsEditorDisplayContext {
 		finally {
 			_themeDisplay.setIsolated(isolated);
 		}
+
+		return soyContexts;
+	}
+
+	private List<SoyContext> _getSoyContextPanels() {
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		SoyContext availableSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "cards");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "sections"));
+		availableSoyContext.put("panelId", "sections");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "cards");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "elements"));
+		availableSoyContext.put("panelId", "elements");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "page-template");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "layouts"));
+		availableSoyContext.put("panelId", "layouts");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "simulation-menu");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "mapping"));
+		availableSoyContext.put("panelId", "mapping");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "pages-tree");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "structure"));
+		availableSoyContext.put("panelId", "structure");
+
+		soyContexts.add(availableSoyContext);
 
 		return soyContexts;
 	}

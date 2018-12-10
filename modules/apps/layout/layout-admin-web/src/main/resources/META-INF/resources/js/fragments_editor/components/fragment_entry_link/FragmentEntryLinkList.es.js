@@ -296,7 +296,10 @@ class FragmentEntryLinkList extends Component {
 			else if (itemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
 				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;
 				moveItemPayload = {
-					fragmentEntryLinkId: itemData.itemId
+					fragmentEntryLinkId: itemData.itemId,
+					targetBorder: this.dropTargetBorder,
+					targetItemId: this.dropTargetItemId,
+					targetItemType: this.dropTargetItemType
 				};
 			}
 
@@ -553,6 +556,16 @@ FragmentEntryLinkList.STATE = {
 	 * @type {string}
 	 */
 	dropTargetItemId: state.dropTargetItemId,
+
+	/**
+	 * Type of the item where another item is being dragged over
+	 * @default {string}
+	 * @instance
+	 * @memberOf FragmentEntryLinkList
+	 * @review
+	 * @type {string}
+	 */
+	dropTargetItemType: state.dropTargetItemType,
 
 	/**
 	 * Id of the last element that was hovered

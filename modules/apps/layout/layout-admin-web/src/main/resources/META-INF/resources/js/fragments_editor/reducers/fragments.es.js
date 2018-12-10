@@ -116,6 +116,9 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {!string} actionType
  * @param {!object} payload
  * @param {!string} payload.fragmentEntryLinkId
+ * @param {!string} payload.targetBorder
+ * @param {!string} payload.targetItemId
+ * @param {!string} payload.targetItemType
  * @return {object}
  * @review
  */
@@ -134,9 +137,9 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 
 				nextData = _addFragment(
 					payload.fragmentEntryLinkId,
-					state.dropTargetBorder,
-					state.dropTargetItemId,
-					state.dropTargetItemType,
+					payload.targetBorder,
+					payload.targetItemId,
+					payload.targetItemType,
 					nextData
 				);
 

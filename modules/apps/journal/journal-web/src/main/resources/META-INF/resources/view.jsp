@@ -55,7 +55,9 @@ if (Validator.isNotNull(title)) {
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() %>">
-					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
+					<liferay-site-navigation:breadcrumb
+						breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, journalDisplayContext.getPortletURL()) %>"
+					/>
 				</c:if>
 			</div>
 

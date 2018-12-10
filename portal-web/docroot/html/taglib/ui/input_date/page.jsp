@@ -253,13 +253,16 @@ else {
 							keydown: function(event) {
 								var instance = this;
 
-								var event = event.domEvent._event;
+								var domEvent = event.domEvent;
 
-								var node = A.one('#' + event.target.id);
-
-								if (event.key === 'Tab' && (node && node.hasClass('yui3-calendar-grid'))) {
+								if (domEvent.keyCode == 9 && domEvent.target.hasClass('yui3-calendar-grid')) {
 									instance.hide();
-									A.one('.lfr-input-date > input').focus();
+
+									var trigger = A.one('#<%= nameId %>');
+
+									if (trigger) {
+										Liferay.Util.focusFormField(trigger);
+									}
 								}
 							}
 						}

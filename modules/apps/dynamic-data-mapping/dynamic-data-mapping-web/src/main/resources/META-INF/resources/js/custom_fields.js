@@ -1378,37 +1378,40 @@ AUI.add(
 
 						DDMDateField.superclass.renderUI.apply(instance, arguments);
 
-						instance.datePicker = new A.DatePickerDeprecated(
-							{
-								calendar: {
-									locale: Liferay.ThemeDisplay.getLanguageId()
-								},
-								on: {
-									selectionChange: function(event) {
-										var date = event.newSelection;
+						var trigger = instance.get('templateNode').one('input');
 
-										instance.setValue(A.Date.format(date));
-									}
-								},
-								popover: {
+						if (trigger) {
+							instance.datePicker = new A.DatePickerDeprecated(
+								{
+									calendar: {
+										locale: Liferay.ThemeDisplay.getLanguageId()
+									},
 									on: {
-										keydown: function(event) {
-											var instance = this;
+										selectionChange: function(event) {
+											var date = event.newSelection;
 
-											var event = event.domEvent._event;
+											instance.setValue(A.Date.format(date));
+										}
+									},
+									popover: {
+										on: {
+											keydown: function(event) {
+												var instance = this;
 
-											var node = A.one('#' + event.target.id);
+												var domEvent = event.domEvent;
 
-											if (event.key === 'Tab' && (node && node.hasClass('yui3-calendar-grid'))) {
-												instance.hide();
-												A.one('.liferay-ddm-form-field-date > input').focus();
+												if (domEvent.keyCode == 9 && domEvent.target.hasClass('yui3-calendar-grid')) {
+													instance.hide();
+
+													Liferay.Util.focusFormField(trigger);
+												}
 											}
 										}
-									}
-								},
-								trigger: instance.get('templateNode').one('input')
-							}
-						).render();
+									},
+									trigger: trigger
+								}
+							).render();
+						}
 
 						instance.datePicker.calendar.set(
 							'strings',

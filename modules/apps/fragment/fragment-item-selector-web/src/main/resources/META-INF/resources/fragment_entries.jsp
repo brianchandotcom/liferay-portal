@@ -16,11 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collections"), fragmentItemSelectorViewDisplayContext.getFragmentCollectionsRedirect());
-PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayContext.getFragmentCollectionTitle(), null);
-%>
-
 <clay:management-toolbar
 	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="fragmentItemSelectorFragmentEntriesManagementToolbar"
@@ -35,14 +30,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showPortletBreadcrumb="<%= true %>"
-		/>
-	</div>
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= fragmentItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
+	/>
 
 	<liferay-ui:search-container
 		id="fragmentEntries"

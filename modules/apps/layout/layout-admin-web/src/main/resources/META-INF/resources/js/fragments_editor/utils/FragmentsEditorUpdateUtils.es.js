@@ -4,6 +4,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../actions/actions.es';
+import {DROP_TARGET_ITEM_TYPES} from '../reducers/placeholders.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -18,6 +19,23 @@ function add(array, element, position) {
 	newArray.splice(position, 0, element);
 
 	return newArray;
+}
+
+function focusItem(itemId, itemType) {
+	let attr;
+
+	if (itemType === DROP_TARGET_ITEM_TYPES.section) {
+		attr = 'data-layout-section-id';
+	}
+	else if (itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+		attr = 'data-fragment-entry-link-id';
+	}
+
+	const item = document.querySelector(`[${attr}='${itemId}']`);
+
+	if (item) {
+		item.focus();
+	}
 }
 
 /**
@@ -176,6 +194,7 @@ function updateLayoutData(
 
 export {
 	add,
+	focusItem,
 	moveItem,
 	remove,
 	setIn,

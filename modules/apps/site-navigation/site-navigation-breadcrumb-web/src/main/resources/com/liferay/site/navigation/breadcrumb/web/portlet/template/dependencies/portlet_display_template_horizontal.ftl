@@ -1,29 +1,15 @@
 <#if entries?has_content>
-	<ul aria-label="${portletDisplay.getTitle()}" class="breadcrumb breadcrumb-horizontal" role="navigation">
-		<#assign cssClass = "" />
-
+	<ol class="breadcrumb" role="navigation">
 		<#list entries as entry>
-			<#if entry?is_last>
-				<#assign cssClass = "active" />
-			</#if>
-
-			<li class="${cssClass}" <#if entry?is_last>aria-current="page"</#if>>
+			<li class="breadcrumb-item">
 				<#if entry?has_next>
-					<a
-
-					<#if entry.isBrowsable()>
-						href="${entry.getURL()!""}"
-					</#if>
-
-					>
-				</#if>
-
-				${htmlUtil.escape(entry.getTitle())}
-
-				<#if entry?has_next>
+					<a class="breadcrumb-link" href="${entry.getURL()!""}" title="${htmlUtil.escape(entry.getTitle())}">
+						<span class="breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
 					</a>
+				<#else>
+					<span class="active breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
 				</#if>
 			</li>
 		</#list>
-	</ul>
+	</ol>
 </#if>

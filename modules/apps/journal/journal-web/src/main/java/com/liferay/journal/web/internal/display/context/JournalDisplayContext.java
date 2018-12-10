@@ -763,13 +763,15 @@ public class JournalDisplayContext {
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append(
 				PortalUtil.getGroupFriendlyURL(
 					_themeDisplay.getLayoutSet(), _themeDisplay));
 			sb.append("/a/");
 			sb.append(assetEntry.getEntryId());
+			sb.append(StringPool.SLASH);
+			sb.append(article.getVersion());
 			sb.append("?p_p_state=pop_up");
 
 			return sb.toString();

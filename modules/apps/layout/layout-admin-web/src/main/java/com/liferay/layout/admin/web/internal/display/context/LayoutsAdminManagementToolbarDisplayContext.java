@@ -151,6 +151,15 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingOrder() {
+		if (_layoutsAdminDisplayContext.isFirstColumn()) {
+			return null;
+		}
+
+		return super.getSortingOrder();
+	}
+
+	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(
 			getPortletURL(), _layoutsAdminDisplayContext.getDisplayStyle()) {
@@ -178,6 +187,15 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		if (_layoutsAdminDisplayContext.isFirstColumn()) {
+			return false;
+		}
+
+		return super.isSelectable();
+	}
+
+	@Override
 	public Boolean isShowCreationMenu() {
 		try {
 			return _layoutsAdminDisplayContext.isShowAddRootLayoutButton();
@@ -193,6 +211,10 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
+		if (_layoutsAdminDisplayContext.isFirstColumn()) {
+			return super.getOrderByKeys();
+		}
+
 		if (_layoutsAdminDisplayContext.isSearch()) {
 			return new String[] {"create-date"};
 		}

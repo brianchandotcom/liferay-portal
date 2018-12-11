@@ -170,24 +170,18 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
-		throws PortalException {
-
-		assetListEntryLocalService.deleteAssetListEntry(
-			assetListEntry.getAssetListEntryId());
-
-		return assetListEntry;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry) {
+		return assetListEntryPersistence.remove(assetListEntry);
 	}
 
 	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException {
 
 		// Asset list entry
 
-		AssetListEntry assetListEntry = assetListEntryPersistence.remove(
-			assetListEntryId);
+		AssetListEntry assetListEntry = getAssetListEntry(assetListEntryId);
 
 		// Resources
 
@@ -199,7 +193,7 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntryAssetEntryRelPersistence.removeByAssetListEntryId(
 			assetListEntryId);
 
-		return assetListEntry;
+		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 	}
 
 	@Override

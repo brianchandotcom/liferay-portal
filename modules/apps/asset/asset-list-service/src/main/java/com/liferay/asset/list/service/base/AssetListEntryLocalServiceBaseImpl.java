@@ -126,12 +126,10 @@ public abstract class AssetListEntryLocalServiceBaseImpl
 	 *
 	 * @param assetListEntry the asset list entry
 	 * @return the asset list entry that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
-		throws PortalException {
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry) {
 		return assetListEntryPersistence.remove(assetListEntry);
 	}
 

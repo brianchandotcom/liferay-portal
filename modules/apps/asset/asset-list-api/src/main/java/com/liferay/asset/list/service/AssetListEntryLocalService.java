@@ -112,11 +112,10 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	*
 	* @param assetListEntry the asset list entry
 	* @return the asset list entry that was removed
-	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
-		throws PortalException;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry);
 
 	/**
 	* Deletes the asset list entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -126,7 +125,6 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a asset list entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException;
 

@@ -14,16 +14,14 @@ import {
 	REMOVE_SECTION,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_DROP_TARGET,
-	UPDATE_HOVERED_ITEM,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
+	UPDATE_HOVERED_ITEM
 } from '../../actions/actions.es';
 import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {
-	getFragmentRowIndex,
+	getFragmentColumn,
 	getItemMoveDirection,
 	getSectionIndex,
 	getTargetBorder
@@ -313,58 +311,36 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	_handleFragmentMove(event) {
-		const placeholderId = event.fragmentEntryLinkId;
+		const fragmentEntryLinkId = event.fragmentEntryLinkId;
 
-		const rowIndex = getFragmentRowIndex(
+		const column = getFragmentColumn(
 			this.layoutData.structure,
-			placeholderId
+			fragmentEntryLinkId
 		);
+		const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
+			fragmentEntryLinkId
+		);
+		const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
+			fragmentIndex + event.direction
+		];
 
-		let targetId;
+		if (event.direction && targetFragmentEntryLinkId) {
+			const moveItemPayload = {
+				fragmentEntryLinkId,
+				targetBorder: getTargetBorder(event.direction),
+				targetItemId: targetFragmentEntryLinkId,
+				targetItemType: DROP_TARGET_ITEM_TYPES.fragment
+			};
 
-		const targetRow = this
-			.layoutData
-			.structure[rowIndex + event.direction];
+			this.store.dispatchAction(
+				UPDATE_ACTIVE_ITEM,
+				{
+					activeItemId: fragmentEntryLinkId,
+					activeItemType: DROP_TARGET_ITEM_TYPES.fragment
+				}
+			);
 
-		if (targetRow && targetRow.columns.length) {
-			targetId = targetRow.columns[0].fragmentEntryLinkIds[0];
-		}
-
-		if (event.direction === 1) {
-			this._targetBorder = DROP_TARGET_BORDERS.bottom;
-		}
-		else {
-			this._targetBorder = DROP_TARGET_BORDERS.top;
-		}
-
-		if (targetId && targetId !== placeholderId) {
-			this.store
-				.dispatchAction(
-					UPDATE_SAVING_CHANGES_STATUS,
-					{
-						savingChanges: true
-					}
-				)
-				.dispatchAction(
-					MOVE_FRAGMENT_ENTRY_LINK,
-					{
-						originFragmentEntryLinkId: placeholderId,
-						targetFragmentEntryLinkBorder: this._targetBorder,
-						targetFragmentEntryLinkId: targetId
-					}
-				)
-				.dispatchAction(
-					UPDATE_LAST_SAVE_DATE,
-					{
-						lastSaveDate: new Date()
-					}
-				)
-				.dispatchAction(
-					UPDATE_SAVING_CHANGES_STATUS,
-					{
-						savingChanges: false
-					}
-				);
+			moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
 		}
 	}
 

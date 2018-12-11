@@ -73,7 +73,17 @@ public abstract class BaseAssetDisplayContributor<T>
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
-		return getAssetDisplayFieldsValues(assetEntry, 0L, locale);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		T assetObject = assetRenderer.getAssetObject();
+
+		return _getParameterMap(assetEntry, assetObject, locale);
 	}
 
 	@Override
@@ -81,55 +91,22 @@ public abstract class BaseAssetDisplayContributor<T>
 			AssetEntry assetEntry, long versionClassPK, Locale locale)
 		throws PortalException {
 
-		// Field values for asset entry
-
-		Map<String, Object> parameterMap =
-			_getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
-
-		// Field values for the specific asset type
-
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(
 					assetEntry.getClassNameId());
 
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			AssetDisplayContributorFieldHelperUtil.
-				getAssetDisplayContributorFields(getClassName());
-
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		T assetObject = null;
-
-		if (versionClassPK > 0) {
-			assetObject = assetRenderer.getAssetObject(versionClassPK);
-		}
-		else {
-			assetObject = assetRenderer.getAssetObject();
-		}
+		T assetObject = assetRenderer.getAssetObject(versionClassPK);
 
 		if (assetObject == null) {
 			throw new NoSuchEntryException(
 				"No such Asset Entry " + versionClassPK);
 		}
 
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
-
-			parameterMap.put(
-				assetDisplayContributorField.getKey(),
-				assetDisplayContributorField.getValue(assetObject, locale));
-		}
-
-		// Field values for the class type
-
-		Map<String, Object> classTypeValues = getClassTypeValues(
-			assetObject, locale);
-
-		parameterMap.putAll(classTypeValues);
-
-		return parameterMap;
+		return _getParameterMap(assetEntry, assetObject, locale);
 	}
 
 	@Override
@@ -238,6 +215,38 @@ public abstract class BaseAssetDisplayContributor<T>
 		}
 
 		return assetDisplayFieldsValues;
+	}
+
+	private Map<String, Object> _getParameterMap(
+		AssetEntry assetEntry, T assetObject, Locale locale) {
+
+		// Field values for asset entry
+
+		Map<String, Object> parameterMap =
+			_getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
+
+		// Field values for the specific asset type
+
+		List<AssetDisplayContributorField> assetDisplayContributorFields =
+			AssetDisplayContributorFieldHelperUtil.
+				getAssetDisplayContributorFields(getClassName());
+
+		for (AssetDisplayContributorField assetDisplayContributorField :
+				assetDisplayContributorFields) {
+
+			parameterMap.put(
+				assetDisplayContributorField.getKey(),
+				assetDisplayContributorField.getValue(assetObject, locale));
+		}
+
+		// Field values for the class type
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetObject, locale);
+
+		parameterMap.putAll(classTypeValues);
+
+		return parameterMap;
 	}
 
 }

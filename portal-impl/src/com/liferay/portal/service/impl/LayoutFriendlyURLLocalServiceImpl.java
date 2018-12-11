@@ -256,22 +256,21 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 			return layoutFriendlyURLMap;
 		}
-		else {
-			Map<Long, String> result = new HashMap<>();
-			String[] locales = StringUtil.split(
-				typeSettingsProperties.getProperty(PropsKeys.LOCALES));
 
-			if (!ArrayUtil.contains(locales, languageId)) {
-				for (Layout layout : layouts) {
-					String friendlyURL = layoutFriendlyURLMap.get(
-						layout.getPlid());
+		Map<Long, String> result = new HashMap<>();
 
-					result.put(layout.getPlid(), friendlyURL);
-				}
+		String[] locales = StringUtil.split(
+			typeSettingsProperties.getProperty(PropsKeys.LOCALES));
+
+		if (!ArrayUtil.contains(locales, languageId)) {
+			for (Layout layout : layouts) {
+				String friendlyURL = layoutFriendlyURLMap.get(layout.getPlid());
+
+				result.put(layout.getPlid(), friendlyURL);
 			}
-
-			return result;
 		}
+
+		return result;
 	}
 
 	@Override

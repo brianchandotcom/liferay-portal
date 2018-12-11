@@ -16,7 +16,6 @@ package com.liferay.bookmarks.internal.upgrade;
 
 import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
-import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksEntryResourceBlock;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksFolderResourceBlock;
@@ -34,9 +33,7 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "0.0.2", new UpgradeKernelPackage(),
-			new UpgradePortletId());
+		registry.register("0.0.1", "0.0.2", new UpgradeKernelPackage());
 
 		registry.register(
 			"0.0.2", "1.0.0", new UpgradeLastPublishDate(),

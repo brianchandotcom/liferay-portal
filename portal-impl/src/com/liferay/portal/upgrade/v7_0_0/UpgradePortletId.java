@@ -43,16 +43,19 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 			{"140", PortletKeys.MY_PAGES}, {"146", _LAYOUT_PROTOTYPE},
 			{"147", _ASSET_CATEGORIES_ADMIN}, {"149", _LAYOUT_SET_PROTOTYPE},
 			{"153", PortletKeys.MY_WORKFLOW_TASK},
-			{"156", PortletKeys.GROUP_PAGES}, {"161", PortletKeys.BLOGS_ADMIN},
+			{"154", PortletKeys.WIKI_ADMIN}, {"156", PortletKeys.GROUP_PAGES},
+			{"161", PortletKeys.BLOGS_ADMIN},
 			{"162", PortletKeys.MESSAGE_BOARDS_ADMIN}, {"165", _SITE_SETTINGS},
 			{"167", _DYNAMIC_DATA_LISTS}, {"174", _SITE_MEMBERSHIPS_ADMIN},
 			{"183", PortletKeys.PORTLET_DISPLAY_TEMPLATE},
 			{"19", PortletKeys.MESSAGE_BOARDS}, {"191", _SITE_TEAMS},
 			{"192", _SITE_TEMPLATE_SETTINGS},
+			{"198", PortletKeys.BOOKMARKS_ADMIN},
 			{"199", PortletKeys.DOCUMENT_LIBRARY_ADMIN},
-			{"20", PortletKeys.DOCUMENT_LIBRARY},
+			{"20", PortletKeys.DOCUMENT_LIBRARY}, {"28", PortletKeys.BOOKMARKS},
 			{"31", PortletKeys.MEDIA_GALLERY_DISPLAY},
-			{"33", PortletKeys.BLOGS}, {"83", PortletKeys.ALERTS},
+			{"33", PortletKeys.BLOGS}, {"36", PortletKeys.WIKI},
+			{"54", PortletKeys.WIKI_DISPLAY}, {"83", PortletKeys.ALERTS},
 			{"88", _LAYOUTS_ADMIN}, {"99", _ASSET_TAGS_ADMIN}
 		};
 	}

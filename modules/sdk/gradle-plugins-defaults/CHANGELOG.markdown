@@ -5183,6 +5183,12 @@ during the execution of the `uploadArchives` task.
 - [LPS-86806]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.35.
 
+## 5.5.139 - 2018-12-10
+
+### Changed
+- [LPS-81706]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.36.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5609,6 +5615,7 @@ during the execution of the `uploadArchives` task.
 [LPS-81555]: https://issues.liferay.com/browse/LPS-81555
 [LPS-81635]: https://issues.liferay.com/browse/LPS-81635
 [LPS-81638]: https://issues.liferay.com/browse/LPS-81638
+[LPS-81706]: https://issues.liferay.com/browse/LPS-81706
 [LPS-81795]: https://issues.liferay.com/browse/LPS-81795
 [LPS-81895]: https://issues.liferay.com/browse/LPS-81895
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900

@@ -79,14 +79,16 @@ public class AssetTagsDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "mergeTags");
-						dropdownItem.setIcon("merge");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "merge"));
-						dropdownItem.setQuickAction(true);
-					});
+				if (isShowTagsActions()) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "mergeTags");
+							dropdownItem.setIcon("merge");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "merge"));
+							dropdownItem.setQuickAction(true);
+						});
+				}
 
 				add(
 					dropdownItem -> {

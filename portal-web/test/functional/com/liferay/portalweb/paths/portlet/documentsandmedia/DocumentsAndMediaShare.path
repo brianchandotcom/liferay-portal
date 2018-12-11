@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE</td>
-	<td>//h3[contains(.,'No Collaborators')]</td>
+	<td>//h3[contains(.,'No Collaborators')]/../p[contains(.,'To add collaborators, share the file again.')]</td>
 	<td></td>
 </tr>
 <tr>

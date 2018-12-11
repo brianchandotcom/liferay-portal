@@ -24,6 +24,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -160,6 +162,20 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowCreationMenu() {
+		try {
+			return _layoutsAdminDisplayContext.isShowAddRootLayoutButton();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		if (_layoutsAdminDisplayContext.isSearch()) {
 			return new String[] {"create-date"};
@@ -171,6 +187,9 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		return super.getOrderByKeys();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsAdminManagementToolbarDisplayContext.class);
 
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 

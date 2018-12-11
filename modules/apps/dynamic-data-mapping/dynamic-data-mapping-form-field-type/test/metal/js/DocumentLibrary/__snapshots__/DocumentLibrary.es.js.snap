@@ -5,7 +5,7 @@ exports[`Field DocumentLibrary should have a helptext 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -13,7 +13,7 @@ exports[`Field DocumentLibrary should have a helptext 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
   <span class="form-text">Type something</span>
 </div>
@@ -25,7 +25,7 @@ exports[`Field DocumentLibrary should have a label 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -33,7 +33,7 @@ exports[`Field DocumentLibrary should have a label 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
 </div>
 `;
@@ -43,7 +43,7 @@ exports[`Field DocumentLibrary should have a placeholder 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -51,7 +51,7 @@ exports[`Field DocumentLibrary should have a placeholder 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" placeholder="Placeholder" value="">
+    <input name="textField" type="hidden" placeholder="Placeholder" value="">
   </div>
 </div>
 `;
@@ -61,7 +61,7 @@ exports[`Field DocumentLibrary should have a spritemap 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -69,7 +69,7 @@ exports[`Field DocumentLibrary should have a spritemap 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
 </div>
 `;
@@ -79,7 +79,7 @@ exports[`Field DocumentLibrary should have a value 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -87,7 +87,7 @@ exports[`Field DocumentLibrary should have a value 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="value">
+    <input name="textField" type="hidden" value="[object Object]">
   </div>
 </div>
 `;
@@ -97,7 +97,7 @@ exports[`Field DocumentLibrary should have an id 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -105,7 +105,7 @@ exports[`Field DocumentLibrary should have an id 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" id="ID" name="textField" type="hidden" value="">
+    <input id="ID" name="textField" type="hidden" value="">
   </div>
 </div>
 `;
@@ -115,7 +115,7 @@ exports[`Field DocumentLibrary should not be readOnly 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -123,7 +123,7 @@ exports[`Field DocumentLibrary should not be readOnly 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
 </div>
 `;
@@ -133,7 +133,7 @@ exports[`Field DocumentLibrary should not be required 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -141,7 +141,7 @@ exports[`Field DocumentLibrary should not be required 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
 </div>
 `;
@@ -152,7 +152,7 @@ exports[`Field DocumentLibrary should render Label if showLabel is true 1`] = `
   <div class="liferay-ddm-form-field-document-library">
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
-        <input class="field form-control" disabled="" id="inputFile" type="text">
+        <input class="field form-control" disabled="" id="textFieldinputFile" type="text">
       </div>
       <div class="input-group-append input-group-item input-group-item-shrink">
         <button class="btn btn-secondary select-button" type="button">
@@ -160,7 +160,7 @@ exports[`Field DocumentLibrary should render Label if showLabel is true 1`] = `
         </button>
       </div>
     </div>
-    <input class="field form-control" name="textField" type="hidden" value="">
+    <input name="textField" type="hidden" value="">
   </div>
 </div>
 `;

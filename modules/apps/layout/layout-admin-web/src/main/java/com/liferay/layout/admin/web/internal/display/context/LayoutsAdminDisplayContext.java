@@ -228,6 +228,8 @@ public class LayoutsAdminDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
+		portletURL.setParameter("firstColumn", Boolean.TRUE.toString());
+
 		breadcrumbEntryJSONObject.put("url", portletURL.toString());
 
 		breadcrumbEntriesJSONArray.put(breadcrumbEntryJSONObject);
@@ -355,6 +357,30 @@ public class LayoutsAdminDisplayContext {
 			"privateLayout", String.valueOf(privatePages));
 
 		return editLayoutSetURL.toString();
+	}
+
+	public SearchContainer getFirstColumnLayoutsSearchContainer() {
+		if (_layoutsSearchContainer != null) {
+			return _layoutsSearchContainer;
+		}
+
+		SearchContainer layoutsSearchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, StringPool.BLANK);
+
+		List<String> results = new ArrayList<>();
+
+		if (isShowPublicPages()) {
+			results.add("public-pages");
+		}
+
+		results.add("private-pages");
+
+		layoutsSearchContainer.setTotal(results.size());
+		layoutsSearchContainer.setResults(results);
+
+		_layoutsSearchContainer = layoutsSearchContainer;
+
+		return _layoutsSearchContainer;
 	}
 
 	public long getFirstLayoutPageTemplateCollectionId() {
@@ -1061,6 +1087,16 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	public boolean isFirstColumn() {
+		if (_firstColumn != null) {
+			return _firstColumn;
+		}
+
+		_firstColumn = ParamUtil.getBoolean(_request, "firstColumn", false);
+
+		return _firstColumn;
+	}
+
 	public boolean isFlattenedView() {
 		if (Objects.equals(getDisplayStyle(), "list") || isSearch()) {
 			return true;
@@ -1598,6 +1634,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private String _displayStyle;
+	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private Long _homePagePlid;
 	private String _homePageTitle;

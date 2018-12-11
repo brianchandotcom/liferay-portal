@@ -153,30 +153,32 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
-									<liferay-frontend:vertical-card
-										actionJsp="/article_action.jsp"
-										actionJspServletContext="<%= application %>"
-										imageUrl="<%= HtmlUtil.escape(articleImageURL) %>"
+									<clay:image-card
+										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(row) %>"
+										href="<%= editURL %>"
+										imageSrc="<%= HtmlUtil.escape(articleImageURL) %>"
+										inputName="<%= journalDisplayContext.getArticleInputName() %>"
+										labels="<%= journalDisplayContext.getArticleLabels(row) %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
+										selectable="<%= true %>"
+										subtitle="<%= curArticle.getUserName() %>"
 										title="<%= title %>"
-										url="<%= editURL %>"
-									>
-										<%@ include file="/article_vertical_card.jspf" %>
-									</liferay-frontend:vertical-card>
+									/>
 								</c:when>
 								<c:otherwise>
-									<liferay-frontend:icon-vertical-card
-										actionJsp="/article_action.jsp"
-										actionJspServletContext="<%= application %>"
+									<clay:file-card
+										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(row) %>"
+										href="<%= editURL %>"
 										icon="web-content"
+										inputName="<%= journalDisplayContext.getArticleInputName() %>"
+										labels="<%= journalDisplayContext.getArticleLabels(row) %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
+                                        selectable="<%= true %>"
+										subtitle="<%= curArticle.getUserName() %>"
 										title="<%= title %>"
-										url="<%= editURL %>"
-									>
-										<%@ include file="/article_vertical_card.jspf" %>
-									</liferay-frontend:icon-vertical-card>
+									/>
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-column-text>
@@ -321,20 +323,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-							<liferay-frontend:horizontal-card
-								actionJsp="/folder_action.jsp"
-								actionJspServletContext="<%= application %>"
+							<clay:horizontal-card
+								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(row) %>"
+								href="<%= rowURL.toString() %>"
+								icon="folder"
 								resultRow="<%= row %>"
 								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
-								text="<%= HtmlUtil.escape(curFolder.getName()) %>"
-								url="<%= rowURL.toString() %>"
-							>
-								<liferay-frontend:horizontal-card-col>
-									<liferay-frontend:horizontal-card-icon
-										icon="folder"
-									/>
-								</liferay-frontend:horizontal-card-col>
-							</liferay-frontend:horizontal-card>
+								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>

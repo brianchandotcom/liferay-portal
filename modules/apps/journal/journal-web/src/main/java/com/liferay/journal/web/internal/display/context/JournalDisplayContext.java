@@ -24,6 +24,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
@@ -47,6 +51,8 @@ import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
@@ -54,6 +60,7 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -186,6 +193,55 @@ public class JournalDisplayContext {
 		return _article;
 	}
 
+	public List<DropdownItem> getArticleActionDropdownItems(ResultRow row)
+		throws PortalException {
+
+		JournalArticle article = (JournalArticle)row.getObject();
+		String referringPortletResource = ParamUtil.getString(
+			_request, "referringPortletResource");
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		return new DropdownItemList() {
+			{
+				if (JournalArticlePermission.contains(
+						permissionChecker, article, ActionKeys.UPDATE)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/edit_article.jsp", "redirect",
+								_themeDisplay.getURLCurrent(),
+								"referringPortletResource",
+								referringPortletResource, "groupId",
+								article.getGroupId(), "folderId",
+								article.getFolderId(), "articleId",
+								article.getArticleId(), "version",
+								article.getVersion());
+							dropdownItem.setIcon("edit");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "edit"));
+						});
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/move_entries.jsp", "redirect",
+								_themeDisplay.getURLCurrent(),
+								"referringPortletResource",
+								referringPortletResource,
+								"rowIdsJournalArticle", article.getArticleId());
+							dropdownItem.setIcon("move");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "move"));
+						});
+				}
+			}
+		};
+	}
+
 	public JournalArticleDisplay getArticleDisplay() throws Exception {
 		if (_articleDisplay != null) {
 			return _articleDisplay;
@@ -227,6 +283,25 @@ public class JournalDisplayContext {
 		}
 
 		return availableLocales;
+	}
+
+	public String getArticleInputName() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer(false);
+
+		return searchContainer.getRowChecker().getRowIds() + JournalArticle.class.getSimpleName();
+	}
+
+	public List<LabelItem> getArticleLabels(ResultRow row) {
+		JournalArticle article = (JournalArticle)row.getObject();
+
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setStatus(article.getStatus());
+					});
+			}
+		};
 	}
 
 	public String[] getCharactersBlacklist() throws PortalException {
@@ -438,6 +513,42 @@ public class JournalDisplayContext {
 		return _folder;
 	}
 
+	public List<DropdownItem> getFolderActionDropdownItems(ResultRow row)
+		throws PortalException {
+
+		JournalFolder folder = (JournalFolder)row.getObject();
+		String referringPortletResource = ParamUtil.getString(
+			_request, "referringPortletResource");
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		return new DropdownItemList() {
+			{
+				if (JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.UPDATE)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/edit_folder.jsp", "redirect",
+								_themeDisplay.getURLCurrent(), "groupId",
+								folder.getGroupId(), "folderId",
+								folder.getFolderId(),
+								"mergeWithParentFolderDisabled",
+								String.valueOf(
+									GetterUtil.getBoolean(
+										_request.getAttribute(
+											"view_entries.jsp-folderSelected"))));
+							dropdownItem.setIcon("edit");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "edit"));
+						});
+				}
+			}
+		};
+	}
+
 	public long getFolderId() {
 		if (_folderId != null) {
 			return _folderId;
@@ -450,6 +561,12 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public String getFolderInputName() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer(false);
+
+		return searchContainer.getRowChecker().getRowIds() + JournalFolder.class.getSimpleName();
 	}
 
 	public JSONArray getFoldersJSONArray() {

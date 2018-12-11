@@ -234,6 +234,10 @@ public class LayoutsAdminDisplayContext {
 
 		breadcrumbEntriesJSONArray.put(breadcrumbEntryJSONObject);
 
+		if (isFirstColumn()) {
+			return breadcrumbEntriesJSONArray;
+		}
+
 		breadcrumbEntriesJSONArray.put(
 			_getBreadcrumbEntryJSONObject(
 				LayoutConstants.DEFAULT_PLID, privatePages,

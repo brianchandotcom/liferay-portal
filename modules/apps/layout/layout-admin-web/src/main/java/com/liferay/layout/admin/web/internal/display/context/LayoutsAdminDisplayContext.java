@@ -211,7 +211,7 @@ public class LayoutsAdminDisplayContext {
 		breadcrumbEntriesJSONArray.put(
 			_getBreadcrumbEntryJSONObject(
 				LayoutConstants.DEFAULT_PLID, privatePages,
-				_getTitle(privatePages)));
+				getTitle(privatePages)));
 
 		if ((getSelPlid() == LayoutConstants.DEFAULT_PLID) ||
 			(selLayout == null)) {
@@ -316,6 +316,21 @@ public class LayoutsAdminDisplayContext {
 			layout, _themeDisplay);
 
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+	}
+
+	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
+		PortletURL editLayoutSetURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutSetURL.setParameter("mvcPath", "/edit_layout_set.jsp");
+		editLayoutSetURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		editLayoutSetURL.setParameter(
+			"privateLayout", String.valueOf(privatePages));
+
+		return editLayoutSetURL.toString();
 	}
 
 	public long getFirstLayoutPageTemplateCollectionId() {
@@ -922,6 +937,21 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
+	public String getTitle(boolean privatePages) {
+		String title = "pages";
+
+		if (isShowPublicPages()) {
+			if (privatePages) {
+				title = "private-pages";
+			}
+			else {
+				title = "public-pages";
+			}
+		}
+
+		return LanguageUtil.get(_request, title);
+	}
+
 	public int getTotalItems() throws Exception {
 		return LayoutLocalServiceUtil.getLayoutsCount(
 			getSelGroup(), isPrivateLayout());
@@ -1058,6 +1088,17 @@ public class LayoutsAdminDisplayContext {
 
 		if (group.isGuest() && !layout.isPrivateLayout() &&
 			layout.isRootLayout() && (layoutsCount == 1)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowFirstColumnConfigureAction() throws PortalException {
+		if (!GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), getSelGroupId(),
+				ActionKeys.MANAGE_LAYOUTS)) {
 
 			return false;
 		}
@@ -1268,7 +1309,7 @@ public class LayoutsAdminDisplayContext {
 		pagesJSONObject.put("active", active);
 		pagesJSONObject.put("hasChild", true);
 		pagesJSONObject.put("plid", LayoutConstants.DEFAULT_PLID);
-		pagesJSONObject.put("title", _getTitle(privatePages));
+		pagesJSONObject.put("title", getTitle(privatePages));
 
 		PortletURL pagesURL = getPortletURL();
 
@@ -1286,24 +1327,9 @@ public class LayoutsAdminDisplayContext {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), getSelGroupId(),
-				ActionKeys.MANAGE_LAYOUTS)) {
-
-			PortletURL editLayoutSetURL =
-				_liferayPortletResponse.createRenderURL();
-
-			editLayoutSetURL.setParameter("mvcPath", "/edit_layout_set.jsp");
-			editLayoutSetURL.setParameter(
-				"redirect", _themeDisplay.getURLCurrent());
-			editLayoutSetURL.setParameter(
-				"backURL", _themeDisplay.getURLCurrent());
-			editLayoutSetURL.setParameter(
-				"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-			editLayoutSetURL.setParameter(
-				"privateLayout", String.valueOf(privatePages));
-
-			jsonObject.put("configureURL", editLayoutSetURL.toString());
+		if (isShowFirstColumnConfigureAction()) {
+			jsonObject.put(
+				"configureURL", getFirstColumnConfigureLayoutURL(privatePages));
 		}
 
 		return jsonObject;
@@ -1456,21 +1482,6 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	private String _getTitle(boolean privatePages) {
-		String title = "pages";
-
-		if (isShowPublicPages()) {
-			if (privatePages) {
-				title = "private-pages";
-			}
-			else {
-				title = "public-pages";
-			}
-		}
-
-		return LanguageUtil.get(_request, title);
 	}
 
 	private boolean _isActive(long plid) throws PortalException {

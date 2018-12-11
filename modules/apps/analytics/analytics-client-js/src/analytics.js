@@ -15,10 +15,10 @@ const FLUSH_INTERVAL = 2000;
 const REQUEST_TIMEOUT = 5000;
 
 // Local Storage keys
-const STORAGE_KEY_EVENTS = 'lcs_client_batch';
-const STORAGE_KEY_CONTEXTS = 'lcs_client_context';
-const STORAGE_KEY_USER_ID = 'lcs_client_user_id';
-const STORAGE_KEY_IDENTITY_HASH = 'lcs_client_identity';
+const STORAGE_KEY_EVENTS = 'ac_client_batch';
+const STORAGE_KEY_CONTEXTS = 'ac_client_context';
+const STORAGE_KEY_USER_ID = 'ac_client_user_id';
+const STORAGE_KEY_IDENTITY_HASH = 'ac_client_identity';
 
 // Creates LocalStorage wrapper
 const storage = new Storage(new LocalStorageMechanism());
@@ -213,7 +213,6 @@ class Analytics {
 				method: 'POST',
 				mode: 'cors',
 			};
-
 
 			return fetch(this.asahIdentityEndpoint, request).then(
 				() => newIdentityHash

@@ -8,17 +8,18 @@ const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ANALYTICS_KEY = 'ANALYTICS_KEY';
 const ENDPOINT_URL = 'https://osbasahcerebropublisher-asahlfr.lfr.io';
 const FLUSH_INTERVAL = 100;
-const MOCKED_REQUEST_DURATION = 5000;
-
-// Local Storage keys
-const STORAGE_KEY_EVENTS = 'lcs_client_batch';
-const STORAGE_KEY_USER_ID = 'lcs_client_user_id';
-const STORAGE_KEY_IDENTITY = 'lcs_client_identity';
 const INITIAL_CONFIG = {
 	analyticsKey: ANALYTICS_KEY,
 	dataSourceId: '1234',
 	endpointUrl: ENDPOINT_URL,
 };
+const MOCKED_REQUEST_DURATION = 5000;
+
+// Local Storage keys
+const STORAGE_KEY_EVENTS = 'ac_client_batch';
+const STORAGE_KEY_USER_ID = 'ac_client_user_id';
+const STORAGE_KEY_IDENTITY = 'ac_client_identity';
+
 const fetchMock = window.fetchMock;
 
 /**

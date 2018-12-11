@@ -133,7 +133,9 @@ describe(
 				component = new DocumentLibrary(
 					{
 						...defaultDocumentLibraryConfig,
-						value: 'value'
+						value: {
+							id: '123'
+						}
 					}
 				);
 

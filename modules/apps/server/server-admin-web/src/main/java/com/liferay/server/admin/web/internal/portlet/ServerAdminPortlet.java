@@ -14,12 +14,14 @@
 
 package com.liferay.server.admin.web.internal.portlet;
 
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Philip Jones
@@ -48,4 +50,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ServerAdminPortlet extends MVCPortlet {
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.server.admin.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
 }

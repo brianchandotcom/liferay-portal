@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -587,6 +588,13 @@ public class WebFormPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setMailService(MailService mailService) {
 		_mailService = mailService;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.web.form.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected Set<String> validate(

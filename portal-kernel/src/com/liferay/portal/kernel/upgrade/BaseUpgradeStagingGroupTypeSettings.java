@@ -77,7 +77,7 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 				UnicodeProperties typeSettingsProperties =
 					group.getTypeSettingsProperties();
 
-				if (typeSettingsProperties == null) {
+				if (typeSettingsProperties.size() == 0) {
 					return;
 				}
 

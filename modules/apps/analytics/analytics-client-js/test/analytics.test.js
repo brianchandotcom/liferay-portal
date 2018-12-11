@@ -6,7 +6,7 @@ let EVENT_ID = 0;
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ANALYTICS_KEY = 'ANALYTICS_KEY';
-const ENDPOINT_URL = 'https://osbasahcerebropublisher-asahlfr.lfr.io';
+const ENDPOINT_URL = 'https://ac-server.io';
 const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
 	analyticsKey: ANALYTICS_KEY,
@@ -49,7 +49,7 @@ describe('Analytics Client', () => {
 
 	beforeEach(
 		() => {
-			fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
+			fetchMock.mock(/ac-server/ig, () => Promise.resolve(200));
 
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
@@ -87,7 +87,7 @@ describe('Analytics Client', () => {
 			let fetchCalled = 0;
 
 			fetchMock.mock(
-				/asahlfr/ig,
+				/ac-server/ig,
 				function() {
 					fetchCalled += 1;
 
@@ -217,7 +217,7 @@ describe('Analytics Client', () => {
 			fetchMock.mock(/identity$/, () => Promise.resolve({}));
 
 			fetchMock.mock(
-				/asahlfr/ig,
+				/ac-server/ig,
 				function() {
 					// Send events while flush is in progress
 					sendDummyEvents(Analytics, 7);

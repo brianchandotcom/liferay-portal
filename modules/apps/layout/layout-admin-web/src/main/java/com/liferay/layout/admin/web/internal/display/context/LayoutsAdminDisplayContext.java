@@ -1332,6 +1332,11 @@ public class LayoutsAdminDisplayContext {
 				"configureURL", getFirstColumnConfigureLayoutURL(privatePages));
 		}
 
+		if (isShowAddRootLayoutButton()) {
+			jsonObject.put(
+				"addURL", getSelectLayoutPageTemplateEntryURL(privatePages));
+		}
+
 		return jsonObject;
 	}
 

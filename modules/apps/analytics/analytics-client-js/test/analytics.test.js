@@ -5,11 +5,9 @@ let Analytics;
 let EVENT_ID = 0;
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
-const ANALYTICS_KEY = 'ANALYTICS_KEY';
 const ENDPOINT_URL = 'https://ac-server.io';
 const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
-	analyticsKey: ANALYTICS_KEY,
 	dataSourceId: '1234',
 	endpointUrl: ENDPOINT_URL,
 };

@@ -15,6 +15,7 @@
 package com.liferay.rss.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.rss.constants.RSSPortletKeys;
 import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
@@ -32,6 +33,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -82,6 +84,13 @@ public class RSSPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_rssWebCacheConfiguration = ConfigurableUtil.createConfigurable(
 			RSSWebCacheConfiguration.class, properties);
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.rss.web)(&(release.schema.version>=3.0.0)(!(release.schema.version>=3.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private volatile RSSWebCacheConfiguration _rssWebCacheConfiguration;

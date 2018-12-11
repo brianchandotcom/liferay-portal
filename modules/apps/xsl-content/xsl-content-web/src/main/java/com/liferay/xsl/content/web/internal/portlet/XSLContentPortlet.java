@@ -15,6 +15,7 @@
 package com.liferay.xsl.content.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.internal.constants.XSLContentPortletKeys;
@@ -31,6 +32,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -86,6 +88,13 @@ public class XSLContentPortlet extends MVCPortlet {
 	protected void modified(Map<String, Object> properties) {
 		_xslContentConfiguration = ConfigurableUtil.createConfigurable(
 			XSLContentConfiguration.class, properties);
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.xsl.content.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private volatile XSLContentConfiguration _xslContentConfiguration;

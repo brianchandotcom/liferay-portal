@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -153,6 +154,13 @@ public class SearchPortlet extends MVCPortlet {
 				request.getQueryString());
 
 		return xml.getBytes();
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.search.web)(&(release.schema.version>=2.0.0)(!(release.schema.version>=2.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference

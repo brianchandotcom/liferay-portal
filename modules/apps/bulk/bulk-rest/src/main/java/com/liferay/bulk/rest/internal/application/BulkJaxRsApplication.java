@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"osgi.jaxrs.application.base=/bulk", "osgi.jaxrs.name=bulk-application"
 	},
 	service = Application.class

@@ -27,11 +27,11 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolTopLevelBuildRunner
+public class RootCauseAnalysisToolTopLevelBuildRunner
 	extends PortalTopLevelBuildRunner
 		<PortalTopLevelBuildData, PortalWorkspace> {
 
-	protected GitBisectToolTopLevelBuildRunner(
+	protected RootCauseAnalysisToolTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {
 
 		super(portalTopLevelBuildData);
@@ -52,12 +52,12 @@ public class GitBisectToolTopLevelBuildRunner
 						portalTopLevelBuildData.getBuildURL())));
 		}
 
-		GitBisectToolBuild gitBisectToolBuild =
-			(GitBisectToolBuild)getTopLevelBuild();
+		RootCauseAnalysisToolBuild rootCauseAnalysisToolBuild =
+			(RootCauseAnalysisToolBuild)getTopLevelBuild();
 
-		gitBisectToolBuild.setDownstreamBuildDataList(
+		rootCauseAnalysisToolBuild.setDownstreamBuildDataList(
 			portalTopLevelBuildData.getDownstreamBuildDataList());
-		gitBisectToolBuild.setWorkspaceGitRepository(
+		rootCauseAnalysisToolBuild.setWorkspaceGitRepository(
 			portalWorkspace.getPrimaryPortalWorkspaceGitRepository());
 
 		return super.getJenkinsReportElement();

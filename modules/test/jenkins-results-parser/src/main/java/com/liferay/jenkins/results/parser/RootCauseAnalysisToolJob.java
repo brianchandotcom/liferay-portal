@@ -22,9 +22,10 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolJob extends BaseJob implements PortalTestClassJob {
+public class RootCauseAnalysisToolJob
+	extends BaseJob implements PortalTestClassJob {
 
-	public GitBisectToolJob(String jobName, String portalBranchName) {
+	public RootCauseAnalysisToolJob(String jobName, String portalBranchName) {
 		super(jobName);
 
 		_jenkinsGitWorkingDirectory =
@@ -42,7 +43,7 @@ public class GitBisectToolJob extends BaseJob implements PortalTestClassJob {
 		jobPropertiesFiles.add(
 			new File(
 				_jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/dependencies/git-bisect-tool.properties"));
+				"commands/dependencies/root-cause-analysis-tool.properties"));
 
 		jobPropertiesFiles.add(
 			new File(

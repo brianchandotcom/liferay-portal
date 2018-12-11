@@ -22,7 +22,9 @@ public class BuildDataFactory {
 	public static BatchBuildData newBatchBuildData(
 		String runID, String jobName, String buildURL) {
 
-		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
+		if (jobName.contains("portal") ||
+			jobName.contains("root-cause-analysis-tool")) {
+
 			return new PortalBatchBuildData(runID, jobName, buildURL);
 		}
 
@@ -42,7 +44,9 @@ public class BuildDataFactory {
 	public static TopLevelBuildData newTopLevelBuildData(
 		String runID, String jobName, String buildURL) {
 
-		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
+		if (jobName.contains("portal") ||
+			jobName.contains("root-cause-analysis-tool")) {
+
 			return new PortalTopLevelBuildData(runID, jobName, buildURL);
 		}
 

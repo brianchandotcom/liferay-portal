@@ -26,8 +26,8 @@ public class BuildRunnerFactory {
 
 		BuildRunner<?, ?> buildRunner = null;
 
-		if (jobName.equals("git-bisect-tool")) {
-			buildRunner = new GitBisectToolTopLevelBuildRunner(
+		if (jobName.equals("root-cause-analysis-tool")) {
+			buildRunner = new RootCauseAnalysisToolTopLevelBuildRunner(
 				(PortalTopLevelBuildData)buildData);
 		}
 

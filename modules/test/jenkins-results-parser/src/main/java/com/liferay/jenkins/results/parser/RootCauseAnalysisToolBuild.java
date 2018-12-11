@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolBuild extends TopLevelBuild {
+public class RootCauseAnalysisToolBuild extends TopLevelBuild {
 
 	@Override
 	public Element getJenkinsReportElement() {
@@ -60,11 +60,13 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		_workspaceGitRepository = workspaceGitRepository;
 	}
 
-	protected GitBisectToolBuild(String url) {
+	protected RootCauseAnalysisToolBuild(String url) {
 		this(url, null);
 	}
 
-	protected GitBisectToolBuild(String url, TopLevelBuild topLevelBuild) {
+	protected RootCauseAnalysisToolBuild(
+		String url, TopLevelBuild topLevelBuild) {
+
 		super(url, topLevelBuild);
 	}
 

@@ -19,9 +19,11 @@ import java.io.File;
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolBatchJob extends GitBisectToolJob {
+public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 
-	public GitBisectToolBatchJob(String jobName, String portalBranchName) {
+	public RootCauseAnalysisToolBatchJob(
+		String jobName, String portalBranchName) {
+
 		super(jobName, portalBranchName);
 
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
@@ -30,7 +32,9 @@ public class GitBisectToolBatchJob extends GitBisectToolJob {
 		jobPropertiesFiles.add(
 			new File(
 				jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/dependencies/git-bisect-tool-batch.properties"));
+				JenkinsResultsParserUtil.combine(
+					"commands/dependencies/",
+					"root-cause-analysis-tool-batch.properties")));
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();

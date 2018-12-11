@@ -43,7 +43,7 @@ public class BuildFactory {
 			return new ValidationBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (url.contains("git-bisect-tool-batch")) {
+		if (url.contains("root-cause-analysis-tool-batch")) {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
@@ -58,8 +58,9 @@ public class BuildFactory {
 
 		String jobName = topLevelBuild.getJobName();
 
-		if (jobName.equals("git-bisect-tool")) {
-			return new GitBisectToolBuild(url, (TopLevelBuild)parentBuild);
+		if (jobName.equals("root-cause-analysis-tool")) {
+			return new RootCauseAnalysisToolBuild(
+				url, (TopLevelBuild)parentBuild);
 		}
 
 		if ((parentBuild != null) &&

@@ -84,15 +84,18 @@ public class JobFactory {
 			return job;
 		}
 
-		if (jobName.equals("git-bisect-tool")) {
-			_jobs.put(jobName, new GitBisectToolJob(jobName, portalBranchName));
+		if (jobName.equals("root-cause-analysis-tool")) {
+			_jobs.put(
+				jobName,
+				new RootCauseAnalysisToolJob(jobName, portalBranchName));
 
 			return _jobs.get(jobName);
 		}
 
-		if (jobName.equals("git-bisect-tool-batch")) {
+		if (jobName.equals("root-cause-analysis-tool-batch")) {
 			_jobs.put(
-				jobName, new GitBisectToolBatchJob(jobName, portalBranchName));
+				jobName,
+				new RootCauseAnalysisToolBatchJob(jobName, portalBranchName));
 
 			return _jobs.get(jobName);
 		}

@@ -97,7 +97,9 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			value="<%= LanguageUtil.get(request, websiteTypeKey) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smaller"
+		>
 			<c:if test="<%= website.isPrimary() %>">
 				<span class="label label-primary">
 					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>

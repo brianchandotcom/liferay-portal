@@ -97,7 +97,9 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 			value="<%= LanguageUtil.get(request, emailAddressTypeKey) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smaller"
+		>
 			<c:if test="<%= emailAddress.isPrimary() %>">
 				<span class="label label-primary">
 					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>

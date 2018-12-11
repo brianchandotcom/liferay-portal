@@ -118,6 +118,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		<liferay-ui:input-localized
 			cssClass="form-control"
+			defaultLanguageId="<%= defaultLanguageId %>"
 			editorName="alloyeditor"
 			formName="fm"
 			ignoreRequestValue="<%= changeStructure %>"

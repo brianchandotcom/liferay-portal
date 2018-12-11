@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.util.PropsValues;
@@ -36,11 +36,7 @@ import java.util.concurrent.Future;
 /**
  * @author Shuyang Zhou
  */
-public class PortalResiliencyAdvice extends AnnotationChainableMethodAdvice {
-
-	public PortalResiliencyAdvice() {
-		super(AccessControlled.class);
-	}
+public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(

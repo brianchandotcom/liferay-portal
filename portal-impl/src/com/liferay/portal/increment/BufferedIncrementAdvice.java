@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
@@ -38,11 +38,7 @@ import java.lang.reflect.Method;
  * @author     Zsolt Berentey
  * @author     Shuyang Zhou
  */
-public class BufferedIncrementAdvice extends AnnotationChainableMethodAdvice {
-
-	public BufferedIncrementAdvice() {
-		super(BufferedIncrement.class);
-	}
+public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 
 	@Override
 	@SuppressWarnings("rawtypes")

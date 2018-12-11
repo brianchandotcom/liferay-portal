@@ -90,8 +90,13 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		long versionClassPK = GetterUtil.getLong(
 			_request.getAttribute(AssetDisplayWebKeys.VERSION_CLASS_PK));
 
+		if (versionClassPK > 0) {
+			return assetDisplayContributor.getAssetDisplayFieldsValues(
+				_assetEntry, versionClassPK, themeDisplay.getLocale());
+		}
+
 		return assetDisplayContributor.getAssetDisplayFieldsValues(
-			_assetEntry, versionClassPK, themeDisplay.getLocale());
+			_assetEntry, themeDisplay.getLocale());
 	}
 
 	private long _getLayoutPageTemplateEntryId(long groupId) {

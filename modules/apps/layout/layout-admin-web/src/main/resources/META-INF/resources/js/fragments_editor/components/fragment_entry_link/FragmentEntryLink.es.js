@@ -12,32 +12,14 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
+import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
 import templates from './FragmentEntryLink.soy';
-
-const ARROW_DOWN_KEYCODE = 40;
-
-const ARROW_UP_KEYCODE = 38;
 
 /**
  * FragmentEntryLink
  * @review
  */
 class FragmentEntryLink extends Component {
-
-	/**
-	 * Emits a move event with the fragmentEntryLinkId and the direction.
-	 * @param {!number} direction
-	 * @private
-	 */
-	_emitMoveEvent(direction) {
-		this.emit(
-			'move',
-			{
-				direction,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
-	}
 
 	/**
 	 * Callback executed when a fragment starts being hovered.
@@ -76,16 +58,17 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	_handleFragmentKeyUp(event) {
-		if (document.activeElement === this.refs.fragmentEntryLinkWrapper) {
-			switch (event.which) {
-			case ARROW_DOWN_KEYCODE:
-				this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.DOWN);
-				break;
-			case ARROW_UP_KEYCODE:
-				this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.UP);
-				break;
+		event.stopPropagation();
+
+		const direction = getItemMoveDirection(event.which);
+
+		this.emit(
+			'moveFragment',
+			{
+				direction,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
-		}
+		);
 	}
 
 	/**
@@ -120,17 +103,6 @@ class FragmentEntryLink extends Component {
 			);
 	}
 }
-
-/**
- * Directions where a fragment can be moved to
- * @review
- * @static
- * @type {!object}
- */
-FragmentEntryLink.MOVE_DIRECTIONS = {
-	DOWN: 1,
-	UP: -1
-};
 
 /**
  * State definition.

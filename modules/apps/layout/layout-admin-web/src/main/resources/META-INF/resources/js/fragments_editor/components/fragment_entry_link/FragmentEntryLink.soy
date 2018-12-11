@@ -8,6 +8,7 @@
 	{@param spritemap: string}
 	{@param? _handleFragmentHoverStart: any}
 	{@param? _handleFragmentHoverEnd: any}
+	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? content: ?}
 	{@param? defaultEditorConfigurations: ?}
@@ -36,6 +37,7 @@
 	<div
 		class="{$wrapperClasses}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
+		data-onkeyup="{$_handleFragmentKeyUp}"
 		data-onmouseout="{$_handleFragmentHoverEnd}"
 		data-onmouseover="{$_handleFragmentHoverStart}"
 		ref="fragmentEntryLinkWrapper"

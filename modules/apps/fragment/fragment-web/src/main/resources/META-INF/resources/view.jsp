@@ -96,7 +96,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									componentId="actionsComponent"
+									componentId="emptyResultMessageComponent"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
 								/>
@@ -140,20 +140,23 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var deleteCollections = function() {
-		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
+	const deleteCollections = function() {
+		const fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+		const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
 				eventName: '<portlet:namespace />selectCollections',
 				on: {
 					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+						const selectedItem = event.newVal;
 
 						if (selectedItem) {
 							fragmentCollectionsFm.append(selectedItem);
 
-							submitForm(fragmentCollectionsFm, '<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection"></liferay-portlet:actionURL>');
+							submitForm(
+								fragmentCollectionsFm,
+								'<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection"></liferay-portlet:actionURL>'
+							);
 						}
 					}
 				},
@@ -166,20 +169,23 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 		itemSelectorDialog.open();
 	};
 
-	var exportCollections = function() {
-		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
+	const exportCollections = function() {
+		const fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+		const itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
 				eventName: '<portlet:namespace />selectCollections',
 				on: {
 					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+						const selectedItem = event.newVal;
 
 						if (selectedItem) {
 							fragmentCollectionsFm.append(selectedItem);
 
-							submitForm(fragmentCollectionsFm, '<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" />');
+							submitForm(
+								fragmentCollectionsFm,
+								'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" />'
+							);
 						}
 					}
 				},
@@ -192,7 +198,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 		itemSelectorDialog.open();
 	};
 
-	var openImportView = function() {
+	const openImportView = function() {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -213,31 +219,37 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 		);
 	};
 
-	var ACTIONS = {
-		'deleteCollections': deleteCollections,
-		'exportCollections': exportCollections,
-		'openImportView': openImportView
+	const ACTIONS = {
+		deleteCollections: deleteCollections,
+		exportCollections: exportCollections,
+		openImportView: openImportView
+	};
+
+	const handleComponentReady = function(component) {
+		component.on(
+			['click', 'itemClicked'],
+			function(event, facade) {
+				let itemData;
+
+				if (event.data && event.data.item) {
+					itemData = event.data.item.data;
+				}
+				else if (!event.data && facade && facade.target) {
+					itemData = facade.target.data;
+				}
+
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			}
+		);
 	};
 
 	Liferay.componentReady('actionsComponent').then(
-		function(actionsComponent) {
-			actionsComponent.on(
-				['click', 'itemClicked'],
-				function(event, facade) {
-					var itemData;
+		handleComponentReady
+	);
 
-					if (event.data && event.data.item) {
-						itemData = event.data.item.data;
-					}
-					else if (!event.data && facade && facade.target) {
-						itemData = facade.target.data;
-					}
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
+	Liferay.componentReady('emptyResultMessageComponent').then(
+		handleComponentReady
 	);
 </aui:script>

@@ -29,6 +29,7 @@ import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUt
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -86,8 +87,11 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 			(AssetDisplayContributor)_request.getAttribute(
 				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
 
+		double version = GetterUtil.getDouble(
+			_request.getAttribute(AssetDisplayWebKeys.VERSION));
+
 		return assetDisplayContributor.getAssetDisplayFieldsValues(
-			_assetEntry, themeDisplay.getLocale());
+			_assetEntry, version, themeDisplay.getLocale());
 	}
 
 	private long _getLayoutPageTemplateEntryId(long groupId) {

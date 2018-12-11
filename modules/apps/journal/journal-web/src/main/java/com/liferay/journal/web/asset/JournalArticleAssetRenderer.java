@@ -108,6 +108,12 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public JournalArticle getAssetObject(double version) {
+		return JournalArticleLocalServiceUtil.fetchArticle(
+			_article.getGroupId(), _article.getArticleId(), version);
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return _article.getAvailableLanguageIds();
 	}

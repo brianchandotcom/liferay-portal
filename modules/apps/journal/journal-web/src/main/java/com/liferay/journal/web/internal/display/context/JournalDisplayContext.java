@@ -757,19 +757,18 @@ public class JournalDisplayContext {
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		if (JournalArticleLocalServiceUtil.isLatestVersion(
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion()) &&
-			AssetDisplayPageHelper.hasAssetDisplayPage(
+		if (AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append(
 				PortalUtil.getGroupFriendlyURL(
 					_themeDisplay.getLayoutSet(), _themeDisplay));
 			sb.append("/a/");
 			sb.append(assetEntry.getEntryId());
+			sb.append(StringPool.SLASH);
+			sb.append(article.getVersion());
 			sb.append("?p_p_state=pop_up");
 
 			return sb.toString();

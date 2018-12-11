@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -64,8 +65,21 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		String urlSeparator = getURLSeparator();
 
-		long assetEntryId = GetterUtil.getLong(
-			friendlyURL.substring(urlSeparator.length()));
+		double version = 0D;
+		long assetEntryId = 0L;
+
+		String path = friendlyURL.substring(urlSeparator.length());
+
+		if (path.indexOf(CharPool.SLASH) != -1) {
+			assetEntryId = GetterUtil.getLong(
+				path.substring(0, path.indexOf(CharPool.SLASH)));
+
+			version = GetterUtil.getDouble(
+				path.substring(path.indexOf(CharPool.SLASH) + 1));
+		}
+		else {
+			assetEntryId = GetterUtil.getLong(path);
+		}
 
 		AssetEntry assetEntry = _assetEntryService.getEntry(assetEntryId);
 
@@ -84,6 +98,7 @@ public class AssetDisplayPageFriendlyURLResolver
 			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		request.setAttribute(AssetDisplayWebKeys.VERSION, version);
 
 		Locale locale = _portal.getLocale(request);
 

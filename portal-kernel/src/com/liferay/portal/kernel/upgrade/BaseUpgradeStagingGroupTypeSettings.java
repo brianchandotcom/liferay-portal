@@ -88,22 +88,18 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 
 				typeSettingsProperties.remove(oldPropertyKey);
 
+				if (Validator.isNull(oldPropertyValue)) {
+					return;
+				}
+
 				String newPropertyKey = _getStagedPortletId(_newPortletId);
 
 				String newPropertyValue = typeSettingsProperties.getProperty(
 					newPropertyKey);
 
-				if (Validator.isNotNull(newPropertyValue)) {
-					return;
-				}
-
-				if (Validator.isNotNull(oldPropertyValue)) {
+				if (Validator.isNull(newPropertyValue)) {
 					typeSettingsProperties.put(
 						newPropertyKey, oldPropertyValue);
-				}
-				else {
-					typeSettingsProperties.put(
-						newPropertyKey, Boolean.toString(false));
 				}
 
 				group.setTypeSettingsProperties(typeSettingsProperties);

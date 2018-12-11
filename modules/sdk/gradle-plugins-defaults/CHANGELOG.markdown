@@ -5195,6 +5195,12 @@ during the execution of the `uploadArchives` task.
 - [LPS-88171]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.37.
 
+## 5.5.141 - 2018-12-10
+
+### Added
+- [LPS-88306]: Update the `writeParentThemesDigest` task to generate the
+`.digest` file for theme projects in subrepositories.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5722,6 +5728,7 @@ during the execution of the `uploadArchives` task.
 [LPS-88186]: https://issues.liferay.com/browse/LPS-88186
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223
 [LPS-88226]: https://issues.liferay.com/browse/LPS-88226
+[LPS-88306]: https://issues.liferay.com/browse/LPS-88306
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

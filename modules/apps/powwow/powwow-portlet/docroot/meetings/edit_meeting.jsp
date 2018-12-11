@@ -418,7 +418,7 @@ if (powwowMeeting != null) {
 			prefixParticipantName: 'powwowParticipantName',
 			prefixParticipantParticipantUserId: 'powwowParticipantParticipantUserId',
 			prefixParticipantType: 'powwowParticipantType',
-			redirect: '<%= HtmlUtil.escape(redirect) %>',
+			redirect: '<%= HtmlUtil.escapeJS(redirect) %>',
 			rowFieldsSelector: '#<portlet:namespace />participants .row-fields'
 		}
 	);

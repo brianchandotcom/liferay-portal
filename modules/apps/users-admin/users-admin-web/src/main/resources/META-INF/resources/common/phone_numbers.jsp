@@ -132,6 +132,6 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 	ContactInformation.registerContactInformationListener(
 		'.modify-phone-number-link a',
 		'<%= editPhoneRenderURL.toString() %>',
-		470
+		545
 	);
 </aui:script>

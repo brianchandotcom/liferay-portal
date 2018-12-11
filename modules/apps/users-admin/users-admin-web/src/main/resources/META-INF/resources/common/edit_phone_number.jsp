@@ -29,6 +29,12 @@ if (phoneId > 0L) {
 %>
 
 <aui:form cssClass="modal-body" name="fm">
+	<clay:alert
+		message='<%= LanguageUtil.get(request, "extension-must-be-numeric") %>'
+		style="info"
+		title='<%= LanguageUtil.get(request, "info") + ":" %>'
+	/>
+
 	<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />

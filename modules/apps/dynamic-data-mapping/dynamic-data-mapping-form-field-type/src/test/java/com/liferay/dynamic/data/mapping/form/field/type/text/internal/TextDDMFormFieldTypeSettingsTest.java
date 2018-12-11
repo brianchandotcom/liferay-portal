@@ -159,7 +159,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 7, actions.size());
+		Assert.assertEquals(actions.toString(), 8, actions.size());
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
@@ -170,6 +170,14 @@ public class TextDDMFormFieldTypeSettingsTest
 			actions.contains(
 				"setRequired('ddmDataProviderInstanceOutput', equals(" +
 					"getValue('dataSourceType'), \"data-provider\"))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setValidationDataType('validation', getValue('dataType'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setValidationFieldName('validation', getValue('name'))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(

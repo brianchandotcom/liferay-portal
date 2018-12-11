@@ -26,8 +26,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Shuyang Zhou
  */
-public class TransactionInterceptor
-	extends AnnotationChainableMethodAdvice<Transactional> {
+public class TransactionInterceptor extends AnnotationChainableMethodAdvice {
 
 	public TransactionInterceptor() {
 		super(Transactional.class);

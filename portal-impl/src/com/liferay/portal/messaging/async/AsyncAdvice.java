@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
+public class AsyncAdvice extends AnnotationChainableMethodAdvice {
 
 	public AsyncAdvice() {
 		super(Async.class);

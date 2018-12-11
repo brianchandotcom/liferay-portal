@@ -31,8 +31,7 @@ import java.util.concurrent.Future;
 /**
  * @author Shuyang Zhou
  */
-public class SPIClusterableAdvice
-	extends AnnotationChainableMethodAdvice<Clusterable> {
+public class SPIClusterableAdvice extends AnnotationChainableMethodAdvice {
 
 	public SPIClusterableAdvice() {
 		super(Clusterable.class);

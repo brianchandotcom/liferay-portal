@@ -36,8 +36,7 @@ import java.util.concurrent.Future;
 /**
  * @author Shuyang Zhou
  */
-public class PortalResiliencyAdvice
-	extends AnnotationChainableMethodAdvice<AccessControlled> {
+public class PortalResiliencyAdvice extends AnnotationChainableMethodAdvice {
 
 	public PortalResiliencyAdvice() {
 		super(AccessControlled.class);

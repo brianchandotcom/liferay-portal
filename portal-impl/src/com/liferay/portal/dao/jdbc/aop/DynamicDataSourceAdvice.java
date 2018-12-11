@@ -32,8 +32,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Shuyang Zhou
  * @author László Csontos
  */
-public class DynamicDataSourceAdvice
-	extends AnnotationChainableMethodAdvice<MasterDataSource> {
+public class DynamicDataSourceAdvice extends AnnotationChainableMethodAdvice {
 
 	public DynamicDataSourceAdvice() {
 		super(MasterDataSource.class);

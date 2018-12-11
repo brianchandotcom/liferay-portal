@@ -27,8 +27,7 @@ import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class ThreadLocalCacheAdvice
-	extends AnnotationChainableMethodAdvice<ThreadLocalCachable> {
+public class ThreadLocalCacheAdvice extends AnnotationChainableMethodAdvice {
 
 	public ThreadLocalCacheAdvice() {
 		super(ThreadLocalCachable.class);

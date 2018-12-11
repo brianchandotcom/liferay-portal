@@ -33,8 +33,7 @@ import java.lang.reflect.Method;
 /**
  * @author Shuyang Zhou
  */
-public class IndexableAdvice
-	extends AnnotationChainableMethodAdvice<Indexable> {
+public class IndexableAdvice extends AnnotationChainableMethodAdvice {
 
 	public IndexableAdvice() {
 		super(Indexable.class);

@@ -154,10 +154,10 @@ public class AssetListEntryStagedModelDataHandler
 					existingAssetListEntry.getAssetListEntryId());
 		}
 
+		_importAssetObjects(portletDataContext);
+
 		_importAssetEntryListAssetEntryRelElements(
 			portletDataContext, assetListEntry);
-
-		_importAssetObjects(portletDataContext);
 	}
 
 	@Override

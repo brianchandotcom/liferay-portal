@@ -7,6 +7,7 @@ all
 alter
 analyze
 and
+array
 as
 asc
 asensitive
@@ -40,6 +41,8 @@ const
 constraint
 continue
 convert
+count
+counter
 create
 cross
 currency
@@ -89,6 +92,8 @@ fetch
 fields
 final
 finally
+finderArgs
+finderPath
 float
 float4
 float8
@@ -147,6 +152,7 @@ left
 like
 limit
 lines
+list
 load
 localtime
 localtimestamp
@@ -183,10 +189,14 @@ option
 optionally
 or
 order
+orderByComparator
+orderByConditionFields
+orderByFields
 out
 outer
 outfile
 package
+pagination
 password
 path
 precision
@@ -196,6 +206,8 @@ procedure
 protected
 public
 purge
+q
+query
 read
 reads
 real
@@ -220,6 +232,7 @@ second_microsecond
 select
 sensitive
 separator
+session
 set
 settings
 short
@@ -235,6 +248,7 @@ sql_big_result
 sql_calc_found_rows
 sql_small_result
 sqlexception
+sqlQuery
 sqlstate
 sqlwarning
 ssl
@@ -280,6 +294,7 @@ utc_date
 utc_time
 utc_timestamp
 uuid
+value
 values
 varbinary
 varchar

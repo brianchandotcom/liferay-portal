@@ -29,27 +29,29 @@ AssetTag tag = (AssetTag)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-		<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/edit_tag.jsp" />
+			<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		label="<%= true %>"
-		message="edit"
-		url="<%= editURL %>"
-	/>
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="edit"
+			url="<%= editURL %>"
+		/>
 
-	<portlet:renderURL var="mergeURL">
-		<portlet:param name="mvcPath" value="/merge_tag.jsp" />
-		<portlet:param name="mergeTagIds" value="<%= String.valueOf(tag.getTagId()) %>" />
-	</portlet:renderURL>
+		<portlet:renderURL var="mergeURL">
+			<portlet:param name="mvcPath" value="/merge_tag.jsp" />
+			<portlet:param name="mergeTagIds" value="<%= String.valueOf(tag.getTagId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		label="<%= true %>"
-		message="merge"
-		url="<%= mergeURL %>"
-	/>
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="merge"
+			url="<%= mergeURL %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="deleteTag" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />

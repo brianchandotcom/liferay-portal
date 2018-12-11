@@ -71,11 +71,9 @@
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
-						<liferay-ui:search-container-column-jsp
-							path="/tag_action.jsp"
-						/>
-					</c:if>
+					<liferay-ui:search-container-column-jsp
+						path="/tag_action.jsp"
+					/>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
@@ -90,11 +88,9 @@
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>
 
-					<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
-						<liferay-ui:search-container-column-jsp
-							path="/tag_action.jsp"
-						/>
-					</c:if>
+					<liferay-ui:search-container-column-jsp
+						path="/tag_action.jsp"
+					/>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

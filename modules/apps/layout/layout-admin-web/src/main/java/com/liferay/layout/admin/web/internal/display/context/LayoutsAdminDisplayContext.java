@@ -1521,6 +1521,10 @@ public class LayoutsAdminDisplayContext {
 
 		layoutColumnsJSONArray.put(firstColumnJSONArray);
 
+		if (isFirstColumn()) {
+			return layoutColumnsJSONArray;
+		}
+
 		JSONArray layoutSetBranchesJSONArray = _getLayoutSetBranchesJSONArray();
 
 		if (layoutSetBranchesJSONArray.length() > 0) {

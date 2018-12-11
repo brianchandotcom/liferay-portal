@@ -1506,6 +1506,10 @@ public class LayoutsAdminDisplayContext {
 				active = selLayout.isPublicLayout();
 			}
 
+			if (isFirstColumn()) {
+				active = false;
+			}
+
 			firstColumnJSONArray.put(_getFirstColumn(false, active));
 		}
 
@@ -1514,6 +1518,10 @@ public class LayoutsAdminDisplayContext {
 
 			if (selLayout != null) {
 				active = selLayout.isPrivateLayout();
+			}
+
+			if (isFirstColumn()) {
+				active = false;
 			}
 
 			firstColumnJSONArray.put(_getFirstColumn(true, active));

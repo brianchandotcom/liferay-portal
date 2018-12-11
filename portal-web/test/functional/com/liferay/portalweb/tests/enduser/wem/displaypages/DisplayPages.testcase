@@ -165,6 +165,16 @@
 			<var name="key_fragmentClass" value="body" />
 			<var name="key_position" value="4" />
 		</execute>
+
+		<execute macro="PageEditor#removeSection">
+			<var name="position" value="3" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
+			<var name="key_fragmentClass" value="body" />
+			<var name="key_position" value="3" />
+		</execute>
 	</command>
 
 	<command name="DeleteDisplayPage" priority="5">

@@ -411,7 +411,7 @@ public class AssetTagsDisplayContext {
 				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 				themeDisplay.getSiteGroupId(), ActionKeys.MANAGE_TAG)) {
 
-			return isShowTagsActionMenu();
+			return isShowTagsActions();
 		}
 
 		return false;
@@ -431,12 +431,12 @@ public class AssetTagsDisplayContext {
 		return false;
 	}
 
-	public boolean isShowTagsActionMenu() {
-		if (_showTagsActionMenu != null) {
-			return _showTagsActionMenu;
+	public boolean isShowTagsActions() {
+		if (_showTagsActions != null) {
+			return _showTagsActions;
 		}
 
-		boolean showTagsActionMenu = true;
+		boolean showTagsActions = true;
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -449,12 +449,12 @@ public class AssetTagsDisplayContext {
 		if (stagingGroupHelper.isLocalLiveGroup(group) ||
 			stagingGroupHelper.isRemoteLiveGroup(group)) {
 
-			showTagsActionMenu = false;
+			showTagsActions = false;
 		}
 
-		_showTagsActionMenu = showTagsActionMenu;
+		_showTagsActions = showTagsActions;
 
-		return _showTagsActionMenu;
+		return _showTagsActions;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -504,7 +504,7 @@ public class AssetTagsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private Boolean _showTagsActionMenu;
+	private Boolean _showTagsActions;
 	private AssetTag _tag;
 	private Long _tagId;
 	private SearchContainer _tagsSearchContainer;

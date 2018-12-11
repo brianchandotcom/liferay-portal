@@ -29,7 +29,7 @@ AssetTag tag = (AssetTag)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
+	<c:if test="<%= assetTagsDisplayContext.isShowTagsActions() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 			<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />

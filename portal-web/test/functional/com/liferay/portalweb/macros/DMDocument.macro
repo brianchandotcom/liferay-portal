@@ -1294,6 +1294,14 @@
 		</if>
 	</command>
 
+	<command name="selectVersion">
+		<execute function="AssertClick" locator1="DocumentsAndMedia#SIDEBAR_DROPDOWN" value1="Details" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Versions">
+			<var name="key_menuItem" value="Versions" />
+		</execute>
+	</command>
+
 	<command name="sharePG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

@@ -240,6 +240,23 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_DROPDOWN</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_LATEST_VERSION</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[@class='h5']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <!--REPOSITORY-->
 <tr>
 	<td>REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW</td>

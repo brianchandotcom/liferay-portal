@@ -248,7 +248,6 @@ else {
 						}
 					},
 					popover: {
-						zIndex: Liferay.zIndex.POPOVER,
 						on: {
 							keydown: function(event) {
 								var instance = this;
@@ -265,7 +264,8 @@ else {
 									}
 								}
 							}
-						}
+						},
+						zIndex: Liferay.zIndex.POPOVER
 					},
 					trigger: '#<%= nameId %>'
 				}

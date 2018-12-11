@@ -22,6 +22,16 @@ AUI.add(
 		var isUndefined = Lang.isUndefined;
 		var isValue = Lang.isValue;
 
+		var CSS_FIELD = A.getClassName('field');
+
+		var CSS_FIELD_CHOICE = A.getClassName('field', 'choice');
+
+		var CSS_FIELD_RADIO = A.getClassName('field', 'radio');
+
+		var CSS_FORM_BUILDER_FIELD_NODE = A.getClassName('form-builder-field', 'node');
+
+		var CSS_RADIO = A.getClassName('radio');
+
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var LOCALIZABLE_FIELD_ATTRS = Liferay.FormBuilder.LOCALIZABLE_FIELD_ATTRS;
@@ -51,6 +61,13 @@ AUI.add(
 
 		var TPL_PARAGRAPH = '<p></p>';
 
+		var TPL_RADIO = '<div class="' + CSS_RADIO + '">' +
+				'<label class="radio-inline" for="{id}">' +
+					'<input id="{id}" class="' + [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(' ') + '" name="{name}" type="radio" value="{value}" {checked} {disabled} />' +
+					'{label}' +
+				'</label>' +
+			'</div>';
+
 		var TPL_SEPARATOR = '<div class="separator"></div>';
 
 		var TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>';
@@ -65,20 +82,6 @@ AUI.add(
 				'<label class="control-label">' + A.Escape.html(Liferay.Language.get('image-description')) + '</label>' +
 				'<input class="field form-control" type="text" value="" disabled>' +
 			'</div>';
-
-		CSS_RADIO = A.getClassName('radio'),
-		CSS_FIELD = A.getClassName('field'),
-		CSS_FIELD_CHOICE = A.getClassName('field', 'choice'),
-		CSS_FIELD_RADIO = A.getClassName('field', 'radio'),
-		CSS_FORM_BUILDER_FIELD = A.getClassName('form-builder-field'),
-		CSS_FORM_BUILDER_FIELD_NODE = A.getClassName('form-builder-field', 'node'),
-		CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = A.getClassName('form-builder-field', 'options', 'container'),
-
-		TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
-		TPL_RADIO =
-			'<div class="' + CSS_RADIO + '"><label class="radio-inline" for="{id}"><input id="{id}" class="' +
-			[CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
-			'" name="{name}" type="radio" value="{value}" {checked} {disabled} />{label}</label></div>';
 
 		var UNIQUE_FIELD_NAMES_MAP = Liferay.FormBuilder.UNIQUE_FIELD_NAMES_MAP;
 
@@ -108,8 +111,7 @@ AUI.add(
 			return LiferayFormBuilderUtil.validateFieldName(value);
 		};
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureRestrictedFieldName =
-			Lang.sub(Liferay.Language.get('x-is-a-reserved-word'), [RESTRICTED_NAME]);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureRestrictedFieldName = Lang.sub(Liferay.Language.get('x-is-a-reserved-word'), [RESTRICTED_NAME]);
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureRestrictedFieldName = function(value) {
 			return RESTRICTED_NAME !== value;
@@ -143,18 +145,6 @@ AUI.add(
 				prototype: {
 					ELEMENT_TEMPLATE: '<input type="text" />',
 
-					getElementsValue: function() {
-						var instance = this;
-
-						var colorPicker = instance.get('colorPicker');
-
-						var input = instance.get('boundingBox').one('input');
-
-						if (/\#[A-F\d]{6}/.test(input.val())) {
-							return input.val();
-						}
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -175,14 +165,35 @@ AUI.add(
 								input.setStyle('color', event.color);
 								input.val(event.color);
 
-								instance.fire('save', {
-									newVal: instance.getValue(),
-									prevVal: event.color
-								});
+								instance.fire(
+									'save',
+									{
+										newVal: instance.getValue(),
+										prevVal: event.color
+									}
+								);
 							}
 						);
 
 						instance.set('colorPicker', colorPicker);
+					},
+
+					getElementsValue: function() {
+						var instance = this;
+
+						var retVal;
+
+						var input = instance.get('boundingBox').one('input');
+
+						if (input) {
+							var val = input.val();
+
+							if (/\#[A-F\d]{6}/.test(val)) {
+								retVal = val;
+							}
+						}
+
+						return retVal;
 					},
 
 					_defSaveFn: function() {
@@ -334,7 +345,6 @@ AUI.add(
 						);
 
 						itemSelectorDialog.open();
-
 					},
 
 					_onClickClear: function() {
@@ -1327,6 +1337,10 @@ AUI.add(
 				NAME: 'ddm-color',
 
 				prototype: {
+					getHTML: function() {
+						return TPL_COLOR;
+					},
+
 					getPropertyModel: function() {
 						var instance = this;
 
@@ -1347,10 +1361,6 @@ AUI.add(
 						);
 
 						return model;
-					},
-
-					getHTML: function() {
-						return TPL_COLOR;
 					}
 				}
 			}
@@ -1454,13 +1464,15 @@ AUI.add(
 												outputFormatter: function(val) {
 													var instance = this;
 
+													var retVal = val;
+
 													if (Array.isArray(val)) {
 														var formattedValue = A.DataType.Date.parse(instance.get('dateFormat'), val[0]);
 
-														return [formattedValue];
+														retVal = [formattedValue];
 													}
 
-													return val;
+													return retVal;
 												}
 											}
 										),
@@ -1760,9 +1772,45 @@ AUI.add(
 				OVERRIDE_TYPE: 'radio',
 
 				prototype: {
+					_uiSetOptions: function(val) {
+						var instance = this;
+
+						var buffer = [];
+						var counter = 0;
+
+						var predefinedValue = instance.get('predefinedValue');
+						var templateNode = instance.get('templateNode');
+
+						A.each(
+							val,
+							function(item) {
+								var checked = predefinedValue === item.value;
+
+								buffer.push(
+									Lang.sub(
+										TPL_RADIO,
+										{
+											checked: checked ? 'checked="checked"' : '',
+											disabled: instance.get('disabled') ? 'disabled="disabled"' : '',
+											id: AEscape.html(instance.get('id') + counter++),
+											label: AEscape.html(item.label),
+											name: AEscape.html(instance.get('name')),
+											value: AEscape.html(item.value)
+										}
+									)
+								);
+							}
+						);
+
+						instance.optionNodes = A.NodeList.create(buffer.join(''));
+
+						templateNode.setContent(instance.optionNodes);
+					},
+
 					_uiSetPredefinedValue: function(val) {
-						var instance = this,
-							optionNodes = instance.optionNodes;
+						var instance = this;
+
+						var optionNodes = instance.optionNodes;
 
 						if (!optionNodes) {
 							return;
@@ -1771,35 +1819,6 @@ AUI.add(
 						optionNodes.set('checked', false);
 
 						optionNodes.all('input[value="' + AEscape.html(val) + '"]').set('checked', true);
-					},
-
-					_uiSetOptions: function(val) {
-						var instance = this,
-							buffer = [],
-							counter = 0,
-							predefinedValue = instance.get('predefinedValue'),
-							templateNode = instance.get('templateNode');
-
-						A.each(val, function(item) {
-							var checked = predefinedValue === item.value;
-
-							buffer.push(
-								Lang.sub(
-									TPL_RADIO, {
-										checked: checked ? 'checked="checked"' : '',
-										disabled: instance.get('disabled') ? 'disabled="disabled"' : '',
-										id: AEscape.html(instance.get('id') + counter++),
-										label: AEscape.html(item.label),
-										name: AEscape.html(instance.get('name')),
-										value: AEscape.html(item.value)
-									}
-								)
-							);
-						});
-
-						instance.optionNodes = A.NodeList.create(buffer.join(''));
-
-						templateNode.setContent(instance.optionNodes);
 					}
 				}
 			}

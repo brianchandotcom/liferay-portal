@@ -126,11 +126,6 @@
 </tr>
 <!--FOLDER-->
 <tr>
-	<td>FOLDER_BREADCRUMBS</td>
-	<td>//ul[contains(@class,'breadcrumb')]//li[contains(.,'${key_kbFolderName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FOLDER_NAVIGATION_MENULIST</td>
 	<td>//div[contains(@class,'form-group')]/select</td>
 	<td></td>

@@ -71,7 +71,9 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_BREADCRUMBS" value1="${kbFolderName}" />
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${kbFolderName}">
+			<var name="key_breadcrumbName" value="${kbFolderName}" />
+		</execute>
 	</command>
 
 	<command name="gotoViaKBDisplayPG">

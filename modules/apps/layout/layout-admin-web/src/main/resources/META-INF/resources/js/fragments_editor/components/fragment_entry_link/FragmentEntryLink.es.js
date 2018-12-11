@@ -6,8 +6,10 @@ import './FragmentEntryLinkContent.es';
 import {DROP_TARGET_ITEM_TYPES} from '../../reducers/placeholders.es';
 import MetalStore from '../../store/store.es';
 import {
+	CLEAR_ACTIVE_ITEM,
 	CLEAR_HOVERED_ITEM,
 	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_ACTIVE_ITEM,
 	UPDATE_HOVERED_ITEM,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
@@ -20,6 +22,30 @@ import templates from './FragmentEntryLink.soy';
  * @review
  */
 class FragmentEntryLink extends Component {
+
+	/**
+	 * Callback executed when a fragment lose the focus
+	 * @private
+	 */
+	_handleFragmentBlur() {
+		this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+	}
+
+	/**
+	 * Callback executed when a fragment is clicked
+	 * @private
+	 */
+	_handleFragmentClick() {
+		event.stopPropagation();
+
+		this.store.dispatchAction(
+			UPDATE_ACTIVE_ITEM,
+			{
+				activeItemId: this.fragmentEntryLinkId,
+				activeItemType: DROP_TARGET_ITEM_TYPES.fragment
+			}
+		);
+	}
 
 	/**
 	 * Callback executed when a fragment starts being hovered.
@@ -76,6 +102,8 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 */
 	_handleFragmentRemoveButtonClick() {
+		event.stopPropagation();
+
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,

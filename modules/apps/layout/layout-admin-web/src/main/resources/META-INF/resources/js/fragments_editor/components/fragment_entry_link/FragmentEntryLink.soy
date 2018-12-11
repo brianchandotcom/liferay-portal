@@ -6,6 +6,8 @@
 {template .render}
 	{@param fragmentEntryLinkId: string}
 	{@param spritemap: string}
+	{@param? _handleFragmentBlur: any}
+	{@param? _handleFragmentClick: any}
 	{@param? _handleFragmentHoverStart: any}
 	{@param? _handleFragmentHoverEnd: any}
 	{@param? _handleFragmentKeyUp: any}
@@ -37,6 +39,8 @@
 	<div
 		class="{$wrapperClasses}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
+		data-onblur="{$_handleFragmentBlur}"
+		data-onclick="{$_handleFragmentClick}"
 		data-onkeyup="{$_handleFragmentKeyUp}"
 		data-onmouseout="{$_handleFragmentHoverEnd}"
 		data-onmouseover="{$_handleFragmentHoverStart}"

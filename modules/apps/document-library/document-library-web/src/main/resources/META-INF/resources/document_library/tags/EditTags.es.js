@@ -20,6 +20,20 @@ EditTags.STATE = {
 	commonTags: Config.string(),
 
 	/**
+	 * Description
+	 * @type {String}
+	 */
+	description: Config.string(),
+
+	/**
+	 * Flag that indicate if multiple
+	 * file entries has been selected.
+	 *
+	 * @type {Boolean}
+	 */
+	multiple: Config.bool().value(false),
+
+	/**
 	 * Path to images.
 	 * @instance
 	 * @memberof ManageCollaborators

@@ -188,6 +188,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 				'<portlet:namespace />DocumentLibrary',
 				new Liferay.Portlet.DocumentLibrary(
 					{
+						classNameId: '<%= ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()) %>',
 						columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 
 						<%

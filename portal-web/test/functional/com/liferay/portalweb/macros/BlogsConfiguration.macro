@@ -107,7 +107,7 @@
 
 		<var name="key_text" value="RSS" />
 
-		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss-full RSS" />
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="RSS" />
 	</command>
 
 	<command name="viewDefaultConfiguration">
@@ -150,7 +150,7 @@
 
 		<var name="key_text" value="RSS" />
 
-		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss-full RSS" />
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="RSS" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Portlet#OPTIONS_ICON" />

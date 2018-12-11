@@ -439,6 +439,7 @@
 
 		<execute macro="DMDocument#viewCheckedoutPG">
 			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="status" value="Draft" />
 		</execute>
 	</command>
 
@@ -469,6 +470,7 @@
 
 		<execute macro="DMDocument#viewCheckedoutPG">
 			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="status" value="Draft" />
 		</execute>
 	</command>
 
@@ -499,6 +501,7 @@
 
 		<execute macro="DMDocument#viewCheckedoutPG">
 			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="status" value="Draft" />
 		</execute>
 	</command>
 

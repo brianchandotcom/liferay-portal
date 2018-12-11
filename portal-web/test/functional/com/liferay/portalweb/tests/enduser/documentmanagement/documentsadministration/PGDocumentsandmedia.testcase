@@ -1970,6 +1970,7 @@
 
 		<execute macro="DMDocument#viewCheckedoutPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="status" value="Draft" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

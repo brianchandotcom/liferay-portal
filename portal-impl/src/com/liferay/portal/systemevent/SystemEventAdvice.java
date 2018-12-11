@@ -39,8 +39,7 @@ import java.lang.reflect.Method;
 /**
  * @author Zsolt Berentey
  */
-public class SystemEventAdvice
-	extends AnnotationChainableMethodAdvice<SystemEvent> {
+public class SystemEventAdvice extends AnnotationChainableMethodAdvice {
 
 	public SystemEventAdvice() {
 		super(SystemEvent.class);

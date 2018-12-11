@@ -26,8 +26,7 @@ import java.lang.reflect.Method;
 /**
  * @author Shuyang Zhou
  */
-public class ClusterableAdvice
-	extends AnnotationChainableMethodAdvice<Clusterable> {
+public class ClusterableAdvice extends AnnotationChainableMethodAdvice {
 
 	public ClusterableAdvice() {
 		super(Clusterable.class);

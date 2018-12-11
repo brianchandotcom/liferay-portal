@@ -29,8 +29,7 @@ import java.util.Map;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class AccessControlAdvice
-	extends AnnotationChainableMethodAdvice<AccessControlled> {
+public class AccessControlAdvice extends AnnotationChainableMethodAdvice {
 
 	public AccessControlAdvice() {
 		super(AccessControlled.class);

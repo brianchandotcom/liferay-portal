@@ -23,10 +23,12 @@ import java.util.Objects;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
+public abstract class AnnotationChainableMethodAdvice
 	extends ChainableMethodAdvice {
 
-	public AnnotationChainableMethodAdvice(Class<T> annotationClass) {
+	public AnnotationChainableMethodAdvice(
+		Class<? extends Annotation> annotationClass) {
+
 		_annotationClass = Objects.requireNonNull(annotationClass);
 	}
 
@@ -38,6 +40,6 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 		return methodContextHelper.findAnnotation(_annotationClass);
 	}
 
-	private final Class<T> _annotationClass;
+	private final Class<? extends Annotation> _annotationClass;
 
 }

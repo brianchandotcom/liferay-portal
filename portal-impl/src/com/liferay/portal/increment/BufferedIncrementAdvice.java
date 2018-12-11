@@ -38,8 +38,7 @@ import java.lang.reflect.Method;
  * @author     Zsolt Berentey
  * @author     Shuyang Zhou
  */
-public class BufferedIncrementAdvice
-	extends AnnotationChainableMethodAdvice<BufferedIncrement> {
+public class BufferedIncrementAdvice extends AnnotationChainableMethodAdvice {
 
 	public BufferedIncrementAdvice() {
 		super(BufferedIncrement.class);

@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Matthew Tambara
  */
-public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
+public class RetryAdvice extends AnnotationChainableMethodAdvice {
 
 	public RetryAdvice() {
 		super(Retry.class);

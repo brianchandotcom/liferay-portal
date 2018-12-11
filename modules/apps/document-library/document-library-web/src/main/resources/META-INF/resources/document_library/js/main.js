@@ -10,6 +10,10 @@ AUI.add(
 		var DocumentLibrary = A.Component.create(
 			{
 				ATTRS: {
+					classNameId: {
+						validator: Lang.isString
+					},
+
 					downloadEntryUrl: {
 						validator: Lang.isString
 					},
@@ -56,6 +60,7 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
+						var eventHandles = [];
 
 						var documentLibraryContainer = instance.byId('documentLibraryContainer');
 
@@ -70,14 +75,13 @@ AUI.add(
 
 						searchContainer.registerAction('move-to-folder', A.bind('_moveToFolder', instance));
 						searchContainer.registerAction('move-to-trash', A.bind('_moveToTrash', instance));
+						eventHandles.push(searchContainer.on('rowToggled', this._handleSearchContainerRowToggled, this));
 
 						instance._searchContainer = searchContainer;
 
 						var foldersConfig = config.folders;
 
 						instance._folderId = foldersConfig.defaultParentFolderId;
-
-						var eventHandles = [];
 
 						instance._config = config;
 
@@ -176,6 +180,19 @@ AUI.add(
 						}
 					},
 
+					_handleSearchContainerRowToggled: function(event) {
+						var instance = this;
+
+						var selectedElements = event.elements.allSelectedElements;
+
+						if (selectedElements.size() > 0) {
+							instance._selectedFileEntries = selectedElements.attr('value').join(',');
+						}
+						else {
+							instance._selectedFileEntries = '';
+						}
+					},
+
 					_moveToFolder: function(obj) {
 						var instance = this;
 
@@ -252,20 +269,59 @@ AUI.add(
 							editTagsComponent.open();
 						}
 
-						instance._getCommonTags()
+						instance._getTagsInfo();
 					},
 
-					_getCommonTags: function() {
-						//TODO peticion al servidor para obtener los tags.
-						//TODO getFileEntries
+					_getTagsInfo: function() {
 						var instance = this;
 
-						setTimeout(() => {
-							var editTagsComponent = instance._editTagsComponent;
+						//TODO
 
-							editTagsComponent.commonTags = 'aaaaa, bbbb';
-						}
-						, 3000);
+						var form = instance.get('form').node;
+						var namespace = instance.NS;
+
+						var bodyData = {
+							"bulkAssetEntryCommonTagsActionModel": {
+								repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
+								selection: instance._selectedFileEntries.split(",")
+							}
+						};
+
+						var body = JSON.stringify(bodyData);
+
+						var headers = new Headers();
+						headers.append('Content-Type', 'application/json');
+
+						const request = {
+							body,
+							credentials: 'include',
+							headers,
+							method: 'POST'
+						};
+
+						var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+
+						fetch(urlTags, request)
+							.then(
+								response => response.json()
+							)
+							.then(
+								response => {
+									var editTagsComponent = instance._editTagsComponent;
+									var responseData = response.bulkAssetEntryCommonTagsModel;
+
+									if (responseData && editTagsComponent) {
+										editTagsComponent.commonTags = responseData.tagNames.toString();
+										editTagsComponent.description = responseData.description;
+									}
+								}
+							)
+							.catch(
+								(xhr) => {
+									//editTagsComponent.close();
+									//TODO open toast error
+								}
+							);
 					},
 
 					_plugUpload: function(event, config) {

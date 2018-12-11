@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 import java.util.HashMap;
 
 /**
@@ -33,8 +35,46 @@ public class LabelItem extends HashMap<String, Object> {
 		put("label", label);
 	}
 
+	public void setStatus(int status) {
+		setLabel(WorkflowConstants.getStatusLabel(status));
+
+		setStyle(_getStyleFromWorkflowStatus(status));
+	}
+
 	public void setStyle(String style) {
 		put("style", style);
+	}
+
+	private String _getStyleFromWorkflowStatus(int status) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "success";
+		}
+		else if (status == WorkflowConstants.STATUS_DENIED) {
+			return "danger";
+		}
+		else if (status == WorkflowConstants.STATUS_DRAFT) {
+			return "secondary";
+		}
+		else if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "danger";
+		}
+		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			return "primary";
+		}
+		else if (status == WorkflowConstants.STATUS_INACTIVE) {
+			return "secondary";
+		}
+		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			return "warning";
+		}
+		else if (status == WorkflowConstants.STATUS_PENDING) {
+			return "primary";
+		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			return "primary";
+		}
+
+		return "secondary";
 	}
 
 }

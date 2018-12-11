@@ -15,7 +15,7 @@
 package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
@@ -26,11 +26,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Shuyang Zhou
  */
-public class TransactionInterceptor extends AnnotationChainableMethodAdvice {
-
-	public TransactionInterceptor() {
-		super(Transactional.class);
-	}
+public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	@Override
 	public Object createMethodContext(

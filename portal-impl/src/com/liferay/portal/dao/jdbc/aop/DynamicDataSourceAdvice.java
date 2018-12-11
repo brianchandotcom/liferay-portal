@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
@@ -32,11 +32,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Shuyang Zhou
  * @author László Csontos
  */
-public class DynamicDataSourceAdvice extends AnnotationChainableMethodAdvice {
-
-	public DynamicDataSourceAdvice() {
-		super(MasterDataSource.class);
-	}
+public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(

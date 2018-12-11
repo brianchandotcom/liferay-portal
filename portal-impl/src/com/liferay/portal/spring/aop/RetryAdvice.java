@@ -30,11 +30,7 @@ import java.util.Map;
 /**
  * @author Matthew Tambara
  */
-public class RetryAdvice extends AnnotationChainableMethodAdvice {
-
-	public RetryAdvice() {
-		super(Retry.class);
-	}
+public class RetryAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object createMethodContext(

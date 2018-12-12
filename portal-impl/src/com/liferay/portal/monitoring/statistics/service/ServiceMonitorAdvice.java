@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
@@ -162,7 +163,7 @@ public class ServiceMonitorAdvice
 	@Override
 	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
 		if (monitorServiceRequest && !_monitorServiceRequest) {
-			serviceBeanAopCacheManager.reset();
+			ServiceBeanAopCacheManager.reset();
 		}
 
 		_monitorServiceRequest = monitorServiceRequest;

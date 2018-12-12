@@ -86,14 +86,6 @@ public abstract class ChainableMethodAdvice {
 		return returnValue;
 	}
 
-	protected void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-	}
-
 	protected static Object nullResult = new Object();
-
-	protected ServiceBeanAopCacheManager serviceBeanAopCacheManager;
 
 }

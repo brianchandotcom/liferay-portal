@@ -322,6 +322,7 @@ AUI.add(
 						var instance = this;
 
 						var sessionLength = instance.get('sessionLength');
+						var sessionState = instance.get('sessionState');
 						var warningTime = instance.get('warningTime');
 
 						var registered = instance._registered;
@@ -343,8 +344,6 @@ AUI.add(
 
 									if (instance._initTimestamp !== timestamp) {
 										instance.set('timestamp', timestamp);
-
-										var sessionState = instance.get('sessionState');
 
 										if (sessionState != 'active') {
 											instance.set('sessionState', 'active', SRC_EVENT_OBJ);
@@ -369,8 +368,6 @@ AUI.add(
 										extend = false;
 										hasExpired = true;
 									}
-
-									var sessionState = instance.get('sessionState');
 
 									if (hasExpired && sessionState != 'expired') {
 										if (extend) {

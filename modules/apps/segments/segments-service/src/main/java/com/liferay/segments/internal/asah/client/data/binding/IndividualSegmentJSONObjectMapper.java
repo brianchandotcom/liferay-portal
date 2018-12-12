@@ -14,62 +14,27 @@
 
 package com.liferay.segments.internal.asah.client.data.binding;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.PageMetadata;
 import com.liferay.segments.internal.asah.client.model.Rels;
 import com.liferay.segments.internal.asah.client.model.Results;
 
 import java.io.IOException;
-
-import java.util.List;
 
 /**
  * @author David Arques
  */
 public class IndividualSegmentJSONObjectMapper {
 
-	public IndividualSegmentJSONObjectMapper() {
-		_objectMapper = new ObjectMapper();
-
-		_objectMapper.configure(
-			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	}
-
 	public IndividualSegment map(String json) throws IOException {
-		return _objectMapper.readValue(json, IndividualSegment.class);
+		return AsahFaroBackendJSONObjectMapper.map(
+			json, IndividualSegment.class);
 	}
 
 	public Results<IndividualSegment> mapToResults(String json)
 		throws IOException {
 
-		JsonNode responseJsonNode = _objectMapper.readTree(json);
-
-		JsonNode embeddedJsonNode = responseJsonNode.get("_embedded");
-
-		JsonNode individualSegmentsJsonNode = embeddedJsonNode.get(
-			Rels.INDIVIDUAL_SEGMENTS);
-
-		ObjectReader individualSegmentsReader = _objectMapper.readerFor(
-			new TypeReference<List<IndividualSegment>>() {});
-
-		List<IndividualSegment> individualSegments =
-			individualSegmentsReader.readValue(individualSegmentsJsonNode);
-
-		JsonNode pageJsonNode = responseJsonNode.get("page");
-
-		PageMetadata pageMetadata = _objectMapper.treeToValue(
-			pageJsonNode, PageMetadata.class);
-
-		return new Results<>(
-			individualSegments, (int)pageMetadata.getTotalElements());
+		return AsahFaroBackendJSONObjectMapper.mapToResults(
+			json, Rels.INDIVIDUAL_SEGMENTS, IndividualSegment.class);
 	}
-
-	private final ObjectMapper _objectMapper;
 
 }

@@ -1,0 +1,114 @@
+{
+	"dataSourceIndividualPKs": {
+		"327205908165727542": [
+			"fa08b246-2f0c-25c3-588a-6da21da8cb46"
+		]
+	},
+	"dateCreated": "2018-12-11T11:00:01.162Z",
+	"dateModified": "2018-12-11T11:00:01.162Z",
+	"demographics": {
+		"FavoriteNinja": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "FavoriteNinja",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "twitterSn"
+			}
+		],
+		"additionalName": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "additionalName",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "middleName"
+			}
+		],
+		"address": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "address",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "prefixId",
+				"value": "11016"
+			}
+		],
+		"country": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "country",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "emailAddress",
+				"value": "celine.yodora@liferay.com"
+			}
+		],
+		"familyName": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "familyName",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "firstName",
+				"value": "Celine"
+			}
+		],
+		"favoriteColor": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "favoriteColor",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "gender",
+				"value": "female"
+			}
+		],
+		"jobTitle": [
+			{
+				"context": "demographics",
+				"dataSourceId": "327205908165727542",
+				"dataSourceName": "DavidTest4",
+				"dateModified": "2018-12-11T09:45:42.367Z",
+				"fieldType": "Text",
+				"name": "jobTitle",
+				"ownerId": "327206046201282216",
+				"ownerType": "individual",
+				"sourceName": "jobTitle",
+				"value": "Teacher"
+			}
+		]
+	},
+	"id": "327206046201282216",
+	"individualSegmentIds": [
+		"327254155227873445"
+	],
+	"liferayDataSourceIndividualPKs": [
+		"fa08b246-2f0c-25c3-588a-6da21da8cb46"
+	]
+}

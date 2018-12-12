@@ -1,12 +1,14 @@
+import {addClasses, contains, removeClasses} from 'metal-dom';
 import Component from 'metal-component';
-import {addClasses, removeClasses} from 'metal-dom';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
+import Soy from 'metal-soy';
 
 import FragmentEditableField from './FragmentEditableField.es';
+import FragmentStyleEditor from './FragmentStyleEditor.es';
 import MetalStore from '../../store/store.es';
 import templates from './FragmentEntryLinkContent.soy';
+import {UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
 
 const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
@@ -120,6 +122,58 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
+	 * Create instantes of FragmentStyleEditor for each element styled with
+	 * background image.
+	 */
+	_createBackgroundImageStyleEditors() {
+		if (this._backgroundImageStyleEditors) {
+			this._backgroundImageStyleEditors.forEach(
+				styleEditor => styleEditor.dispose()
+			);
+
+			this._backgroundImageStyleEditors = [];
+		}
+
+		this._backgroundImageStyleEditors = this._styles.flatMap(
+			style => {
+				let value = [];
+
+				if (style.css.backgroundImage !== '') {
+					value = style.nodes.map(
+						node => {
+							const styleEditor = new FragmentStyleEditor(
+								{
+									cssText: style.cssText,
+
+									editorsOptions: {
+										imageSelectorURL: this.imageSelectorURL
+									},
+
+									fragmentEntryLinkId: this.fragmentEntryLinkId,
+									node,
+									portletNamespace: this.portletNamespace,
+									selectorText: style.selectorText,
+									showMapping: this.showMapping,
+									store: this.store,
+									type: 'backgroundImage'
+								}
+							);
+
+							styleEditor.on('openTooltip', this._handleOpenStyleTooltip.bind(this));
+
+							styleEditor.on('styleChanged', this._handleStyleChanged.bind(this));
+
+							return styleEditor;
+						}
+					);
+				}
+
+				return value;
+			}
+		);
+	}
+
+	/**
 	 * Create instances of FragmentEditableField for each editable.
 	 */
 	_createEditables() {
@@ -170,6 +224,37 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
+	 */
+	_createStyles() {
+		const elements = [];
+
+		for (let styleIndex = 0; styleIndex < document.styleSheets.length; styleIndex++) {
+			const cssStyle = document.styleSheets[styleIndex];
+
+			if (contains(this.refs.content, cssStyle.ownerNode)) {
+				for (let ruleIndex = 0; ruleIndex < cssStyle.rules.length; ruleIndex++) {
+					const cssRule = cssStyle.rules[ruleIndex];
+
+					elements.push(
+						{
+							css: cssRule.style,
+							cssText: cssRule.cssText,
+							nodes: [
+								...this.refs.content.querySelectorAll(
+									cssRule.selectorText
+								)
+							],
+							selectorText: cssRule.selectorText
+						}
+					);
+				}
+			}
+		}
+
+		this._styles = elements;
+	}
+
+	/**
 	 * Destroy existing FragmentEditableField instances.
 	 */
 	_destroyEditables() {
@@ -180,6 +265,34 @@ class FragmentEntryLinkContent extends Component {
 
 			this._editables = [];
 		}
+	}
+
+	/**
+	 * Callback executed when a tooltip is opened.
+	 */
+	_handleOpenStyleTooltip() {
+		if (!this._backgroundImageStyleEditors) {
+			return;
+		}
+
+		this._backgroundImageStyleEditors.forEach(
+			styleEditor => styleEditor.disposeStyleTooltip()
+		);
+	}
+
+	/**
+	 * @param {Object} event
+	 */
+	_handleStyleChanged(event) {
+		this.store.dispatchAction(
+			UPDATE_EDITABLE_VALUE,
+			{
+				editableId: event.name,
+				editableValue: event.value,
+				editableValueId: this.languageId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
 	}
 
 	/**
@@ -197,7 +310,11 @@ class FragmentEntryLinkContent extends Component {
 					contentNode.plug(A.Plugin.ParseContent);
 					contentNode.setContent(content);
 
+					this._createStyles();
+
 					this._createEditables();
+
+					this._createBackgroundImageStyleEditors();
 
 					this._update(
 						this.languageId,
@@ -214,7 +331,8 @@ class FragmentEntryLinkContent extends Component {
 	 * inside this fragment entry link.
 	 * @param {string} languageId The current language id
 	 * @param {string} defaultLanguageId The default language id
-	 * @param {Array<Function>} updateFunctions The set of update functions to execute for each editable value
+	 * @param {Array<Function>} updateFunctions The set of update functions to execute for each
+	 * 	editable value
 	 * @private
 	 * @review
 	 */
@@ -263,13 +381,14 @@ class FragmentEntryLinkContent extends Component {
 				'untranslated'
 			);
 
-			const mapped = !!mappedField;
-			const translated = !mappedField && !!value;
+			const mapped = Boolean(mappedField);
+			const translated = Boolean(!mappedField && value);
 
 			addClasses(element, mapped ? 'mapped' : 'unmapped');
 			addClasses(element, translated ? 'translated' : 'untranslated');
 		}
 	}
+
 }
 
 /**
@@ -426,8 +545,5 @@ FragmentEntryLinkContent.STATE = {
 
 Soy.register(FragmentEntryLinkContent, templates);
 
-export {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-};
-
+export {EDITABLE_FRAGMENT_ENTRY_PROCESSOR};
 export default FragmentEntryLinkContent;

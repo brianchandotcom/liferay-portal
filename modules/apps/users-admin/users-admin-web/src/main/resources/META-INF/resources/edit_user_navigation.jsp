@@ -69,7 +69,9 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 
 	<div class="sheet sheet-lg">
 		<c:if test="<%= (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_TITLE) %>">
-			<h2 class="sheet-title"><%= formLabel %></h2>
+			<div class="sheet-header">
+				<h2 class="sheet-title"><%= formLabel %></h2>
+			</div>
 		</c:if>
 
 		<div class="sheet-section">

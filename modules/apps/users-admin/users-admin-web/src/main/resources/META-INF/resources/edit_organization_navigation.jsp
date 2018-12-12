@@ -23,7 +23,9 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 <aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="portlet-users-admin-edit-organization" data-senna-off="true" method="post" name="fm">
 	<div class="sheet sheet-lg">
 		<c:if test="<%= organizationScreenNavigationDisplayContext.isShowTitle() %>">
-			<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>
+			<div class="sheet-header">
+				<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>
+			</div>
 		</c:if>
 
 		<div class="sheet-section">

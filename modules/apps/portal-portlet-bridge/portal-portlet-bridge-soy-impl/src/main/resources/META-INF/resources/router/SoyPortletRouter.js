@@ -3,7 +3,6 @@ import async from 'metal';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Router from 'metal-router';
-import Soy from 'metal-soy';
 import State from 'metal-state';
 import Uri from 'metal-uri';
 import { CancellablePromise } from 'metal-promise';
@@ -133,14 +132,14 @@ class SoyPortletRouter extends State {
 			flip() {
 				const loadedState = super.maybeParseLastLoadedStateAsJson();
 
-				Soy.setInjectedData(loadedState._INJECTED_DATA_);
-
 				const deferred = new CancellablePromise((resolve, reject) => {
 					Liferay.Loader.require(
 						loadedState.javaScriptLoaderModule,
 						(module) => {
 							super.maybeRedirectRouter();
-							this.router.component = module.default;
+							let component = module.default;
+							component.RENDERER.setInjectedData(loadedState._INJECTED_DATA_);
+							this.router.component = component;
 							resolve();
 						},
 						error => reject(error)

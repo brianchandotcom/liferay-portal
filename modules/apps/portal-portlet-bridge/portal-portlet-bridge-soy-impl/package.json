@@ -5,7 +5,6 @@
 		"metal-path-parser": "^1.0.3",
 		"metal-promise": "^2.0.1",
 		"metal-router": "^3.6.3",
-		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2",
 		"metal-uri": "^2.3.0",
 		"senna": "^2.5.6"

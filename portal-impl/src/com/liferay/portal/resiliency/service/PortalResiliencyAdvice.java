@@ -23,14 +23,15 @@ import com.liferay.portal.kernel.security.access.control.AccessControlThreadLoca
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -77,16 +78,15 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
 		if (!PropsValues.PORTAL_RESILIENCY_ENABLED) {
 			return null;
 		}
 
-		AccessControlled accessControlled = methodContextHelper.findAnnotation(
-			AccessControlled.class);
+		Annotation annotation = annotations.get(AccessControlled.class);
 
-		if (accessControlled == null) {
+		if (annotation == null) {
 			return null;
 		}
 

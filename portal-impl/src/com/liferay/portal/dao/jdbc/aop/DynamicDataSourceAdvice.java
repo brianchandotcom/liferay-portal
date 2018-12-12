@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -49,9 +51,9 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		Transactional transactional = methodContextHelper.findAnnotation(
+		Transactional transactional = (Transactional)annotations.get(
 			Transactional.class);
 
 		TransactionAttribute transactionAttribute =
@@ -63,7 +65,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 		Operation operation = Operation.WRITE;
 
-		MasterDataSource masterDataSource = methodContextHelper.findAnnotation(
+		MasterDataSource masterDataSource = (MasterDataSource)annotations.get(
 			MasterDataSource.class);
 
 		if ((masterDataSource == null) && transactional.readOnly()) {

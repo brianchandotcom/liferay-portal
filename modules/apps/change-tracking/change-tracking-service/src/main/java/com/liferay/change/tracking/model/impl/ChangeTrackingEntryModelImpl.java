@@ -108,8 +108,10 @@ public class ChangeTrackingEntryModelImpl extends BaseModelImpl<ChangeTrackingEn
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.ChangeTrackingEntry"),
 			true);
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 1L;
-	public static final long CHANGETRACKINGENTRYID_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4L;
+	public static final long CHANGETRACKINGENTRYID_COLUMN_BITMASK = 8L;
 	public static final String MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_NAME = "CTCollections_CTEntries";
 	public static final Object[][] MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_COLUMNS =
 		{
@@ -349,7 +351,19 @@ public class ChangeTrackingEntryModelImpl extends BaseModelImpl<ChangeTrackingEn
 
 	@Override
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@Override
@@ -359,7 +373,19 @@ public class ChangeTrackingEntryModelImpl extends BaseModelImpl<ChangeTrackingEn
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@Override
@@ -492,6 +518,14 @@ public class ChangeTrackingEntryModelImpl extends BaseModelImpl<ChangeTrackingEn
 		ChangeTrackingEntryModelImpl changeTrackingEntryModelImpl = this;
 
 		changeTrackingEntryModelImpl._setModifiedDate = false;
+
+		changeTrackingEntryModelImpl._originalClassNameId = changeTrackingEntryModelImpl._classNameId;
+
+		changeTrackingEntryModelImpl._setOriginalClassNameId = false;
+
+		changeTrackingEntryModelImpl._originalClassPK = changeTrackingEntryModelImpl._classPK;
+
+		changeTrackingEntryModelImpl._setOriginalClassPK = false;
 
 		changeTrackingEntryModelImpl._originalResourcePrimKey = changeTrackingEntryModelImpl._resourcePrimKey;
 
@@ -634,7 +668,11 @@ public class ChangeTrackingEntryModelImpl extends BaseModelImpl<ChangeTrackingEn
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private long _resourcePrimKey;
 	private long _originalResourcePrimKey;
 	private boolean _setOriginalResourcePrimKey;

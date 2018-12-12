@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -70,6 +71,10 @@ public interface ChangeTrackingCollectionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ChangeTrackingCollection addChangeTrackingCollection(
 		ChangeTrackingCollection changeTrackingCollection);
+
+	public ChangeTrackingCollection addChangeTrackingCollection(
+		long companyId, long userId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addChangeTrackingEntryChangeTrackingCollection(
 		long changeTrackingEntryId,
@@ -132,6 +137,8 @@ public interface ChangeTrackingCollectionLocalService extends BaseLocalService,
 
 	public void deleteChangeTrackingEntryChangeTrackingCollections(
 		long changeTrackingEntryId, long[] changeTrackingCollectionIds);
+
+	public void deleteCompanyChangeTrackingCollections(long companyId);
 
 	/**
 	* @throws PortalException
@@ -210,6 +217,10 @@ public interface ChangeTrackingCollectionLocalService extends BaseLocalService,
 		long changeTrackingCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ChangeTrackingCollection fetchChangeTrackingCollection(
+		long companyId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -237,6 +248,10 @@ public interface ChangeTrackingCollectionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ChangeTrackingCollection> getChangeTrackingCollections(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ChangeTrackingCollection> getChangeTrackingCollections(
+		long companyId);
 
 	/**
 	* Returns the number of change tracking collections.
@@ -308,4 +323,8 @@ public interface ChangeTrackingCollectionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ChangeTrackingCollection updateChangeTrackingCollection(
 		ChangeTrackingCollection changeTrackingCollection);
+
+	public ChangeTrackingCollection updateStatus(long userId,
+		ChangeTrackingCollection collection, int status,
+		ServiceContext serviceContext) throws PortalException;
 }

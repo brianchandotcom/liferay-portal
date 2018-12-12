@@ -54,6 +54,15 @@ public class ChangeTrackingCollectionLocalServiceUtil {
 		return getService().addChangeTrackingCollection(changeTrackingCollection);
 	}
 
+	public static com.liferay.change.tracking.model.ChangeTrackingCollection addChangeTrackingCollection(
+		long companyId, long userId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addChangeTrackingCollection(companyId, userId, name,
+			description, serviceContext);
+	}
+
 	public static void addChangeTrackingEntryChangeTrackingCollection(
 		long changeTrackingEntryId,
 		com.liferay.change.tracking.model.ChangeTrackingCollection changeTrackingCollection) {
@@ -158,6 +167,10 @@ public class ChangeTrackingCollectionLocalServiceUtil {
 			changeTrackingCollectionIds);
 	}
 
+	public static void deleteCompanyChangeTrackingCollections(long companyId) {
+		getService().deleteCompanyChangeTrackingCollections(companyId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -251,6 +264,11 @@ public class ChangeTrackingCollectionLocalServiceUtil {
 				   .fetchChangeTrackingCollection(changeTrackingCollectionId);
 	}
 
+	public static com.liferay.change.tracking.model.ChangeTrackingCollection fetchChangeTrackingCollection(
+		long companyId, String name) {
+		return getService().fetchChangeTrackingCollection(companyId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -283,6 +301,11 @@ public class ChangeTrackingCollectionLocalServiceUtil {
 	public static java.util.List<com.liferay.change.tracking.model.ChangeTrackingCollection> getChangeTrackingCollections(
 		int start, int end) {
 		return getService().getChangeTrackingCollections(start, end);
+	}
+
+	public static java.util.List<com.liferay.change.tracking.model.ChangeTrackingCollection> getChangeTrackingCollections(
+		long companyId) {
+		return getService().getChangeTrackingCollections(companyId);
 	}
 
 	/**
@@ -382,6 +405,16 @@ public class ChangeTrackingCollectionLocalServiceUtil {
 		com.liferay.change.tracking.model.ChangeTrackingCollection changeTrackingCollection) {
 		return getService()
 				   .updateChangeTrackingCollection(changeTrackingCollection);
+	}
+
+	public static com.liferay.change.tracking.model.ChangeTrackingCollection updateStatus(
+		long userId,
+		com.liferay.change.tracking.model.ChangeTrackingCollection collection,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, collection, status, serviceContext);
 	}
 
 	public static ChangeTrackingCollectionLocalService getService() {

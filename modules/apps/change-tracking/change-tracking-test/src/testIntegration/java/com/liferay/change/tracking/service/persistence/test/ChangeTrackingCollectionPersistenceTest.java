@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -55,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -177,6 +179,22 @@ public class ChangeTrackingCollectionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingChangeTrackingCollection.getStatusDate()),
 			Time.getShortTimestamp(newChangeTrackingCollection.getStatusDate()));
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByC_N() throws Exception {
+		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_N(0L, "null");
+
+		_persistence.countByC_N(0L, (String)null);
 	}
 
 	@Test
@@ -413,6 +431,24 @@ public class ChangeTrackingCollectionPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		ChangeTrackingCollection newChangeTrackingCollection = addChangeTrackingCollection();
+
+		_persistence.clearCache();
+
+		ChangeTrackingCollection existingChangeTrackingCollection = _persistence.findByPrimaryKey(newChangeTrackingCollection.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingChangeTrackingCollection.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingChangeTrackingCollection,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
+				existingChangeTrackingCollection.getName(),
+				ReflectionTestUtil.invoke(existingChangeTrackingCollection,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected ChangeTrackingCollection addChangeTrackingCollection()

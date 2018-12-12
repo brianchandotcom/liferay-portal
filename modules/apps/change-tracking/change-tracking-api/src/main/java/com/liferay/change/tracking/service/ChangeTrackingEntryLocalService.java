@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -83,6 +84,11 @@ public interface ChangeTrackingEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ChangeTrackingEntry addChangeTrackingEntry(
 		ChangeTrackingEntry changeTrackingEntry);
+
+	public ChangeTrackingEntry addChangeTrackingEntry(long companyId,
+		long userId, long changeTrackingCollectionId, long classNameId,
+		long classPK, long resourcePrimKey, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void clearChangeTrackingCollectionChangeTrackingEntries(
 		long changeTrackingCollectionId);

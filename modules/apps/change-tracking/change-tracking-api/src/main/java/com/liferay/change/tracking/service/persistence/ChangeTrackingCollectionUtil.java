@@ -116,6 +116,235 @@ public class ChangeTrackingCollectionUtil {
 	}
 
 	/**
+	* Returns all the change tracking collections where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching change tracking collections
+	*/
+	public static List<ChangeTrackingCollection> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the change tracking collections where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChangeTrackingCollectionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of change tracking collections
+	* @param end the upper bound of the range of change tracking collections (not inclusive)
+	* @return the range of matching change tracking collections
+	*/
+	public static List<ChangeTrackingCollection> findByCompanyId(
+		long companyId, int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the change tracking collections where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChangeTrackingCollectionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of change tracking collections
+	* @param end the upper bound of the range of change tracking collections (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching change tracking collections
+	*/
+	public static List<ChangeTrackingCollection> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the change tracking collections where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChangeTrackingCollectionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of change tracking collections
+	* @param end the upper bound of the range of change tracking collections (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching change tracking collections
+	*/
+	public static List<ChangeTrackingCollection> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first change tracking collection in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching change tracking collection
+	* @throws NoSuchCollectionException if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection findByCompanyId_First(
+		long companyId,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first change tracking collection in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching change tracking collection, or <code>null</code> if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection fetchByCompanyId_First(
+		long companyId,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last change tracking collection in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching change tracking collection
+	* @throws NoSuchCollectionException if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection findByCompanyId_Last(
+		long companyId,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last change tracking collection in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching change tracking collection, or <code>null</code> if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection fetchByCompanyId_Last(
+		long companyId,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the change tracking collections before and after the current change tracking collection in the ordered set where companyId = &#63;.
+	*
+	* @param changeTrackingCollectionId the primary key of the current change tracking collection
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next change tracking collection
+	* @throws NoSuchCollectionException if a change tracking collection with the primary key could not be found
+	*/
+	public static ChangeTrackingCollection[] findByCompanyId_PrevAndNext(
+		long changeTrackingCollectionId, long companyId,
+		OrderByComparator<ChangeTrackingCollection> orderByComparator)
+		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(changeTrackingCollectionId,
+			companyId, orderByComparator);
+	}
+
+	/**
+	* Removes all the change tracking collections where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of change tracking collections where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching change tracking collections
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the change tracking collection where companyId = &#63; and name = &#63; or throws a {@link NoSuchCollectionException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the matching change tracking collection
+	* @throws NoSuchCollectionException if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection findByC_N(long companyId, String name)
+		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
+		return getPersistence().findByC_N(companyId, name);
+	}
+
+	/**
+	* Returns the change tracking collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the matching change tracking collection, or <code>null</code> if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection fetchByC_N(long companyId,
+		String name) {
+		return getPersistence().fetchByC_N(companyId, name);
+	}
+
+	/**
+	* Returns the change tracking collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching change tracking collection, or <code>null</code> if a matching change tracking collection could not be found
+	*/
+	public static ChangeTrackingCollection fetchByC_N(long companyId,
+		String name, boolean retrieveFromCache) {
+		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
+	}
+
+	/**
+	* Removes the change tracking collection where companyId = &#63; and name = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the change tracking collection that was removed
+	*/
+	public static ChangeTrackingCollection removeByC_N(long companyId,
+		String name)
+		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
+		return getPersistence().removeByC_N(companyId, name);
+	}
+
+	/**
+	* Returns the number of change tracking collections where companyId = &#63; and name = &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the number of matching change tracking collections
+	*/
+	public static int countByC_N(long companyId, String name) {
+		return getPersistence().countByC_N(companyId, name);
+	}
+
+	/**
 	* Caches the change tracking collection in the entity cache if it is enabled.
 	*
 	* @param changeTrackingCollection the change tracking collection

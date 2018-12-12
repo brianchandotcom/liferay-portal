@@ -77,6 +77,17 @@ public class ChangeTrackingEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.ChangeTrackingEntry addChangeTrackingEntry(
+		long companyId, long userId, long changeTrackingCollectionId,
+		long classNameId, long classPK, long resourcePrimKey,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _changeTrackingEntryLocalService.addChangeTrackingEntry(companyId,
+			userId, changeTrackingCollectionId, classNameId, classPK,
+			resourcePrimKey, serviceContext);
+	}
+
+	@Override
 	public void clearChangeTrackingCollectionChangeTrackingEntries(
 		long changeTrackingCollectionId) {
 		_changeTrackingEntryLocalService.clearChangeTrackingCollectionChangeTrackingEntries(changeTrackingCollectionId);

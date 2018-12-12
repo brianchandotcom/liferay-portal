@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -99,8 +100,8 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 
 	public static final String TABLE_SQL_CREATE = "create table ChangeTrackingCollection (changeTrackingCollectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table ChangeTrackingCollection";
-	public static final String ORDER_BY_JPQL = " ORDER BY changeTrackingCollection.changeTrackingCollectionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY ChangeTrackingCollection.changeTrackingCollectionId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY changeTrackingCollection.createDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY ChangeTrackingCollection.createDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -110,7 +111,12 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.change.tracking.model.ChangeTrackingCollection"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.ChangeTrackingCollection"),
+			true);
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 	public static final String MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_NAME = "CTCollections_CTEntries";
 	public static final Object[][] MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_COLUMNS =
 		{
@@ -275,7 +281,19 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -326,6 +344,8 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -357,7 +377,17 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -516,6 +546,10 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 		}
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -563,17 +597,16 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 
 	@Override
 	public int compareTo(ChangeTrackingCollection changeTrackingCollection) {
-		long primaryKey = changeTrackingCollection.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getCreateDate(),
+				changeTrackingCollection.getCreateDate());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -617,7 +650,15 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 	public void resetOriginalValues() {
 		ChangeTrackingCollectionModelImpl changeTrackingCollectionModelImpl = this;
 
+		changeTrackingCollectionModelImpl._originalCompanyId = changeTrackingCollectionModelImpl._companyId;
+
+		changeTrackingCollectionModelImpl._setOriginalCompanyId = false;
+
 		changeTrackingCollectionModelImpl._setModifiedDate = false;
+
+		changeTrackingCollectionModelImpl._originalName = changeTrackingCollectionModelImpl._name;
+
+		changeTrackingCollectionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -797,16 +838,20 @@ public class ChangeTrackingCollectionModelImpl extends BaseModelImpl<ChangeTrack
 		};
 	private long _changeTrackingCollectionId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _columnBitmask;
 	private ChangeTrackingCollection _escapedModel;
 }

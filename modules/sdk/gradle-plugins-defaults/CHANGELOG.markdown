@@ -5201,6 +5201,12 @@ during the execution of the `uploadArchives` task.
 - [LPS-88306]: Update the `writeParentThemesDigest` task to generate the
 `.digest` file for theme projects in subrepositories.
 
+## 5.5.142 - 2018-12-11
+
+### Added
+- [LPS-88314]: Add a check to reject using snapshot artifacts for the
+`importFiles` task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5729,6 +5735,7 @@ during the execution of the `uploadArchives` task.
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223
 [LPS-88226]: https://issues.liferay.com/browse/LPS-88226
 [LPS-88306]: https://issues.liferay.com/browse/LPS-88306
+[LPS-88314]: https://issues.liferay.com/browse/LPS-88314
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

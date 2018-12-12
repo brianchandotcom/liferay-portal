@@ -60,12 +60,6 @@ public class ServiceBeanAopCacheManager {
 	public ServiceBeanAopCacheManager(
 		List<ChainableMethodAdvice> chainableMethodAdvices) {
 
-		for (ChainableMethodAdvice chainableMethodAdvice :
-				chainableMethodAdvices) {
-
-			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
-		}
-
 		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
 			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 	}

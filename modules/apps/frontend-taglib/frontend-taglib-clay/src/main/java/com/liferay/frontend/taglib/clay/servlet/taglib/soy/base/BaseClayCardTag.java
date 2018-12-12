@@ -17,10 +17,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Julien Castelain
@@ -31,32 +29,6 @@ public class BaseClayCardTag extends BaseClayTag {
 	public int doStartTag() {
 		setHydrate(true);
 		setModuleBaseName("card");
-
-		if (_rowChecker != null) {
-			Map<String, Object> context = getContext();
-
-			if (Validator.isNull(context.get("inputName"))) {
-				setInputName(_rowChecker.getRowIds());
-			}
-
-			if (Validator.isNull(context.get("inputValue"))) {
-				setInputValue(_resultRow.getPrimaryKey());
-			}
-
-			if (Validator.isNull(context.get("selectable"))) {
-				setSelectable(true);
-			}
-
-			if (_resultRow != null) {
-				if (Validator.isNull(context.get("disabled"))) {
-					setDisabled(_rowChecker.isDisabled(_resultRow.getObject()));
-				}
-
-				if (Validator.isNull(context.get("selected"))) {
-					setSelected(_rowChecker.isChecked(_resultRow.getObject()));
-				}
-			}
-		}
 
 		return super.doStartTag();
 	}
@@ -85,12 +57,18 @@ public class BaseClayCardTag extends BaseClayTag {
 		putValue("inputValue", inputValue);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setResultRow(ResultRow resultRow) {
-		_resultRow = resultRow;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setRowChecker(RowChecker rowChecker) {
-		_rowChecker = rowChecker;
 	}
 
 	public void setSelectable(Boolean selectable) {
@@ -100,8 +78,5 @@ public class BaseClayCardTag extends BaseClayTag {
 	public void setSelected(Boolean selected) {
 		putValue("selected", selected);
 	}
-
-	private ResultRow _resultRow;
-	private RowChecker _rowChecker;
 
 }

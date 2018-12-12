@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.bulk.selection;
 
-import com.liferay.bulk.selection.Selection;
+import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,9 +38,9 @@ import java.util.stream.StreamSupport;
 /**
  * @author Adolfo Pérez
  */
-public class FolderFileEntrySelection implements Selection<FileEntry> {
+public class FolderFileEntryBulkSelection implements BulkSelection<FileEntry> {
 
-	public FolderFileEntrySelection(
+	public FolderFileEntryBulkSelection(
 		long repositoryId, long folderId,
 		ResourceBundleLoader resourceBundleLoader, Language language,
 		RepositoryProvider repositoryProvider, DLAppService dlAppService) {

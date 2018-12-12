@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.bulk.selection;
 
-import com.liferay.bulk.selection.Selection;
+import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -39,9 +39,10 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public class MultipleFileEntrySelection implements Selection<FileEntry> {
+public class MultipleFileEntryBulkSelection
+	implements BulkSelection<FileEntry> {
 
-	public MultipleFileEntrySelection(
+	public MultipleFileEntryBulkSelection(
 		long[] fileEntryIds, ResourceBundleLoader resourceBundleLoader,
 		Language language, DLAppService dlAppService) {
 
@@ -99,7 +100,7 @@ public class MultipleFileEntrySelection implements Selection<FileEntry> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MultipleFileEntrySelection.class);
+		MultipleFileEntryBulkSelection.class);
 
 	private final DLAppService _dlAppService;
 	private final long[] _fileEntryIds;

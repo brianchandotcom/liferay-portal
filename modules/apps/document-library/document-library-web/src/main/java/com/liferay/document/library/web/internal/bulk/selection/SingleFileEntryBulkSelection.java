@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.bulk.selection;
 
-import com.liferay.bulk.selection.Selection;
+import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -32,9 +32,9 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public class SingleFileEntrySelection implements Selection<FileEntry> {
+public class SingleFileEntryBulkSelection implements BulkSelection<FileEntry> {
 
-	public SingleFileEntrySelection(
+	public SingleFileEntryBulkSelection(
 		long fileEntryId, ResourceBundleLoader resourceBundleLoader,
 		Language language, DLAppService dlAppService) {
 

@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public interface Selection<T> {
+public interface BulkSelection<T> {
 
 	public String describe(Locale locale) throws PortalException;
 

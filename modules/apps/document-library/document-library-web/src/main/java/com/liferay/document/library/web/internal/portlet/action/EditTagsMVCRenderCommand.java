@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.bulk.selection.Selection;
-import com.liferay.bulk.selection.SelectionFactory;
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -69,8 +69,8 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			Selection<FileEntry> selection = _selectionFactory.create(
-				renderRequest.getParameterMap());
+			BulkSelection<FileEntry> bulkSelection =
+				_bulkSelectionFactory.create(renderRequest.getParameterMap());
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -79,9 +79,9 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getPermissionChecker();
 
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_SELECTION, selection);
+				DLWebKeys.DOCUMENT_LIBRARY_BULK_SELECTION, bulkSelection);
 
-			Stream<FileEntry> fileEntryStream = selection.stream();
+			Stream<FileEntry> fileEntryStream = bulkSelection.stream();
 
 			Set<String> commonTags = fileEntryStream.map(
 				_getFileEntryTagsSet(permissionChecker)
@@ -146,12 +146,12 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
+	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private SelectionFactory<FileEntry> _selectionFactory;
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 }

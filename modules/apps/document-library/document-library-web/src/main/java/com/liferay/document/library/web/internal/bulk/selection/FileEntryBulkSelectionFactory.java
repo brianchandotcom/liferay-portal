@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.internal.bulk.selection;
 
-import com.liferay.bulk.selection.Selection;
-import com.liferay.bulk.selection.SelectionFactory;
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
@@ -35,11 +35,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
-	service = SelectionFactory.class
+	service = BulkSelectionFactory.class
 )
-public class FileEntrySelectionFactory implements SelectionFactory<FileEntry> {
+public class FileEntryBulkSelectionFactory
+	implements BulkSelectionFactory<FileEntry> {
 
-	public Selection<FileEntry> create(Map<String, String[]> parameterMap) {
+	public BulkSelection<FileEntry> create(Map<String, String[]> parameterMap) {
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {
 			throw new IllegalArgumentException();
 		}
@@ -70,12 +71,12 @@ public class FileEntrySelectionFactory implements SelectionFactory<FileEntry> {
 
 		long folderId = GetterUtil.getLong(value.substring(4));
 
-		return new FolderFileEntrySelection(
+		return new FolderFileEntryBulkSelection(
 			repositoryId, folderId, _resourceBundleLoader, _language,
 			_repositoryProvider, _dlAppService);
 	}
 
-	private Selection<FileEntry> _getFileEntrySelection(String[] values) {
+	private BulkSelection<FileEntry> _getFileEntrySelection(String[] values) {
 		if (values.length == 1) {
 			values = StringUtil.split(values[0]);
 		}
@@ -83,12 +84,12 @@ public class FileEntrySelectionFactory implements SelectionFactory<FileEntry> {
 		long[] rowIdsFileEntries = GetterUtil.getLongValues(values);
 
 		if (rowIdsFileEntries.length == 1) {
-			return new SingleFileEntrySelection(
+			return new SingleFileEntryBulkSelection(
 				rowIdsFileEntries[0], _resourceBundleLoader, _language,
 				_dlAppService);
 		}
 
-		return new MultipleFileEntrySelection(
+		return new MultipleFileEntryBulkSelection(
 			rowIdsFileEntries, _resourceBundleLoader, _language, _dlAppService);
 	}
 

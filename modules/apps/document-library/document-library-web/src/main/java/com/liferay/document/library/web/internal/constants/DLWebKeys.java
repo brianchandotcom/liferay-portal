@@ -19,6 +19,9 @@ package com.liferay.document.library.web.internal.constants;
  */
 public class DLWebKeys {
 
+	public static final String DOCUMENT_LIBRARY_BULK_SELECTION =
+		"DOCUMENT_LIBRARY_BULK_SELECTION";
+
 	public static final String DOCUMENT_LIBRARY_COMMON_TAG_NAMES =
 		"DOCUMENT_LIBRARY_COMMON_TAG_NAMES";
 
@@ -33,9 +36,6 @@ public class DLWebKeys {
 
 	public static final String DOCUMENT_LIBRARY_PREVIEW_EXCEPTION =
 		"DOCUMENT_LIBRARY_PREVIEW_EXCEPTION";
-
-	public static final String DOCUMENT_LIBRARY_SELECTION =
-		"DOCUMENT_LIBRARY_SELECTION";
 
 	public static final String DOCUMENT_LIBRARY_TRASH_UTIL =
 		"DOCUMENT_LIBRARY_TRASH_UTIL";

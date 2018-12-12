@@ -16,8 +16,8 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.bulk.selection.Selection;
-import com.liferay.bulk.selection.SelectionFactory;
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -96,10 +96,10 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _editTags(ActionRequest actionRequest) throws PortalException {
-		Selection<FileEntry> selection = _selectionFactory.create(
+		BulkSelection<FileEntry> bulkSelection = _bulkSelectionFactory.create(
 			actionRequest.getParameterMap());
 
-		Stream<FileEntry> fileEntryStream = selection.stream();
+		Stream<FileEntry> fileEntryStream = bulkSelection.stream();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -178,15 +178,15 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
+	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
 	private ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private SelectionFactory<FileEntry> _selectionFactory;
 
 }

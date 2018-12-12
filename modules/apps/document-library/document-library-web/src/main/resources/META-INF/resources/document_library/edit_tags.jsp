@@ -32,7 +32,7 @@ if (portletTitleBasedNavigation) {
 	renderResponse.setTitle(LanguageUtil.get(request, "edit-tags"));
 }
 
-Selection<FileEntry> selection = (Selection<FileEntry>)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_SELECTION);
+BulkSelection<FileEntry> bulkSelection = (BulkSelection<FileEntry>)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_BULK_SELECTION);
 %>
 
 <liferay-portlet:actionURL name="/document_library/edit_tags" varImpl="editTagsURL" />
@@ -54,13 +54,13 @@ Selection<FileEntry> selection = (Selection<FileEntry>)request.getAttribute(DLWe
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= String.valueOf(selection.serialize()) %>" />
+					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= String.valueOf(bulkSelection.serialize()) %>" />
 					<aui:input name="commonTagNames" type="hidden" value="<%= commonTagNames %>" />
 					<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 
-					<%= selection.describe(themeDisplay.getLocale()) %>
+					<%= bulkSelection.describe(themeDisplay.getLocale()) %>
 
-					<c:if test="<%= selection.isMultiple() %>">
+					<c:if test="<%= bulkSelection.isMultiple() %>">
 						<div class="form-group" id="<portlet:namespace />tagOptions">
 							<aui:input checked="<%= true %>" label="append" name="append" type="radio" value="<%= true %>" />
 

@@ -19,8 +19,8 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public interface SelectionFactory<T> {
+public interface BulkSelectionFactory<T> {
 
-	public Selection<T> create(Map<String, String[]> parameterMap);
+	public BulkSelection<T> create(Map<String, String[]> parameterMap);
 
 }

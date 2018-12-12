@@ -188,8 +188,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, T> map = new HashMap<>();
-
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
@@ -197,12 +195,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			T model = fetchByPrimaryKey(primaryKey);
 
-			if (model != null) {
-				map.put(primaryKey, model);
+			if (model == null) {
+				return Collections.emptyMap();
 			}
 
-			return map;
+			return Collections.singletonMap(primaryKey, model);
 		}
+
+		Map<Serializable, T> map = new HashMap<>();
 
 		if (_modelPKType == ModelPKType.COMPOUND) {
 			for (Serializable primaryKey : primaryKeys) {

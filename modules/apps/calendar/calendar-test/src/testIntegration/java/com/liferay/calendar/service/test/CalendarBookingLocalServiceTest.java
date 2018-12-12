@@ -131,13 +131,13 @@ public class CalendarBookingLocalServiceTest {
 
 	@Test
 	public void testAddCalendarBooking() throws Exception {
+		Locale siteDefault = LocaleUtil.getSiteDefault();
+
 		ServiceContext serviceContext = createServiceContext();
 
 		Calendar calendar = CalendarTestUtil.addCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
-
-		serviceContext.setLanguageId("fr_FR");
 
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addRegularCalendarBooking(
@@ -145,7 +145,7 @@ public class CalendarBookingLocalServiceTest {
 				serviceContext);
 
 		Assert.assertEquals(
-			"fr_FR",
+			LocaleUtil.toLanguageId(siteDefault),
 			LocalizationUtil.getDefaultLanguageId(calendarBooking.getTitle()));
 	}
 

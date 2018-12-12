@@ -74,6 +74,9 @@ public class InvokerFilterTest {
 			HttpMethods.GET,
 			"/c///portal/%2e/../login;jsessionid=ae01b0f2af.worker1");
 
+		originalURI = invokerFilter.getOriginalRequestURI(
+			mockHttpServletRequest);
+
 		Assert.assertEquals(
 			"/c/portal/login", invokerFilter.getURI(originalURI));
 	}

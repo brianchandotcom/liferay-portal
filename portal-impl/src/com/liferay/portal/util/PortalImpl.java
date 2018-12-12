@@ -1462,18 +1462,28 @@ public class PortalImpl implements Portal {
 		groupFriendlyURL = groupFriendlyURL.concat(canonicalLayoutFriendlyURL);
 
 		if (includeQueryString) {
-			groupFriendlyURL = groupFriendlyURL.concat(
-				_removeSlashForConcatURLPath(groupFriendlyURL, parametersURL));
+			if (groupFriendlyURL.endsWith(StringPool.SLASH) &&
+				parametersURL.startsWith(StringPool.SLASH)) {
+
+				parametersURL = parametersURL.substring(1);
+			}
+
+			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
 		}
 		else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
+			if (groupFriendlyURL.endsWith(StringPool.SLASH) &&
+				parametersURL.startsWith(StringPool.SLASH)) {
+
+				parametersURL = parametersURL.substring(1);
+			}
+
 			int pos = parametersURL.indexOf(CharPool.QUESTION);
 
 			if (pos != -1) {
 				parametersURL = parametersURL.substring(0, pos);
 			}
 
-			groupFriendlyURL = groupFriendlyURL.concat(
-				_removeSlashForConcatURLPath(groupFriendlyURL, parametersURL));
+			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
 		}
 
 		return groupFriendlyURL;
@@ -9019,18 +9029,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return virtualHostName.equals(portalDomain);
-	}
-
-	private String _removeSlashForConcatURLPath(
-		String baseURL, String parametersURL) {
-
-		if (baseURL.endsWith(StringPool.SLASH) &&
-			parametersURL.startsWith(StringPool.SLASH)) {
-
-			return parametersURL.substring(1);
-		}
-
-		return parametersURL;
 	}
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(

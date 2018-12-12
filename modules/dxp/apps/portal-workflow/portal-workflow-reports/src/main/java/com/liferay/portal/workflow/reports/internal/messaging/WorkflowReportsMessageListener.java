@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexConstants;
+import com.liferay.portal.workflow.reports.internal.index.WorkflowIndicesCreator;
 import com.liferay.portal.workflow.reports.messaging.constants.WorkflowReportsDestinationNames;
 
 import java.util.Map;
@@ -62,7 +63,12 @@ public class WorkflowReportsMessageListener extends BaseMessageListener {
 		_searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setWorkflowIndicesCreator(
+		WorkflowIndicesCreator workflowIndicesCreator) {
+	}
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

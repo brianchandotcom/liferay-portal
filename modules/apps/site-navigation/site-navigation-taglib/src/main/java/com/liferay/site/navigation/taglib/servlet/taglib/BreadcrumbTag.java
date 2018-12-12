@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class BreadcrumbTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_breadcrumbEntries = null;
+		_breadcrumbEntries = new ArrayList<>();
 	}
 
 	@Override
@@ -60,6 +61,6 @@ public class BreadcrumbTag extends IncludeTag {
 
 	private static final String _PAGE = "/breadcrumb/page.jsp";
 
-	private List<BreadcrumbEntry> _breadcrumbEntries;
+	private List<BreadcrumbEntry> _breadcrumbEntries = new ArrayList<>();
 
 }

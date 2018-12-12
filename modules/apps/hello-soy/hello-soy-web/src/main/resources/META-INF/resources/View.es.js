@@ -1,7 +1,7 @@
-import Component from 'metal-component/src/Component';
+import Component from 'metal-component';
 import Footer from './Footer.soy';
 import Header from './Header.soy';
-import Soy from 'metal-soy/src/Soy';
+import Soy from 'metal-soy';
 import templates from './View.soy';
 
 class View extends Component {}

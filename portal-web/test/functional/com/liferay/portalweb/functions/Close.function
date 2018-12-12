@@ -1,45 +1,46 @@
-<definition default="close">
-	<command name="close">
-		<execute function="WaitForSPARefresh" />
+@default = "close"
+definition {
+	function close {
+		WaitForSPARefresh();
 
-		<execute argument1="null" selenium="selectWindow" />
+		selenium.selectWindow("null");
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="closeAndSelectWindow">
-		<execute function="WaitForSPARefresh" />
+	function closeAndSelectWindow {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="close" />
+		selenium.close();
 
-		<execute argument1="5000" selenium="pause" />
+		selenium.pause("5000");
 
-		<execute selenium="selectWindow" />
+		selenium.selectWindow();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="closeWindow">
-		<execute function="WaitForSPARefresh" />
+	function closeWindow {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="close" />
+		selenium.close();
 
-		<execute argument1="null" selenium="selectWindow" />
+		selenium.selectWindow("null");
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

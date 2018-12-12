@@ -1,11 +1,12 @@
-<definition default="downloadTempFile">
-	<command name="downloadTempFile">
-		<execute function="WaitForSPARefresh" />
+@default = "downloadTempFile"
+definition {
+	function downloadTempFile {
+		WaitForSPARefresh();
 
-		<execute argument1="5000" selenium="pause" />
+		selenium.pause("5000");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

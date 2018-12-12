@@ -1,11 +1,12 @@
-<definition default="mouseUp">
-	<command name="mouseUp">
-		<execute function="WaitForSPARefresh" />
+@default = "mouseUp"
+definition {
+	function mouseUp {
+		WaitForSPARefresh();
 
-		<execute selenium="mouseUp" />
+		selenium.mouseUp();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

@@ -1,13 +1,15 @@
-<definition default="assertElementNotPresent" summary="Assert that '${locator1}' is not available">
-	<command name="assertElementNotPresent">
-		<execute function="WaitForSPARefresh" />
+@default = "assertElementNotPresent"
+@summary = "Assert that '${locator1}' is not available"
+definition {
+	function assertElementNotPresent {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementNotPresent" />
+		selenium.waitForElementNotPresent();
 
-		<execute selenium="assertElementNotPresent" />
+		selenium.assertElementNotPresent();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

@@ -1,11 +1,12 @@
-<definition default="selectFrameTop">
-	<command name="selectFrameTop">
-		<execute argument1="relative=top" selenium="selectFrame" />
+@default = "selectFrameTop"
+definition {
+	function selectFrameTop {
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
+		selenium.assertLiferayErrors();
 
-		<execute function="WaitForSPARefresh" />
-	</command>
-</definition>
+		WaitForSPARefresh();
+	}
+}

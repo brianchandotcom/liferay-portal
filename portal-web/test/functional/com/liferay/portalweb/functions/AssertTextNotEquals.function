@@ -1,57 +1,57 @@
-<definition default="assertTextNotEquals" summary="Assert that '${locator1}' does not equal the value '${value1}'">
-	<command name="assertNotPartialText" summary="Assert that '${locator1}' does not contain the value '${value1}'">
-		<execute function="WaitForSPARefresh" />
+@default = "assertTextNotEquals"
+@summary = "Assert that '${locator1}' does not equal the value '${value1}'"
+definition {
+	@summary = "Assert that '${locator1}' does not contain the value '${value1}'"
+	function assertNotPartialText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForNotPartialText" />
+		selenium.waitForNotPartialText();
 
-		<execute selenium="assertNotPartialText" />
+		selenium.assertNotPartialText();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertNotText">
-		<execute function="WaitForSPARefresh" />
+	function assertNotText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForNotText" />
+		selenium.waitForNotText();
 
-		<execute selenium="assertNotText" />
+		selenium.assertNotText();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertNotValue">
-		<execute function="WaitForSPARefresh" />
+	function assertNotValue {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForNotValue" />
+		selenium.waitForNotValue();
 
-		<execute selenium="assertNotValue" />
+		selenium.assertNotValue();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextNotEquals">
-		<execute function="WaitForSPARefresh" />
+	function assertTextNotEquals {
+		WaitForSPARefresh();
 
-		<if>
-			<contains string="${locator1}" substring="/input" />
-			<then>
-				<execute function="AssertTextNotEquals#assertNotValue" />
-			</then>
-			<else>
-				<execute function="AssertTextNotEquals#assertNotText" />
-			</else>
-		</if>
-	</command>
-</definition>
+		if (contains("${locator1}", "/input")) {
+			AssertTextNotEquals.assertNotValue();
+		}
+		else {
+			AssertTextNotEquals.assertNotText();
+		}
+	}
+}

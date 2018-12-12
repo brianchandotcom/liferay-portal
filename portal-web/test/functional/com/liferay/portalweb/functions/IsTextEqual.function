@@ -1,45 +1,43 @@
-<definition default="isTextEqual">
-	<command name="isPartialText">
-		<execute function="WaitForSPARefresh" />
+@default = "isTextEqual"
+definition {
+	function isPartialText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="isPartialText" />
-	</command>
+		selenium.isPartialText();
+	}
 
-	<command name="isText">
-		<execute function="WaitForSPARefresh" />
+	function isText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="isText" />
-	</command>
+		selenium.isText();
+	}
 
-	<command name="isTextEqual">
-		<execute function="WaitForSPARefresh" />
+	function isTextEqual {
+		WaitForSPARefresh();
 
-		<if>
-			<contains string="${locator1}" substring="/input" />
-			<then>
-				<execute function="IsTextEqual#isValue" />
-			</then>
-			<else>
-				<execute function="IsTextEqual#isText" />
-			</else>
-		</if>
-	</command>
+		if (contains("${locator1}", "/input")) {
+			IsTextEqual.isValue();
+		}
+		else {
+			IsTextEqual.isText();
+		}
+	}
 
-	<command name="isValue">
-		<execute function="WaitForSPARefresh" />
+	function isValue {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="isValue" />
-	</command>
-</definition>
+		selenium.isValue();
+	}
+}

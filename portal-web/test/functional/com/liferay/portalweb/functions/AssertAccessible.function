@@ -1,11 +1,12 @@
-<definition default="assertAccessible">
-	<command name="assertAccessible">
-		<execute function="WaitForSPARefresh" />
+@default = "assertAccessible"
+definition {
+	function assertAccessible {
+		WaitForSPARefresh();
 
-		<execute selenium="assertAccessible" />
+		selenium.assertAccessible();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

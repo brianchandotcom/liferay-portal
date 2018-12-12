@@ -1,11 +1,12 @@
-<definition default="refresh">
-	<command name="refresh">
-		<execute function="WaitForSPARefresh" />
+@default = "refresh"
+definition {
+	function refresh {
+		WaitForSPARefresh();
 
-		<execute selenium="refresh" />
+		selenium.refresh();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

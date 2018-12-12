@@ -1,27 +1,28 @@
-<definition default="isElementPresent">
-	<command name="isElementPresent">
-		<execute function="WaitForSPARefresh" />
+@default = "isElementPresent"
+definition {
+	function isElementPresent {
+		WaitForSPARefresh();
 
-		<execute selenium="isElementPresent" />
-	</command>
+		selenium.isElementPresent();
+	}
 
-	<command name="isElementPresentAfterWait">
-		<execute function="WaitForSPARefresh" />
+	function isElementPresentAfterWait {
+		WaitForSPARefresh();
 
-		<execute selenium="isElementPresentAfterWait" />
-	</command>
+		selenium.isElementPresentAfterWait();
+	}
 
-	<command name="isVisible">
-		<execute function="WaitForSPARefresh" />
+	function isVisible {
+		WaitForSPARefresh();
 
-		<execute selenium="isVisible" />
-	</command>
+		selenium.isVisible();
+	}
 
-	<command name="pauseIsElementPresent">
-		<execute function="WaitForSPARefresh" />
+	function pauseIsElementPresent {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="isElementPresent" />
-	</command>
-</definition>
+		selenium.isElementPresent();
+	}
+}

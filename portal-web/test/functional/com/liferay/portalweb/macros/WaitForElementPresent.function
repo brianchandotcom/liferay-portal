@@ -1,5 +1,6 @@
-<definition default="waitForElementPresent">
-	<command name="waitForElementPresent">
-		<execute selenium="waitForElementPresent" />
-	</command>
-</definition>
+@default = "waitForElementPresent"
+definition {
+	function waitForElementPresent {
+		selenium.waitForElementPresent();
+	}
+}

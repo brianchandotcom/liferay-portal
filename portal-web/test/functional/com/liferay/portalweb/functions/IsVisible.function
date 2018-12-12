@@ -1,7 +1,8 @@
-<definition default="isVisible">
-	<command name="isVisible">
-		<execute function="WaitForSPARefresh" />
+@default = "isVisible"
+definition {
+	function isVisible {
+		WaitForSPARefresh();
 
-		<execute selenium="isVisible" />
-	</command>
-</definition>
+		selenium.isVisible();
+	}
+}

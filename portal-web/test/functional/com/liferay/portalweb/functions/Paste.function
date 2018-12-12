@@ -1,15 +1,16 @@
-<definition default="paste">
-	<command name="paste">
-		<execute function="WaitForSPARefresh" />
+@default = "paste"
+definition {
+	function paste {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="paste" />
+		selenium.paste();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

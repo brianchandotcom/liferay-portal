@@ -1,213 +1,221 @@
-<definition default="type" summary="Type to '${locator1}' the value '${value1}'">
-	<command name="clickAtType">
-		<execute function="WaitForSPARefresh" />
+@default = "type"
+@summary = "Type to '${locator1}' the value '${value1}'"
+definition {
+	function clickAtType {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="sendKeys">
-		<execute function="WaitForSPARefresh" />
+	function sendKeys {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="sendKeys" />
+		selenium.sendKeys();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="sendKeysAceEditor">
-		<execute function="WaitForSPARefresh" />
+	function sendKeysAceEditor {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="sendKeysAceEditor" />
+		selenium.sendKeysAceEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="sendKeysApplicationSearch">
-		<execute function="WaitForSPARefresh" />
+	function sendKeysApplicationSearch {
+		WaitForSPARefresh();
 
-		<execute argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]"
+		);
 
-		<execute function="Type#sendKeys" />
+		Type.sendKeys();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="type">
-		<execute function="WaitForSPARefresh" />
+	function type {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeAceEditor">
-		<execute function="WaitForSPARefresh" />
+	function typeAceEditor {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeAceEditor" />
+		selenium.typeAceEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeAceEditorNoError">
-		<execute function="WaitForSPARefresh" />
+	function typeAceEditorNoError {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeAceEditor" />
-	</command>
+		selenium.typeAceEditor();
+	}
 
-	<command name="typeAceEditorNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function typeAceEditorNoMouseOver {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="typeAceEditor" />
+		selenium.typeAceEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeCKEditor">
-		<execute function="WaitForSPARefresh" />
+	function typeCKEditor {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeCKEditor" />
+		selenium.typeCKEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeCKEditorWaitForCKEditor">
-		<execute function="WaitForSPARefresh" />
+	function typeCKEditorWaitForCKEditor {
+		WaitForSPARefresh();
 
-		<execute argument1="//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]" selenium="waitForVisible" />
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]"
+		);
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute function="Type#typeCKEditor" />
+		Type.typeCKEditor();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeClickAt">
-		<execute function="WaitForSPARefresh" />
+	function typeClickAt {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeEditor">
-		<execute function="WaitForSPARefresh" />
+	function typeEditor {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="typeEditor" />
+		selenium.typeEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeNotVisibleNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function typeNotVisibleNoMouseOver {
+		WaitForSPARefresh();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typePause">
-		<execute function="WaitForSPARefresh" />
+	function typePause {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="type" />
+		selenium.type();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="typeWaitForCKEditorScript">
-		<execute function="WaitForSPARefresh" />
+	function typeWaitForCKEditorScript {
+		WaitForSPARefresh();
 
-		<execute argument1="//script[contains(@src,'ckeditor/config.js') or contains(@id,'ckEditorScript')]" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'ckeditor/config.js') or contains(@id,'ckEditorScript')]"
+		);
 
-		<execute function="Type#type" />
+		Type.type();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

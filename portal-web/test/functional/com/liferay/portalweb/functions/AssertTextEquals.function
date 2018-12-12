@@ -1,85 +1,85 @@
-<definition default="assertTextEquals" summary="Assert that '${locator1}' equals the value '${value1}'">
-	<command name="assertPartialText" summary="Assert that '${locator1}' contains the value '${value1}'">
-		<execute function="WaitForSPARefresh" />
+@default = "assertTextEquals"
+@summary = "Assert that '${locator1}' equals the value '${value1}'"
+definition {
+	@summary = "Assert that '${locator1}' contains the value '${value1}'"
+	function assertPartialText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForPartialText" />
+		selenium.waitForPartialText();
 
-		<execute selenium="assertPartialText" />
+		selenium.assertPartialText();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertPartialTextAceEditor">
-		<execute function="WaitForSPARefresh" />
+	function assertPartialTextAceEditor {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForPartialTextAceEditor" />
+		selenium.waitForPartialTextAceEditor();
 
-		<execute selenium="assertPartialTextAceEditor" />
+		selenium.assertPartialTextAceEditor();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertText">
-		<execute function="WaitForSPARefresh" />
+	function assertText {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForText" />
+		selenium.waitForText();
 
-		<execute selenium="assertText" />
+		selenium.assertText();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextCaseInsensitive">
-		<execute function="WaitForSPARefresh" />
+	function assertTextCaseInsensitive {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForTextCaseInsensitive" />
+		selenium.waitForTextCaseInsensitive();
 
-		<execute selenium="assertTextCaseInsensitive" />
+		selenium.assertTextCaseInsensitive();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextEquals">
-		<execute function="WaitForSPARefresh" />
+	function assertTextEquals {
+		WaitForSPARefresh();
 
-		<if>
-			<contains string="${locator1}" substring="/input" />
-			<then>
-				<execute function="AssertTextEquals#assertValue" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertText" />
-			</else>
-		</if>
-	</command>
+		if (contains("${locator1}", "/input")) {
+			AssertTextEquals.assertValue();
+		}
+		else {
+			AssertTextEquals.assertText();
+		}
+	}
 
-	<command name="assertValue">
-		<execute function="WaitForSPARefresh" />
+	function assertValue {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="waitForValue" />
+		selenium.waitForValue();
 
-		<execute selenium="assertValue" />
+		selenium.assertValue();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

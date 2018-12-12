@@ -1,37 +1,38 @@
-<definition default="assertNotChecked">
-	<command name="assertNotChecked">
-		<execute function="WaitForSPARefresh" />
+@default = "assertNotChecked"
+definition {
+	function assertNotChecked {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="assertNotChecked" />
+		selenium.assertNotChecked();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertNotCheckedHiddenToggleSwitch">
-		<execute function="WaitForSPARefresh" />
+	function assertNotCheckedHiddenToggleSwitch {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute argument1="xpath=(${locator1})/../../input" selenium="assertNotChecked" />
+		selenium.assertNotChecked("xpath=(${locator1})/../../input");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertNotCheckedNotVisible">
-		<execute function="WaitForSPARefresh" />
+	function assertNotCheckedNotVisible {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="assertNotChecked" />
+		selenium.assertNotChecked();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

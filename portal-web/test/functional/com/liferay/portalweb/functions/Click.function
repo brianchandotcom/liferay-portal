@@ -1,177 +1,183 @@
-<definition default="click" summary="Click on '${locator1}'">
-	<command name="click">
-		<execute function="WaitForSPARefresh" />
+@default = "click"
+@summary = "Click on '${locator1}'"
+definition {
+	function click {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickAt">
-		<execute function="WaitForSPARefresh" />
+	function clickAt {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickAtSidebarClickAtWaitForScript">
-		<execute function="WaitForSPARefresh" />
+	function clickAtSidebarClickAtWaitForScript {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute argument1="//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']"
+		);
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute argument1="//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]"
+		);
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute function="Click#clickAt" />
+		Click.clickAt();
 
-		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]" selenium="waitForElementPresent" />
-	</command>
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains( @src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]"
+		);
+	}
 
-	<command name="clickNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function clickNoMouseOver {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickNoMouseOverNoWaitForVisible">
-		<execute function="WaitForSPARefresh" />
+	function clickNoMouseOverNoWaitForVisible {
+		WaitForSPARefresh();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickNoSPARefresh">
-		<execute selenium="waitForVisible" />
+	function clickNoSPARefresh {
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickNoWaitForVisible">
-		<execute function="WaitForSPARefresh" />
+	function clickNoWaitForVisible {
+		WaitForSPARefresh();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="clickWaitForInlineCKEditorNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function clickWaitForInlineCKEditorNoMouseOver {
+		WaitForSPARefresh();
 
-		<if>
-			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
-			<then>
-				<execute argument1="//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]" selenium="waitForElementPresent" />
-			</then>
-		</if>
+		if (selenium.isElementPresent("//div[contains(@class,'cke_editable_inline')]")) {
+			selenium.waitForElementPresent(
+				"//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]"
+			);
+		}
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="mouseDownMouseUp">
-		<execute function="WaitForSPARefresh" />
+	function mouseDownMouseUp {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseDown" />
+		selenium.mouseDown();
 
-		<execute selenium="mouseUp" />
+		selenium.mouseUp();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="mouseOverClick">
-		<execute function="WaitForSPARefresh" />
+	function mouseOverClick {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForElementPresent" />
+		selenium.waitForElementPresent();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="pauseClickAt">
-		<execute function="WaitForSPARefresh" />
+	function pauseClickAt {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute function="Click#clickAt" />
+		Click.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="waitForMenuToggleJSClick">
-		<execute function="WaitForSPARefresh" />
+	function waitForMenuToggleJSClick {
+		WaitForSPARefresh();
 
-		<execute argument1="relative=top" selenium="selectFrame" />
+		selenium.selectFrame("relative=top");
 
-		<execute argument1="//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]"
+		);
 
-		<if>
-			<condition argument1="//iframe" selenium="isElementPresent" />
-			<then>
-				<execute argument1="//iframe" selenium="selectFrame" />
-			</then>
-		</if>
+		if (selenium.isElementPresent("//iframe")) {
+			selenium.selectFrame("//iframe");
+		}
 
-		<execute argument1="3000" selenium="pause" />
+		selenium.pause("3000");
 
-		<execute function="Click" />
+		Click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

@@ -1,9 +1,11 @@
-<definition default="antCommand" summary="ant -f ${locator1} ${value1}">
-	<command name="antCommand">
-		<execute selenium="antCommand" />
+@default = "antCommand"
+@summary = "ant -f ${locator1} ${value1}"
+definition {
+	function antCommand {
+		selenium.antCommand();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

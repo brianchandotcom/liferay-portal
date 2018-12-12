@@ -1,27 +1,29 @@
-<definition default="click" summary="Click on '${locator1}'">
-	<command name="click">
-		<execute function="WaitForSPARefresh" />
+@default = "click"
+@summary = "Click on '${locator1}'"
+definition {
+	function click {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="clickNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function clickNoMouseOver {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="click" />
-	</command>
+		selenium.click();
+	}
 
-	<command name="mouseDownMouseUp">
-		<execute function="WaitForSPARefresh" />
+	function mouseDownMouseUp {
+		WaitForSPARefresh();
 
-		<execute selenium="mouseDown" />
+		selenium.mouseDown();
 
-		<execute selenium="mouseUp" />
-	</command>
-</definition>
+		selenium.mouseUp();
+	}
+}

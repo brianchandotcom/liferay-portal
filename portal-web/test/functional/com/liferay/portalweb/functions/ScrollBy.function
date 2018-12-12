@@ -1,7 +1,8 @@
-<definition default="scrollBy">
-	<command name="scrollBy">
-		<execute function="WaitForSPARefresh" />
+@default = "scrollBy"
+definition {
+	function scrollBy {
+		WaitForSPARefresh();
 
-		<execute selenium="scrollBy" />
-	</command>
-</definition>
+		selenium.scrollBy();
+	}
+}

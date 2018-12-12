@@ -1,15 +1,16 @@
-<definition default="uploadTempFile">
-	<command name="uploadTempFile">
-		<execute function="WaitForSPARefresh" />
+@default = "uploadTempFile"
+definition {
+	function uploadTempFile {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="uploadTempFile" />
+		selenium.uploadTempFile();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

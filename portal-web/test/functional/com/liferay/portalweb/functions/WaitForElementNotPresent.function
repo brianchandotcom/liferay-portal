@@ -1,5 +1,6 @@
-<definition default="waitForElementNotPresent">
-	<command name="waitForElementNotPresent">
-		<execute selenium="waitForElementNotPresent" />
-	</command>
-</definition>
+@default = "waitForElementNotPresent"
+definition {
+	function waitForElementNotPresent {
+		selenium.waitForElementNotPresent();
+	}
+}

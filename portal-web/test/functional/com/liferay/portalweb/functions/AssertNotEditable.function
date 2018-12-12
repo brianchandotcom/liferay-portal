@@ -1,13 +1,14 @@
-<definition default="assertNotEditable">
-	<command name="assertNotEditable">
-		<execute function="WaitForSPARefresh" />
+@default = "assertNotEditable"
+definition {
+	function assertNotEditable {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute selenium="assertNotEditable" />
+		selenium.assertNotEditable();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

@@ -1,35 +1,35 @@
-<definition default="selectFrame">
-	<command name="selectFrame">
-		<if>
-			<contains string="${locator1}" substring="/iframe" />
-			<then>
-				<execute selenium="waitForVisible" />
+@default = "selectFrame"
+definition {
+	function selectFrame {
+		if (contains("${locator1}", "/iframe")) {
+			selenium.waitForVisible();
 
-				<execute selenium="mouseOver" />
+			selenium.mouseOver();
 
-				<execute selenium="selectFrame" />
+			selenium.selectFrame();
 
-				<execute argument1="//div[contains(@class,'overlaymask') and not(contains(@class,'hidden'))]//div[contains(@class,'loadingmask-message')]" selenium="waitForElementNotPresent" />
+			selenium.waitForElementNotPresent(
+				"//div[contains(@class,'overlaymask') and not(contains(@class,'hidden'))]//div[contains(@class,'loadingmask-message')]"
+			);
 
-				<execute selenium="assertJavaScriptErrors" />
+			selenium.assertJavaScriptErrors();
 
-				<execute selenium="assertLiferayErrors" />
-			</then>
-			<else>
-				<execute function="SelectFrame#selectFrameTop" />
-			</else>
-		</if>
+			selenium.assertLiferayErrors();
+		}
+		else {
+			SelectFrame.selectFrameTop();
+		}
 
-		<execute function="WaitForSPARefresh" />
-	</command>
+		WaitForSPARefresh();
+	}
 
-	<command name="selectFrameTop">
-		<execute argument1="relative=top" selenium="selectFrame" />
+	function selectFrameTop {
+		selenium.selectFrame("relative=top");
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
+		selenium.assertLiferayErrors();
 
-		<execute function="WaitForSPARefresh" />
-	</command>
-</definition>
+		WaitForSPARefresh();
+	}
+}

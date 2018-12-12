@@ -1,11 +1,12 @@
-<definition default="sikuliUploadTCatFile">
-	<command name="sikuliUploadTCatFile">
-		<execute function="WaitForSPARefresh" />
+@default = "sikuliUploadTCatFile"
+definition {
+	function sikuliUploadTCatFile {
+		WaitForSPARefresh();
 
-		<execute selenium="sikuliUploadTCatFile" />
+		selenium.sikuliUploadTCatFile();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

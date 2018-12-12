@@ -1,11 +1,12 @@
-<definition default="mouseDown">
-	<command name="mouseDown">
-		<execute function="WaitForSPARefresh" />
+@default = "mouseDown"
+definition {
+	function mouseDown {
+		WaitForSPARefresh();
 
-		<execute selenium="mouseDown" />
+		selenium.mouseDown();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

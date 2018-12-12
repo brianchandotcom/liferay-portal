@@ -1,13 +1,14 @@
-<definition default="assertTextNotPresent">
-	<command name="assertTextNotPresent">
-		<execute function="WaitForSPARefresh" />
+@default = "assertTextNotPresent"
+definition {
+	function assertTextNotPresent {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForTextNotPresent" />
+		selenium.waitForTextNotPresent();
 
-		<execute selenium="assertTextNotPresent" />
+		selenium.assertTextNotPresent();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

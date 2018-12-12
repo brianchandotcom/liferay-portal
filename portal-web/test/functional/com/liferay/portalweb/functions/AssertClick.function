@@ -1,151 +1,152 @@
-<definition default="assertClick" summary="Click on '${locator1}' that should have a value of '${value1}'">
-	<command name="assertClick">
-		<execute function="WaitForSPARefresh" />
+@default = "assertClick"
+@summary = "Click on '${locator1}' that should have a value of '${value1}'"
+definition {
+	function assertClick {
+		WaitForSPARefresh();
 
-		<if>
-			<contains string="${locator1}" substring="/input" />
-			<then>
-				<execute function="AssertClick#assertValueClickAt" />
-			</then>
-			<else>
-				<execute function="AssertClick#assertTextClickAt" />
-			</else>
-		</if>
-	</command>
+		if (contains("${locator1}", "/input")) {
+			AssertClick.assertValueClickAt();
+		}
+		else {
+			AssertClick.assertTextClickAt();
+		}
+	}
 
-	<command name="assertPartialTextClickAt">
-		<execute function="WaitForSPARefresh" />
+	function assertPartialTextClickAt {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertPartialText" />
+		AssertTextEquals.assertPartialText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextClickAt">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickAt {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertText" />
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextClickAtAndPause">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickAtAndPause {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertText" />
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
+		selenium.assertLiferayErrors();
 
-		<execute argument1="1000" selenium="pause" />
-	</command>
+		selenium.pause("1000");
+	}
 
-	<command name="assertTextClickAtNoJavaScript">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickAtNoJavaScript {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertText" />
+		AssertTextEquals.assertText();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextClickAtWaitForLastScript">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickAtWaitForLastScript {
+		WaitForSPARefresh();
 
-		<execute selenium="waitForVisible" />
+		selenium.waitForVisible();
 
-		<execute function="AssertClick#assertTextClickAt" />
+		AssertClick.assertTextClickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
+		selenium.assertLiferayErrors();
 
-		<execute argument1="xpath=(//script)[last()]" selenium="waitForElementPresent" />
-	</command>
+		selenium.waitForElementPresent("xpath=(//script)[last()]");
+	}
 
-	<command name="assertTextClickCaseInsensitive">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickCaseInsensitive {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" />
+		AssertTextEquals.assertTextCaseInsensitive();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertTextClickNoMouseOver">
-		<execute function="WaitForSPARefresh" />
+	function assertTextClickNoMouseOver {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertText" />
+		AssertTextEquals.assertText();
 
-		<execute selenium="click" />
+		selenium.click();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="assertValueClickAt">
-		<execute function="WaitForSPARefresh" />
+	function assertValueClickAt {
+		WaitForSPARefresh();
 
-		<execute function="AssertTextEquals#assertValue" />
+		AssertTextEquals.assertValue();
 
-		<execute selenium="mouseOver" />
+		selenium.mouseOver();
 
-		<execute selenium="clickAt" />
+		selenium.clickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="pauseAssertTextClickAt">
-		<execute function="WaitForSPARefresh" />
+	function pauseAssertTextClickAt {
+		WaitForSPARefresh();
 
-		<execute argument1="1000" selenium="pause" />
+		selenium.pause("1000");
 
-		<execute function="AssertClick#assertTextClickAt" />
+		AssertClick.assertTextClickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
+		selenium.assertLiferayErrors();
+	}
 
-	<command name="waitForDMHomeAssertTextEqualsClick">
-		<execute function="WaitForSPARefresh" />
+	function waitForDMHomeAssertTextEqualsClick {
+		WaitForSPARefresh();
 
-		<execute argument1="//div[contains(@id,'documentLibraryContainer')]" selenium="waitForElementPresent" />
+		selenium.waitForElementPresent(
+			"//div[contains(@id,'documentLibraryContainer')]"
+		);
 
-		<execute argument1="1500" selenium="pause" />
+		selenium.pause("1500");
 
-		<execute function="AssertClick#assertTextClickAt" />
+		AssertClick.assertTextClickAt();
 
-		<execute selenium="assertJavaScriptErrors" />
+		selenium.assertJavaScriptErrors();
 
-		<execute selenium="assertLiferayErrors" />
-	</command>
-</definition>
+		selenium.assertLiferayErrors();
+	}
+}

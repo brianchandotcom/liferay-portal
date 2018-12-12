@@ -20,17 +20,26 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class ThreadLocalCacheAdvice extends AnnotationChainableMethodAdvice {
+public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 
-	public ThreadLocalCacheAdvice() {
-		super(ThreadLocalCachable.class);
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(ThreadLocalCachable.class);
 	}
 
 	@Override

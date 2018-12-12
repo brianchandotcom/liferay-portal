@@ -19,23 +19,21 @@ import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
  */
-public class SPIClusterableAdvice extends AnnotationChainableMethodAdvice {
-
-	public SPIClusterableAdvice() {
-		super(Clusterable.class);
-	}
+public class SPIClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
@@ -92,6 +90,14 @@ public class SPIClusterableAdvice extends AnnotationChainableMethodAdvice {
 		}
 
 		return result;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(Clusterable.class);
 	}
 
 }

@@ -75,13 +75,13 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @review
 	 */
 	_alignTooltip() {
-    if (this.refs.tooltip) {
-      Align.align(
-        this.refs.tooltip,
-        this.alignElement,
-        Align.Top
-      );
-    }
+		if (this.refs.tooltip) {
+			Align.align(
+				this.refs.tooltip,
+				this.alignElement,
+				Align.Top
+			);
+		}
 	}
 
 	/**

@@ -1,23 +1,20 @@
-import Component from 'metal-component';
-import {Config} from 'metal-state';
+import State, {Config} from 'metal-state';
 import dom from 'metal-dom';
 import {Store} from '../../store/store.es';
 
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
-
 import FragmentStyleEditors from '../fragment_processors/FragmentStyleEditors.es';
+import {OPEN_MAPPING_FIELDS_DIALOG} from '../../actions/actions.es';
 
-import {
-	OPEN_MAPPING_FIELDS_DIALOG
-} from '../../actions/actions.es';
-
-class FragmentStyleEditor extends Component {
+/**
+ * FragmentStyleEditor
+ */
+class FragmentStyleEditor extends State {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	created() {
 		this._onNodeClickHandler = dom.on(
 			this.node,
@@ -31,7 +28,6 @@ class FragmentStyleEditor extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
-
 	_handleNodeClick(event) {
 		if (event.target === this.node) {
 			event.preventDefault();
@@ -61,6 +57,10 @@ class FragmentStyleEditor extends Component {
 		}
 	}
 
+	/**
+	 * Handles tooltip button click event.
+	 * @param {MouseEvent} event
+	 */
 	_handleButtonClick(event) {
 		const styleEditor = FragmentStyleEditors[this.type];
 
@@ -78,6 +78,11 @@ class FragmentStyleEditor extends Component {
 		);
 	}
 
+	/**
+	 * Handles a change style event.
+	 * @param {Object} event
+	 * @param {string} event.eventType
+	 */
 	_handleChangeStyle(event) {
 		if (event.eventType && event.eventType === 'map') {
 			this.store
@@ -104,11 +109,17 @@ class FragmentStyleEditor extends Component {
 		}
 	}
 
+	/**
+	 * Handle destroy style editor event.
+	 */
 	_handleDestroyStyleEditor() {
 		this._tooltip.dispose();
 		this._tooltip = null;
 	}
 
+	/**
+	 * Disposes style tooltip if any.
+	 */
 	disposeStyleTooltip() {
 		if (this._tooltip) {
 			this._tooltip.dispose();
@@ -125,7 +136,6 @@ class FragmentStyleEditor extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentStyleEditor.STATE = {
 
 	/**
@@ -136,7 +146,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	cssText: Config.string().required(),
 
 	/**
@@ -147,7 +156,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-
 	editorsOptions: Config.object().required(),
 
 	/**
@@ -158,7 +166,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
@@ -169,7 +176,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {HTMLElement}
 	 */
-
 	node: Config.internal().object(),
 
 	/**
@@ -180,7 +186,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -191,7 +196,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	selectorText: Config.string().required(),
 
 	/**
@@ -202,7 +206,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!boolean}
 	 */
-
 	showMapping: Config.bool().required(),
 
 	/**
@@ -213,7 +216,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -224,7 +226,6 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	type: Config.string().required()
 
 };

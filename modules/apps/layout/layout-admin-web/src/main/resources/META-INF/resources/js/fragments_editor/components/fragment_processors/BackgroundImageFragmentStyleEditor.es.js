@@ -1,7 +1,6 @@
 /**
  * Possible types that can be returned by the image selector
  */
-
 const RETURN_TYPES = {
 	fileEntryItemSelector: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 	url: 'URL'
@@ -12,11 +11,9 @@ const RETURN_TYPES = {
  * "styleChanged" event.
  * @param {Event} changeEvent
  * @param {HTMLElement} styledElement
- * @param {string} fragmentEntryLinkId
  * @param {function} changedCallback
  * @private
  */
-
 function _handleImageEditorChange(
 	changeEvent,
 	styledElement,
@@ -25,7 +22,7 @@ function _handleImageEditorChange(
 	const selectedItem = changeEvent.newVal;
 
 	if (styledElement && selectedItem) {
-		const returnType = selectedItem.returnType;
+		const {returnType} = selectedItem;
 		let url = '';
 
 		if (returnType === RETURN_TYPES.url) {
@@ -51,10 +48,15 @@ function _handleImageEditorChange(
  * destroyed on hide.
  * @review
  */
-
 function destroy() {
 }
 
+/**
+ * Returns the list of buttons to be shown inside the tooltip.
+ * @param {boolean} showMapping
+ * @return {Array<{id: string, label: string}>}
+ * @review
+ */
 function getButtons(showMapping) {
 	const buttons = [
 		{
@@ -78,6 +80,7 @@ function getButtons(showMapping) {
 /**
  * Show the image selector dialog and calls the given callback when an
  * image is selected.
+ * @param {string} buttonId
  * @param {HTMLElement} styledElement
  * @param {string} portletNamespace
  * @param {{imageSelectorURL: string}} options
@@ -85,7 +88,6 @@ function getButtons(showMapping) {
  * @param {function} destroyedCallback
  * @review
  */
-
 function init(
 	buttonId,
 	styledElement,
@@ -106,7 +108,7 @@ function init(
 					{
 						eventName,
 						on: {
-							selectedItemChange: (changeEvent) => {
+							selectedItemChange: changeEvent => {
 								_handleImageEditorChange(
 									changeEvent,
 									styledElement,
@@ -114,7 +116,7 @@ function init(
 								);
 							},
 
-							visibleChange: (change) => {
+							visibleChange: change => {
 								if (change.newVal === false) {
 									destroyedCallback();
 								}

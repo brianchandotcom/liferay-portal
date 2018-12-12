@@ -103,20 +103,13 @@ public class AopConfigurableApplicationContextConfigurator
 
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				ServiceBeanAutoProxyCreator counterServiceBeanAutoProxyCreator =
-					new ServiceBeanAutoProxyCreator();
-
-				counterServiceBeanAutoProxyCreator.setBeanMatcher(
-					new ServiceBeanMatcher(true));
-				counterServiceBeanAutoProxyCreator.setChainableMethodAdvices(
-					Collections.singletonList(
-						configurableListableBeanFactory.getBean(
-							"counterTransactionAdvice",
-							ChainableMethodAdvice.class)));
-
-				counterServiceBeanAutoProxyCreator.setBeanClassLoader(
-					_classLoader);
-
-				counterServiceBeanAutoProxyCreator.afterPropertiesSet();
+					new ServiceBeanAutoProxyCreator(
+						new ServiceBeanMatcher(true), _classLoader,
+						new ServiceBeanAopCacheManager(
+							Collections.singletonList(
+								configurableListableBeanFactory.getBean(
+									"counterTransactionAdvice",
+									ChainableMethodAdvice.class))));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
 					counterServiceBeanAutoProxyCreator);
@@ -124,17 +117,15 @@ public class AopConfigurableApplicationContextConfigurator
 
 			// Service AOP
 
+			ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+				new ServiceBeanAopCacheManager(
+					_createChainableMethodAdvices(
+						configurableListableBeanFactory));
+
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
-				new ServiceBeanAutoProxyCreator();
-
-			serviceBeanAutoProxyCreator.setBeanMatcher(
-				new ServiceBeanMatcher());
-			serviceBeanAutoProxyCreator.setChainableMethodAdvices(
-				_createChainableMethodAdvices(configurableListableBeanFactory));
-
-			serviceBeanAutoProxyCreator.setBeanClassLoader(_classLoader);
-
-			serviceBeanAutoProxyCreator.afterPropertiesSet();
+				new ServiceBeanAutoProxyCreator(
+					new ServiceBeanMatcher(), _classLoader,
+					serviceBeanAopCacheManager);
 
 			configurableListableBeanFactory.addBeanPostProcessor(
 				serviceBeanAutoProxyCreator);

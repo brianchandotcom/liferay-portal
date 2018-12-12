@@ -68,24 +68,17 @@ public class AssetListEntryStagingTest {
 	public void testAssetListCopiedWhenLocalStagingActivated()
 		throws PortalException {
 
-		AssetListTestUtil.addAssetListEntry(_liveGroup.getGroupId());
+		AssetListEntry liveAssetListEntry = AssetListTestUtil.addAssetListEntry(
+			_liveGroup.getGroupId());
 
 		_stagingGroup = AssetListStagingTestUtil.enableLocalStaging(
 			_liveGroup, true);
 
-		List<AssetListEntry> liveAssetLists =
-			AssetListEntryLocalServiceUtil.getAssetListEntries(
-				_liveGroup.getGroupId());
+		AssetListEntry stagingAssetListEntry =
+			AssetListEntryLocalServiceUtil.fetchAssetListEntryByUuidAndGroupId(
+				liveAssetListEntry.getUuid(), _stagingGroup.getGroupId());
 
-		List<AssetListEntry> stagingAssetLists =
-			AssetListEntryLocalServiceUtil.getAssetListEntries(
-				_stagingGroup.getGroupId());
-
-		Assert.assertEquals(
-			liveAssetLists.toString(), 1, liveAssetLists.size());
-
-		Assert.assertEquals(
-			stagingAssetLists.toString(), 1, stagingAssetLists.size());
+		Assert.assertNotNull(stagingAssetListEntry);
 	}
 
 	@Test
@@ -93,77 +86,53 @@ public class AssetListEntryStagingTest {
 		_stagingGroup = AssetListStagingTestUtil.enableLocalStaging(
 			_liveGroup, true);
 
-		AssetListTestUtil.addAssetListEntry(_stagingGroup.getGroupId());
-
-		List<AssetListEntry> liveAssetLists =
+		List<AssetListEntry> originalLiveAssetListEntries =
 			AssetListEntryLocalServiceUtil.getAssetListEntries(
 				_liveGroup.getGroupId());
 
-		List<AssetListEntry> stagingAssetLists =
-			AssetListEntryLocalServiceUtil.getAssetListEntries(
-				_stagingGroup.getGroupId());
-
-		Assert.assertEquals(
-			liveAssetLists.toString(), 0, liveAssetLists.size());
-
-		Assert.assertEquals(
-			stagingAssetLists.toString(), 1, stagingAssetLists.size());
+		AssetListTestUtil.addAssetListEntry(_stagingGroup.getGroupId());
 
 		AssetListStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
 
-		liveAssetLists = AssetListEntryLocalServiceUtil.getAssetListEntries(
-			_liveGroup.getGroupId());
-
-		stagingAssetLists = AssetListEntryLocalServiceUtil.getAssetListEntries(
-			_stagingGroup.getGroupId());
+		List<AssetListEntry> actualLiveAssetListEntries =
+			AssetListEntryLocalServiceUtil.getAssetListEntries(
+				_liveGroup.getGroupId());
 
 		Assert.assertEquals(
-			liveAssetLists.toString(), 1, liveAssetLists.size());
-
-		Assert.assertEquals(
-			stagingAssetLists.toString(), 1, stagingAssetLists.size());
+			actualLiveAssetListEntries.toString(),
+			originalLiveAssetListEntries.size() + 1,
+			actualLiveAssetListEntries.size());
 	}
 
 	@Test
 	public void testPublishDeleteAssetList() throws PortalException {
-		AssetListTestUtil.addAssetListEntry(_liveGroup.getGroupId());
+		AssetListEntry liveAssetListEntry = AssetListTestUtil.addAssetListEntry(
+			_liveGroup.getGroupId());
 
 		_stagingGroup = AssetListStagingTestUtil.enableLocalStaging(
 			_liveGroup, true);
 
-		AssetListEntry assetList =
-			AssetListEntryLocalServiceUtil.getAssetListEntries(
-				_stagingGroup.getGroupId()).get(0);
-
-		AssetListEntryLocalServiceUtil.deleteAssetListEntry(assetList);
-
-		List<AssetListEntry> liveAssetLists =
+		List<AssetListEntry> originalLiveAssetListEntries =
 			AssetListEntryLocalServiceUtil.getAssetListEntries(
 				_liveGroup.getGroupId());
 
-		List<AssetListEntry> stagingAssetLists =
-			AssetListEntryLocalServiceUtil.getAssetListEntries(
-				_stagingGroup.getGroupId());
+		AssetListEntry stagingAssetListEntry =
+			AssetListEntryLocalServiceUtil.fetchAssetListEntryByUuidAndGroupId(
+				liveAssetListEntry.getUuid(), _stagingGroup.getGroupId());
 
-		Assert.assertEquals(
-			liveAssetLists.toString(), 1, liveAssetLists.size());
-
-		Assert.assertEquals(
-			stagingAssetLists.toString(), 0, stagingAssetLists.size());
+		AssetListEntryLocalServiceUtil.deleteAssetListEntry(
+			stagingAssetListEntry);
 
 		AssetListStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
 
-		liveAssetLists = AssetListEntryLocalServiceUtil.getAssetListEntries(
-			_liveGroup.getGroupId());
-
-		stagingAssetLists = AssetListEntryLocalServiceUtil.getAssetListEntries(
-			_stagingGroup.getGroupId());
+		List<AssetListEntry> actualLiveAssetListEntries =
+			AssetListEntryLocalServiceUtil.getAssetListEntries(
+				_liveGroup.getGroupId());
 
 		Assert.assertEquals(
-			liveAssetLists.toString(), 0, liveAssetLists.size());
-
-		Assert.assertEquals(
-			stagingAssetLists.toString(), 0, stagingAssetLists.size());
+			actualLiveAssetListEntries.toString(),
+			originalLiveAssetListEntries.size() - 1,
+			actualLiveAssetListEntries.size());
 	}
 
 	@Test

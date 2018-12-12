@@ -1471,19 +1471,22 @@ public class PortalImpl implements Portal {
 			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
 		}
 		else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
+			int x = 0;
+
 			if (groupFriendlyURL.endsWith(StringPool.SLASH) &&
 				parametersURL.startsWith(StringPool.SLASH)) {
 
-				parametersURL = parametersURL.substring(1);
+				x = 1;
 			}
 
-			int pos = parametersURL.indexOf(CharPool.QUESTION);
+			int y = parametersURL.indexOf(CharPool.QUESTION);
 
-			if (pos != -1) {
-				parametersURL = parametersURL.substring(0, pos);
+			if (y == -1) {
+				y = parametersURL.length();
 			}
 
-			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
+			groupFriendlyURL = groupFriendlyURL.concat(
+				parametersURL.substring(x, y));
 		}
 
 		return groupFriendlyURL;

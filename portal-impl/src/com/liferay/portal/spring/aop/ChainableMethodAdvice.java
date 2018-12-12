@@ -86,10 +86,6 @@ public abstract class ChainableMethodAdvice {
 	protected void setServiceBeanAopCacheManager(
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
-		if (this.serviceBeanAopCacheManager != null) {
-			return;
-		}
-
 		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 

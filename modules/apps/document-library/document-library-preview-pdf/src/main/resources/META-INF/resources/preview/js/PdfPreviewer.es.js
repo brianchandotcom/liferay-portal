@@ -33,6 +33,13 @@ class PdfPreviewer extends Component {
 	 * @inheritDoc
 	 */
 	created() {
+		this._loadedPages = {
+			[this.currentPage]: {
+				loaded: true,
+				pagePromise: Promise.resolve()
+			}
+		};
+
 		this._goToPageDebounced = debounce(
 			this._goToPage.bind(this),
 			WAIT_BETWEEN_GO_TO_PAGE
@@ -60,9 +67,7 @@ class PdfPreviewer extends Component {
 			!this._loadedPages[currentPage] ||
 			!this._loadedPages[currentPage].loaded
 		) {
-			if (currentPage !== this.initialConfig_.currentPage) {
-				this.currentPageLoading = true;
-			}
+			this.currentPageLoading = true;
 			this._goToPageDebounced(currentPage);
 		}
 		else {
@@ -261,14 +266,7 @@ PdfPreviewer.STATE = {
 	 * Pdf pages lenght
 	 * @type {Number}
 	 */
-	totalPages: Config.number().required(),
-
-	/**
-	 * Object that store promises in the page key
-	 * @default {}
-	 * @type {Object}
-	 */
-	_loadedPages: Config.object().internal().value({})
+	totalPages: Config.number().required()
 };
 
 Soy.register(PdfPreviewer, templates);

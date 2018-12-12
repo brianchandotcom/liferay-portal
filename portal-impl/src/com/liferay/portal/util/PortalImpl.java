@@ -1373,7 +1373,7 @@ public class PortalImpl implements Portal {
 			int pos = completeURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
 			if (pos == -1) {
-				pos = completeURL.indexOf(StringPool.QUESTION);
+				pos = completeURL.indexOf(CharPool.QUESTION);
 			}
 
 			groupFriendlyURL = completeURL;
@@ -1466,9 +1466,14 @@ public class PortalImpl implements Portal {
 				_removeSlashForConcatURLPath(groupFriendlyURL, parametersURL));
 		}
 		else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
+			int pos = parametersURL.indexOf(CharPool.QUESTION);
+
+			if (pos != -1) {
+				parametersURL = parametersURL.substring(0, pos);
+			}
+
 			groupFriendlyURL = groupFriendlyURL.concat(
-				_removeSlashForConcatURLPath(
-					groupFriendlyURL, _removeAllParameters(parametersURL)));
+				_removeSlashForConcatURLPath(groupFriendlyURL, parametersURL));
 		}
 
 		return groupFriendlyURL;
@@ -9014,16 +9019,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return virtualHostName.equals(portalDomain);
-	}
-
-	private String _removeAllParameters(String url) {
-		int pos = url.indexOf(StringPool.QUESTION);
-
-		if (pos != -1) {
-			url = url.substring(0, pos);
-		}
-
-		return url;
 	}
 
 	private String _removeSlashForConcatURLPath(

@@ -271,10 +271,7 @@ public class FragmentEntryLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
 		}
 
 		validate(name);

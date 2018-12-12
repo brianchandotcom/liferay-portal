@@ -36,6 +36,21 @@ public class AutoCloseUtil {
 	public static void autoClose(PullRequest pullRequest, Build build)
 		throws Exception {
 
+		if (pullRequest.isAutoCloseCommentAvailable()) {
+			return;
+		}
+
+		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
+		String gitHubSenderUsername = pullRequest.getSenderUsername();
+
+		if ((gitHubReceiverUsername == null) ||
+			(gitHubSenderUsername == null) ||
+			!_autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
+			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
+
+			return;
+		}
+
 		pullRequest.close();
 
 		StringBuilder sb = new StringBuilder();

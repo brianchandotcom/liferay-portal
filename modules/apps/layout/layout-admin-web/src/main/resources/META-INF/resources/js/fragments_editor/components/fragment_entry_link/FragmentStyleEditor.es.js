@@ -16,11 +16,12 @@ class FragmentStyleEditor extends State {
 	 * @review
 	 */
 	created() {
-		this._onNodeClickHandler = dom.on(
-			this.node,
-			'click',
-			this._handleNodeClick.bind(this)
-		);
+		this.disposeStyleTooltip = this.disposeStyleTooltip.bind(this);
+		this._handleButtonClick = this._handleButtonClick.bind(this);
+		this._handleChangeStyle = this._handleChangeStyle.bind(this);
+		this._handleNodeClick = this._handleNodeClick.bind(this);
+
+		this._onNodeClickHandler = dom.on(this.node, 'click', this._handleNodeClick);
 	}
 
 	/**
@@ -49,7 +50,7 @@ class FragmentStyleEditor extends State {
 						}
 					);
 
-					this._tooltip.on('buttonClick', this._handleButtonClick.bind(this));
+					this._tooltip.on('buttonClick', this._handleButtonClick);
 				}
 			}
 		}
@@ -68,8 +69,8 @@ class FragmentStyleEditor extends State {
 				this.node,
 				this.portletNamespace,
 				this.editorsOptions,
-				this._handleChangeStyle.bind(this),
-				this.disposeStyleTooltip.bind(this)
+				this._handleChangeStyle,
+				this.disposeStyleTooltip
 			);
 		}
 	}

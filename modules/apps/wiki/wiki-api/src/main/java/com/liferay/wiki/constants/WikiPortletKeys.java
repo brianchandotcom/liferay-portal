@@ -19,6 +19,8 @@ package com.liferay.wiki.constants;
  */
 public class WikiPortletKeys {
 
+	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
+
 	public static final String WIKI =
 		"com_liferay_wiki_web_portlet_WikiPortlet";
 

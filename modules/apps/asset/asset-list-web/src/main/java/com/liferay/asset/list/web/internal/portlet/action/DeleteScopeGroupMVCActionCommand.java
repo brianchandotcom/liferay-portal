@@ -55,7 +55,7 @@ public class DeleteScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
-		if (assetListEntry != null) {
+		if (assetListEntry == null) {
 			return;
 		}
 

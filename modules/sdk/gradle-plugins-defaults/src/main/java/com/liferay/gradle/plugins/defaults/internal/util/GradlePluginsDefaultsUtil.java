@@ -185,6 +185,10 @@ public class GradlePluginsDefaultsUtil {
 
 	@SuppressWarnings("unchecked")
 	public static boolean hasNPMParentThemesDependencies(Project project) {
+		if (!isSubrepository(project)) {
+			return false;
+		}
+
 		File packageJSONFile = project.file("package.json");
 
 		if (!packageJSONFile.exists()) {

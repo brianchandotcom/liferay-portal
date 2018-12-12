@@ -16,6 +16,7 @@ package com.liferay.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -69,6 +70,14 @@ public abstract class BaseAssetDisplayContributor<T>
 
 	@Override
 	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		return getAssetDisplayFieldsValues(assetEntry, 0L, locale);
+	}
+
+	@Override
+	public Map<String, Object> getAssetDisplayFieldsValues(
 			AssetEntry assetEntry, long versionClassPK, Locale locale)
 		throws PortalException {
 
@@ -100,6 +109,11 @@ public abstract class BaseAssetDisplayContributor<T>
 			assetObject = assetRenderer.getAssetObject();
 		}
 
+		if (assetObject == null) {
+			throw new NoSuchEntryException(
+				"No such Asset Entry " + versionClassPK);
+		}
+
 		for (AssetDisplayContributorField assetDisplayContributorField :
 				assetDisplayContributorFields) {
 
@@ -116,14 +130,6 @@ public abstract class BaseAssetDisplayContributor<T>
 		parameterMap.putAll(classTypeValues);
 
 		return parameterMap;
-	}
-
-	@Override
-	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException {
-
-		return getAssetDisplayFieldsValues(assetEntry, 0L, locale);
 	}
 
 	@Override

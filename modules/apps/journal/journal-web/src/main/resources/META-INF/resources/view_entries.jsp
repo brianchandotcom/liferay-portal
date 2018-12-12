@@ -156,13 +156,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
 									<clay:image-card
-										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(row) %>"
+										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										imageSrc="<%= HtmlUtil.escape(articleImageURL) %>"
-										inputName="<%= journalDisplayContext.getArticleInputName() %>"
+										inputName="<%= rowChecker.getRowIds() + JournalArticle.class.getSimpleName() %>"
 										inputValue="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-										labels="<%= journalDisplayContext.getArticleLabels(row) %>"
+										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
 										subtitle="<%= curArticle.getUserName() %>"
@@ -171,14 +171,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								</c:when>
 								<c:otherwise>
 									<clay:file-card
-										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(row) %>"
+										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										icon="web-content"
-										inputName="<%= journalDisplayContext.getArticleInputName() %>"
+										inputName="<%= rowChecker.getRowIds() + JournalArticle.class.getSimpleName() %>"
 										inputValue="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-										labels="<%= journalDisplayContext.getArticleLabels(row) %>"
-                                        selectable="<%= true %>"
+										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
+										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
 										subtitle="<%= curArticle.getUserName() %>"
 										title="<%= title %>"
@@ -330,11 +330,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							colspan="<%= 2 %>"
 						>
 							<clay:horizontal-card
-								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(row) %>"
+								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
 								disabled="<%= rowChecker.isDisabled(curFolder) %>"
 								href="<%= rowURL.toString() %>"
 								icon="folder"
-								inputName="<%= journalDisplayContext.getFolderInputName() %>"
+								inputName="<%= rowChecker.getRowIds() + JournalFolder.class.getSimpleName() %>"
 								inputValue="<%= String.valueOf(curFolder.getFolderId()) %>"
 								selectable="<%= true %>"
 								selected="<%= rowChecker.isChecked(curFolder) %>"

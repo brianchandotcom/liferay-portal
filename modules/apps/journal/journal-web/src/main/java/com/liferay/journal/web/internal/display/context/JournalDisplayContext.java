@@ -60,7 +60,6 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -193,19 +192,18 @@ public class JournalDisplayContext {
 		return _article;
 	}
 
-	public List<DropdownItem> getArticleActionDropdownItems(ResultRow row)
+	public List<DropdownItem> getArticleActionDropdownItems(
+			JournalArticle article)
 		throws PortalException {
 
-		JournalArticle article = (JournalArticle)row.getObject();
 		String referringPortletResource = ParamUtil.getString(
 			_request, "referringPortletResource");
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
 
 		return new DropdownItemList() {
 			{
 				if (JournalArticlePermission.contains(
-						permissionChecker, article, ActionKeys.UPDATE)) {
+						_themeDisplay.getPermissionChecker(), article,
+						ActionKeys.UPDATE)) {
 
 					add(
 						dropdownItem -> {
@@ -269,6 +267,17 @@ public class JournalDisplayContext {
 		return _articleDisplay;
 	}
 
+	public List<LabelItem> getArticleLabels(JournalArticle article) {
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setStatus(article.getStatus());
+					});
+			}
+		};
+	}
+
 	public List<Locale> getAvailableArticleLocales() throws PortalException {
 		JournalArticle article = getArticle();
 
@@ -283,25 +292,6 @@ public class JournalDisplayContext {
 		}
 
 		return availableLocales;
-	}
-
-	public String getArticleInputName() throws PortalException {
-		SearchContainer searchContainer = getSearchContainer(false);
-
-		return searchContainer.getRowChecker().getRowIds() + JournalArticle.class.getSimpleName();
-	}
-
-	public List<LabelItem> getArticleLabels(ResultRow row) {
-		JournalArticle article = (JournalArticle)row.getObject();
-
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> {
-						labelItem.setStatus(article.getStatus());
-					});
-			}
-		};
 	}
 
 	public String[] getCharactersBlacklist() throws PortalException {
@@ -513,19 +503,14 @@ public class JournalDisplayContext {
 		return _folder;
 	}
 
-	public List<DropdownItem> getFolderActionDropdownItems(ResultRow row)
+	public List<DropdownItem> getFolderActionDropdownItems(JournalFolder folder)
 		throws PortalException {
-
-		JournalFolder folder = (JournalFolder)row.getObject();
-		String referringPortletResource = ParamUtil.getString(
-			_request, "referringPortletResource");
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
 
 		return new DropdownItemList() {
 			{
 				if (JournalFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.UPDATE)) {
+						_themeDisplay.getPermissionChecker(), folder,
+						ActionKeys.UPDATE)) {
 
 					add(
 						dropdownItem -> {
@@ -534,13 +519,7 @@ public class JournalDisplayContext {
 								"mvcPath", "/edit_folder.jsp", "redirect",
 								_themeDisplay.getURLCurrent(), "groupId",
 								folder.getGroupId(), "folderId",
-								folder.getFolderId(),
-								"mergeWithParentFolderDisabled",
-								String.valueOf(
-									GetterUtil.getBoolean(
-										_request.getAttribute(
-											"view_entries.jsp-folderSelected"))));
-							dropdownItem.setIcon("edit");
+								folder.getFolderId());
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "edit"));
 						});
@@ -561,12 +540,6 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
-	}
-
-	public String getFolderInputName() throws PortalException {
-		SearchContainer searchContainer = getSearchContainer(false);
-
-		return searchContainer.getRowChecker().getRowIds() + JournalFolder.class.getSimpleName();
 	}
 
 	public JSONArray getFoldersJSONArray() {

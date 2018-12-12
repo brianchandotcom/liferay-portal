@@ -34,9 +34,7 @@ class FragmentStyleEditor extends State {
 			event.stopPropagation();
 
 			if (this._tooltip) {
-				this._tooltip.dispose();
-
-				this._tooltip = null;
+				this.disposeStyleTooltip();
 			}
 			else {
 				const styleEditor = FragmentStyleEditors[this.type];

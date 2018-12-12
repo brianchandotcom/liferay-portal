@@ -18,8 +18,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -27,26 +29,82 @@ import java.util.Queue;
  */
 public class AnnotationLocator {
 
-	public static List<Annotation> locate(Class<?> targetClass) {
+	public static Map<Class<? extends Annotation>, Annotation> index(
+		Class<?> targetClass) {
+
 		Queue<Class<?>> queue = new LinkedList<>();
 
 		queue.offer(targetClass);
 
-		ArrayList<Annotation> annotationsList = new ArrayList<>();
+		Map<Class<? extends Annotation>, Annotation> indexMap =
+			new LinkedHashMap<>();
 
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
 			Annotation[] annotations = clazz.getAnnotations();
 
-			_mergeAnnotations(annotations, annotationsList);
+			_mergeAnnotations(annotations, indexMap);
 
 			_queueSuperTypes(queue, clazz);
 		}
 
-		annotationsList.trimToSize();
+		return indexMap;
+	}
 
-		return annotationsList;
+	public static Map<Class<? extends Annotation>, Annotation> index(
+		Method method, Class<?> targetClass) {
+
+		Queue<Class<?>> queue = new LinkedList<>();
+
+		if (targetClass == null) {
+			queue.offer(method.getDeclaringClass());
+		}
+		else {
+			queue.offer(targetClass);
+		}
+
+		Map<Class<? extends Annotation>, Annotation> indexMap =
+			new LinkedHashMap<>();
+
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			try {
+				Method specificMethod = clazz.getDeclaredMethod(
+					method.getName(), method.getParameterTypes());
+
+				Annotation[] annotations = specificMethod.getAnnotations();
+
+				_mergeAnnotations(annotations, indexMap);
+			}
+			catch (Exception e) {
+			}
+
+			try {
+
+				// Ensure the class has a publicly inherited method
+
+				clazz.getMethod(method.getName(), method.getParameterTypes());
+
+				Annotation[] annotations = clazz.getAnnotations();
+
+				_mergeAnnotations(annotations, indexMap);
+			}
+			catch (Exception e) {
+			}
+
+			_queueSuperTypes(queue, clazz);
+		}
+
+		return indexMap;
+	}
+
+	public static List<Annotation> locate(Class<?> targetClass) {
+		Map<Class<? extends Annotation>, Annotation> indexMap = index(
+			targetClass);
+
+		return new ArrayList<>(indexMap.values());
 	}
 
 	public static <T extends Annotation> T locate(
@@ -73,50 +131,10 @@ public class AnnotationLocator {
 	}
 
 	public static List<Annotation> locate(Method method, Class<?> targetClass) {
-		Queue<Class<?>> queue = new LinkedList<>();
+		Map<Class<? extends Annotation>, Annotation> indexMap = index(
+			method, targetClass);
 
-		if (targetClass == null) {
-			queue.offer(method.getDeclaringClass());
-		}
-		else {
-			queue.offer(targetClass);
-		}
-
-		ArrayList<Annotation> annotationsList = new ArrayList<>();
-
-		Class<?> clazz = null;
-
-		while ((clazz = queue.poll()) != null) {
-			try {
-				Method specificMethod = clazz.getDeclaredMethod(
-					method.getName(), method.getParameterTypes());
-
-				Annotation[] annotations = specificMethod.getAnnotations();
-
-				_mergeAnnotations(annotations, annotationsList);
-			}
-			catch (Exception e) {
-			}
-
-			try {
-
-				// Ensure the class has a publicly inherited method
-
-				clazz.getMethod(method.getName(), method.getParameterTypes());
-
-				Annotation[] annotations = clazz.getAnnotations();
-
-				_mergeAnnotations(annotations, annotationsList);
-			}
-			catch (Exception e) {
-			}
-
-			_queueSuperTypes(queue, clazz);
-		}
-
-		annotationsList.trimToSize();
-
-		return annotationsList;
+		return new ArrayList<>(indexMap.values());
 	}
 
 	public static <T extends Annotation> T locate(
@@ -172,19 +190,12 @@ public class AnnotationLocator {
 	}
 
 	private static void _mergeAnnotations(
-		Annotation[] sourceAnnotations, List<Annotation> targetAnnotationList) {
+		Annotation[] sourceAnnotations,
+		Map<Class<? extends Annotation>, Annotation> indexMap) {
 
-		merge:
 		for (Annotation sourceAnnotation : sourceAnnotations) {
-			for (Annotation targetAnnotation : targetAnnotationList) {
-				if (sourceAnnotation.annotationType() ==
-						targetAnnotation.annotationType()) {
-
-					continue merge;
-				}
-			}
-
-			targetAnnotationList.add(sourceAnnotation);
+			indexMap.putIfAbsent(
+				sourceAnnotation.annotationType(), sourceAnnotation);
 		}
 	}
 

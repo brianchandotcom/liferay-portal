@@ -224,25 +224,6 @@ public class GradlePluginsDefaultsUtil {
 		return true;
 	}
 
-	public static boolean isSubrepository(Project project) {
-		File gitRepoDir = GradleUtil.getRootDir(
-			project, GitRepo.GIT_REPO_FILE_NAME);
-
-		if (gitRepoDir != null) {
-			return true;
-		}
-
-		String[] dirNames = {"build-working-dir.xml", "portal-impl"};
-
-		for (String dirName : dirNames) {
-			if (GradleUtil.getRootDir(project, dirName) != null) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	public static boolean isPrivateProject(Project project) {
 		String path = project.getPath();
 
@@ -284,6 +265,25 @@ public class GradlePluginsDefaultsUtil {
 		}
 
 		return snapshot;
+	}
+
+	public static boolean isSubrepository(Project project) {
+		File gitRepoDir = GradleUtil.getRootDir(
+			project, GitRepo.GIT_REPO_FILE_NAME);
+
+		if (gitRepoDir != null) {
+			return true;
+		}
+
+		String[] dirNames = {"build-working-dir.xml", "portal-impl"};
+
+		for (String dirName : dirNames) {
+			if (GradleUtil.getRootDir(project, dirName) != null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static boolean isTestProject(File dir) {

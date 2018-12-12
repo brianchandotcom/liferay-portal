@@ -71,7 +71,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -7003,52 +7007,100 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByExpirationDate(Date expirationDate)
 		throws PortalException {
 
-		List<JournalArticle> articles =
-			journalArticleFinder.findByExpirationDate(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				new Date(expirationDate.getTime() + getArticleCheckInterval()),
-				new QueryDefinition<JournalArticle>(
-					WorkflowConstants.STATUS_APPROVED));
+		long checkInterval = getArticleCheckInterval();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Expiring " + articles.size() + " articles");
-		}
+		final ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-		for (JournalArticle article : articles) {
-			if (isExpireAllArticleVersions(article.getCompanyId())) {
-				List<JournalArticle> currentArticles =
-					journalArticlePersistence.findByG_A(
-						article.getGroupId(), article.getArticleId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						new ArticleVersionComparator(true));
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-				for (JournalArticle currentArticle : currentArticles) {
-					if ((currentArticle.getExpirationDate() == null) ||
-						(currentArticle.getVersion() > article.getVersion())) {
+				dynamicQuery.add(
+					classNameIdProperty.eq(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT));
 
-						continue;
-					}
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-					currentArticle.setExpirationDate(
-						article.getExpirationDate());
-					currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 
-					journalArticlePersistence.update(currentArticle);
+				Property expirationDateProperty = PropertyFactoryUtil.forName(
+					"expirationDate");
+
+				dynamicQuery.add(
+					expirationDateProperty.le(
+						new Date(expirationDate.getTime() + checkInterval)));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle article) -> {
+				if (isExpireAllArticleVersions(article.getCompanyId())) {
+					final ActionableDynamicQuery actionableDynamicQueryByG_A =
+						getActionableDynamicQuery();
+
+					actionableDynamicQueryByG_A.setAddCriteriaMethod(
+						dynamicQuery -> {
+							Property groupIdProperty =
+								PropertyFactoryUtil.forName("groupId");
+
+							dynamicQuery.add(
+								groupIdProperty.eq(article.getGroupId()));
+
+							Property articleIdProperty =
+								PropertyFactoryUtil.forName("articleId");
+
+							dynamicQuery.add(
+								articleIdProperty.eq(article.getArticleId()));
+
+							Property expirationDateProperty =
+								PropertyFactoryUtil.forName("expirationDate");
+
+							dynamicQuery.add(
+								expirationDateProperty.isNotNull());
+
+							Property versionProperty =
+								PropertyFactoryUtil.forName("version");
+
+							dynamicQuery.add(
+								versionProperty.lt(article.getVersion()));
+
+							Order order = OrderFactoryUtil.asc("modifiedDate");
+
+							dynamicQuery.addOrder(order);
+						});
+
+					actionableDynamicQueryByG_A.setPerformActionMethod(
+						(JournalArticle currentArticle) -> {
+							currentArticle.setExpirationDate(
+								article.getExpirationDate());
+							currentArticle.setStatus(
+								WorkflowConstants.STATUS_EXPIRED);
+
+							journalArticlePersistence.update(currentArticle);
+						});
+
+					actionableDynamicQueryByG_A.performActions();
 				}
-			}
-			else {
+
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
 				journalArticlePersistence.update(article);
-			}
 
-			updatePreviousApprovedArticle(article);
+				updatePreviousApprovedArticle(article);
 
-			Indexer<JournalArticle> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+				Indexer<JournalArticle> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalArticle.class);
 
-			indexer.reindex(article);
-		}
+				indexer.reindex(article);
+			});
+
+		actionableDynamicQuery.setTransactionConfig(
+			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
+
+		actionableDynamicQuery.performActions();
 
 		if (_previousCheckDate == null) {
 			_previousCheckDate = new Date(

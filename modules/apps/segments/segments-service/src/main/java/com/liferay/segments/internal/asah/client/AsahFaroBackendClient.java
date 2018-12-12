@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.asah.client;
 
+import com.liferay.segments.internal.asah.client.model.Individual;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
 import com.liferay.segments.internal.asah.client.model.Results;
 import com.liferay.segments.internal.asah.client.util.OrderByField;
@@ -25,6 +26,10 @@ import java.util.List;
  * @author David Arques
  */
 public interface AsahFaroBackendClient {
+
+	public Results<Individual> getIndividuals(
+		String individualSegmentId, int cur, int delta,
+		List<OrderByField> orderByFields);
 
 	/**
 	 * Returns a {@link Results} of active {@link IndividualSegment} with

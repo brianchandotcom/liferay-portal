@@ -109,7 +109,7 @@ public class ChangeTrackingManagerImpl implements ChangeTrackingManager {
 			return;
 		}
 
-		_changeTrackingCollectionLocalService.deleteCollection(
+		_changeTrackingCollectionLocalService.deleteChangeTrackingCollection(
 			collectionOptional.get());
 	}
 
@@ -123,8 +123,8 @@ public class ChangeTrackingManagerImpl implements ChangeTrackingManager {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					_changeTrackingCollectionLocalService.deleteCollection(
-						companyId);
+					_changeTrackingCollectionLocalService.
+						deleteCompanyChangeTrackingCollections(companyId);
 
 					_productionCollection = null;
 
@@ -217,7 +217,8 @@ public class ChangeTrackingManagerImpl implements ChangeTrackingManager {
 			return Collections.emptyList();
 		}
 
-		return _changeTrackingCollectionLocalService.getCollections(companyId);
+		return _changeTrackingCollectionLocalService.
+			getChangeTrackingCollections(companyId);
 	}
 
 	@Override
@@ -233,9 +234,11 @@ public class ChangeTrackingManagerImpl implements ChangeTrackingManager {
 
 		if (_productionCollection == null) {
 			_productionCollection =
-				_changeTrackingCollectionLocalService.fetchCollection(
-					companyId,
-					ChangeTrackingConstants.PRODUCTION_CHANGE_COLLECTION_NAME);
+				_changeTrackingCollectionLocalService.
+					fetchChangeTrackingCollection(
+						companyId,
+						ChangeTrackingConstants.
+							PRODUCTION_CHANGE_COLLECTION_NAME);
 		}
 
 		return Optional.ofNullable(_productionCollection);
@@ -335,9 +338,10 @@ public class ChangeTrackingManagerImpl implements ChangeTrackingManager {
 				_transactionConfig,
 				() -> {
 					ChangeTrackingCollection changeTrackingCollection =
-						_changeTrackingCollectionLocalService.addCollection(
-							companyId, userId, name, description,
-							new ServiceContext());
+						_changeTrackingCollectionLocalService.
+							addChangeTrackingCollection(
+								companyId, userId, name, description,
+								new ServiceContext());
 
 					_copyEntriesFromProduction(changeTrackingCollection);
 

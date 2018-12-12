@@ -46,6 +46,8 @@ public class AssetListStagingTestUtil {
 			StagingUtil.getStagedPortletId(AssetListPortletKeys.ASSET_LIST),
 			enableAssetListStaging);
 		addStagingAttribute(
+			serviceContext, PortletDataHandlerKeys.DATA_STRATEGY_MIRROR, true);
+		addStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			false);
 		addStagingAttribute(

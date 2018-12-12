@@ -123,15 +123,11 @@ public abstract class BaseFailureMessageGenerator
 	}
 
 	protected Element getConsoleTextSnippetElementByStart(
-		String consoleText, boolean truncateTop, int start) {
-
-		int end = Math.min(
-			start + MAX_CONSOLE_TEXT_SNIPPET_LENGTH, consoleText.length() - 1);
-
-		end = consoleText.lastIndexOf("\n", end);
+		String consoleText, int start) {
 
 		return Dom4JUtil.toCodeSnippetElement(
-			_getConsoleTextSnippet(consoleText, truncateTop, start, end));
+			_getConsoleTextSnippet(
+				consoleText, false, start, consoleText.length() - 1));
 	}
 
 	protected Map<String, String> getDetailsMapFromPullRequest(
@@ -179,7 +175,7 @@ public abstract class BaseFailureMessageGenerator
 	protected int getSnippetStart(String consoleText, int end) {
 		int start = 0;
 
-		Matcher matcher = _pattern.matcher(consoleText);
+		Matcher matcher = _targetOutputStartPattern.matcher(consoleText);
 
 		while (matcher.find()) {
 			int x = matcher.start() + 1;
@@ -224,7 +220,7 @@ public abstract class BaseFailureMessageGenerator
 		return consoleText;
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _targetOutputStartPattern = Pattern.compile(
 		"\\n[a-z\\-\\.]+\\:\\n");
 
 }

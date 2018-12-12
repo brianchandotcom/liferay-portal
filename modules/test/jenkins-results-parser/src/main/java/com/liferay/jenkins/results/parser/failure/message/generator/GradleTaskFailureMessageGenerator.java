@@ -38,7 +38,7 @@ public class GradleTaskFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleTextSnippetElementByStart(consoleText, false, start);
+		return getConsoleTextSnippetElementByStart(consoleText, start);
 	}
 
 	private static final String _TOKEN_WHAT_WENT_WRONG = "* What went wrong:";

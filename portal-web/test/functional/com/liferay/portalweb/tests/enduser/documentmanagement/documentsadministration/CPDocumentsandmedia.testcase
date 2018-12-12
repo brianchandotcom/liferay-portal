@@ -142,6 +142,58 @@
 		</execute>
 	</command>
 
+	<command name="CheckInDocumentAsCurrentVersion" priority="5">
+		<description message="This test ensures that a user can check in a document without changing versions." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Check in as current version" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Check in as current version" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="DMDocument#checkinCP">
+			<var name="dmDocumentTitle" value="Check in as current version" />
+			<var name="revision" value="Current" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED">
+			<var name="key_dmDocumentTitle" value="Check in as current version" />
+		</execute>
+
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
+			<var name="dmDocumentTitle" value="Check in as current version" />
+		</execute>
+
+		<execute macro="DMDocument#expandInfo" />
+
+		<execute macro="DMDocument#selectVersion" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#SIDEBAR_LATEST_VERSION" value1="Version 1.0" />
+	</command>
+
 	<command name="CheckInDocumentAsMajorVersion" priority="5">
 		<description message="This test ensures that a user can check in a document as a major version." />
 

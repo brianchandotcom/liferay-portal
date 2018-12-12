@@ -65,7 +65,7 @@ public class WebSiteCollectionResourceTest {
 				group, Locale.getDefault());
 
 			PageItems<Group> pageItems = _getPageItems(
-				PaginationRequest.of(10, 1), themeDisplay);
+				PaginationRequest.of(50, 1), themeDisplay);
 
 			List<Group> groups = (List<Group>)pageItems.getItems();
 
@@ -105,7 +105,7 @@ public class WebSiteCollectionResourceTest {
 				group, Locale.getDefault());
 
 			PageItems<Group> pageItems = _getPageItems(
-				PaginationRequest.of(10, 1), themeDisplay);
+				PaginationRequest.of(50, 1), themeDisplay);
 
 			List<Group> groups = (List<Group>)pageItems.getItems();
 

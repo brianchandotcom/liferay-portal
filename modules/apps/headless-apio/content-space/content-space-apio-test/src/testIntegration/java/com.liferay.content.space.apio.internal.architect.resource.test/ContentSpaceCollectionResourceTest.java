@@ -65,7 +65,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(10, 1), company, _acceptLanguage);
+				PaginationRequest.of(50, 1), company, _acceptLanguage);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 
@@ -103,7 +103,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(10, 1), company, _acceptLanguage);
+				PaginationRequest.of(50, 1), company, _acceptLanguage);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 

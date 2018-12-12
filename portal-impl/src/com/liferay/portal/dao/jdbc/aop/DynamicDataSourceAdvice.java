@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.MethodContextHelper;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 
@@ -85,13 +84,6 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
 
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
-	}
-
-	@Override
-	protected void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		super.setServiceBeanAopCacheManager(serviceBeanAopCacheManager);
 	}
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;

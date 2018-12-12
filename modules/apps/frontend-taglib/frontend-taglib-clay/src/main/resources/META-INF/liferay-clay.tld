@@ -2009,13 +2009,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.1.0, with no direct replacement.</description>
 			<name>resultRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.1.0, with no direct replacement.</description>
 			<name>rowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

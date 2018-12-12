@@ -19,6 +19,5 @@ runGradleTest {
 		File bundleDir = file("../../../bundle")
 
 		assert new File(bundleDir, "osgi/marketplace/override/com.liferay.login.web.jar").exists()
-		assert !new File(bundleDir, "osgi/marketplace/override/com.liferay.login.web-2.0.0.ext.jar").exists()
 	}
 }

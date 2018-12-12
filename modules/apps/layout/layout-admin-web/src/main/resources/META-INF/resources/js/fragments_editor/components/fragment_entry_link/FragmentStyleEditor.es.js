@@ -25,34 +25,36 @@ class FragmentStyleEditor extends State {
 	}
 
 	/**
+	 * Callback executed anytime type property is changed.
+	 * It updates the styleEditor begin used.
+	 */
+	syncType() {
+		this._styleEditor = FragmentStyleEditors[this.type];
+	}
+
+	/**
 	 * Handle styled node click event
 	 * @param {Event} event
 	 * @private
 	 */
 	_handleNodeClick(event) {
-		if (event.target === this.node) {
-			event.preventDefault();
-			event.stopPropagation();
+		event.preventDefault();
+		event.stopPropagation();
 
-			if (this._tooltip) {
-				this.disposeStyleTooltip();
-			}
-			else {
-				const styleEditor = FragmentStyleEditors[this.type];
+		if (this._tooltip) {
+			this.disposeStyleTooltip();
+		}
+		else if (this._styleEditor) {
+			this.emit('openTooltip');
 
-				if (styleEditor) {
-					this.emit('openTooltip');
-
-					this._tooltip = new FragmentEditableFieldTooltip(
-						{
-							alignElement: this.node,
-							buttons: styleEditor.getButtons(this.showMapping)
-						}
-					);
-
-					this._tooltip.on('buttonClick', this._handleButtonClick);
+			this._tooltip = new FragmentEditableFieldTooltip(
+				{
+					alignElement: this.node,
+					buttons: this._styleEditor.getButtons(this.showMapping)
 				}
-			}
+			);
+
+			this._tooltip.on('buttonClick', this._handleButtonClick);
 		}
 	}
 
@@ -61,10 +63,8 @@ class FragmentStyleEditor extends State {
 	 * @param {MouseEvent} event
 	 */
 	_handleButtonClick(event) {
-		const styleEditor = FragmentStyleEditors[this.type];
-
-		if (styleEditor) {
-			styleEditor.init(
+		if (this._styleEditor) {
+			this._styleEditor.init(
 				event.buttonId,
 				this.node,
 				this.portletNamespace,
@@ -215,7 +215,20 @@ FragmentStyleEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	type: Config.string().required()
+	type: Config.string().required(),
+
+	/**
+	 * Style editor instance being used.
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentStyleEditor
+	 * @review
+	 * @type {FragmentStyleEditors}
+	 */
+	_styleEditor: Config
+		.internal()
+		.object()
+		.value(null)
 
 };
 

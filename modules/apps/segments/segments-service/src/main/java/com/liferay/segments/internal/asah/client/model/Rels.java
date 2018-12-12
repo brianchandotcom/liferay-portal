@@ -22,4 +22,6 @@ public interface Rels {
 
 	public static final String INDIVIDUAL_SEGMENTS = "individual-segments";
 
+	public static final String INDIVIDUALS = "individuals";
+
 }

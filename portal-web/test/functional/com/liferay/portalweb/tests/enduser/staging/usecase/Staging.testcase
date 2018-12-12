@@ -418,8 +418,10 @@
 			<var name="tagName" value="tag name edit" />
 		</execute>
 
-		<execute macro="LexiconEntry#viewNoEntryMenu">
+		<execute macro="LexiconEntry#viewNoEntryMenuItem">
 			<var name="rowEntry" value="tag name edit" />
+			<var name="menuItem" value="Edit" />
+			<var name="menuItem" value="Merge" />
 		</execute>
 	</command>
 

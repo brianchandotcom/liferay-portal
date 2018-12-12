@@ -1,219 +1,184 @@
-<definition>
-	<command name="changeDisplayStyle">
-		<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+definition {
+	macro changeDisplayStyle {
+		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-		<execute macro="MenuItem#click">
-			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="menuItem" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
+	}
 
-	<command name="changeExportDisplayStyle">
-		<execute function="Click#clickNoMouseOverNoWaitForVisible" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+	macro changeExportDisplayStyle {
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-		<execute function="Click#clickNoMouseOverNoWaitForVisible" locator1="MenuItem#ANY_MENU_ITEM">
-			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="key_menuItem" />
-		</execute>
-	</command>
+		Click.clickNoMouseOverNoWaitForVisible(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			key_menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}")
+		);
+	}
 
-	<command name="delete">
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+	macro delete {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${rowEntry}"
+		);
 
-		<if>
-			<isset var="confirmationText" />
-			<then>
-				<execute function="AssertConfirm" value1="${confirmationText}" />
-			</then>
-			<else>
-				<execute function="Confirm" />
-			</else>
-		</if>
+		if (isSet(confirmationText)) {
+			AssertConfirm(value1 = "${confirmationText}");
+		}
+		else {
+			Confirm();
+		}
 
-		<if>
-			<isset var="failure" />
-			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="Message#ERROR_2" />
-					<then>
-						<execute macro="Alert#viewRequestFailedToComplete" />
+		if (isSet(failure)) {
+			if (IsElementPresent(locator1 = "Message#ERROR_2")) {
+				Alert.viewRequestFailedToComplete();
 
-						<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="${failure}" />
-					</then>
-					<else>
-						<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${failure}" />
-					</else>
-				</if>
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
+				AssertTextEquals(locator1 = "Message#ERROR_2", value1 = "${failure}");
+			}
+			else {
+				AssertTextEquals(locator1 = "Message#ERROR", value1 = "${failure}");
+			}
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
 
-	<command name="gotoAdd">
-		<var method="PropsUtil#get('browser.type')" name="browserType" />
+	macro gotoAdd {
+		var browserType = PropsUtil.get("browser.type");
 
-		<if>
-			<equals arg1="${browserType}" arg2="chrome" />
-			<then>
-				<execute macro="LexiconEntry#waitForManagementBar" />
-			</then>
-		</if>
+		if ("${browserType}" == "chrome") {
+			LexiconEntry.waitForManagementBar();
+		}
 
-		<execute function="Click" locator1="Button#PLUS" />
-	</command>
+		Click(locator1 = "Button#PLUS");
+	}
 
-	<command name="gotoAddDropdownMenuItem">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro gotoAddDropdownMenuItem {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="DropdownMenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+		DropdownMenuItem.click(menuItem = "${menuItem}");
+	}
 
-	<command name="gotoAddMenuItem">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro gotoAddMenuItem {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-	<command name="gotoEllipsisMenuItem">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+	macro gotoEllipsisMenuItem {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-	<command name="gotoEllipsisMenuItemNoError">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+	macro gotoEllipsisMenuItemNoError {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
 
-	<command name="gotoEntry">
-		<if>
-			<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
-				<var name="key_displayStyle" value="cards" />
-			</condition>
+	macro gotoEntry {
+		if (IsElementPresent(locator1 = "Icon#DISPLAY_STYLE_ACTIVE", key_displayStyle = "cards")) {
+			AssertClick(
+				locator1 = "Card#SPECIFIC_LARGE_TEXT",
+				value1 = "${rowEntry}",
+				key_cardText = "${rowEntry}"
+			);
+		}
+		else {
+			AssertClick(
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+				value1 = "${rowEntry}",
+				key_rowEntry = "${rowEntry}"
+			);
+		}
+	}
 
-			<then>
-				<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
-					<var name="key_cardText" value="${rowEntry}" />
-				</execute>
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}">
-					<var name="key_rowEntry" value="${rowEntry}" />
-				</execute>
-			</else>
-		</if>
-	</command>
+	macro gotoEntryMenuItem {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
 
-	<command name="gotoEntryMenuItem">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro gotoEntryMenuItemNoError {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
 
-	<command name="gotoEntryMenuItemNoError">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro gotoEntryMenuItemNoWait {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
 
-	<command name="gotoEntryMenuItemNoWait">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro gotoEntryMenuItemNoWaitNoError {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
 
-	<command name="gotoEntryMenuItemNoWaitNoError">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro gotoHeaderMenuItem {
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-	<command name="gotoHeaderMenuItem">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro openEntryMenu {
+		Click.waitForMenuToggleJSClick(
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
 
-	<command name="openEntryMenu">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
+	macro selectEntry {
+		Check(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
 
-	<command name="selectEntry">
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
+	macro viewActiveDisplayStyle {
+		AssertElementPresent(
+			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE",
+			key_displayStyle = "${displayStyle}"
+		);
+	}
 
-	<command name="viewActiveDisplayStyle">
-		<execute function="AssertElementPresent" locator1="Icon#CURRENT_DISPLAY_STYLE_ACTIVE">
-			<var name="key_displayStyle" value="${displayStyle}" />
-		</execute>
-	</command>
+	macro viewEntryName {
+		AssertTextEquals(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${rowEntry}",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
 
-	<command name="viewEntryName">
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME" value1="${rowEntry}">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
+	macro viewNoEntry {
+		AssertElementNotPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
 
-	<command name="viewNoEntry">
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
+	macro viewNoEntryMenu {
+		AssertElementNotPresent(
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
 
-	<command name="viewNoEntryMenu">
-		<execute function="AssertElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
+	macro viewNoEntryMenuItem {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
 
-	<command name="viewNoEntryMenuItem">
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			key_menuItem = "${menuItem}"
+		);
+	}
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+	macro waitForManagementBar {
+		AssertVisible(locator1 = "ManagementBar#MANAGEMENT_BAR");
 
-	<command name="waitForManagementBar">
-		<execute function="AssertVisible" locator1="ManagementBar#MANAGEMENT_BAR" />
-
-		<var name="javaScript"><![CDATA[
+		var javaScript = '''
 var managementBar = Liferay.component(document.querySelector("nav.management-bar").parentNode.id);
 
 if (managementBar !== undefined) {
@@ -227,18 +192,13 @@ if (managementBar !== undefined) {
 else {
 	return 'pending';
 }
-		]]></var>
-		<var name="managementBarReady" value="" />
+		''';
+		var managementBarReady = "";
 
-		<while max-iterations="30">
-			<not>
-				<equals arg1="${managementBarReady}" arg2="ready" />
-			</not>
-			<then>
-				<var method="selenium#getEval('${javaScript}')" name="managementBarReady" />
+		while (!("${managementBarReady}" == "ready") && (maxIterations = "30")) {
+			var managementBarReady = selenium.getEval("${javaScript}");
 
-				<execute function="Pause" locator1="1000" />
-			</then>
-		</while>
-	</command>
-</definition>
+			Pause(locator1 = "1000");
+		}
+	}
+}

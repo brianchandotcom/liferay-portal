@@ -1,111 +1,117 @@
-<definition>
-	<command name="clickTagView">
-		<var name="key_tagName" value="${tagName}" />
+definition {
+	macro clickTagView {
+		var key_tagName = "${tagName}";
 
-		<if>
-			<isset var="tagAssetCount" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="TagsNavigation#TAG_NAME" value1="${tagAssetCount}" />
-			</then>
-		</if>
+		if (isSet(tagAssetCount)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "TagsNavigation#TAG_NAME",
+				value1 = "${tagAssetCount}"
+			);
+		}
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="TagsNavigation#TAG_NAME" value1="${tagName}" />
-	</command>
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "TagsNavigation#TAG_NAME",
+			value1 = "${tagName}"
+		);
+	}
 
-	<command name="configureDisplayStylePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Tags Navigation" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+	macro configureDisplayStylePG {
+		Portlet.gotoPortletOptions(
+			portletName = "Tags Navigation",
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME" />
+		SelectFrame(locator1 = "TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME");
 
-		<if>
-			<isset var="displayTemplate" />
-			<then>
-				<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
-			</then>
-		</if>
+		if (isSet(displayTemplate)) {
+			Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${displayTemplate}");
+		}
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="configureFlaggableSettingsPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Tags Navigation" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+	macro configureFlaggableSettingsPG {
+		Portlet.gotoPortletOptions(
+			portletName = "Tags Navigation",
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME" />
+		SelectFrame(locator1 = "TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME");
 
-		<if>
-			<equals arg1="${showUnusedTags}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
-			</then>
-		</if>
+		if ("${showUnusedTags}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX",
+				value1 = "Show Unused Tags"
+			);
+		}
 
-		<if>
-			<equals arg1="${showAssetCount}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
-			</then>
-		</if>
+		if ("${showAssetCount}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX",
+				value1 = "Show Asset Count"
+			);
+		}
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="viewADTColorByPopularityPG">
-		<var name="key_adtTagColor" value="${adtTagColor}" />
-		<var name="key_tagName" value="${tagName}" />
+	macro viewADTColorByPopularityPG {
+		var key_adtTagColor = "${adtTagColor}";
+		var key_tagName = "${tagName}";
 
-		<execute function="AssertTextEquals" locator1="TagsNavigation#ADT_COLOR_BY_POPULARITY_TAG" value1="${tagName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TagsNavigation#ADT_COLOR_BY_POPULARITY_TAG",
+			value1 = "${tagName}"
+		);
+	}
 
-	<command name="viewDefaultPG">
-		<for list="${tagNameList}" param="tagName">
-			<var name="key_tagName" value="${tagName}" />
+	macro viewDefaultPG {
+		for (var tagName : list "${tagNameList}") {
+			var key_tagName = "${tagName}";
 
-			<execute function="AssertTextEquals" locator1="TagsNavigation#TAG_NAME" value1="${tagName}" />
-		</for>
-	</command>
+			AssertTextEquals(locator1 = "TagsNavigation#TAG_NAME", value1 = "${tagName}");
+		}
+	}
 
-	<command name="viewTagCloud">
-		<var name="key_tagPopularityLevel" value="${tagPopularityLevel}" />
+	macro viewTagCloud {
+		var key_tagPopularityLevel = "${tagPopularityLevel}";
 
-		<execute function="AssertTextEquals" locator1="TagsNavigation#TAG_CLOUD_POPULARITY" value1="${tagName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TagsNavigation#TAG_CLOUD_POPULARITY",
+			value1 = "${tagName}"
+		);
+	}
 
-	<command name="viewTagCloudConfiguration">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Tag Cloud" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+	macro viewTagCloudConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "Tag Cloud",
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="TagsNavigationConfiguration#TAG_CLOUD_IFRAME" />
+		SelectFrame(locator1 = "TagsNavigationConfiguration#TAG_CLOUD_IFRAME");
 
-		<if>
-			<isset var="displayTemplate" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
-			</then>
-		</if>
+		if (isSet(displayTemplate)) {
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "${displayTemplate}"
+			);
+		}
 
-		<if>
-			<equals arg1="${showUnusedTags}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
-			</then>
-		</if>
+		if ("${showUnusedTags}" == "true") {
+			AssertChecked(
+				locator1 = "TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX",
+				value1 = "Show Unused Tags"
+			);
+		}
 
-		<if>
-			<equals arg1="${showAssetCount}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
-			</then>
-		</if>
-	</command>
-</definition>
+		if ("${showAssetCount}" == "true") {
+			AssertChecked(
+				locator1 = "TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX",
+				value1 = "Show Asset Count"
+			);
+		}
+	}
+}

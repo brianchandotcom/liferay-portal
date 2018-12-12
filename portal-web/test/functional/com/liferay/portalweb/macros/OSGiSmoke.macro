@@ -1,34 +1,34 @@
-<definition>
-	<command name="Smoke">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+definition {
+	macro Smoke {
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="AppManager#BREADCRUMB_2_LINK">
-			<var name="key_breadCrumb" value="Independent Modules" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "AppManager#BREADCRUMB_2_LINK",
+			key_breadCrumb = "Independent Modules"
+		);
 
-		<execute function="AssertClick" locator1="ListGroupItem#INDEPENDENT_MODULES_LINK" value1="Independent Modules" />
+		AssertClick(
+			locator1 = "ListGroupItem#INDEPENDENT_MODULES_LINK",
+			value1 = "Independent Modules"
+		);
 
-		<execute macro="Breadcrumb#viewActiveEntry">
-			<var name="breadcrumbName" value="Independent Modules" />
-		</execute>
+		Breadcrumb.viewActiveEntry(breadcrumbName = "Independent Modules");
 
-		<var name="key_appName" value="${appName}" />
+		var key_appName = "${appName}";
 
-		<while>
-			<not>
-				<condition function="IsElementPresent#isElementPresentAfterWait" locator1="AppManager#APP_NAME" />
-			</not>
-			<then>
-				<execute function="Click" locator1="Pagination#NEXT_LINK" />
-			</then>
-		</while>
+		while (!(IsElementPresent.isElementPresentAfterWait(locator1 = "AppManager#APP_NAME"))) {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
 
-		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
+		AssertTextPresent.assertTextPresent(value1 = "${appName}");
 
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=${portletName}" />
-	</command>
-</definition>
+		AntCommand.antCommand(
+			locator1 = "build-test.xml",
+			value1 = "remove-plugin -Dplugin.name=${portletName}"
+		);
+	}
+}

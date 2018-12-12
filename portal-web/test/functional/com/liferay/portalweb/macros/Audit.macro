@@ -1,46 +1,37 @@
-<definition>
-	<command name="searchCP">
-		<if>
-			<equals arg1="${searchTerm}" arg2="${resourceAction}" />
-			<then>
-				<var name="reportFieldKey" value="RESOURCE_ACTION" />
-			</then>
-			<elseif>
-				<equals arg1="${searchTerm}" arg2="${resourceId}" />
-				<then>
-					<var name="reportFieldKey" value="RESOURCE_ID" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchTerm}" arg2="${resourceName}" />
-				<then>
-					<var name="reportFieldKey" value="RESOURCE_NAME" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchTerm}" arg2="${userId}" />
-				<then>
-					<var name="reportFieldKey" value="USER_ID" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchTerm}" arg2="${userName}" />
-				<then>
-					<var name="reportFieldKey" value="USER_NAME" />
-				</then>
-			</elseif>
-		</if>
+definition {
+	macro searchCP {
+		if ("${searchTerm}" == "${resourceAction}") {
+			var reportFieldKey = "RESOURCE_ACTION";
+		}
+		else if ("${searchTerm}" == "${resourceId}") {
+			var reportFieldKey = "RESOURCE_ID";
+		}
+		else if ("${searchTerm}" == "${resourceName}") {
+			var reportFieldKey = "RESOURCE_NAME";
+		}
+		else if ("${searchTerm}" == "${userId}") {
+			var reportFieldKey = "USER_ID";
+		}
+		else if ("${searchTerm}" == "${userName}") {
+			var reportFieldKey = "USER_NAME";
+		}
 
-		<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
+		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
-		<execute function="Select" locator1="AuditReports#ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
+		Select(locator1 = "AuditReports#ADVANCED_SEARCH_MATCH_SELECT", value1 = "Any");
 
-		<execute function="Type" locator1="AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
+		Type(
+			locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
+			value1 = "${searchTerm}"
+		);
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		AssertClick(locator1 = "Button#SEARCH", value1 = "Search");
 
-		<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
+		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_${reportFieldKey}_1",
+			value1 = "${searchTerm}"
+		);
+	}
+}

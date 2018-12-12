@@ -1,58 +1,42 @@
-<definition>
-	<command name="click">
-		<var name="key_menuBar" value="${menuBar}" />
+definition {
+	macro click {
+		var key_menuBar = "${menuBar}";
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="MenuBar#ACTIVE_NAV_LINK" />
-			<then>
-				<execute function="AssertClick" locator1="MenuBar#NAV_LINK" value1="${menuBar}" />
-			</then>
-		</if>
+		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK")) {
+			AssertClick(locator1 = "MenuBar#NAV_LINK", value1 = "${menuBar}");
+		}
 
-		<execute macro="MenuBar#viewActive">
-			<var name="menuBar" value="${menuBar}" />
-		</execute>
-	</command>
+		MenuBar.viewActive(menuBar = "${menuBar}");
+	}
 
-	<command name="gotoAddresses">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Addresses" />
-		</execute>
-	</command>
+	macro gotoAddresses {
+		MenuBar.click(menuBar = "Addresses");
+	}
 
-	<command name="gotoContactInformation">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Contact Information" />
-		</execute>
-	</command>
+	macro gotoContactInformation {
+		MenuBar.click(menuBar = "Contact Information");
+	}
 
-	<command name="gotoInformation">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Information" />
-		</execute>
-	</command>
+	macro gotoInformation {
+		MenuBar.click(menuBar = "Information");
+	}
 
-	<command name="gotoOpeningHours">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Opening Hours" />
-		</execute>
-	</command>
+	macro gotoOpeningHours {
+		MenuBar.click(menuBar = "Opening Hours");
+	}
 
-	<command name="gotoOrganizationSite">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Organization Site" />
-		</execute>
-	</command>
+	macro gotoOrganizationSite {
+		MenuBar.click(menuBar = "Organization Site");
+	}
 
-	<command name="gotoSecurityQuestions">
-		<execute macro="MenuBar#click">
-			<var name="menuBar" value="Security Questions" />
-		</execute>
-	</command>
+	macro gotoSecurityQuestions {
+		MenuBar.click(menuBar = "Security Questions");
+	}
 
-	<command name="viewActive">
-		<execute function="AssertElementPresent" locator1="MenuBar#ACTIVE_NAV_LINK">
-			<var name="key_menuBar" value="${menuBar}" />
-		</execute>
-	</command>
-</definition>
+	macro viewActive {
+		AssertElementPresent(
+			locator1 = "MenuBar#ACTIVE_NAV_LINK",
+			key_menuBar = "${menuBar}"
+		);
+	}
+}

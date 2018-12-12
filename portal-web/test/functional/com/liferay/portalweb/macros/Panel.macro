@@ -1,45 +1,40 @@
-<definition>
-	<command name="expandPanel">
-		<var name="key_panel" value="${panel}" />
+definition {
+	macro expandPanel {
+		var key_panel = "${panel}";
 
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="Panel#PANEL_COLLAPSED" />
-				<condition function="IsVisible" locator1="Panel#PANEL_COLLAPSED" />
-			</and>
-			<then>
-				<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
-			</then>
-		</if>
+		if ((IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) && (IsVisible(locator1 = "Panel#PANEL_COLLAPSED"))) {
+			AssertClick.assertTextClickCaseInsensitive(
+				locator1 = "Panel#PANEL_COLLAPSED",
+				value1 = "${panel}"
+			);
+		}
 
-		<execute function="AssertElementPresent" locator1="Panel#PANEL_EXPANDED" />
-	</command>
+		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
+	}
 
-	<command name="expandSidebarApplicationsPanel">
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" />
-				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" />
-			</and>
-			<then>
-				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" value1="Widgets" />
+	macro expandSidebarApplicationsPanel {
+		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED"))) {
+			AssertClick(
+				locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED",
+				value1 = "Widgets"
+			);
 
-				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_EXPANDED" />
-			</then>
-		</if>
-	</command>
+			AssertElementPresent(
+				locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_EXPANDED"
+			);
+		}
+	}
 
-	<command name="expandSidebarContentPanel">
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" />
-				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" />
-			</and>
-			<then>
-				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" value1="Content" />
+	macro expandSidebarContentPanel {
+		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED"))) {
+			AssertClick(
+				locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED",
+				value1 = "Content"
+			);
 
-				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_EXPANDED" />
-			</then>
-		</if>
-	</command>
-</definition>
+			AssertElementPresent(
+				locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_EXPANDED"
+			);
+		}
+	}
+}

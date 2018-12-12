@@ -1,11 +1,11 @@
-<definition>
-	<command name="addCP">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+definition {
+	macro addCP {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="Type" locator1="TextInput#INITIAL_URL" value1="${initialURL}" />
+		Type(locator1 = "TextInput#INITIAL_URL", value1 = "${initialURL}");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-</definition>
+		SelectFrame(value1 = "relative=top");
+	}
+}

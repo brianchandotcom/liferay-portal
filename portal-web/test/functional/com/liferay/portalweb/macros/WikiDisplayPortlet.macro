@@ -1,25 +1,38 @@
-<definition>
-	<command name="configureSetupPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Wiki Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+definition {
+	macro configureSetupPG {
+		Portlet.gotoPortletOptions(
+			portletName = "Wiki Display",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
+		Select(
+			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
+		AssertSelectedLabel(
+			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
+		Select(
+			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
+			value1 = "${wikiPageName}"
+		);
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
-		<execute macro="Alert#viewSuccessMessage" />
+		AssertSelectedLabel(
+			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
+			value1 = "${wikiPageName}"
+		);
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+
+		SelectFrame(value1 = "relative=top");
+	}
+}

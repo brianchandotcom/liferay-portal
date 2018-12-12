@@ -1,335 +1,300 @@
-<definition>
-	<command name="_editCP">
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${teamName}" />
-		</execute>
+definition {
+	macro _editCP {
+		PortletEntry.inputName(name = "${teamName}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${teamDescription}" />
-		</execute>
-	</command>
+		PortletEntry.inputDescription(description = "${teamDescription}");
+	}
 
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="Team#_editCP">
-			<var name="teamDescription" value="${teamDescription}" />
-			<var name="teamName" value="${teamName}" />
-		</execute>
+		Team._editCP(teamDescription = "${teamDescription}", teamName = "${teamName}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="assignMembersCP">
-		<var name="key_teamName" value="${teamName}" />
-		<var name="key_userScreenName" value="${userScreenName}" />
+	macro assignMembersCP {
+		var key_teamName = "${teamName}";
+		var key_userScreenName = "${userScreenName}";
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${teamName}" />
-		</execute>
+		Search.searchCP(searchTerm = "${teamName}");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		AssertTextEquals(locator1 = "SiteTeams#TEAM_TABLE_NAME", value1 = "${teamName}");
 
-		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		AssertClick(locator1 = "SiteTeams#TEAM_TABLE_NAME", value1 = "${teamName}");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Users" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Users");
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		LexiconEntry.gotoAdd();
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userScreenName}" />
-		</execute>
+		Search.searchCP(searchTerm = "${userScreenName}");
 
-		<if>
-			<equals arg1="${userNameIsNotFound}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
-			</then>
-			<else>
-				<execute macro="LexiconEntry#changeDisplayStyle">
-					<var name="displayStyle" value="cards" />
-				</execute>
+		if ("${userNameIsNotFound}" == "true") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No users were found."
+			);
+		}
+		else {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-				<var name="key_cardText" value="${userScreenName}" />
+			var key_cardText = "${userScreenName}";
 
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+			AssertTextEquals(locator1 = "Card#SPECIFIC_TEXT", value1 = "${userScreenName}");
 
-				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+			Check(locator1 = "Card#SPECIFIC_CHECKBOX");
 
-				<execute function="Pause" locator1="5000" />
+			Pause(locator1 = "5000");
 
-				<execute function="SelectFrameTop" />
+			SelectFrameTop();
 
-				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+			AssertClick(locator1 = "Button#ADD", value1 = "Add");
 
-				<execute macro="Alert#viewSuccessMessage" />
+			Alert.viewSuccessMessage();
 
-				<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT" />
-			</else>
-		</if>
+			AssertElementPresent(locator1 = "Card#SPECIFIC_LARGE_TEXT");
+		}
 
-		<execute function="SelectFrameTop" />
-	</command>
+		SelectFrameTop();
+	}
 
-	<command name="assignUserGroups">
-		<var name="key_teamName" value="${teamName}" />
+	macro assignUserGroups {
+		var key_teamName = "${teamName}";
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${teamName}" />
-		</execute>
+		Search.searchCP(searchTerm = "${teamName}");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		AssertTextEquals(locator1 = "SiteTeams#TEAM_TABLE_NAME", value1 = "${teamName}");
 
-		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		AssertClick(locator1 = "SiteTeams#TEAM_TABLE_NAME", value1 = "${teamName}");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "User Groups");
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<var name="key_cardText" value="${userGroupName}" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
-			<then>
-				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
-			</then>
-			<else>
-				<execute macro="LexiconEntry#selectEntry">
-					<var name="rowEntry" value="${userGroupName}" />
-				</execute>
+		LexiconEntry.gotoAdd();
 
-				<execute function="SelectFrameTop" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		var key_cardText = "${userGroupName}";
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute function="SelectFrameTop" />
-	</command>
+		if ("${userGroupsNameIsNotAvailable}" == "true") {
+			AssertTextNotPresent(
+				locator1 = "SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME",
+				value1 = "${userGroupName}"
+			);
+		}
+		else {
+			LexiconEntry.selectEntry(rowEntry = "${userGroupName}");
 
-	<command name="definePermissionPG">
-		<execute function="Check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute function="AssertChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-	</command>
-
-	<command name="deleteCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${teamName}" />
-		</execute>
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${teamName}" />
-		</execute>
-
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="editCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${teamName}" />
-		</execute>
-
-		<execute macro="Team#_editCP">
-			<var name="teamDescription" value="${teamDescriptionEdit}" />
-			<var name="teamName" value="${teamNameEdit}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="removeMemberCP">
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${teamName}">
-			<var name="key_rowEntry" value="${teamName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${membershipType}s" />
-		</execute>
-
-		<if>
-			<equals arg1="${membershipType}" arg2="User" />
-			<then>
-				<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-					<var name="key_rowEntry" value="${userFirstName} ${userLastName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${membershipType}" arg2="User Group" />
-				<then>
-					<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-						<var name="key_rowEntry" value="${userGroupName}" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="ClickNoError" locator1="Icon#TIMES" />
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="removePermissionPG">
-		<execute function="Uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute function="AssertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-	</command>
-
-	<command name="searchCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${membershipType}s" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${searchTerm}" />
-		</execute>
-
-		<if>
-			<equals arg1="${isEmpty}" arg2="true" />
-			<then>
-				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-			</then>
-			<else>
-				<var method="StringUtil#unquote('${searchTerm}')" name="name" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${name}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="tearDownCP">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewCP">
-		<var name="key_teamName" value="${teamName}" />
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
-		<execute function="AssertElementPresent" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
-	</command>
-
-	<command name="viewDefaultCP">
-		<var name="key_teamName" value="${teamName}" />
-
-		<execute macro="PortletEntry#viewEmptyMessage">
-			<var name="entity" value="Site Teams" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-	</command>
-
-	<command name="viewMemberCP">
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${teamName}">
-			<var name="key_rowEntry" value="${teamName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${membershipType}s" />
-		</execute>
-
-		<if>
-			<equals arg1="${membershipType}" arg2="User" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${userFirstName} ${userLastName}">
-					<var name="key_rowEntry" value="${userFirstName} ${userLastName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${membershipType}" arg2="User Group" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${userGroupName}">
-						<var name="key_rowEntry" value="${userGroupName}" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="viewNoMembersCP">
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${teamName}">
-			<var name="key_rowEntry" value="${teamName}" />
-		</execute>
-
-		<for list="Users,User Groups" param="navItem">
-			<execute macro="Navigator#gotoNavItem">
-				<var name="navItem" value="${navItem}" />
-			</execute>
-
-			<var method="StringUtil#lowerCase('${navItem}')" name="lowercaseNavItem" />
-
-			<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${lowercaseNavItem} were found." />
-		</for>
-	</command>
-</definition>
+			SelectFrameTop();
+
+			AssertClick(locator1 = "Button#ADD", value1 = "Add");
+
+			Alert.viewSuccessMessage();
+		}
+
+		SelectFrameTop();
+	}
+
+	macro definePermissionPG {
+		Check(
+			locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]"
+		);
+
+		PortletEntry.save();
+
+		AssertChecked(
+			locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]"
+		);
+	}
+
+	macro deleteCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconEntry.viewEntryName(rowEntry = "${teamName}");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${teamName}");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${teamName}");
+
+		Team._editCP(
+			teamDescription = "${teamDescriptionEdit}",
+			teamName = "${teamNameEdit}"
+		);
+
+		PortletEntry.save();
+	}
+
+	macro removeMemberCP {
+		AssertClick(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${teamName}",
+			key_rowEntry = "${teamName}"
+		);
+
+		Navigator.gotoNavItem(navItem = "${membershipType}s");
+
+		if ("${membershipType}" == "User") {
+			Check(
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
+				key_rowEntry = "${userFirstName} ${userLastName}"
+			);
+		}
+		else if ("${membershipType}" == "User Group") {
+			Check(
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
+				key_rowEntry = "${userGroupName}"
+			);
+		}
+
+		ClickNoError(locator1 = "Icon#TIMES");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro removePermissionPG {
+		Uncheck(
+			locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]"
+		);
+
+		PortletEntry.save();
+
+		AssertNotChecked(
+			locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]"
+		);
+	}
+
+	macro searchCP {
+		Navigator.gotoNavItem(navItem = "${membershipType}s");
+
+		Search.searchCP(searchTerm = "${searchTerm}");
+
+		if ("${isEmpty}" == "true") {
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+		}
+		else {
+			var name = StringUtil.unquote("${searchTerm}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
+				value1 = "${name}"
+			);
+		}
+	}
+
+	macro tearDownCP {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewCP {
+		var key_teamName = "${teamName}";
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals(locator1 = "SiteTeams#TEAM_TABLE_NAME", value1 = "${teamName}");
+
+		AssertTextEquals(
+			locator1 = "SiteTeams#TEAM_TABLE_DESCRIPTION",
+			value1 = "${teamDescription}"
+		);
+
+		AssertElementPresent(locator1 = "SiteTeams#TEAM_TABLE_ACTIONS");
+	}
+
+	macro viewDefaultCP {
+		var key_teamName = "${teamName}";
+
+		PortletEntry.viewEmptyMessage(entity = "Site Teams");
+
+		AssertTextNotPresent(
+			locator1 = "SiteTeams#TEAM_TABLE_NAME",
+			value1 = "${teamName}"
+		);
+	}
+
+	macro viewMemberCP {
+		AssertClick(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${teamName}",
+			key_rowEntry = "${teamName}"
+		);
+
+		Navigator.gotoNavItem(navItem = "${membershipType}s");
+
+		if ("${membershipType}" == "User") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
+				value1 = "${userFirstName} ${userLastName}",
+				key_rowEntry = "${userFirstName} ${userLastName}"
+			);
+		}
+		else if ("${membershipType}" == "User Group") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
+				value1 = "${userGroupName}",
+				key_rowEntry = "${userGroupName}"
+			);
+		}
+	}
+
+	macro viewNoMembersCP {
+		AssertClick(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${teamName}",
+			key_rowEntry = "${teamName}"
+		);
+
+		for (var navItem : list "Users,User Groups") {
+			Navigator.gotoNavItem(navItem = "${navItem}");
+
+			var lowercaseNavItem = StringUtil.lowerCase("${navItem}");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No ${lowercaseNavItem} were found."
+			);
+		}
+	}
+}

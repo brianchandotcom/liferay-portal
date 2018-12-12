@@ -1,267 +1,241 @@
-<definition>
-	<command name="configureDisplayContent">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+definition {
+	macro configureDisplayContent {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
-		<var method="selenium#getNumberDecrement('${rowNumber}')" name="rowIndexNumber" />
+		var rowIndexNumber = selenium.getNumberDecrement("${rowNumber}");
 
-		<if>
-			<not>
-				<equals arg1="${rowIndexNumber}" arg2="0" />
-			</not>
-			<then>
-				<var name="key_indexNumber" value="${rowIndexNumber}" />
+		if (!("${rowIndexNumber}" == "0")) {
+			var key_indexNumber = "${rowIndexNumber}";
 
-				<execute function="Click" locator1="ContentTargeting#PLUS_LINK" />
-			</then>
-		</if>
+			Click(locator1 = "ContentTargeting#PLUS_LINK");
+		}
 
-		<var name="key_rowNumber" value="${rowNumber}" />
+		var key_rowNumber = "${rowNumber}";
 
-		<if>
-			<equals arg1="${belongs}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO" />
-			</then>
-		</if>
+		if ("${belongs}" == "true") {
+			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO");
+		}
 
-		<if>
-			<equals arg1="${doesNotBelong}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
-			</then>
-		</if>
+		if ("${doesNotBelong}" == "true") {
+			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO");
+		}
 
-		<if>
-			<equals arg1="${toAll}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO" />
-			</then>
-		</if>
+		if ("${toAll}" == "true") {
+			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO");
+		}
 
-		<if>
-			<equals arg1="${toAny}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO" />
-			</then>
-		</if>
+		if ("${toAny}" == "true") {
+			Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO");
+		}
 
-		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
+		Click(
+			locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON"
+		);
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<for list="${userSegmentName}" param="userSegmentName">
-			<var name="key_userSegmentName" value="${userSegmentName}" />
+		for (var userSegmentName : list "${userSegmentName}") {
+			var key_userSegmentName = "${userSegmentName}";
 
-			<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
-		</for>
+			Click(
+				locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX"
+			);
+		}
 
-		<if>
-			<isset var="siteScope" />
-			<then>
-				<var name="key_siteScope" value="${siteScope}" />
+		if (isSet(siteScope)) {
+			var key_siteScope = "${siteScope}";
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
-			</then>
-		</if>
+			AssertTextEquals.assertPartialText(
+				locator1 = "UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE",
+				value1 = "User Segment (${siteScope})"
+			);
+		}
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		Click(locator1 = "Icon#CLOSE");
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT" />
+		Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT");
 
-		<var name="key_menuItem" value="${contentType}" />
+		var key_menuItem = "${contentType}";
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${contentType}" />
-		</execute>
+		MenuItem.click(menuItem = "${contentType}");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<var name="key_rowEntry" value="${contentTitle}" />
+		var key_rowEntry = "${contentTitle}";
 
-		<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+		ClickNoError(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="configureOtherwiseContentDisplayRule">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro configureOtherwiseContentDisplayRule {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<if>
-			<isset var="otherwiseContentType" />
-			<then>
-				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+		if (isSet(otherwiseContentType)) {
+			ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-				<execute function="ScrollWebElementIntoView" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+			ScrollWebElementIntoView(
+				locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
+			);
 
-				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+			Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
-				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT" />
+			ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT");
 
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="${otherwiseContentType}" />
-				</execute>
+			MenuItem.click(menuItem = "${otherwiseContentType}");
 
-				<execute function="SelectFrame" value1="relative=top" />
+			SelectFrame(value1 = "relative=top");
 
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			SelectFrame(locator1 = "IFrame#DIALOG");
 
-				<var name="key_rowEntry" value="${otherwiseContentTitle}" />
+			var key_rowEntry = "${otherwiseContentTitle}";
 
-				<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+			ClickNoError(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-			<else>
-				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+			SelectFrame(value1 = "relative=top");
+		}
+		else {
+			ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+			Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO");
 
-				<execute function="SelectFrame" value1="relative=top" />
-			</else>
-		</if>
-	</command>
+			SelectFrame(value1 = "relative=top");
+		}
+	}
 
-	<command name="savePG">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro savePG {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="ClickNoError" locator1="Button#SAVE" />
+		ClickNoError(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewConfiguredDisplayContent">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+	macro viewConfiguredDisplayContent {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<var name="key_rowNumber" value="${rowNumber}" />
+		var key_rowNumber = "${rowNumber}";
 
-		<if>
-			<equals arg1="${belongs}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO" />
-			</then>
-		</if>
+		if ("${belongs}" == "true") {
+			AssertChecked(locator1 = "UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO");
+		}
 
-		<if>
-			<equals arg1="${doesNotBelong}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${toAll}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${toAny}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO" />
-			</then>
-		</if>
-
-		<var name="key_userSegmentName" value="${userSegmentName}" />
-
-		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_USER_SEGMENT" value1="${userSegmentName}" />
-
-		<var name="key_contentTitle" value="${contentTitle}" />
-
-		<execute function="AssertTextEquals" locator1="ContentTargeting#CARD_CONTENT_TITLE" value1="${contentTitle}" />
-
-		<var name="key_contentType" value="${contentType}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#CARD_CONTENT_TYPE" value1="${contentType}" />
-
-		<if>
-			<isset var="otherwiseContentType" />
-			<then>
-				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL" />
-
-				<execute function="AssertChecked" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
-
-				<var name="key_contentType" value="${otherwiseContentType}" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="${otherwiseContentType}" />
-
-				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
-
-				<execute function="AssertTextEquals" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewContentOnly">
-		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
-	</command>
-
-	<command name="viewEntryPG">
-		<execute macro="ContentTargeting#expandPreview">
-			<var name="portletName" value="User Segment Content Display" />
-		</execute>
-
-		<if>
-			<isset var="viewUserSegmentSelected" />
-			<then>
-				<var name="key_viewEntrySelected" value="${viewUserSegmentSelected}" />
-
-				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_ENTRY_SELECTED" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="previewUserSegmentList" />
-			<then>
-				<for list="${previewUserSegmentList}" param="previewEntry">
-					<execute macro="ContentTargeting#expandPreview">
-						<var name="portletName" value="User Segment Content Display" />
-					</execute>
-
-					<var name="key_previewEntry" value="${previewEntry}" />
-
-					<if>
-						<and>
-							<isset var="entryContentText" />
-							<not>
-								<equals arg1="${previewEntry}" arg2="default" />
-							</not>
-						</and>
-						<then>
-							<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
-						</then>
-					</if>
-
-					<if>
-						<and>
-							<equals arg1="viewDontDisplay" arg2="true" />
-							<equals arg1="${previewEntry}" arg2="default" />
-						</and>
-						<then>
-							<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="There are no matching rules" />
-						</then>
-					</if>
-				</for>
-			</then>
-		</if>
-	</command>
-
-	<command name="viewNoContentPG">
-		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="The selected content no longer exists" />
-	</command>
-</definition>
+		if ("${doesNotBelong}" == "true") {
+			AssertChecked(
+				locator1 = "UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO"
+			);
+		}
+
+		if ("${toAll}" == "true") {
+			AssertChecked(locator1 = "UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO");
+		}
+
+		if ("${toAny}" == "true") {
+			AssertChecked(locator1 = "UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO");
+		}
+
+		var key_userSegmentName = "${userSegmentName}";
+
+		AssertTextEquals(
+			locator1 = "UserSegmentContentDisplay#RULE_PANEL_SELECTED_USER_SEGMENT",
+			value1 = "${userSegmentName}"
+		);
+
+		var key_contentTitle = "${contentTitle}";
+
+		AssertTextEquals(
+			locator1 = "ContentTargeting#CARD_CONTENT_TITLE",
+			value1 = "${contentTitle}"
+		);
+
+		var key_contentType = "${contentType}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ContentTargeting#CARD_CONTENT_TYPE",
+			value1 = "${contentType}"
+		);
+
+		if (isSet(otherwiseContentType)) {
+			Click(locator1 = "ContentTargeting#OTHERWISE_PANEL");
+
+			AssertChecked(
+				locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
+			);
+
+			var key_contentType = "${otherwiseContentType}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE",
+				value1 = "${otherwiseContentType}"
+			);
+
+			var key_contentTitle = "${otherwiseContentTitle}";
+
+			AssertTextEquals(
+				locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE",
+				value1 = "${otherwiseContentTitle}"
+			);
+		}
+	}
+
+	macro viewContentOnly {
+		AssertTextEquals(
+			locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
+			value1 = "${entryContentText}"
+		);
+	}
+
+	macro viewEntryPG {
+		ContentTargeting.expandPreview(portletName = "User Segment Content Display");
+
+		if (isSet(viewUserSegmentSelected)) {
+			var key_viewEntrySelected = "${viewUserSegmentSelected}";
+
+			AssertElementPresent(locator1 = "ContentTargeting#PREVIEW_ENTRY_SELECTED");
+		}
+
+		if (isSet(previewUserSegmentList)) {
+			for (var previewEntry : list "${previewUserSegmentList}") {
+				ContentTargeting.expandPreview(portletName = "User Segment Content Display");
+
+				var key_previewEntry = "${previewEntry}";
+
+				if ((isSet(entryContentText)) && (!("${previewEntry}" == "default"))) {
+					AssertTextEquals(
+						locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
+						value1 = "${entryContentText}"
+					);
+				}
+
+				if (("viewDontDisplay" == "true") && ("${previewEntry}" == "default")) {
+					AssertTextEquals(
+						locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
+						value1 = "There are no matching rules"
+					);
+				}
+			}
+		}
+	}
+
+	macro viewNoContentPG {
+		AssertTextEquals(
+			locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
+			value1 = "The selected content no longer exists"
+		);
+	}
+}

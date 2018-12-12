@@ -1,17 +1,19 @@
-<definition>
-	<command name="gotoPortletConfiguration">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Configuration" />
-		</execute>
+definition {
+	macro gotoPortletConfiguration {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-	</command>
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+	}
 
-	<command name="viewPortletTitle" summary="Assert that the Site Admin portlet title displays the text '${portletTitle}'">
-		<var name="key_portletTitle" value="${portletTitle}" />
+	@summary = "Assert that the Site Admin portlet title displays the text '${portletTitle}'"
+	macro viewPortletTitle {
+		var key_portletTitle = "${portletTitle}";
 
-		<execute function="AssertElementPresent" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" />
+		AssertElementPresent(locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE");
 
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${portletTitle}" />
-	</command>
-</definition>
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
+			value1 = "${portletTitle}"
+		);
+	}
+}

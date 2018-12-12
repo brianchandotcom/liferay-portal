@@ -1,7 +1,7 @@
-<definition>
-	<command name="save">
-		<execute macro="Button#clickSave" />
+definition {
+	macro save {
+		Button.clickSave();
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+	}
+}

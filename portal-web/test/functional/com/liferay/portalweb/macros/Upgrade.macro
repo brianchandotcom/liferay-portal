@@ -1,812 +1,738 @@
-<definition>
-	<command name="addDataDefinitionWithDB2">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no lists." />
-
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
-
-		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
-			<execute macro="DDLDataDefinition#viewName">
-				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			</execute>
-		</for>
-
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-134" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-727" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="Data Definition" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#viewCP">
-			<var name="ddlDataDefinitionName" value="Data Definition" />
-			<var name="fieldFieldLabel" value="Text" />
-		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-134" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=-727" />
-	</command>
-
-	<command name="addForm">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no forms. Click on the plus button to add the first one." />
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#editName">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="Form#editDescription">
-			<var name="formDescription" value="Form Description" />
-		</execute>
-
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewForm">
-			<var name="formDescription" value="Form Description" />
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
-
-		<execute macro="FormPortletNavigator#gotoSelectForm">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="FormPortletConfiguration#selectForm">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Text Field" />
-			<var name="fieldName" value="TextField" />
-		</execute>
-	</command>
-
-	<command name="addMessageBoards">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject 3" />
-		</execute>
-	</command>
-
-	<command name="addOrganization">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-	</command>
-
-	<command name="addUserAndSuborganization">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization2" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Suborganization#addCP">
-			<var name="orgName" value="Organization2" />
-			<var name="suborgName" value="Sub-organization2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Suborganization#addCP">
-			<var name="orgName" value="Organization1" />
-			<var name="suborgName" value="Sub-organization1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="user2@liferay.com" />
-			<var name="userFirstName" value="user2" />
-			<var name="userLastName" value="user2" />
-			<var name="userScreenName" value="user2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization1" />
-			<var name="userFirstName" value="user2" />
-			<var name="userLastName" value="user2" />
-			<var name="userName" value="user2 user2" />
-			<var name="userScreenName" value="user2" />
-		</execute>
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Sub-organization1" />
-			<var name="userFirstName" value="user2" />
-			<var name="userLastName" value="user2" />
-			<var name="userName" value="user2 user2" />
-			<var name="userScreenName" value="user2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#gotoCP">
-			<var name="orgName" value="Organization1" />
-			<var name="searchToken" value="Organization1" />
-		</execute>
-
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="Organization#viewAssignMemberCP">
-			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#editSiteCP">
-			<var name="orgName" value="Organization1" />
-			<var name="orgNameEdit" value="Organization1 Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#editSiteCP">
-			<var name="orgName" value="Sub-organization1" />
-			<var name="orgNameEdit" value="Sub-organization1 Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#deleteCP">
-			<var name="orgName" value="Sub-organization2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#deleteCP">
-			<var name="orgName" value="Organization2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#removeMemberCP">
-			<var name="orgName" value="Sub-organization1 Edit" />
-			<var name="userFullName" value="user2 user2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#deleteCP">
-			<var name="orgName" value="Sub-organization1 Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#searchCP">
-			<var name="orgName" value="Organization1 Edit" />
-			<var name="searchTerm" value="Organization1 Edit" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="Organization1 Edit" />
-			<var name="orgType" value="Organization" />
-		</execute>
-	</command>
-
-	<command name="addWCStructureAndTemplate">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="approveWorkflow">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="WC Workflow Content" />
-			<var name="webContentTitle" value="WC Workflow Title" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="WC Workflow Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="WC Workflow Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC Workflow Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="WC Workflow Content" />
-			<var name="webContentTitle" value="WC Workflow Title" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="WC Workflow Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Workflow Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Workflow Content" />
-			<var name="webContentTitle" value="WC Workflow Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC Workflow Content" />
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="WC Workflow Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="WC Workflow Title" />
-		</execute>
-
-		<execute macro="WebContent#viewEntryAsWorkflowAsset">
-			<var name="webContentContent" value="WC Workflow Content" />
-			<var name="webContentTitle" value="WC Workflow Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Workflow Content" />
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Workflow Content" />
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="Blogs Workflow Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="Blogs Workflow Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Workflow Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Workflow Content" />
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Workflow Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="cards" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Workflow Content" />
-			<var name="entryTitle" value="Blogs Workflow Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewStatus">
-			<var name="entryStatus" value="Approved" />
-		</execute>
-	</command>
-
-	<command name="publishStagedSite">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Site Staging" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Home#PORTLET" />
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="publishWCDraft">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoViewStatus">
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="Web Content Draft Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="Web Content Draft Content" />
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="Web Content Draft Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Draft Title" />
-			<var name="webContentTitleEdit" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoViewStatus">
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="publishWorkflowDefinition">
-		<var method="PropsUtil#get('test.run.environment')" name="testRunEnvironment" />
-
-		<if>
-			<equals arg1="${testRunEnvironment}" arg2="EE" />
-			<then>
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Configuration" />
-					<var name="panel" value="Control Panel" />
-					<var name="portlet" value="Workflow" />
-				</execute>
-
-				<execute macro="Workflow#viewDefinitionUnpublished">
-					<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
-				</execute>
-
-				<execute macro="Workflow#publishExistingWorkflowDefinition">
-					<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
-				</execute>
-
-				<execute macro="Navigator#gotoBack" />
-
-				<execute macro="Workflow#viewDefinitionPublished">
-					<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="resetTestUserPassword">
-		<execute macro="SetupWizard#finishConfigurationPG" />
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#acceptEndUserLicenseAgreement" />
-
-		<execute macro="User#resetPassword">
-			<var name="setupWizardEnabled" value="true" />
-		</execute>
-
-		<execute macro="User#answerPasswordReminder" />
-
-		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test2" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="searchForAssetsAfterUpgrade">
-		<execute macro="Navigator#openURL" />
-
-		<!--<execute macro="SearchPortlets#searchEmbedded">
+definition {
+	macro addDataDefinitionWithDB2 {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no lists."
+		);
+
+		DDLNavigator.gotoManageDataDefinitions();
+
+		for (var ddlDataDefinitionName : list "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do") {
+			DDLDataDefinition.viewName(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+		}
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.viewCP(
+			ddlDataDefinitionName = "Data Definition",
+			fieldFieldLabel = "Text"
+		);
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
+	}
+
+	macro addForm {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no forms. Click on the plus button to add the first one."
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form Name");
+
+		Form.editDescription(formDescription = "Form Description");
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabel(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdmin.viewForm(
+			formDescription = "Form Description",
+			formName = "Form Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm(formName = "Form Name");
+
+		FormPortletConfiguration.selectForm(formName = "Form Name");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewTextField(fieldLabel = "Text Field", fieldName = "TextField");
+	}
+
+	macro addMessageBoards {
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.addPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 3"
+		);
+	}
+
+	macro addOrganization {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+	}
+
+	macro addUserAndSuborganization {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization2", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Suborganization.addCP(
+			orgName = "Organization2",
+			suborgName = "Sub-organization2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Suborganization.addCP(
+			orgName = "Organization1",
+			suborgName = "Sub-organization1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization1",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userName = "user2 user2",
+			userScreenName = "user2"
+		);
+
+		Organization.addMemberCP(
+			orgName = "Sub-organization1",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userName = "user2 user2",
+			userScreenName = "user2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoCP(orgName = "Organization1", searchToken = "Organization1");
+
+		User.searchCP(searchTerm = "usersn");
+
+		Organization.viewAssignMemberCP(
+			userName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.editSiteCP(
+			orgName = "Organization1",
+			orgNameEdit = "Organization1 Edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.editSiteCP(
+			orgName = "Sub-organization1",
+			orgNameEdit = "Sub-organization1 Edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deleteCP(orgName = "Sub-organization2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deleteCP(orgName = "Organization2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.removeMemberCP(
+			orgName = "Sub-organization1 Edit",
+			userFullName = "user2 user2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deleteCP(orgName = "Sub-organization1 Edit");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Organization1 Edit",
+			searchTerm = "Organization1 Edit"
+		);
+
+		Organization.viewCP(orgName = "Organization1 Edit", orgType = "Organization");
+	}
+
+	macro addWCStructureAndTemplate {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	macro approveWorkflow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC Workflow Content",
+			webContentStatus = "Approved",
+			webContentTitle = "WC Workflow Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(
+			workflowAssetTitle = "WC Workflow Title"
+		);
+
+		WebContent.viewEntryAsWorkflowAsset(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Workflow Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Workflow Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title"
+		);
+
+		BlogsEntry.viewStatus(entryStatus = "Approved");
+	}
+
+	macro publishStagedSite {
+		Navigator.openSiteURL(siteName = "Staging Site Staging");
+
+		AssertElementNotPresent(locator1 = "Home#PORTLET");
+
+		ProductMenu.gotoStagingSite();
+
+		WebContent.viewPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		WebContent.viewPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+	}
+
+	macro publishWCDraft {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Draft",
+			webContentTitle = "Web Content Draft Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "Web Content Draft Content",
+			webContentStatus = "Draft",
+			webContentTitle = "Web Content Draft Title"
+		);
+
+		WebContent.editCP(
+			webContentContentEdit = "Web Content Content",
+			webContentTitle = "Web Content Draft Title",
+			webContentTitleEdit = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "Web Content Content",
+			webContentStatus = "Approved",
+			webContentTitle = "Web Content Title"
+		);
+	}
+
+	macro publishWorkflowDefinition {
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if ("${testRunEnvironment}" == "EE") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Workflow"
+			);
+
+			Workflow.viewDefinitionUnpublished(
+				workflowDefinitionTitle = "New Workflow Definition Draft"
+			);
+
+			Workflow.publishExistingWorkflowDefinition(
+				workflowDefinitionTitle = "New Workflow Definition Draft"
+			);
+
+			Navigator.gotoBack();
+
+			Workflow.viewDefinitionPublished(
+				workflowDefinitionTitle = "New Workflow Definition Draft"
+			);
+		}
+	}
+
+	macro resetTestUserPassword {
+		SetupWizard.finishConfigurationPG();
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openURL();
+
+		User.acceptEndUserLicenseAgreement();
+
+		User.resetPassword(setupWizardEnabled = "true");
+
+		User.answerPasswordReminder();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		User.logoutPG();
+
+		User.loginPG(password = "test2", userEmailAddress = "test@liferay.com");
+	}
+
+	macro searchForAssetsAfterUpgrade {
+		Navigator.openURL();
+
+		/*<execute macro="SearchPortlets#searchEmbedded">
 			<var name="searchTerm" value="Web Content" />
 		</execute>
 
@@ -853,782 +779,669 @@
 			<var name="searchAssetSummary" value="Blogs Entry Content" />
 			<var name="searchAssetTitle" value="Blogs Entry Title" />
 			<var name="searchAssetType" value="Blogs Entry" />
-		</execute> -->
-	</command>
-
-	<command name="submitNewWorkflow">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="cards" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="New Blog After Upgrade" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAsWorkflowAsset">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="New Blog After Upgrade" />
-		</execute>
-	</command>
-
-	<command name="viewAndDeleteFormEntry">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="FormFields#viewParagraphField">
-			<var name="fieldTitle" value="Paragraph" />
-			<var name="fieldValue" value="Paragraph body text." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
-
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Status" />
-			<var name="fieldValue" value="Approved" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Checkbox" />
-			<var name="fieldValue" value="Yes" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Multiple Selection" />
-			<var name="fieldValue" value="1, 2, 4" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoView" />
-
-		<execute macro="FormFields#viewParagraphField">
-			<var name="fieldTitle" value="Paragraph" />
-			<var name="fieldValue" value="Paragraph body text." />
-		</execute>
-
-		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="SingleLineText" />
-			<var name="fieldName" value="SingleLineText" />
-			<var name="fieldValue" value="Single Line Text" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewMultilineTextEntry">
-			<var name="fieldLabel" value="MultilineText" />
-			<var name="fieldName" value="MultilineText" />
-			<var name="fieldValue" value="Multiline Text" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewSelectEntry">
-			<var name="fieldLabel" value="Select" />
-			<var name="fieldName" value="Select" />
-			<var name="selectOption" value="Select 1" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewRadioEntry">
-			<var name="fieldLabel" value="Radio" />
-			<var name="fieldName" value="Radio" />
-			<var name="fieldValue" value="Option 1" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewDateEntry">
-			<var name="fieldLabel" value="Date" />
-			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="05/02/2016" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewCheckboxEntry">
-			<var name="fieldLabel" value="Checkbox" />
-			<var name="fieldName" value="Checkbox" />
-		</execute>
-
-		<execute macro="FormPortlet#clickNextPage" />
-
-		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="SingleLineText2" />
-			<var name="fieldName" value="SingleLineText2" />
-			<var name="fieldValue" value="SingleLineText2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
-
-		<execute macro="FormsAdmin#deleteFormEntry">
-			<var name="formEntryValue" value="Option 1" />
-		</execute>
-
-		<execute macro="FormsAdmin#viewNoFormEntries" />
-	</command>
-
-	<command name="viewAssetPublisher">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Asset Publisher">
-			<var name="key_portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="viewCalendar">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title Edited" />
-		</execute>
-
-		<execute macro="CalendarEvent#publishRepeating">
-			<var name="saveOption" value="Entire Series" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title Edited" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Post Upgrade Calendar Event" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Calendar" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Post Upgrade Calendar Event" />
-		</execute>
-	</command>
-
-	<command name="viewDocument">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Document" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Document" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="commentBody" value="Document Comment" />
-			<var name="dmDocumentTitle" value="Document1" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentDetailsCmdPG">
-			<var name="dmDocumentTitle" value="Document1" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentMetadataCP">
-			<var name="metadataData" value="application/msword" />
-			<var name="metadataLabel" value="Content Type" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentMetadataCP">
-			<var name="metadataData" value="Liferay" />
-			<var name="metadataLabel" value="Creator" />
-		</execute>
-	</command>
-
-	<command name="ViewDroolsAppManager">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewAppCP">
-			<var name="appName" value="Liferay Drools" />
-			<var name="appStatus" value="Active" />
-		</execute>
-
-		<execute macro="AppManager#viewAppCP">
-			<var name="appName" value="Liferay Portal Rules Engine Drools" />
-			<var name="appStatus" value="Active" />
-		</execute>
-	</command>
-
-	<command name="viewMessageBoards">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewLockedPG">
-			<var name="threadSubject" value="Message Boards Subject 2" />
-		</execute>
-	</command>
-
-	<command name="viewNestedPortlets">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Nested Portlets" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Nested Applications">
-			<var name="key_portletName" value="Nested Applications" />
-		</execute>
-
-		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag applications below to nest them." />
-
-		<execute macro="NestedPortlets#viewPG">
-			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</command>
-
-	<command name="viewNotifications">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="Message Boards Subject 1" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Message Boards Subject 1" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject 1" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="activePanel" value="Notifications" />
-			<var name="notificationCount" value="2" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="Message Boards Subject 2" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Message Boards Subject 2" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject 2" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="activePanel" value="Notifications" />
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="Message Boards Subject 3" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Message Boards Subject 3" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject 3" />
-		</execute>
-	</command>
-
-	<command name="viewPolls">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Polls" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Message#INFO" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Polls" />
-		</execute>
-
-		<execute macro="Polls#viewPollPG">
-			<var name="pollsQuestion" value="Sample Polls Question" />
-			<var name="pollsQuestionChoiceList" value="Yes,No" />
-		</execute>
-
-		<execute macro="Polls#votePollPG">
-			<var name="pollsQuestionChoice" value="Yes" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Polls" />
-		</execute>
-
-		<execute macro="Polls#viewVotedPollPG">
-			<var name="pollsQuestionChoice" value="Yes" />
-			<var name="pollsQuestionTotalVotes" value="1" />
-			<var name="pollsQuestionVoteCount" value="1" />
-			<var name="pollsQuestionVotePercent" value="100%" />
-		</execute>
-	</command>
-
-	<command name="ViewPortletsPermissions">
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
-			<var name="userLoginFullName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="siteName" value="Site Name 1" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="siteName" value="Site Name 1" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Portlet#OPTIONS_ICON" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Site Name 1" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/web/site-name-2/blogs-page" />
-		</execute>
-
-		<execute macro="Portlet#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
-			<var name="userLoginFullName" value="userfn2 userln2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="Wiki Front Page Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="Portlet#viewPortletOptions">
-			<var name="OptionsName" value="Configuration" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentTitle" value="Document1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="Portlet#viewPortletOptions">
-			<var name="OptionsName" value="Permissions" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="Portlet#viewNoPermissionPG" />
-	</command>
-
-	<command name="viewStagingNestedPortlets">
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Staging Site" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Nested Applications">
-			<var name="key_portletName" value="Nested Applications" />
-		</execute>
-
-		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag applications below to nest them." />
-
-		<execute macro="NestedPortlets#viewPG">
-			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="NestedPortlets#viewPG">
-			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Blogs" />
-		</execute>
-	</command>
-
-	<command name="viewUpgrade">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Document" />
-		</execute>
-
-		<var name="key_menuItem" value="List" />
-
-		<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
-			<then>
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Document" />
-				</execute>
-
-				<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
-			</else>
-		</if>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentTitle" value="Document1" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
-
-		<execute macro="DMDocument#expandInfo" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="VERSION 1.0">
-			<var name="key_dmDocumentVersionNumber" value="1.0" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="APPROVED" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download">
-			<var name="key_dmDocumentSize" value="22KB" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="startedByUserName" value="Test Test" />
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="Wiki Front Page Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
-			<var name="key_pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SignOut#signOut" />
-
-		<execute macro="SignIn#signIn">
-			<var name="userEmailAddress" value="user@liferay.com" />
-		</execute>
-
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Userfn" />
-			<var name="userLastName" value="Userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Document" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentTitle" value="Document1" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
-
-		<execute macro="DMDocument#expandInfo" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="VERSION 1.0">
-			<var name="key_dmDocumentVersionNumber" value="1.0" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="APPROVED" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download">
-			<var name="key_dmDocumentSize" value="22KB" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="startedByUserName" value="Test Test" />
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Body" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="Wiki Front Page Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
-			<var name="key_pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SignOut#signOut" />
-
-		<execute macro="SignIn#signIn" />
-	</command>
-</definition>
+		</execute> */
+	}
+
+	macro submitNewWorkflow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "New Blog After Upgrade"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "New Blog After Upgrade",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "New Blog After Upgrade",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "New Blog After Upgrade");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "New Blog After Upgrade");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(
+			workflowAssetTitle = "New Blog After Upgrade"
+		);
+
+		BlogsEntry.viewEntryAsWorkflowAsset(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade"
+		);
+	}
+
+	macro viewAndDeleteFormEntry {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			fieldValue = "Paragraph body text."
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(fieldLabel = "Status", fieldValue = "Approved");
+
+		FormsAdmin.viewFormTableEntry(fieldLabel = "Checkbox", fieldValue = "Yes");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Multiple Selection",
+			fieldValue = "1, 2, 4"
+		);
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			fieldValue = "Paragraph body text."
+		);
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "SingleLineText",
+			fieldName = "SingleLineText",
+			fieldValue = "Single Line Text"
+		);
+
+		FormsAdmin.viewMultilineTextEntry(
+			fieldLabel = "MultilineText",
+			fieldName = "MultilineText",
+			fieldValue = "Multiline Text"
+		);
+
+		FormsAdmin.viewSelectEntry(
+			fieldLabel = "Select",
+			fieldName = "Select",
+			selectOption = "Select 1"
+		);
+
+		FormsAdmin.viewRadioEntry(
+			fieldLabel = "Radio",
+			fieldName = "Radio",
+			fieldValue = "Option 1"
+		);
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			fieldValue = "05/02/2016"
+		);
+
+		FormsAdmin.viewCheckboxEntry(fieldLabel = "Checkbox", fieldName = "Checkbox");
+
+		FormPortlet.clickNextPage();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "SingleLineText2",
+			fieldName = "SingleLineText2",
+			fieldValue = "SingleLineText2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.deleteFormEntry(formEntryValue = "Option 1");
+
+		FormsAdmin.viewNoFormEntries();
+	}
+
+	macro viewAssetPublisher {
+		Navigator.gotoPage(pageName = "Asset Publisher");
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#TITLE",
+			value1 = "Asset Publisher",
+			key_portletName = "Asset Publisher"
+		);
+
+		WebContent.viewPGViaAP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+	}
+
+	macro viewCalendar {
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title Edited");
+
+		CalendarEvent.publishRepeating(saveOption = "Entire Series");
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title Edited");
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Post Upgrade Calendar Event",
+			eventType = "Regular",
+			pageName = "Calendar"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Post Upgrade Calendar Event");
+	}
+
+	macro viewDocument {
+		Navigator.gotoPage(pageName = "Document");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Document");
+
+		DMDocument.viewAllPG(
+			commentBody = "Document Comment",
+			dmDocumentTitle = "Document1"
+		);
+
+		DMDocument.viewDocumentDetailsCmdPG(dmDocumentTitle = "Document1");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "application/msword",
+			metadataLabel = "Content Type"
+		);
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "Liferay",
+			metadataLabel = "Creator"
+		);
+	}
+
+	macro ViewDroolsAppManager {
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
+
+		AppManager.viewAppCP(appName = "Liferay Drools", appStatus = "Active");
+
+		AppManager.viewAppCP(
+			appName = "Liferay Portal Rules Engine Drools",
+			appStatus = "Active"
+		);
+	}
+
+	macro viewMessageBoards {
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Subject 2");
+	}
+
+	macro viewNestedPortlets {
+		Navigator.gotoPage(pageName = "Nested Portlets");
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#TITLE",
+			value1 = "Nested Applications",
+			key_portletName = "Nested Applications"
+		);
+
+		AssertTextNotEquals(
+			locator1 = "Message#INFO",
+			value1 = "Drag applications below to nest them."
+		);
+
+		NestedPortlets.viewPG(
+			portletColumnNumberTo = "1",
+			portletName = "Web Content Display"
+		);
+	}
+
+	macro viewNotifications {
+		Navigator.gotoPage(pageName = "Welcome");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 1",
+			user = "Test Test"
+		);
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 1");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 1"
+		);
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "2"
+		);
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 2",
+			user = "Test Test"
+		);
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 2");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 2"
+		);
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1"
+		);
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 3",
+			user = "Test Test"
+		);
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 3");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 3"
+		);
+	}
+
+	macro viewPolls {
+		Navigator.gotoPage(pageName = "Polls");
+
+		AssertElementNotPresent(locator1 = "Message#INFO");
+
+		Navigator.gotoPage(pageName = "Polls");
+
+		Polls.viewPollPG(
+			pollsQuestion = "Sample Polls Question",
+			pollsQuestionChoiceList = "Yes,No"
+		);
+
+		Polls.votePollPG(pollsQuestionChoice = "Yes");
+
+		Navigator.gotoPage(pageName = "Polls");
+
+		Polls.viewVotedPollPG(
+			pollsQuestionChoice = "Yes",
+			pollsQuestionTotalVotes = "1",
+			pollsQuestionVoteCount = "1",
+			pollsQuestionVotePercent = "100%"
+		);
+	}
+
+	macro ViewPortletsPermissions {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Message Boards Page",
+			siteName = "Site Name 1"
+		);
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadSubject = "Message Boards Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Message Boards Page",
+			siteName = "Site Name 1"
+		);
+
+		AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
+
+		Navigator.gotoSitePage(pageName = "Web Content Page", siteName = "Site Name 1");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Navigator.openSpecificURL(
+			url = "http://localhost:8080/web/site-name-2/blogs-page"
+		);
+
+		Portlet.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2"
+		);
+
+		Navigator.gotoSitePage(pageName = "Wiki Page", siteName = "Site Name 2");
+
+		WikiPage.viewFrontPagePG(wikiPageContent = "Wiki Front Page Content");
+
+		Navigator.gotoSitePage(pageName = "Wiki Page", siteName = "Site Name 2");
+
+		Portlet.viewPortletOptions(OptionsName = "Configuration");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name 2"
+		);
+
+		DMDocument.viewPG(dmDocumentTitle = "Document1");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name 2"
+		);
+
+		Portlet.viewPortletOptions(OptionsName = "Permissions");
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name 2");
+
+		Portlet.viewNoPermissionPG();
+	}
+
+	macro viewStagingNestedPortlets {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Site"
+		);
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#TITLE",
+			value1 = "Nested Applications",
+			key_portletName = "Nested Applications"
+		);
+
+		AssertTextNotEquals(
+			locator1 = "Message#INFO",
+			value1 = "Drag applications below to nest them."
+		);
+
+		NestedPortlets.viewPG(
+			portletColumnNumberTo = "1",
+			portletName = "Web Content Display"
+		);
+
+		NestedPortlets.viewPG(portletColumnNumberTo = "1", portletName = "Blogs");
+	}
+
+	macro viewUpgrade {
+		Navigator.gotoPage(pageName = "Web Content");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Navigator.gotoPage(pageName = "Document");
+
+		var key_menuItem = "List";
+
+		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+
+		if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+		else {
+			Navigator.gotoPage(pageName = "Document");
+
+			Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
+		DMDocument.viewPG(dmDocumentTitle = "Document1");
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			value1 = "Test Test"
+		);
+
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",
+			value1 = "VERSION 1.0",
+			key_dmDocumentVersionNumber = "1.0"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
+			value1 = "APPROVED"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD",
+			value1 = "Download",
+			key_dmDocumentSize = "22KB"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			startedByUserName = "Test Test",
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki Front Page Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertVisible(locator1 = "Home#PAGE_ACTIVE", key_pageName = "Site Page");
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "user@liferay.com");
+
+		Smoke.viewWelcomePage(userFirstName = "Userfn", userLastName = "Userln");
+
+		Navigator.gotoPage(pageName = "Web Content");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Navigator.gotoPage(pageName = "Document");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document1");
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			value1 = "Test Test"
+		);
+
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",
+			value1 = "VERSION 1.0",
+			key_dmDocumentVersionNumber = "1.0"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
+			value1 = "APPROVED"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD",
+			value1 = "Download",
+			key_dmDocumentSize = "22KB"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			startedByUserName = "Test Test",
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki Front Page Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertVisible(locator1 = "Home#PAGE_ACTIVE", key_pageName = "Site Page");
+
+		SignOut.signOut();
+
+		SignIn.signIn();
+	}
+}

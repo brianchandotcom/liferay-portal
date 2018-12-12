@@ -1,22 +1,17 @@
-<definition>
-	<command name="addComment">
-		<execute function="Click" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="postReply" />
-		</execute>
+definition {
+	macro addComment {
+		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "postReply");
 
-		<execute macro="AlloyEditor#typeEditor">
-			<var name="content" value="${entryComment}" />
-			<var name="editor" value="postReply" />
-		</execute>
+		AlloyEditor.typeEditor(content = "${entryComment}", editor = "postReply");
 
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		AssertClick(locator1 = "Button#REPLY", value1 = "Reply");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="subscribePG">
-		<execute function="AssertClick" locator1="Button#SUBSCRIBE" value1="Subscribe" />
+	macro subscribePG {
+		AssertClick(locator1 = "Button#SUBSCRIBE", value1 = "Subscribe");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+	}
+}

@@ -1,104 +1,105 @@
-<definition>
-	<command name="addOrganization">
-		<execute macro="LexiconEntry#gotoAdd" />
+definition {
+	macro addOrganization {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${organizationName}" />
-		</execute>
+		PortletEntry.inputName(name = "${organizationName}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="changeUserLanguage">
-		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
+	macro changeUserLanguage {
+		Select(locator1 = "MyAccount#LANGUAGE_SELECT", value1 = "${languageName}");
 
-		<var name="key_saveButton" value="${saveButton}" />
+		var key_saveButton = "${saveButton}";
 
-		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
+		AssertClick(locator1 = "Button#SAVE_LOCALIZED", value1 = "${saveButton}");
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-	<command name="configureDisplaySettingsLanguage">
-		<execute macro="Navigator#openURL" />
+	macro configureDisplaySettingsLanguage {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Account Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Account Settings"
+		);
 
-		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
+		Select(locator1 = "MyAccount#LANGUAGE_SELECT", value1 = "${languageName}");
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-	<command name="configureDisplaySettingsLanguageLocalized">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="${category}" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="${portlet}" />
-		</execute>
+	macro configureDisplaySettingsLanguageLocalized {
+		ProductMenu.gotoPortlet(
+			category = "${category}",
+			panel = "User",
+			portlet = "${portlet}"
+		);
 
-		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
+		Select(locator1 = "MyAccount#LANGUAGE_SELECT", value1 = "${languageName}");
 
-		<var name="key_saveButton" value="${saveButton}" />
+		var key_saveButton = "${saveButton}";
 
-		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
+		AssertClick(locator1 = "Button#SAVE_LOCALIZED", value1 = "${saveButton}");
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-	<command name="editPasswordInvalidCP">
-		<execute macro="UserNavigator#gotoPassword" />
+	macro editPasswordInvalidCP {
+		UserNavigator.gotoPassword();
 
-		<if>
-			<isset var="currentPassword" />
-			<then>
-				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="${currentPassword}" />
-			</then>
-			<else>
-				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="test" />
-			</else>
-		</if>
+		if (isSet(currentPassword)) {
+			Type(locator1 = "TextInput#CURRENT_PASSWORD", value1 = "${currentPassword}");
+		}
+		else {
+			Type(locator1 = "TextInput#CURRENT_PASSWORD", value1 = "test");
+		}
 
-		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${newPassword}" />
-		<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${newPassword}" />
+		Type(locator1 = "TextInput#NEW_PASSWORD", value1 = "${newPassword}");
 
-		<execute macro="Button#clickSave" />
+		Type(locator1 = "TextInput#ENTER_AGAIN", value1 = "${newPassword}");
 
-		<if>
-			<equals arg1="${changeable}" arg2="false" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
+		Button.clickSave();
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Passwords may not be changed under the current password policy." />
-			</then>
-			<else>
-				<execute macro="Alert#viewRequestFailedToComplete" />
+		if ("${changeable}" == "false") {
+			Alert.viewRequestFailedToComplete();
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password is invalid. Please enter in a different password." />
-			</else>
-		</if>
-	</command>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "Passwords may not be changed under the current password policy."
+			);
+		}
+		else {
+			Alert.viewRequestFailedToComplete();
 
-	<command name="openMyAccountAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet" />
-		</execute>
-	</command>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "That password is invalid. Please enter in a different password."
+			);
+		}
+	}
 
-	<command name="view">
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL" />
+	macro openMyAccountAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet"
+		);
+	}
 
-		<execute macro="UserNavigator#gotoOrganizations" />
+	macro view {
+		AssertElementPresent(
+			locator1 = "UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL"
+		);
 
-		<execute macro="UserNavigator#gotoMemberships" />
+		UserNavigator.gotoOrganizations();
 
-		<execute macro="UserNavigator#gotoRoles" />
+		UserNavigator.gotoMemberships();
 
-		<execute macro="UserNavigator#gotoPassword" />
-	</command>
-</definition>
+		UserNavigator.gotoRoles();
+
+		UserNavigator.gotoPassword();
+	}
+}

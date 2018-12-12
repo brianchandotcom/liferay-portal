@@ -1,389 +1,363 @@
-<definition>
-	<var name="assetType" value="Bookmarks Folder" />
+definition {
+	var assetType = "Bookmarks Folder";
 
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Folder" />
-		</execute>
+		MenuItem.click(menuItem = "Folder");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${folderName}" />
-		</execute>
+		PortletEntry.inputName(name = "${folderName}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${folderDescription}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${folderDescription}");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
-		</execute>
-	</command>
+		BookmarksFolder.viewFolder(
+			folderDescription = "${folderDescription}",
+			folderName = "${folderName}"
+		);
+	}
 
-	<command name="addNullCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addNullCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Folder" />
-		</execute>
+		MenuItem.click(menuItem = "Folder");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Required" />
-		<execute macro="Alert#viewRequiredField" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Name"
+		);
 
-	<command name="addNullSubfolderCP">
-		<var name="key_assetName" value="${folderName}" />
-		<var name="key_folderName" value="${folderName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required"
+		);
 
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
+		Alert.viewRequiredField();
+	}
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
+	macro addNullSubfolderCP {
+		var key_assetName = "${folderName}";
+		var key_folderName = "${folderName}";
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		AssertClick(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}"
+		);
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Subfolder" />
-		</execute>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${folderName}");
 
-		<execute macro="Button#clickSave" />
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Required" />
-		<execute macro="Alert#viewRequiredField" />
-	</command>
+		MenuItem.click(menuItem = "Subfolder");
 
-	<command name="addPG">
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
+		Button.clickSave();
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Folder" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Name"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${folderName}" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required"
+		);
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${folderDescription}" />
-		</execute>
+		Alert.viewRequiredField();
+	}
 
-		<execute macro="PortletEntry#save" />
+	macro addPG {
+		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Folder");
 
-	<command name="addSubfolderCP">
-		<var name="key_assetName" value="${folderName}" />
+		PortletEntry.inputName(name = "${folderName}");
 
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
+		PortletEntry.inputDescription(description = "${folderDescription}");
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
+		PortletEntry.save();
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		BookmarksFolder.viewFolder(
+			folderDescription = "${folderDescription}",
+			folderName = "${folderName}"
+		);
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Subfolder" />
-		</execute>
+	macro addSubfolderCP {
+		var key_assetName = "${folderName}";
 
-		<var name="key_folderName" value="${subfolderName}" />
+		AssertClick(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${subfolderName}" />
-		</execute>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${folderName}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${subfolderDescription}" />
-		</execute>
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#save" />
+		MenuItem.click(menuItem = "Subfolder");
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${subfolderDescription}" />
-			<var name="folderName" value="${subfolderName}" />
-		</execute>
+		var key_folderName = "${subfolderName}";
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
-	</command>
+		PortletEntry.inputName(name = "${subfolderName}");
 
-	<command name="addSubfolderPG">
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
+		PortletEntry.inputDescription(description = "${subfolderDescription}");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Subfolder" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${folderName}" />
-		</execute>
+		BookmarksFolder.viewFolder(
+			folderDescription = "${subfolderDescription}",
+			folderName = "${subfolderName}"
+		);
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${folderDescription}" />
-		</execute>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${folderName}");
+	}
 
-		<execute macro="PortletEntry#save" />
+	macro addSubfolderPG {
+		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Subfolder");
 
-	<command name="deletePG">
-		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+		PortletEntry.inputName(name = "${folderName}");
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#VERTICAL_ELLIPSIS" />
+		PortletEntry.inputDescription(description = "${folderDescription}");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Move to Recycle Bin" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		PortletEntry.save();
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+		BookmarksFolder.viewFolder(
+			folderDescription = "${folderDescription}",
+			folderName = "${folderName}"
+		);
+	}
 
-	<command name="editCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${folderName}" />
-		</execute>
+	macro deletePG {
+		AssertTextEquals(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${folderNameEdit}" />
-		</execute>
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${folderDescriptionEdit}" />
-		</execute>
+		MenuItem.click(menuItem = "Move to Recycle Bin");
 
-		<execute macro="PortletEntry#save" />
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${folderDescriptionEdit}" />
-			<var name="folderName" value="${folderNameEdit}" />
-		</execute>
-	</command>
+		Navigator.openURL();
 
-	<command name="editPG">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${folderName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${folderNameEdit}" />
-		</execute>
+		RecycleBin.emptyCP();
+	}
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${folderDescriptionEdit}" />
-		</execute>
+	macro editCP {
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${folderName}");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.inputName(name = "${folderNameEdit}");
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${folderDescriptionEdit}" />
-			<var name="folderName" value="${folderNameEdit}" />
-		</execute>
-	</command>
+		PortletEntry.inputDescription(description = "${folderDescriptionEdit}");
 
-	<command name="editSubfolderCP">
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+		PortletEntry.save();
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
+		BookmarksFolder.viewFolder(
+			folderDescription = "${folderDescriptionEdit}",
+			folderName = "${folderNameEdit}"
+		);
+	}
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${subfolderName}" />
-		</execute>
+	macro editPG {
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${folderName}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${editSubfolderName}" />
-		</execute>
+		PortletEntry.inputName(name = "${folderNameEdit}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${editSubfolderDescription}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${folderDescriptionEdit}");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="BookmarksFolder#viewFolder">
-			<var name="folderDescription" value="${editSubfolderDescription}" />
-			<var name="folderName" value="${editSubfolderName}" />
-		</execute>
-	</command>
+		BookmarksFolder.viewFolder(
+			folderDescription = "${folderDescriptionEdit}",
+			folderName = "${folderNameEdit}"
+		);
+	}
 
-	<command name="gotoPG">
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+	macro editSubfolderCP {
+		AssertClick(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
 
-		<execute macro="Breadcrumb#viewActiveEntry">
-			<var name="breadcrumbName" value="${folderName}" />
-		</execute>
-	</command>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${folderName}");
 
-	<command name="gotoSubfolderPG">
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${subfolderName}");
 
-		<while>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Icon#BACK" />
-			<then>
-				<execute function="Click" locator1="Icon#BACK" />
-			</then>
-		</while>
+		PortletEntry.inputName(name = "${editSubfolderName}");
 
-		<var name="key_assetName" value="${folderName}" />
+		PortletEntry.inputDescription(description = "${editSubfolderDescription}");
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
+		PortletEntry.save();
 
-		<var name="key_assetName" value="${subfolderName}" />
+		BookmarksFolder.viewFolder(
+			folderDescription = "${editSubfolderDescription}",
+			folderName = "${editSubfolderName}"
+		);
+	}
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${subfolderName}" />
+	macro gotoPG {
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
 
-		<execute macro="Breadcrumb#viewActiveEntry">
-			<var name="breadcrumbName" value="${subfolderName}" />
-		</execute>
-	</command>
+		Breadcrumb.viewActiveEntry(breadcrumbName = "${folderName}");
+	}
 
-	<command name="mergeSubfolderToFolderCP">
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+	macro gotoSubfolderPG {
+		Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
+		while (IsElementPresent.pauseIsElementPresent(locator1 = "Icon#BACK")) {
+			Click(locator1 = "Icon#BACK");
+		}
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${subfolderName}" />
-		</execute>
+		var key_assetName = "${folderName}";
 
-		<execute function="Click" locator1="Bookmarks#PARENT_FOLDER_PANEL" />
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}"
+		);
 
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#MERGE_WITH_PARENT_FOLDER" />
+		var key_assetName = "${subfolderName}";
 
-		<execute macro="Button#clickSave" />
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${subfolderName}"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Breadcrumb.viewActiveEntry(breadcrumbName = "${subfolderName}");
+	}
 
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${bookmarkName}" />
-		</execute>
-	</command>
+	macro mergeSubfolderToFolderCP {
+		AssertClick(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
 
-	<command name="moveSubfolderToRecycleBinPG">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to Recycle Bin" />
-			<var name="rowEntry" value="${subfolderName}" />
-		</execute>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${folderName}");
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${subfolderName}");
 
-	<command name="moveToRecycleBinCP">
-		<execute macro="Navigator#openURL" />
+		Click(locator1 = "Bookmarks#PARENT_FOLDER_PANEL");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
+		Check.checkToggleSwitch(locator1 = "Checkbox#MERGE_WITH_PARENT_FOLDER");
 
-		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+		Button.clickSave();
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to Recycle Bin" />
-			<var name="rowEntry" value="${folderName}" />
-		</execute>
+		Alert.viewSuccessMessage();
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		Bookmark.viewBookmark(
+			bookmarkName = "${bookmarkName}",
+			bookmarkURL = "${bookmarkURL}",
+			folderName = "${bookmarkName}"
+		);
+	}
 
-	<command name="subscribePG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}">
-			<var name="key_assetDescription" value="${folderDescription}" />
-		</execute>
+	macro moveSubfolderToRecycleBinPG {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Move to Recycle Bin",
+			rowEntry = "${subfolderName}"
+		);
 
-		<execute function="Click#clickAt" locator1="Icon#INFO" />
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-		<execute function="Pause" locator1="1000" />
+	macro moveToRecycleBinCP {
+		Navigator.openURL();
 
-		<execute function="Click" locator1="Icon#SUBSCRIBE" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		AssertTextEquals(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Move to Recycle Bin",
+			rowEntry = "${folderName}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+	macro subscribePG {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION",
+			value1 = "${folderDescription}",
+			key_assetDescription = "${folderDescription}"
+		);
 
-				<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
+		Click.clickAt(locator1 = "Icon#INFO");
 
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-			</then>
-		</if>
+		Pause(locator1 = "1000");
 
-		<execute macro="Navigator#openURL" />
+		Click(locator1 = "Icon#SUBSCRIBE");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		Alert.viewSuccessMessage();
+	}
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+	macro tearDownCP {
+		Navigator.openURL();
 
-	<command name="viewFolder">
-		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}">
-			<var name="key_assetName" value="${folderName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
 
-		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}">
-			<var name="key_assetDescription" value="${folderDescription}" />
-		</execute>
-	</command>
-</definition>
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.emptyCP();
+	}
+
+	macro viewFolder {
+		AssertTextEquals(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
+			value1 = "${folderName}",
+			key_assetName = "${folderName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION",
+			value1 = "${folderDescription}",
+			key_assetDescription = "${folderDescription}"
+		);
+	}
+}

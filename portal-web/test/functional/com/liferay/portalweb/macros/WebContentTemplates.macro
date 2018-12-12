@@ -1,426 +1,408 @@
-<definition>
-	<command name="_addFields" summary="Helper function to add fields '${templateFieldNames}' to the template">
-		<if>
-			<isset var="templateFieldNames" />
-			<then>
-				<for list="${templateFieldNames}" param="fieldName">
-					<var name="key_fieldName" value="${fieldName}" />
-
-					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
-				</for>
-			</then>
-		</if>
-	</command>
-
-	<command name="_inputDescription" summary="Helper function to add description '${description}' to the template">
-		<if>
-			<isset var="templateDescription" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Details" />
-				</execute>
-
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${templateDescription}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="_inputScript" summary="Helper function to add a script to the template">
-		<if>
-			<isset var="templateScript" />
-			<then>
-				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="_inputStructure" summary="Helper function to link structure '${structureName}' to the template">
-		<if>
-			<isset var="structureName" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Details" />
-				</execute>
-
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
-
-				<execute function="SelectFrameTop" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-				<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
-
-				<execute function="SelectFrameTop" />
-			</then>
-		</if>
-	</command>
-
-	<command name="_inputTemplateFile" summary="Helper function to add a script to a template via file">
-		<if>
-			<isset var="templateFile" />
-			<then>
-				<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="_inputTemplateLanguage" summary="Helper function to select template language 'templateLanguage' to read the template in">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="vm" />
-			<then>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="vm" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-			</else>
-		</if>
-	</command>
-
-	<command name="addCP" summary="Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-			<var name="templateFile" value="${templateFile}" />
-			<var name="templateLanguage" value="${templateLanguage}" />
-			<var name="templateName" value="${templateName}" />
-			<var name="templateScript" value="${templateScript}" />
-			<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-	</command>
-
-	<command name="addNullCP" summary="Attempt to add a blank template">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewRequiredField" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="addRoleViewPermissions" summary="Give the roles '${roles}' permissions to view the template '${templateName}'">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="${templateName}" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Add" />
-			<var name="roleList" value="${roles}" />
-		</execute>
-
-		<execute function="SelectFrameTop" />
-	</command>
-
-	<command name="deleteCP" summary="Attempt to delete the template '${templateName}'">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
-
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<if>
-			<equals arg1="${webContentHasReference}" arg2="true" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The template cannot be deleted because it is required by one or more template links." />
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
-
-	<command name="inputSmallImage" summary="Input a small image with the url '${templateSmallImageURL}'">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<if>
-			<isset var="templateSmallImageURL" />
-			<then>
-				<if>
-					<condition function="IsElementNotPresent" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
-					<then>
-						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-					</then>
-					<else>
-						<execute function="Click" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-
-						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
-
-		<execute function="Type" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT" value1="${templateSmallImageURL}" />
-	</command>
-
-	<command name="inputTemplateAddScreenFields" summary="Input most basic fields inside a template">
-		<if>
-			<isset var="templateName" />
-			<then>
-				<execute macro="PortletEntry#inputName">
-					<var name="name" value="${templateName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="WebContentTemplates#_inputStructure">
-			<var name="structureName" value="${structureName}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#_inputDescription">
-			<var name="templateDescription" value="${templateDescription}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#_inputTemplateLanguage">
-			<var name="templateLanguage" value="${templateLanguage}" />
-		</execute>
-
-		<if>
-			<isset var="templateSmallImageURL" />
-			<then>
-				<execute macro="WebContentTemplates#inputSmallImage">
-					<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="WebContentTemplates#_inputScript">
-			<var name="templateScript" value="${templateScript}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#_addFields">
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#_inputTemplateFile">
-			<var name="templateFile" value="${templateFile}" />
-		</execute>
-	</command>
-
-	<command name="localizeTemplateName" summary="Add localization for the template name">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute macro="WebContentNavigator#gotoViewTemplate">
-			<var name="templateName" value="${templateName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Name" />
-			<var name="locale" value="${locale}" />
-		</execute>
-
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization1Name}" />
-
-		<if>
-			<isset var="locale2" />
-			<then>
-				<execute macro="PortletEntry#changeLocale">
-					<var name="fieldName" value="Name" />
-					<var name="locale" value="${locale2}" />
-				</execute>
-
-				<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization2Name}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="tearDownCP" summary="Teardown templates in the guest site">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="2" />
-		</execute>
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Template" />
-		</execute>
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-
-		<execute macro="Portlet#viewEmptyMessage">
-			<var name="message" value="There are no results." />
-		</execute>
-	</command>
-
-	<command name="viewCP" summary="Assert that certain template attributes are present for the template '${templateName}'">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
-
-		<if>
-			<isset var="structureName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_MODE" value1="${structureName}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="vm" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Extensible Stylesheet Language" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
-			</else>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${userEditPermission}" arg2="noEditPermission" />
-			</not>
-			<then>
-				<execute macro="WebContentNavigator#gotoViewTemplate">
-					<var name="templateName" value="${templateName}" />
-				</execute>
-
-				<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
-
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Details" />
-				</execute>
-
-				<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
-
-				<if>
-					<isset var="structureName" />
-					<then>
-						<execute function="AssertTextEquals#assertValue" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${templateLanguage}" arg2="vm" />
-					<then>
-						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-					</then>
-					<elseif>
-						<equals arg1="${templateLanguage}" arg2="xsl" />
-						<then>
-							<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-						</then>
-					</elseif>
-					<else>
-						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-					</else>
-				</if>
-
-				<if>
-					<isset var="templateScript" />
-					<then>
-						<execute function="AssertTextEquals#assertPartialTextAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
-					</then>
-				</if>
-			</then>
-		</if>
-	</command>
-
-	<command name="viewTableEntryCP" summary="Assert that the table entry for template '${templateName}' is present">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-
-		<if>
-			<isset var="templateSmallImage" />
-			<then>
-				<execute function="AssertVisible" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION_SMALL_IMAGE" value1="${templateSmallImage}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
-			</else>
-		</if>
-	</command>
-</definition>
+definition {
+	@summary = "Helper function to add fields '${templateFieldNames}' to the template"
+	macro _addFields {
+		if (isSet(templateFieldNames)) {
+			for (var fieldName : list "${templateFieldNames}") {
+				var key_fieldName = "${fieldName}";
+
+				AssertClick(locator1 = "DDMEditTemplate#SCRIPT_FIELD", value1 = "${fieldName}");
+			}
+		}
+	}
+
+	@summary = "Helper function to add description '${description}' to the template"
+	macro _inputDescription {
+		if (isSet(templateDescription)) {
+			Panel.expandPanel(panel = "Details");
+
+			PortletEntry.inputDescription(description = "${templateDescription}");
+		}
+	}
+
+	@summary = "Helper function to add a script to the template"
+	macro _inputScript {
+		if (isSet(templateScript)) {
+			Type.typeAceEditor(
+				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
+				value1 = "${templateScript}"
+			);
+		}
+	}
+
+	@summary = "Helper function to link structure '${structureName}' to the template"
+	macro _inputStructure {
+		if (isSet(structureName)) {
+			Panel.expandPanel(panel = "Details");
+
+			AssertClick(
+				locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
+				value1 = "Select"
+			);
+
+			SelectFrameTop();
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			Click(locator1 = "Icon#BASIC_SEARCH");
+
+			var key_ddlDataDefinitionName = "${structureName}";
+
+			AssertClickNoError(
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+				value1 = "${structureName}"
+			);
+
+			SelectFrameTop();
+		}
+	}
+
+	@summary = "Helper function to add a script to a template via file"
+	macro _inputTemplateFile {
+		if (isSet(templateFile)) {
+			UploadCommonFile(
+				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+				value1 = "${templateFile}"
+			);
+		}
+	}
+
+	@summary = "Helper function to select template language 'templateLanguage' to read the template in"
+	macro _inputTemplateLanguage {
+		Panel.expandPanel(panel = "Details");
+
+		if ("${templateLanguage}" == "vm") {
+			Select(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "Velocity (.vm)"
+			);
+		}
+		else if ("${templateLanguage}" == "xsl") {
+			Select(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "Extensible Stylesheet Language (.xsl)"
+			);
+		}
+		else {
+			Select(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "FreeMarker (.ftl)"
+			);
+		}
+
+		if ("${templateLanguage}" == "vm") {
+			AssertSelectedLabel(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "Velocity (.vm)"
+			);
+		}
+		else if ("${templateLanguage}" == "xsl") {
+			AssertSelectedLabel(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "Extensible Stylesheet Language (.xsl)"
+			);
+		}
+		else {
+			AssertSelectedLabel(
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				value1 = "FreeMarker (.ftl)"
+			);
+		}
+	}
+
+	@summary = "Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template"
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "${structureName}",
+			templateDescription = "${templateDescription}",
+			templateFieldNames = "${templateFieldNames}",
+			templateFile = "${templateFile}",
+			templateLanguage = "${templateLanguage}",
+			templateName = "${templateName}",
+			templateScript = "${templateScript}",
+			templateSmallImageURL = "${templateSmallImageURL}"
+		);
+
+		DDLDataDefinition.save();
+	}
+
+	@summary = "Attempt to add a blank template"
+	macro addNullCP {
+		LexiconEntry.gotoAdd();
+
+		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
+		Button.clickSave();
+
+		Alert.viewRequiredField();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	@summary = "Give the roles '${roles}' permissions to view the template '${templateName}'"
+	macro addRoleViewPermissions {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "${templateName}"
+		);
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "${roles}"
+		);
+
+		SelectFrameTop();
+	}
+
+	@summary = "Attempt to delete the template '${templateName}'"
+	macro deleteCP {
+		var key_ddlTemplateName = "${templateName}";
+
+		Click(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		if ("${webContentHasReference}" == "true") {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "The template cannot be deleted because it is required by one or more template links."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@summary = "Input a small image with the url '${templateSmallImageURL}'"
+	macro inputSmallImage {
+		Panel.expandPanel(panel = "Details");
+
+		if (isSet(templateSmallImageURL)) {
+			if (IsElementNotPresent(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL")) {
+				Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
+			}
+			else {
+				Click(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
+
+				Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
+			}
+		}
+
+		Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL");
+
+		Type(
+			locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT",
+			value1 = "${templateSmallImageURL}"
+		);
+	}
+
+	@summary = "Input most basic fields inside a template"
+	macro inputTemplateAddScreenFields {
+		if (isSet(templateName)) {
+			PortletEntry.inputName(name = "${templateName}");
+		}
+
+		WebContentTemplates._inputStructure(structureName = "${structureName}");
+
+		WebContentTemplates._inputDescription(
+			templateDescription = "${templateDescription}"
+		);
+
+		WebContentTemplates._inputTemplateLanguage(
+			templateLanguage = "${templateLanguage}"
+		);
+
+		if (isSet(templateSmallImageURL)) {
+			WebContentTemplates.inputSmallImage(
+				templateSmallImageURL = "${templateSmallImageURL}"
+			);
+		}
+
+		WebContentTemplates._inputScript(templateScript = "${templateScript}");
+
+		WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
+
+		WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
+	}
+
+	@summary = "Add localization for the template name"
+	macro localizeTemplateName {
+		var key_ddlTemplateName = "${templateName}";
+
+		WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
+
+		AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${templateName}");
+
+		PortletEntry.changeLocale(fieldName = "Name", locale = "${locale}");
+
+		Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${localization1Name}");
+
+		if (isSet(locale2)) {
+			PortletEntry.changeLocale(fieldName = "Name", locale = "${locale2}");
+
+			Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${localization2Name}");
+		}
+	}
+
+	@summary = "Teardown templates in the guest site"
+	macro tearDownCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		Search.searchCP(searchTerm = "2");
+
+		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+
+		Search.searchCP(searchTerm = "Template");
+
+		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+
+		Portlet.viewEmptyMessage(message = "There are no results.");
+	}
+
+	@summary = "Assert that certain template attributes are present for the template '${templateName}'"
+	macro viewCP {
+		var key_ddlTemplateName = "${templateName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME",
+			value1 = "${templateName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION",
+			value1 = "${templateDescription}"
+		);
+
+		if (isSet(structureName)) {
+			AssertTextEquals(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_MODE",
+				value1 = "${structureName}"
+			);
+		}
+
+		if ("${templateLanguage}" == "vm") {
+			AssertTextEquals(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
+				value1 = "Velocity"
+			);
+		}
+		else if ("${templateLanguage}" == "xsl") {
+			AssertTextEquals(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
+				value1 = "Extensible Stylesheet Language"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
+				value1 = "FreeMarker"
+			);
+		}
+
+		if (!("${userEditPermission}" == "noEditPermission")) {
+			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
+
+			AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${templateName}");
+
+			Panel.expandPanel(panel = "Details");
+
+			AssertTextEquals(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${templateDescription}"
+			);
+
+			if (isSet(structureName)) {
+				AssertTextEquals.assertValue(
+					locator1 = "DDMEditTemplate#DETAILS_STRUCTURE",
+					value1 = "${structureName}"
+				);
+			}
+
+			if ("${templateLanguage}" == "vm") {
+				AssertSelectedLabel(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+					value1 = "Velocity (.vm)"
+				);
+			}
+			else if ("${templateLanguage}" == "xsl") {
+				AssertSelectedLabel(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+					value1 = "Extensible Stylesheet Language (.xsl)"
+				);
+			}
+			else {
+				AssertSelectedLabel(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+					value1 = "FreeMarker (.ftl)"
+				);
+			}
+
+			if (isSet(templateScript)) {
+				AssertTextEquals.assertPartialTextAceEditor(
+					locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD",
+					value1 = "${templateScript}"
+				);
+			}
+		}
+	}
+
+	@summary = "Assert that the table entry for template '${templateName}' is present"
+	macro viewTableEntryCP {
+		var key_ddlTemplateName = "${templateName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME",
+			value1 = "${templateName}"
+		);
+
+		if (isSet(templateSmallImage)) {
+			AssertVisible(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION_SMALL_IMAGE",
+				value1 = "${templateSmallImage}"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION",
+				value1 = "${templateDescription}"
+			);
+		}
+	}
+}

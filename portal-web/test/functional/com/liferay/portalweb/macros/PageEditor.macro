@@ -1,162 +1,172 @@
-<definition>
-	<command name="addFragment">
-		<execute macro="PageEditor#gotoTab">
-			<var name="tabName" value="Available" />
-		</execute>
+definition {
+	macro addFragment {
+		PageEditor.gotoTab(tabName = "Available");
 
-		<execute macro="PageEditor#expandFragmentCollection">
-			<var name="collectionName" value="${collectionName}" />
-		</execute>
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		<execute function="Click" locator1="PageEditor#FRAGMENT_SIDEBAR_FRAGMENT">
-			<var name="key_collectionName" value="${collectionName}" />
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
+		Click(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_FRAGMENT",
+			key_collectionName = "${collectionName}",
+			key_fragmentName = "${fragmentName}"
+		);
 
-		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
+		AssertElementPresent(
+			locator1 = "Fragment#FRAGMENT_HEADER",
+			key_fragmentName = "${fragmentName}"
+		);
+	}
 
-	<command name="editFragmentImage">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
+	macro editFragmentImage {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Fragment#FRAGMENT_HEADER",
+			key_fragmentName = "${fragmentName}"
+		);
 
-		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+		Click(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
+		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
 
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
 
-		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${fileName}" />
+		SikuliUploadCommonFile(
+			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+			value1 = "${fileName}"
+		);
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<execute function="Click" locator1="Button#ADD" />
-	</command>
+		Click(locator1 = "Button#ADD");
+	}
 
-	<command name="editFragmentText">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#EDITABLE_FIELD">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+	macro editFragmentText {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+		Click(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<if>
-			<condition function="IsElementPresent" locator1="Button#EDIT" />
-			<then>
-				<execute macro="Button#clickEdit" />
-			</then>
-		</if>
+		if (IsElementPresent(locator1 = "Button#EDIT")) {
+			Button.clickEdit();
+		}
 
-		<execute function="Type" locator1="Fragment#EDITABLE_FIELD_CK_EDITOR" value1="${text}">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+		Type(
+			locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
+			value1 = "${text}",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<execute function="Pause" locator1="3000" />
-	</command>
+		Pause(locator1 = "3000");
+	}
 
-	<command name="expandContentPageFragmentSidebar">
-		<execute function="Pause" locator1="3000" />
+	macro expandContentPageFragmentSidebar {
+		Pause(locator1 = "3000");
 
-		<if>
-			<not>
-				<condition function="IsElementPresent" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
-			</not>
-			<then>
-				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-			</then>
-		</if>
+		if (!(IsElementPresent(locator1 = "PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR"))) {
+			Click.clickAt(locator1 = "ControlMenu#ADD");
+		}
 
-		<execute function="AssertVisible" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
-	</command>
+		AssertVisible(locator1 = "PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR");
+	}
 
-	<command name="expandFragmentCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
-				<var name="key_collectionName" value="${collectionName}" />
-			</condition>
+	macro expandFragmentCollection {
+		if (IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED", key_collectionName = "${collectionName}")) {
+			AssertClick(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
+				value1 = "${collectionName}",
+				key_collectionName = "${collectionName}"
+			);
+		}
 
-			<then>
-				<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
-					<var name="key_collectionName" value="${collectionName}" />
-				</execute>
-			</then>
-		</if>
+		AssertElementPresent(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED",
+			key_collectionName = "${collectionName}"
+		);
+	}
 
-		<execute function="AssertElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
-			<var name="key_collectionName" value="${collectionName}" />
-		</execute>
-	</command>
+	macro gotoTab {
+		AssertClick(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB",
+			value1 = "${tabName}",
+			key_tabName = "${tabName}"
+		);
+	}
 
-	<command name="gotoTab">
-		<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
-			<var name="key_tabName" value="${tabName}" />
-		</execute>
-	</command>
+	macro removeFragment {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Fragment#FRAGMENT_HEADER",
+			key_fragmentName = "${fragmentName}"
+		);
 
-	<command name="removeFragment">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
+		Click(
+			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON",
+			key_fragmentName = "${fragmentName}"
+		);
+	}
 
-		<execute function="Click" locator1="Fragment#FRAGMENT_HEADER_DELETE_BUTTON">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
+	macro removeSection {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "PageEditor#SECTION",
+			key_position = "${position}"
+		);
 
-	<command name="removeSection">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="PageEditor#SECTION">
-			<var name="key_position" value="${position}" />
-		</execute>
+		Click(
+			locator1 = "PageEditor#SECTION_HEADER_DELETE_BUTTON",
+			key_position = "${position}"
+		);
+	}
 
-		<execute function="Click" locator1="PageEditor#SECTION_HEADER_DELETE_BUTTON">
-			<var name="key_position" value="${position}" />
-		</execute>
-	</command>
+	macro viewAutoSaveMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
+			value1 = "Changes saved at"
+		);
+	}
 
-	<command name="viewAutoSaveMessage">
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageEditor#AUTOSAVE_MESSAGE" value1="Changes saved at" />
-	</command>
+	macro viewCollectionNotPresent {
+		AssertElementNotPresent(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
+			key_collectionName = "${collectionName}"
+		);
+	}
 
-	<command name="viewCollectionNotPresent">
-		<execute function="AssertElementNotPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
-			<var name="key_collectionName" value="${collectionName}" />
-		</execute>
-	</command>
+	macro viewEditorEmpty {
+		AssertElementPresent(locator1 = "PageEditor#EMPTY_MESSAGE");
+	}
 
-	<command name="viewEditorEmpty">
-		<execute function="AssertElementPresent" locator1="PageEditor#EMPTY_MESSAGE" />
-	</command>
+	macro viewFragment {
+		AssertElementPresent(
+			locator1 = "Fragment#FRAGMENT_HEADER",
+			key_fragmentName = "${fragmentName}"
+		);
+	}
 
-	<command name="viewFragment">
-		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
+	macro viewFragmentEditableText {
+		AssertTextEquals(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			value1 = "${editableText}",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
+	}
 
-	<command name="viewFragmentEditableText">
-		<execute function="AssertTextEquals" locator1="Fragment#EDITABLE_FIELD" value1="${editableText}">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
-	</command>
-
-	<command name="viewFragmentOrder">
-		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER_POSITION">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_position" value="${position}" />
-		</execute>
-	</command>
-</definition>
+	macro viewFragmentOrder {
+		AssertElementPresent(
+			locator1 = "Fragment#FRAGMENT_HEADER_POSITION",
+			key_fragmentName = "${fragmentName}",
+			key_position = "${position}"
+		);
+	}
+}

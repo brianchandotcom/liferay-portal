@@ -1,33 +1,53 @@
-<definition>
-	<command name="addNewPG">
-		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+definition {
+	macro addNewPG {
+		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
-		<execute function="AssertVisible" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" value1="Content" />
+		AssertElementPresent(
+			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE"
+		);
 
-		<execute macro="Panel#expandSidebarContentPanel" />
+		AssertVisible(
+			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
+			value1 = "Content"
+		);
 
-		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_DROPDOWN" value1="Add New" />
+		Panel.expandSidebarContentPanel();
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${assetType}" />
-		</execute>
-	</command>
+		AssertClick(
+			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
+			value1 = "Add New"
+		);
 
-	<command name="addPG">
-		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+		MenuItem.click(menuItem = "${assetType}");
+	}
 
-		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
-		<execute function="AssertVisible" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" value1="Content" />
+	macro addPG {
+		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		<execute macro="Panel#expandSidebarContentPanel" />
+		AssertElementPresent(
+			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE"
+		);
 
-		<var name="key_assetTitle" value="${assetTitle}" />
+		AssertVisible(
+			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
+			value1 = "Content"
+		);
 
-		<execute function="Type" locator1="NavBar#CONTENT_SEARCH_FIELD" value1="${assetTitle}" />
+		Panel.expandSidebarContentPanel();
 
-		<execute function="AssertTextEquals" locator1="ControlMenuAddPanel#CONTENT_TITLE" value1="${assetTitle}" />
+		var key_assetTitle = "${assetTitle}";
 
-		<execute function="DragAndDrop" locator1="ControlMenuAddPanel#CONTENT_TITLE" locator2="Home#PAGE_COLUMN_1" value1="${assetTitle}" />
-	</command>
-</definition>
+		Type(locator1 = "NavBar#CONTENT_SEARCH_FIELD", value1 = "${assetTitle}");
+
+		AssertTextEquals(
+			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
+			value1 = "${assetTitle}"
+		);
+
+		DragAndDrop(
+			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
+			locator2 = "Home#PAGE_COLUMN_1",
+			value1 = "${assetTitle}"
+		);
+	}
+}

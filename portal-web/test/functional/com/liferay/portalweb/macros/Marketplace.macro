@@ -1,356 +1,333 @@
-<definition>
-	<command name="smoke">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
+definition {
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	macro smoke {
+		ProductMenu.gotoSite(site = "${siteName}");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Test Page" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Blogs Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Blogs Test Page", siteName = "${siteName}");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Portlet.addPG(
+			pageName = "Blogs Test Page",
+			portletName = "Blogs",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry 1 Content" />
-			<var name="entryTitle" value="Blogs Entry 1 Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Blogs Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryAuthorFirstName" value="Test" />
-			<var name="entryAuthorLastName" value="Test" />
-			<var name="entryContent" value="Blogs Entry 1 Content" />
-			<var name="entryTitle" value="Blogs Entry 1 Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Blogs.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry 1 Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BlogsEntry.viewPG(
+			entryAuthorFirstName = "Test",
+			entryAuthorLastName = "Test",
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry 1 Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry 1 Content" />
-			<var name="entryTitle" value="Blogs Entry 1 Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Blogs Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="Blogs Entry 1 Comment" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry 1 Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BlogsEntryComment.add(
+			entryComment = "Blogs Entry 1 Comment",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Blogs Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoSite(site = "${siteName}");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Test Page" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Documents and Media Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="portletName" value="Documents and Media" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Test Page",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Portlet.addPG(
+			pageName = "Documents and Media Test Page",
+			portletName = "Documents and Media",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0.3k" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Documents and Media Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0.3k",
+			dmDocumentTitle = "DM Document Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderName" value="DM Folder 1 Name" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Documents and Media Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder 1 Name" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		DMFolder.addPG(
+			dmFolderName = "DM Folder 1 Name",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		DMNavigator.gotoFolder(
+			dmFolderName = "DM Folder 1 Name",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
-			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Folder Image 1 Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Folder Image 1 Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Folder Image 1 Description",
+			dmDocumentTitle = "DM Folder Image 1 Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Documents and Media Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Wiki Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="portletName" value="Wiki" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Wiki Test Page", siteName = "${siteName}");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		Portlet.addPG(
+			pageName = "Wiki Test Page",
+			portletName = "Wiki",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		WikiPage.addFrontPagePG(
+			siteName = "${siteName}",
+			siteURL = "${siteURL}",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="WikiPage#addChildPagePG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 1" />
-			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 1" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Wiki Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		WikiPage.addChildPagePG(
+			siteName = "${siteName}",
+			siteURL = "${siteURL}",
+			wikiChildPageContent = "Wiki Front Page Child Page Content 1",
+			wikiChildPageTitle = "Wiki Front Page Child Page Title 1",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Wiki Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoSite(site = "${siteName}");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Test Page" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Calendar Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="portletName" value="Calendar" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Calendar Test Page",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Portlet.addPG(
+			pageName = "Calendar Test Page",
+			portletName = "Calendar",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+		Navigator.gotoPage(
+			pageName = "Calendar Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="frequency" value="Weekly" />
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		CalendarNavigator.gotoAddEvent();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			frequency = "Weekly",
+			pageName = "Calendar Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Calendar Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		CalendarEvent.view(
+			eventTitle = "Calendar Event Title",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Calendar Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoSite(site = "${siteName}");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Bookmarks Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="portletName" value="Bookmarks" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Bookmarks Test Page",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Portlet.addPG(
+			pageName = "Bookmarks Test Page",
+			portletName = "Bookmarks",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="Test Folder Description" />
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Bookmarks Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BookmarksFolder.addPG(
+			folderDescription = "Test Folder Description",
+			folderName = "Test Folder",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Bookmarks Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="Test Folder Entry 1 Description" />
-			<var name="bookmarkName" value="Test Folder Entry 1" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BookmarksFolder.gotoPG(
+			folderName = "Test Folder",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Bookmark.addPG(
+			bookmarkDescription = "Test Folder Entry 1 Description",
+			bookmarkName = "Test Folder Entry 1",
+			bookmarkURL = "https://www.liferay.com",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Navigator.gotoPage(
+			pageName = "Bookmarks Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Folder Entry 1" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		BookmarksFolder.gotoPG(
+			folderName = "Test Folder",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		Bookmark.viewBookmark(
+			bookmarkName = "Test Folder Entry 1",
+			bookmarkURL = "https://www.liferay.com",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<!-- LPS-69746 -->
+		Navigator.gotoPage(
+			pageName = "Bookmarks Test Page",
+			siteName = "${siteName}",
+			siteURL = "${siteURL}"
+		);
 
-		<!-- <execute macro="ProductMenu#gotoPortlet">
+		// LPS-69746
+
+		/* <execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Sites" />
@@ -370,6 +347,6 @@
 			<var name="pageName" value="Wiki" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="${siteURL}" />
-		</execute> -->
-	</command>
-</definition>
+		</execute> */
+	}
+}

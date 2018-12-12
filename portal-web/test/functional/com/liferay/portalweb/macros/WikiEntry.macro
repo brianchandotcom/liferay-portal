@@ -1,50 +1,46 @@
-<definition>
-	<command name="addPageContent">
-		<execute macro="AlloyEditor#addContent">
-			<var name="content" value="${wikiPageContent}" />
-		</execute>
-	</command>
+definition {
+	macro addPageContent {
+		AlloyEditor.addContent(content = "${wikiPageContent}");
+	}
 
-	<command name="addPageTitle">
-		<execute macro="AlloyEditor#addTitle">
-			<var name="title" value="${wikiPageTitle}" />
-		</execute>
-	</command>
+	macro addPageTitle {
+		AlloyEditor.addTitle(title = "${wikiPageTitle}");
+	}
 
-	<command name="cancel">
-		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
-	</command>
+	macro cancel {
+		AssertClick(locator1 = "Button#CANCEL", value1 = "Cancel");
+	}
 
-	<command name="confirmHTML">
-		<execute function="AssertConfirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-	</command>
+	macro confirmHTML {
+		AssertConfirm(
+			value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?"
+		);
+	}
 
-	<command name="saveAsDraft">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save as Draft" />
+	macro saveAsDraft {
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save as Draft");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="selectPageFormat">
-		<if>
-			<condition function="IsNotVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Configuration" />
-				</execute>
+	macro selectPageFormat {
+		if (IsNotVisible(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN")) {
+			Panel.expandPanel(panel = "Configuration");
 
-				<execute function="SelectNoError" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
-			</then>
-			<elseif>
-				<condition function="IsVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
-				<then>
-					<execute function="SelectNoError" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
-				</then>
-			</elseif>
-		</if>
-	</command>
+			SelectNoError(
+				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+				value1 = "${pageFormat}"
+			);
+		}
+		else if (IsVisible(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN")) {
+			SelectNoError(
+				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+				value1 = "${pageFormat}"
+			);
+		}
+	}
 
-	<command name="viewPageContentBody">
-		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
-	</command>
-</definition>
+	macro viewPageContentBody {
+		AssertTextEquals(locator1 = "WikiEntry#BODY", value1 = "${wikiPageContent}");
+	}
+}

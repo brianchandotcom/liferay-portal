@@ -1,52 +1,50 @@
-<definition>
-	<command name="gotoFeed">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+definition {
+	macro gotoFeed {
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="RSS" />
-		</execute>
+		MenuItem.click(menuItem = "RSS");
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute function="SelectWindow#selectPopUp" locator1="null" />
+		SelectWindow.selectPopUp(locator1 = "null");
 
-		<execute function="AssertLocation#assertPartialLocation" value1="${rssURL}/rss" />
-	</command>
+		AssertLocation.assertPartialLocation(value1 = "${rssURL}/rss");
+	}
 
-	<command name="viewFeed">
-		<execute macro="RSS#gotoFeed">
-			<var name="rssURL" value="${rssURL}" />
-		</execute>
+	macro viewFeed {
+		RSS.gotoFeed(rssURL = "${rssURL}");
 
-		<execute macro="RSS#viewFeedTitle">
-			<var name="feedSubtitle" value="${feedSubtitle}" />
-			<var name="feedTitle" value="${feedTitle}" />
-		</execute>
+		RSS.viewFeedTitle(feedSubtitle = "${feedSubtitle}", feedTitle = "${feedTitle}");
 
-		<execute macro="RSS#viewFeedEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		RSS.viewFeedEntry(
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}"
+		);
 
-		<execute function="Close#closeWindow" locator1="null" />
-	</command>
+		Close.closeWindow(locator1 = "null");
+	}
 
-	<command name="viewFeedEntry">
-		<for list="${entryTitle}" param="entryTitle">
-			<execute function="AssertTextEquals" locator1="RSS#ENTRY_TITLE" value1="${entryTitle}">
-				<var name="key_entryTitle" value="${entryTitle}" />
-			</execute>
-		</for>
+	macro viewFeedEntry {
+		for (var entryTitle : list "${entryTitle}") {
+			AssertTextEquals(
+				locator1 = "RSS#ENTRY_TITLE",
+				value1 = "${entryTitle}",
+				key_entryTitle = "${entryTitle}"
+			);
+		}
 
-		<for list="${entryContent}" param="entryContent">
-			<execute function="AssertTextEquals" locator1="RSS#ENTRY_CONTENT" value1="${entryContent}">
-				<var name="key_entryContent" value="${entryContent}" />
-			</execute>
-		</for>
-	</command>
+		for (var entryContent : list "${entryContent}") {
+			AssertTextEquals(
+				locator1 = "RSS#ENTRY_CONTENT",
+				value1 = "${entryContent}",
+				key_entryContent = "${entryContent}"
+			);
+		}
+	}
 
-	<command name="viewFeedTitle">
-		<execute function="AssertTextEquals" locator1="RSS#FEED_TITLE" value1="${feedTitle}" />
-		<execute function="AssertTextEquals" locator1="RSS#FEED_SUBTITLE" value1="${feedSubtitle}" />
-	</command>
-</definition>
+	macro viewFeedTitle {
+		AssertTextEquals(locator1 = "RSS#FEED_TITLE", value1 = "${feedTitle}");
+
+		AssertTextEquals(locator1 = "RSS#FEED_SUBTITLE", value1 = "${feedSubtitle}");
+	}
+}

@@ -1,18 +1,28 @@
-<definition>
-	<command name="search">
-		<execute function="Type" locator1="TextInput#SEARCH_2" value1="${webContentSearchTerm}" />
+definition {
+	macro search {
+		Type(locator1 = "TextInput#SEARCH_2", value1 = "${webContentSearchTerm}");
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-	</command>
+		AssertClick(locator1 = "Button#SEARCH", value1 = "Search");
+	}
 
-	<command name="viewNoResults">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
-	</command>
+	macro viewNoResults {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No pages were found that matched the keywords: ${webContentSearchTerm}."
+		);
+	}
 
-	<command name="viewResultsEntry">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+	macro viewResultsEntry {
+		var key_webContentTitle = "${webContentTitle}";
 
-		<execute function="AssertTextEquals" locator1="WebContentSearchResults#TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="WebContentSearchResults#CONTENT" value1="${webContentContent}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "WebContentSearchResults#TITLE",
+			value1 = "${webContentTitle}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "WebContentSearchResults#CONTENT",
+			value1 = "${webContentContent}"
+		);
+	}
+}

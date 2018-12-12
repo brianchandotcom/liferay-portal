@@ -1,160 +1,144 @@
-<definition>
-	<command name="_addTag">
-		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+definition {
+	macro _addTag {
+		Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
 
-		<if>
-			<condition function="IsElementPresent" locator1="AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER" />
-			<then>
-				<execute function="Click" locator1="AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC">
-					<var name="key_tagName" value="${tagName}" />
-				</execute>
-			</then>
-		</if>
+		if (IsElementPresent(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
+			Click(
+				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+				key_tagName = "${tagName}"
+			);
+		}
 
-		<execute function="AssertClick" locator1="Button#ADD_TAGS" value1="Add" />
-	</command>
+		AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
+	}
 
-	<command name="addCategory">
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
-		</execute>
+	macro addCategory {
+		AssertClick(
+			locator1 = "AssetCategorization#CATEGORY_SELECT",
+			value1 = "Select",
+			key_vocabularyName = "${vocabularyName}"
+		);
 
-		<execute macro="AssetCategorization#selectCategory">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
+		AssetCategorization.selectCategory(categoryName = "${categoryName}");
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">
-			<var name="key_categoryName" value="${categoryName}" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "AssetCategorization#CATEGORY",
+			value1 = "${categoryName}",
+			key_categoryName = "${categoryName}"
+		);
+	}
 
-	<command name="addDuplicateTag">
-		<execute macro="AssetCategorization#_addTag">
-			<var name="tagName" value="${tagName}" />
-		</execute>
+	macro addDuplicateTag {
+		AssetCategorization._addTag(tagName = "${tagName}");
 
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'help-block')]" value1="Duplicate Tag: ${tagName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "//div[contains(@class,'help-block')]",
+			value1 = "Duplicate Tag: ${tagName}"
+		);
+	}
 
-	<command name="addMultipleCategories">
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
-		</execute>
+	macro addMultipleCategories {
+		AssertClick(
+			locator1 = "AssetCategorization#CATEGORY_SELECT",
+			value1 = "Select",
+			key_vocabularyName = "${vocabularyName}"
+		);
 
-		<execute macro="AssetCategorization#gotoSelectCategory" />
+		AssetCategorization.gotoSelectCategory();
 
-		<for list="${categoryNameList}" param="categoryName">
-			<execute macro="Portlet#selectTreeNode">
-				<var name="nodeName" value="${categoryName}" />
-			</execute>
-		</for>
+		for (var categoryName : list "${categoryNameList}") {
+			Portlet.selectTreeNode(nodeName = "${categoryName}");
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
-	</command>
+		AssertClick(locator1 = "Button#DONE", value1 = "Done");
+	}
 
-	<command name="addTag">
-		<execute macro="AssetCategorization#_addTag">
-			<var name="tagName" value="${tagName}" />
-		</execute>
+	macro addTag {
+		AssetCategorization._addTag(tagName = "${tagName}");
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}">
-			<var name="key_tagName" value="${tagName}" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}",
+			key_tagName = "${tagName}"
+		);
+	}
 
-	<command name="gotoSelectCategory">
-		<execute function="SelectFrameTop" />
+	macro gotoSelectCategory {
+		SelectFrameTop();
 
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
-			<then>
-				<execute macro="IFrame#selectCategoryFrame" />
-			</then>
-		</if>
+		if (IsElementPresent(locator1 = "IFrame#SELECT_CATEGORY")) {
+			IFrame.selectCategoryFrame();
+		}
 
-		<execute macro="Portlet#expandTree" />
-	</command>
+		Portlet.expandTree();
+	}
 
-	<command name="removeTag">
-		<var name="key_tagName" value="${tagName}" />
+	macro removeTag {
+		var key_tagName = "${tagName}";
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
+		AssertTextEquals(locator1 = "AssetCategorization#TAG", value1 = "${tagName}");
 
-		<execute function="Click" locator1="AssetCategorization#TAG_REMOVE" />
+		Click(locator1 = "AssetCategorization#TAG_REMOVE");
 
-		<execute function="AssertElementNotPresent" locator1="AssetCategorization#TAG" />
-	</command>
+		AssertElementNotPresent(locator1 = "AssetCategorization#TAG");
+	}
 
-	<command name="selectCategory">
-		<execute macro="AssetCategorization#gotoSelectCategory" />
+	macro selectCategory {
+		AssetCategorization.gotoSelectCategory();
 
-		<execute macro="Portlet#selectTreeNode">
-			<var name="nodeName" value="${categoryName}" />
-		</execute>
+		Portlet.selectTreeNode(nodeName = "${categoryName}");
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<if>
-			<condition function="IsElementPresent" locator1="Button#DONE" />
-			<then>
-				<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Icon#CLOSE" />
-			</else>
-		</if>
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			AssertClick(locator1 = "Button#DONE", value1 = "Done");
+		}
+		else {
+			Click(locator1 = "Icon#CLOSE");
+		}
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
-			<then>
-				<execute macro="IFrame#selectModalFrame" />
-			</then>
-		</if>
-	</command>
+		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
+			IFrame.selectModalFrame();
+		}
+	}
 
-	<command name="selectTag">
-		<execute function="Click" locator1="AssetCategorization#TAGS_SELECT_BUTTON" />
+	macro selectTag {
+		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#SELECT_TAG" />
-			<then>
-				<execute function="SelectFrame" locator1="IFrame#SELECT_TAG" />
-			</then>
-		</if>
+		if (IsElementPresent(locator1 = "IFrame#SELECT_TAG")) {
+			SelectFrame(locator1 = "IFrame#SELECT_TAG");
+		}
 
-		<for list="${tagNameList}" param="tagName">
-			<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-				<var name="key_rowEntry" value="${tagName}" />
-			</execute>
-		</for>
+		for (var tagName : list "${tagNameList}") {
+			Check(
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
+				key_rowEntry = "${tagName}"
+			);
+		}
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<if>
-			<condition function="IsElementPresent" locator1="Button#DONE" />
-			<then>
-				<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Icon#CLOSE" />
-			</else>
-		</if>
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			AssertClick(locator1 = "Button#DONE", value1 = "Done");
+		}
+		else {
+			Click(locator1 = "Icon#CLOSE");
+		}
 
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
-			<then>
-				<execute macro="IFrame#selectModalFrame" />
-			</then>
-		</if>
+		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
+			IFrame.selectModalFrame();
+		}
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}">
-			<var name="key_tagName" value="${tagName}" />
-		</execute>
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}",
+			key_tagName = "${tagName}"
+		);
+	}
+}

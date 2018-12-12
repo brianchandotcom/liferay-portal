@@ -1,33 +1,60 @@
-<definition>
-	<command name="selectCategoryPG">
-		<execute macro="Portlet#expandTree" />
+definition {
+	macro selectCategoryPG {
+		Portlet.expandTree();
 
-		<execute function="AssertClick" locator1="CategoriesNavigation#CATEGORY_NAME" value1="${categoryName}">
-			<var name="key_categoryName" value="${categoryName}" />
-		</execute>
-	</command>
+		AssertClick(
+			locator1 = "CategoriesNavigation#CATEGORY_NAME",
+			value1 = "${categoryName}",
+			key_categoryName = "${categoryName}"
+		);
+	}
 
-	<command name="viewCustomADTMultiColumnPG">
-		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_1" />
-		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2" />
-		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3" />
+	macro viewCustomADTMultiColumnPG {
+		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_1");
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_1_VOCABULARY_NAME" value1="Topic" />
+		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2");
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2_VOCABULARY_NAME" value1="${vocabularyName1}" />
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2_CATEGORY_NAME" value1="${categoryName1}" />
+		AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3");
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3_VOCABULARY_NAME" value1="${vocabularyName2}" />
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3_CATEGORY_NAME" value1="${categoryName2}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_1_VOCABULARY_NAME",
+			value1 = "Topic"
+		);
 
-	<command name="viewDefaultPG">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_VOCABULARY_NAME",
+			value1 = "${vocabularyName1}"
+		);
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#VOCABULARY_NAME" value1="${vocabularyName}" />
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_CATEGORY_NAME",
+			value1 = "${categoryName1}"
+		);
 
-		<var name="key_categoryName" value="${categoryName}" />
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_VOCABULARY_NAME",
+			value1 = "${vocabularyName2}"
+		);
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#CATEGORY_NAME" value1="${categoryName}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_CATEGORY_NAME",
+			value1 = "${categoryName2}"
+		);
+	}
+
+	macro viewDefaultPG {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#VOCABULARY_NAME",
+			value1 = "${vocabularyName}"
+		);
+
+		var key_categoryName = "${categoryName}";
+
+		AssertTextEquals(
+			locator1 = "CategoriesNavigation#CATEGORY_NAME",
+			value1 = "${categoryName}"
+		);
+	}
+}

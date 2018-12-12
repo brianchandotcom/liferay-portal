@@ -1,105 +1,116 @@
-<definition>
-	<command name="configureDisplayStyle">
-		<execute function="Click" locator1="Dropdown#TRIGGER" />
+definition {
+	macro configureDisplayStyle {
+		Click(locator1 = "Dropdown#TRIGGER");
 
-		<execute function="AssertClick" locator1="Dropdown#RESULT" value1="${displayStyle}">
-			<var name="key_option" value="${displayStyle}" />
-		</execute>
+		AssertClick(
+			locator1 = "Dropdown#RESULT",
+			value1 = "${displayStyle}",
+			key_option = "${displayStyle}"
+		);
 
-		<execute function="AssertTextEquals" locator1="Dropdown#SELECTED_VALUE" value1="${displayStyle}" />
+		AssertTextEquals(
+			locator1 = "Dropdown#SELECTED_VALUE",
+			value1 = "${displayStyle}"
+		);
 
-		<execute macro="SystemSettings#saveConfiguration" />
-	</command>
+		SystemSettings.saveConfiguration();
+	}
 
-	<command name="editSecurityCredential">
-		<execute function="Type" locator1="SystemSettings#SECURITY_CREDENTIAL_FIELD" value1="${securityCredential}" />
+	macro editSecurityCredential {
+		Type(
+			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
+			value1 = "${securityCredential}"
+		);
 
-		<var name="key_fieldName" value="securityPrincipal" />
+		var key_fieldName = "securityPrincipal";
 
-		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="test" />
+		Type(locator1 = "FormFields#TEXT_MULTILINE_FIELD", value1 = "test");
 
-		<execute function="AssertElementPresent" locator1="SystemSettings#SECURITY_CREDENTIAL_FIELD" />
+		AssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD");
 
-		<execute function="SikuliAssertElementPresent" locator1="SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE" />
-	</command>
+		SikuliAssertElementPresent(
+			locator1 = "SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE"
+		);
+	}
 
-	<command name="editTextAreaSetting">
-		<execute function="Type" locator1="TextArea#ANY_LABELED" value1="${settingValue}">
-			<var name="key_label" value="${settingName}" />
-		</execute>
-	</command>
+	macro editTextAreaSetting {
+		Type(
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = "${settingValue}",
+			key_label = "${settingName}"
+		);
+	}
 
-	<command name="editTextSetting">
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${settingValue}">
-			<var name="key_fieldLabel" value="${settingName}" />
-		</execute>
-	</command>
+	macro editTextSetting {
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${settingValue}",
+			key_fieldLabel = "${settingName}"
+		);
+	}
 
-	<command name="exitEditConfiguration">
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
-	</command>
+	macro exitEditConfiguration {
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+	}
 
-	<command name="gotoConfiguration">
-		<execute function="Click" locator1="ListGroupItem#ITEM_TEXT">
-			<var name="key_itemName" value="${configurationCategory}" />
-		</execute>
+	macro gotoConfiguration {
+		Click(
+			locator1 = "ListGroupItem#ITEM_TEXT",
+			key_itemName = "${configurationCategory}"
+		);
 
-		<var method="PropsUtil#get('browser.type')" name="browserType" />
+		var browserType = PropsUtil.get("browser.type");
 
-		<if>
-			<equals arg1="${browserType}" arg2="chrome" />
-			<then>
-				<execute function="Pause" locator1="5000" />
-			</then>
-		</if>
+		if ("${browserType}" == "chrome") {
+			Pause(locator1 = "5000");
+		}
 
-		<execute function="Click" locator1="SystemSettings#SCOPED_CONFIGURATION_NAME">
-			<var name="key_configurationName" value="${configurationName}" />
-			<var name="key_configurationScope" value="${configurationScope}" />
-		</execute>
+		Click(
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME",
+			key_configurationName = "${configurationName}",
+			key_configurationScope = "${configurationScope}"
+		);
 
-		<execute function="AssertElementPresent" locator1="Header#H2_TITLE">
-			<var name="key_title" value="${configurationName}" />
-		</execute>
-	</command>
+		AssertElementPresent(
+			locator1 = "Header#H2_TITLE",
+			key_title = "${configurationName}"
+		);
+	}
 
-	<command name="openSystemSettingsAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet" />
-		</execute>
-	</command>
+	macro openSystemSettingsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet"
+		);
+	}
 
-	<command name="resetConfiguration">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+	macro resetConfiguration {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Reset Default Values" />
-		</execute>
+		MenuItem.click(menuItem = "Reset Default Values");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="saveConfiguration">
-		<if>
-			<condition function="IsElementPresent" locator1="Button#SAVE" />
-			<then>
-				<execute macro="PortletEntry#save" />
-			</then>
-			<else>
-				<execute macro="Button#clickUpdate" />
+	macro saveConfiguration {
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+		else {
+			Button.clickUpdate();
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
+			Alert.viewSuccessMessage();
+		}
+	}
 
-	<command name="selectOptionSetting">
-		<execute function="Click" locator1="SystemSettings#DROPDOWN_MENU">
-			<var name="key_fieldLabel" value="${fieldName}" />
-		</execute>
+	macro selectOptionSetting {
+		Click(
+			locator1 = "SystemSettings#DROPDOWN_MENU",
+			key_fieldLabel = "${fieldName}"
+		);
 
-		<execute function="Click" locator1="SystemSettings#DROPDOWN_MENU_OPTION">
-			<var name="key_selectOption" value="${selectOption}" />
-		</execute>
-	</command>
-</definition>
+		Click(
+			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION",
+			key_selectOption = "${selectOption}"
+		);
+	}
+}

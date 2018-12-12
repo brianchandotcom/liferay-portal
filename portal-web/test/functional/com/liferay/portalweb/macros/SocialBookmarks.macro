@@ -1,47 +1,42 @@
-<definition>
-	<command name="viewBookmarkIcons">
-		<for list="${socialBookmarks}" param="socialBookmark">
-			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARK_ICON">
-				<var method="StringUtil#toLowerCase('${socialBookmark}')" name="key_socialBookmark" />
-			</execute>
-		</for>
-	</command>
+definition {
+	macro viewBookmarkIcons {
+		for (var socialBookmark : list "${socialBookmarks}") {
+			AssertElementPresent(
+				locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON",
+				key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}")
+			);
+		}
+	}
 
-	<command name="viewBookmarkMenuItems">
-		<execute function="Click" locator1="Icon#SHARE" />
+	macro viewBookmarkMenuItems {
+		Click(locator1 = "Icon#SHARE");
 
-		<for list="${socialBookmarks}" param="socialBookmark">
-			<execute macro="MenuItem#viewPresent">
-				<var name="menuItem" value="${socialBookmark}" />
-			</execute>
-		</for>
+		for (var socialBookmark : list "${socialBookmarks}") {
+			MenuItem.viewPresent(menuItem = "${socialBookmark}");
+		}
 
-		<execute function="Click" locator1="Icon#SHARE" />
-	</command>
+		Click(locator1 = "Icon#SHARE");
+	}
 
-	<command name="viewBookmarksNotPresent">
-		<execute function="Click" locator1="Icon#SHARE" />
+	macro viewBookmarksNotPresent {
+		Click(locator1 = "Icon#SHARE");
 
-		<for list="${socialBookmarks}" param="socialBookmark">
-			<execute macro="MenuItem#viewNotPresent">
-				<var name="menuItem" value="${socialBookmark}" />
-			</execute>
-		</for>
+		for (var socialBookmark : list "${socialBookmarks}") {
+			MenuItem.viewNotPresent(menuItem = "${socialBookmark}");
+		}
 
-		<execute function="Click" locator1="Icon#SHARE" />
-	</command>
+		Click(locator1 = "Icon#SHARE");
+	}
 
-	<command name="viewDefaultSharableBookmarks">
-		<execute macro="SocialBookmarks#viewBookmarkIcons">
-			<var name="socialBookmarks" value="Facebook,LinkedIn,Twitter" />
-		</execute>
+	macro viewDefaultSharableBookmarks {
+		SocialBookmarks.viewBookmarkIcons(socialBookmarks = "Facebook,LinkedIn,Twitter");
 
-		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
-	</command>
+		SocialBookmarks.viewBookmarkMenuItems(
+			socialBookmarks = "Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
+	}
 
-	<command name="viewShareIconNotPresent">
-		<execute function="AssertElementNotPresent" locator1="Icon#SHARE" />
-	</command>
-</definition>
+	macro viewShareIconNotPresent {
+		AssertElementNotPresent(locator1 = "Icon#SHARE");
+	}
+}

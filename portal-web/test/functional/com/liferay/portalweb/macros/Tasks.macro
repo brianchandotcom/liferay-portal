@@ -1,136 +1,127 @@
-<definition>
-	<command name="addTask">
-		<if>
-			<condition function="IsElementNotPresent" locator1="Tasks#TASK_DESCRIPTION" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Tasks#INFO_MESSAGE" value1="No tasks were found." />
-			</then>
-		</if>
+definition {
+	macro addTask {
+		if (IsElementNotPresent(locator1 = "Tasks#TASK_DESCRIPTION")) {
+			AssertTextEquals(
+				locator1 = "Tasks#INFO_MESSAGE",
+				value1 = "No tasks were found."
+			);
+		}
 
-		<execute function="Click" locator1="Tasks#ADD_TASK_BUTTON" />
+		Click(locator1 = "Tasks#ADD_TASK_BUTTON");
 
-		<execute function="SelectFrame" locator1="AddTask#ADD_TASK_IFRAME" />
-		<execute function="Type" locator1="AddTask#TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
-		<execute function="Select" locator1="AddTask#TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssignee}" />
+		SelectFrame(locator1 = "AddTask#ADD_TASK_IFRAME");
 
-		<if>
-			<isset var="taskPriority" />
-			<then>
-				<execute function="Select" locator1="AddTask#TASK_PRIORITY_SELECT_MENU" value1="${taskPriority}" />
-			</then>
-			<else>
-				<execute function="Select" locator1="AddTask#TASK_PRIORITY_SELECT_MENU" value1="Normal" />
-			</else>
-		</if>
+		Type(locator1 = "AddTask#TASK_DESCRIPTION_FIELD", value1 = "${taskDescription}");
 
-		<if>
-			<equals arg1="${dueDate}" arg2="true" />
-			<then>
-				<if>
-					<condition function="IsTextEqual" locator1="AddTask#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
-					<then>
-						<execute function="AssertClick" locator1="AddTask#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
-					</then>
-				</if>
+		Select(
+			locator1 = "AddTask#TASK_ASSIGNEE_SELECT_MENU",
+			value1 = "${taskAssignee}"
+		);
 
-				<execute function="Type" locator1="AddTask#DUE_DATE_FIELD" value1="3/16/2016" />
-			</then>
-		</if>
+		if (isSet(taskPriority)) {
+			Select(
+				locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU",
+				value1 = "${taskPriority}"
+			);
+		}
+		else {
+			Select(locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU", value1 = "Normal");
+		}
 
-		<if>
-			<equals arg1="${dueTime}" arg2="true" />
-			<then>
-				<if>
-					<condition function="IsElementNotPresent" locator1="AddTask#DUE_DATE_FIELD" />
-					<then>
-						<execute function="AssertClick" locator1="AddTask#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
-					</then>
-				</if>
+		if ("${dueDate}" == "true") {
+			if (IsTextEqual(locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK", value1 = "Add Due Date")) {
+				AssertClick(
+					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
+					value1 = "Add Due Date"
+				);
+			}
 
-				<var method="selenium#getElementValue('AddTask#DUE_DATE_HOUR')" name="displayDateHour" />
-				<var method="StringUtil#length('${displayDateHour}')" name="displayDateHourLength" />
+			Type(locator1 = "AddTask#DUE_DATE_FIELD", value1 = "3/16/2016");
+		}
 
-				<if>
-					<equals arg1="${displayDateHourLength}" arg2="1" />
-					<then>
-						<var name="displayDateHour" value="0${displayDateHour}" />
-					</then>
-				</if>
+		if ("${dueTime}" == "true") {
+			if (IsElementNotPresent(locator1 = "AddTask#DUE_DATE_FIELD")) {
+				AssertClick(
+					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
+					value1 = "Add Due Date"
+				);
+			}
 
-				<var method="selenium#getElementValue('AddTask#DUE_DATE_MINUTE')" name="displayDateMinute" />
-				<var method="MathUtil#sum('${displayDateMinute}', '2')" name="displayDateMinuteFuture" />
-				<var method="StringUtil#length('${displayDateMinuteFuture}')" name="displayDateMinuteFutureLength" />
+			var displayDateHour = selenium.getElementValue("AddTask#DUE_DATE_HOUR");
+			var displayDateHourLength = StringUtil.length("${displayDateHour}");
 
-				<if>
-					<equals arg1="${displayDateMinuteFutureLength}" arg2="1" />
-					<then>
-						<var name="displayDateMinuteFuture" value="0${displayDateMinuteFuture}" />
-					</then>
-				</if>
+			if ("${displayDateHourLength}" == "1") {
+				var displayDateHour = "0${displayDateHour}";
+			}
 
-				<var method="selenium#getElementValue('AddTask#DUE_DATE_MERIDIAN')" name="displayDateMeridian" />
-				<var method="StringUtil#replace('${displayDateMeridian}', '0', 'AM')" name="displayDateMeridian" />
-				<var method="StringUtil#replace('${displayDateMeridian}', '1', 'PM')" name="displayDateMeridian" />
+			var displayDateMinute = selenium.getElementValue("AddTask#DUE_DATE_MINUTE");
+			var displayDateMinuteFuture = MathUtil.sum("${displayDateMinute}", "2");
+			var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
-				<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
+			if ("${displayDateMinuteFutureLength}" == "1") {
+				var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
+			}
 
-				<execute function="Type" locator1="AddTask#DUE_DATE_TIME_FIELD" value1="${displayDate}" />
-			</then>
-		</if>
+			var displayDateMeridian = selenium.getElementValue("AddTask#DUE_DATE_MERIDIAN");
+			var displayDateMeridian = StringUtil.replace("${displayDateMeridian}", "0", "AM");
+			var displayDateMeridian = StringUtil.replace("${displayDateMeridian}", "1", "PM");
+			var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}";
 
-		<if>
-			<isset var="numberOfTags" />
-			<then>
-				<var name="tagNumber" value="0" />
+			Type(locator1 = "AddTask#DUE_DATE_TIME_FIELD", value1 = "${displayDate}");
+		}
 
-				<while>
-					<not>
-						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
-					</not>
-					<then>
-						<var method="MathUtil#sum('${tagNumber}', '1')" name="tagNumber" />
+		if (isSet(numberOfTags)) {
+			var tagNumber = "0";
 
-						<execute function="Type" locator1="AddTask#TASK_TAG_FIELD" value1="tag${tagNumber}" />
-						<execute function="Click" locator1="Button#ADD_TAGS" />
+			while (!("${tagNumber}" == "${numberOfTags}")) {
+				var tagNumber = MathUtil.sum("${tagNumber}", "1");
 
-						<var name="key_tagNumber" value="${tagNumber}" />
+				Type(locator1 = "AddTask#TASK_TAG_FIELD", value1 = "tag${tagNumber}");
 
-						<execute function="AssertTextEquals" locator1="AddTask#TASK_TAG" value1="tag${tagNumber}" />
-					</then>
-				</while>
-			</then>
-		</if>
+				Click(locator1 = "Button#ADD_TAGS");
 
-		<if>
-			<isset var="tagNumber" />
-			<then>
-				<var name="key_tagNumber" value="${tagNumber}" />
+				var key_tagNumber = "${tagNumber}";
 
-				<execute function="Type" locator1="AddTask#TASK_TAG_FIELD" value1="tag${tagNumber}" />
-				<execute function="Click" locator1="Button#ADD_TAGS" />
-				<execute function="AssertTextEquals" locator1="AddTask#TASK_TAG" value1="tag${tagNumber}" />
-			</then>
-		</if>
+				AssertTextEquals(locator1 = "AddTask#TASK_TAG", value1 = "tag${tagNumber}");
+			}
+		}
 
-		<execute macro="Button#clickSave" />
+		if (isSet(tagNumber)) {
+			var key_tagNumber = "${tagNumber}";
 
-		<var name="key_taskDescription" value="${taskDescription}" />
+			Type(locator1 = "AddTask#TASK_TAG_FIELD", value1 = "tag${tagNumber}");
 
-		<execute function="AssertTextEquals" locator1="TasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
+			Click(locator1 = "Button#ADD_TAGS");
 
-		<if>
-			<equals arg1="${taskAssignee}" arg2="Unassigned" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TasksTask#TASK_ASSIGNEE" value1="Unassigned" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="TasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
-			</else>
-		</if>
+			AssertTextEquals(locator1 = "AddTask#TASK_TAG", value1 = "tag${tagNumber}");
+		}
 
-		<execute function="AssertTextEquals" locator1="TasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
-		<execute function="SelectFrame" value1="relative=top" />
+		Button.clickSave();
 
-		<execute macro="Navigator#openURL" />
-	</command>
-</definition>
+		var key_taskDescription = "${taskDescription}";
+
+		AssertTextEquals(
+			locator1 = "TasksTask#TASK_DESCRIPTION",
+			value1 = "${taskDescription}"
+		);
+
+		if ("${taskAssignee}" == "Unassigned") {
+			AssertTextEquals(locator1 = "TasksTask#TASK_ASSIGNEE", value1 = "Unassigned");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "TasksTask#TASK_ASSIGNEE",
+				value1 = "Assigned to ${taskAssignee}"
+			);
+		}
+
+		AssertTextEquals(
+			locator1 = "TasksTask#TASK_REPORTER",
+			value1 = "Created by ${taskReporter}"
+		);
+
+		SelectFrame(value1 = "relative=top");
+
+		Navigator.openURL();
+	}
+}

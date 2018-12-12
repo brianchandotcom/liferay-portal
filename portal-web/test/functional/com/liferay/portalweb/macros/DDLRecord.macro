@@ -1,999 +1,1054 @@
-<definition>
-	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-	<var name="ddlDataDefinitionName" value="Data Definition Name" />
-	<var name="ddlListName" value="List Name" />
+definition {
+	var ddlDataDefinitionDescription = "Data Definition Description";
+	var ddlDataDefinitionName = "Data Definition Name";
+	var ddlListName = "List Name";
 
-	<command name="addCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
+	macro addCP {
+		var key_ddlListName = "${ddlListName}";
 
-		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
+		DDLNavigator.gotoListRecords(ddlListName = "${ddlListName}");
 
-		<execute macro="DDLNavigator#gotoAddListRecord">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-	</command>
+		DDLNavigator.gotoAddListRecord(
+			ddlDataDefinitionName = "${ddlDataDefinitionName}"
+		);
+	}
 
-	<command name="addPGViaAP">
-		<execute macro="AssetPublisherPortlet#addAsset">
-			<var name="assetType" value="${ddlListName}" />
-		</execute>
+	macro addPGViaAP {
+		AssetPublisherPortlet.addAsset(assetType = "${ddlListName}");
 
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "${ddlRecordFieldData}",
+			fieldName = "${fieldName}"
+		);
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-	</command>
+		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+	}
 
-	<command name="addRepeatableField">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro addRepeatableField {
+		var key_fieldName = "${fieldName}";
 
-		<execute function="Click" locator1="DDLEditRecord#FIELD_ADD" />
-	</command>
+		Click(locator1 = "DDLEditRecord#FIELD_ADD");
+	}
 
-	<command name="addViaDDLDisplayPG">
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+	macro addViaDDLDisplayPG {
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		<execute function="Click" locator1="DDL#TOOLBAR_ADD" />
-	</command>
+		Click(locator1 = "DDL#TOOLBAR_ADD");
+	}
 
-	<command name="clearFieldDocumentsAndMedia">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro clearFieldDocumentsAndMedia {
+		var key_fieldName = "${fieldName}";
 
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON" value1="Clear" />
-	</command>
+		AssertClick(
+			locator1 = "DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON",
+			value1 = "Clear"
+		);
+	}
 
-	<command name="deleteCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
+	macro deleteCP {
+		var key_ddlListName = "${ddlListName}";
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		AssertTextEquals(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		AssertClick(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
 
-		<execute function="AssertElementPresent#assertVisible" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
+		AssertElementPresent.assertVisible(locator1 = "DDL#RECORD_TABLE_ELLIPSIS");
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS");
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		MenuItem.clickNoError(menuItem = "Delete");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="no" />
-	</command>
+		Alert.viewSuccessMessage();
 
-	<command name="deleteRepeatableField">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_fieldNumber" value="${fieldNumber}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "no"
+		);
+	}
 
-		<execute function="Click" locator1="DDLEditRecord#FIELD_DELETE" />
-	</command>
+	macro deleteRepeatableField {
+		var key_fieldName = "${fieldName}";
+		var key_fieldNumber = "${fieldNumber}";
 
-	<command name="deleteViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		Click(locator1 = "DDLEditRecord#FIELD_DELETE");
+	}
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+	macro deleteViaDDLDisplayPG {
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		MenuItem.clickNoError(menuItem = "Delete");
 
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no records." />
-	</command>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-	<command name="editCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
+		Alert.viewSuccessMessage();
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no records."
+		);
+	}
 
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+	macro editCP {
+		var key_ddlListName = "${ddlListName}";
 
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+		AssertTextEquals(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		AssertClick(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-	</command>
-
-	<command name="editPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-	</command>
-
-	<command name="editViaRecordViewCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
-
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
-
-		<execute function="AssertElementPresent#assertVisible" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" />
-
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
-	</command>
-
-	<command name="editViaRecordViewPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
-	</command>
-
-	<command name="expandInfo">
-		<execute function="AssertElementNotPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
-
-		<execute function="Click" locator1="Icon#INFO" />
-
-		<execute function="AssertElementPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
-	</command>
-
-	<command name="gotoLinkToPageChildPages">
-		<var name="key_pageName" value="${parentPage}" />
-
-		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
-	</command>
-
-	<command name="gotoLinkToPageNavItem">
-		<var name="key_navItem" value="${pagePrivacy} Pages" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
-	</command>
-
-	<command name="gotoLinkToPageSelect">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="Button#LINK_TO_PAGE_SELECT_PAGE" value1="Select" />
-	</command>
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1",
+			value1 = "${ddlRecordFieldData}"
+		);
 
-	<command name="gotoRecordPreview">
-		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
-	</command>
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-	<command name="populateFieldBoolean">
-		<execute macro="DDLRecord#viewFieldLabel">
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="fieldShowLabel" value="${fieldShowLabel}" />
-		</execute>
+		MenuItem.click(menuItem = "Edit");
+	}
 
-		<var name="key_fieldName" value="${fieldName}" />
+	macro editPG {
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="No" />
-			<then>
-				<if>
-					<equals arg1="${fieldShowLabel}" arg2="No" />
-					<then>
-						<execute function="Uncheck" locator1="TextInput#DDM" />
-					</then>
-					<else>
-						<execute function="Uncheck" locator1="TextInput#DDM" />
-					</else>
-				</if>
-			</then>
-			<elseif>
-				<equals arg1="${ddlRecordFieldData}" arg2="Yes" />
-				<then>
-					<if>
-						<equals arg1="${fieldShowLabel}" arg2="No" />
-						<then>
-							<execute function="Check" locator1="TextInput#DDM" />
-						</then>
-						<else>
-							<execute function="Check" locator1="TextInput#DDM" />
-						</else>
-					</if>
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var recordFieldData. Must be (Yes|No)." />
-			</else>
-		</if>
-	</command>
+		MenuItem.click(menuItem = "Edit");
+	}
 
-	<command name="populateFieldDate">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro editViaRecordViewCP {
+		var key_ddlListName = "${ddlListName}";
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
-	</command>
+		AssertTextEquals(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-	<command name="populateFieldDecimal">
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertClick(locator1 = "DDL#LIST_TABLE_NAME", value1 = "${ddlListName}");
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
-	</command>
+		AssertElementPresent.assertVisible(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1"
+		);
 
-	<command name="populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-		<var name="key_fieldName" value="${fieldName}" />
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<if>
-			<isset var="parentFieldName" />
-			<then>
-				<var name="key_parentFieldName" value="${parentFieldName}" />
+		MenuItem.click(menuItem = "View");
 
-				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHILD_FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON_" value1="Select" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Button#LINK_TO_PAGE_SELECT_PAGE" value1="Select" />
-			</else>
-		</if>
+		AssertClick(locator1 = "Button#EDIT", value1 = "Edit");
+	}
 
-		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
+	macro editViaRecordViewPG {
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<if>
-			<equals arg1="${userRole}" arg2="Guest" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
-			</then>
-			<else>
-				<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON" value1="${document}" />
+		MenuItem.click(menuItem = "View");
 
-				<execute function="Pause" locator1="1000" />
+		AssertClick(locator1 = "Button#EDIT", value1 = "Edit");
+	}
 
-				<execute function="SelectFrameTop" value1="relative=top" />
+	macro expandInfo {
+		AssertElementNotPresent(locator1 = "DDLRecord#INFO_SIDEBAR_EXPANDED");
 
-				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-			</else>
-		</if>
-	</command>
+		Click(locator1 = "Icon#INFO");
 
-	<command name="populateFieldGeolocation">
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertElementPresent(locator1 = "DDLRecord#INFO_SIDEBAR_EXPANDED");
+	}
 
-		<execute function="AssertClick" locator1="DDLEditRecord#FIELD_LABEL" value1="${fieldName}" />
+	macro gotoLinkToPageChildPages {
+		var key_pageName = "${parentPage}";
 
-		<execute function="Pause" locator1="2000" />
+		Click(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_CARET");
+	}
 
-		<execute function="AssertElementPresent" locator1="DDLEditRecord#GEOLOCATION_GOOGLE_MAP" />
-	</command>
+	macro gotoLinkToPageNavItem {
+		var key_navItem = "${pagePrivacy} Pages";
 
-	<command name="populateFieldHTML">
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertClick(
+			locator1 = "DDLEditRecord#LINK_TO_PAGE_NAV_ITEM",
+			value1 = "${pagePrivacy} Pages"
+		);
+	}
 
-		<execute function="Type#typeEditor" locator1="DDLEditRecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
-	</command>
+	macro gotoLinkToPageSelect {
+		var key_fieldName = "${fieldName}";
 
-	<command name="populateFieldInteger">
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertClick(locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE", value1 = "Select");
+	}
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
-	</command>
+	macro gotoRecordPreview {
+		AssertClick(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1",
+			value1 = "(Preview)"
+		);
+	}
 
-	<command name="populateFieldLinkToPage">
-		<execute macro="DDLRecord#gotoLinkToPageSelect">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
+	macro populateFieldBoolean {
+		DDLRecord.viewFieldLabel(
+			fieldFieldLabel = "${fieldFieldLabel}",
+			fieldName = "${fieldName}",
+			fieldShowLabel = "${fieldShowLabel}"
+		);
 
-		<execute macro="DDLRecord#gotoLinkToPageNavItem">
-			<var name="pagePrivacy" value="${pagePrivacy}" />
-		</execute>
+		var key_fieldName = "${fieldName}";
 
-		<execute macro="DDLRecord#selectLinkToPageRadio">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="parentPage" value="${parentPage}" />
-		</execute>
+		if ("${ddlRecordFieldData}" == "No") {
+			if ("${fieldShowLabel}" == "No") {
+				Uncheck(locator1 = "TextInput#DDM");
+			}
+			else {
+				Uncheck(locator1 = "TextInput#DDM");
+			}
+		}
+		else if ("${ddlRecordFieldData}" == "Yes") {
+			if ("${fieldShowLabel}" == "No") {
+				Check(locator1 = "TextInput#DDM");
+			}
+			else {
+				Check(locator1 = "TextInput#DDM");
+			}
+		}
+		else {
+			fail("Invalid var recordFieldData. Must be (Yes|No).");
+		}
+	}
 
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+	macro populateFieldDate {
+		var key_fieldName = "${fieldName}";
 
-		<var name="key_fieldName" value="${fieldName}" />
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+	}
 
-		<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
-	</command>
+	macro populateFieldDecimal {
+		var key_fieldName = "${fieldName}";
 
-	<command name="populateFieldNumber">
-		<var name="key_fieldName" value="${fieldName}" />
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+	}
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
-	</command>
+	macro populateFieldDocumentsAndMediaChooseFromDocumentLibrary {
+		var key_fieldName = "${fieldName}";
 
-	<command name="populateFieldRadio">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldName" value="${fieldName}" />
+		if (isSet(parentFieldName)) {
+			var key_parentFieldName = "${parentFieldName}";
 
-		<execute function="AssertTextEquals" locator1="DDLEditRecord#RADIO_OPTION_LABEL" value1="${ddlRecordFieldData}" />
+			AssertClick(
+				locator1 = "DDLEditRecord#DOCUMENTS_AND_MEDIA_CHILD_FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON_",
+				value1 = "Select"
+			);
+		}
+		else {
+			AssertClick(locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE", value1 = "Select");
+		}
 
-		<execute function="Click" locator1="DDLEditRecord#RADIO_OPTION_RADIO" />
-	</command>
+		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 
-	<command name="populateFieldSelect">
-		<var name="key_fieldName" value="${fieldName}" />
+		if ("${userRole}" == "Guest") {
+			AssertTextEquals(locator1 = "Button#SIGN_IN", value1 = "Sign In");
+		}
+		else {
+			UploadCommonFile.uploadCommonFileHidden(
+				locator1 = "DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON",
+				value1 = "${document}"
+			);
 
-		<execute function="Select" locator1="DDMField#SELECT" value1="${ddlRecordFieldData}" />
-	</command>
+			Pause(locator1 = "1000");
 
-	<command name="populateFieldSelectViaSpreadsheetView">
-		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
-		<var name="key_fieldName" value="${fieldName}" />
+			SelectFrameTop(value1 = "relative=top");
 
-		<execute function="DoubleClick" locator1="DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY" />
+			AssertClick(locator1 = "Button#ADD", value1 = "Add");
+		}
+	}
 
-		<execute function="Select" locator1="DDMEditStructure#FORM_FIELD_SELECT" value1="${ddlRecordFieldData}" />
+	macro populateFieldGeolocation {
+		var key_fieldName = "${fieldName}";
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+		AssertClick(locator1 = "DDLEditRecord#FIELD_LABEL", value1 = "${fieldName}");
 
-		<execute function="AssertTextEquals" locator1="DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
-	</command>
+		Pause(locator1 = "2000");
 
-	<command name="populateFieldText">
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertElementPresent(locator1 = "DDLEditRecord#GEOLOCATION_GOOGLE_MAP");
+	}
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
+	macro populateFieldHTML {
+		var key_fieldName = "${fieldName}";
 
-		<var name="i" value="1" />
+		Type.typeEditor(
+			locator1 = "DDLEditRecord#HTML_FIELD",
+			value1 = "${ddlRecordFieldData}"
+		);
+	}
 
-		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
-			<then>
-				<var method="MathUtil#sum('${i}', '1')" name="i" />
+	macro populateFieldInteger {
+		var key_fieldName = "${fieldName}";
 
-				<if>
-					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
-					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData} ${i}" />
-					</then>
-				</if>
-			</then>
-		</while>
-	</command>
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+	}
 
-	<command name="populateFieldTextBox">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro populateFieldLinkToPage {
+		DDLRecord.gotoLinkToPageSelect(fieldName = "${fieldName}");
 
-		<execute function="Type" locator1="DDLEditRecord#TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
-	</command>
+		DDLRecord.gotoLinkToPageNavItem(pagePrivacy = "${pagePrivacy}");
 
-	<command name="populateFieldTextViaSpreadsheetView">
-		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetViewCmd">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="ddlRecordRow" value="${ddlRecordRow}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
+		DDLRecord.selectLinkToPageRadio(
+			ddlRecordFieldData = "${ddlRecordFieldData}",
+			parentPage = "${parentPage}"
+		);
 
-	<command name="populateFieldTextViaSpreadsheetViewCmd">
-		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
-		<var name="key_fieldName" value="${fieldName}" />
+		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
 
-		<execute function="DoubleClick" locator1="DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY" />
+		var key_fieldName = "${fieldName}";
 
-		<execute function="Type" locator1="DDMEditStructure#FORM_FIELD_FIELD" value1="${ddlRecordFieldData}" />
+		AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+	}
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+	macro populateFieldNumber {
+		var key_fieldName = "${fieldName}";
 
-		<execute function="AssertTextEquals" locator1="DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
-	</command>
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+	}
 
-	<command name="populateFieldWebContentChooseFromWebContentLibrary">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+	macro populateFieldRadio {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_fieldName = "${fieldName}";
 
-		<execute function="AssertClick" locator1="Button#LINK_TO_PAGE_SELECT_PAGE" value1="Select" />
+		AssertTextEquals(
+			locator1 = "DDLEditRecord#RADIO_OPTION_LABEL",
+			value1 = "${ddlRecordFieldData}"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		Click(locator1 = "DDLEditRecord#RADIO_OPTION_RADIO");
+	}
 
-		<execute function="AssertClick" locator1="Link#WEB_CONTENT_ARTICLE" value1="${webContentTitle}" />
+	macro populateFieldSelect {
+		var key_fieldName = "${fieldName}";
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		Select(locator1 = "DDMField#SELECT", value1 = "${ddlRecordFieldData}");
+	}
 
-	<command name="populateTranslationFieldText">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro populateFieldSelectViaSpreadsheetView {
+		var key_ddlRecordRow = "${ddlRecordRow}";
+		var key_fieldName = "${fieldName}";
 
-		<execute function="Type" locator1="TextInput#DDM" value1="${ddlRecordFieldData}" />
+		DoubleClick(locator1 = "DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY");
 
-		<var name="i" value="1" />
+		Select(
+			locator1 = "DDMEditStructure#FORM_FIELD_SELECT",
+			value1 = "${ddlRecordFieldData}"
+		);
 
-		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
-			<then>
-				<var method="MathUtil#sum('${i}', '1')" name="i" />
+		Click(locator1 = "Button#SAVE", value1 = "Save");
 
-				<if>
-					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
-					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
-					</then>
-				</if>
-			</then>
-		</while>
-	</command>
+		AssertTextEquals(
+			locator1 = "DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY",
+			value1 = "${ddlRecordFieldData}"
+		);
+	}
 
-	<command name="saveAsDraftCP">
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+	macro populateFieldText {
+		var key_fieldName = "${fieldName}";
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
 
-	<command name="selectLinkToPageRadio">
-		<if>
-			<isset var="parentPage" />
-			<then>
-				<execute macro="DDLRecord#gotoLinkToPageChildPages">
-					<var name="parentPage" value="${parentPage}" />
-				</execute>
-			</then>
-		</if>
+		var i = "1";
 
-		<var name="key_pageName" value="${ddlRecordFieldData}" />
+		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]")) {
+			var i = MathUtil.sum("${i}", "1");
 
-		<execute function="RunScript" locator1="$('.top-ended').scrollTop(1000)" />
+			if (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]")) {
+				Type(
+					locator1 = "xpath=(//div[@data-fieldname='${key_fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+					value1 = "${ddlRecordFieldData} ${i}"
+				);
+			}
+		}
+	}
 
-		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
-	</command>
+	macro populateFieldTextBox {
+		var key_fieldName = "${fieldName}";
 
-	<command name="submitForPublication">
-		<execute macro="Button#clickSubmitForPublication" />
+		Type(
+			locator1 = "DDLEditRecord#TEXT_BOX_FIELD",
+			value1 = "${ddlRecordFieldData}"
+		);
+	}
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+	macro populateFieldTextViaSpreadsheetView {
+		DDLRecord.populateFieldTextViaSpreadsheetViewCmd(
+			ddlRecordFieldData = "${ddlRecordFieldData}",
+			ddlRecordRow = "${ddlRecordRow}",
+			fieldName = "${fieldName}"
+		);
+	}
 
-	<command name="viewEditPreview">
-		<var name="key_fieldName" value="${fieldName}" />
+	macro populateFieldTextViaSpreadsheetViewCmd {
+		var key_ddlRecordRow = "${ddlRecordRow}";
+		var key_fieldName = "${fieldName}";
 
-		<execute macro="DDLRecord#viewFieldLabel">
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
+		DoubleClick(locator1 = "DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY");
 
-		<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${ddlRecordFieldDataEdit}" />
+		Type(
+			locator1 = "DDMEditStructure#FORM_FIELD_FIELD",
+			value1 = "${ddlRecordFieldData}"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
+		Click(locator1 = "Button#SAVE", value1 = "Save");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewFieldCP">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="" />
-			<then>
-				<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-			</else>
-		</if>
-
-		<if>
-			<isset var="ddlRecordNestedFieldData" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
-				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
-
-				<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
-			</then>
-		</if>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="${ddlRecordFieldData}" />
-		</execute>
-
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
-			</then>
-			<else>
-				<execute macro="DDLRecord#viewPopulatedField">
-					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-				</execute>
-			</else>
-		</if>
-
-		<if>
-			<isset var="ddlRecordNestedFieldData" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
-				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
-
-				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
-				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewFieldFormTemplateSpecific">
-		<if>
-			<equals arg1="${field}" arg2="Paragraph" />
-			<then>
-				<var name="key_fieldText" value="${fieldText}" />
-
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#PARAGRAPH_FIELD" value1="${fieldText}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Separator" />
-			<then>
-				<execute function="AssertElementPresent" locator1="DDLEditRecord#SEPARATOR_FIELD" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewFieldLabel">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<if>
-			<equals arg1="${fieldShowLabel}" arg2="No" />
-			<then>
-				<execute function="AssertNotVisible" locator1="DDLEditRecord#FIELD_LABEL_HIDDEN" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#FIELD_LABEL" value1="${fieldFieldLabel}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewFieldPredefinedValue">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<if>
-			<not>
-				<equals arg1="${fieldShowLabel}" arg2="No" />
-			</not>
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#FIELD_LABEL" value1="${fieldFieldLabel}" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="DDLEditRecord#FIELD_LABEL" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Boolean" />
-			<then>
-				<if>
-					<equals arg1="${fieldPredefinedValue}" arg2="Yes" />
-					<then>
-						<execute function="AssertChecked" locator1="TextInput#DDM" />
-					</then>
-					<elseif>
-						<equals arg1="${fieldPredefinedValue}" arg2="No" />
-						<then>
-							<execute function="AssertNotChecked" locator1="TextInput#DDM" />
-						</then>
-					</elseif>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Date" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Decimal" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Documents and Media" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="HTML" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#HTML_FIELD" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Integer" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Link to Page" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Number" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Radio" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${fieldPredefinedValue}" />
-
-				<execute function="AssertChecked" locator1="DDLEditRecord#RADIO_OPTION_RADIO" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Select" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDMField#SELECT" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Text" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DDM" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Text Box" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#TEXT_BOX_FIELD" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewFieldRepeatedNotPresent">
-		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData}" />
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" />
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='${fieldName}'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" />
-	</command>
-
-	<command name="viewFirstFieldCP">
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
-
-		<if>
-			<isset var="workflowStatus" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="Pending" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="HTML" />
-			<then>
-				<execute macro="DDLRecord#gotoRecordPreview" />
-
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_PREVIEW" value1="${ddlRecordFieldData}" />
-
-				<execute function="Click" locator1="DDL#RECORD_TABLE_PREVIEW_CLOSE" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
-			</else>
-		</if>
-
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
-		</execute>
-
-		<if>
-			<isset var="workflowStatus" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLRecord#WORKFLOW_STATUS" value1="Pending (${workflowStatus})" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDLRecord#WORKFLOW_STATUS" value1="Approved" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Boolean" />
-			<then>
-				<if>
-					<equals arg1="${ddlRecordFieldData}" arg2="true" />
-					<then>
-						<var name="ddlRecordFieldData" value="Yes" />
-					</then>
-					<elseif>
-						<equals arg1="${ddlRecordFieldData}" arg2="false" />
-						<then>
-							<var name="ddlRecordFieldData" value="No" />
-						</then>
-					</elseif>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${fieldShowLabel}" arg2="No" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${ddlRecordFieldData}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewFirstRecordSearchResult">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewGeolocationRecord">
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Latitude:" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Longitude:" />
-	</command>
-
-	<command name="viewInvalidHTMLfield">
-		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
-	</command>
-
-	<command name="viewLinkToPageBreadcrumbCount">
-		<var name="key_number" value="${count}" />
-
-		<execute function="AssertElementPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
-
-		<var method="MathUtil#sum('${count}', '1')" name="count" />
-
-		<var name="key_number" value="${count}" />
-
-		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
-	</command>
-
-	<command name="viewLinkToPageLink">
-		<var name="key_pageName" value="${ddlRecordFieldData}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_LINK" value1="${ddlRecordFieldData}" />
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" value1="${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewNestedFields">
-		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
-		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
-
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
-	</command>
-
-	<command name="viewNestedFieldsRepeating">
-		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
-		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
-
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_REPEATING_FIELD" />
-		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_REPEATING_FIELD" />
-	</command>
-
-	<command name="viewNoRecords">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no records." />
-	</command>
-
-	<command name="viewPGViaAP">
-		<var name="key_assetContent" value="${ddlRecordFieldData}" />
-		<var name="key_assetTitle" value="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${ddlListName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewPopulatedField">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewSecondFieldCP">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY_2" value1="${ddlRecordFieldData}" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="${ddlRecordFieldData}" />
-		</execute>
-
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
-			</then>
-			<else>
-				<execute macro="DDLRecord#viewPopulatedField">
-					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-				</execute>
-			</else>
-		</if>
-	</command>
-
-	<command name="viewSecondRecordSearchResult">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${field} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewSecondRecordViaDDLDisplayTemplate">
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
-
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_NAME" value1="${fieldFieldLabel}" />
-
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="View" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewSelectedLinkToPage">
-		<execute macro="DDLRecord#gotoLinkToPageSelect">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<var name="key_pageName" value="${ddlRecordFieldData}" />
-
-		<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
-
-		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
-	</command>
-
-	<command name="viewStatusViaDDLDisplayTable">
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-		<var name="key_workflowStatus" value="${workflowStatus}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_WORKFLOW_STATUS" value1="${workflowStatus}" />
-	</command>
-
-	<command name="viewTextFieldRepeated">
-		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData1}" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData2}" />
-
-		<if>
-			<isset var="ddlRecordFieldData3" />
-			<then>
-				<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData3}" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewTranslationNotAvailable">
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION">
-			<var name="key_localizedLanguage" value="${localizedLanguage}" />
-		</execute>
-	</command>
-
-	<command name="viewViaAnchorLink">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-
-		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
-
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_NAME" value1="${fieldFieldLabel}" />
-
-		<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />
-
-		<if>
-			<isset var="ddlRecordFieldDataTableDisplay" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldDataTableDisplay}" />
-
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldDataTableDisplay}" />
-			</then>
-			<else>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${userRole}" arg2="Guest" />
-			<then>
-				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="View" />
-				</execute>
-			</then>
-			<else>
-				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
-
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="View" />
-				</execute>
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Boolean" />
-			<then>
-				<if>
-					<equals arg1="${ddlRecordFieldData}" arg2="true" />
-					<then>
-						<var name="ddlRecordFieldData" value="Yes" />
-					</then>
-					<elseif>
-						<equals arg1="${ddlRecordFieldData}" arg2="false" />
-						<then>
-							<var name="ddlRecordFieldData" value="No" />
-						</then>
-					</elseif>
-				</if>
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Portlet#H2_HEADER" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${ddlRecordFieldData}" />
-
-		<if>
-			<isset var="ddlRecordNestedFieldData" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
-				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
-
-				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
-				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewViaDDLDisplayTable">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="" />
-			<then>
-				<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-			</else>
-		</if>
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY",
+			value1 = "${ddlRecordFieldData}"
+		);
+	}
+
+	macro populateFieldWebContentChooseFromWebContentLibrary {
+		var key_fieldName = "${fieldName}";
+		var key_webContentTitle = "${webContentTitle}";
+
+		AssertClick(locator1 = "Button#LINK_TO_PAGE_SELECT_PAGE", value1 = "Select");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		AssertClick(
+			locator1 = "Link#WEB_CONTENT_ARTICLE",
+			value1 = "${webContentTitle}"
+		);
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro populateTranslationFieldText {
+		var key_fieldName = "${fieldName}";
+
+		Type(locator1 = "TextInput#DDM", value1 = "${ddlRecordFieldData}");
+
+		var i = "1";
+
+		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='Text']//input)[${i}]")) {
+			var i = MathUtil.sum("${i}", "1");
+
+			if (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='Text']//input)[${i}]")) {
+				Type(
+					locator1 = "xpath=(//div[@data-fieldname='Text']//input)[${i}]",
+					value1 = "${ddlRecordFieldData} ${i}"
+				);
+			}
+		}
+	}
+
+	macro saveAsDraftCP {
+		AssertClick(locator1 = "Button#SAVE_AS_DRAFT", value1 = "Save as Draft");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro selectLinkToPageRadio {
+		if (isSet(parentPage)) {
+			DDLRecord.gotoLinkToPageChildPages(parentPage = "${parentPage}");
+		}
+
+		var key_pageName = "${ddlRecordFieldData}";
+
+		RunScript(locator1 = "$('.top-ended').scrollTop(1000)");
+
+		Click(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO");
+	}
+
+	macro submitForPublication {
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewEditPreview {
+		var key_fieldName = "${fieldName}";
+
+		DDLRecord.viewFieldLabel(
+			fieldFieldLabel = "${fieldFieldLabel}",
+			fieldName = "${fieldName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "TextInput#DDM",
+			value1 = "${ddlRecordFieldDataEdit}"
+		);
+
+		AssertElementNotPresent(locator1 = "DDL#RECORD_TABLE_ENTRY");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewFieldCP {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		if ("${ddlRecordFieldData}" == "") {
+			AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ENTRY");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_ENTRY",
+				value1 = "${ddlRecordFieldData}"
+			);
+		}
+
+		if (isSet(ddlRecordNestedFieldData)) {
+			var key_ddlRecordFieldData = "${ddlRecordNestedFieldData}";
+			var key_fieldFieldLabel = "${nestedFieldFieldLabel}";
+
+			AssertElementNotPresent(locator1 = "DDL#RECORD_TABLE_ENTRY");
+		}
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "${ddlRecordFieldData}"
+		);
+
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		if ("${ddlRecordFieldData}" == "") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${fieldFieldLabel}${ddlRecordFieldData}"
+			);
+		}
+		else {
+			DDLRecord.viewPopulatedField(
+				ddlRecordFieldData = "${ddlRecordFieldData}",
+				fieldFieldLabel = "${fieldFieldLabel}"
+			);
+		}
+
+		if (isSet(ddlRecordNestedFieldData)) {
+			var key_ddlRecordFieldData = "${ddlRecordNestedFieldData}";
+			var key_fieldFieldLabel = "${nestedFieldFieldLabel}";
+
+			AssertTextEquals(
+				locator1 = "DDLRecord#FIELD_NESTED",
+				value1 = "${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}"
+			);
+
+			AssertCssValue(
+				locator1 = "DDLRecord#FIELD_NESTED",
+				locator2 = "margin-left",
+				value1 = "15px"
+			);
+		}
+	}
+
+	macro viewFieldFormTemplateSpecific {
+		if ("${field}" == "Paragraph") {
+			var key_fieldText = "${fieldText}";
+
+			AssertTextEquals(
+				locator1 = "DDLEditRecord#PARAGRAPH_FIELD",
+				value1 = "${fieldText}"
+			);
+		}
+
+		if ("${field}" == "Separator") {
+			AssertElementPresent(locator1 = "DDLEditRecord#SEPARATOR_FIELD");
+		}
+	}
+
+	macro viewFieldLabel {
+		var key_fieldName = "${fieldName}";
+
+		if ("${fieldShowLabel}" == "No") {
+			AssertNotVisible(locator1 = "DDLEditRecord#FIELD_LABEL_HIDDEN");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDLEditRecord#FIELD_LABEL",
+				value1 = "${fieldFieldLabel}"
+			);
+		}
+	}
+
+	macro viewFieldPredefinedValue {
+		var key_fieldName = "${fieldName}";
+
+		if (!("${fieldShowLabel}" == "No")) {
+			AssertTextEquals(
+				locator1 = "DDLEditRecord#FIELD_LABEL",
+				value1 = "${fieldFieldLabel}"
+			);
+		}
+		else {
+			AssertElementNotPresent(locator1 = "DDLEditRecord#FIELD_LABEL");
+		}
+
+		if ("${field}" == "Boolean") {
+			if ("${fieldPredefinedValue}" == "Yes") {
+				AssertChecked(locator1 = "TextInput#DDM");
+			}
+			else if ("${fieldPredefinedValue}" == "No") {
+				AssertNotChecked(locator1 = "TextInput#DDM");
+			}
+		}
+
+		if ("${field}" == "Date") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Decimal") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Documents and Media") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "HTML") {
+			AssertTextEquals(
+				locator1 = "DDLEditRecord#HTML_FIELD",
+				value1 = "${fieldPredefinedValue}"
+			);
+		}
+
+		if ("${field}" == "Integer") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Link to Page") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Number") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Radio") {
+			var key_ddlRecordFieldData = "${fieldPredefinedValue}";
+
+			AssertChecked(locator1 = "DDLEditRecord#RADIO_OPTION_RADIO");
+		}
+
+		if ("${field}" == "Select") {
+			AssertTextEquals(
+				locator1 = "DDMField#SELECT",
+				value1 = "${fieldPredefinedValue}"
+			);
+		}
+
+		if ("${field}" == "Text") {
+			AssertTextEquals(locator1 = "TextInput#DDM", value1 = "${fieldPredefinedValue}");
+		}
+
+		if ("${field}" == "Text Box") {
+			AssertTextEquals(
+				locator1 = "DDLEditRecord#TEXT_BOX_FIELD",
+				value1 = "${fieldPredefinedValue}"
+			);
+		}
+	}
+
+	macro viewFieldRepeatedNotPresent {
+		AssertTextEquals(
+			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+			value1 = "${ddlRecordFieldData}"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)"
+		);
+	}
+
+	macro viewFirstFieldCP {
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_NAME",
+			value1 = "${fieldFieldLabel}"
+		);
+
+		if (isSet(workflowStatus)) {
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS",
+				value1 = "Pending"
+			);
+		}
+
+		if ("${field}" == "HTML") {
+			DDLRecord.gotoRecordPreview();
+
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_PREVIEW",
+				value1 = "${ddlRecordFieldData}"
+			);
+
+			Click(locator1 = "DDL#RECORD_TABLE_PREVIEW_CLOSE");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1",
+				value1 = "${ddlRecordFieldData}"
+			);
+		}
+
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		MenuItem.click(menuItem = "View");
+
+		if (isSet(workflowStatus)) {
+			AssertTextEquals(
+				locator1 = "DDLRecord#WORKFLOW_STATUS",
+				value1 = "Pending (${workflowStatus})"
+			);
+		}
+		else {
+			AssertTextEquals(locator1 = "DDLRecord#WORKFLOW_STATUS", value1 = "Approved");
+		}
+
+		if ("${field}" == "Boolean") {
+			if ("${ddlRecordFieldData}" == "true") {
+				var ddlRecordFieldData = "Yes";
+			}
+			else if ("${ddlRecordFieldData}" == "false") {
+				var ddlRecordFieldData = "No";
+			}
+		}
+
+		if ("${fieldShowLabel}" == "No") {
+			AssertTextEquals(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${ddlRecordFieldData}"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${fieldFieldLabel} ${ddlRecordFieldData}"
+			);
+		}
+	}
+
+	macro viewFirstRecordSearchResult {
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "New Data Definition Name for List: ${ddlListName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "DDLRecord#FIELD_1",
+			value1 = "${field} ${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewGeolocationRecord {
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_NAME",
+			value1 = "${fieldFieldLabel}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1",
+			value1 = "Latitude:"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1",
+			value1 = "Longitude:"
+		);
+	}
+
+	macro viewInvalidHTMLfield {
+		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_PREVIEW_INVALID_IMG");
+	}
+
+	macro viewLinkToPageBreadcrumbCount {
+		var key_number = "${count}";
+
+		AssertElementPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");
+
+		var count = MathUtil.sum("${count}", "1");
+		var key_number = "${count}";
+
+		AssertElementNotPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");
+	}
+
+	macro viewLinkToPageLink {
+		var key_pageName = "${ddlRecordFieldData}";
+
+		AssertClick(
+			locator1 = "DDLEditRecord#LINK_TO_PAGE_LINK",
+			value1 = "${ddlRecordFieldData}"
+		);
+
+		AssertVisible(locator1 = "Home#PAGE_ACTIVE", value1 = "${ddlRecordFieldData}");
+	}
+
+	macro viewNestedFields {
+		var key_nestedChildFieldFieldName = "${nestedChildFieldFieldName}";
+		var key_nestedParentFieldFieldName = "${nestedParentFieldFieldName}";
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_CHILD_FIELD");
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_PARENT_FIELD");
+	}
+
+	macro viewNestedFieldsRepeating {
+		var key_nestedChildFieldFieldName = "${nestedChildFieldFieldName}";
+		var key_nestedParentFieldFieldName = "${nestedParentFieldFieldName}";
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_CHILD_FIELD");
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_PARENT_FIELD");
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_CHILD_REPEATING_FIELD");
+
+		AssertElementPresent(locator1 = "DDLRecord#NESTED_PARENT_REPEATING_FIELD");
+	}
+
+	macro viewNoRecords {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no records."
+		);
+	}
+
+	macro viewPGViaAP {
+		var key_assetContent = "${ddlRecordFieldData}";
+		var key_assetTitle = "${ddlListName}";
+
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${ddlListName}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewPopulatedField {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDLRecord#FIELD",
+			value1 = "${fieldFieldLabel} ${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewSecondFieldCP {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_ENTRY_2",
+			value1 = "${ddlRecordFieldData}"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "${ddlRecordFieldData}"
+		);
+
+		if ("${ddlRecordFieldData}" == "") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${fieldFieldLabel}${ddlRecordFieldData}"
+			);
+		}
+		else {
+			DDLRecord.viewPopulatedField(
+				ddlRecordFieldData = "${ddlRecordFieldData}",
+				fieldFieldLabel = "${fieldFieldLabel}"
+			);
+		}
+	}
+
+	macro viewSecondRecordSearchResult {
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "New Data Definition Name for List: ${ddlListName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "DDLRecord#FIELD_2",
+			value1 = "${field} ${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewSecondRecordViaDDLDisplayTemplate {
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "${ddlListName}"
+		);
+
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_NAME",
+			value1 = "${fieldFieldLabel}"
+		);
+
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		MenuItem.click(menuItem = "View");
+
+		AssertTextEquals(
+			locator1 = "DDLRecord#FIELD_2",
+			value1 = "${fieldFieldLabel} ${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewSelectedLinkToPage {
+		DDLRecord.gotoLinkToPageSelect(fieldName = "${fieldName}");
+
+		var key_pageName = "${ddlRecordFieldData}";
+
+		AssertChecked(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO");
+
+		AssertClick(locator1 = "Button#CANCEL", value1 = "Cancel");
+	}
+
+	macro viewStatusViaDDLDisplayTable {
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		var key_workflowStatus = "${workflowStatus}";
+
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_WORKFLOW_STATUS",
+			value1 = "${workflowStatus}"
+		);
+	}
+
+	macro viewTextFieldRepeated {
+		AssertTextEquals(
+			locator1 = "xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+			value1 = "${ddlRecordFieldData1}"
+		);
+
+		AssertTextEquals(
+			locator1 = "xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+			value1 = "${ddlRecordFieldData2}"
+		);
+
+		if (isSet(ddlRecordFieldData3)) {
+			AssertTextEquals(
+				locator1 = "xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+				value1 = "${ddlRecordFieldData3}"
+			);
+		}
+		else {
+			AssertElementNotPresent(locator1 = "xpath=(//div[@data-fieldname='Text'])[3]");
+		}
+	}
+
+	macro viewTranslationNotAvailable {
+		AssertElementNotPresent(
+			locator1 = "Translation#AVAILABLE_TRANSLATION",
+			key_localizedLanguage = "${localizedLanguage}"
+		);
+	}
+
+	macro viewViaAnchorLink {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+
+		AssertClick(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1",
+			value1 = "${ddlRecordFieldData}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDLRecord#FIELD_1",
+			value1 = "${fieldFieldLabel} ${ddlRecordFieldData}"
+		);
+	}
+
+	macro viewViaDDLDisplayPG {
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "${ddlListName}"
+		);
+
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "DDL#RECORD_TABLE_COLUMN_NAME",
+			value1 = "${fieldFieldLabel}"
+		);
+
+		var key_ddlRecordFieldData = "${key_ddlRecordFieldData}";
+
+		if (isSet(ddlRecordFieldDataTableDisplay)) {
+			var key_ddlRecordFieldData = "${ddlRecordFieldDataTableDisplay}";
+
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_ENTRY",
+				value1 = "${ddlRecordFieldDataTableDisplay}"
+			);
+		}
+		else {
+			var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_ENTRY",
+				value1 = "${ddlRecordFieldData}"
+			);
+		}
+
+		if ("${userRole}" == "Guest") {
+			Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+			MenuItem.click(menuItem = "View");
+		}
+		else {
+			Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS");
+
+			MenuItem.click(menuItem = "View");
+		}
+
+		if ("${field}" == "Boolean") {
+			if ("${ddlRecordFieldData}" == "true") {
+				var ddlRecordFieldData = "Yes";
+			}
+			else if ("${ddlRecordFieldData}" == "false") {
+				var ddlRecordFieldData = "No";
+			}
+		}
+
+		AssertElementPresent(locator1 = "Portlet#H2_HEADER");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDLRecord#FIELD_1",
+			value1 = "${fieldFieldLabel}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDLRecord#FIELD_1",
+			value1 = "${ddlRecordFieldData}"
+		);
+
+		if (isSet(ddlRecordNestedFieldData)) {
+			var key_ddlRecordFieldData = "${ddlRecordNestedFieldData}";
+			var key_fieldFieldLabel = "${nestedFieldFieldLabel}";
+
+			AssertTextEquals(
+				locator1 = "DDLRecord#FIELD_NESTED",
+				value1 = "${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}"
+			);
+
+			AssertCssValue(
+				locator1 = "DDLRecord#FIELD_NESTED",
+				locator2 = "margin-left",
+				value1 = "15px"
+			);
+		}
+	}
+
+	macro viewViaDDLDisplayTable {
+		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		if ("${ddlRecordFieldData}" == "") {
+			AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ENTRY");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "DDL#RECORD_TABLE_ENTRY",
+				value1 = "${ddlRecordFieldData}"
+			);
+		}
+	}
+}

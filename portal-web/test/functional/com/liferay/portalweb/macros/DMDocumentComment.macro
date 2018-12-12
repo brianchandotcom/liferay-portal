@@ -1,27 +1,33 @@
-<definition>
-	<command name="addPG">
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}">
-			<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+definition {
+	macro addPG {
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}",
+			key_dmDocumentTitle = "${dmDocumentTitle}"
+		);
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
+		Type(locator1 = "Comments#COMMENT_FIELD", value1 = "${commentBody}");
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		AssertClick(locator1 = "Button#REPLY", value1 = "Reply");
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="viewPG">
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}">
-			<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+	macro viewPG {
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}",
+			key_dmDocumentTitle = "${dmDocumentTitle}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}">
-			<var name="key_entryComment" value="${commentBody}" />
-		</execute>
-	</command>
-</definition>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+			value1 = "${commentBody}",
+			key_entryComment = "${commentBody}"
+		);
+	}
+}

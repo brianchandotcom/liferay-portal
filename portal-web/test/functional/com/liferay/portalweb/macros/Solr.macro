@@ -1,23 +1,29 @@
-<definition>
-	<command name="viewLiferayCloudDashboard">
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8983/solr/#/~cloud" />
-		</execute>
+definition {
+	macro viewLiferayCloudDashboard {
+		Navigator.openSpecificURL(url = "http://localhost:8983/solr/#/~cloud");
 
-		<execute function="AssertVisible" locator1="SolrAdminDashboard#MENU_CLOUD" />
+		AssertVisible(locator1 = "SolrAdminDashboard#MENU_CLOUD");
 
-		<var name="key_cloudCollectionName" value="${cloudCollectionName}" />
+		var key_cloudCollectionName = "${cloudCollectionName}";
 
-		<execute function="AssertVisible" locator1="SolrAdminDashboard#CLOUD_COLLECTION" />
-	</command>
+		AssertVisible(locator1 = "SolrAdminDashboard#CLOUD_COLLECTION");
+	}
 
-	<command name="viewSolrwithSolrCloudEnabledInConsole">
-		<execute function="AssertConsoleTextPresent" value1="Using default ZkCredentialsProvider" />
-		<execute function="AssertConsoleTextPresent" value1="Using default ZkACLProvider" />
-		<execute function="AssertConsoleTextPresent" value1="Waiting for client to connect to ZooKeeper" />
-		<execute function="AssertConsoleTextPresent" value1="Watcher org.apache.solr.common.cloud.ConnectionManager" />
-		<execute function="AssertConsoleTextPresent" value1="ZooKeeperConnection Watcher:localhost:9983" />
-		<execute function="AssertConsoleTextPresent" value1="Client is connected to ZooKeeper" />
-		<execute function="AssertConsoleTextPresent" value1="Updating cluster state from ZooKeeper" />
-	</command>
-</definition>
+	macro viewSolrwithSolrCloudEnabledInConsole {
+		AssertConsoleTextPresent(value1 = "Using default ZkCredentialsProvider");
+
+		AssertConsoleTextPresent(value1 = "Using default ZkACLProvider");
+
+		AssertConsoleTextPresent(value1 = "Waiting for client to connect to ZooKeeper");
+
+		AssertConsoleTextPresent(
+			value1 = "Watcher org.apache.solr.common.cloud.ConnectionManager"
+		);
+
+		AssertConsoleTextPresent(value1 = "ZooKeeperConnection Watcher:localhost:9983");
+
+		AssertConsoleTextPresent(value1 = "Client is connected to ZooKeeper");
+
+		AssertConsoleTextPresent(value1 = "Updating cluster state from ZooKeeper");
+	}
+}

@@ -1,772 +1,692 @@
-<definition>
-	<command name="addBlogsEntryLoginUserPG">
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<if>
-			<equals arg1="${siteURLTemp}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="${pageName}" />
-					<var name="siteName" value="${siteName}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="${pageName}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="entryAddCategory" value="${entryAddCategory}" />
-			<var name="entryAddPermissions" value="${entryAddPermissions}" />
-			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
-			<var name="entryAddTag" value="${entryAddTag}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryInvalidContent" value="${entryInvalidContent}" />
-			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
-			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-			<var name="viewableBySelection" value="${viewableBySelection}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="addDMFolderLoginUserPG">
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolder" value="${dmFolder}" />
-			<var name="dmFolderDescription" value="${dmFolderDescription}" />
-			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="definePermissionCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-	</command>
-
-	<command name="definePermissionLoginUserCP">
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="definePermissionViaJSONAPI">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<var name="groupName" value="Global" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="roleType" />
-			</not>
-			<then>
-				<var name="roleType" value="regular" />
-			</then>
-		</if>
-
-		<execute macro="JSONPermission#editPermission">
-			<var name="groupName" value="${groupName}" />
-			<var name="method" value="add-resource-permission" />
-			<var name="resourceAction" value="${resourceAction}" />
-			<var name="resourceName" value="${resourceName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-	</command>
-
-	<command name="removePermissionCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#removePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-	</command>
-
-	<command name="removePermissionLoginUserCP">
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="removePermissionViaAPI">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<var name="groupName" value="Global" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="roleType" />
-			</not>
-			<then>
-				<var name="roleType" value="regular" />
-			</then>
-		</if>
-
-		<execute macro="JSONPermission#editPermission">
-			<var name="groupName" value="${groupName}" />
-			<var name="method" value="remove-resource-permission" />
-			<var name="resourceAction" value="${resourceAction}" />
-			<var name="resourceName" value="${resourceName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-	</command>
-
-	<command name="setUpOrgRoleLoginUserPG">
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="JSONOrganization#addOrganization">
-			<var name="organizationName" value="${orgName}" />
-			<var name="organizationSite" value="true" />
-		</execute>
-
-		<execute macro="JSONOrganization#assignUserToOrganization">
-			<var name="organizationName" value="${orgName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayoutByGroupName">
-			<var name="groupName" value="${orgName}" />
-			<var name="layoutName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="JSONRole#addOrganizationRole">
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="JSONGroup#assignGroupRoleToUser">
-			<var name="groupName" value="${orgName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpRegRoleLoginUserCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleTitle" value="" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="JSONRole#assignRoleToUser">
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpRegRoleLoginUserPG">
-		<execute macro="Permissions#setUpRegRolePG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpRegRolePG">
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Guest" />
-			<var name="layoutName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="JSONRole#assignRoleToUser">
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-	</command>
-
-	<command name="setUpSiteMemberRoleLoginUserPG">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpSiteRoleCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleTitle" value="" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="${siteName}" />
-		</execute>
-
-		<execute macro="JSONGroup#assignUserToGroup">
-			<var name="groupName" value="${siteName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="${siteName}" />
-			<var name="layoutName" value="${pageName}" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="JSONGroup#assignGroupRoleToUser">
-			<var name="groupName" value="${siteName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpSiteRoleLoginUserCP">
-		<execute macro="Permissions#setUpSiteRoleCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpSiteRoleLoginUserPG">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="${roleType}" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleDescription" value="${roleDescription}" />
-			<var name="roleKey" value="${roleKey}" />
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="${userFirstName} ${userLastName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-
-	<command name="setUpSiteTeamRoleLoginUserPG">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="${newPassword}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="${teamDescription}" />
-			<var name="teamName" value="${teamName}" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="teamName" value="${teamName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userNameIsNotFound" value="${userNameIsNotFound}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
-			<var name="userLoginFullName" value="${userLoginFullName}" />
-		</execute>
-	</command>
-</definition>
+definition {
+	macro addBlogsEntryLoginUserPG {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		if ("${siteURLTemp}" == "true") {
+			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		Blogs.addEntry(
+			assetTitle = "${assetTitle}",
+			assetType = "${assetType}",
+			categoryName = "${categoryName}",
+			entryAddCategory = "${entryAddCategory}",
+			entryAddPermissions = "${entryAddPermissions}",
+			entryAddRelatedAsset = "${entryAddRelatedAsset}",
+			entryAddTag = "${entryAddTag}",
+			entryContent = "${entryContent}",
+			entryInvalidContent = "${entryInvalidContent}",
+			entryInvalidTitle = "${entryInvalidTitle}",
+			entryInvalidTitleLength = "${entryInvalidTitleLength}",
+			entryTitle = "${entryTitle}",
+			entryValidTitleLength = "${entryValidTitleLength}",
+			tagName = "${tagName}",
+			viewableBy = "${viewableBy}",
+			viewableBySelection = "${viewableBySelection}",
+			vocabularyName = "${vocabularyName}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro addDMFolderLoginUserPG {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "${pageName}");
+
+		DMFolder.addPG(
+			dmFolder = "${dmFolder}",
+			dmFolderDescription = "${dmFolderDescription}",
+			dmFolderName = "${dmFolderName}",
+			viewableBy = "${viewableBy}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro definePermissionCP {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "${permissionDefinitionKey}",
+			permissionDefinitionValue = "${permissionDefinitionValue}",
+			permissionNavigationValue = "${permissionNavigationValue}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+	}
+
+	macro definePermissionLoginUserCP {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Permissions.definePermissionCP(
+			permissionDefinitionKey = "${permissionDefinitionKey}",
+			permissionDefinitionValue = "${permissionDefinitionValue}",
+			permissionNavigationValue = "${permissionNavigationValue}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro definePermissionViaJSONAPI {
+		if (!(isSet(groupName))) {
+			var groupName = "Global";
+		}
+
+		if (!(isSet(roleType))) {
+			var roleType = "regular";
+		}
+
+		JSONPermission.editPermission(
+			groupName = "${groupName}",
+			method = "add-resource-permission",
+			resourceAction = "${resourceAction}",
+			resourceName = "${resourceName}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+	}
+
+	macro removePermissionCP {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.removePermissionCP(
+			permissionDefinitionKey = "${permissionDefinitionKey}",
+			permissionDefinitionValue = "${permissionDefinitionValue}",
+			permissionNavigationValue = "${permissionNavigationValue}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+	}
+
+	macro removePermissionLoginUserCP {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Permissions.removePermissionCP(
+			permissionDefinitionKey = "${permissionDefinitionKey}",
+			permissionDefinitionValue = "${permissionDefinitionValue}",
+			permissionNavigationValue = "${permissionNavigationValue}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro removePermissionViaAPI {
+		if (!(isSet(groupName))) {
+			var groupName = "Global";
+		}
+
+		if (!(isSet(roleType))) {
+			var roleType = "regular";
+		}
+
+		JSONPermission.editPermission(
+			groupName = "${groupName}",
+			method = "remove-resource-permission",
+			resourceAction = "${resourceAction}",
+			resourceName = "${resourceName}",
+			roleTitle = "${roleTitle}",
+			roleType = "${roleType}"
+		);
+	}
+
+	macro setUpOrgRoleLoginUserPG {
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		JSONOrganization.addOrganization(
+			organizationName = "${orgName}",
+			organizationSite = "true"
+		);
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "${orgName}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+
+		JSONLayout.addPublicLayoutByGroupName(
+			groupName = "${orgName}",
+			layoutName = "${pageName}"
+		);
+
+		Navigator.gotoSitePage(pageName = "${pageName}", siteName = "Organization Name");
+
+		Portlet.addPG(
+			i = "${i}",
+			pageName = "${pageName}",
+			portletName = "${portletName}",
+			siteName = "Organization Name",
+			siteURL = "true"
+		);
+
+		JSONRole.addOrganizationRole(roleTitle = "${roleTitle}");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "${orgName}",
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpRegRoleLoginUserCP {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
+			roleTitle = ""
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		JSONRole.addRegularRole(roleTitle = "${roleTitle}");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpRegRoleLoginUserPG {
+		Permissions.setUpRegRolePG(
+			pageName = "${pageName}",
+			portletName = "${portletName}",
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpRegRolePG {
+		JSONLayout.addPublicLayout(groupName = "Guest", layoutName = "${pageName}");
+
+		Navigator.gotoPage(pageName = "${pageName}");
+
+		Portlet.addPG(
+			i = "${i}",
+			pageName = "${pageName}",
+			portletName = "${portletName}"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		JSONRole.addRegularRole(roleTitle = "${roleTitle}");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+	}
+
+	macro setUpSiteMemberRoleLoginUserPG {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userBirthday = "${userBirthday}",
+			userEmailAddress = "${userEmailAddress}",
+			userEmailAddressVariation = "${userEmailAddressVariation}",
+			userFirstName = "${userFirstName}",
+			userGender = "${userGender}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}",
+			userScreenNameVariation = "${userScreenNameVariation}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "${siteName}");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "${pageName}");
+
+		Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Portlet.addPG(
+			i = "${i}",
+			pageName = "${pageName}",
+			portletName = "${portletName}",
+			siteName = "${siteName}",
+			siteURL = "true"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpSiteRoleCP {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
+			roleTitle = ""
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		JSONGroup.addGroup(groupName = "${siteName}");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "${siteName}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "${siteName}",
+			layoutName = "${pageName}"
+		);
+
+		JSONRole.addSiteRole(roleTitle = "${roleTitle}");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "${siteName}",
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpSiteRoleLoginUserCP {
+		Permissions.setUpSiteRoleCP(
+			newPassword = "${newPassword}",
+			pageName = "${pageName}",
+			roleTitle = "${roleTitle}",
+			siteName = "${siteName}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpSiteRoleLoginUserPG {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userBirthday = "${userBirthday}",
+			userEmailAddress = "${userEmailAddress}",
+			userEmailAddressVariation = "${userEmailAddressVariation}",
+			userFirstName = "${userFirstName}",
+			userGender = "${userGender}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}",
+			userScreenNameVariation = "${userScreenNameVariation}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "${pageName}");
+
+		Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Portlet.addPG(
+			i = "${i}",
+			pageName = "${pageName}",
+			portletName = "${portletName}",
+			siteName = "${siteName}",
+			siteURL = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		RoleNavigator.gotoRoleType(roleType = "${roleType}");
+
+		Role.add(
+			roleDescription = "${roleDescription}",
+			roleKey = "${roleKey}",
+			roleTitle = "${roleTitle}"
+		);
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "${userFirstName} ${userLastName}",
+			roleTitle = "${roleTitle}"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+
+	macro setUpSiteTeamRoleLoginUserPG {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userBirthday = "${userBirthday}",
+			userEmailAddress = "${userEmailAddress}",
+			userEmailAddressVariation = "${userEmailAddressVariation}",
+			userFirstName = "${userFirstName}",
+			userGender = "${userGender}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}",
+			userScreenNameVariation = "${userScreenNameVariation}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userMiddleName = "${userMiddleName}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(teamDescription = "${teamDescription}", teamName = "${teamName}");
+
+		Team.assignMembersCP(
+			siteName = "${siteName}",
+			teamName = "${teamName}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userNameIsNotFound = "${userNameIsNotFound}",
+			userScreenName = "${userScreenName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "${pageName}");
+
+		Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Portlet.addPG(
+			i = "${i}",
+			pageName = "${pageName}",
+			portletName = "${portletName}",
+			siteName = "${siteName}",
+			siteURL = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}"
+		);
+	}
+}

@@ -1,288 +1,254 @@
-<definition>
-	<!--
+definition {
+
+	/*
 		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
-	 -->
-
-	<command name="addWidgets">
-		<if>
-			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
-			<then>
-				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />
-		<execute function="AssertVisible" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Widgets" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="Panel#expandSidebarApplicationsPanel" />
-
-		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="search" />
-
-		<for list="${searchPortletList}" param="portletName">
-			<execute macro="Portlet#_clickAddPortlet">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-
-			<var name="key_portletName" value="${portletName}" />
-
-			<execute function="AssertElementPresent" locator1="Portlet#LOADED" />
-
-			<execute function="AssertElementPresent" locator1="Home#PORTLET" />
-		</for>
-	</command>
-
-	<command name="configureDestination">
-		<execute macro="SearchPortlets#gotoEmbeddedOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<isset var="destinationPage" />
-			<then>
-				<if>
-					<contains string="${destinationPage}" substring=" " />
-					<then>
-						<var method="StringUtil#replace('${destinationPage}', ' ', '-')" name="destinationPage" />
-					</then>
-				</if>
-
-				<var method="StringUtil#toLowerCase('${destinationPage}')" name="destinationPage" />
-
-				<execute function="Type" locator1="SearchConfiguration#DESTINATION_PAGE" value1="${destinationPage}" />
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="configureEmbeddedScope">
-		<execute macro="SearchPortlets#gotoEmbeddedOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<if>
-			<or>
-				<equals arg1="${searchScope}" arg2="Everything" />
-				<equals arg1="${searchScope}" arg2="Let the User Choose" />
-				<equals arg1="${searchScope}" arg2="This Site" />
-			</or>
-			<then>
-				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
-			</then>
-			<else>
-				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
-			</else>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="configureSearchOptions">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Search Options" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<equals arg1="${allowEmptySearches}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Allow Empty Searches" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${basicFacetSelection}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Basic Facet Selection" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
+	 */
 
-	<command name="configureWidgetParameterNames">
-		<execute macro="SearchPortlets#gotoWidgetOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<isset var="keywordsParameterName" />
-			<then>
-				<execute function="Type" locator1="SearchConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
-			</then>
-		</if>
+	macro addWidgets {
+		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
+			Click.clickAt(locator1 = "ControlMenu#ADD");
+		}
 
-		<if>
-			<isset var="scopeParameterName" />
-			<then>
-				<execute function="Type" locator1="SearchConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
-			</then>
-		</if>
+		AssertElementPresent(
+			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE"
+		);
 
-		<execute macro="PortletEntry#save" />
+		AssertVisible(
+			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
+			value1 = "Widgets"
+		);
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		Pause(locator1 = "5000");
 
-	<command name="configureWidgetScope">
-		<execute macro="SearchPortlets#gotoWidgetOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<if>
-			<or>
-				<equals arg1="${searchScope}" arg2="Everything" />
-				<equals arg1="${searchScope}" arg2="Let the User Choose" />
-				<equals arg1="${searchScope}" arg2="This Site" />
-			</or>
-			<then>
-				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
-			</then>
-			<else>
-				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
-			</else>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="getSearchTermURL">
-		<if>
-			<contains string="${searchPage}" substring=" " />
-			<then>
-				<var method="StringUtil#replace('${searchPage}', ' ', '-')" name="searchPage" />
-			</then>
-		</if>
-
-		<var method="StringUtil#toLowerCase('${searchPage}')" name="searchPage" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<var name="searchURL" value="${portalURL}/web/guest/${searchPage}?q=" />
-
-		<var name="searchURL" value="${searchURL}${searchTerm}" />
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="gotoEmbeddedOptions">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
-
-		<execute function="Click" locator1="Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON" />
-
-		<if>
-			<isset var="portletOption" />
-			<then>
-				<var name="key_menuItem" value="${portletOption}" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
-			</then>
-		</if>
-	</command>
-
-	<command name="gotoResultDetails">
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-	</command>
-
-	<command name="gotoWidgetOptions">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
-
-		<execute function="Click" locator1="Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON" />
-
-		<if>
-			<isset var="portletOption" />
-			<then>
-				<var name="key_menuItem" value="${portletOption}" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
-			</then>
-		</if>
-	</command>
-
-	<command name="searchEmbedded">
-		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
-
-		<execute function="Type" locator1="Search#EMBEDDED_SEARCH_BAR" value1="${searchTerm}" />
-
-		<execute function="KeyPress" locator1="Search#EMBEDDED_SEARCH_BAR" value1="\RETURN" />
-	</command>
-
-	<command name="searchWidget">
-		<execute function="Type" locator1="Search#SEARCH_BAR_WIDGET" value1="${searchTerm}" />
-
-		<execute function="KeyPress" locator1="Search#SEARCH_BAR_WIDGET" value1="\RETURN" />
-	</command>
-
-	<command name="selectEmbeddedScopeInput">
-		<if>
-			<or>
-				<equals arg1="${searchScope}" arg2="Everything" />
-				<equals arg1="${searchScope}" arg2="This Site" />
-			</or>
-			<then>
-				<execute function="Select" locator1="Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
-			</then>
-			<else>
-				<fail message="Invalid search scope. Must be (Everything|This Site)." />
-			</else>
-		</if>
-	</command>
-
-	<command name="selectWidgetScopeInput">
-		<if>
-			<or>
-				<equals arg1="${searchScope}" arg2="Everything" />
-				<equals arg1="${searchScope}" arg2="This Site" />
-			</or>
-			<then>
-				<execute function="Select" locator1="Search#SEARCH_BAR_WIDGET_SCOPE_SELECT" value1="${searchScope}" />
-			</then>
-			<else>
-				<fail message="Invalid search scope. Must be (Everything|This Site)." />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewResultDetails">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${searchAssetTitle}" />
-	</command>
-
-	<command name="viewSearchHidden">
-		<execute function="AssertElementNotPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
-	</command>
-
-	<command name="viewSearchResultWithNoPermissions">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
-	</command>
-
-	<command name="viewUserResultDetails">
-		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
-	</command>
-</definition>
+		Panel.expandSidebarApplicationsPanel();
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "search"
+		);
+
+		for (var portletName : list "${searchPortletList}") {
+			Portlet._clickAddPortlet(portletName = "${portletName}");
+
+			var key_portletName = "${portletName}";
+
+			AssertElementPresent(locator1 = "Portlet#LOADED");
+
+			AssertElementPresent(locator1 = "Home#PORTLET");
+		}
+	}
+
+	macro configureDestination {
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(destinationPage)) {
+			if (contains("${destinationPage}", " ")) {
+				var destinationPage = StringUtil.replace("${destinationPage}", " ", "-");
+			}
+
+			var destinationPage = StringUtil.toLowerCase("${destinationPage}");
+
+			Type(
+				locator1 = "SearchConfiguration#DESTINATION_PAGE",
+				value1 = "${destinationPage}"
+			);
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureEmbeddedScope {
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Select(locator1 = "Select#SCOPE_CONFIGURATION", value1 = "${searchScope}");
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureSearchOptions {
+		Portlet.gotoPortletOptions(
+			portletName = "Search Options",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if ("${allowEmptySearches}" == "true") {
+			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Allow Empty Searches");
+		}
+
+		if ("${basicFacetSelection}" == "true") {
+			Check(
+				locator1 = "Checkbox#ANY_CHECKBOX",
+				checkboxName = "Basic Facet Selection"
+			);
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureWidgetParameterNames {
+		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(keywordsParameterName)) {
+			Type(
+				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",
+				value1 = "${keywordsParameterName}"
+			);
+		}
+
+		if (isSet(scopeParameterName)) {
+			Type(
+				locator1 = "SearchConfiguration#SCOPE_PARAMETER_NAME",
+				value1 = "${scopeParameterName}"
+			);
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureWidgetScope {
+		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Select(locator1 = "Select#SCOPE_CONFIGURATION", value1 = "${searchScope}");
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro getSearchTermURL {
+		if (contains("${searchPage}", " ")) {
+			var searchPage = StringUtil.replace("${searchPage}", " ", "-");
+		}
+
+		var searchPage = StringUtil.toLowerCase("${searchPage}");
+		var portalURL = PropsUtil.get("portal.url");
+		var searchURL = "${portalURL}/web/guest/${searchPage}?q=";
+		var searchURL = "${searchURL}${searchTerm}";
+
+		return "${searchURL}";
+	}
+
+	macro gotoEmbeddedOptions {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON"
+		);
+
+		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = "${portletOption}";
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
+	macro gotoResultDetails {
+		var key_searchAssetTitle = "${searchAssetTitle}";
+
+		AssertClick(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "${searchAssetTitle}"
+		);
+	}
+
+	macro gotoWidgetOptions {
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON"
+		);
+
+		Click(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = "${portletOption}";
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
+	macro searchEmbedded {
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+		Type(locator1 = "Search#EMBEDDED_SEARCH_BAR", value1 = "${searchTerm}");
+
+		KeyPress(locator1 = "Search#EMBEDDED_SEARCH_BAR", value1 = "\RETURN");
+	}
+
+	macro searchWidget {
+		Type(locator1 = "Search#SEARCH_BAR_WIDGET", value1 = "${searchTerm}");
+
+		KeyPress(locator1 = "Search#SEARCH_BAR_WIDGET", value1 = "\RETURN");
+	}
+
+	macro selectEmbeddedScopeInput {
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+			Select(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
+				value1 = "${searchScope}"
+			);
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|This Site).");
+		}
+	}
+
+	macro selectWidgetScopeInput {
+		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+			Select(
+				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
+				value1 = "${searchScope}"
+			);
+		}
+		else {
+			fail("Invalid search scope. Must be (Everything|This Site).");
+		}
+	}
+
+	macro viewResultDetails {
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${searchAssetTitle}");
+	}
+
+	macro viewSearchHidden {
+		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+	}
+
+	macro viewSearchResultWithNoPermissions {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found that matched the keywords: ${searchTerm}."
+		);
+	}
+
+	macro viewUserResultDetails {
+		AssertTextEquals(locator1 = "Home#USER_NAME_HEADER", value1 = "${userName}");
+
+		AssertTextEquals(locator1 = "Home#PAGE_1", value1 = "${pageName}");
+	}
+}

@@ -1,17 +1,27 @@
-<definition>
-	<command name="viewClusterStatus">
-		<execute function="AssertTextPresent" locator1="//pre" value1="${clusterStatus}" />
-	</command>
+definition {
+	macro viewClusterStatus {
+		AssertTextPresent(locator1 = "//pre", value1 = "${clusterStatus}");
+	}
 
-	<command name="viewClusterStatusViaClusterHealthAPI">
-		<description message="Elasticsearch provides a Cluster Health API (http://localhost:9200/_cluster/health?pretty=true) to easily view the current status of the cluster." />
+	@description = "Elasticsearch provides a Cluster Health API (http://localhost:9200/_cluster/health?pretty=true) to easily view the current status of the cluster."
+	macro viewClusterStatusViaClusterHealthAPI {
+		Navigator.openSpecificURL(
+			url = "http://localhost:9200/_cluster/health?level=indices&amp;pretty"
+		);
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "//body",
+			value1 = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_nodes&quot; : ${numberOfNodes}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_data_nodes&quot; : ${numberOfNodes}" />
-	</command>
-</definition>
+		AssertTextEquals.assertPartialText(
+			locator1 = "//body",
+			value1 = "&quot;number_of_nodes&quot; : ${numberOfNodes}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "//body",
+			value1 = "&quot;number_of_data_nodes&quot; : ${numberOfNodes}"
+		);
+	}
+}

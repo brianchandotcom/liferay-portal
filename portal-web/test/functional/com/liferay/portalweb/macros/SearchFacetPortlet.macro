@@ -1,326 +1,232 @@
-<definition>
-	<command name="checkFacet">
-		<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-			<var name="checkboxName" value="${facetValueName}" />
-		</execute>
-
-		<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX">
-			<var name="checkboxName" value="${facetValueName}" />
-		</execute>
-	</command>
-
-	<command name="checkFacetAndViewURL">
-		<execute macro="SearchFacetPortlet#checkFacet">
-			<var name="facetValueName" value="${facetValueName}" />
-		</execute>
-
-		<execute macro="SearchFacetPortlet#generateFacetCheckedURL">
-			<return name="searchURL" />
-			<var name="facetClass" value="${facetClass}" />
-			<var name="facetValue" value="${facetValue}" />
-			<var name="facetValueName" value="${facetValueName}" />
-			<var name="searchPage" value="${searchPage}" />
-			<var name="searchTerm" value="${searchTerm}" />
-			<var name="searchURL" value="${searchURL}" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${searchURL}" />
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="clearAllFacetsAndViewURL">
-		<while>
-			<condition function="IsElementPresent" locator1="SearchResults#FACET_PORTLET_CLEAR_GENERIC" />
-			<then>
-				<var method="selenium#getText('SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE')" name="facetClearClass" />
-
-				<execute macro="SearchFacetPortlet#clearFacetAndViewURL">
-					<return name="searchURL" />
-					<var name="facetClass" value="${facetClearClass}" />
-					<var name="searchURL" value="${searchURL}" />
-				</execute>
-			</then>
-		</while>
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="clearFacet">
-		<if>
-			<isset var="facetClass" />
-			<then>
-				<var method="StringUtil#toLowerCase('${facetClass}')" name="facetClass" />
-
-				<var name="key_facetClass" value="${facetClass}_facet" />
-
-				<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#FACET_PORTLET_CLEAR_SPECIFIC" value1="Clear">
-					<var name="key_facetClass" value="${key_facetClass}" />
-				</execute>
-			</then>
-			<else>
-				<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#FACET_PORTLET_CLEAR_GENERIC" value1="Clear" />
-			</else>
-		</if>
-	</command>
-
-	<command name="clearFacetAndViewURL">
-		<if>
-			<isset var="facetClass" />
-			<then>
-				<execute macro="SearchFacetPortlet#clearFacet">
-					<var name="facetClass" value="${facetClass}" />
-				</execute>
-
-				<execute macro="SearchFacetPortlet#generateFacetClearedURL">
-					<return name="searchURL" />
-					<var name="facetClass" value="${facetClass}" />
-					<var name="searchURL" value="${searchURL}" />
-				</execute>
-
-				<execute function="AssertLocation" value1="${searchURL}" />
-
-				<return value="${searchURL}" />
-			</then>
-			<else>
-				<execute macro="SearchFacetPortlet#clearFacet" />
-			</else>
-		</if>
-	</command>
-
-	<command name="configureCustomFacet">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Custom Facet" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<if>
-			<isset var="aggregationField" />
-			<then>
-				<execute function="Type" locator1="SearchResults#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD" value1="${aggregationField}" />
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="generateFacetCheckedURL">
-		<if>
-			<not>
-				<isset var="searchURL" />
-			</not>
-			<then>
-				<execute macro="SearchPortlets#getSearchTermURL">
-					<return name="searchURL" />
-					<var name="searchPage" value="${searchPage}" />
-					<var name="searchTerm" value="${searchTerm}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${facetClass}" arg2="type" />
-			<then>
-				<execute macro="SearchFacetPortlet#getFacetTypeValue">
-					<return name="facetValue" />
-					<var name="facetTypeValueName" value="${facetValueName}" />
-				</execute>
-			</then>
-			<elseif>
-				<not>
-					<isset var="facetValue" />
-				</not>
-				<then>
-					<var name="facetValue" value="${facetValueName}" />
-				</then>
-			</elseif>
-		</if>
-
-		<var method="StringUtil#replace('${searchURL}', '&amp;', ',')" name="searchURLList" />
-
-		<var method="StringUtil#replace('${facetValue}', ' ', '%20')" name="facetValue" />
-
-		<var name="facetValueList" value="${facetValue}" />
-
-		<for list="${searchURLList}" param="facetKeyValuePair">
-			<if>
-				<contains string="${facetKeyValuePair}" substring="${facetClass}" />
-				<then>
-					<var method="StringUtil#stripBetween('${facetKeyValuePair}', '${facetClass}', '=')" name="facetKeyValue" />
-
-					<var method="StringUtil#add('${facetValueList}', '${facetKeyValue}')" name="facetValueList" />
-
-					<var method="StringUtil#stripBetween('${searchURL}', '&amp;${facetClass}', '${facetKeyValue}')" name="searchURL" />
-
-					<var name="facetClassFound" value="true" />
-				</then>
-			</if>
-		</for>
-
-		<if>
-			<equals arg1="${facetClassFound}" arg2="true" />
-			<then>
-				<var method="RegexUtil#replace('${facetValueList}', '(.*),$', '1')" name="facetValueList" />
-
-				<var method="ListUtil#sort('${facetValueList}')" name="facetValueList" />
-
-				<for list="${facetValueList}" param="facetValueListValue">
-					<var name="searchURL" value="${searchURL}&amp;${facetClass}=${facetValueListValue}" />
-				</for>
-			</then>
-			<else>
-				<var name="searchURL" value="${searchURL}&amp;${facetClass}=${facetValue}" />
-			</else>
-		</if>
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="generateFacetClearedURL">
-		<var method="StringUtil#toLowerCase('${facetClass}')" name="facetClass" />
-
-		<var method="RegexUtil#replace('${searchURL}', '^(.*?)((?:&amp;${facetClass}[^&amp;]+)+)(.*)', '1')" name="beforeFacetGroup" />
-
-		<var method="RegexUtil#replace('${searchURL}', '^(.*?)((?:&amp;${facetClass}[^&amp;]+)+)(.*)', '3')" name="afterFacetGroup" />
-
-		<var name="searchURL" value="${beforeFacetGroup}${afterFacetGroup}" />
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="generateFacetUncheckedURL">
-		<if>
-			<equals arg1="${facetClass}" arg2="type" />
-			<then>
-				<execute macro="SearchFacetPortlet#getFacetTypeValue">
-					<return name="facetValue" />
-					<var name="facetTypeValueName" value="${facetValueName}" />
-				</execute>
-			</then>
-			<elseif>
-				<not>
-					<isset var="facetValue" />
-				</not>
-				<then>
-					<var name="facetValue" value="${facetValueName}" />
-				</then>
-			</elseif>
-		</if>
-
-		<var method="RegexUtil#replace('${searchURL}', '^(.*?)((?:&amp;${facetClass}[^&amp;]+)+)(.*)', '1')" name="beforeFacetGroup" />
-
-		<var method="RegexUtil#replace('${searchURL}', '^(.*?)((?:&amp;${facetClass}[^&amp;]+)+)(.*)', '2')" name="facetGroup" />
-
-		<var method="RegexUtil#replace('${searchURL}', '^(.*?)((?:&amp;${facetClass}[^&amp;]+)+)(.*)', '3')" name="afterFacetGroup" />
-
-		<var method="StringUtil#replace('${facetValue}', ' ', '%20')" name="facetValue" />
-
-		<var name="facetGroupList" value="${facetGroup}" />
-
-		<while>
-			<not>
-				<equals arg1="${facetValueFound}" arg2="true" />
-			</not>
-			<then>
-				<var method="RegexUtil#replace('${facetGroupList}', '(&amp;[^&amp;]+)(.*)', '1')" name="facetKeyValuePair" />
-
-				<if>
-					<contains string="${facetKeyValuePair}" substring="${facetValue}" />
-					<then>
-						<var method="StringUtil#replaceFirst('${facetGroup}', '${facetKeyValuePair}', '')" name="facetGroup" />
-
-						<var name="facetValueFound" value="true" />
-					</then>
-					<else>
-						<var method="StringUtil#replaceFirst('${facetGroupList}', '${facetKeyValuePair}', '')" name="facetGroupList" />
-					</else>
-				</if>
-			</then>
-		</while>
-
-		<var name="searchURL" value="${beforeFacetGroup}${afterFacetGroup}${facetGroup}" />
-
-		<return value="${searchURL}" />
-	</command>
-
-	<command name="getFacetTypeValue">
-		<if>
-			<contains string="${facetTypeValueName}" substring="Blogs" />
-			<then>
-				<var name="facetTypeValue" value="com.liferay.blogs.model.BlogsEntry" />
-
-				<var name="facetValueFound" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<contains string="${facetTypeValueName}" substring="Bookmarks" />
-			<then>
-				<var name="facetTypeValue" value="com.liferay.journal.model.JournalArticle" />
-
-				<var name="facetValueFound" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<contains string="${facetTypeValueName}" substring="Web Content Article" />
-			<then>
-				<var name="facetTypeValue" value="com.liferay.journal.model.JournalArticle" />
-
-				<var name="facetValueFound" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<contains string="${facetTypeValueName}" substring="Web Content Folder" />
-			<then>
-				<var name="facetTypeValue" value="com.liferay.journal.model.JournalArticle" />
-
-				<var name="facetValueFound" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${facetValueFound}" arg2="true" />
-			</not>
-			<then>
-				<fail message="Facet Type value name has not been set correctly." />
-			</then>
-		</if>
-
-		<return value="${facetTypeValue}" />
-	</command>
-
-	<command name="uncheckFacet">
-		<execute function="Uncheck" locator1="Checkbox#ANY_CHECKBOX">
-			<var name="checkboxName" value="${facetValueName}" />
-		</execute>
-
-		<execute function="AssertNotChecked" locator1="Checkbox#ANY_CHECKBOX">
-			<var name="checkboxName" value="${facetValueName}" />
-		</execute>
-	</command>
-
-	<command name="uncheckFacetAndViewURL">
-		<execute macro="SearchFacetPortlet#uncheckFacet">
-			<var name="facetValueName" value="${facetValueName}" />
-		</execute>
-
-		<execute macro="SearchFacetPortlet#generateFacetUncheckedURL">
-			<return name="searchURL" />
-			<var name="facetClass" value="${facetClass}" />
-			<var name="facetValue" value="${facetValue}" />
-			<var name="facetValueName" value="${facetValueName}" />
-			<var name="searchURL" value="${searchURL}" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${searchURL}" />
-
-		<return value="${searchURL}" />
-	</command>
-</definition>
+definition {
+	macro checkFacet {
+		Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${facetValueName}");
+
+		AssertChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "${facetValueName}"
+		);
+	}
+
+	macro checkFacetAndViewURL {
+		SearchFacetPortlet.checkFacet(facetValueName = "${facetValueName}");
+
+		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
+			facetClass = "${facetClass}",
+			facetValue = "${facetValue}",
+			facetValueName = "${facetValueName}",
+			searchPage = "${searchPage}",
+			searchTerm = "${searchTerm}",
+			searchURL = "${searchURL}"
+		);
+
+		AssertLocation(value1 = "${searchURL}");
+
+		return "${searchURL}";
+	}
+
+	macro clearAllFacetsAndViewURL {
+		while (IsElementPresent(locator1 = "SearchResults#FACET_PORTLET_CLEAR_GENERIC")) {
+			var facetClearClass = selenium.getText("SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE");
+
+			var searchURL = SearchFacetPortlet.clearFacetAndViewURL(
+				facetClass = "${facetClearClass}",
+				searchURL = "${searchURL}"
+			);
+		}
+
+		return "${searchURL}";
+	}
+
+	macro clearFacet {
+		if (isSet(facetClass)) {
+			var facetClass = StringUtil.toLowerCase("${facetClass}");
+			var key_facetClass = "${facetClass}_facet";
+
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "SearchResults#FACET_PORTLET_CLEAR_SPECIFIC",
+				value1 = "Clear",
+				key_facetClass = "${key_facetClass}"
+			);
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "SearchResults#FACET_PORTLET_CLEAR_GENERIC",
+				value1 = "Clear"
+			);
+		}
+	}
+
+	macro clearFacetAndViewURL {
+		if (isSet(facetClass)) {
+			SearchFacetPortlet.clearFacet(facetClass = "${facetClass}");
+
+			var searchURL = SearchFacetPortlet.generateFacetClearedURL(
+				facetClass = "${facetClass}",
+				searchURL = "${searchURL}"
+			);
+
+			AssertLocation(value1 = "${searchURL}");
+
+			return "${searchURL}";
+		}
+		else {
+			SearchFacetPortlet.clearFacet();
+		}
+	}
+
+	macro configureCustomFacet {
+		Portlet.gotoPortletOptions(
+			portletName = "Custom Facet",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(aggregationField)) {
+			Type(
+				locator1 = "SearchResults#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD",
+				value1 = "${aggregationField}"
+			);
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro generateFacetCheckedURL {
+		if (!(isSet(searchURL))) {
+			var searchURL = SearchPortlets.getSearchTermURL(
+				searchPage = "${searchPage}",
+				searchTerm = "${searchTerm}"
+			);
+		}
+
+		if ("${facetClass}" == "type") {
+			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = "${facetValueName}");
+		}
+		else if (!(isSet(facetValue))) {
+			var facetValue = "${facetValueName}";
+		}
+
+		var searchURLList = StringUtil.replace("${searchURL}", "&", ",");
+		var facetValue = StringUtil.replace("${facetValue}", " ", "%20");
+		var facetValueList = "${facetValue}";
+
+		for (var facetKeyValuePair : list "${searchURLList}") {
+			if (contains("${facetKeyValuePair}", "${facetClass}")) {
+				var facetKeyValue = StringUtil.stripBetween("${facetKeyValuePair}", "${facetClass}", "=");
+				var facetValueList = StringUtil.add("${facetValueList}", "${facetKeyValue}");
+				var searchURL = StringUtil.stripBetween("${searchURL}", "&${facetClass}", "${facetKeyValue}");
+				var facetClassFound = "true";
+			}
+		}
+
+		if ("${facetClassFound}" == "true") {
+			var facetValueList = RegexUtil.replace("${facetValueList}", "(.*),$", "1");
+			var facetValueList = ListUtil.sort("${facetValueList}");
+
+			for (var facetValueListValue : list "${facetValueList}") {
+				var searchURL = "${searchURL}&amp;${facetClass}=${facetValueListValue}";
+			}
+		}
+		else {
+			var searchURL = "${searchURL}&amp;${facetClass}=${facetValue}";
+		}
+
+		return "${searchURL}";
+	}
+
+	macro generateFacetClearedURL {
+		var facetClass = StringUtil.toLowerCase("${facetClass}");
+		var beforeFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
+		var afterFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
+		var searchURL = "${beforeFacetGroup}${afterFacetGroup}";
+
+		return "${searchURL}";
+	}
+
+	macro generateFacetUncheckedURL {
+		if ("${facetClass}" == "type") {
+			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = "${facetValueName}");
+		}
+		else if (!(isSet(facetValue))) {
+			var facetValue = "${facetValueName}";
+		}
+
+		var beforeFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
+		var facetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "2");
+		var afterFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
+		var facetValue = StringUtil.replace("${facetValue}", " ", "%20");
+		var facetGroupList = "${facetGroup}";
+
+		while (!("${facetValueFound}" == "true")) {
+			var facetKeyValuePair = RegexUtil.replace("${facetGroupList}", "(&[^&]+)(.*)", "1");
+
+			if (contains("${facetKeyValuePair}", "${facetValue}")) {
+				var facetGroup = StringUtil.replaceFirst("${facetGroup}", "${facetKeyValuePair}", "");
+				var facetValueFound = "true";
+			}
+			else {
+				var facetGroupList = StringUtil.replaceFirst("${facetGroupList}", "${facetKeyValuePair}", "");
+			}
+		}
+
+		var searchURL = "${beforeFacetGroup}${afterFacetGroup}${facetGroup}";
+
+		return "${searchURL}";
+	}
+
+	macro getFacetTypeValue {
+		if (contains("${facetTypeValueName}", "Blogs")) {
+			var facetTypeValue = "com.liferay.blogs.model.BlogsEntry";
+			var facetValueFound = "true";
+		}
+
+		if (contains("${facetTypeValueName}", "Bookmarks")) {
+			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
+			var facetValueFound = "true";
+		}
+
+		if (contains("${facetTypeValueName}", "Web Content Article")) {
+			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
+			var facetValueFound = "true";
+		}
+
+		if (contains("${facetTypeValueName}", "Web Content Folder")) {
+			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
+			var facetValueFound = "true";
+		}
+
+		if (!("${facetValueFound}" == "true")) {
+			fail("Facet Type value name has not been set correctly.");
+		}
+
+		return "${facetTypeValue}";
+	}
+
+	macro uncheckFacet {
+		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${facetValueName}");
+
+		AssertNotChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "${facetValueName}"
+		);
+	}
+
+	macro uncheckFacetAndViewURL {
+		SearchFacetPortlet.uncheckFacet(facetValueName = "${facetValueName}");
+
+		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
+			facetClass = "${facetClass}",
+			facetValue = "${facetValue}",
+			facetValueName = "${facetValueName}",
+			searchURL = "${searchURL}"
+		);
+
+		AssertLocation(value1 = "${searchURL}");
+
+		return "${searchURL}";
+	}
+}

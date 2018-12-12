@@ -1,175 +1,177 @@
-<definition>
-	<command name="gotoAddPageViaPG">
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
+definition {
+	macro gotoAddPageViaPG {
+		Portlet.clickPortletPlusIconPG(portletName = "Wiki");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Add Page" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Add Page");
+	}
 
-	<command name="gotoAllPagesCP">
-		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
+	macro gotoAllPagesCP {
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="All Pages" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "All Pages");
+	}
 
-	<command name="gotoAllPagesPG">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	macro gotoAllPagesPG {
+		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
 
-		<var name="key_tabName" value="All Pages" />
+		var key_tabName = "All Pages";
 
-		<execute function="AssertElementPresent" locator1="WikiTable#NAVIGATION_ACTIVE_TAB" />
+		AssertElementPresent(locator1 = "WikiTable#NAVIGATION_ACTIVE_TAB");
 
-		<execute function="AssertElementPresent" locator1="Portlet#H3_HEADER" />
+		AssertElementPresent(locator1 = "Portlet#H3_HEADER");
 
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="All Pages" />
-	</command>
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "All Pages");
+	}
 
-	<command name="gotoAllPagesPGViaWD">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
-	</command>
+	macro gotoAllPagesPGViaWD {
+		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
+	}
 
-	<command name="gotoBodyLinkPG">
-		<execute function="AssertClick" locator1="WikiEntry#BODY_LINK" value1="${wikiPageContent}" />
-	</command>
+	macro gotoBodyLinkPG {
+		AssertClick(locator1 = "WikiEntry#BODY_LINK", value1 = "${wikiPageContent}");
+	}
 
-	<command name="gotoChangeParent">
-		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_PARENT" value1="Change Parent" />
-	</command>
+	macro gotoChangeParent {
+		AssertClick(locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT", value1 = "Change Parent");
+	}
 
-	<command name="gotoChildPagePG">
-		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
+	macro gotoChildPagePG {
+		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#CHILD_PAGE_HEADER" value1="Child Page" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Wiki#CHILD_PAGE_HEADER",
+			value1 = "Child Page"
+		);
 
-		<execute function="AssertClick" locator1="Wiki#CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
-	</command>
+		AssertClick(
+			locator1 = "Wiki#CHILD_PAGE_TITLE",
+			value1 = "${wikiChildPageTitle}"
+		);
+	}
 
-	<command name="gotoCP">
-		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
+	macro gotoCP {
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		<if>
-			<equals arg1="${isOrphanPage}" arg2="true" />
-			<then>
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="Orphan Pages" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="All Pages" />
-				</execute>
-			</else>
-		</if>
+		if ("${isOrphanPage}" == "true") {
+			MenuItem.click(menuItem = "Orphan Pages");
+		}
+		else {
+			MenuItem.click(menuItem = "All Pages");
+		}
 
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="${wikiPageTitle}" />
+		AssertClick(
+			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
+			value1 = "${wikiPageTitle}"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		<execute function="AssertVisible" locator1="Portlet#HEADER" value1="${wikiPageTitle}" />
-	</command>
+		AssertVisible(locator1 = "Portlet#HEADER", value1 = "${wikiPageTitle}");
+	}
 
-	<command name="gotoDraftPagesPG">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
-	</command>
+	macro gotoDraftPagesPG {
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_DRAFT_PAGES",
+			value1 = "Draft Pages"
+		);
+	}
 
-	<command name="gotoEntryCopyViaPGTable">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+	macro gotoEntryCopyViaPGTable {
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Copy" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Copy");
+	}
 
-	<command name="gotoEntryEditViaPGTable">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+	macro gotoEntryEditViaPGTable {
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Edit");
+	}
 
-	<command name="gotoEntryMoveViaTable">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+	macro gotoEntryMoveViaTable {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Move" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Move");
+	}
 
-	<command name="gotoEntryViaPGTable">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+	macro gotoEntryViaPGTable {
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-	</command>
+		AssertClick(
+			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
+			value1 = "${wikiPageTitle}"
+		);
+	}
 
-	<command name="gotoFrontPageCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+	macro gotoFrontPageCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<var name="key_wikiPageTitle" value="FrontPage" />
+		var key_wikiPageTitle = "FrontPage";
 
-		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="FrontPage" />
+		AssertClick(
+			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
+			value1 = "FrontPage"
+		);
 
-		<execute function="AssertVisible" locator1="Portlet#HEADER" value1="FrontPage" />
-	</command>
+		AssertVisible(locator1 = "Portlet#HEADER", value1 = "FrontPage");
+	}
 
-	<command name="gotoFrontPagePG">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_FRONTPAGE" value1="FrontPage" />
-	</command>
+	macro gotoFrontPagePG {
+		AssertClick(locator1 = "WikiTable#NAVIGATION_FRONTPAGE", value1 = "FrontPage");
+	}
 
-	<command name="gotoNode">
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+	macro gotoNode {
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+		AssertClick(locator1 = "Wiki#NODE_TABLE_WIKI_NAME", value1 = "${wikiNodeName}");
 
-		<execute function="AssertElementPresent" locator1="Dropdown#FILTER_AND_ORDER" />
-	</command>
+		AssertElementPresent(locator1 = "Dropdown#FILTER_AND_ORDER");
+	}
 
-	<command name="gotoPG">
-		<if>
-			<equals arg1="${isOrphanPage}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
-			</then>
-			<else>
-				<execute macro="WikiNavigator#gotoAllPagesPG" />
-			</else>
-		</if>
+	macro gotoPG {
+		if ("${isOrphanPage}" == "true") {
+			AssertClick(
+				locator1 = "WikiTable#NAVIGATION_ORPHAN_PAGES",
+				value1 = "Orphan Pages"
+			);
+		}
+		else {
+			WikiNavigator.gotoAllPagesPG();
+		}
 
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="AssertClick#assertTextClickAt" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-	</command>
+		AssertClick.assertTextClickAt(
+			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
+			value1 = "${wikiPageTitle}"
+		);
+	}
 
-	<command name="gotoPGViaWD">
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	macro gotoPGViaWD {
+		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
 
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-	</command>
-</definition>
+		AssertClick(
+			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
+			value1 = "${wikiPageTitle}"
+		);
+	}
+}

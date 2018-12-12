@@ -1,81 +1,87 @@
-<definition>
-	<command name="_selectAssetType">
-		<var name="key_assetType" value="${assetType}" />
+definition {
+	macro _selectAssetType {
+		var key_assetType = "${assetType}";
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
+		AssertClick(
+			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
+			value1 = "Select"
+		);
 
-		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
+		var assetTypeLocator = StringUtil.replace("${assetType}", " ", "_");
+		var assetTypeLocator = StringUtil.upperCase("${assetTypeLocator}");
 
-		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
+		MenuItem.click(menuItem = "${assetType}");
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${assetType}" />
-		</execute>
-	</command>
+	macro gotoBookmarksSelectionPG {
+		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
-	<command name="gotoBookmarksSelectionPG">
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
+		MenuItem.click(menuItem = "Bookmark");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Bookmark" />
-		</execute>
+		Panel.expandPanel(panel = "Related Assets");
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Related Assets" />
-		</execute>
+		AssertClick(
+			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
+			value1 = "Select"
+		);
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
+		var key_assetType = "${assetType}";
 
-		<var name="key_assetType" value="${assetType}" />
+		AssertClick(
+			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
+			value1 = "${assetType}"
+		);
+	}
 
-		<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
-	</command>
+	macro selectAsset {
+		RelatedAssets._selectAssetType(assetType = "${assetType}");
 
-	<command name="selectAsset">
-		<execute macro="RelatedAssets#_selectAssetType">
-			<var name="assetType" value="${assetType}" />
-		</execute>
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		var key_assetTitle = "${assetTitle}";
 
-		<var name="key_assetTitle" value="${assetTitle}" />
+		Click(
+			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX",
+			key_assetTitle = "${assetTitle}"
+		);
 
-		<execute function="Click" locator1="AssetRelatedAssets#ASSET_TABLE_CHECKBOX">
-			<var name="key_assetTitle" value="${assetTitle}" />
-		</execute>
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		Button.clickAdd();
+	}
 
-		<execute macro="Button#clickAdd" />
-	</command>
+	macro viewDefaultPG {
+		var key_portletName = "Related Assets";
 
-	<command name="viewDefaultPG">
-		<var name="key_portletName" value="Related Assets" />
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#TITLE",
+			value1 = "Related Assets"
+		);
 
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Related Assets" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
-	</command>
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page."
+		);
+	}
 
-	<command name="viewNoPG">
-		<for list="${assetTitleList}" param="assetTitle">
-			<var name="key_assetTitle" value="${assetTitle}" />
+	macro viewNoPG {
+		for (var assetTitle : list "${assetTitleList}") {
+			var key_assetTitle = "${assetTitle}";
 
-			<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE" />
-		</for>
-	</command>
+			AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE");
+		}
+	}
 
-	<command name="viewPG">
-		<if>
-			<condition function="IsElementPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
-			<then>
-				<execute function="AssertVisible" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
-			</then>
-		</if>
+	macro viewPG {
+		if (IsElementPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_1")) {
+			AssertVisible(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_1");
+		}
 
-		<execute function="AssertTextEquals" locator1="Relatedassets#ASSET_TITLE_1" value1="${assetTitle}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "Relatedassets#ASSET_TITLE_1",
+			value1 = "${assetTitle}"
+		);
+	}
+}

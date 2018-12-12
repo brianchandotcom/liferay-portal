@@ -1,38 +1,25 @@
-<definition>
-	<command name="setFilterAndOrder">
-		<if>
-			<isset var="filterBy" />
-			<then>
-				<var name="menuItem" value="${filterBy}" />
-			</then>
-			<elseif>
-				<isset var="orderBy" />
-				<then>
-					<var name="menuItem" value="${orderBy}" />
-				</then>
-			</elseif>
-		</if>
+definition {
+	macro setFilterAndOrder {
+		if (isSet(filterBy)) {
+			var menuItem = "${filterBy}";
+		}
+		else if (isSet(orderBy)) {
+			var menuItem = "${orderBy}";
+		}
 
-		<execute function="Click" locator1="ManagementBar#FILTER_AND_ORDER" />
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "${menuItem}");
+	}
 
-	<command name="toggleViewOrder">
-		<if>
-			<condition function="IsElementNotPresent" locator1="ManagementBar#ORDER_ICON_SPECIFIC">
-				<var name="key_order" value="${order}" />
-			</condition>
+	macro toggleViewOrder {
+		if (IsElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_SPECIFIC", key_order = "${order}")) {
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
 
-			<then>
-				<execute function="Click" locator1="ManagementBar#ORDER_ICON_GENERIC" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="ManagementBar#ORDER_ICON_SPECIFIC">
-			<var name="key_order" value="${order}" />
-		</execute>
-	</command>
-</definition>
+		AssertElementPresent(
+			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC",
+			key_order = "${order}"
+		);
+	}
+}

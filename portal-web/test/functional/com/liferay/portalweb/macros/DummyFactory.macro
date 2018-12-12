@@ -1,40 +1,37 @@
-<definition>
-	<command name="addBulkAssets">
-		<execute function="Click" locator1="DummyFactory#DATA_TYPE_SELECT" value1="${dateType}">
-			<var name="key_dateType" value="${dateType}" />
-		</execute>
+definition {
+	macro addBulkAssets {
+		Click(
+			locator1 = "DummyFactory#DATA_TYPE_SELECT",
+			value1 = "${dateType}",
+			key_dateType = "${dateType}"
+		);
 
-		<execute function="Type" locator1="DummyFactory#NUMBER" value1="${number}" />
+		Type(locator1 = "DummyFactory#NUMBER", value1 = "${number}");
 
-		<if>
-			<equals arg1="${dateType}" arg2="Message Board" />
-			<then>
-				<execute function="Type" locator1="DummyFactory#MESSAGE_BOARD_SUBJECT" value1="${subject}" />
-				<execute function="Type" locator1="DummyFactory#MESSAGE_BOARD_BODY" value1="${body}" />
-			</then>
-			<elseif>
-				<equals arg1="${dateType}" arg2="Blogs" />
-				<then>
-					<execute function="Type" locator1="DummyFactory#BASE_NAME" value1="${baseName}" />
-					<execute function="Type" locator1="DummyFactory#BLOG_CONTENTS" value1="${contents}" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Type" locator1="DummyFactory#BASE_NAME" value1="${baseName}" />
-			</else>
-		</if>
+		if ("${dateType}" == "Message Board") {
+			Type(locator1 = "DummyFactory#MESSAGE_BOARD_SUBJECT", value1 = "${subject}");
 
-		<if>
-			<isset var="siteName" />
-			<then>
-				<execute function="Click" locator1="DummyFactory#SELECT_SITE_SCOPE" value1="${siteName}">
-					<var name="key_siteName" value="${siteName}" />
-				</execute>
-			</then>
-		</if>
+			Type(locator1 = "DummyFactory#MESSAGE_BOARD_BODY", value1 = "${body}");
+		}
+		else if ("${dateType}" == "Blogs") {
+			Type(locator1 = "DummyFactory#BASE_NAME", value1 = "${baseName}");
 
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Run" />
+			Type(locator1 = "DummyFactory#BLOG_CONTENTS", value1 = "${contents}");
+		}
+		else {
+			Type(locator1 = "DummyFactory#BASE_NAME", value1 = "${baseName}");
+		}
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-</definition>
+		if (isSet(siteName)) {
+			Click(
+				locator1 = "DummyFactory#SELECT_SITE_SCOPE",
+				value1 = "${siteName}",
+				key_siteName = "${siteName}"
+			);
+		}
+
+		AssertClick(locator1 = "Button#SUBMIT", value1 = "Run");
+
+		Alert.viewSuccessMessage();
+	}
+}

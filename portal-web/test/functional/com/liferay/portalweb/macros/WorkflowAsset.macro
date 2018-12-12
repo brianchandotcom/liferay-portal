@@ -1,72 +1,98 @@
-<definition>
-	<command name="createNewUserAccount">
-		<execute macro="User#createAccount">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+definition {
+	macro createNewUserAccount {
+		User.createAccount(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-	<command name="gotoViaNotification">
-		<execute macro="Notifications#gotoNotifications" />
+	macro gotoViaNotification {
+		Notifications.gotoNotifications();
 
-		<if>
-			<isset var="user" />
-			<then>
-				<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${user} sent you a ${assetType} for review in the workflow." />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="sent you a ${assetType} for review in the workflow." />
-			</else>
-		</if>
-	</command>
+		if (isSet(user)) {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "${user} sent you a ${assetType} for review in the workflow."
+			);
+		}
+		else {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "sent you a ${assetType} for review in the workflow."
+			);
+		}
+	}
 
-	<command name="previewViewContent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
+	macro previewViewContent {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldValue = "${fieldValue}";
 
-		<execute function="AssertTextEquals" locator1="AssetWorkflow#CONTENT_PREVIEW_VIEW" value1="${fieldLabel} ${fieldValue}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#CONTENT_PREVIEW_VIEW",
+			value1 = "${fieldLabel} ${fieldValue}"
+		);
+	}
 
-	<command name="previewViewContentFieldNotPresent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
+	macro previewViewContentFieldNotPresent {
+		var key_fieldLabel = "${fieldLabel}";
 
-		<execute function="AssertElementNotPresent" locator1="AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW" />
-	</command>
+		AssertElementNotPresent(locator1 = "AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW");
+	}
 
-	<command name="viewDetails">
-		<execute function="Click" locator1="Icon#INFO" />
+	macro viewDetails {
+		Click(locator1 = "Icon#INFO");
 
-		<execute function="AssertTextEquals" locator1="NavBar#DETAILS" value1="Details" />
-		<execute function="AssertTextEquals" locator1="AssetWorkflow#DETAILS_WORKFLOW_STATUS" value1="${workflowStatus}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AssetWorkflow#DETAILS_WORKFLOW_CREATED_BY" value1="${userName}" />
-	</command>
+		AssertTextEquals(locator1 = "NavBar#DETAILS", value1 = "Details");
 
-	<command name="viewFormEntryTable">
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldValue" value="${fieldValue}" />
-		</execute>
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
+			value1 = "${workflowStatus}"
+		);
 
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-		<var name="key_workflowStatus" value="${workflowStatus}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_CREATED_BY",
+			value1 = "${userName}"
+		);
+	}
 
-		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}" />
-	</command>
+	macro viewFormEntryTable {
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "${fieldLabel}",
+			fieldValue = "${fieldValue}"
+		);
 
-	<command name="viewFormTemplateLabel">
-		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowFormsTemplateLabel}" />
-	</command>
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldValue = "${fieldValue}";
+		var key_workflowStatus = "${workflowStatus}";
 
-	<command name="viewNotification">
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${contentBody}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "FormsAdmin#FORM_ENTRY_WORKFLOW_STATUS",
+			value1 = "${workflowStatus}"
+		);
+	}
 
-	<command name="viewUserDetails">
-		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_USER" value1="${userEmailAddress}" />
-	</command>
-</definition>
+	macro viewFormTemplateLabel {
+		AssertTextEquals.assertPartialText(
+			locator1 = "MyWorkflowTasksTask#PREVIEW_CONTENT",
+			value1 = "${workflowFormsTemplateLabel}"
+		);
+	}
+
+	macro viewNotification {
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "${contentBody}"
+		);
+	}
+
+	macro viewUserDetails {
+		AssertTextEquals.assertPartialText(
+			locator1 = "WorkflowSubmissionsTask#PREVIEW_USER",
+			value1 = "${userEmailAddress}"
+		);
+	}
+}

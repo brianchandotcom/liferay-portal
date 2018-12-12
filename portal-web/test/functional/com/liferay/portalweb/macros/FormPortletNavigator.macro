@@ -1,7 +1,7 @@
-<definition>
-	<command name="gotoSelectForm">
-		<execute function="AssertClick" locator1="FormPortlet#SELECT_FORM" value1="Select Form" />
+definition {
+	macro gotoSelectForm {
+		AssertClick(locator1 = "FormPortlet#SELECT_FORM", value1 = "Select Form");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-</definition>
+		SelectFrame(locator1 = "IFrame#DIALOG");
+	}
+}

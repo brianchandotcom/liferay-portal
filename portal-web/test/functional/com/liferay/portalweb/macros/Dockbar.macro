@@ -1,7 +1,10 @@
-<definition>
-	<command name="viewAddTabsWithNoAddPagePermission">
-		<execute function="Click" locator1="ControlMenu#ADD" />
+definition {
+	macro viewAddTabsWithNoAddPagePermission {
+		Click(locator1 = "ControlMenu#ADD");
 
-		<execute function="AssertTextEquals" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Widgets" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
+			value1 = "Widgets"
+		);
+	}
+}

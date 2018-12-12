@@ -1,40 +1,49 @@
-<definition>
-	<command name="subscribeViaInfoPanelPG">
-		<execute function="Click" locator1="Icon#INFO" />
+definition {
+	macro subscribeViaInfoPanelPG {
+		Click(locator1 = "Icon#INFO");
 
-		<execute function="Click" locator1="Icon#SUBSCRIBE" />
+		Click(locator1 = "Icon#SUBSCRIBE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="unsubscribeViaMySubscriptions">
-		<var name="key_rowNumber" value="${rowNumber}" />
+	macro unsubscribeViaMySubscriptions {
+		var key_rowNumber = "${rowNumber}";
 
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX" />
+		Check(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX");
 
-		<execute function="Click" locator1="Button#UNSUBSCRIBE" />
+		Click(locator1 = "Button#UNSUBSCRIBE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="viewDefaultPG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No subscriptions were found." />
-	</command>
+	macro viewDefaultPG {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No subscriptions were found."
+		);
+	}
 
-	<command name="viewSubscription">
-		<var name="key_assetTitle" value="${assetTitle}" />
-		<var name="key_assetType" value="${assetType}" />
+	macro viewSubscription {
+		var key_assetTitle = "${assetTitle}";
+		var key_assetType = "${assetType}";
 
-		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TITLE" value1="${assetTitle}" />
+		AssertTextEquals(
+			locator1 = "MySubscriptions#ASSET_TITLE",
+			value1 = "${assetTitle}"
+		);
 
-		<var method="StringUtil#toUpperCase('${assetType}')" name="assetType" />
+		var assetType = StringUtil.toUpperCase("${assetType}");
 
-		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TYPE" value1="${assetType}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "MySubscriptions#ASSET_TYPE",
+			value1 = "${assetType}"
+		);
+	}
 
-	<command name="viewUnsubscribedViaInfoPanel">
-		<execute function="Click" locator1="Icon#INFO" />
+	macro viewUnsubscribedViaInfoPanel {
+		Click(locator1 = "Icon#INFO");
 
-		<execute function="AssertVisible" locator1="Icon#STAR_UNSUBSCRIBED" />
-	</command>
-</definition>
+		AssertVisible(locator1 = "Icon#STAR_UNSUBSCRIBED");
+	}
+}

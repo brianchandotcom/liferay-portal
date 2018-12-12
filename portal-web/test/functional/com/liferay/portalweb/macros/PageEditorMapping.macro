@@ -1,64 +1,59 @@
-<definition>
-	<command name="assertAssetTypeUnselectable">
-		<execute macro="PageEditor#gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
+definition {
+	macro assertAssetTypeUnselectable {
+		PageEditor.gotoTab(tabName = "Mapping");
 
-		<execute macro="Button#viewNotPresent">
-			<var name="button" value="Select" />
-		</execute>
-	</command>
+		Button.viewNotPresent(button = "Select");
+	}
 
-	<command name="mapEditableTextToAsset">
-		<execute macro="PageEditor#gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
+	macro mapEditableTextToAsset {
+		PageEditor.gotoTab(tabName = "Mapping");
 
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#EDITABLE_FIELD">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+		MouseOver.mouseOverNotVisible(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
-			<var name="key_fragmentName" value="${fragmentName}" />
-			<var name="key_id" value="${id}" />
-		</execute>
+		Click(
+			locator1 = "Fragment#EDITABLE_FIELD",
+			key_fragmentName = "${fragmentName}",
+			key_id = "${id}"
+		);
 
-		<execute macro="Button#clickMap" />
+		Button.clickMap();
 
-		<execute function="AssertClick" locator1="PageEditor#LIST_GROUP_ITEM" value1="${itemName}">
-			<var name="key_itemName" value="${itemName}" />
-		</execute>
-	</command>
+		AssertClick(
+			locator1 = "PageEditor#LIST_GROUP_ITEM",
+			value1 = "${itemName}",
+			key_itemName = "${itemName}"
+		);
+	}
 
-	<command name="selectAssetType">
-		<execute macro="PageEditor#gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
+	macro selectAssetType {
+		PageEditor.gotoTab(tabName = "Mapping");
 
-		<execute macro="Button#clickSelect" />
+		Button.clickSelect();
 
-		<if>
-			<contains string="${assetType}" substring="{assetType}" />
-			<then>
-				<var name="assetType" value="Web Content Article" />
-				<if>
-					<contains string="${subType}" substring="{subType}" />
-					<then>
-						<var name="subType" value="Basic Web Content" />
-					</then>
-				</if>
-			</then>
-		</if>
+		if (contains("${assetType}", "{assetType}")) {
+			var assetType = "Web Content Article";
 
-		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
-			<var name="key_fieldLabel" value="Asset Type" />
-		</execute>
+			if (contains("${subType}", "{subType}")) {
+				var subType = "Basic Web Content";
+			}
+		}
 
-		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
-			<var name="key_fieldLabel" value="Subtype" />
-		</execute>
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${assetType}",
+			key_fieldLabel = "Asset Type"
+		);
 
-		<execute macro="Button#clickSave" />
-	</command>
-</definition>
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${subType}",
+			key_fieldLabel = "Subtype"
+		);
+
+		Button.clickSave();
+	}
+}

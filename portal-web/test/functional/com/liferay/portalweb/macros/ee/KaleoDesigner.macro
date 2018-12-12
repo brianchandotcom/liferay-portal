@@ -1,75 +1,76 @@
-<definition>
-	<command name="addConnectorAndNodeViaViewTab">
-		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
+definition {
+	macro addConnectorAndNodeViaViewTab {
+		var key_nodeType = StringUtil.replace("${nodeType}", "-", "_");
 
-		<if>
-			<equals arg1="${down}" arg2="true" />
-			<then>
-				<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_CORNER" value1="50,100" />
-			</then>
-			<elseif>
-				<equals arg1="${up}" arg2="true" />
-				<then>
-					<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_CORNER" value1="150,-250" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_CORNER" value1="100,0" />
-			</else>
-		</if>
+		if ("${down}" == "true") {
+			SikuliDragAndDrop(
+				locator1 = "KaleoDesignerEditWorkflow#NODE_CORNER",
+				value1 = "50,100"
+			);
+		}
+		else if ("${up}" == "true") {
+			SikuliDragAndDrop(
+				locator1 = "KaleoDesignerEditWorkflow#NODE_CORNER",
+				value1 = "150,-250"
+			);
+		}
+		else {
+			SikuliDragAndDrop(
+				locator1 = "KaleoDesignerEditWorkflow#NODE_CORNER",
+				value1 = "100,0"
+			);
+		}
 
-		<var name="key_newNode" value="${newNode}" />
+		var key_newNode = "${newNode}";
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_ADD_NEW_NODE" value1="${newNode}" />
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_ADD_NEW_NODE",
+			value1 = "${newNode}"
+		);
 
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT" />
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
 
-		<execute macro="KaleoDesigner#editConnectorName">
-			<var name="connectorName" value="${connectorName}" />
-		</execute>
+		KaleoDesigner.editConnectorName(connectorName = "${connectorName}");
 
-		<var name="key_nodeType" value="${newNodeType}" />
+		var key_nodeType = "${newNodeType}";
 
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT" />
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
 
-		<execute macro="KaleoDesigner#editNodeName">
-			<var name="nodeName" value="${newNodeName}" />
-		</execute>
+		KaleoDesigner.editNodeName(nodeName = "${newNodeName}");
 
-		<execute macro="KaleoDesigner#editNodeDescription">
-			<var name="nodeDescription" value="${newNodeDescription}" />
-		</execute>
-	</command>
+		KaleoDesigner.editNodeDescription(nodeDescription = "${newNodeDescription}");
+	}
 
-	<command name="addConnectorViaViewTab">
-		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
+	macro addConnectorViaViewTab {
+		var key_nodeType = StringUtil.replace("${nodeType}", "-", "_");
 
-		<execute function="SikuliMouseMove" locator1="KaleoDesignerEditWorkflow#NODE_CORNER" />
-		<execute function="SikuliLeftMouseDown" />
+		SikuliMouseMove(locator1 = "KaleoDesignerEditWorkflow#NODE_CORNER");
 
-		<var method="StringUtil#replace('${nodeTypeDestination}', '-', '_')" name="key_nodeType" />
+		SikuliLeftMouseDown();
 
-		<execute function="SikuliMouseMove" locator1="KaleoDesignerEditWorkflow#NODE_CORNER" />
+		var key_nodeType = StringUtil.replace("${nodeTypeDestination}", "-", "_");
 
-		<execute function="SikuliLeftMouseUp" />
+		SikuliMouseMove(locator1 = "KaleoDesignerEditWorkflow#NODE_CORNER");
 
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT" />
+		SikuliLeftMouseUp();
 
-		<execute macro="KaleoDesigner#editConnectorName">
-			<var name="connectorName" value="${connectorName}" />
-		</execute>
-	</command>
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
 
-	<command name="addNodeSettingsSection">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ADD_SECTION" value1="Add Section" />
-	</command>
+		KaleoDesigner.editConnectorName(connectorName = "${connectorName}");
+	}
 
-	<command name="addNodeViaSourceXML">
-		<if>
-			<equals arg1="${nodeType}" arg2="task" />
-			<then>
-				<var name="sourceXML">
-<![CDATA[
+	macro addNodeSettingsSection {
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ADD_SECTION",
+			value1 = "Add Section"
+		);
+	}
+
+	macro addNodeViaSourceXML {
+
+		if ("${nodeType}" == "task") {
+
+			var sourceXML = '''
 <?xml version="1.0"?>
 <workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
 	<name>Task</name>${line.separator}
@@ -85,47 +86,56 @@
 		</assignments>${line.separator}
 	</task>${line.separator}
 </workflow-definition>${line.separator}
-]]>
-				</var>
-			</then>
-		</if>
+''';
+		}
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB",
+			value1 = "Source"
+		);
 
-		<execute function="Pause" locator1="1000" />
+		Pause(locator1 = "1000");
 
-		<execute function="Type#typeAceEditorNoMouseOver" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
+		Type.typeAceEditorNoMouseOver(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT",
+			value1 = "${sourceXML}"
+		);
 
-		<execute function="Pause" locator1="1000" />
+		Pause(locator1 = "1000");
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#DIAGRAM_TAB",
+			value1 = "Diagram"
+		);
 
-		<execute function="Pause" locator1="1000" />
-	</command>
+		Pause(locator1 = "1000");
+	}
 
-	<command name="addNodeViaViewTab">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="KaleoDesignerEditWorkflow#NODES_TAB" value1="Nodes" />
+	macro addNodeViaViewTab {
+		AssertClick.pauseAssertTextClickAt(
+			locator1 = "KaleoDesignerEditWorkflow#NODES_TAB",
+			value1 = "Nodes"
+		);
 
-		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
+		var key_nodeType = StringUtil.replace("${nodeType}", "-", "_");
 
-		<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_PNG" value1="250,0" />
+		SikuliDragAndDrop(
+			locator1 = "KaleoDesignerEditWorkflow#NODE_PNG",
+			value1 = "250,0"
+		);
 
-		<var name="key_nodeType" value="${nodeType}" />
+		var key_nodeType = "${nodeType}";
 
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT" />
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
 
-		<execute macro="KaleoDesigner#editNodeName">
-			<var name="nodeName" value="${nodeName}" />
-		</execute>
+		KaleoDesigner.editNodeName(nodeName = "${nodeName}");
 
-		<execute macro="KaleoDesigner#editNodeDescription">
-			<var name="nodeDescription" value="${nodeDescription}" />
-		</execute>
-	</command>
+		KaleoDesigner.editNodeDescription(nodeDescription = "${nodeDescription}");
+	}
 
-	<command name="addSourceXMLBasicDefinition">
-		<var name="sourceXML">
-<![CDATA[
+	macro addSourceXMLBasicDefinition {
+
+		var sourceXML = '''
 <?xml version="1.0"?>
 <workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
 <name>Workflow Definition Name</name>${line.separator}${line.separator}
@@ -176,528 +186,634 @@
 </actions>${line.separator}
 </state>${line.separator}
 </workflow-definition>
-]]>
-		</var>
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
+''';
 
-		<execute function="Pause" locator1="1000" />
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB",
+			value1 = "Source"
+		);
 
-		<execute function="Type#typeAceEditorNoMouseOver" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
+		Pause(locator1 = "1000");
 
-		<execute function="Pause" locator1="1000" />
+		Type.typeAceEditorNoMouseOver(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT",
+			value1 = "${sourceXML}"
+		);
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
+		Pause(locator1 = "1000");
 
-		<execute function="Pause" locator1="1000" />
-	</command>
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#DIAGRAM_TAB",
+			value1 = "Diagram"
+		);
 
-	<command name="deleteConnector">
-		<var name="key_connectorLabel" value="${connectorLabel}" />
+		Pause(locator1 = "1000");
+	}
 
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" />
+	macro deleteConnector {
+		var key_connectorLabel = "${connectorLabel}";
 
-		<execute function="KeyPress#keyPressNoError" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" value1="\DELETE" />
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete the selected connector(s)?" />
+		KeyPress.keyPressNoError(
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR",
+			value1 = "\DELETE"
+		);
 
-		<execute function="Pause" locator1="1000" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete the selected connector(s)?"
+		);
 
-		<execute macro="KaleoDesigner#viewConnectorNotPresent">
-			<var name="connectorLabel" value="${connectorLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-		</execute>
-	</command>
+		Pause(locator1 = "1000");
 
-	<command name="deleteNode">
-		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+		KaleoDesigner.viewConnectorNotPresent(
+			connectorLabel = "${connectorLabel}",
+			nodeNodeLabel = "${nodeNodeLabel}"
+		);
+	}
 
-		<execute function="ClickNoError" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON" />
+	macro deleteNode {
+		var key_nodeNodeLabel = "${nodeNodeLabel}";
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete the selected node(s)?" />
+		ClickNoError(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON");
 
-		<execute function="Pause" locator1="1000" />
+		AssertConfirm(value1 = "Are you sure you want to delete the selected node(s)?");
 
-		<execute macro="KaleoDesigner#viewNodeNotPresent">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-		</execute>
-	</command>
+		Pause(locator1 = "1000");
 
-	<command name="editConnectorName">
-		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
+		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "${nodeNodeLabel}");
+	}
 
-		<execute function="Type" locator1="TextInput#TEXT" value1="${connectorName}" />
+	macro editConnectorName {
+		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		Type(locator1 = "TextInput#TEXT", value1 = "${connectorName}");
 
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${connectorName}" />
-	</command>
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
 
-	<command name="editExecutionType">
-		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT" value1="${nodeExecutionType}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_NAME",
+			value1 = "${connectorName}"
+		);
+	}
 
-	<command name="editNodeAssignments">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" />
+	macro editExecutionType {
+		Select(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT",
+			value1 = "${nodeExecutionType}"
+		);
+	}
 
-		<execute function="Select" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeAssignmentType}" />
+	macro editNodeAssignments {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
 
-		<if>
-			<equals arg1="${nodeAssignmentType}" arg2="Role" />
-			<then>
-				<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" />
+		Select(locator1 = "Select#ASSIGNMENT_TYPE", value1 = "${nodeAssignmentType}");
 
-				<var name="key_roleTitle" value="${roleTitle}" />
+		if ("${nodeAssignmentType}" == "Role") {
+			Click(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH"
+			);
 
-				<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
-			</then>
-		</if>
+			var key_roleTitle = "${roleTitle}";
 
-		<if>
-			<equals arg1="${nodeAssignmentType}" arg2="Role Type" />
-			<then>
-				<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT" value1="${roleType}" />
+			Click(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT"
+			);
+		}
 
-				<var name="key_roleName" value="${roleName}" />
+		if ("${nodeAssignmentType}" == "Role Type") {
+			Select(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT",
+				value1 = "${roleType}"
+			);
 
-				<if>
-					<isset var="autoCreate" />
-					<then>
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" />
-
-						<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" value1="${roleName}" />
-
-						<execute function="Check" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_AUTO_CREATE" />
-					</then>
-					<else>
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" />
-
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
-	<command name="editNodeDescription">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION" />
-
-		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${nodeDescription}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION" value1="${nodeDescription}" />
-	</command>
-
-	<command name="editNodeName">
-		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
-
-		<execute function="Type" locator1="TextInput#TEXT" value1="${nodeName}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${nodeName}" />
-	</command>
-
-	<command name="editNodeNotifications">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS" />
-
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${nodeNotificationsName}" />
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
-
-		<if>
-			<isset var="nodeNotificationsTemplateLanguage" />
-			<then>
-				<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsTemplate" />
-			<then>
-				<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE" value1="${nodeNotificationsTemplate}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsType" />
-			<then>
-				<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="${nodeNotificationsType}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsExecutionType" />
-			<then>
-				<execute macro="KaleoDesigner#editExecutionType">
-					<var name="nodeExecutionType" value="${nodeNotificationsExecutionType}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsRecipientType" />
-			<then>
-				<execute function="Select" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeNotificationsRecipientType}" />
-
-				<if>
-					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
-					<then>
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" />
-
-						<var name="key_roleTitle" value="${roleTitle}" />
-
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
-					<then>
-						<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT" value1="${roleType}" />
-
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" />
-
-						<var name="key_roleTitle" value="${roleTitle}" />
-
-						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
-	<command name="editNodeScript">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT" />
-
-		<execute function="Type#typeAceEditorNoMouseOver" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT_CONTENT" value1="${nodeScript}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
-	<command name="editNodeTimer">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_TIMERS" />
-
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${timerName}" />
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${timerDescription}" />
-
-		<execute macro="KaleoDesigner#editNodeTimerDuration">
-			<var name="durationScale" value="${durationScale1}" />
-			<var name="durationTime" value="${durationTime1}" />
-		</execute>
-
-		<execute macro="KaleoDesigner#addNodeSettingsSection" />
-
-		<execute macro="KaleoDesigner#editNodeTimerDurationAdditional">
-			<var name="durationScale" value="${durationScale2}" />
-			<var name="durationTime" value="${durationTime2}" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editNodeTimerBlocker">
-			<var name="blockerDescription" value="${blockerDescription}" />
-			<var name="blockerName" value="${blockerName}" />
-			<var name="blockerScript" value="${blockerScript}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
-	<command name="editNodeTimerBlocker">
-		<execute function="Check" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
-
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME" value1="${blockerName}" />
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_DESCRIPTION" value1="${blockerDescription}" />
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCRIPT" value1="${blockerScript}" />
-	</command>
-
-	<command name="editNodeTimerDuration">
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION" value1="${durationTime}" />
-
-		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT" value1="${durationScale}" />
-	</command>
-
-	<command name="editNodeTimerDurationAdditional">
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2" value1="${durationTime}" />
-
-		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT_2" value1="${durationScale}" />
-	</command>
-
-	<command name="editSourceXML">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
-
-		<var name="key_line" value="${line}" />
-
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" />
-
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" />
-
-		<execute function="TypeScreen" locator1="${kdSourceXML}" />
-	</command>
-
-	<command name="restoreDraft">
-		<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
-
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_RESTORE_BUTTON" value1="Restore" />
-	</command>
-
-	<command name="selectNode">
-		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
-
-		<execute function="Click" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE" />
-
-		<execute function="ScrollWebElementIntoView" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE" />
-	</command>
-
-	<command name="showDetails">
-		<if>
-			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
-			<then>
-				<execute function="Click" locator1="Button#INFO" />
-			</then>
-		</if>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="KaleoDesignerEditWorkflow#DETAILS_ACTIVE" />
-			<then>
-				<execute function="Click" locator1="KaleoDesignerEditWorkflow#DETAILS" />
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#DETAILS_ACTIVE" />
-	</command>
-
-	<command name="showRevisionHistory">
-		<if>
-			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
-			<then>
-				<execute function="Click" locator1="Button#INFO" />
-			</then>
-		</if>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE" />
-			<then>
-				<execute function="Click" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY" />
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE" />
-	</command>
-
-	<command name="viewButtons">
-		<execute function="AssertTextEquals" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
-
-		<if>
-			<equals arg1="${cancelButton}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Button#CANCEL" value1="Cancel" />
-
-				<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewConnectorNotPresent">
-		<var name="key_connectorLabel" value="${connectorLabel}" />
-
-		<execute function="AssertElementNotPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" />
-	</command>
-
-	<command name="viewConnectorPresent">
-		<var name="key_connectorLabel" value="${connectorLabel}" />
-
-		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR" />
-	</command>
-
-	<command name="viewExecutionType">
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT" value1="${nodeExecutionType}" />
-	</command>
-
-	<command name="viewNodeAssignments">
-		<if>
-			<equals arg1="${nodeAssignmentType}" arg2="Role" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" value1="Role ID" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
-			</else>
-		</if>
-
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" />
-
-		<execute function="AssertElementPresent" locator1="Select#ASSIGNMENT_TYPE" />
-	</command>
-
-	<command name="viewNodeNotifications">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${nodeNotificationsName}" />
-
-		<if>
-			<isset var="nodeNotificationsDescription" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsTemplateLanguage" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsTemplate" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE" value1="${nodeNotificationsTemplate}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsType" />
-			<then>
-				<if>
-					<equals arg1="${nodeNotificationsType}" arg2="User Notification" />
-					<then>
-						<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="User Notification" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsExecutionType" />
-			<then>
-				<execute macro="KaleoDesigner#viewExecutionType">
-					<var name="nodeExecutionType" value="${nodeNotificationsExecutionType}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="nodeNotificationsRecipientType" />
-			<then>
-				<if>
-					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
-					<then>
-						<execute function="AssertTextEquals" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeNotificationsRecipientType}" />
-						<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" value1="${nodeNotificationsRecipientRole}" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
-					<then>
-						<execute function="AssertSelectedLabel" locator1="Select#ASSIGNMENT_TYPE" value1="Role Type" />
-
-						<if>
-							<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
-							<then>
-								<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" value1="Regular" />
-							</then>
-						</if>
-
-						<if>
-							<equals arg1="${roleTitle}" arg2="Administrator" />
-							<then>
-								<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" value1="Administrator" />
-							</then>
-						</if>
-					</then>
-				</if>
-			</then>
-		</if>
-	</command>
-
-	<command name="viewNodeNotPresent">
-		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
-
-		<execute function="AssertElementNotPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE" />
-	</command>
-
-	<command name="viewNodePresent">
-		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
-
-		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE" />
-	</command>
-
-	<command name="viewNodeTimer">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_TIMERS" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${timerName}" />
-
-		<if>
-			<equals arg1="${blocking}" arg2="false" />
-			<then>
-				<execute function="AssertNotChecked" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
-			</then>
-			<elseif>
-				<equals arg1="${blocking}" arg2="true" />
-				<then>
-					<execute function="AssertChecked" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME" value1="${blockerName}" />
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION" value1="${durationTime1}" />
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2" value1="${durationTime2}" />
-	</command>
-
-	<command name="viewNodeType">
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_TYPE" value1="${nodeType}" />
-	</command>
-
-	<command name="viewSourceXMLLine">
-		<execute macro="KaleoDesigner#viewSourceXMLTab" />
-
-		<execute function="ScrollWebElementIntoView" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
-
-		<var name="key_line" value="${line}" />
-
-		<if>
-			<equals arg1="${invalid}" arg2="true" />
-			<then>
-				<execute function="AssertTextNotPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialTextAceEditor" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
-			</else>
-		</if>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
-
-		<execute function="Pause" locator1="1000" />
-	</command>
-
-	<command name="viewSourceXMLTab">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
-
-		<execute function="Pause" locator1="1000" />
-	</command>
-
-	<command name="viewTotalModifications">
-		<var name="key_totalModifications" value="${totalModifications}" />
-
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#TOTAL_MODIFICATIONS" value1="${totalModifications} Revisions" />
-	</command>
-
-	<command name="viewViewTab">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
-
-		<execute function="Pause" locator1="1000" />
-	</command>
-</definition>
+			var key_roleName = "${roleName}";
+
+			if (isSet(autoCreate)) {
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH"
+				);
+
+				Type(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH",
+					value1 = "${roleName}"
+				);
+
+				Check(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_AUTO_CREATE");
+			}
+			else {
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH"
+				);
+
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT"
+				);
+			}
+		}
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
+
+	macro editNodeDescription {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION");
+
+		Type(
+			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA",
+			value1 = "${nodeDescription}"
+		);
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION",
+			value1 = "${nodeDescription}"
+		);
+	}
+
+	macro editNodeName {
+		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
+
+		Type(locator1 = "TextInput#TEXT", value1 = "${nodeName}");
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_NAME",
+			value1 = "${nodeName}"
+		);
+	}
+
+	macro editNodeNotifications {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS");
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME",
+			value1 = "${nodeNotificationsName}"
+		);
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION",
+			value1 = "${nodeNotificationsDescription}"
+		);
+
+		if (isSet(nodeNotificationsTemplateLanguage)) {
+			Select(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT",
+				value1 = "${nodeNotificationsTemplateLanguage}"
+			);
+		}
+
+		if (isSet(nodeNotificationsTemplate)) {
+			Type(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE",
+				value1 = "${nodeNotificationsTemplate}"
+			);
+		}
+
+		if (isSet(nodeNotificationsType)) {
+			Select(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT",
+				value1 = "${nodeNotificationsType}"
+			);
+		}
+
+		if (isSet(nodeNotificationsExecutionType)) {
+			KaleoDesigner.editExecutionType(
+				nodeExecutionType = "${nodeNotificationsExecutionType}"
+			);
+		}
+
+		if (isSet(nodeNotificationsRecipientType)) {
+			Select(
+				locator1 = "Select#ASSIGNMENT_TYPE",
+				value1 = "${nodeNotificationsRecipientType}"
+			);
+
+			if ("${nodeNotificationsRecipientType}" == "Role") {
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH"
+				);
+
+				var key_roleTitle = "${roleTitle}";
+
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT"
+				);
+			}
+
+			if ("${nodeNotificationsRecipientType}" == "Role Type") {
+				Select(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT",
+					value1 = "${roleType}"
+				);
+
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH"
+				);
+
+				var key_roleTitle = "${roleTitle}";
+
+				Click(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT"
+				);
+			}
+		}
+
+		Pause(locator1 = "1000");
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
+
+	macro editNodeScript {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_SCRIPT");
+
+		Type.typeAceEditorNoMouseOver(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_SCRIPT_CONTENT",
+			value1 = "${nodeScript}"
+		);
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
+
+	macro editNodeTimer {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TIMERS");
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME",
+			value1 = "${timerName}"
+		);
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION",
+			value1 = "${timerDescription}"
+		);
+
+		KaleoDesigner.editNodeTimerDuration(
+			durationScale = "${durationScale1}",
+			durationTime = "${durationTime1}"
+		);
+
+		KaleoDesigner.addNodeSettingsSection();
+
+		KaleoDesigner.editNodeTimerDurationAdditional(
+			durationScale = "${durationScale2}",
+			durationTime = "${durationTime2}"
+		);
+
+		KaleoDesigner.editNodeTimerBlocker(
+			blockerDescription = "${blockerDescription}",
+			blockerName = "${blockerName}",
+			blockerScript = "${blockerScript}"
+		);
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
+
+	macro editNodeTimerBlocker {
+		Check(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING");
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME",
+			value1 = "${blockerName}"
+		);
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_DESCRIPTION",
+			value1 = "${blockerDescription}"
+		);
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCRIPT",
+			value1 = "${blockerScript}"
+		);
+	}
+
+	macro editNodeTimerDuration {
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION",
+			value1 = "${durationTime}"
+		);
+
+		Select(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT",
+			value1 = "${durationScale}"
+		);
+	}
+
+	macro editNodeTimerDurationAdditional {
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2",
+			value1 = "${durationTime}"
+		);
+
+		Select(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT_2",
+			value1 = "${durationScale}"
+		);
+	}
+
+	macro editSourceXML {
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB",
+			value1 = "Source"
+		);
+
+		var key_line = "${line}";
+
+		DoubleClick(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE"
+		);
+
+		Click(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE"
+		);
+
+		TypeScreen(locator1 = "${kdSourceXML}");
+	}
+
+	macro restoreDraft {
+		var key_rowIndexNumber = "${rowIndexNumber}";
+
+		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY_RESTORE_BUTTON",
+			value1 = "Restore"
+		);
+	}
+
+	macro selectNode {
+		var key_nodeNodeLabel = "${nodeNodeLabel}";
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
+
+		ScrollWebElementIntoView(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
+	}
+
+	macro showDetails {
+		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
+			Click(locator1 = "Button#INFO");
+		}
+
+		if (IsElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#DETAILS_ACTIVE")) {
+			Click(locator1 = "KaleoDesignerEditWorkflow#DETAILS");
+		}
+
+		AssertVisible(locator1 = "KaleoDesignerEditWorkflow#DETAILS_ACTIVE");
+	}
+
+	macro showRevisionHistory {
+		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
+			Click(locator1 = "Button#INFO");
+		}
+
+		if (IsElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE")) {
+			Click(locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY");
+		}
+
+		AssertVisible(locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY_ACTIVE");
+	}
+
+	macro viewButtons {
+		AssertTextEquals(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		AssertTextEquals(locator1 = "KaleoDesigner#SAVE_BUTTON", value1 = "Save");
+
+		if ("${cancelButton}" == "true") {
+			AssertTextEquals(locator1 = "Button#CANCEL", value1 = "Cancel");
+
+			AssertClick(locator1 = "Button#CANCEL", value1 = "Cancel");
+		}
+	}
+
+	macro viewConnectorNotPresent {
+		var key_connectorLabel = "${connectorLabel}";
+
+		AssertElementNotPresent(
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR"
+		);
+	}
+
+	macro viewConnectorPresent {
+		var key_connectorLabel = "${connectorLabel}";
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR");
+	}
+
+	macro viewExecutionType {
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT",
+			value1 = "${nodeExecutionType}"
+		);
+	}
+
+	macro viewNodeAssignments {
+		if ("${nodeAssignmentType}" == "Role") {
+			AssertTextEquals(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS",
+				value1 = "Role ID"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS",
+				value1 = "${nodeAssignmentType}"
+			);
+		}
+
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
+
+		AssertElementPresent(locator1 = "Select#ASSIGNMENT_TYPE");
+	}
+
+	macro viewNodeNotifications {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME",
+			value1 = "${nodeNotificationsName}"
+		);
+
+		if (isSet(nodeNotificationsDescription)) {
+			AssertTextEquals(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION",
+				value1 = "${nodeNotificationsDescription}"
+			);
+		}
+
+		if (isSet(nodeNotificationsTemplateLanguage)) {
+			AssertSelectedLabel(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT",
+				value1 = "${nodeNotificationsTemplateLanguage}"
+			);
+		}
+
+		if (isSet(nodeNotificationsTemplate)) {
+			AssertTextEquals(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE",
+				value1 = "${nodeNotificationsTemplate}"
+			);
+		}
+
+		if (isSet(nodeNotificationsType)) {
+			if ("${nodeNotificationsType}" == "User Notification") {
+				AssertSelectedLabel(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT",
+					value1 = "User Notification"
+				);
+			}
+		}
+
+		if (isSet(nodeNotificationsExecutionType)) {
+			KaleoDesigner.viewExecutionType(
+				nodeExecutionType = "${nodeNotificationsExecutionType}"
+			);
+		}
+
+		if (isSet(nodeNotificationsRecipientType)) {
+			if ("${nodeNotificationsRecipientType}" == "Role") {
+				AssertTextEquals(
+					locator1 = "Select#ASSIGNMENT_TYPE",
+					value1 = "${nodeNotificationsRecipientType}"
+				);
+
+				AssertTextEquals(
+					locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH",
+					value1 = "${nodeNotificationsRecipientRole}"
+				);
+			}
+
+			if ("${nodeNotificationsRecipientType}" == "Role Type") {
+				AssertSelectedLabel(locator1 = "Select#ASSIGNMENT_TYPE", value1 = "Role Type");
+
+				if ("${nodeNotificationsRecipientType}" == "Role") {
+					AssertSelectedLabel(
+						locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH",
+						value1 = "Regular"
+					);
+				}
+
+				if ("${roleTitle}" == "Administrator") {
+					AssertTextEquals(
+						locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH",
+						value1 = "Administrator"
+					);
+				}
+			}
+		}
+	}
+
+	macro viewNodeNotPresent {
+		var key_nodeNodeLabel = "${nodeNodeLabel}";
+
+		AssertElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
+	}
+
+	macro viewNodePresent {
+		var key_nodeNodeLabel = "${nodeNodeLabel}";
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
+	}
+
+	macro viewNodeTimer {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TIMERS");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME",
+			value1 = "${timerName}"
+		);
+
+		if ("${blocking}" == "false") {
+			AssertNotChecked(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING"
+			);
+		}
+		else if ("${blocking}" == "true") {
+			AssertChecked(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING"
+			);
+		}
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME",
+			value1 = "${blockerName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION",
+			value1 = "${durationTime1}"
+		);
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2",
+			value1 = "${durationTime2}"
+		);
+	}
+
+	macro viewNodeType {
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TYPE",
+			value1 = "${nodeType}"
+		);
+	}
+
+	macro viewSourceXMLLine {
+		KaleoDesigner.viewSourceXMLTab();
+
+		ScrollWebElementIntoView(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB"
+		);
+
+		var key_line = "${line}";
+
+		if ("${invalid}" == "true") {
+			AssertTextNotPresent(
+				locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT",
+				value1 = "${kdSourceXML}"
+			);
+		}
+		else {
+			AssertTextEquals.assertPartialTextAceEditor(
+				locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT",
+				value1 = "${kdSourceXML}"
+			);
+		}
+
+		Pause(locator1 = "1000");
+
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#DIAGRAM_TAB",
+			value1 = "Diagram"
+		);
+
+		Pause(locator1 = "1000");
+	}
+
+	macro viewSourceXMLTab {
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB",
+			value1 = "Source"
+		);
+
+		Pause(locator1 = "1000");
+	}
+
+	macro viewTotalModifications {
+		var key_totalModifications = "${totalModifications}";
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#TOTAL_MODIFICATIONS",
+			value1 = "${totalModifications} Revisions"
+		);
+	}
+
+	macro viewViewTab {
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#DIAGRAM_TAB",
+			value1 = "Diagram"
+		);
+
+		Pause(locator1 = "1000");
+	}
+}

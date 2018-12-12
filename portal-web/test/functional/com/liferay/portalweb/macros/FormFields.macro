@@ -1,755 +1,845 @@
-<definition>
-	<var name="rowNumber" value="1" />
-
-	<command name="addRepeatableField">
-		<execute function="Click" locator1="FormFields#FIELD_ADD_SPECIFIC">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="changeFieldType">
-		<execute function="Click" locator1="FormFields#CHANGE_FIELD_TYPE_BUTTON" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${selectOption}" />
-		</execute>
-	</command>
-
-	<command name="deleteGridOptionsRow">
-		<execute function="Click" locator1="FormFields#GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON">
-			<var name="key_gridField" value="${gridField}" />
-			<var name="key_rowNumber" value="${rowNumber}" />
-		</execute>
-	</command>
-
-	<command name="deleteOptionsRow">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="Click" locator1="FormFields#OPTIONS_DELETE_ROW_BUTTON" />
-	</command>
-
-	<command name="disableCheckbox">
-		<if>
-			<condition function="IsChecked" locator1="FormFields#CHECKBOX">
-				<var name="key_fieldName" value="${fieldName}" />
-			</condition>
-
-			<then>
-				<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
-					<var name="key_fieldName" value="${fieldName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="FormFields#viewCheckboxNotChecked">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="disableSwitcher">
-		<execute function="Click" locator1="FormFields#SWITCHER">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="FormFields#viewCheckboxNotChecked">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="duplicateField">
-		<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD" value1="Duplicate Field" />
-	</command>
-
-	<command name="editBlankMultiTextFieldWithEnterKey">
-		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="\RETURN">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editCaptchaTextVerification">
-		<execute function="Type" locator1="FormFields#CAPTCHA_TEXT_VERIFICATION" value1="${fieldValue}" />
-	</command>
-
-	<command name="editDate">
-		<execute function="Type" locator1="FormFields#DATE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editFieldName">
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="Type#clickAtType" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
-	</command>
-
-	<command name="editGridOptions">
-		<var name="key_gridField" value="${gridField}" />
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="Type" locator1="FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#GRID_OPTIONS_OPTION_NAME_FIELD" />
-	</command>
-
-	<command name="editHelpText">
-		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldHelpText}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editOptionsRow">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" />
-	</command>
-
-	<command name="editOptionsRowNameField">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="Type#clickAtType" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${optionValue}" />
-	</command>
-
-	<command name="editParagraphBody">
-		<execute function="Type#clickAtType" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
-	</command>
-
-	<command name="editPassword">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="Type" locator1="FormFields#PASSWORD_FIELD" value1="${fieldValue}" />
-	</command>
-
-	<command name="editRepeatableTextMultiline">
-		<execute function="Type" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="editRepeatingText">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#TEXT_FIELD_2" />
-
-		<execute function="Type" locator1="FormFields#TEXT_FIELD_2" value1="${fieldValueRepeat}" />
-	</command>
-
-	<command name="editText">
-		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editTextAlt">
-		<execute function="Type" locator1="FormFields#TEXT_FIELD_ALT" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editTextMultiline">
-		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="editTextWithBackspace">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="DoubleClick" locator1="FormFields#TEXT_FIELD" />
-
-		<execute function="KeyPress" locator1="FormFields#TEXT_FIELD" value1="\BACK_SPACE" />
-	</command>
-
-	<command name="editValidation">
-		<execute function="Click" locator1="FormFields#VALIDATION_ARGUMENT" />
-
-		<execute function="AssertClick" locator1="FormFields#VALIDATION_ARGUMENT_OPTION" value1="${validationArgument}">
-			<var name="key_validationArgument" value="${validationArgument}" />
-		</execute>
-
-		<execute function="Type" locator1="FormFields#VALIDATION_INPUT" value1="${validationInput}" />
-		<execute function="Type" locator1="FormFields#VALIDATION_ERROR_MESSAGE" value1="${validationErrorMessage}" />
-	</command>
-
-	<command name="enableCheckbox">
-		<if>
-			<condition function="IsNotChecked#isNotCheckedNotVisible" locator1="FormFields#CHECKBOX">
-				<var name="key_fieldName" value="${fieldName}" />
-			</condition>
-
-			<then>
-				<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
-					<var name="key_fieldName" value="${fieldName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="FormFields#viewCheckboxChecked">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="enableSwitcher">
-		<execute function="Click" locator1="FormFields#SWITCHER">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="FormFields#viewSwitcherChecked">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="getFieldName">
-		<execute function="Pause" locator1="3000" />
-
-		<var method="selenium#getElementValue('FormFields#FIELD_NAME_EDIT')" name="fieldName" />
-
-		<return value="${fieldName}" />
-	</command>
-
-	<command name="moveGridOptionsRow">
-		<execute function="DragAndDrop" locator1="FormFields#GRID_OPTIONS_DRAG_ICON_1" locator2="FormFields#GRID_OPTIONS_DRAG_ICON_2" value1="">
-			<var name="key_gridField" value="${gridField}" />
-			<var name="key_rowNumber1" value="${rowNumberStart}" />
-			<var name="key_rowNumber2" value="${rowNumberEnd}" />
-		</execute>
-	</command>
-
-	<command name="moveOptionsRow">
-		<var name="key_rowNumber1" value="${rowNumberStart}" />
-		<var name="key_rowNumber2" value="${rowNumberEnd}" />
-
-		<execute function="Click" locator1="FormFields#OPTIONS_DRAG_ICON_1" />
-
-		<execute function="DragAndDrop#dragAndDropToObject" locator1="FormFields#OPTIONS_DRAG_ICON_1" locator2="FormFields#OPTIONS_DRAG_ICON_2" value1="" />
-	</command>
-
-	<command name="removeSelectOption">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_selectOption" value="${selectOption}" />
-
-		<execute function="MouseOver" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" />
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION_REMOVE" />
-
-		<execute function="AssertNotVisible" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" value1="${selectOption}" />
-	</command>
-
-	<command name="removeSelectOptionViaDropdown">
-		<execute function="Click" locator1="FormFields#SELECT_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="FormFields#disableCheckbox">
-			<var name="fieldName" value="${selectOption}" />
-		</execute>
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute function="AssertNotVisible" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" value1="${selectOption}">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_selectOption" value="${selectOption}" />
-		</execute>
-	</command>
-
-	<command name="selectAutoCompleteOption">
-		<var name="key_autocompleteOption" value="${autocompleteOption}" />
-
-		<execute function="Click" locator1="FormFields#AUTOCOMPLETE_OPTION" />
-	</command>
-
-	<command name="selectCheckboxOption">
-		<execute function="Click" locator1="FormFields#CHECKBOX_OPTION_LABEL">
-			<var name="key_checkboxOption" value="${checkboxOption}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="selectDataProviderOutputType">
-		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
-
-		<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD" />
-
-		<var name="key_outputParameterType" value="${outputParameterType}" />
-
-		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
-	</command>
-
-	<command name="selectDataProviderPermission">
-		<if>
-			<condition function="IsElementNotPresent" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" />
-			<then>
-				<execute function="Click" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL" />
-
-				<execute function="AssertElementPresent" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" />
-			</then>
-		</if>
-
-		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" value1="${selectOption}" />
-	</command>
-
-	<command name="selectGridRadioOption">
-		<var name="key_categoryColumnName" value="${categoryColumnName}" />
-		<var name="key_optionRowName" value="${optionRowName}" />
-
-		<execute function="Click" locator1="FormFields#GRID_RADIO_OPTIONS" />
-	</command>
-
-	<command name="selectRadioOption">
-		<execute function="Click" locator1="FormFields#RADIO_OPTION_LABEL">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_radioOption" value="${radioOption}" />
-		</execute>
-	</command>
-
-	<command name="selectSelectOption">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_selectOption" value="${selectOption}" />
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD" value1="${selectOption}" />
-
-		<if>
-			<or>
-				<equals arg1="${fieldName}" arg2="ddmDataProviderInstanceId" />
-				<equals arg1="${fieldName}" arg2="ddmDataProviderInstanceOutput" />
-			</or>
-			<then>
-				<execute function="AssertClick" locator1="FormFields#SELECT_FIELD_DATA_PROVIDER_LIST" value1="${selectOption}" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="FormFields#SELECT_FIELD_OPTIONS_LIST" value1="${selectOption}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="selectSelectWithMultipleOptions">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
-
-		<for list="${selectOptionsList}" param="selectOption">
-			<execute macro="FormFields#enableCheckbox">
-				<var name="fieldName" value="${selectOption}" />
-			</execute>
-		</for>
-
-		<execute macro="FormFields#viewSelectMultipleOptions">
-			<var name="fieldName" value="Select" />
-			<var name="selectOptionsList" value="${selectOptionsList}" />
-		</execute>
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
-	</command>
-
-	<command name="selectSwitcherOption">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_switcherOption" value="${switcherOption}" />
-
-		<var method="StringUtil#replace('${switcherOption}', ' ', '')" name="key_switcherOption" />
-
-		<execute function="Click" locator1="FormFields#SWITCHER_OPTION" />
-	</command>
-
-	<command name="selectTextFieldLineOption">
-		<execute macro="FormFields#selectRadioOption">
-			<var name="fieldName" value="displayStyle" />
-			<var name="radioOption" value="${textFieldLineOption}" />
-		</execute>
-	</command>
-
-	<command name="viewCaptchaField">
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD" />
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD_REFRESH" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="FormFields#CAPTCHA_LABEL" value1="Text Verification" />
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_TEXT_VERIFICATION" />
-	</command>
-
-	<command name="viewCheckboxChecked">
-		<execute function="AssertChecked#assertCheckedNotVisible" locator1="FormFields#CHECKBOX">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewCheckboxLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewCheckboxNotChecked">
-		<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="FormFields#CHECKBOX">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewDateField">
-		<execute macro="FormFields#viewDateLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#DATE_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewDateFieldNotPresent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="FormFields#DATE_FIELD" />
-			<then>
-				<execute function="AssertNotVisible" locator1="FormFields#LABEL" />
-				<execute function="AssertNotVisible" locator1="FormFields#DATE_FIELD" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="FormFields#LABEL" />
-				<execute function="AssertElementNotPresent" locator1="FormFields#DATE_FIELD" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewDateLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewDateValue">
-		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewDeletedSelectOptionsRowFieldValue">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="AssertTextNotPresent" locator1="FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
-	</command>
-
-	<command name="viewFieldHelpText">
-		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewFieldLabel">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
-	</command>
-
-	<command name="viewFieldName">
-		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldName}" />
-	</command>
-
-	<command name="viewFieldValidationErrorMessage">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" />
-			<then>
-				<execute function="Click" locator1="FormPortlet#FORM_CONTAINER" />
-			</then>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" value1="${fieldValidationErrorMessage}" />
-	</command>
-
-	<command name="viewGridOptionNotPresent">
-		<execute macro="FormFields#viewGridOptionsFieldValue">
-			<var name="fieldValue" value="" />
-			<var name="key_gridField" value="${gridField}" />
-			<var name="key_rowNumber" value="${rowNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewGridOptionsFieldValue">
-		<execute function="AssertTextEquals" locator1="FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD" value1="${fieldValue}">
-			<var name="key_gridField" value="${gridField}" />
-			<var name="key_rowNumber" value="${rowNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewMultilineTextValue">
-		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_fieldValue" value="${fieldValue}" />
-		</execute>
-	</command>
-
-	<command name="viewOptionsRowFieldName">
-		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${fieldName}">
-			<var name="key_rowNumber" value="${rowNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewOptionsRowFieldValue">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<if>
-			<condition function="IsVisible" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" />
-			<then>
-				<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="${fieldValue}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewParagraphField">
-		<if>
-			<not>
-				<isset var="fieldName" />
-			</not>
-			<then>
-				<var name="key_fieldName" value="${fieldTitle}" />
-				<var method="StringUtil#replace('${fieldTitle}', ' ', '')" name="key_fieldName" />
-			</then>
-			<else>
-				<var name="key_fieldName" value="${fieldName}" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${fieldTitle}" arg2="" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="FormFields#PARAGRAPH_TITLE" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />
-	</command>
-
-	<command name="viewRadioLabel">
-		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewRadioValue">
-		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldValue" />
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_radioOption" value="${fieldValue}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#RADIO_OPTION_CHECKED" />
-	</command>
-
-	<command name="viewRepeatableFieldHelpText">
-		<execute function="AssertTextEquals" locator1="FormFields#REPEATABLE_HELP_TEXT" value1="${fieldHelpText}">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewRepeatableTextFieldLabel">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}" />
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL_2" value1="${fieldLabel}" />
-	</command>
-
-	<command name="viewRepeatableTextMultilineField">
-		<execute macro="FormFields#viewRepeatableTextMultilineLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-
-		<if>
-			<isset var="fieldHelpText" />
-			<then>
-				<execute macro="FormFields#viewRepeatableFieldHelpText">
-					<var name="fieldHelpText" value="${fieldHelpText}" />
-					<var name="fieldName" value="${fieldName}" />
-					<var name="repeatableFieldNumber" value="${repeatableFieldNumber}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewRepeatableTextMultilineLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewRepeatableTextMultilineValue">
-		<execute function="AssertTextEquals" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		</execute>
-	</command>
-
-	<command name="viewRequiredAsterisk">
-		<execute function="AssertElementPresent#assertVisible" locator1="Icon#ASTERISK" />
-	</command>
-
-	<command name="viewRequiredAsteriskNotPresent">
-		<execute function="AssertElementNotPresent" locator1="Icon#ASTERISK" />
-	</command>
-
-	<command name="viewSelectLabel">
-		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewSelectMultipleOptions">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<for list="${selectOptionsList}" param="selectOption">
-			<execute function="AssertTextEquals#assertPartialText" locator1="FormFields#SELECT_FIELD" value1="${selectOption}" />
-		</for>
-	</command>
-
-	<command name="viewSelectOption">
-		<execute function="AssertTextEquals#assertPartialText" locator1="FormFields#SELECT_FIELD" value1="${selectOption}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewSelectOptionsList">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
-
-		<var name="key_selectOption" value="${selectOption}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#SELECT_FIELD_OPTIONS_LIST" />
-	</command>
-
-	<command name="viewSelectOptionsRowFieldValue">
-		<var name="key_rowNumber" value="${rowNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
-	</command>
-
-	<command name="viewSelectValue">
-		<execute function="AssertElementPresent" locator1="FormFields#SELECT_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewSwitcher">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#SWITCHER" />
-	</command>
-
-	<command name="viewSwitcherChecked">
-		<execute macro="FormFields#viewCheckboxChecked">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewSwitcherLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewSwitcherLabelNotPresent">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertTextNotPresent" locator1="FormFields#LABEL" value1="${fieldLabel}" />
-	</command>
-
-	<command name="viewTextField">
-		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<if>
-			<isset var="fieldHelpText" />
-			<then>
-				<execute macro="FormFields#viewFieldHelpText">
-					<var name="fieldHelpText" value="${fieldHelpText}" />
-					<var name="fieldName" value="${fieldName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_FIELD">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextFieldNotVisible">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertNotVisible" locator1="FormFields#LABEL" />
-		<execute function="AssertNotVisible" locator1="FormFields#TEXT_FIELD" />
-	</command>
-
-	<command name="viewTextLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextMultilineValue">
-		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextValue">
-		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewTextValueAlt">
-		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD_ALT" value1="${fieldValue}">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
-	<command name="viewUploadField">
-		<execute macro="FormFields#viewUploadLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#UPLOAD_FIELD" />
-	</command>
-
-	<command name="viewUploadLabel">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}" />
-	</command>
-</definition>
+definition {
+	var rowNumber = "1";
+
+	macro addRepeatableField {
+		Click(
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro changeFieldType {
+		Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
+
+		MenuItem.click(menuItem = "${selectOption}");
+	}
+
+	macro deleteGridOptionsRow {
+		Click(
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON",
+			key_gridField = "${gridField}",
+			key_rowNumber = "${rowNumber}"
+		);
+	}
+
+	macro deleteOptionsRow {
+		var key_rowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormFields#OPTIONS_DELETE_ROW_BUTTON");
+	}
+
+	macro disableCheckbox {
+		if (IsChecked(locator1 = "FormFields#CHECKBOX", key_fieldName = "${fieldName}")) {
+			Click(locator1 = "FormFields#CHECKBOX_LABEL", key_fieldName = "${fieldName}");
+		}
+
+		FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
+	}
+
+	macro disableSwitcher {
+		Click(locator1 = "FormFields#SWITCHER", key_fieldName = "${fieldName}");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
+	}
+
+	macro duplicateField {
+		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+
+		AssertClick(
+			locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD",
+			value1 = "Duplicate Field"
+		);
+	}
+
+	macro editBlankMultiTextFieldWithEnterKey {
+		KeyPress(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "\RETURN",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editCaptchaTextVerification {
+		Type(
+			locator1 = "FormFields#CAPTCHA_TEXT_VERIFICATION",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro editDate {
+		Type(
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editFieldName {
+		var key_fieldValue = "${fieldValue}";
+
+		Type.clickAtType(
+			locator1 = "FormFields#FIELD_NAME_EDIT",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro editGridOptions {
+		var key_gridField = "${gridField}";
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}"
+		);
+
+		AssertElementPresent(locator1 = "FormFields#GRID_OPTIONS_OPTION_NAME_FIELD");
+	}
+
+	macro editHelpText {
+		Type(
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${fieldHelpText}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editOptionsRow {
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}"
+		);
+
+		AssertElementPresent(locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD");
+	}
+
+	macro editOptionsRowNameField {
+		var key_rowNumber = "${rowNumber}";
+
+		Type.clickAtType(
+			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",
+			value1 = "${optionValue}"
+		);
+	}
+
+	macro editParagraphBody {
+		Type.clickAtType(
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro editPassword {
+		var key_fieldName = "${fieldName}";
+
+		Type(locator1 = "FormFields#PASSWORD_FIELD", value1 = "${fieldValue}");
+	}
+
+	macro editRepeatableTextMultiline {
+		Type(
+			locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro editRepeatingText {
+		var key_fieldName = "${fieldName}";
+
+		Type(locator1 = "FormFields#TEXT_FIELD", value1 = "${fieldValue}");
+
+		AssertElementPresent(locator1 = "FormFields#TEXT_FIELD_2");
+
+		Type(locator1 = "FormFields#TEXT_FIELD_2", value1 = "${fieldValueRepeat}");
+	}
+
+	macro editText {
+		Type(
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editTextAlt {
+		Type(
+			locator1 = "FormFields#TEXT_FIELD_ALT",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editTextMultiline {
+		Type(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro editTextWithBackspace {
+		var key_fieldName = "${fieldName}";
+
+		DoubleClick(locator1 = "FormFields#TEXT_FIELD");
+
+		KeyPress(locator1 = "FormFields#TEXT_FIELD", value1 = "\BACK_SPACE");
+	}
+
+	macro editValidation {
+		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
+
+		AssertClick(
+			locator1 = "FormFields#VALIDATION_ARGUMENT_OPTION",
+			value1 = "${validationArgument}",
+			key_validationArgument = "${validationArgument}"
+		);
+
+		Type(locator1 = "FormFields#VALIDATION_INPUT", value1 = "${validationInput}");
+
+		Type(
+			locator1 = "FormFields#VALIDATION_ERROR_MESSAGE",
+			value1 = "${validationErrorMessage}"
+		);
+	}
+
+	macro enableCheckbox {
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "${fieldName}")) {
+			Click(locator1 = "FormFields#CHECKBOX_LABEL", key_fieldName = "${fieldName}");
+		}
+
+		FormFields.viewCheckboxChecked(fieldName = "${fieldName}");
+	}
+
+	macro enableSwitcher {
+		Click(locator1 = "FormFields#SWITCHER", key_fieldName = "${fieldName}");
+
+		FormFields.viewSwitcherChecked(fieldName = "${fieldName}");
+	}
+
+	macro getFieldName {
+		Pause(locator1 = "3000");
+
+		var fieldName = selenium.getElementValue("FormFields#FIELD_NAME_EDIT");
+
+		return "${fieldName}";
+	}
+
+	macro moveGridOptionsRow {
+		DragAndDrop(
+			locator1 = "FormFields#GRID_OPTIONS_DRAG_ICON_1",
+			locator2 = "FormFields#GRID_OPTIONS_DRAG_ICON_2",
+			value1 = "",
+			key_gridField = "${gridField}",
+			key_rowNumber1 = "${rowNumberStart}",
+			key_rowNumber2 = "${rowNumberEnd}"
+		);
+	}
+
+	macro moveOptionsRow {
+		var key_rowNumber1 = "${rowNumberStart}";
+		var key_rowNumber2 = "${rowNumberEnd}";
+
+		Click(locator1 = "FormFields#OPTIONS_DRAG_ICON_1");
+
+		DragAndDrop.dragAndDropToObject(
+			locator1 = "FormFields#OPTIONS_DRAG_ICON_1",
+			locator2 = "FormFields#OPTIONS_DRAG_ICON_2",
+			value1 = ""
+		);
+	}
+
+	macro removeSelectOption {
+		var key_fieldName = "${fieldName}";
+		var key_selectOption = "${selectOption}";
+
+		MouseOver(locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION");
+
+		Click(locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION_REMOVE");
+
+		AssertNotVisible(
+			locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION",
+			value1 = "${selectOption}"
+		);
+	}
+
+	macro removeSelectOptionViaDropdown {
+		Click(locator1 = "FormFields#SELECT_FIELD", key_fieldName = "${fieldName}");
+
+		FormFields.disableCheckbox(fieldName = "${selectOption}");
+
+		Click(locator1 = "FormFields#SELECT_FIELD", key_fieldName = "${fieldName}");
+
+		AssertNotVisible(
+			locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION",
+			value1 = "${selectOption}",
+			key_fieldName = "${fieldName}",
+			key_selectOption = "${selectOption}"
+		);
+	}
+
+	macro selectAutoCompleteOption {
+		var key_autocompleteOption = "${autocompleteOption}";
+
+		Click(locator1 = "FormFields#AUTOCOMPLETE_OPTION");
+	}
+
+	macro selectCheckboxOption {
+		Click(
+			locator1 = "FormFields#CHECKBOX_OPTION_LABEL",
+			key_checkboxOption = "${checkboxOption}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro selectDataProviderOutputType {
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		Click(locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD");
+
+		var key_outputParameterType = "${outputParameterType}";
+
+		AssertClick(
+			locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST",
+			value1 = "${outputParameterType}"
+		);
+	}
+
+	macro selectDataProviderPermission {
+		if (IsElementNotPresent(locator1 = "Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT")) {
+			Click(locator1 = "Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL");
+
+			AssertElementPresent(
+				locator1 = "Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT"
+			);
+		}
+
+		Select(
+			locator1 = "Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT",
+			value1 = "${selectOption}"
+		);
+	}
+
+	macro selectGridRadioOption {
+		var key_categoryColumnName = "${categoryColumnName}";
+		var key_optionRowName = "${optionRowName}";
+
+		Click(locator1 = "FormFields#GRID_RADIO_OPTIONS");
+	}
+
+	macro selectRadioOption {
+		Click(
+			locator1 = "FormFields#RADIO_OPTION_LABEL",
+			key_fieldName = "${fieldName}",
+			key_radioOption = "${radioOption}"
+		);
+	}
+
+	macro selectSelectOption {
+		var key_fieldName = "${fieldName}";
+		var key_selectOption = "${selectOption}";
+
+		Click(locator1 = "FormFields#SELECT_FIELD", value1 = "${selectOption}");
+
+		if (("${fieldName}" == "ddmDataProviderInstanceId") || ("${fieldName}" == "ddmDataProviderInstanceOutput")) {
+			AssertClick(
+				locator1 = "FormFields#SELECT_FIELD_DATA_PROVIDER_LIST",
+				value1 = "${selectOption}"
+			);
+		}
+		else {
+			AssertClick(
+				locator1 = "FormFields#SELECT_FIELD_OPTIONS_LIST",
+				value1 = "${selectOption}"
+			);
+		}
+	}
+
+	macro selectSelectWithMultipleOptions {
+		var key_fieldName = "${fieldName}";
+
+		Click(locator1 = "FormFields#SELECT_FIELD");
+
+		for (var selectOption : list "${selectOptionsList}") {
+			FormFields.enableCheckbox(fieldName = "${selectOption}");
+		}
+
+		FormFields.viewSelectMultipleOptions(
+			fieldName = "Select",
+			selectOptionsList = "${selectOptionsList}"
+		);
+
+		Click(locator1 = "FormFields#SELECT_FIELD");
+	}
+
+	macro selectSwitcherOption {
+		var key_fieldName = "${fieldName}";
+		var key_switcherOption = "${switcherOption}";
+		var key_switcherOption = StringUtil.replace("${switcherOption}", " ", "");
+
+		Click(locator1 = "FormFields#SWITCHER_OPTION");
+	}
+
+	macro selectTextFieldLineOption {
+		FormFields.selectRadioOption(
+			fieldName = "displayStyle",
+			radioOption = "${textFieldLineOption}"
+		);
+	}
+
+	macro viewCaptchaField {
+		AssertElementPresent.assertVisible(locator1 = "FormFields#CAPTCHA_FIELD");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "FormFields#CAPTCHA_FIELD_REFRESH"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "FormFields#CAPTCHA_LABEL",
+			value1 = "Text Verification"
+		);
+
+		AssertElementPresent.assertVisible(
+			locator1 = "FormFields#CAPTCHA_TEXT_VERIFICATION"
+		);
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "FormFields#CHECKBOX",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewCheckboxLabel {
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#CHECKBOX_LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewCheckboxNotChecked {
+		AssertNotChecked.assertNotCheckedNotVisible(
+			locator1 = "FormFields#CHECKBOX",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewDateField {
+		FormFields.viewDateLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}"
+		);
+
+		AssertElementPresent.assertVisible(
+			locator1 = "FormFields#DATE_FIELD",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewDateFieldNotPresent {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldName = "${fieldName}";
+
+		if (IsElementPresent(locator1 = "FormFields#DATE_FIELD")) {
+			AssertNotVisible(locator1 = "FormFields#LABEL");
+
+			AssertNotVisible(locator1 = "FormFields#DATE_FIELD");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "FormFields#LABEL");
+
+			AssertElementNotPresent(locator1 = "FormFields#DATE_FIELD");
+		}
+	}
+
+	macro viewDateLabel {
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewDateValue {
+		AssertTextEquals(
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewDeletedSelectOptionsRowFieldValue {
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextNotPresent(
+			locator1 = "FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro viewFieldHelpText {
+		AssertTextEquals(
+			locator1 = "FormFields#HELP_TEXT",
+			value1 = "${fieldHelpText}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewFieldLabel {
+		var key_fieldName = "${fieldName}";
+
+		AssertTextEquals(locator1 = "FormFields#TEXT_FIELD", value1 = "${fieldValue}");
+	}
+
+	macro viewFieldName {
+		AssertTextEquals(
+			locator1 = "FormFields#FIELD_NAME_EDIT",
+			value1 = "${fieldName}"
+		);
+	}
+
+	macro viewFieldValidationErrorMessage {
+		var key_fieldName = "${fieldName}";
+
+		if (IsElementNotPresent(locator1 = "Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED")) {
+			Click(locator1 = "FormPortlet#FORM_CONTAINER");
+		}
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED",
+			value1 = "${fieldValidationErrorMessage}"
+		);
+	}
+
+	macro viewGridOptionNotPresent {
+		FormFields.viewGridOptionsFieldValue(
+			fieldValue = "",
+			key_gridField = "${gridField}",
+			key_rowNumber = "${rowNumber}"
+		);
+	}
+
+	macro viewGridOptionsFieldValue {
+		AssertTextEquals(
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${fieldValue}",
+			key_gridField = "${gridField}",
+			key_rowNumber = "${rowNumber}"
+		);
+	}
+
+	macro viewMultilineTextValue {
+		AssertTextEquals(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}",
+			key_fieldValue = "${fieldValue}"
+		);
+	}
+
+	macro viewOptionsRowFieldName {
+		AssertTextEquals(
+			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",
+			value1 = "${fieldName}",
+			key_rowNumber = "${rowNumber}"
+		);
+	}
+
+	macro viewOptionsRowFieldValue {
+		var key_rowNumber = "${rowNumber}";
+
+		if (IsVisible(locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD")) {
+			AssertTextEquals(
+				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+				value1 = "${fieldValue}"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
+				value1 = "${fieldValue}"
+			);
+		}
+	}
+
+	macro viewParagraphField {
+		if (!(isSet(fieldName))) {
+			var key_fieldName = "${fieldTitle}";
+			var key_fieldName = StringUtil.replace("${fieldTitle}", " ", "");
+		}
+		else {
+			var key_fieldName = "${fieldName}";
+		}
+
+		if ("${fieldTitle}" == "") {
+			AssertElementNotPresent(locator1 = "FormFields#PARAGRAPH_TITLE");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "FormFields#PARAGRAPH_TITLE",
+				value1 = "${fieldTitle}"
+			);
+		}
+
+		AssertTextEquals(
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro viewRadioLabel {
+		AssertTextEquals.assertText(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewRadioValue {
+		var fieldValue = StringUtil.replace("${fieldValue}", " ", "");
+		var key_fieldName = "${fieldName}";
+		var key_radioOption = "${fieldValue}";
+
+		AssertElementPresent(locator1 = "FormFields#RADIO_OPTION_CHECKED");
+	}
+
+	macro viewRepeatableFieldHelpText {
+		AssertTextEquals(
+			locator1 = "FormFields#REPEATABLE_HELP_TEXT",
+			value1 = "${fieldHelpText}",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro viewRepeatableTextFieldLabel {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldName = "${fieldName}";
+
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}"
+		);
+
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#TEXT_LABEL_2",
+			value1 = "${fieldLabel}"
+		);
+	}
+
+	macro viewRepeatableTextMultilineField {
+		FormFields.viewRepeatableTextMultilineLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}",
+			repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+
+		if (isSet(fieldHelpText)) {
+			FormFields.viewRepeatableFieldHelpText(
+				fieldHelpText = "${fieldHelpText}",
+				fieldName = "${fieldName}",
+				repeatableFieldNumber = "${repeatableFieldNumber}"
+			);
+		}
+
+		AssertElementPresent.assertVisible(
+			locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro viewRepeatableTextMultilineLabel {
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro viewRepeatableTextMultilineValue {
+		AssertTextEquals(
+			locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}"
+		);
+	}
+
+	macro viewRequiredAsterisk {
+		AssertElementPresent.assertVisible(locator1 = "Icon#ASTERISK");
+	}
+
+	macro viewRequiredAsteriskNotPresent {
+		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+	}
+
+	macro viewSelectLabel {
+		AssertTextEquals.assertText(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewSelectMultipleOptions {
+		var key_fieldName = "${fieldName}";
+
+		for (var selectOption : list "${selectOptionsList}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "${selectOption}"
+			);
+		}
+	}
+
+	macro viewSelectOption {
+		AssertTextEquals.assertPartialText(
+			locator1 = "FormFields#SELECT_FIELD",
+			value1 = "${selectOption}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewSelectOptionsList {
+		var key_fieldName = "${fieldName}";
+
+		Click(locator1 = "FormFields#SELECT_FIELD");
+
+		var key_selectOption = "${selectOption}";
+
+		AssertElementPresent(locator1 = "FormFields#SELECT_FIELD_OPTIONS_LIST");
+	}
+
+	macro viewSelectOptionsRowFieldValue {
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextEquals(
+			locator1 = "FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
+			value1 = "${fieldValue}"
+		);
+	}
+
+	macro viewSelectValue {
+		AssertElementPresent(
+			locator1 = "FormFields#SELECT_FIELD",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewSwitcher {
+		var key_fieldName = "${fieldName}";
+
+		AssertElementPresent(locator1 = "FormFields#SWITCHER");
+	}
+
+	macro viewSwitcherChecked {
+		FormFields.viewCheckboxChecked(fieldName = "${fieldName}");
+	}
+
+	macro viewSwitcherLabel {
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewSwitcherLabelNotPresent {
+		var key_fieldName = "${fieldName}";
+
+		AssertTextNotPresent(locator1 = "FormFields#LABEL", value1 = "${fieldLabel}");
+	}
+
+	macro viewTextField {
+		FormFields.viewTextLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}"
+		);
+
+		if (isSet(fieldHelpText)) {
+			FormFields.viewFieldHelpText(
+				fieldHelpText = "${fieldHelpText}",
+				fieldName = "${fieldName}"
+			);
+		}
+
+		AssertElementPresent.assertVisible(
+			locator1 = "FormFields#TEXT_FIELD",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewTextFieldNotVisible {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldName = "${fieldName}";
+
+		AssertNotVisible(locator1 = "FormFields#LABEL");
+
+		AssertNotVisible(locator1 = "FormFields#TEXT_FIELD");
+	}
+
+	macro viewTextLabel {
+		AssertTextEquals.assertText(
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}",
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewTextMultilineValue {
+		AssertTextEquals(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewTextValue {
+		AssertTextEquals(
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewTextValueAlt {
+		AssertTextEquals(
+			locator1 = "FormFields#TEXT_FIELD_ALT",
+			value1 = "${fieldValue}",
+			key_fieldName = "${fieldName}"
+		);
+	}
+
+	macro viewUploadField {
+		FormFields.viewUploadLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}"
+		);
+
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldName = "${fieldName}";
+
+		AssertElementPresent.assertVisible(locator1 = "FormFields#UPLOAD_FIELD");
+	}
+
+	macro viewUploadLabel {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_fieldName = "${fieldName}";
+
+		AssertTextEquals.assertText(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}"
+		);
+	}
+}

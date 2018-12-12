@@ -1,82 +1,78 @@
-<definition>
-	<command name="addCP">
-		<var name="key_resourceName" value="${resourceName}" />
+definition {
+	macro addCP {
+		var key_resourceName = "${resourceName}";
 
-		<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
+		AssertClick(
+			locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
+			value1 = "${resourceName}"
+		);
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		LexiconEntry.gotoAdd();
 
-		<var method="StringUtil#lowerCase('${customFieldName}')" name="customFieldKey" />
+		var customFieldKey = StringUtil.lowerCase("${customFieldName}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${customFieldKey}" />
-		</execute>
+		PortletEntry.inputName(name = "${customFieldKey}");
 
-		<execute function="Select" locator1="Select#TYPE" value1="${customFieldType}" />
+		Select(locator1 = "Select#TYPE", value1 = "${customFieldType}");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<var name="key_customFieldName" value="${customFieldName}" />
+		var key_customFieldName = "${customFieldName}";
 
-		<execute function="AssertTextEquals" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME" value1="${customFieldName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME",
+			value1 = "${customFieldName}"
+		);
+	}
 
-	<command name="editCP">
-		<var name="key_resourceName" value="${resourceName}" />
+	macro editCP {
+		var key_resourceName = "${resourceName}";
 
-		<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
+		AssertClick(
+			locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
+			value1 = "${resourceName}"
+		);
 
-		<var name="key_customFieldName" value="${customFieldName}" />
+		var key_customFieldName = "${customFieldName}";
 
-		<execute function="AssertVisible" locator1="CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME" />
+		AssertVisible(locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME");
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${customFieldName}" />
-		</execute>
+		LexiconEntry.openEntryMenu(rowEntry = "${customFieldName}");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		MenuItem.click(menuItem = "Edit");
 
-		<if>
-			<isset var="defaultValue" />
-			<then>
-				<if>
-					<equals arg1="${customFieldType}" arg2="True/False" />
-					<then>
-						<execute function="Select" locator1="Select#DEFAULT_VALUE_SELECT" value1="${defaultValue}" />
-					</then>
-				</if>
-			</then>
-		</if>
+		if (isSet(defaultValue)) {
+			if ("${customFieldType}" == "True/False") {
+				Select(locator1 = "Select#DEFAULT_VALUE_SELECT", value1 = "${defaultValue}");
+			}
+		}
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="tearDownCP">
-		<for list="Blogs Entry,Calendar Event,Document,Documents Folder,Knowledge Base Article,Knowledge Base Folder,Message Boards Category,Message Boards Message,Organization,Page,Role,Site,User,User Group,Web Content Article,Web Content Folder,Wiki Page" param="resourceName">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Configuration" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Custom Fields" />
-			</execute>
+	macro tearDownCP {
+		for (var resourceName : list "Blogs Entry,Calendar Event,Document,Documents Folder,Knowledge Base Article,Knowledge Base Folder,Message Boards Category,Message Boards Message,Organization,Page,Role,Site,User,User Group,Web Content Article,Web Content Folder,Wiki Page") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields"
+			);
 
-			<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}">
-				<var name="key_resourceName" value="${resourceName}" />
-			</execute>
+			AssertClick(
+				locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
+				value1 = "${resourceName}",
+				key_resourceName = "${resourceName}"
+			);
 
-			<if>
-				<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-				<then>
-					<execute macro="PortletEntry#selectAll" />
+			if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+				PortletEntry.selectAll();
 
-					<execute function="Click" locator1="Icon#DELETE" />
-				</then>
-			</if>
+				Click(locator1 = "Icon#DELETE");
+			}
 
-			<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-		</for>
-	</command>
-</definition>
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+		}
+	}
+}

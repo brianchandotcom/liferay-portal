@@ -1,45 +1,27 @@
-<definition>
-	<command name="editPermission">
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+definition {
 
-		<execute macro="JSONRole#getRoleIdByName">
-			<return name="roleId" />
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
+	macro editPermission {
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
 
-		<if>
-			<equals arg1="${roleType}" arg2="regular" />
-			<then>
-				<var name="primKey" value="${companyId}" />
-				<var name="scope" value="1" />
-			</then>
-			<elseif>
-				<or>
-					<equals arg1="${roleType}" arg2="site" />
-					<equals arg1="${roleType}" arg2="organization" />
-				</or>
-				<then>
-					<var name="primKey" value="0" />
-					<var name="scope" value="3" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid 'roleType', '${roleType}' must be 'regular/site/organization'." />
-			</else>
-		</if>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONGroup#_getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
+		if ("${roleType}" == "regular") {
+			var primKey = "${companyId}";
+			var scope = "1";
+		}
+		else if (("${roleType}" == "site") || ("${roleType}" == "organization")) {
+			var primKey = "0";
+			var scope = "3";
+		}
+		else {
+			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+		}
 
-		<var name="curl"><![CDATA[
+		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+
+		var curl = '''
 			${portalURL}/api/jsonws/resourcepermission/${method} \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -49,10 +31,8 @@
 				-d primKey=${primKey} \
 				-d roleId=${roleId} \
 				-d actionId=${resourceAction}
-		]]></var>
+		''';
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-		</execute>
-	</command>
-</definition>
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+}

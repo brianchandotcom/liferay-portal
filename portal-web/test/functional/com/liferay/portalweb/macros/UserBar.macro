@@ -1,118 +1,72 @@
-<definition>
-	<var name="key_panel" value="user" />
+definition {
+	var key_panel = "user";
 
-	<command name="gotoDashboard">
-		<description message="Navigate to My Dashboard." />
+	@description = "Navigate to My Dashboard."
+	macro gotoDashboard {
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PANEL_EXPANDED">
-				<var name="key_category" value="${key_category}" />
-			</condition>
+				Pause(locator1 = "5000");
 
-			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-					<then>
-						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+				AssertClick(locator1 = "UserBar#USER_DASHBOARD", value1 = "My Dashboard");
+			}
+		}
+		else {
+			AssertClick(locator1 = "UserBar#USER_DASHBOARD", value1 = "My Dashboard");
+		}
+	}
 
-						<execute function="Pause" locator1="5000" />
+	@description = "Navigate to Account via the User Bar."
+	macro gotoMyAccount {
+		Navigator.openURL();
 
-						<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
-					</then>
-				</if>
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
-			</else>
-		</if>
-	</command>
+		if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-	<command name="gotoMyAccount">
-		<description message="Navigate to Account via the User Bar." />
+				ProductMenuHelper.expandCategory(category = "My Account");
 
-		<execute macro="Navigator#openURL" />
+				ProductMenuHelper.gotoPortlet(portlet = "Account Settings");
+			}
+		}
+		else {
+			ProductMenuHelper.expandCategory(category = "My Account");
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PANEL_EXPANDED">
-				<var name="key_category" value="${key_category}" />
-			</condition>
+			ProductMenuHelper.gotoPortlet(portlet = "Account Settings");
+		}
+	}
 
-			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-					<then>
-						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+	@description = "Navigate to My Profile."
+	macro gotoProfile {
+		Navigator.openURL();
 
-						<execute macro="ProductMenuHelper#expandCategory">
-							<var name="category" value="My Account" />
-						</execute>
+		if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-						<execute macro="ProductMenuHelper#gotoPortlet">
-							<var name="portlet" value="Account Settings" />
-						</execute>
-					</then>
-				</if>
-			</then>
-			<else>
-				<execute macro="ProductMenuHelper#expandCategory">
-					<var name="category" value="My Account" />
-				</execute>
+				AssertClick(locator1 = "UserBar#USER_PROFILE", value1 = "My Profile");
+			}
+		}
+		else {
+			AssertClick(locator1 = "UserBar#USER_PROFILE", value1 = "My Profile");
+		}
+	}
 
-				<execute macro="ProductMenuHelper#gotoPortlet">
-					<var name="portlet" value="Account Settings" />
-				</execute>
-			</else>
-		</if>
-	</command>
+	macro signOut {
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			}
 
-	<command name="gotoProfile">
-		<description message="Navigate to My Profile." />
+			AssertVisible(
+				locator1 = "ProductMenu#PANEL_EXPANDED",
+				key_category = "${key_category}"
+			);
 
-		<execute macro="Navigator#openURL" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PANEL_EXPANDED">
-				<var name="key_category" value="${key_category}" />
-			</condition>
-
-			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-					<then>
-						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-
-						<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="My Profile" />
-					</then>
-				</if>
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="My Profile" />
-			</else>
-		</if>
-	</command>
-
-	<command name="signOut">
-		<if>
-			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-			<then>
-				<if>
-					<condition function="IsElementNotPresent" locator1="ProductMenu#PANEL_EXPANDED">
-						<var name="key_category" value="${key_category}" />
-					</condition>
-
-					<then>
-						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-					</then>
-				</if>
-
-				<execute function="AssertVisible" locator1="ProductMenu#PANEL_EXPANDED">
-					<var name="key_category" value="${key_category}" />
-				</execute>
-
-				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
-			</then>
-		</if>
-	</command>
-</definition>
+			Click(locator1 = "UserBar#USER_SIGN_OUT");
+		}
+	}
+}

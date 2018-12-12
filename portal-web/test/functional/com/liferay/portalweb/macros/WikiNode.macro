@@ -1,132 +1,126 @@
-<definition>
-	<var name="assetType" value="Wiki Node" />
+definition {
+	var assetType = "Wiki Node";
 
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${wikiNodeName}" />
-		</execute>
+		PortletEntry.inputName(name = "${wikiNodeName}");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="addMainCP">
-		<execute macro="Navigator#openURL" />
+	macro addMainCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="Wiki#NODE_TABLE" />
-			<then>
-				<execute macro="WikiNode#addCP">
-					<var name="wikiNodeName" value="Main" />
-				</execute>
-			</then>
-		</if>
-	</command>
+		if (IsElementNotPresent(locator1 = "Wiki#NODE_TABLE")) {
+			WikiNode.addCP(wikiNodeName = "Main");
+		}
+	}
 
-	<command name="deleteCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+	macro deleteCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
 
-		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+		PortletEntry.clickMoveToRecycleBin();
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+		RecycleBin.emptyCP();
+	}
 
-	<command name="editCP">
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+	macro editCP {
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		MenuItem.click(menuItem = "Edit");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${wikiNodeNameEdit}" />
-		</execute>
+		PortletEntry.inputName(name = "${wikiNodeNameEdit}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${wikiNodeDescriptionEdit}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${wikiNodeDescriptionEdit}");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<var name="key_wikiNodeName" value="${wikiNodeNameEdit}" />
+		var key_wikiNodeName = "${wikiNodeNameEdit}";
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<while>
-			<condition function="IsElementPresent" locator1="Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2" />
-			<then>
-				<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2" />
+		while (IsElementPresent(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2")) {
+			Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2");
 
-				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+			PortletEntry.clickMoveToRecycleBin();
 
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-			</then>
-		</while>
+			AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+		}
 
-	<command name="viewCP">
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		RecycleBin.emptyCP();
+	}
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+	macro viewCP {
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_NUMBER_OF_PAGES" value1="${numberOfWikiPages}" />
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}"
+		);
 
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${wikiNodeName}" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
+			value1 = "${numberOfWikiPages}"
+		);
 
-	<command name="viewMainNode">
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		AssertClick(locator1 = "Wiki#NODE_TABLE_WIKI_NAME", value1 = "${wikiNodeName}");
 
-		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
-		<execute function="AssertElementNotPresent" locator1="Wiki#NODE_TABLE_WIKI_GENERIC_2" />
-	</command>
-</definition>
+		SiteAdmin.viewPortletTitle(portletTitle = "${wikiNodeName}");
+	}
+
+	macro viewMainNode {
+		var key_wikiNodeName = "${wikiNodeName}";
+
+		AssertTextEquals(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}"
+		);
+
+		AssertElementNotPresent(locator1 = "Wiki#NODE_TABLE_WIKI_GENERIC_2");
+	}
+}

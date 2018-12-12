@@ -1,58 +1,63 @@
-<definition>
-	<command name="accountSignIn">
-		<var method="PropsUtil#get('sharepoint.oauth.user.name')" name="key_userEmail" />
-		<var method="PropsUtil#get('sharepoint.oauth.user.password')" name="key_userPassword" />
+definition {
+	macro accountSignIn {
+		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
+		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
-		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" />
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER",
+				value1 = "${key_userEmail}"
+			);
 
-			<then>
-				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" value1="${key_userEmail}" />
+			AssertClick(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON", value1 = "Next");
 
-				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
+			Type(
+				locator1 = "MicrosoftLogin#LOGIN_PASSWORD_FIELD",
+				value1 = "${key_userPassword}"
+			);
 
-				<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
+				value1 = "Sign in"
+			);
+		}
+		else if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
+			Type(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD", value1 = "${key_userEmail}");
 
-				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
-			</then>
-			<elseif>
-				<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" />
+			AssertClick(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON", value1 = "Next");
 
-				<then>
-					<execute function="Type" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" value1="${key_userEmail}" />
+			Type(
+				locator1 = "MicrosoftLogin#LOGIN_PASSWORD_FIELD",
+				value1 = "${key_userPassword}"
+			);
 
-					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_NEXT_BUTTON" value1="Next" />
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
+				value1 = "Sign in"
+			);
+		}
+	}
 
-					<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${key_userPassword}" />
+	macro confirmSharepointApp {
+		Pause(locator1 = "3000");
 
-					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
-				</then>
-			</elseif>
-		</if>
-	</command>
+		var app_name = "Collaboration Test Application";
 
-	<command name="confirmSharepointApp">
-		<execute function="Pause" locator1="3000" />
+		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
+			AssertClick(
+				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",
+				value1 = "Trust It"
+			);
+		}
 
-		<var name="app_name" value="Collaboration Test Application" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
-
-			<then>
-				<execute function="AssertClick" locator1="MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON" value1="Trust It" />
-			</then>
-		</if>
-
-		<if>
-			<condition function="IsElementPresent" locator1="Portlet#HEADER" />
-
-			<then>
-				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${dmRepositoryName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="MicrosoftLogin#SHAREPOINT_SITE_TITLE" value1="Sitio de grupo de Liferay" />
-			</else>
-		</if>
-	</command>
-</definition>
+		if (IsElementPresent(locator1 = "Portlet#HEADER")) {
+			AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${dmRepositoryName}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "MicrosoftLogin#SHAREPOINT_SITE_TITLE",
+				value1 = "Sitio de grupo de Liferay"
+			);
+		}
+	}
+}

@@ -1,24 +1,27 @@
-<definition>
-	<command name="editServiceAccessPolicy">
-		<execute macro="ServiceAccessPolicy#gotoServiceAccessPolicy">
-			<var name="policyName" value="${policyName}" />
-		</execute>
+definition {
+	macro editServiceAccessPolicy {
+		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = "${policyName}");
 
-		<if>
-			<isset var="allowedServiceSignature" />
-			<then>
-				<execute function="Click" locator1="ServiceAccessPolicy#SWITCH_TO_ADVANCED_MODE" value1="Switch to Advanced Mode" />
+		if (isSet(allowedServiceSignature)) {
+			Click(
+				locator1 = "ServiceAccessPolicy#SWITCH_TO_ADVANCED_MODE",
+				value1 = "Switch to Advanced Mode"
+			);
 
-				<execute function="Type" locator1="ServiceAccessPolicy#ALLOWED_SERVICE_SIGNATURES_FIELD" value1="${allowedServiceSignature}" />
-			</then>
-		</if>
+			Type(
+				locator1 = "ServiceAccessPolicy#ALLOWED_SERVICE_SIGNATURES_FIELD",
+				value1 = "${allowedServiceSignature}"
+			);
+		}
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
 
-	<command name="gotoServiceAccessPolicy">
-		<execute function="AssertClick" locator1="ServiceAccessPolicy#POLICY_NAME" value1="${policyName}">
-			<var name="key_policyName" value="${policyName}" />
-		</execute>
-	</command>
-</definition>
+	macro gotoServiceAccessPolicy {
+		AssertClick(
+			locator1 = "ServiceAccessPolicy#POLICY_NAME",
+			value1 = "${policyName}",
+			key_policyName = "${policyName}"
+		);
+	}
+}

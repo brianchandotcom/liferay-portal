@@ -1,17 +1,23 @@
-<definition>
-	<command name="gotoGeneral">
-		<execute function="AssertClick" locator1="NavTab#GENERAL" value1="General" />
-	</command>
+definition {
+	macro gotoGeneral {
+		AssertClick(locator1 = "NavTab#GENERAL", value1 = "General");
+	}
 
-	<command name="gotoIdentityProvider">
-		<execute function="AssertClick" locator1="NavTab#IDENTITY_PROVIDER" value1="Identity Provider" />
-	</command>
+	macro gotoIdentityProvider {
+		AssertClick(locator1 = "NavTab#IDENTITY_PROVIDER", value1 = "Identity Provider");
+	}
 
-	<command name="gotoIdentityProviderConnection">
-		<execute function="AssertClick" locator1="NavTab#IDENTITY_PROVIDER_CONNECTION" value1="Identity Provider Connection" />
-	</command>
+	macro gotoIdentityProviderConnection {
+		AssertClick(
+			locator1 = "NavTab#IDENTITY_PROVIDER_CONNECTION",
+			value1 = "Identity Provider Connection"
+		);
+	}
 
-	<command name="gotoServiceProviderConnection">
-		<execute function="AssertClick" locator1="NavTab#SERVICE_PROVIDER_CONNECTIONS" value1="Service Provider Connections" />
-	</command>
-</definition>
+	macro gotoServiceProviderConnection {
+		AssertClick(
+			locator1 = "NavTab#SERVICE_PROVIDER_CONNECTIONS",
+			value1 = "Service Provider Connections"
+		);
+	}
+}

@@ -1,112 +1,129 @@
-<definition>
-	<command name="addDocumentum">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Repository Configuration" />
-		</execute>
+definition {
+	macro addDocumentum {
+		Panel.expandPanel(panel = "Repository Configuration");
 
-		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="Documentum" />
+		Select(
+			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT",
+			value1 = "Documentum"
+		);
 
-		<execute function="Type" locator1="DocumentsAndMediaEditRepository#CABINET_FIELD" value1="${dmCabinetName}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditRepository#REPOSITORY_FIELD" value1="${dmRepositoryFieldName}" />
-	</command>
+		Type(
+			locator1 = "DocumentsAndMediaEditRepository#CABINET_FIELD",
+			value1 = "${dmCabinetName}"
+		);
 
-	<command name="addSharepoint">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Repository Configuration" />
-		</execute>
+		Type(
+			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_FIELD",
+			value1 = "${dmRepositoryFieldName}"
+		);
+	}
 
-		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryName}" />
+	macro addSharepoint {
+		Panel.expandPanel(panel = "Repository Configuration");
 
-		<if>
-			<isset var="dmRepositorySiteAbsoluteURL" />
-			<then>
-				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmRepositorySiteAbsoluteURL}">
-					<var name="key_fieldLabel" value="Site Absolute URL" />
-				</execute>
+		Select(
+			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT",
+			value1 = "${dmRepositoryName}"
+		);
 
-				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmRepositoryLibraryPath}">
-					<var name="key_fieldLabel" value="Library Path" />
-				</execute>
-			</then>
-			<else>
-				<execute function="Type" locator1="DocumentsAndMediaEditRepository#SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
-				<execute function="Type" locator1="DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
-			</else>
-		</if>
-	</command>
+		if (isSet(dmRepositorySiteAbsoluteURL)) {
+			Type(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmRepositorySiteAbsoluteURL}",
+				key_fieldLabel = "Site Absolute URL"
+			);
 
-	<command name="edit">
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${dmRepositoryName}" />
-		</execute>
-	</command>
+			Type(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmRepositoryLibraryPath}",
+				key_fieldLabel = "Library Path"
+			);
+		}
+		else {
+			Type(
+				locator1 = "DocumentsAndMediaEditRepository#SITE_URL_FIELD",
+				value1 = "${dmRepositorySiteURL}"
+			);
 
-	<command name="gotoCP">
-		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
+			Type(
+				locator1 = "DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD",
+				value1 = "${dmRepositoryLibraryName}"
+			);
+		}
+	}
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+	macro edit {
+		PortletEntry.inputName(name = "${dmRepositoryName}");
+	}
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW" value1="${dmRepositoryName}" />
+	macro gotoCP {
+		var key_dmRepositoryName = "${dmRepositoryName}";
 
-		<var name="key_dmFolderName" value="${dmRepositoryName}" />
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute function="AssertVisible" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" />
+		AssertClick(
+			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
+			value1 = "${dmRepositoryName}"
+		);
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${dmRepositoryName}" />
-	</command>
+		var key_dmFolderName = "${dmRepositoryName}";
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${dmRepositoryName}");
+	}
 
-		<while>
-			<condition function="IsElementPresent" locator1="DocumentsAndMedia#FILTER_REPOSITORY_GENERIC" />
-			<then>
-				<execute function="Click" locator1="DocumentsAndMedia#FILTER_REPOSITORY_GENERIC" />
-				<execute function="Pause" locator1="1000" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-				<if>
-					<condition function="IsElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_GENERIC" />
-					<then>
-						<execute function="Check" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-						<execute function="Pause" locator1="1000" />
+		while (IsElementPresent(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_GENERIC")) {
+			Click(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_GENERIC");
 
-						<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
+			Pause(locator1 = "1000");
 
-						<execute macro="MenuItem#clickNoError">
-							<var name="menuItem" value="Delete" />
-						</execute>
+			if (IsElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC")) {
+				Check(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
-						<execute function="AssertConfirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+				Pause(locator1 = "1000");
 
-						<execute macro="Alert#viewSuccessMessage" />
-					</then>
-				</if>
+				AssertClick.waitForDMHomeAssertTextEqualsClick(
+					locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS",
+					value1 = "Actions"
+				);
 
-				<execute function="Click" locator1="DocumentsAndMedia#FILTER_REPOSITORY_ACTIONS_GENERIC" />
+				MenuItem.clickNoError(menuItem = "Delete");
 
-				<execute macro="MenuItem#clickNoError">
-					<var name="menuItem" value="Delete" />
-				</execute>
+				AssertConfirm(
+					value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately."
+				);
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				Alert.viewSuccessMessage();
+			}
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-	</command>
+			Click(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_ACTIONS_GENERIC");
 
-	<command name="viewBreadcrumb">
-		<var name="key_dmFolderName" value="${dmRepositoryName}" />
+			MenuItem.clickNoError(menuItem = "Delete");
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmRepositoryName}" />
-	</command>
-</definition>
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewBreadcrumb {
+		var key_dmFolderName = "${dmRepositoryName}";
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
+			value1 = "${dmRepositoryName}"
+		);
+	}
+}

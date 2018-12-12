@@ -1,78 +1,122 @@
-<definition>
-	<command name="configureSetupPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+definition {
+	macro configureSetupPG {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<if>
-			<isset var="directorySites" />
-			<then>
-				<execute function="Select" locator1="Select#SITES" value1="${directorySites}" />
-			</then>
-		</if>
+		if (isSet(directorySites)) {
+			Select(locator1 = "Select#SITES", value1 = "${directorySites}");
+		}
 
-		<if>
-			<isset var="directoryDisplayStyle" />
-			<then>
-				<execute function="Select" locator1="Select#DISPLAY_STYLE" value1="${directoryDisplayStyle}" />
-			</then>
-		</if>
+		if (isSet(directoryDisplayStyle)) {
+			Select(locator1 = "Select#DISPLAY_STYLE", value1 = "${directoryDisplayStyle}");
+		}
 
-		<execute macro="Button#clickSave" />
-		<execute function="SelectFrameTop" />
-	</command>
+		Button.clickSave();
 
-	<command name="viewDefaultConfigurationPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		SelectFrameTop();
+	}
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro viewDefaultConfigurationPG {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Top Level" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Parent Level" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Siblings" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Children" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="Icon" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="List" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="List Hierarchy" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="SelectFrameTop" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#SITES",
+			value1 = "Top Level"
+		);
 
-	<command name="viewDescriptivePG">
-		<var name="key_siteName" value="${siteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#SITES",
+			value1 = "Parent Level"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#SITES",
+			value1 = "Siblings"
+		);
 
-	<command name="viewListHierarchyPG">
-		<var name="key_siteName" value="${availableSiteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#SITES",
+			value1 = "Children"
+		);
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE" value1="${availableSiteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#DISPLAY_STYLE",
+			value1 = "Icon"
+		);
 
-		<var name="key_siteName" value="${currentSiteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#DISPLAY_STYLE",
+			value1 = "Descriptive"
+		);
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${currentSiteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#DISPLAY_STYLE",
+			value1 = "List"
+		);
 
-		<var name="key_childSiteName" value="${childSiteName1}" />
-		<var name="key_siteName" value="${currentSiteName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#DISPLAY_STYLE",
+			value1 = "List Hierarchy"
+		);
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName1}" />
+		SelectFrameTop();
+	}
 
-		<var name="key_childSiteName" value="${childSiteName2}" />
-		<var name="key_siteName" value="${currentSiteName}" />
+	macro viewDescriptivePG {
+		var key_siteName = "${siteName}";
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName2}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitesDirectory#DESCRIPTIVE_SITE_ENTRY",
+			value1 = "${siteName}"
+		);
+	}
 
-		<var name="key_childSiteName" value="${childSiteName3}" />
-		<var name="key_siteName" value="${currentSiteName}" />
+	macro viewListHierarchyPG {
+		var key_siteName = "${availableSiteName}";
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName3}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE",
+			value1 = "${availableSiteName}"
+		);
+
+		var key_siteName = "${currentSiteName}";
+
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT",
+			value1 = "${currentSiteName}"
+		);
+
+		var key_childSiteName = "${childSiteName1}";
+		var key_siteName = "${currentSiteName}";
+
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
+			value1 = "${childSiteName1}"
+		);
+
+		var key_childSiteName = "${childSiteName2}";
+		var key_siteName = "${currentSiteName}";
+
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
+			value1 = "${childSiteName2}"
+		);
+
+		var key_childSiteName = "${childSiteName3}";
+		var key_siteName = "${currentSiteName}";
+
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
+			value1 = "${childSiteName3}"
+		);
+	}
+}

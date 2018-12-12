@@ -1,359 +1,328 @@
-<definition>
-	<command name="addAssociatedAssetType">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Associated Asset Types" />
-		</execute>
-
-		<if>
-			<contains string="${rowNumber}" substring="{rowNumber}" />
-			<then>
-				<var name="rowNumber" value="1" />
-			</then>
-		</if>
-
-		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N" value1="${assetType}">
-			<var name="key_rowNumber" value="${rowNumber}" />
-		</execute>
-
-		<if>
-			<equals arg1="${required}" arg2="true" />
-			<then>
-				<var name="key_rowNumber" value="${rowNumber}" />
-
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#REQUIRED" />
-			</then>
-		</if>
-	</command>
-
-	<command name="addCP" summary="Add a vocabulary named '${vocabularyName}'">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${vocabularyName}" />
-		</execute>
-
-		<if>
-			<isset var="vocabularyDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${vocabularyDescription}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${allowMultipleCategories}" arg2="false" />
-			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="locale" />
-			<then>
-				<execute macro="PortletEntry#changeLocale">
-					<var name="fieldName" value="Name" />
-					<var name="locale" value="${locale}" />
-				</execute>
-
-				<execute macro="PortletEntry#inputName">
-					<var name="name" value="${localizationName}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="locale2" />
-			<then>
-				<execute macro="PortletEntry#changeLocale">
-					<var name="fieldName" value="Name" />
-					<var name="locale" value="${locale2}" />
-				</execute>
-
-				<execute macro="PortletEntry#inputName">
-					<var name="name" value="${localization2Name}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-	</command>
+definition {
+	macro addAssociatedAssetType {
+		Panel.expandPanel(panel = "Associated Asset Types");
 
-	<command name="addViewableByCP">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${vocabularyName}" />
-		</execute>
+		if (contains("${rowNumber}", "{rowNumber}")) {
+			var rowNumber = "1";
+		}
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Permissions" />
-		</execute>
+		Select(
+			locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N",
+			value1 = "${assetType}",
+			key_rowNumber = "${rowNumber}"
+		);
 
-		<execute function="Select" locator1="Select#PERMISSIONS" value1="${viewableBy}" />
+		if ("${required}" == "true") {
+			var key_rowNumber = "${rowNumber}";
 
-		<execute macro="PortletEntry#save" />
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#REQUIRED");
+		}
+	}
 
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+	@summary = "Add a vocabulary named '${vocabularyName}'"
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-	</command>
+		PortletEntry.inputName(name = "${vocabularyName}");
 
-	<command name="addVocabularyWithNullTitle">
-		<execute macro="LexiconEntry#gotoAdd" />
+		if (isSet(vocabularyDescription)) {
+			PortletEntry.inputDescription(description = "${vocabularyDescription}");
+		}
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value=" " />
-		</execute>
+		if ("${allowMultipleCategories}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH"
+			);
+		}
 
-		<execute macro="Button#clickSave" />
+		if (isSet(locale)) {
+			PortletEntry.changeLocale(fieldName = "Name", locale = "${locale}");
 
-		<execute macro="Alert#viewRequiredField" />
-	</command>
+			PortletEntry.inputName(name = "${localizationName}");
+		}
 
-	<command name="addWithAssociatedAssetTypeCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+		if (isSet(locale2)) {
+			PortletEntry.changeLocale(fieldName = "Name", locale = "${locale2}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${vocabularyName}" />
-		</execute>
+			PortletEntry.inputName(name = "${localization2Name}");
+		}
 
-		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="assetType" value="${assetType}" />
-			<var name="required" value="${required}" />
-			<var name="rowNumber" value="${rowNumber}" />
-		</execute>
+		PortletEntry.save();
+	}
 
-		<if>
-			<isset var="assetSubtype" />
-			<then>
-				<execute function="Select" locator1="Select#ASSET_SUBTYPE" value1="${assetSubtype}" />
-			</then>
-		</if>
+	macro addViewableByCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.inputName(name = "${vocabularyName}");
 
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
-		</execute>
-	</command>
+		Panel.expandPanel(panel = "Permissions");
 
-	<command name="deleteAssociatedAssetTypeViaVocabularyCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+		Select(locator1 = "Select#PERMISSIONS", value1 = "${viewableBy}");
 
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		PortletEntry.save();
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
+		var key_vocabularyName = "${vocabularyName}";
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Associated Asset Types" />
-		</execute>
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+	}
 
-		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
+	macro addVocabularyWithNullTitle {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.inputName(name = " ");
 
-	<command name="deleteByIconCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+		Button.clickSave();
 
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		Alert.viewRequiredField();
+	}
 
-		<execute macro="PortletEntry#selectAll" />
+	macro addWithAssociatedAssetTypeCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="ClickNoError" locator1="Icon#TIMES" />
+		PortletEntry.inputName(name = "${vocabularyName}");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		Vocabulary.addAssociatedAssetType(
+			assetType = "${assetType}",
+			required = "${required}",
+			rowNumber = "${rowNumber}"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
+		if (isSet(assetSubtype)) {
+			Select(locator1 = "Select#ASSET_SUBTYPE", value1 = "${assetSubtype}");
+		}
 
-		<execute function="AssertTextNotPresent" value1="${vocabularyName}" />
-	</command>
+		PortletEntry.save();
 
-	<command name="deleteByMenuCP">
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertTextNotPresent" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-	</command>
-
-	<command name="editCP">
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
-
-		<if>
-			<isset var="vocabularyNameEdit" />
-			<then>
-				<execute macro="PortletEntry#inputTitle">
-					<var name="title" value="${vocabularyNameEdit}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${allowMultipleCategories}" arg2="false" />
-			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
-			</then>
-			<elseif>
-				<equals arg1="${allowMultipleCategories}" arg2="true" />
-				<then>
-					<execute function="Check#checkToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<if>
-			<isset var="vocabularyNameEdit" />
-			<then>
-				<var name="key_vocabularyName" value="${vocabularyNameEdit}" />
-
-				<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyNameEdit}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-
-		<if>
-			<equals arg1="${allowMultipleCategories}" arg2="false" />
-			<then>
-				<execute macro="LexiconEntry#gotoEntryMenuItem">
-					<var name="menuItem" value="Edit" />
-					<var name="rowEntry" value="${vocabularyName}" />
-				</execute>
-
-				<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewSearchResultsCP">
-		<if>
-			<isset var="vocabularyNameList" />
-			<then>
-				<for list="${vocabularyNameList}" param="vocabularyName">
-					<var name="key_vocabularyName" value="${vocabularyName}" />
-
-					<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="vocabularyDescriptionList" />
-			<then>
-				<for list="${vocabularyDescriptionList}" param="vocabularyDescription">
-					<var name="key_vocabularyDescription" value="${vocabularyDescription}" />
-
-					<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY_DESCRIPTION" value1="${vocabularyDescription}" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${nullResult}" arg2="true" />
-			<then>
-				<execute macro="PortletEntry#viewEmptyMessage">
-					<var name="entity" value="Vocabularies" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="viewVocabularyPermissionsCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<if>
-			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
-			<then>
-				<execute function="AssertChecked" locator1="AssetPermissions#GUEST_VIEW_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${viewableBy}" arg2="Owner" />
-				<then>
-					<execute function="AssertChecked" locator1="AssetPermissions#OWNER_VIEW_CHECKBOX" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${viewableBy}" arg2="Site Members" />
-				<then>
-					<execute function="AssertChecked" locator1="AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
-	<command name="viewWithAssociatedAssetTypeCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Associated Asset Types" />
-		</execute>
-
-		<execute function="AssertSelectedLabel" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}",
+			key_vocabularyName = "${vocabularyName}"
+		);
+	}
+
+	macro deleteAssociatedAssetTypeViaVocabularyCP {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${vocabularyName}"
+		);
+
+		Panel.expandPanel(panel = "Associated Asset Types");
+
+		Click(
+			locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2"
+		);
+
+		PortletEntry.save();
+	}
+
+	macro deleteByIconCP {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#TIMES");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+
+		AssertTextNotPresent(value1 = "${vocabularyName}");
+	}
+
+	macro deleteByMenuCP {
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}",
+			key_vocabularyName = "${vocabularyName}"
+		);
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${vocabularyName}"
+		);
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+
+		AssertTextNotPresent(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+	}
+
+	macro editCP {
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}",
+			key_vocabularyName = "${vocabularyName}"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${vocabularyName}"
+		);
+
+		if (isSet(vocabularyNameEdit)) {
+			PortletEntry.inputTitle(title = "${vocabularyNameEdit}");
+		}
+
+		if ("${allowMultipleCategories}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH"
+			);
+		}
+		else if ("${allowMultipleCategories}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH"
+			);
+		}
+
+		PortletEntry.save();
+
+		if (isSet(vocabularyNameEdit)) {
+			var key_vocabularyName = "${vocabularyNameEdit}";
+
+			AssertTextEquals(
+				locator1 = "Categories#VOCABULARY_ENTRY",
+				value1 = "${vocabularyNameEdit}"
+			);
+		}
+	}
+
+	macro tearDownCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		if (IsElementPresent(locator1 = "Checkbox#SELECT_ALL")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+		}
+	}
+
+	macro viewCP {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+
+		if ("${allowMultipleCategories}" == "false") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${vocabularyName}"
+			);
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH"
+			);
+		}
+	}
+
+	macro viewSearchResultsCP {
+		if (isSet(vocabularyNameList)) {
+			for (var vocabularyName : list "${vocabularyNameList}") {
+				var key_vocabularyName = "${vocabularyName}";
+
+				AssertTextEquals(
+					locator1 = "Categories#VOCABULARY_ENTRY",
+					value1 = "${vocabularyName}"
+				);
+			}
+		}
+
+		if (isSet(vocabularyDescriptionList)) {
+			for (var vocabularyDescription : list "${vocabularyDescriptionList}") {
+				var key_vocabularyDescription = "${vocabularyDescription}";
+
+				AssertTextEquals(
+					locator1 = "Categories#VOCABULARY_ENTRY_DESCRIPTION",
+					value1 = "${vocabularyDescription}"
+				);
+			}
+		}
+
+		if ("${nullResult}" == "true") {
+			PortletEntry.viewEmptyMessage(entity = "Vocabularies");
+		}
+	}
+
+	macro viewVocabularyPermissionsCP {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "${vocabularyName}"
+		);
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		if ("${viewableBy}" == "Anyone (Guest Role)") {
+			AssertChecked(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
+		}
+		else if ("${viewableBy}" == "Owner") {
+			AssertChecked(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
+		}
+		else if ("${viewableBy}" == "Site Members") {
+			AssertChecked(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
+		}
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
+	macro viewWithAssociatedAssetTypeCP {
+		var key_vocabularyName = "${vocabularyName}";
+
+		AssertTextEquals(
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${vocabularyName}"
+		);
+
+		Panel.expandPanel(panel = "Associated Asset Types");
+
+		AssertSelectedLabel(
+			locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT",
+			value1 = "${vocabularyAssociatedAssetType}"
+		);
+	}
+}

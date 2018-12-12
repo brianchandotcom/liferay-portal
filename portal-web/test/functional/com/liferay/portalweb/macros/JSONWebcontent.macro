@@ -1,68 +1,41 @@
-<definition>
-	<command name="_addWebContent" summary="Helper function to add a WC Article via JSON">
+definition {
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+	@summary = "Helper function to add a WC Article via JSON"
+	macro _addWebContent {
+		var portalURL = JSONCompany.getPortalURL();
 
-		<if>
-			<isset var="contentMap" />
-			<then>
-				<execute macro="JSONWebcontent#_localizedConvertToXML">
-					<return name="contentXML" />
-					<var name="contentMap" value="${contentMap}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="JSONWebcontent#_convertToXML">
-					<return name="contentXML" />
-					<var name="content" value="${content}" />
-				</execute>
-			</else>
-		</if>
+		if (isSet(contentMap)) {
+			var contentXML = JSONWebcontent._localizedConvertToXML(contentMap = "${contentMap}");
+		}
+		else {
+			var contentXML = JSONWebcontent._convertToXML(content = "${content}");
+		}
 
-		<if>
-			<isset var="description" />
-			<then>
-				<var name="descriptionMap"><![CDATA[{"en_US":"${description}"}]]></var>
-			</then>
-			<else>
-				<var name="descriptionMap" value="{}" />
-			</else>
-		</if>
+		if (isSet(description)) {
 
-		<if>
-			<not>
-				<isset var="folderId" />
-			</not>
-			<then>
-				<var name="folderId" value="0" />
-			</then>
-		</if>
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
 
-		<if>
-			<not>
-				<isset var="serviceContext" />
-			</not>
-			<then>
-				<var name="serviceContext" value="{}" />
-			</then>
-		</if>
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
 
-		<if>
-			<isset var="titleMap" />
-			<then>
-				<execute macro="JSONWebcontent#_convertLocalizedListToMap">
-					<return name="titleMap" />
-					<var name="listMap" value="${titleMap}" />
-				</execute>
-			</then>
-			<else>
-				<var name="titleMap"><![CDATA[{"en_US":"${title}"}]]></var>
-			</else>
-		</if>
+		if (!(isSet(serviceContext))) {
+			var serviceContext = "{}";
+		}
 
-		<var name="curl"><![CDATA[
+		if (isSet(titleMap)) {
+			var titleMap = JSONWebcontent._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -73,187 +46,149 @@
 				-d ddmStructureKey=BASIC-WEB-CONTENT \
 				-d ddmTemplateKey=BASIC-WEB-CONTENT \
 				-d serviceContext=${serviceContext}
-		]]></var>
+		''';
 
-		<execute macro="JSONGroup#_getGroupName">
-			<return name="groupName" />
-			<var name="groupId" value="${groupId}" />
-		</execute>
+		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
 
-		<echo message="## Create a 'Web Content' with the following info using JSONWS:" />
+		echo("## Create a 'Web Content' with the following info using JSONWS:");
 
-		<echo message="## * Group Name: ${groupName}" />
+		echo("## * Group Name: ${groupName}");
 
-		<echo message="## * Folder Id: ${folderId}" />
+		echo("## * Folder Id: ${folderId}");
 
-		<echo message="## * Title: ${title}" />
+		echo("## * Title: ${title}");
 
-		<echo message="## * Description: ${description}" />
+		echo("## * Description: ${description}");
 
-		<echo message="## * Content: ${content}" />
+		echo("## * Content: ${content}");
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-		</execute>
-	</command>
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
 
-	<command name="_convertLocalizedListToMap" summary="Helper function to convert a localized list into JSON">
-		<!-- Create list using '${listMap' -->
+	@summary = "Helper function to convert a localized list into JSON"
+	macro _convertLocalizedListToMap {
+		// Create list using '${listMap'
 
-		<var name="localizedMap" value="{" />
+		var localizedMap = "{";
 
-		<for list="${listMap}" param="i">
-			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
-			<var method="StringUtil#extractLast('${i}', ':')" name="translated" />
+		for (var i : list "${listMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var translated = StringUtil.extractLast("${i}", ":");
 
-			<var name="localizedMap"><![CDATA[${localizedMap}"${locale}":"${translated}",]]></var>
-		</for>
+			var localizedMap = '''${localizedMap}"${locale}":"${translated}",''';
+		}
 
-		<!-- Replace last comma with } -->
+		// Replace last comma with }
 
-		<var method="RegexUtil#replace('${localizedMap}', '(.*)(?=,)', '1')" name="localizedMap" />
+		var localizedMap = RegexUtil.replace("${localizedMap}", "(.*)(?=,)", "1");
+		var localizedMap = "${localizedMap}}";
 
-		<var name="localizedMap" value="${localizedMap}}" />
+		return "${localizedMap}";
+	}
 
-		<return value="${localizedMap}" />
-	</command>
+	@summary = "Helper function to help input content html info"
+	macro _convertToXML {
 
-	<command name="_convertToXML" summary="Helper function to help input content html info">
-		<var name="contentXML"><![CDATA[<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ]]></var>
+		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ''';
 
-		<return value="${contentXML}" />
-	</command>
+		return "${contentXML}";
+	}
 
-	<command name="_exclusiveOrCheck" summary="checks if either A or B is set, but not both">
-		<if>
-			<or>
-				<and>
-					<isset var="A" />
-					<isset var="B" />
-				</and>
-				<and>
-					<not>
-						<isset var="B" />
-					</not>
-					<not>
-						<isset var="A" />
-					</not>
-				</and>
-			</or>
-			<then>
-				<fail message="${failMessage}" />
-			</then>
-		</if>
-	</command>
+	@summary = "checks if either A or B is set, but not both"
+	macro _exclusiveOrCheck {
+		if (((isSet(A)) && (isSet(B))) || ((!(isSet(B))) && (!(isSet(A))))) {
+			fail("${failMessage}");
+		}
+	}
 
-	<command name="_localizedConvertToXML" summary="Helper function to help input localized content html info">
-		<!-- Get list of localizations used -->
+	@summary = "Helper function to help input localized content html info"
+	macro _localizedConvertToXML {
+		// Get list of localizations used
 
-		<var name="localeList" value="" />
+		var localeList = "";
 
-		<for list="${contentMap}" param="i">
-			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
+		for (var i : list "${contentMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var localeList = "${localeList},${locale}";
+		}
 
-			<var name="localeList" value="${localeList},${locale}" />
-		</for>
+		var localeList = RegexUtil.replace("${localeList}", ",(.*)", "1");
 
-		<var method="RegexUtil#replace('${localeList}', ',(.*)', '1')" name="localeList" />
+		// Build dynamic content
 
-		<!-- Build dynamic content -->
+		var dynamicContent = "";
 
-		<var name="dynamicContent" value="" />
+		for (var i : list "${contentMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var translated = StringUtil.extractLast("${i}", ":");
 
-		<for list="${contentMap}" param="i">
-			<var method="StringUtil#extractFirst('${i}', ':')" name="locale" />
-			<var method="StringUtil#extractLast('${i}', ':')" name="translated" />
+			var dynamicContent = '''${dynamicContent} <dynamic-content language-id="${locale}">${translated}</dynamic-content>''';
+		}
 
-			<var name="dynamicContent"><![CDATA[${dynamicContent} <dynamic-content language-id="${locale}">${translated}</dynamic-content>]]></var>
-		</for>
+		// Build XML
 
-		<!-- Build XML -->
+		var contentXML = '''<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ''';
 
-		<var name="contentXML"><![CDATA[<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ]]></var>
+		return "${contentXML}";
+	}
 
-		<return value="${contentXML}" />
-	</command>
+	@summary = "Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'"
+	macro addBasicWebContentLocalized {
+		JSONWebcontent._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none."
+		);
 
-	<command name="addBasicWebContentLocalized" summary="Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'">
-		<execute macro="JSONWebcontent#_exclusiveOrCheck">
-			<var name="A" value="${title}" />
-			<var name="B" value="${titleMap}" />
-			<var name="failMessage" value="Please only set 'title' or only 'titleMap' but not both or none." />
-		</execute>
+		JSONWebcontent._exclusiveOrCheck(
+			A = "${content}",
+			B = "${contentMap}",
+			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none."
+		);
 
-		<execute macro="JSONWebcontent#_exclusiveOrCheck">
-			<var name="A" value="${content}" />
-			<var name="B" value="${contentMap}" />
-			<var name="failMessage" value="Please only set 'content' or only 'contentMap' but not both or none." />
-		</execute>
+		if (isSet(groupName)) {
+			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		}
+		else {
+			fail("Please set 'groupName' to get groupId.");
+		}
 
-		<if>
-			<isset var="groupName" />
-			<then>
-				<execute macro="JSONGroup#_getGroupIdByName">
-					<return name="groupId" />
-					<var name="groupName" value="${groupName}" />
-				</execute>
-			</then>
-			<else>
-				<fail message="Please set 'groupName' to get groupId." />
-			</else>
-		</if>
+		JSONWebcontent._addWebContent(
+			content = "${content}",
+			contentMap = "${contentMap}",
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			serviceContext = "${serviceContext}",
+			title = "${title}",
+			titleMap = "${titleMap}"
+		);
+	}
 
-		<execute macro="JSONWebcontent#_addWebContent">
-			<var name="content" value="${content}" />
-			<var name="contentMap" value="${contentMap}" />
-			<var name="description" value="${description}" />
-			<var name="folderId" value="${folderId}" />
-			<var name="groupId" value="${groupId}" />
-			<var name="serviceContext" value="${serviceContext}" />
-			<var name="title" value="${title}" />
-			<var name="titleMap" value="${titleMap}" />
-		</execute>
-	</command>
+	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
+	macro addWebContent {
+		if (!(isSet(content))) {
+			fail("Please set 'content.'");
+		}
 
-	<command name="addWebContent" summary="Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON">
-		<if>
-			<not>
-				<isset var="content" />
-			</not>
-			<then>
-				<fail message="Please set 'content.'" />
-			</then>
-		</if>
+		if (isSet(groupName)) {
+			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		}
+		else {
+			fail("Please set 'groupName' to get groupId.");
+		}
 
-		<if>
-			<isset var="groupName" />
-			<then>
-				<execute macro="JSONGroup#_getGroupIdByName">
-					<return name="groupId" />
-					<var name="groupName" value="${groupName}" />
-				</execute>
-			</then>
-			<else>
-				<fail message="Please set 'groupName' to get groupId." />
-			</else>
-		</if>
+		if (!(isSet(title))) {
+			fail("Please set 'title.'");
+		}
 
-		<if>
-			<not>
-				<isset var="title" />
-			</not>
-			<then>
-				<fail message="Please set 'title.'" />
-			</then>
-		</if>
-
-		<execute macro="JSONWebcontent#_addWebContent">
-			<var name="content" value="${content}" />
-			<var name="description" value="${description}" />
-			<var name="folderId" value="${folderId}" />
-			<var name="groupId" value="${groupId}" />
-			<var name="serviceContext" value="${serviceContext}" />
-			<var name="title" value="${title}" />
-		</execute>
-	</command>
-</definition>
+		JSONWebcontent._addWebContent(
+			content = "${content}",
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			serviceContext = "${serviceContext}",
+			title = "${title}"
+		);
+	}
+}

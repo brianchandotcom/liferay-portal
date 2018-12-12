@@ -1,386 +1,387 @@
-<definition>
-	<command name="addCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${userGroupName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${selectSiteTemplate}" arg2="true" />
-			<then>
-				<execute function="Select" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT" value1="${siteTemplateName}" />
-			</then>
-		</if>
-
-		<execute macro="Button#clickSave" />
-
-		<if>
-			<or>
-				<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
-				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
-				<equals arg1="${userGroupNameVariation}" arg2="Number" />
-			</or>
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The User Group Name cannot be blank, numeric or a reserved word such as null." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The User Group Name cannot contain the following invalid characters: , *." />
-			</then>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Duplicate" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a unique name." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Null" />
-				<then>
-					<execute macro="Alert#viewRequiredField" />
-				</then>
-			</elseif>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
+definition {
+	macro addCP {
+		var key_userGroupName = "${userGroupName}";
 
-				<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-			</else>
-		</if>
-	</command>
+		LexiconEntry.gotoAdd();
 
-	<command name="addSiteCP">
-		<execute macro="UserGroup#gotoActionsCmd">
-			<var name="userGroupName" value="${userGroupName}" />
-		</execute>
+		PortletEntry.inputName(name = "${userGroupName}");
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		if ("${selectSiteTemplate}" == "true") {
+			Select(
+				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
+				value1 = "${siteTemplateName}"
+			);
+		}
 
-		<if>
-			<or>
-				<equals arg1="${userGroupSite}" arg2="Community Site" />
-				<equals arg1="${userGroupSite}" arg2="Intranet Site" />
-			</or>
-			<then>
-				<execute function="Select" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT" value1="${userGroupSite}" />
+		Button.clickSave();
 
-				<if>
-					<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
-					<then>
-						<execute function="AssertChecked" locator1="UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX" />
-					</then>
-					<else>
-						<execute function="Uncheck" locator1="UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX" />
-					</else>
-				</if>
-			</then>
-		</if>
+		if (("${userGroupNameVariation}" == "Asterik") || ("${userGroupNameVariation}" == "Comma") || ("${userGroupNameVariation}" == "Number")) {
+			Alert.viewRequestFailedToComplete();
 
-		<execute macro="PortletEntry#save" />
-	</command>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "The User Group Name cannot be blank, numeric or a reserved word such as null."
+			);
 
-	<command name="assignAllMembersCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "The User Group Name cannot contain the following invalid characters: , *."
+			);
+		}
+		else if ("${userGroupNameVariation}" == "Duplicate") {
+			Alert.viewRequestFailedToComplete();
 
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "Please enter a unique name."
+			);
+		}
+		else if ("${userGroupNameVariation}" == "Null") {
+			Alert.viewRequiredField();
+		}
+		else {
+			Alert.viewSuccessMessage();
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Assign Members" />
-		</execute>
+			AssertTextEquals(
+				locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+				value1 = "${userGroupName}"
+			);
+		}
+	}
 
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addSiteCP {
+		UserGroup.gotoActionsCmd(userGroupName = "${userGroupName}");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		<execute macro="PortletEntry#selectAll" />
+		if (("${userGroupSite}" == "Community Site") || ("${userGroupSite}" == "Intranet Site")) {
+			Select(
+				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
+				value1 = "${userGroupSite}"
+			);
 
-		<execute function="SelectFrameTop" />
+			if ("${checkEnablePropagationCheckbox}" == "true") {
+				AssertChecked(
+					locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX"
+				);
+			}
+			else {
+				Uncheck(
+					locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX"
+				);
+			}
+		}
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		PortletEntry.save();
+	}
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+	macro assignAllMembersCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-	<command name="assignMemberCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
 
-		<execute function="Pause" locator1="5000" />
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign Members");
 
-		<var name="key_rowEntry" value="${userGroupName}" />
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Assign Members" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+		PortletEntry.selectAll();
 
-		<execute function="AssertVisible" locator1="NavBar#USERS" />
+		SelectFrameTop();
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		AssertClick(locator1 = "Button#ADD", value1 = "Add");
 
-		<execute function="AssertElementPresent#assertVisible" locator1="Button#ADD" />
+		Alert.viewSuccessMessage();
+	}
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	macro assignMemberCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="${userScreenName}" />
-		</execute>
+		Pause(locator1 = "5000");
 
-		<var name="key_userScreenName" value="${userScreenName}" />
+		var key_rowEntry = "${userGroupName}";
 
-		<execute function="Check" locator1="UserGroupsAssignUsers#USER_TABLE_CHECKBOX" />
+		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		<execute function="Pause" locator1="5000" />
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Members",
+			rowEntry = "${userGroupName}"
+		);
 
-		<execute function="SelectFrameTop" />
+		AssertVisible(locator1 = "NavBar#USERS");
 
-		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="Button#ADD" value1="Add" />
+		LexiconEntry.gotoAdd();
 
-		<execute macro="Alert#viewSuccessMessage" />
+		AssertElementPresent.assertVisible(locator1 = "Button#ADD");
 
-		<execute function="AssertTextEquals" locator1="UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-	</command>
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-	<command name="deleteCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		User.searchCP(searchTerm = "${userScreenName}");
 
-		<execute function="Pause" locator1="5000" />
+		var key_userScreenName = "${userScreenName}";
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		Pause(locator1 = "5000");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+		SelectFrameTop();
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertClick.assertTextClickAtWaitForLastScript(
+			locator1 = "Button#ADD",
+			value1 = "Add"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" />
-	</command>
+		AssertTextEquals(
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
+			value1 = "${userScreenName}"
+		);
+	}
 
-	<command name="deleteUserCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+	macro deleteCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute function="Pause" locator1="5000" />
+		Pause(locator1 = "5000");
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		var key_userGroupName = "${userGroupName}";
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}"
+		);
 
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${userGroupName}"
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		Alert.viewSuccessMessage();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="You cannot delete user groups that have users." />
-	</command>
+		AssertElementNotPresent(locator1 = "UserGroups#USER_GROUP_TABLE_NAME");
+	}
 
-	<command name="editCP">
-		<execute function="Pause" locator1="5000" />
+	macro deleteUserCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		Pause(locator1 = "5000");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${userGroupNameEdit}" />
-		</execute>
+		var key_userGroupName = "${userGroupName}";
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}"
+		);
 
-	<command name="gotoActionsCmd">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${userGroupName}"
+		);
 
-		<execute function="Pause" locator1="5000" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
-	</command>
+		Alert.viewRequestFailedToComplete();
 
-	<command name="gotoAddPageCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "You cannot delete user groups that have users."
+		);
+	}
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Manage Pages" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
-	</command>
+	macro editCP {
+		Pause(locator1 = "5000");
 
-	<command name="removeMemberCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		<execute function="Pause" locator1="5000" />
+		PortletEntry.inputName(name = "${userGroupNameEdit}");
 
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+		PortletEntry.save();
+	}
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Assign Members" />
-		</execute>
+	macro gotoActionsCmd {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<var name="key_userScreenName" value="${userScreenName}" />
+		Pause(locator1 = "5000");
 
-		<execute function="Check" locator1="UserGroupsAssignUsers#USER_TABLE_CHECKBOX" />
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
+	}
 
-		<execute function="Click" locator1="Icon#DELETE" />
+	macro gotoAddPageCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		LexiconEntry.gotoEllipsisMenuItem(
+			menuItem = "Manage Pages",
+			rowEntry = "${userGroupName}"
+		);
+	}
 
-	<command name="searchCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+	macro removeMemberCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+		Pause(locator1 = "5000");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="UG1 UserGroup1 Name1" />
-		</execute>
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
 
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign Members");
 
-	<command name="tearDownCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		var key_userScreenName = "${userScreenName}";
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
+		Click(locator1 = "Icon#DELETE");
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		Alert.viewSuccessMessage();
+	}
 
-				<execute macro="Alert#viewSuccessMessage" />
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
-			</then>
-		</if>
-	</command>
+	macro searchCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-	<command name="viewAssignMemberCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		Search.searchCP(searchTerm = "UG1 UserGroup1 Name1");
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		LexiconEntry.viewNoEntry(rowEntry = "${userGroupName}");
+	}
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Assign Members" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
+	macro tearDownCP {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute function="AssertTextEquals" locator1="UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}">
-			<var name="key_userScreenName" value="${userScreenName}" />
-		</execute>
-	</command>
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
 
-	<command name="viewCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+			ClickNoError(locator1 = "Icon#DELETE");
 
-		<execute function="Pause" locator1="5000" />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+			Alert.viewSuccessMessage();
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
-		<execute function="AssertElementPresent" locator1="UserGroups#USER_GROUP_TABLE_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="Button#PLUS" />
-		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-	</command>
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "No user groups were found."
+			);
+		}
+	}
 
-	<command name="viewDefault">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
-	</command>
+	macro viewAssignMemberCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-	<command name="viewPG">
-		<execute function="Pause" locator1="5000" />
+		var key_userGroupName = "${userGroupName}";
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}"
+		);
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Members",
+			rowEntry = "${userGroupName}"
+		);
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
+		AssertTextEquals(
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
+			value1 = "${userScreenName}",
+			key_userScreenName = "${userScreenName}"
+		);
+	}
 
-		<execute function="SelectWindow" locator1="Home - ${userGroupName} - ${siteName}" />
+	macro viewCP {
+		Search.searchCP(searchTerm = "${userGroupName}");
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${userGroupName}" />
+		Pause(locator1 = "5000");
 
-		<var name="key_portletName" value="${portletName}" />
+		var key_userGroupName = "${userGroupName}";
 
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="${portletName}" />
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}"
+		);
 
-		<execute function="Close" locator1="Home - ${userGroupName} - ${siteName}" />
-	</command>
+		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-	<command name="viewPortletCP">
-		<execute function="AssertElementPresent" locator1="Button#PLUS" />
-		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-	</command>
+		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
-	<command name="viewRemoveMemberCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
+		AssertElementPresent(locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userGroupName}" />
-		</execute>
+		AssertElementPresent(locator1 = "Button#PLUS");
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		AssertElementPresent(locator1 = "TextInput#SEARCH");
 
-		<execute function="AssertClick" locator1="UserGroups#USER_GROUP_TABLE_NAME_LINK" value1="${userGroupName}" />
+		AssertElementPresent(locator1 = "Button#SUBMIT");
+	}
 
-		<execute function="AssertTextNotPresent" value1="${userFirstName}" />
-	</command>
-</definition>
+	macro viewDefault {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No user groups were found."
+		);
+	}
+
+	macro viewPG {
+		Pause(locator1 = "5000");
+
+		var key_userGroupName = "${userGroupName}";
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES",
+			value1 = "Open Pages"
+		);
+
+		SelectWindow(locator1 = "Home - ${userGroupName} - ${siteName}");
+
+		AssertTextEquals(locator1 = "Home#SITE_NAME", value1 = "${userGroupName}");
+
+		var key_portletName = "${portletName}";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#TITLE",
+			value1 = "${portletName}"
+		);
+
+		Close(locator1 = "Home - ${userGroupName} - ${siteName}");
+	}
+
+	macro viewPortletCP {
+		AssertElementPresent(locator1 = "Button#PLUS");
+
+		AssertElementPresent(locator1 = "TextInput#SEARCH");
+
+		AssertElementPresent(locator1 = "Button#SUBMIT");
+
+		AssertElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+	}
+
+	macro viewRemoveMemberCP {
+		var key_userGroupName = "${userGroupName}";
+
+		Search.searchCP(searchTerm = "${userGroupName}");
+
+		AssertTextEquals(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
+			value1 = "${userGroupName}"
+		);
+
+		AssertClick(
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK",
+			value1 = "${userGroupName}"
+		);
+
+		AssertTextNotPresent(value1 = "${userFirstName}");
+	}
+}

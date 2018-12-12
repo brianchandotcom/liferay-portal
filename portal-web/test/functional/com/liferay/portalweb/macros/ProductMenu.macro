@@ -1,132 +1,99 @@
-<definition>
-	<command name="gotoLiveSite" summary="Navigate to the Live site">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+definition {
+	@summary = "Navigate to the Live site"
+	macro gotoLiveSite {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute function="AssertClick" locator1="ProductMenu#LIVE_LINK" value1="Live" />
-	</command>
+		AssertClick(locator1 = "ProductMenu#LIVE_LINK", value1 = "Live");
+	}
 
-	<command name="gotoLocalizedSite" summary="Navigate to Product Menu > Sites > Sites Modal > ${site}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
+	macro gotoLocalizedSite {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute macro="ProductMenuHelper#openSitesPopup" />
+		ProductMenuHelper.openSitesPopup();
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${navItem}" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "${navItem}");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="${displayStyle}" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "${displayStyle}");
 
-		<execute macro="SiteSelector#_searchSite">
-			<var name="site" value="${site}" />
-		</execute>
+		SiteSelector._searchSite(site = "${site}");
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${site}" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "${site}");
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+			value1 = "${site}"
+		);
+	}
 
-	<command name="gotoPersonalSite" summary="Navigate to Product Menu > Profile" >
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="User" />
-		</execute>
+	@summary = "Navigate to Product Menu > Profile"
+	macro gotoPersonalSite {
+		ProductMenuHelper.expandPanel(panel = "User");
 
-		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
-	</command>
+		Click(locator1 = "ProductMenu#USER_PROFILE");
+	}
 
-	<command name="gotoPortlet" summary="Navigate to Product Menu > ${panel} > ${category} > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="${panel}" />
-		</execute>
+	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
+	macro gotoPortlet {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
 
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
+		ProductMenuHelper.expandCategory(category = "${category}");
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
+		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
+	}
 
-	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Sites Modal > ${site}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
+	macro gotoSite {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute macro="ProductMenuHelper#openSitesPopup" />
+		ProductMenuHelper.openSitesPopup();
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="My Sites" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "My Sites");
 
-		<execute macro="SiteSelector#selectSite">
-			<var name="site" value="${site}" />
-		</execute>
+		SiteSelector.selectSite(site = "${site}");
 
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+			value1 = "${site}"
+		);
+	}
 
-	<command name="gotoSiteViaLink" summary="Navigate to ${site} via the 'Go to Site' link">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+	@summary = "Navigate to ${site} via the 'Go to Site' link"
+	macro gotoSiteViaLink {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute function="AssertClick" locator1="ProductMenu#GO_TO_SITES_LINK" value1="Go to Site" />
-	</command>
+		AssertClick(locator1 = "ProductMenu#GO_TO_SITES_LINK", value1 = "Go to Site");
+	}
 
-	<command name="gotoStagingSite" summary="Navigate to the Staging site">
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#STAGING_SELECTED" />
-			<then>
-				<execute macro="ProductMenuHelper#expandPanel">
-					<var name="panel" value="Site Administration" />
-				</execute>
+	@summary = "Navigate to the Staging site"
+	macro gotoStagingSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-				<execute function="AssertClick" locator1="ProductMenu#STAGING_LINK" value1="Staging" />
-			</then>
-		</if>
+			AssertClick(locator1 = "ProductMenu#STAGING_LINK", value1 = "Staging");
+		}
 
-		<execute function="AssertVisible" locator1="ProductMenu#STAGING_SELECTED" />
-	</command>
+		AssertVisible(locator1 = "ProductMenu#STAGING_SELECTED");
+	}
 
-	<command name="viewNoSite" summary="View ${site} is not available in the product menu.">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+	@summary = "View ${site} is not available in the product menu."
+	macro viewNoSite {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="ProductMenu#BACK_ARROW" />
-				<condition function="IsVisible" locator1="ProductMenu#BACK_ARROW" />
-			</and>
-			<then>
-				<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
-			</then>
-		</if>
+		if ((IsElementPresent(locator1 = "ProductMenu#BACK_ARROW")) && (IsVisible(locator1 = "ProductMenu#BACK_ARROW"))) {
+			Click(locator1 = "ProductMenu#BACK_ARROW");
+		}
 
-		<execute macro="ProductMenuHelper#viewNoSite">
-			<var name="site" value="${site}" />
-		</execute>
-	</command>
-</definition>
+		ProductMenuHelper.viewNoSite(site = "${site}");
+	}
+}

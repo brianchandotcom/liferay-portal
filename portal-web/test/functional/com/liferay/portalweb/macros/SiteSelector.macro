@@ -1,49 +1,35 @@
-<definition>
-	<command name="_searchSite">
-		<if>
-			<contains string="${site}" substring="Liferay" />
-			<then>
-				<var name="searchTerm" value="guest" />
-			</then>
-			<else>
-				<var name="searchTerm" value="${site}" />
-			</else>
-		</if>
+definition {
+	macro _searchSite {
+		if (contains("${site}", "Liferay")) {
+			var searchTerm = "guest";
+		}
+		else {
+			var searchTerm = "${site}";
+		}
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${searchTerm}" />
-		</execute>
-	</command>
+		Search.searchCP(searchTerm = "${searchTerm}");
+	}
 
-	<command name="selectSite">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+	macro selectSite {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute macro="SiteSelector#_searchSite">
-			<var name="site" value="${site}" />
-		</execute>
+		SiteSelector._searchSite(site = "${site}");
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${site}" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "${site}");
 
-		<execute function="SelectFrameTop" />
-	</command>
+		SelectFrameTop();
+	}
 
-	<command name="viewSite">
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+	macro viewSite {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute macro="SiteSelector#_searchSite">
-			<var name="site" value="${site}" />
-		</execute>
+		SiteSelector._searchSite(site = "${site}");
 
-		<execute function="AssertElementPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
-			<var name="key_rowEntry" value="${site}" />
-		</execute>
+		AssertElementPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			key_rowEntry = "${site}"
+		);
 
-		<execute function="SelectFrameTop" />
-	</command>
-</definition>
+		SelectFrameTop();
+	}
+}

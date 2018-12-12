@@ -1,60 +1,92 @@
-<definition>
-	<command name="addServiceProviderConnection">
-		<execute function="AssertClick" locator1="CPSAMLAdminServiceProviderConnections#ADD_SERVICE_PROVIDER_BUTTON" value1="Add Service Provider" />
+definition {
+	macro addServiceProviderConnection {
+		AssertClick(
+			locator1 = "CPSAMLAdminServiceProviderConnections#ADD_SERVICE_PROVIDER_BUTTON",
+			value1 = "Add Service Provider"
+		);
 
-		<execute function="Type" locator1="TextInput#SAML_NAME_FIELD" value1="${SPNameID}" />
-		<execute function="Type" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_ENTITY_ID_FIELD" value1="${SPEntityID}" />
-		<execute function="Check" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_ENABLED_CHECKBOX" />
-		<execute function="Type" locator1="TextInput#SAML_METADATA_URL_FIELD" value1="${SPMetadataURL}" />
+		Type(locator1 = "TextInput#SAML_NAME_FIELD", value1 = "${SPNameID}");
 
-		<if>
-			<isset var="nameIdentifierAttributeName" />
-			<then>
-				<execute function="Type" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD" value1="${nameIdentifierAttributeName}" />
-			</then>
-		</if>
+		Type(
+			locator1 = "CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_ENTITY_ID_FIELD",
+			value1 = "${SPEntityID}"
+		);
 
-		<if>
-			<isset var="nameIdentifierFormat" />
-			<then>
-				<execute function="Select" locator1="Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT" value1="${nameIdentifierFormat}" />
-			</then>
-		</if>
+		Check(
+			locator1 = "CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_ENABLED_CHECKBOX"
+		);
 
-		<if>
-			<isset var="Attributes" />
-			<then>
-				<execute function="Check" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE" />
+		Type(
+			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+			value1 = "${SPMetadataURL}"
+		);
 
-				<execute function="Type" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA" value1="${Attributes}" />
-			</then>
-		</if>
+		if (isSet(nameIdentifierAttributeName)) {
+			Type(
+				locator1 = "CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
+				value1 = "${nameIdentifierAttributeName}"
+			);
+		}
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		if (isSet(nameIdentifierFormat)) {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "${nameIdentifierFormat}"
+			);
+		}
 
-	<command name="configureIdentityProvider">
-		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX" />
-		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX" />
+		if (isSet(Attributes)) {
+			Check(
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE"
+			);
 
-		<execute macro="PortletEntry#save" />
-	</command>
+			Type(
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
+				value1 = "${Attributes}"
+			);
+		}
 
-	<command name="configureIdentityProviderConnection">
-		<execute function="Type" locator1="TextInput#SAML_NAME_FIELD" value1="${IdpNameID}" />
-		<execute function="Type" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD" value1="${IdpEntityID}" />
-		<execute function="Type" locator1="TextInput#SAML_METADATA_URL_FIELD" value1="${IdpMetadataURL}" />
+		PortletEntry.save();
+	}
 
-		<if>
-			<isset var="nameIdentifierFormat" />
-			<then>
-				<execute function="Select" locator1="Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT" value1="${nameIdentifierFormat}" />
-			</then>
-			<else>
-				<execute function="Select" locator1="Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT" value1="Email Address" />
-			</else>
-		</if>
+	macro configureIdentityProvider {
+		Check(
+			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
+		);
 
-		<execute macro="PortletEntry#save" />
-	</command>
-</definition>
+		Check(
+			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
+		);
+
+		PortletEntry.save();
+	}
+
+	macro configureIdentityProviderConnection {
+		Type(locator1 = "TextInput#SAML_NAME_FIELD", value1 = "${IdpNameID}");
+
+		Type(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
+			value1 = "${IdpEntityID}"
+		);
+
+		Type(
+			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+			value1 = "${IdpMetadataURL}"
+		);
+
+		if (isSet(nameIdentifierFormat)) {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "${nameIdentifierFormat}"
+			);
+		}
+		else {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "Email Address"
+			);
+		}
+
+		PortletEntry.save();
+	}
+}

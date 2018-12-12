@@ -1,135 +1,131 @@
-<definition>
-	<command name="addClassificationRuleCP">
-		<var name="key_deviceFamilyName" value="${mobileDeviceFamilyName}" />
+definition {
+	macro addClassificationRuleCP {
+		var key_deviceFamilyName = "${mobileDeviceFamilyName}";
 
-		<execute function="AssertClick" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK" value1="${mobileDeviceFamilyName}" />
+		AssertClick(
+			locator1 = "MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK",
+			value1 = "${mobileDeviceFamilyName}"
+		);
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Classification Rule" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "New Classification Rule"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${classificationName}" />
-		</execute>
+		PortletEntry.inputName(name = "${classificationName}");
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Operating System and Type" />
-		</execute>
+		Panel.expandPanel(panel = "Operating System and Type");
 
-		<var name="key_ruleOSScope" value="${ruleOSScope}" />
+		var key_ruleOSScope = "${ruleOSScope}";
 
-		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM" />
+		Click(locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM");
 
-		<var name="key_deviceType" value="${deviceType}" />
+		var key_deviceType = "${deviceType}";
 
-		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE" />
+		Click(locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE");
 
-		<execute function="Click" locator1="Button#SAVE" />
+		Click(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="addDeviceFamilyCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addDeviceFamilyCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Device Family" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "New Device Family"
+		);
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${deviceFamilyName}" />
-		</execute>
+		PortletEntry.inputName(name = "${deviceFamilyName}");
 
-		<execute function="Click" locator1="Button#SAVE" />
+		Click(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="assertRedirectActionPG">
-		<var name="key_pageName" value="${pageName}" />
+	macro assertRedirectActionPG {
+		var key_pageName = "${pageName}";
 
-		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
+		AssertClick(locator1 = "Home#PAGE", value1 = "${pageName}");
 
-		<var name="key_pageName" value="${redirectPageName}" />
+		var key_pageName = "${redirectPageName}";
 
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" />
-	</command>
+		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
+	}
 
-	<command name="previewPG">
-		<execute function="Click" locator1="ControlMenu#SIMULATION" />
+	macro previewPG {
+		Click(locator1 = "ControlMenu#SIMULATION");
 
-		<execute function="Pause" locator1="2000" />
-		<execute function="AssertElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />
+		Pause(locator1 = "2000");
 
-		<var name="key_deviceType" value="${deviceType}" />
+		AssertElementNotPresent(locator1 = "IFrame#LOADING_MESSAGE");
 
-		<if>
-			<equals arg1="${deviceType}" arg2="smartphone" />
-			<then>
-				<take-screenshot />
+		var key_deviceType = "${deviceType}";
 
-				<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
+		if ("${deviceType}" == "smartphone") {
+			takeScreenshot();
 
-				<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME" />
+			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-				<take-screenshot />
-			</then>
-			<elseif>
-				<equals arg1="${deviceType}" arg2="tablet" />
-				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
+			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-					<take-screenshot />
+			takeScreenshot();
+		}
+		else if ("${deviceType}" == "tablet") {
+			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
+			takeScreenshot();
 
-					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME" />
+			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-					<take-screenshot />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${deviceType}" arg2="desktop" />
-				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
+			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
+			takeScreenshot();
+		}
+		else if ("${deviceType}" == "desktop") {
+			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-					<take-screenshot />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${deviceType}" arg2="custom" />
-				<then>
-					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON" />
+			AssertElementPresent(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME"
+			);
 
-					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
+			takeScreenshot();
+		}
+		else if ("${deviceType}" == "custom") {
+			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
-					<take-screenshot />
+			AssertElementPresent(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME"
+			);
 
-					<if>
-						<isset var="height" />
-						<then>
-							<execute function="Type" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD" value1="${height}" />
-						</then>
-						<else>
-							<var name="height" value="400" />
-						</else>
-					</if>
+			takeScreenshot();
 
-					<if>
-						<isset var="width" />
-						<then>
-							<execute function="Type" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD" value1="${width}" />
-						</then>
-						<else>
-							<var name="width" value="400" />
-						</else>
-					</if>
+			if (isSet(height)) {
+				Type(
+					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD",
+					value1 = "${height}"
+				);
+			}
+			else {
+				var height = "400";
+			}
 
-					<take-screenshot />
-				</then>
-			</elseif>
-		</if>
+			if (isSet(width)) {
+				Type(
+					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD",
+					value1 = "${width}"
+				);
+			}
+			else {
+				var width = "400";
+			}
 
-		<execute function="SelectFrame" locator1="//iframe[@id='simulationDeviceIframe']" />
-	</command>
-</definition>
+			takeScreenshot();
+		}
+
+		SelectFrame(locator1 = "//iframe[@id='simulationDeviceIframe']");
+	}
+}

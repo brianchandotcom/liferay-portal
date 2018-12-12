@@ -1,141 +1,95 @@
-<definition>
-	<command name="click">
-		<execute function="Click#mouseDownMouseUp" locator1="Button#ANY">
-			<var name="key_text" value="${button}" />
-		</execute>
-	</command>
+definition {
+	macro click {
+		Click.mouseDownMouseUp(locator1 = "Button#ANY", key_text = "${button}");
+	}
 
-	<command name="clickAdd">
-		<execute macro="Button#click">
-			<var name="button" value="Add" />
-		</execute>
-	</command>
+	macro clickAdd {
+		Button.click(button = "Add");
+	}
 
-	<command name="clickAddRow">
-		<execute function="Click" locator1="Button#ADD_ROW" />
-	</command>
+	macro clickAddRow {
+		Click(locator1 = "Button#ADD_ROW");
+	}
 
-	<command name="clickApply">
-		<execute macro="Button#click">
-			<var name="button" value="Apply" />
-		</execute>
-	</command>
+	macro clickApply {
+		Button.click(button = "Apply");
+	}
 
-	<command name="clickCancel">
-		<execute macro="Button#click">
-			<var name="button" value="Cancel" />
-		</execute>
-	</command>
+	macro clickCancel {
+		Button.click(button = "Cancel");
+	}
 
-	<command name="clickDelete">
-		<execute macro="Button#click">
-			<var name="button" value="Delete" />
-		</execute>
-	</command>
+	macro clickDelete {
+		Button.click(button = "Delete");
+	}
 
-	<command name="clickDone">
-		<execute macro="Button#click">
-			<var name="button" value="Done" />
-		</execute>
-	</command>
+	macro clickDone {
+		Button.click(button = "Done");
+	}
 
-	<command name="clickEdit">
-		<execute macro="Button#click">
-			<var name="button" value="Edit" />
-		</execute>
-	</command>
+	macro clickEdit {
+		Button.click(button = "Edit");
+	}
 
-	<command name="clickInstall">
-		<execute macro="Button#click">
-			<var name="button" value="Install" />
-		</execute>
-	</command>
+	macro clickInstall {
+		Button.click(button = "Install");
+	}
 
-	<command name="clickMap">
-		<execute macro="Button#click">
-			<var name="button" value="Map" />
-		</execute>
-	</command>
+	macro clickMap {
+		Button.click(button = "Map");
+	}
 
-	<command name="clickMore">
-		<execute macro="Button#click">
-			<var name="button" value="More" />
-		</execute>
-	</command>
+	macro clickMore {
+		Button.click(button = "More");
+	}
 
-	<command name="clickNext">
-		<execute macro="Button#click">
-			<var name="button" value="Next" />
-		</execute>
-	</command>
+	macro clickNext {
+		Button.click(button = "Next");
+	}
 
-	<command name="clickNoError">
-		<execute function="ClickNoError#mouseDownMouseUp" locator1="Button#ANY">
-			<var name="key_text" value="${button}" />
-		</execute>
-	</command>
+	macro clickNoError {
+		ClickNoError.mouseDownMouseUp(locator1 = "Button#ANY", key_text = "${button}");
+	}
 
-	<command name="clickPublish">
-		<execute function="ScrollWebElementIntoView" locator1="Button#ANY">
-			<var name="key_text" value="Publish" />
-		</execute>
+	macro clickPublish {
+		ScrollWebElementIntoView(locator1 = "Button#ANY", key_text = "Publish");
 
-		<execute macro="Button#click">
-			<var name="button" value="Publish" />
-		</execute>
-	</command>
+		Button.click(button = "Publish");
+	}
 
-	<command name="clickRemove">
-		<execute macro="Button#click">
-			<var name="button" value="Remove" />
-		</execute>
-	</command>
+	macro clickRemove {
+		Button.click(button = "Remove");
+	}
 
-	<command name="clickSave">
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
-	</command>
+	macro clickSave {
+		Button.click(button = "Save");
+	}
 
-	<command name="clickSaveAsDraft">
-		<execute macro="Button#click">
-			<var name="button" value="Save as Draft" />
-		</execute>
-	</command>
+	macro clickSaveAsDraft {
+		Button.click(button = "Save as Draft");
+	}
 
-	<command name="clickSelect">
-		<execute macro="Button#click">
-			<var name="button" value="Select" />
-		</execute>
-	</command>
+	macro clickSelect {
+		Button.click(button = "Select");
+	}
 
-	<command name="clickShare">
-		<execute macro="Button#click">
-			<var name="button" value="Share" />
-		</execute>
-	</command>
+	macro clickShare {
+		Button.click(button = "Share");
+	}
 
-	<command name="clickSubmitForPublication">
-		<execute macro="Button#click">
-			<var name="button" value="Submit for Publication" />
-		</execute>
-	</command>
+	macro clickSubmitForPublication {
+		Button.click(button = "Submit for Publication");
+	}
 
-	<command name="clickUpdate">
-		<execute macro="Button#click">
-			<var name="button" value="Update" />
-		</execute>
-	</command>
+	macro clickUpdate {
+		Button.click(button = "Update");
+	}
 
-	<command name="viewNotPresent">
-		<execute function="AssertElementNotPresent" locator1="Button#ANY">
-			<var name="key_text" value="${button}" />
-		</execute>
-	</command>
+	macro viewNotPresent {
+		AssertElementNotPresent(locator1 = "Button#ANY", key_text = "${button}");
+	}
 
-	<command name="viewPresent">
-		<execute function="AssertElementPresent" locator1="Button#ANY">
-			<var name="key_text" value="${button}" />
-		</execute>
-	</command>
-</definition>
+	macro viewPresent {
+		AssertElementPresent(locator1 = "Button#ANY", key_text = "${button}");
+	}
+}

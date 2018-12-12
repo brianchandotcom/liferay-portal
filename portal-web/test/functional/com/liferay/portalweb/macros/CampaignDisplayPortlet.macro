@@ -1,129 +1,111 @@
-<definition>
-	<command name="configureCampaignRule">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+definition {
+	macro configureCampaignRule {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<var method="selenium#getNumberDecrement('${rowNumber}')" name="rowIndexNumber" />
+		var rowIndexNumber = selenium.getNumberDecrement("${rowNumber}");
 
-		<if>
-			<not>
-				<equals arg1="${rowIndexNumber}" arg2="0" />
-			</not>
-			<then>
-				<var name="key_indexNumber" value="${rowIndexNumber}" />
+		if (!("${rowIndexNumber}" == "0")) {
+			var key_indexNumber = "${rowIndexNumber}";
 
-				<execute function="Click" locator1="ContentTargeting#PLUS_LINK" />
-			</then>
-		</if>
+			Click(locator1 = "ContentTargeting#PLUS_LINK");
+		}
 
-		<var name="key_rowNumber" value="${rowNumber}" />
+		var key_rowNumber = "${rowNumber}";
 
-		<execute function="Select" locator1="CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT" value1="${campaignName}" />
+		Select(
+			locator1 = "CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT",
+			value1 = "${campaignName}"
+		);
 
-		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT" />
+		Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${contentType}" />
-		</execute>
+		MenuItem.click(menuItem = "${contentType}");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<var name="key_rowEntry" value="${contentTitle}" />
+		var key_rowEntry = "${contentTitle}";
 
-		<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+		ClickNoError(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="configureOtherwiseRule">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro configureOtherwiseRule {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+		ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-		<execute function="ScrollWebElementIntoView" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+		ScrollWebElementIntoView(
+			locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
+		);
 
-		<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
-		<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT" />
+		Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${contentType}" />
-		</execute>
+		Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		MenuItem.click(menuItem = "${contentType}");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(value1 = "relative=top");
 
-		<var name="key_rowEntry" value="${contentTitle}" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+		var key_rowEntry = "${contentTitle}";
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		ClickNoError(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 
-	<command name="savePG">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(value1 = "relative=top");
+	}
 
-		<execute function="ClickNoError" locator1="Button#SAVE" />
+	macro savePG {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="Pause" locator1="3000" />
+		ClickNoError(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Pause(locator1 = "3000");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		Alert.viewSuccessMessage();
 
-	<command name="viewContentNoLongerExistsAfterDeletion">
-		<execute function="AssertTextEquals" locator1="CampaignContentDisplay#ENTRY_CONTENT" value1="The selected content no longer exists" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewPG">
-		<execute macro="ContentTargeting#expandPreview">
-			<var name="portletName" value="Campaign Content Display" />
-		</execute>
+	macro viewContentNoLongerExistsAfterDeletion {
+		AssertTextEquals(
+			locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
+			value1 = "The selected content no longer exists"
+		);
+	}
 
-		<if>
-			<isset var="viewCampaignSelected" />
-			<then>
-				<var name="key_viewEntrySelected" value="${viewCampaignSelected}" />
+	macro viewPG {
+		ContentTargeting.expandPreview(portletName = "Campaign Content Display");
 
-				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_ENTRY_SELECTED" />
-			</then>
-		</if>
+		if (isSet(viewCampaignSelected)) {
+			var key_viewEntrySelected = "${viewCampaignSelected}";
 
-		<if>
-			<isset var="previewCampaignList" />
-			<then>
-				<for list="${previewCampaignList}" param="previewEntry">
-					<execute macro="ContentTargeting#expandPreview">
-						<var name="portletName" value="Campaign Content Display" />
-					</execute>
+			AssertElementPresent(locator1 = "ContentTargeting#PREVIEW_ENTRY_SELECTED");
+		}
 
-					<var name="key_previewEntry" value="${previewEntry}" />
+		if (isSet(previewCampaignList)) {
+			for (var previewEntry : list "${previewCampaignList}") {
+				ContentTargeting.expandPreview(portletName = "Campaign Content Display");
 
-					<if>
-						<and>
-							<isset var="entryContentText" />
-							<not>
-								<equals arg1="${previewEntry}" arg2="default" />
-							</not>
-						</and>
-						<then>
-							<execute function="AssertTextEquals" locator1="CampaignContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
-						</then>
-					</if>
+				var key_previewEntry = "${previewEntry}";
 
-					<if>
-						<and>
-							<equals arg1="viewDontDisplay" arg2="true" />
-							<equals arg1="${previewEntry}" arg2="default" />
-						</and>
-						<then>
-							<execute function="AssertTextEquals" locator1="CampaignContentDisplay#ENTRY_CONTENT" value1="There are no matching rules" />
-						</then>
-					</if>
-				</for>
-			</then>
-		</if>
-	</command>
-</definition>
+				if ((isSet(entryContentText)) && (!("${previewEntry}" == "default"))) {
+					AssertTextEquals(
+						locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
+						value1 = "${entryContentText}"
+					);
+				}
+
+				if (("viewDontDisplay" == "true") && ("${previewEntry}" == "default")) {
+					AssertTextEquals(
+						locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
+						value1 = "There are no matching rules"
+					);
+				}
+			}
+		}
+	}
+}

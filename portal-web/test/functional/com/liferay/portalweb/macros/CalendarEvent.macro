@@ -1,1906 +1,1965 @@
-<definition>
-	<var name="siteName" value="Liferay" />
-
-	<command name="_expandPanel">
-		<var method="StringUtil#replace('${panelName}', ' ', '_')" name="panelNamePath" />
-		<var method="StringUtil#upperCase('${panelNamePath}')" name="panelNamePath" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED" />
-			</then>
-			<elseif>
-				<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED" />
-				<then>
-					<execute function="Click" locator1="CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED" />
-
-					<if>
-						<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED" />
-						<then>
-							<execute function="Click" locator1="CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED" />
-
-							<execute function="AssertElementPresent" locator1="CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED" />
-						</then>
-					</if>
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="_options">
-		<if>
-			<equals arg1="${optionSetValue}" arg2="viewPermission" />
-			<then>
-				<execute function="Select" locator1="Select#PERMISSIONS" value1="${viewPermissionValue}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="permissions" />
-			<then>
-				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="key_roleTitle" value="${roleTitle}" />
-
-				<execute function="Check" locator1="AssetPermissions#PERMISSIONS_CHECKBOX" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="inviteResource" />
-			<then>
-				<execute macro="CalendarEvent#inviteResource">
-					<var name="resourceNameList" value="${specificOptionSetValue}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="reminders" />
-			<then>
-				<execute macro="CalendarEvent#configureReminders" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="resourcesAvailability" />
-			<then>
-				<execute macro="CalendarEvent#viewResourcesAvailability" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="tag" />
-			<then>
-				<execute macro="CalendarEvent#tag">
-					<var name="tagText" value="${specificOptionSetValue}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="_viewNewEventIframe">
-		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#START_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#END_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
-	</command>
-
-	<command name="_viewResourcesAvailabilityEvent">
-		<var name="key_endDate" value="${endDate}" />
-		<var name="key_endDateTime" value="${endDateTime}" />
-		<var name="key_startDate" value="${startDate}" />
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR" />
-	</command>
-
-	<command name="add">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${eventType}" arg2="Regular" />
-			<then>
-				<execute macro="CalendarEvent#addRegular">
-					<var name="calendarName" value="${calendarName}" />
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="duration1" value="${duration1}" />
-					<var name="duration2" value="${duration2}" />
-					<var name="eventTitle" value="${eventTitle}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="number1" value="${number1}" />
-					<var name="number2" value="${number2}" />
-					<var name="optionSet" value="${optionSet}" />
-					<var name="optionSetValue" value="${optionSetValue}" />
-					<var name="pageName" value="${pageName}" />
-					<var name="pageStaging" value="${pageStaging}" />
-					<var name="reminders" value="${reminders}" />
-					<var name="resourcesAvailability" value="${resourcesAvailability}" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteURL" value="${siteURL}" />
-					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-					<var name="workflow" value="${workflow}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${eventType}" arg2="All Day" />
-				<then>
-					<execute macro="CalendarEvent#addAllDay">
-						<var name="calendarName" value="${calendarName}" />
-						<var name="defaultURL" value="${defaultURL}" />
-						<var name="duration1" value="${duration1}" />
-						<var name="duration2" value="${duration2}" />
-						<var name="eventTitle" value="${eventTitle}" />
-						<var name="nodePort" value="${nodePort}" />
-						<var name="number1" value="${number1}" />
-						<var name="number2" value="${number2}" />
-						<var name="optionSet" value="${optionSet}" />
-						<var name="optionSetValue" value="${optionSetValue}" />
-						<var name="pageName" value="${pageName}" />
-						<var name="pageStaging" value="${pageStaging}" />
-						<var name="reminders" value="${reminders}" />
-						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${siteName}" />
-						<var name="siteURL" value="${siteURL}" />
-						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-						<var name="workflow" value="${workflow}" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${eventType}" arg2="Repeating" />
-				<then>
-					<execute macro="CalendarEvent#addRepeating">
-						<var name="calendarName" value="${calendarName}" />
-						<var name="defaultURL" value="${defaultURL}" />
-						<var name="duration1" value="${duration1}" />
-						<var name="duration2" value="${duration2}" />
-						<var name="eventTitle" value="${eventTitle}" />
-						<var name="frequency" value="${frequency}" />
-						<var name="nodePort" value="${nodePort}" />
-						<var name="number1" value="${number1}" />
-						<var name="number2" value="${number2}" />
-						<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-						<var name="optionSet" value="${optionSet}" />
-						<var name="optionSetValue" value="${optionSetValue}" />
-						<var name="pageName" value="${pageName}" />
-						<var name="pageStaging" value="${pageStaging}" />
-						<var name="reminders" value="${reminders}" />
-						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${siteName}" />
-						<var name="siteURL" value="${siteURL}" />
-						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-						<var name="workflow" value="${workflow}" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${eventCommentEnabled}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#addComment">
-					<var name="calendarName" value="${calendarName}" />
-					<var name="endDate" value="${endDate}" />
-					<var name="endDateTime" value="${endDateTime}" />
-					<var name="eventComment" value="${eventComment}" />
-					<var name="eventCommentList" value="${eventCommentList}" />
-					<var name="eventTitle" value="${eventTitle}" />
-					<var name="eventType" value="${eventType}" />
-					<var name="startDate" value="${startDate}" />
-					<var name="startDateTime" value="${startDateTime}" />
-					<var name="user" value="${user}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="addAllDay">
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<var name="endDateTime" value="11:59 PM" />
-		<var name="startDateTime" value="12:00 AM" />
-
-		<execute function="Check" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-
-		<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-		<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="${calendarName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${optionSet}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#_options">
-					<var name="optionSetValue" value="${optionSetValue}" />
-					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${reminders}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#configureReminders">
-					<var name="duration1" value="${duration1}" />
-					<var name="duration2" value="${duration2}" />
-					<var name="number1" value="${number1}" />
-					<var name="number2" value="${number2}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${workflow}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-			<else>
-				<execute macro="CalendarEvent#publish" />
-			</else>
-		</if>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="${pageName}" />
-					<var name="siteName" value="${siteName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${siteURL}" arg2="true" />
-				<then>
-					<execute macro="Navigator#gotoSitePage">
-						<var name="pageName" value="${pageName}" />
-						<var name="siteName" value="${siteName}" />
-					</execute>
-				</then>
-			</elseif>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="${pageName}" />
-				</execute>
-			</else>
-		</if>
-
-		<var name="key_endDate" value="${endDate}" />
-		<var name="key_endDateTime" value="${endDateTime}" />
-		<var name="key_startDate" value="${startDate}" />
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<if>
-			<equals arg1="${reminders}" arg2="true" />
-			<then>
-				<if>
-					<not>
-						<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
-					</not>
-					<then>
-						<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
-					</then>
-				</if>
-
-				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
-				<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER" value1="${eventTitle}" />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY" />
-				<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE" value1="${eventTitle}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="addComment">
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${calendarName}" />
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-		</execute>
-
-		<if>
-			<isset var="eventCommentList" />
-			<then>
-				<for list="${eventCommentList}" param="eventComment">
-					<execute macro="Comments#addComment">
-						<var name="entryComment" value="${eventComment}" />
-					</execute>
-				</for>
-			</then>
-			<else>
-				<execute macro="Comments#addComment">
-					<var name="entryComment" value="${eventComment}" />
-				</execute>
-			</else>
-		</if>
-
-		<if>
-			<isset var="eventCommentList" />
-			<then>
-				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_entryComment" value="${eventComment}" />
-					<var name="key_userFullName" value="${user}" />
-
-					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
-					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
-				</for>
-			</then>
-			<else>
-				<var name="key_entryComment" value="${eventComment}" />
-				<var name="key_userFullName" value="${user}" />
-
-				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
-				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="addPGViaAP">
-		<execute macro="AssetPublisherPortlet#addAsset">
-			<var name="assetType" value="Calendar Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#_viewNewEventIframe" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-	</command>
-
-	<command name="addRegular">
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertNotChecked" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-		<execute function="AssertNotChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE_TIME')" name="endDateTime" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE_TIME')" name="startDateTime" />
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="${calendarName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${optionSet}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#_options">
-					<var name="optionSetValue" value="${optionSetValue}" />
-					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${resourcesAvailability}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#viewResourcesAvailability" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${reminders}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#configureReminders">
-					<var name="duration1" value="${duration1}" />
-					<var name="duration2" value="${duration2}" />
-					<var name="number1" value="${number1}" />
-					<var name="number2" value="${number2}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${workflow}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-			<else>
-				<execute macro="CalendarEvent#publish" />
-			</else>
-		</if>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="${pageName}" />
-					<var name="siteName" value="${siteName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${siteURL}" arg2="true" />
-				<then>
-					<execute macro="Navigator#gotoSitePage">
-						<var name="pageName" value="${pageName}" />
-						<var name="siteName" value="${siteName}" />
-					</execute>
-				</then>
-			</elseif>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="${pageName}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
-			<var name="endDate" value="${endDate}" />
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="startDate" value="${startDate}" />
-			<var name="startDateTime" value="${startDateTime}" />
-		</execute>
-	</command>
-
-	<command name="addRepeating">
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE_TIME')" name="endDateTime" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE_TIME')" name="startDateTime" />
-
-		<execute macro="CalendarEvent#setRepeating">
-			<var name="frequency" value="${frequency}" />
-			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="${calendarName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${optionSet}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#_options">
-					<var name="optionSetValue" value="${optionSetValue}" />
-					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${reminders}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#configureReminders">
-					<var name="duration1" value="${duration1}" />
-					<var name="duration2" value="${duration2}" />
-					<var name="number1" value="${number1}" />
-					<var name="number2" value="${number2}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${workflow}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-			<else>
-				<execute macro="CalendarEvent#publish" />
-			</else>
-		</if>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="${pageName}" />
-					<var name="siteName" value="${siteName}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${siteURL}" arg2="true" />
-				<then>
-					<execute macro="Navigator#gotoSitePage">
-						<var name="pageName" value="${pageName}" />
-						<var name="siteName" value="${siteName}" />
-					</execute>
-				</then>
-			</elseif>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="${pageName}" />
-				</execute>
-			</else>
-		</if>
-
-		<var name="key_endDate" value="${endDate}" />
-		<var name="key_endDateTime" value="${endDateTime}" />
-		<var name="key_startDate" value="${startDate}" />
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<if>
-			<not>
-				<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
-			</not>
-			<then>
-				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_REPEAT_TITLE" value1="${eventTitle}" />
-	</command>
-
-	<command name="addRSVP">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-
-		<var name="key_rsvp" value="${rsvp}" />
-
-		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" value1="${rsvp}" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
-			<then>
-				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
-			</then>
-		</if>
-
-		<execute macro="CalendarScheduler#viewRSVP">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="rsvp" value="${rsvp}" />
-		</execute>
-	</command>
-
-	<command name="addViaDayView">
-		<if>
-			<isset var="eventBlock" />
-			<then>
-				<execute macro="CalendarScheduler#addViaDayViewDragAndDrop" />
-			</then>
-			<else>
-				<execute macro="CalendarScheduler#gotoAddViaDayView" />
-			</else>
-		</if>
-
-		<execute macro="CalendarScheduler#editTitle">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#saveEvent" />
-	</command>
-
-	<command name="assertEventNotEditable">
-		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" />
-	</command>
-
-	<command name="clickPublish">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
-	</command>
-
-	<command name="compareEventDateAndTimeToResourcesAvailabilityDateAndTime">
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#END_DATE_TIME')" name="endDateTime" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE_TIME')" name="startDateTime" />
-
-		<execute macro="CalendarEvent#_viewResourcesAvailabilityEvent">
-			<var name="endDate" value="${endDate}" />
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="startDate" value="${startDate}" />
-			<var name="startDateTime" value="${startDateTime}" />
-		</execute>
-	</command>
-
-	<command name="configureReminders">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Reminders" />
-		</execute>
-
-		<execute function="Check" locator1="CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_1" />
-		<execute function="Check" locator1="CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_2" />
-
-		<execute function="Type" locator1="CalendarEditEvent#REMINDERS_VALUE_INPUT_ACTIVE_1" value1="${number1}" />
-		<execute function="Type" locator1="CalendarEditEvent#REMINDERS_VALUE_INPUT_ACTIVE_2" value1="${number2}" />
-
-		<execute function="Select" locator1="CalendarEditEvent#REMINDERS_DURATION_SELECT_ACTIVE_1" value1="${duration1}" />
-		<execute function="Select" locator1="CalendarEditEvent#REMINDERS_DURATION_SELECT_ACTIVE_2" value1="${duration2}" />
-
-		<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#REMINDERS_VALUE_INPUT_INACTIVE_1" />
-		<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#REMINDERS_VALUE_INPUT_INACTIVE_2" />
-		<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#REMINDERS_DURATION_SELECT_INACTIVE_1" />
-		<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#REMINDERS_DURATION_SELECT_INACTIVE_2" />
-	</command>
-
-	<command name="delete">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
-		</execute>
-
-		<var name="i" value="1" />
-
-		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
-			<then>
-				<execute function="Click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
-
-				<if>
-					<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
-					<then>
-						<var method="MathUtil#sum('${i}', '1')" name="i" />
-
-						<execute function="Click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
-					</then>
-					<else>
-						<if>
-							<condition function="IsElementPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
-							<then>
-
-								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
-							</then>
-							<elseif>
-								<condition function="IsTextEqual" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="—" />
-								<then>
-
-									<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-									<execute function="AssertConfirm#waitForConfirmation" value1="Would you like to delete this event?" />
-								</then>
-							</elseif>
-							<else>
-
-								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-								<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-							</else>
-						</if>
-					</else>
-				</if>
-			</then>
-		</while>
-
-		<execute function="AssertTextEquals" locator1="CalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
-		<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_GENERIC" />
-		<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_REPEATING" />
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-	</command>
-
-	<command name="deleteRepeatingEventViaAgendaView">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
-		</execute>
-
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<if>
-			<or>
-				<equals arg1="${deleteOptionSet}" arg2="Entire Series" />
-				<equals arg1="${deleteOptionSet}" arg2="Single Event" />
-			</or>
-			<then>
-				<execute function="AssertClick" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" value1="${eventTitle}" />
-			</then>
-			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="Following Events" />
-				<then>
-					<execute function="AssertClick" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" value1="${eventTitle}" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
-
-		<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-		<if>
-			<equals arg1="${deleteOptionSet}" arg2="Entire Series" />
-			<then>
-				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
-
-				<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" />
-				<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" />
-			</then>
-			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="Following Events" />
-				<then>
-					<execute function="AssertClick" locator1="CalendarEditEvent#FOLLOWING_EVENTS_BUTTON" value1="Following Events" />
-
-					<execute function="AssertElementPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" />
-					<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="Single Event" />
-				<then>
-					<execute function="AssertClick" locator1="CalendarEditEvent#SINGLE_EVENT_BUTTON" value1="Single Event" />
-
-					<execute function="AssertElementPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" />
-					<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="Refresh" />
-	</command>
-
-	<command name="deleteSpecific">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<if>
-			<condition function="IsTextEqual" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="—" />
-			<then>
-				<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-				<execute function="AssertConfirm#waitForConfirmation" value1="Would you like to delete this event?" />
-			</then>
-			<else>
-				<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-
-				<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-			</else>
-		</if>
-
-		<var method="DateUtil#getCurrentDayOfWeek()" name="currentDay" />
-		<var method="DateUtil#getCurrentHour()" name="currentHour" />
-
-		<echo message=" The current day is: ${currentDay} " />
-
-		<echo message=" The current hour is: ${currentHour} " />
-
-		<if>
-			<and>
-				<equals arg1="${currentDay}" arg2="Saturday" />
-				<equals arg1="${currentHour}" arg2="6" />
-			</and>
-			<then>
-				<execute function="Refresh" />
-			</then>
-		</if>
-
-		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="edit">
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-		</execute>
-
-		<if>
-			<isset var="endDateTimeEdit" />
-			<then>
-				<var name="endDateTime" value="${endDateTimeEdit}" />
-			</then>
-			<else>
-				<var name="endDateTime" value="09:30 AM" />
-			</else>
-		</if>
-
-		<if>
-			<isset var="startDateTimeEdit" />
-			<then>
-				<var name="startDateTime" value="${startDateTimeEdit}" />
-			</then>
-			<else>
-				<var name="startDateTime" value="08:30 AM" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${eventType}" arg2="All Day" />
-			<then>
-				<var name="endDateTime" value="11:59 PM" />
-				<var name="startDateTime" value="12:00 AM" />
-
-				<execute function="AssertChecked" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-				<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-				<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-				<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-				<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-
-				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
-
-				<execute macro="PortletEntry#inputTitle">
-					<var name="title" value="${eventTitleEdit}" />
-				</execute>
-
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
-
-				<if>
-					<equals arg1="${optionSet}" arg2="true" />
-					<then>
-						<execute macro="CalendarEvent#_options">
-							<var name="optionSetValue" value="${optionSetValue}" />
-							<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-						</execute>
-					</then>
-				</if>
-			</then>
-			<elseif>
-				<equals arg1="${eventType}" arg2="Regular" />
-				<then>
-					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
-
-					<execute macro="PortletEntry#inputTitle">
-						<var name="title" value="${eventTitleEdit}" />
-					</execute>
-
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-					<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-					<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-
-					<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
-
-					<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
-
-					<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
-
-					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-					<if>
-						<equals arg1="${optionSet}" arg2="true" />
-						<then>
-							<execute macro="CalendarEvent#_options">
-								<var name="optionSetValue" value="${optionSetValue}" />
-								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-							</execute>
-						</then>
-					</if>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${eventType}" arg2="Repeating" />
-				<then>
-					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
-
-					<execute macro="PortletEntry#inputTitle">
-						<var name="title" value="${eventTitleEdit}" />
-					</execute>
-
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
-					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-					<var method="selenium#getElementValue('CalendarEditEvent#END_DATE')" name="endDate" />
-					<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="startDate" />
-
-					<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
-
-					<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
-
-					<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
-
-					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-					<execute function="AssertChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="Daily, 1 Times" />
-
-					<if>
-						<equals arg1="${optionSet}" arg2="true" />
-						<then>
-							<execute macro="CalendarEvent#_options">
-								<var name="optionSetValue" value="${optionSetValue}" />
-								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
-							</execute>
-						</then>
-					</if>
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
-			<then>
-				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${optionSetValue}" arg2="inviteResource" />
-			<then>
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" />
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="You are about to make changes that will only affect your calendar (${calendarName})." />
-
-				<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
-			</then>
-		</if>
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<var name="key_eventTitle" value="${eventTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitleEdit}" />
-	</command>
-
-	<command name="editTitle">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="gotoConfigureInvitations">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Invitations" />
-		</execute>
-	</command>
-
-	<command name="gotoConfigureRelatedAssets">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Related Assets" />
-		</execute>
-	</command>
-
-	<command name="gotoRepeatConfiguration">
-		<execute function="Click" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-	</command>
-
-	<command name="inviteResource">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Invitations" />
-		</execute>
-
-		<for list="${resourceNameList}" param="resourceName">
-			<execute function="Type" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
-
-			<var name="key_resource" value="${resourceName}" />
-
-			<execute function="Click" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" value1="${resourceName}" />
-
-			<execute macro="CalendarEvent#viewRSVPPending">
-				<var name="resourceName" value="${resourceName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="publish">
-		<execute macro="CalendarEvent#clickPublish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="publishRepeating">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
-
-		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />
-
-		<var method="StringUtil#upperCase('${saveOptionPath}')" name="saveOptionPath" />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="publishWithUserNotification">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" />
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="resizeViaEventBlock">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-
-		<execute function="SikuliDragAndDrop" locator1="Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON" value1="0,100" />
-	</command>
-
-	<command name="saveEventUserInvite">
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" />
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
-	</command>
-
-	<command name="saveEventUserInviteCancel">
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" />
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#DO_NOT_CHANGE_THE_EVENT_BUTTON" value1="Do not change the event." />
-	</command>
-
-	<command name="selectCalendar">
-		<if>
-			<isset var="calendarName" />
-			<then>
-				<execute macro="CalendarEvent#_expandPanel">
-					<var name="panelName" value="Details" />
-				</execute>
-
-				<execute function="Select" locator1="CalendarEditEvent#DETAILS_CALENDAR_SELECT" value1="${calendarName}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="selectEventIframe">
-		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
-	</command>
-
-	<command name="selectRepeatFrequency">
-		<execute function="Select" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
-
-		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
-	</command>
-
-	<command name="selectTimes">
-		<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
-
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME_OPTION" />
-
-		<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-		<var name="key_endDateTime" value="${endDateTime}" />
-
-		<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME_OPTION" />
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="startDateTime" value="${startDateTime}" />
-		</execute>
-	</command>
-
-	<command name="setAllDay">
-		<execute function="Check" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-		<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-		<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
-	</command>
-
-	<command name="setDates">
-		<execute function="Type" locator1="CalendarEditEvent#START_DATE" value1="${startDate}" />
-		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
-	</command>
-
-	<command name="setDatesToday">
-		<var method="selenium#getElementValue('CalendarEditEvent#START_DATE')" name="endDate" />
-
-		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
-	</command>
-
-	<command name="setEndDate">
-		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
-	</command>
-
-	<command name="setEndDateTomorrow">
-		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
-
-		<var method="selenium#getText('CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED')" name="daySelected" />
-
-		<var method="MathUtil#sum('${daySelected}', '1')" name="tomorrow" />
-
-		<var name="key_daySpecific" value="${tomorrow}" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			</then>
-			<else>
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_NEXT_MONTH_BUTTON" />
-
-				<var name="key_daySpecific" value="1" />
-
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			</else>
-		</if>
-	</command>
-
-	<command name="setRepeating">
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
-
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="${frequency}" />
-		</execute>
-
-		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
-
-		<if>
-			<equals arg1="${frequency}" arg2="Monthly" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="numberOfOccurrences" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO" />
-
-				<execute function="Type" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="endOnDate" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_ON_RADIO" />
-
-				<execute function="Type#clickAtType" locator1="CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD" value1="${endOnDate}" />
-			</then>
-		</if>
-
-		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
-
-		<if>
-			<equals arg1="${frequency}" arg2="Monthly" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}" />
-
-				<var method="selenium#getElementValue('CalendarEditEvent#REPEAT_MONTHLY_CURRENT_DAY')" name="currentDay" />
-				<var method="StringUtil#lowerCase('${currentDay}')" name="currentDay" />
-				<var method="StringUtil#upperCaseFirstLetter('${currentDay}')" name="currentDay" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${currentDay}" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${numberOfOccurrences} Times" />
-
-				<execute macro="CalendarEvent#viewRepeatingMonthPosition" />
-
-				<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-			</then>
-			<elseif>
-				<equals arg1="${frequency}" arg2="Weekly" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}" />
-
-					<var method="selenium#getElementValue('CalendarEditEvent#REPEAT_WEEKLY_CURRENT_DAY')" name="currentDay" />
-					<var method="StringUtil#lowerCase('${currentDay}')" name="currentDay" />
-					<var method="StringUtil#upperCaseFirstLetter('${currentDay}')" name="currentDay" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${currentDay}" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${numberOfOccurrences} Times" />
-
-					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-				</then>
-			</elseif>
-			<elseif>
-				<isset var="numberOfOccurrences" />
-				<then>
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, ${numberOfOccurrences} Times" />
-
-					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency}, ${numberOfOccurrences} Times" />
-				</then>
-			</elseif>
-			<elseif>
-				<isset var="endOnDate" />
-				<then>
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, Until ${endOnDateSummary}" />
-
-					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency}, Until ${endOnDateSummary}" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-			</else>
-		</if>
-
-		<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-	</command>
-
-	<command name="setRepeatingYearly">
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
-
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="Yearly" />
-		</execute>
-
-		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
-
-		<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
-
-		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
-
-		<if>
-			<condition function="IsTextEqual" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
-			<then>
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummaryPreviousDay}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
-
-		<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-	</command>
-
-	<command name="setTimes">
-		<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
-		<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="startDateTime" value="${startDateTime}" />
-		</execute>
-	</command>
-
-	<command name="tag">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Categorization" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" />
-
-		<if>
-			<isset var="tagTextList" />
-			<then>
-				<for list="${tagTextList}" param="tagText">
-					<var name="key_tagText" value="${tagText}" />
-
-					<execute function="Type#typePause" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
-
-					<execute function="AssertClick" locator1="CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
-
-					<execute function="AssertTextEquals" locator1="CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
-				</for>
-			</then>
-			<else>
-				<var name="key_tagText" value="${tagText}" />
-
-				<execute function="Type#typePause" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
-
-				<execute function="AssertClick" locator1="CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
-
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="tearDown">
-		<if>
-			<equals arg1="${marketplace}" arg2="true" />
-			<then>
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Build" />
-					<var name="panel" value="Site Administration" />
-					<var name="portlet" value="Pages" />
-				</execute>
-
-				<execute macro="SitePages#addPublicPage">
-					<var name="pageName" value="Marketplace Calendar Testing" />
-				</execute>
-
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Marketplace Calendar Testing" />
-				</execute>
-
-				<execute macro="Portlet#addPG">
-					<var name="i" value="${i}" />
-					<var name="pageName" value="Marketplace Calendar Testing" />
-					<var name="portletName" value="Calendar" />
-				</execute>
-
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Marketplace Calendar Testing" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="CalendarEvent#delete" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="view">
-		<var name="eventTitle" value="${eventTitle}" />
-
-		<execute macro="CalendarScheduler#viewDay">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewWeek">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="frequency" value="${frequency}" />
-			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewMonth">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="frequency" value="${frequency}" />
-			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewAgenda">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-	</command>
-
-	<command name="viewAllDay">
-		<for list="Day,Week,Month" param="viewType">
-			<execute macro="CalendarNavigator#gotoView">
-				<var name="viewType" value="${viewType}" />
-			</execute>
-
-			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW">
-				<var name="key_eventTitle" value="${eventTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="CalendarScheduler#viewAgenda">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="viewApprovedEventRSVPButtons">
-		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#MAYBE_BUTTON" value1="Maybe" />
-		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#DECLINE_BUTTON" value1="Decline" />
-	</command>
-
-	<command name="viewApprovedRSVP">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE">
-			<var name="key_rsvp" value="${rsvp}" />
-		</execute>
-	</command>
-
-	<command name="viewAvailableCalendars">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Details" />
-		</execute>
-
-		<for list="${availableCalendarList}" param="availableCalendarName">
-			<var name="key_calendarName" value="${availableCalendarName}" />
-
-			<execute function="AssertElementPresent" locator1="CalendarEditEvent#DETAILS_CALENDAR_SELECT_OPTION" />
-		</for>
-	</command>
-
-	<command name="viewComment">
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${calendarName}" />
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-		</execute>
-
-		<if>
-			<isset var="eventCommentList" />
-			<then>
-				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_entryComment" value="${eventComment}" />
-					<var name="key_userFullName" value="${user}" />
-
-					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
-					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
-				</for>
-			</then>
-			<else>
-				<var name="key_entryComment" value="${eventComment}" />
-				<var name="key_userFullName" value="${user}" />
-
-				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
-				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${eventComment}" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewDetails">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#_viewCalendarViaDialogBox">
-			<var name="calendarName" value="${calendarName}" />
-			<var name="schedulerEventDialogBox" value="${schedulerEventDialogBox}" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewTitleViaDetails">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="viewDetailsInPortlet">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${eventTitle}" />
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="${calendarName}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#START_DATE_FIELD" />
-		<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#END_DATE_FIELD" />
-
-		<if>
-			<isset var="relatedAssetTitle" />
-			<then>
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#ASSET_TITLE" value1="${relatedAssetTitle}" />
-			</then>
-		</if>
-
-		<execute macro="CalendarEvent#viewApprovedEventRSVPButtons" />
-	</command>
-
-	<command name="viewDetailsResources">
-		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#RESOURCES_FIELD" value1="${calendarName}" />
-	</command>
-
-	<command name="viewDetailsTags">
-		<if>
-			<isset var="tagTextList" />
-			<then>
-				<for list="${tagTextList}" param="tagText">
-					<var name="key_tagText" value="${tagText}" />
-
-					<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#TAGS_LABEL" />
-					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#TAGS_TAG_SPECIFIC" value1="Tags: ${tagText}" />
-				</for>
-			</then>
-			<else>
-				<var name="key_tagText" value="${tagText}" />
-
-				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#TAGS_LABEL" />
-				<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#TAGS_TAG_SPECIFIC" value1="Tags: ${tagText}" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewEventNotToday">
-		<for list="Day,Week,Month" param="viewType">
-			<execute macro="CalendarNavigator#gotoView">
-				<var name="viewType" value="${viewType}" />
-			</execute>
-
-			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY">
-				<var name="key_eventTitle" value="${eventTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="CalendarScheduler#viewAgenda">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-		</execute>
-	</command>
-
-	<command name="viewInvitationResourceNotPresent">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Invitations" />
-		</execute>
-
-		<for list="${resourceNameList}" param="resourceName">
-			<execute function="Type" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
-
-			<var name="key_resource" value="${resourceName}" />
-
-			<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" />
-		</for>
-	</command>
-
-	<command name="viewInvitedEventWithWorkflow">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" />
-
-		<execute macro="CalendarScheduler#viewNoRSVP">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="viewInvitedUserRSVPWithApprovedWorkflow">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
-
-		<execute macro="CalendarEvent#viewInvitedEventWithWorkflow">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="userCalendarName" value="${userCalendarName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
-	</command>
-
-	<command name="viewNoRepeating">
-		<execute function="AssertNotVisible" locator1="CalendarEditEvent#REPEAT_SUMMARY" />
-		<execute function="AssertNotChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-	</command>
-
-	<command name="viewNotPresentViaAgendaView">
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]" />
-	</command>
-
-	<command name="viewNoUserInviteWithUnapprovedWorkflow">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
-
-		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
-	</command>
-
-	<command name="viewRepeatingEventErrorMessage">
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The last repeating date should come after the event start date." />
-	</command>
-
-	<command name="viewRepeatingEventViaViewDetails">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${eventTitle}" />
-
-		<if>
-			<equals arg1="${frequency}" arg2="Daily" />
-			<then>
-				<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Daily, ${numberOfOccurrences} Times" />
-			</then>
-			<elseif>
-				<equals arg1="${frequency}" arg2="Weekly" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on " />
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1=", ${numberOfOccurrences} Times" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${frequency}" arg2="Yearly" />
-				<then>
-					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${yearlyRecurrenceSummary}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${frequency}" arg2="Monthly" />
-				<then>
-					<var method="DateUtil#getCurrentDayOfWeek()" name="today" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Monthly" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${numberOfOccurrences} Times" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${today}" />
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="viewRepeatingMonthPosition">
-		<var method="selenium#getElementValue('CalendarEditEvent#REPEAT_MONTHLY_CURRENT_MONTH_POSITION')" name="repeatingMonthPosition" />
-
-		<if>
-			<equals arg1="${repeatingMonthPosition}" arg2="1" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="First" />
-			</then>
-			<elseif>
-				<equals arg1="${repeatingMonthPosition}" arg2="2" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Second" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${repeatingMonthPosition}" arg2="3" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Third" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${repeatingMonthPosition}" arg2="4" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Fourth" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${repeatingMonthPosition}" arg2="-1" />
-				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Last" />
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="viewRepeatWeekStartDay">
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
-	</command>
-
-	<command name="viewResourcesAvailability">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Resources Availability" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
-	</command>
-
-	<command name="viewRSVPAccepted">
-		<var name="key_resource" value="${resourceName}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_ACCEPTED" value1="${resourceName}" />
-	</command>
-
-	<command name="viewRSVPDeclined">
-		<var name="key_resource" value="${resourceName}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_DECLINED" value1="${resourceName}" />
-	</command>
-
-	<command name="viewRSVPMaybe">
-		<var name="key_resource" value="${resourceName}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_MAYBE" value1="${resourceName}" />
-	</command>
-
-	<command name="viewRSVPPending">
-		<var name="key_resource" value="${resourceName}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_PENDING" value1="${resourceName}" />
-	</command>
-
-	<command name="viewSiteCalendarEventNotPresent">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" />
-
-		<var name="key_endDateTime" value="${endDateTime}" />
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_EVENT_TIMES" />
-	</command>
-
-	<command name="viewSiteCalendarEventWithDefaultPermissions">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${siteName}'s Calendars" />
-
-		<var name="key_endDateTime" value="${endDateTime}" />
-		<var name="key_startDateTime" value="${startDateTime}" />
-
-		<execute function="Click" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_EVENT_TIMES" />
-
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_CALENDAR_NAME" value1="${calendarName}" />
-		<execute function="AssertNotVisible" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-	</command>
-
-	<command name="viewSiteRSVPWithApprovedWorkflow">
-		<var name="key_userCalendarName" value="${userCalendarName}" />
-
-		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_CALENDAR" value1="${userCalendarName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS" />
-
-		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_CALENDAR" value1="${userCalendarName}" />
-	</command>
-
-	<command name="viewSiteRSVPWithUnapprovedWorkflow">
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" />
-
-		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS" />
-	</command>
-
-	<command name="viewStatusViaDetails">
-		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#STATUS" value1="${status}" />
-	</command>
-
-	<command name="viewTimes">
-		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
-		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
-	</command>
-
-	<command name="viewTimes24Hour">
-		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#START_DATE_TIME_24_HOUR" value1="${startDateTime}" />
-		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#END_DATE_TIME_24_HOUR" value1="${endDateTime}" />
-	</command>
-
-	<command name="viewTimesViaDetails">
-		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
-	</command>
-
-	<command name="viewTitle">
-		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
-	</command>
-
-	<command name="viewTitleViaDetails">
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${eventTitle}" />
-	</command>
-
-	<command name="viewUnavailableCalendarsNotPresent">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Details" />
-		</execute>
-
-		<for list="${unavailableCalendarList}" param="unavailableCalendarName">
-			<var name="key_calendarName" value="${unavailableCalendarName}" />
-
-			<execute function="AssertElementNotPresent" locator1="CalendarEditEvent#DETAILS_CALENDAR_SELECT_OPTION" />
-		</for>
-	</command>
-
-	<command name="viewUsers">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#_selectSpecificEventCurrentDay">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventUsersViaDialogBox">
-			<var name="user" value="${user}" />
-			<var name="usersList" value="${usersList}" />
-		</execute>
-	</command>
-
-	<command name="viewViaAgendaView">
-		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]" />
-	</command>
-
-	<command name="viewViaAssetPublisher">
-		<var name="key_assetTitle" value="${eventTitle}" />
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${eventTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${calendarName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Resources:" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Starts:" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Ends:" />
-	</command>
-
-	<command name="viewYearly">
-		<for list="Day,Week,Month" param="viewType">
-			<execute macro="CalendarNavigator#gotoView">
-				<var name="viewType" value="${viewType}" />
-			</execute>
-
-			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW">
-				<var name="key_eventTitle" value="${eventTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="CalendarScheduler#viewAgenda">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-</definition>
+definition {
+	var siteName = "Liferay";
+
+	macro _expandPanel {
+		var panelNamePath = StringUtil.replace("${panelName}", " ", "_");
+		var panelNamePath = StringUtil.upperCase("${panelNamePath}");
+
+		if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED")) {
+			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
+
+			AssertElementPresent(
+				locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED"
+			);
+		}
+		else if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED")) {
+			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
+
+			if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED")) {
+				Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
+
+				AssertElementPresent(
+					locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED"
+				);
+			}
+		}
+	}
+
+	macro _options {
+		if ("${optionSetValue}" == "viewPermission") {
+			Select(locator1 = "Select#PERMISSIONS", value1 = "${viewPermissionValue}");
+		}
+
+		if ("${optionSetValue}" == "permissions") {
+			var key_permissionDefinitionKey = "${permissionDefinitionKey}";
+			var key_roleTitle = "${roleTitle}";
+
+			Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+		}
+
+		if ("${optionSetValue}" == "inviteResource") {
+			CalendarEvent.inviteResource(resourceNameList = "${specificOptionSetValue}");
+		}
+
+		if ("${optionSetValue}" == "reminders") {
+			CalendarEvent.configureReminders();
+		}
+
+		if ("${optionSetValue}" == "resourcesAvailability") {
+			CalendarEvent.viewResourcesAvailability();
+		}
+
+		if ("${optionSetValue}" == "tag") {
+			CalendarEvent.tag(tagText = "${specificOptionSetValue}");
+		}
+	}
+
+	macro _viewNewEventIframe {
+		AssertElementPresent.assertVisible(locator1 = "CalendarEditEvent#START_DATE");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "CalendarEditEvent#START_DATE_TIME"
+		);
+
+		AssertElementPresent.assertVisible(locator1 = "CalendarEditEvent#END_DATE");
+
+		AssertElementPresent.assertVisible(locator1 = "CalendarEditEvent#END_DATE_TIME");
+	}
+
+	macro _viewResourcesAvailabilityEvent {
+		var key_endDate = "${endDate}";
+		var key_endDateTime = "${endDateTime}";
+		var key_startDate = "${startDate}";
+		var key_startDateTime = "${startDateTime}";
+
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR"
+		);
+	}
+
+	macro add {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		if ("${eventType}" == "Regular") {
+			CalendarEvent.addRegular(
+				calendarName = "${calendarName}",
+				defaultURL = "${defaultURL}",
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				eventTitle = "${eventTitle}",
+				nodePort = "${nodePort}",
+				number1 = "${number1}",
+				number2 = "${number2}",
+				optionSet = "${optionSet}",
+				optionSetValue = "${optionSetValue}",
+				pageName = "${pageName}",
+				pageStaging = "${pageStaging}",
+				reminders = "${reminders}",
+				resourcesAvailability = "${resourcesAvailability}",
+				siteName = "${siteName}",
+				siteURL = "${siteURL}",
+				specificOptionSetValue = "${specificOptionSetValue}",
+				workflow = "${workflow}"
+			);
+		}
+		else if ("${eventType}" == "All Day") {
+			CalendarEvent.addAllDay(
+				calendarName = "${calendarName}",
+				defaultURL = "${defaultURL}",
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				eventTitle = "${eventTitle}",
+				nodePort = "${nodePort}",
+				number1 = "${number1}",
+				number2 = "${number2}",
+				optionSet = "${optionSet}",
+				optionSetValue = "${optionSetValue}",
+				pageName = "${pageName}",
+				pageStaging = "${pageStaging}",
+				reminders = "${reminders}",
+				resourcesAvailability = "${resourcesAvailability}",
+				siteName = "${siteName}",
+				siteURL = "${siteURL}",
+				specificOptionSetValue = "${specificOptionSetValue}",
+				workflow = "${workflow}"
+			);
+		}
+		else if ("${eventType}" == "Repeating") {
+			CalendarEvent.addRepeating(
+				calendarName = "${calendarName}",
+				defaultURL = "${defaultURL}",
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				eventTitle = "${eventTitle}",
+				frequency = "${frequency}",
+				nodePort = "${nodePort}",
+				number1 = "${number1}",
+				number2 = "${number2}",
+				numberOfOccurrences = "${numberOfOccurrences}",
+				optionSet = "${optionSet}",
+				optionSetValue = "${optionSetValue}",
+				pageName = "${pageName}",
+				pageStaging = "${pageStaging}",
+				reminders = "${reminders}",
+				resourcesAvailability = "${resourcesAvailability}",
+				siteName = "${siteName}",
+				siteURL = "${siteURL}",
+				specificOptionSetValue = "${specificOptionSetValue}",
+				workflow = "${workflow}"
+			);
+		}
+
+		if ("${eventCommentEnabled}" == "true") {
+			CalendarEvent.addComment(
+				calendarName = "${calendarName}",
+				endDate = "${endDate}",
+				endDateTime = "${endDateTime}",
+				eventComment = "${eventComment}",
+				eventCommentList = "${eventCommentList}",
+				eventTitle = "${eventTitle}",
+				eventType = "${eventType}",
+				startDate = "${startDate}",
+				startDateTime = "${startDateTime}",
+				user = "${user}"
+			);
+		}
+	}
+
+	macro addAllDay {
+		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
+
+		var endDateTime = "11:59 PM";
+		var startDateTime = "12:00 AM";
+
+		Check(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
+
+		AssertNotVisible(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+		AssertNotVisible(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+
+		CalendarEvent.selectCalendar(calendarName = "${calendarName}");
+
+		if ("${optionSet}" == "true") {
+			CalendarEvent._options(
+				optionSetValue = "${optionSetValue}",
+				specificOptionSetValue = "${specificOptionSetValue}"
+			);
+		}
+
+		if ("${reminders}" == "true") {
+			CalendarEvent.configureReminders(
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				number1 = "${number1}",
+				number2 = "${number2}"
+			);
+		}
+
+		if ("${workflow}" == "true") {
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+				value1 = "Submit for Publication"
+			);
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			CalendarEvent.publish();
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		if ("${pageStaging}" == "true") {
+			Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else if ("${siteURL}" == "true") {
+			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		var key_endDate = "${endDate}";
+		var key_endDateTime = "${endDateTime}";
+		var key_startDate = "${startDate}";
+		var key_startDateTime = "${startDateTime}";
+
+		if ("${reminders}" == "true") {
+			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER"))) {
+				Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
+			}
+
+			AssertElementPresent(
+				locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER"
+			);
+
+			AssertTextEquals(
+				locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER",
+				value1 = "${eventTitle}"
+			);
+		}
+		else {
+			AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY");
+
+			AssertTextEquals(
+				locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE",
+				value1 = "${eventTitle}"
+			);
+		}
+	}
+
+	macro addComment {
+		CalendarEvent.viewDetails(
+			calendarName = "${calendarName}",
+			eventTitle = "${eventTitle}",
+			eventType = "${eventType}"
+		);
+
+		if (isSet(eventCommentList)) {
+			for (var eventComment : list "${eventCommentList}") {
+				Comments.addComment(entryComment = "${eventComment}");
+			}
+		}
+		else {
+			Comments.addComment(entryComment = "${eventComment}");
+		}
+
+		if (isSet(eventCommentList)) {
+			for (var eventComment : list "${eventCommentList}") {
+				var key_entryComment = "${eventComment}";
+				var key_userFullName = "${user}";
+
+				AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${user} (You)");
+
+				AssertTextEquals(
+					locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+					value1 = "${eventComment}"
+				);
+			}
+		}
+		else {
+			var key_entryComment = "${eventComment}";
+			var key_userFullName = "${user}";
+
+			AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${user} (You)");
+
+			AssertTextEquals(
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+				value1 = "${eventComment}"
+			);
+		}
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro addPGViaAP {
+		AssetPublisherPortlet.addAsset(assetType = "Calendar Event");
+
+		CalendarEvent._viewNewEventIframe();
+
+		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
+
+		Button.clickPublish();
+	}
+
+	macro addRegular {
+		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
+
+		AssertNotChecked(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
+
+		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+
+		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+
+		CalendarEvent.selectCalendar(calendarName = "${calendarName}");
+
+		if ("${optionSet}" == "true") {
+			CalendarEvent._options(
+				optionSetValue = "${optionSetValue}",
+				specificOptionSetValue = "${specificOptionSetValue}"
+			);
+		}
+
+		if ("${resourcesAvailability}" == "true") {
+			CalendarEvent.viewResourcesAvailability();
+		}
+
+		if ("${reminders}" == "true") {
+			CalendarEvent.configureReminders(
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				number1 = "${number1}",
+				number2 = "${number2}"
+			);
+		}
+
+		if ("${workflow}" == "true") {
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+				value1 = "Submit for Publication"
+			);
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			CalendarEvent.publish();
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		if ("${pageStaging}" == "true") {
+			Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else if ("${siteURL}" == "true") {
+			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		CalendarScheduler._viewRegularEventTitleViaMonthView(
+			endDate = "${endDate}",
+			endDateTime = "${endDateTime}",
+			eventTitle = "${eventTitle}",
+			startDate = "${startDate}",
+			startDateTime = "${startDateTime}"
+		);
+	}
+
+	macro addRepeating {
+		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
+
+		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+
+		CalendarEvent.setRepeating(
+			frequency = "${frequency}",
+			numberOfOccurrences = "${numberOfOccurrences}"
+		);
+
+		CalendarEvent.selectCalendar(calendarName = "${calendarName}");
+
+		if ("${optionSet}" == "true") {
+			CalendarEvent._options(
+				optionSetValue = "${optionSetValue}",
+				specificOptionSetValue = "${specificOptionSetValue}"
+			);
+		}
+
+		if ("${reminders}" == "true") {
+			CalendarEvent.configureReminders(
+				duration1 = "${duration1}",
+				duration2 = "${duration2}",
+				number1 = "${number1}",
+				number2 = "${number2}"
+			);
+		}
+
+		if ("${workflow}" == "true") {
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+				value1 = "Submit for Publication"
+			);
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			CalendarEvent.publish();
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		if ("${pageStaging}" == "true") {
+			Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else if ("${siteURL}" == "true") {
+			Navigator.gotoSitePage(pageName = "${pageName}", siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		var key_endDate = "${endDate}";
+		var key_endDateTime = "${endDateTime}";
+		var key_startDate = "${startDate}";
+		var key_startDateTime = "${startDateTime}";
+
+		if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_REPEAT"))) {
+			Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
+		}
+
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_REPEAT");
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_REPEAT_TITLE",
+			value1 = "${eventTitle}"
+		);
+	}
+
+	macro addRSVP {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}"
+		);
+
+		var key_rsvp = "${rsvp}";
+
+		AssertClick(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE",
+			value1 = "${rsvp}"
+		);
+
+		if (IsElementPresent(locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON")) {
+			AssertClick(
+				locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON",
+				value1 = "Entire Series"
+			);
+		}
+
+		CalendarScheduler.viewRSVP(eventTitle = "${eventTitle}", rsvp = "${rsvp}");
+	}
+
+	macro addViaDayView {
+		if (isSet(eventBlock)) {
+			CalendarScheduler.addViaDayViewDragAndDrop();
+		}
+		else {
+			CalendarScheduler.gotoAddViaDayView();
+		}
+
+		CalendarScheduler.editTitle(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.saveEvent();
+	}
+
+	macro assertEventNotEditable {
+		AssertElementNotPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON"
+		);
+	}
+
+	macro clickPublish {
+		AssertClick(locator1 = "Button#SUBMIT", value1 = "Publish");
+	}
+
+	macro compareEventDateAndTimeToResourcesAvailabilityDateAndTime {
+		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+
+		CalendarEvent._viewResourcesAvailabilityEvent(
+			endDate = "${endDate}",
+			endDateTime = "${endDateTime}",
+			startDate = "${startDate}",
+			startDateTime = "${startDateTime}"
+		);
+	}
+
+	macro configureReminders {
+		CalendarEvent._expandPanel(panelName = "Reminders");
+
+		Check(locator1 = "CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_1");
+
+		Check(locator1 = "CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_2");
+
+		Type(
+			locator1 = "CalendarEditEvent#REMINDERS_VALUE_INPUT_ACTIVE_1",
+			value1 = "${number1}"
+		);
+
+		Type(
+			locator1 = "CalendarEditEvent#REMINDERS_VALUE_INPUT_ACTIVE_2",
+			value1 = "${number2}"
+		);
+
+		Select(
+			locator1 = "CalendarEditEvent#REMINDERS_DURATION_SELECT_ACTIVE_1",
+			value1 = "${duration1}"
+		);
+
+		Select(
+			locator1 = "CalendarEditEvent#REMINDERS_DURATION_SELECT_ACTIVE_2",
+			value1 = "${duration2}"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "CalendarEditEvent#REMINDERS_VALUE_INPUT_INACTIVE_1"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "CalendarEditEvent#REMINDERS_VALUE_INPUT_INACTIVE_2"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "CalendarEditEvent#REMINDERS_DURATION_SELECT_INACTIVE_1"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "CalendarEditEvent#REMINDERS_DURATION_SELECT_INACTIVE_2"
+		);
+	}
+
+	macro delete {
+		CalendarNavigator.gotoView(viewType = "Agenda");
+
+		var i = "1";
+
+		while (IsElementPresent(locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]")) {
+			Click(
+				locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]"
+			);
+
+			if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON")) {
+				var i = MathUtil.sum("${i}", "1");
+
+				Click(
+					locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]"
+				);
+			}
+			else {
+				if (IsElementPresent(locator1 = "xpath=(//input[contains(@value,'Repeating')])")) {
+					AssertClickNoError(
+						locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+						value1 = "Delete"
+					);
+
+					AssertClick(
+						locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON",
+						value1 = "Entire Series"
+					);
+				}
+				else if (IsTextEqual(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD", value1 = "—")) {
+					AssertClickNoError(
+						locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+						value1 = "Delete"
+					);
+
+					AssertConfirm.waitForConfirmation(
+						value1 = "Would you like to delete this event?"
+					);
+				}
+				else {
+					AssertClickNoError(
+						locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+						value1 = "Delete"
+					);
+
+					AssertConfirm.waitForConfirmation(
+						value1 = "Deleting this event will cancel the meeting with your guests. Would you like to delete?"
+					);
+				}
+			}
+		}
+
+		AssertTextEquals(
+			locator1 = "CalendarAgendaView#EMPTY_MESSAGE",
+			value1 = "No events."
+		);
+
+		AssertElementNotPresent(locator1 = "CalendarAgendaView#SCHEDULER_EVENT_GENERIC");
+
+		AssertElementNotPresent(
+			locator1 = "CalendarAgendaView#SCHEDULER_EVENT_REPEATING"
+		);
+
+		CalendarNavigator.gotoView(viewType = "Week");
+	}
+
+	macro deleteRepeatingEventViaAgendaView {
+		CalendarNavigator.gotoView(viewType = "Agenda");
+
+		var key_eventTitle = "${eventTitle}";
+
+		if (("${deleteOptionSet}" == "Entire Series") || ("${deleteOptionSet}" == "Single Event")) {
+			AssertClick(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1",
+				value1 = "${eventTitle}"
+			);
+		}
+		else if ("${deleteOptionSet}" == "Following Events") {
+			AssertClick(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2",
+				value1 = "${eventTitle}"
+			);
+		}
+
+		AssertElementPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON"
+		);
+
+		ClickNoError(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+			value1 = "Delete"
+		);
+
+		if ("${deleteOptionSet}" == "Entire Series") {
+			AssertClick(
+				locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON",
+				value1 = "Entire Series"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2"
+			);
+		}
+		else if ("${deleteOptionSet}" == "Following Events") {
+			AssertClick(
+				locator1 = "CalendarEditEvent#FOLLOWING_EVENTS_BUTTON",
+				value1 = "Following Events"
+			);
+
+			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1");
+
+			AssertElementNotPresent(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2"
+			);
+		}
+		else if ("${deleteOptionSet}" == "Single Event") {
+			AssertClick(
+				locator1 = "CalendarEditEvent#SINGLE_EVENT_BUTTON",
+				value1 = "Single Event"
+			);
+
+			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1");
+
+			AssertElementNotPresent(
+				locator1 = "CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2"
+			);
+		}
+
+		Refresh();
+	}
+
+	macro deleteSpecific {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = "${eventTitle}");
+
+		if (IsTextEqual(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD", value1 = "—")) {
+			AssertClickNoError(
+				locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+				value1 = "Delete"
+			);
+
+			AssertConfirm.waitForConfirmation(
+				value1 = "Would you like to delete this event?"
+			);
+		}
+		else {
+			AssertClickNoError(
+				locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON",
+				value1 = "Delete"
+			);
+
+			AssertConfirm.waitForConfirmation(
+				value1 = "Deleting this event will cancel the meeting with your guests. Would you like to delete?"
+			);
+		}
+
+		var currentDay = DateUtil.getCurrentDayOfWeek();
+		var currentHour = DateUtil.getCurrentHour();
+
+		echo(" The current day is: ${currentDay} ");
+
+		echo(" The current hour is: ${currentHour} ");
+
+		if (("${currentDay}" == "Saturday") && ("${currentHour}" == "6")) {
+			Refresh();
+		}
+
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
+	}
+
+	macro edit {
+		CalendarNavigator.gotoEditEvent(
+			eventTitle = "${eventTitle}",
+			eventType = "${eventType}"
+		);
+
+		if (isSet(endDateTimeEdit)) {
+			var endDateTime = "${endDateTimeEdit}";
+		}
+		else {
+			var endDateTime = "09:30 AM";
+		}
+
+		if (isSet(startDateTimeEdit)) {
+			var startDateTime = "${startDateTimeEdit}";
+		}
+		else {
+			var startDateTime = "08:30 AM";
+		}
+
+		if ("${eventType}" == "All Day") {
+			var endDateTime = "11:59 PM";
+			var startDateTime = "12:00 AM";
+
+			AssertChecked(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
+
+			AssertNotVisible(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+			AssertNotVisible(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+			var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+			var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+
+			AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${eventTitle}");
+
+			PortletEntry.inputTitle(title = "${eventTitleEdit}");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#START_DATE");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#END_DATE");
+
+			if ("${optionSet}" == "true") {
+				CalendarEvent._options(
+					optionSetValue = "${optionSetValue}",
+					specificOptionSetValue = "${specificOptionSetValue}"
+				);
+			}
+		}
+		else if ("${eventType}" == "Regular") {
+			AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${eventTitle}");
+
+			PortletEntry.inputTitle(title = "${eventTitleEdit}");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#START_DATE");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#END_DATE");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+			var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+			var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+
+			Type(
+				locator1 = "CalendarEditEvent#START_DATE_TIME",
+				value1 = "${startDateTime}"
+			);
+
+			Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+			Type(locator1 = "CalendarEditEvent#END_DATE_TIME", value1 = "${endDateTime}");
+
+			Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+			if ("${optionSet}" == "true") {
+				CalendarEvent._options(
+					optionSetValue = "${optionSetValue}",
+					specificOptionSetValue = "${specificOptionSetValue}"
+				);
+			}
+		}
+		else if ("${eventType}" == "Repeating") {
+			AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${eventTitle}");
+
+			PortletEntry.inputTitle(title = "${eventTitleEdit}");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#START_DATE");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#END_DATE");
+
+			AssertElementPresent(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+			var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+			var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+
+			Type(
+				locator1 = "CalendarEditEvent#START_DATE_TIME",
+				value1 = "${startDateTime}"
+			);
+
+			Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+			Type(locator1 = "CalendarEditEvent#END_DATE_TIME", value1 = "${endDateTime}");
+
+			Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+			AssertChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_SUMMARY",
+				value1 = "Daily, 1 Times"
+			);
+
+			if ("${optionSet}" == "true") {
+				CalendarEvent._options(
+					optionSetValue = "${optionSetValue}",
+					specificOptionSetValue = "${specificOptionSetValue}"
+				);
+			}
+		}
+
+		Click(locator1 = "Button#PUBLISH");
+
+		if (IsElementPresent(locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON")) {
+			AssertClick(
+				locator1 = "CalendarEditEvent#ENTIRE_SERIES_BUTTON",
+				value1 = "Entire Series"
+			);
+		}
+
+		if ("${optionSetValue}" == "inviteResource") {
+			AssertElementPresent(
+				locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER"
+			);
+
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY",
+				value1 = "You are about to make changes that will only affect your calendar (${calendarName})."
+			);
+
+			AssertClick(
+				locator1 = "CalendarEditEvent#SAVE_CHANGES_BUTTON",
+				value1 = "Save changes."
+			);
+		}
+
+		Alert.viewSuccessMessage();
+
+		SelectFrame(value1 = "relative=top");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "${pageName}");
+
+		var key_eventTitle = "${eventTitleEdit}";
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC",
+			value1 = "${eventTitleEdit}"
+		);
+	}
+
+	macro editTitle {
+		PortletEntry.inputTitle(title = "${eventTitle}");
+	}
+
+	macro gotoConfigureInvitations {
+		CalendarEvent._expandPanel(panelName = "Invitations");
+	}
+
+	macro gotoConfigureRelatedAssets {
+		CalendarEvent._expandPanel(panelName = "Related Assets");
+	}
+
+	macro gotoRepeatConfiguration {
+		Click(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+	}
+
+	macro inviteResource {
+		CalendarEvent._expandPanel(panelName = "Invitations");
+
+		for (var resourceName : list "${resourceNameList}") {
+			Type(
+				locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD",
+				value1 = "${resourceName}"
+			);
+
+			var key_resource = "${resourceName}";
+
+			Click(
+				locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST",
+				value1 = "${resourceName}"
+			);
+
+			CalendarEvent.viewRSVPPending(resourceName = "${resourceName}");
+		}
+	}
+
+	macro publish {
+		CalendarEvent.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro publishRepeating {
+		AssertClick(locator1 = "Button#SUBMIT", value1 = "Publish");
+
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER"
+		);
+
+		var saveOptionPath = StringUtil.replace("${saveOption}", " ", "_");
+		var saveOptionPath = StringUtil.upperCase("${saveOptionPath}");
+
+		AssertClick(
+			locator1 = "CalendarEditEvent#${saveOptionPath}_BUTTON",
+			value1 = "${saveOption}"
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro publishWithUserNotification {
+		AssertClick(locator1 = "Button#SUBMIT", value1 = "Publish");
+
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER"
+		);
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY",
+			value1 = "Invited users will be notified."
+		);
+
+		AssertClick(
+			locator1 = "CalendarEditEvent#SAVE_CHANGES_BUTTON",
+			value1 = "Save changes."
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro resizeViaEventBlock {
+		MouseOver.mouseOverNotVisible(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC");
+
+		SikuliDragAndDrop(
+			locator1 = "Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON",
+			value1 = "0,100"
+		);
+	}
+
+	macro saveEventUserInvite {
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER"
+		);
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY",
+			value1 = "Invited users will be notified."
+		);
+
+		AssertClick(
+			locator1 = "CalendarEditEvent#SAVE_CHANGES_BUTTON",
+			value1 = "Save changes."
+		);
+	}
+
+	macro saveEventUserInviteCancel {
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER"
+		);
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY",
+			value1 = "Invited users will be notified."
+		);
+
+		AssertClick(
+			locator1 = "CalendarEditEvent#DO_NOT_CHANGE_THE_EVENT_BUTTON",
+			value1 = "Do not change the event."
+		);
+	}
+
+	macro selectCalendar {
+		if (isSet(calendarName)) {
+			CalendarEvent._expandPanel(panelName = "Details");
+
+			Select(
+				locator1 = "CalendarEditEvent#DETAILS_CALENDAR_SELECT",
+				value1 = "${calendarName}"
+			);
+		}
+	}
+
+	macro selectEventIframe {
+		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+	}
+
+	macro selectRepeatFrequency {
+		Select(
+			locator1 = "CalendarEditEvent#REPEAT_REPEATS_DROPDOWN",
+			value1 = "${frequency}"
+		);
+
+		AssertSelectedLabel(
+			locator1 = "CalendarEditEvent#REPEAT_REPEATS_DROPDOWN",
+			value1 = "${frequency}"
+		);
+	}
+
+	macro selectTimes {
+		Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+		var key_startDateTime = "${startDateTime}";
+
+		Click(locator1 = "CalendarEditEvent#START_DATE_TIME_OPTION");
+
+		Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+
+		var key_endDateTime = "${endDateTime}";
+
+		Click(locator1 = "CalendarEditEvent#END_DATE_TIME_OPTION");
+
+		CalendarEvent.viewTimes(
+			endDateTime = "${endDateTime}",
+			startDateTime = "${startDateTime}"
+		);
+	}
+
+	macro setAllDay {
+		Check(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
+
+		AssertNotVisible(locator1 = "CalendarEditEvent#START_DATE_TIME");
+
+		AssertNotVisible(locator1 = "CalendarEditEvent#END_DATE_TIME");
+	}
+
+	macro setDates {
+		Type(locator1 = "CalendarEditEvent#START_DATE", value1 = "${startDate}");
+
+		Type(locator1 = "CalendarEditEvent#END_DATE", value1 = "${endDate}");
+	}
+
+	macro setDatesToday {
+		var endDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+
+		Type(locator1 = "CalendarEditEvent#END_DATE", value1 = "${endDate}");
+	}
+
+	macro setEndDate {
+		Type(locator1 = "CalendarEditEvent#END_DATE", value1 = "${endDate}");
+	}
+
+	macro setEndDateTomorrow {
+		Click(locator1 = "CalendarEditEvent#END_DATE");
+
+		var daySelected = selenium.getText("CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED");
+		var tomorrow = MathUtil.sum("${daySelected}", "1");
+		var key_daySpecific = "${tomorrow}";
+
+		if (IsElementPresent(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC")) {
+			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC");
+		}
+		else {
+			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_NEXT_MONTH_BUTTON");
+
+			var key_daySpecific = "1";
+
+			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC");
+		}
+	}
+
+	macro setRepeating {
+		CalendarEvent.gotoRepeatConfiguration();
+
+		CalendarEvent.selectRepeatFrequency(frequency = "${frequency}");
+
+		AssertSelectedLabel(
+			locator1 = "CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN",
+			value1 = "1"
+		);
+
+		if ("${frequency}" == "Monthly") {
+			Click(locator1 = "CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO");
+		}
+
+		if (isSet(numberOfOccurrences)) {
+			Click(locator1 = "CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO");
+
+			Type(
+				locator1 = "CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD",
+				value1 = "${numberOfOccurrences}"
+			);
+		}
+
+		if (isSet(endOnDate)) {
+			Click(locator1 = "CalendarEditEvent#REPEAT_ENDS_ON_RADIO");
+
+			Type.clickAtType(
+				locator1 = "CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD",
+				value1 = "${endOnDate}"
+			);
+		}
+
+		Click(locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY");
+
+		if ("${frequency}" == "Monthly") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${frequency}"
+			);
+
+			var currentDay = selenium.getElementValue("CalendarEditEvent#REPEAT_MONTHLY_CURRENT_DAY");
+			var currentDay = StringUtil.lowerCase("${currentDay}");
+			var currentDay = StringUtil.upperCaseFirstLetter("${currentDay}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${currentDay}"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${numberOfOccurrences} Times"
+			);
+
+			CalendarEvent.viewRepeatingMonthPosition();
+
+			AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+		}
+		else if ("${frequency}" == "Weekly") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${frequency}"
+			);
+
+			var currentDay = selenium.getElementValue("CalendarEditEvent#REPEAT_WEEKLY_CURRENT_DAY");
+			var currentDay = StringUtil.lowerCase("${currentDay}");
+			var currentDay = StringUtil.upperCaseFirstLetter("${currentDay}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${currentDay}"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${numberOfOccurrences} Times"
+			);
+
+			AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+		}
+		else if (isSet(numberOfOccurrences)) {
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${frequency}, ${numberOfOccurrences} Times"
+			);
+
+			AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_SUMMARY",
+				value1 = "${frequency}, ${numberOfOccurrences} Times"
+			);
+		}
+		else if (isSet(endOnDate)) {
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${frequency}, Until ${endOnDateSummary}"
+			);
+
+			AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_SUMMARY",
+				value1 = "${frequency}, Until ${endOnDateSummary}"
+			);
+		}
+		else {
+			AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+		}
+
+		Check(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+	}
+
+	macro setRepeatingYearly {
+		CalendarEvent.gotoRepeatConfiguration();
+
+		CalendarEvent.selectRepeatFrequency(frequency = "Yearly");
+
+		AssertSelectedLabel(
+			locator1 = "CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN",
+			value1 = "1"
+		);
+
+		Click(locator1 = "CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO");
+
+		Click(locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY");
+
+		if (IsTextEqual(locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY", value1 = "${yearlyRecurrenceSummary}")) {
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${yearlyRecurrenceSummary}"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "${yearlyRecurrenceSummaryPreviousDay}"
+			);
+		}
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+			value1 = "${yearlyRecurrenceSummary}"
+		);
+
+		AssertClick(locator1 = "CalendarEditEvent#REPEAT_DONE_BUTTON", value1 = "Done");
+
+		Check(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+	}
+
+	macro setTimes {
+		Type(
+			locator1 = "CalendarEditEvent#START_DATE_TIME",
+			value1 = "${startDateTime}"
+		);
+
+		Type(locator1 = "CalendarEditEvent#END_DATE_TIME", value1 = "${endDateTime}");
+
+		CalendarEvent.viewTimes(
+			endDateTime = "${endDateTime}",
+			startDateTime = "${startDateTime}"
+		);
+	}
+
+	macro tag {
+		CalendarEvent._expandPanel(panelName = "Categorization");
+
+		AssertElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD");
+
+		if (isSet(tagTextList)) {
+			for (var tagText : list "${tagTextList}") {
+				var key_tagText = "${tagText}";
+
+				Type.typePause(
+					locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
+					value1 = "${tagText}"
+				);
+
+				AssertClick(
+					locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON",
+					value1 = "Add"
+				);
+
+				AssertTextEquals(
+					locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
+					value1 = "${tagText}"
+				);
+			}
+		}
+		else {
+			var key_tagText = "${tagText}";
+
+			Type.typePause(
+				locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
+				value1 = "${tagText}"
+			);
+
+			AssertClick(
+				locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON",
+				value1 = "Add"
+			);
+
+			AssertTextEquals(
+				locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
+				value1 = "${tagText}"
+			);
+		}
+	}
+
+	macro tearDown {
+		if ("${marketplace}" == "true") {
+			ProductMenu.gotoPortlet(
+				category = "Build",
+				panel = "Site Administration",
+				portlet = "Pages"
+			);
+
+			SitePages.addPublicPage(pageName = "Marketplace Calendar Testing");
+
+			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
+
+			Portlet.addPG(
+				i = "${i}",
+				pageName = "Marketplace Calendar Testing",
+				portletName = "Calendar"
+			);
+
+			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
+		}
+
+		CalendarEvent.delete();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro view {
+		var eventTitle = "${eventTitle}";
+
+		CalendarScheduler.viewDay(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewWeek(
+			eventTitle = "${eventTitle}",
+			frequency = "${frequency}",
+			numberOfOccurrences = "${numberOfOccurrences}"
+		);
+
+		CalendarScheduler.viewMonth(
+			eventTitle = "${eventTitle}",
+			frequency = "${frequency}",
+			numberOfOccurrences = "${numberOfOccurrences}"
+		);
+
+		CalendarScheduler.viewAgenda(
+			eventTitle = "${eventTitle}",
+			numberOfOccurrences = "${numberOfOccurrences}"
+		);
+
+		CalendarNavigator.gotoView(viewType = "Week");
+	}
+
+	macro viewAllDay {
+		for (var viewType : list "Day,Week,Month") {
+			CalendarNavigator.gotoView(viewType = "${viewType}");
+
+			AssertElementPresent(
+				locator1 = "Calendar#SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW",
+				key_eventTitle = "${eventTitle}"
+			);
+		}
+
+		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
+	}
+
+	macro viewApprovedEventRSVPButtons {
+		AssertTextEquals(
+			locator1 = "CalendarViewEventDetails#MAYBE_BUTTON",
+			value1 = "Maybe"
+		);
+
+		AssertTextEquals(
+			locator1 = "CalendarViewEventDetails#DECLINE_BUTTON",
+			value1 = "Decline"
+		);
+	}
+
+	macro viewApprovedRSVP {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}"
+		);
+
+		AssertElementPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE",
+			key_rsvp = "${rsvp}"
+		);
+	}
+
+	macro viewAvailableCalendars {
+		CalendarEvent._expandPanel(panelName = "Details");
+
+		for (var availableCalendarName : list "${availableCalendarList}") {
+			var key_calendarName = "${availableCalendarName}";
+
+			AssertElementPresent(
+				locator1 = "CalendarEditEvent#DETAILS_CALENDAR_SELECT_OPTION"
+			);
+		}
+	}
+
+	macro viewComment {
+		CalendarEvent.viewDetails(
+			calendarName = "${calendarName}",
+			eventTitle = "${eventTitle}",
+			eventType = "${eventType}"
+		);
+
+		if (isSet(eventCommentList)) {
+			for (var eventComment : list "${eventCommentList}") {
+				var key_entryComment = "${eventComment}";
+				var key_userFullName = "${user}";
+
+				AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${user} (You)");
+
+				AssertTextEquals(
+					locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+					value1 = "${eventComment}"
+				);
+			}
+		}
+		else {
+			var key_entryComment = "${eventComment}";
+			var key_userFullName = "${user}";
+
+			AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${user} (You)");
+
+			AssertTextEquals(
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+				value1 = "${eventComment}"
+			);
+		}
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewDetails {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = "${eventTitle}");
+
+		CalendarScheduler._viewCalendarViaDialogBox(
+			calendarName = "${calendarName}",
+			schedulerEventDialogBox = "${schedulerEventDialogBox}"
+		);
+
+		CalendarEvent.viewTitleViaDetails(eventTitle = "${eventTitle}");
+	}
+
+	macro viewDetailsInPortlet {
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${eventTitle}");
+
+		CalendarEvent.viewDetailsResources(calendarName = "${calendarName}");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#START_DATE_FIELD");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#END_DATE_FIELD");
+
+		if (isSet(relatedAssetTitle)) {
+			AssertTextEquals(
+				locator1 = "AssetRelatedAssets#HEADER",
+				value1 = "Related Assets:"
+			);
+
+			AssertTextEquals(
+				locator1 = "AssetRelatedAssets#ASSET_TITLE",
+				value1 = "${relatedAssetTitle}"
+			);
+		}
+
+		CalendarEvent.viewApprovedEventRSVPButtons();
+	}
+
+	macro viewDetailsResources {
+		AssertTextEquals(
+			locator1 = "CalendarViewEventDetails#RESOURCES_FIELD",
+			value1 = "${calendarName}"
+		);
+	}
+
+	macro viewDetailsTags {
+		if (isSet(tagTextList)) {
+			for (var tagText : list "${tagTextList}") {
+				var key_tagText = "${tagText}";
+
+				AssertElementPresent(locator1 = "CalendarViewEventDetails#TAGS_LABEL");
+
+				AssertTextEquals(
+					locator1 = "CalendarViewEventDetails#TAGS_TAG_SPECIFIC",
+					value1 = "Tags: ${tagText}"
+				);
+			}
+		}
+		else {
+			var key_tagText = "${tagText}";
+
+			AssertElementPresent(locator1 = "CalendarViewEventDetails#TAGS_LABEL");
+
+			AssertTextEquals(
+				locator1 = "CalendarViewEventDetails#TAGS_TAG_SPECIFIC",
+				value1 = "Tags: ${tagText}"
+			);
+		}
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewEventNotToday {
+		for (var viewType : list "Day,Week,Month") {
+			CalendarNavigator.gotoView(viewType = "${viewType}");
+
+			AssertElementPresent(
+				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY",
+				key_eventTitle = "${eventTitle}"
+			);
+		}
+
+		CalendarScheduler.viewAgenda(
+			eventTitle = "${eventTitle}",
+			numberOfOccurrences = "${numberOfOccurrences}"
+		);
+	}
+
+	macro viewInvitationResourceNotPresent {
+		CalendarEvent._expandPanel(panelName = "Invitations");
+
+		for (var resourceName : list "${resourceNameList}") {
+			Type(
+				locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD",
+				value1 = "${resourceName}"
+			);
+
+			var key_resource = "${resourceName}";
+
+			AssertElementNotPresent(
+				locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST"
+			);
+		}
+	}
+
+	macro viewInvitedEventWithWorkflow {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}"
+		);
+
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
+
+		CalendarScheduler.viewNoRSVP(eventTitle = "${eventTitle}");
+	}
+
+	macro viewInvitedUserRSVPWithApprovedWorkflow {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteCalendarName = "${siteCalendarName}";
+		var key_siteName = "${siteName}";
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}"
+		);
+
+		CalendarEvent.viewInvitedEventWithWorkflow(
+			eventTitle = "${eventTitle}",
+			userCalendarName = "${userCalendarName}"
+		);
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}"
+		);
+	}
+
+	macro viewNoRepeating {
+		AssertNotVisible(locator1 = "CalendarEditEvent#REPEAT_SUMMARY");
+
+		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+	}
+
+	macro viewNotPresentViaAgendaView {
+		AssertElementNotPresent(
+			locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]"
+		);
+	}
+
+	macro viewNoUserInviteWithUnapprovedWorkflow {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteCalendarName = "${siteCalendarName}";
+		var key_siteName = "${siteName}";
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}"
+		);
+
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}"
+		);
+	}
+
+	macro viewRepeatingEventErrorMessage {
+		Click(locator1 = "Button#PUBLISH");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "The last repeating date should come after the event start date."
+		);
+	}
+
+	macro viewRepeatingEventViaViewDetails {
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${eventTitle}");
+
+		if ("${frequency}" == "Daily") {
+			AssertTextEquals(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "Daily, ${numberOfOccurrences} Times"
+			);
+		}
+		else if ("${frequency}" == "Weekly") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "Weekly, on "
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = ", ${numberOfOccurrences} Times"
+			);
+		}
+		else if ("${frequency}" == "Yearly") {
+			AssertTextEquals(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "${yearlyRecurrenceSummary}"
+			);
+		}
+		else if ("${frequency}" == "Monthly") {
+			var today = DateUtil.getCurrentDayOfWeek();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "Monthly"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "${numberOfOccurrences} Times"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY",
+				value1 = "${today}"
+			);
+		}
+	}
+
+	macro viewRepeatingMonthPosition {
+		var repeatingMonthPosition = selenium.getElementValue("CalendarEditEvent#REPEAT_MONTHLY_CURRENT_MONTH_POSITION");
+
+		if ("${repeatingMonthPosition}" == "1") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "First"
+			);
+		}
+		else if ("${repeatingMonthPosition}" == "2") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "Second"
+			);
+		}
+		else if ("${repeatingMonthPosition}" == "3") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "Third"
+			);
+		}
+		else if ("${repeatingMonthPosition}" == "4") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "Fourth"
+			);
+		}
+		else if ("${repeatingMonthPosition}" == "-1") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CalendarEditEvent#REPEAT_DIALOG_SUMMARY",
+				value1 = "Last"
+			);
+		}
+	}
+
+	macro viewRepeatWeekStartDay {
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY",
+			value1 = "${weekStartDay}"
+		);
+	}
+
+	macro viewResourcesAvailability {
+		CalendarEvent._expandPanel(panelName = "Resources Availability");
+
+		AssertElementPresent(
+			locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC"
+		);
+	}
+
+	macro viewRSVPAccepted {
+		var key_resource = "${resourceName}";
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#INVITATIONS_ACCEPTED",
+			value1 = "${resourceName}"
+		);
+	}
+
+	macro viewRSVPDeclined {
+		var key_resource = "${resourceName}";
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#INVITATIONS_DECLINED",
+			value1 = "${resourceName}"
+		);
+	}
+
+	macro viewRSVPMaybe {
+		var key_resource = "${resourceName}";
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#INVITATIONS_MAYBE",
+			value1 = "${resourceName}"
+		);
+	}
+
+	macro viewRSVPPending {
+		var key_resource = "${resourceName}";
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#INVITATIONS_PENDING",
+			value1 = "${resourceName}"
+		);
+	}
+
+	macro viewSiteCalendarEventNotPresent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteName = "${siteName}";
+
+		AssertElementNotPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_HEADER");
+
+		var key_endDateTime = "${endDateTime}";
+		var key_startDateTime = "${startDateTime}";
+
+		AssertElementNotPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_EVENT_TIMES"
+		);
+	}
+
+	macro viewSiteCalendarEventWithDefaultPermissions {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteName = "${siteName}";
+
+		AssertTextEquals(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_HEADER",
+			value1 = "${siteName}'s Calendars"
+		);
+
+		var key_endDateTime = "${endDateTime}";
+		var key_startDateTime = "${startDateTime}";
+
+		Click(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_EVENT_TIMES");
+
+		var key_calendarName = "${calendarName}";
+
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_CALENDAR_NAME",
+			value1 = "${calendarName}"
+		);
+
+		AssertNotVisible(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}"
+		);
+	}
+
+	macro viewSiteRSVPWithApprovedWorkflow {
+		var key_userCalendarName = "${userCalendarName}";
+
+		AssertClick(
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR",
+			value1 = "${userCalendarName}"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS"
+		);
+
+		AssertClick(
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR",
+			value1 = "${userCalendarName}"
+		);
+	}
+
+	macro viewSiteRSVPWithUnapprovedWorkflow {
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
+
+		AssertElementNotPresent(
+			locator1 = "Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS"
+		);
+	}
+
+	macro viewStatusViaDetails {
+		AssertTextEquals.assertPartialText(
+			locator1 = "CalendarViewEventDetails#STATUS",
+			value1 = "${status}"
+		);
+	}
+
+	macro viewTimes {
+		AssertTextEquals.assertValue(
+			locator1 = "CalendarEditEvent#START_DATE_TIME",
+			value1 = "${startDateTime}"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "CalendarEditEvent#END_DATE_TIME",
+			value1 = "${endDateTime}"
+		);
+	}
+
+	macro viewTimes24Hour {
+		AssertTextEquals.assertValue(
+			locator1 = "CalendarEditEvent#START_DATE_TIME_24_HOUR",
+			value1 = "${startDateTime}"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "CalendarEditEvent#END_DATE_TIME_24_HOUR",
+			value1 = "${endDateTime}"
+		);
+	}
+
+	macro viewTimesViaDetails {
+		AssertTextEquals.assertPartialText(
+			locator1 = "CalendarViewEventDetails#START_DATE_FIELD",
+			value1 = "${startDateTime}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CalendarViewEventDetails#END_DATE_FIELD",
+			value1 = "${endDateTime}"
+		);
+	}
+
+	macro viewTitle {
+		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${eventTitle}");
+	}
+
+	macro viewTitleViaDetails {
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "${eventTitle}");
+	}
+
+	macro viewUnavailableCalendarsNotPresent {
+		CalendarEvent._expandPanel(panelName = "Details");
+
+		for (var unavailableCalendarName : list "${unavailableCalendarList}") {
+			var key_calendarName = "${unavailableCalendarName}";
+
+			AssertElementNotPresent(
+				locator1 = "CalendarEditEvent#DETAILS_CALENDAR_SELECT_OPTION"
+			);
+		}
+	}
+
+	macro viewUsers {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler._selectSpecificEventCurrentDay(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewEventUsersViaDialogBox(
+			user = "${user}",
+			usersList = "${usersList}"
+		);
+	}
+
+	macro viewViaAgendaView {
+		AssertElementPresent(
+			locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]"
+		);
+	}
+
+	macro viewViaAssetPublisher {
+		var key_assetTitle = "${eventTitle}";
+
+		AssertTextEquals(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${eventTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${calendarName}"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Resources:"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Starts:"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Ends:"
+		);
+	}
+
+	macro viewYearly {
+		for (var viewType : list "Day,Week,Month") {
+			CalendarNavigator.gotoView(viewType = "${viewType}");
+
+			AssertElementPresent(
+				locator1 = "Calendar#SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW",
+				key_eventTitle = "${eventTitle}"
+			);
+		}
+
+		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
+	}
+}

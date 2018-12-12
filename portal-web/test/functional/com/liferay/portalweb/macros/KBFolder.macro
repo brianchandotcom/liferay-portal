@@ -1,142 +1,141 @@
-<definition>
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Folder" />
-		</execute>
+definition {
+	macro addCP {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Folder");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${kbFolderName}" />
-		</execute>
+		PortletEntry.inputName(name = "${kbFolderName}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${kbFolderDescription}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${kbFolderDescription}");
 
-		<if>
-			<isset var="customField" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Custom Fields" />
-				</execute>
+		if (isSet(customField)) {
+			Panel.expandPanel(panel = "Custom Fields");
 
-				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customField}" />
-			</then>
-		</if>
+			Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customField}");
+		}
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<if>
-			<isset var="kbAddDuplicate" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
+		if (isSet(kbAddDuplicate)) {
+			Alert.viewRequestFailedToComplete();
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_UNIQUE_FOLDER" value1="Please enter a unique folder name." />
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_ENTER_A_UNIQUE_FOLDER",
+				value1 = "Please enter a unique folder name."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
 
-	<command name="deleteCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${kbFolderName}" />
-		</execute>
+	macro deleteCP {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${kbFolderName}"
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="editCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${kbFolderName}" />
-		</execute>
+	macro editCP {
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${kbFolderName}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${kbFolderEditedName}" />
-		</execute>
+		PortletEntry.inputName(name = "${kbFolderEditedName}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${kbFolderDescription}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${kbFolderDescription}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="gotoCP">
-		<var name="key_kbFolderName" value="${kbFolderName}" />
+	macro gotoCP {
+		var key_kbFolderName = "${kbFolderName}";
 
-		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
+		AssertClick(
+			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
+			value1 = "${kbFolderName}"
+		);
 
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${kbFolderName}">
-			<var name="key_breadcrumbName" value="${kbFolderName}" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "${kbFolderName}",
+			key_breadcrumbName = "${kbFolderName}"
+		);
+	}
 
-	<command name="gotoViaKBDisplayPG">
-		<var name="key_kbFolderName" value="${kbFolderName}" />
+	macro gotoViaKBDisplayPG {
+		var key_kbFolderName = "${kbFolderName}";
 
-		<execute function="Select" locator1="KnowledgeBase#FOLDER_SELECT_DROPDOWN" value1="${kbFolderName}" />
+		Select(
+			locator1 = "KnowledgeBase#FOLDER_SELECT_DROPDOWN",
+			value1 = "${kbFolderName}"
+		);
 
-		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_SELECT_OPTION" value1="${kbFolderName}" />
-	</command>
+		AssertClick(
+			locator1 = "KnowledgeBase#FOLDER_SELECT_OPTION",
+			value1 = "${kbFolderName}"
+		);
+	}
 
-	<command name="selectParentCP">
-		<var name="key_kbArticleTitle" value="${kbFolderName}" />
+	macro selectParentCP {
+		var key_kbArticleTitle = "${kbFolderName}";
 
-		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+		SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
 
-		<if>
-			<equals arg1="${kbFolderName}" arg2="Home" />
-			<then>
-				<execute function="Click" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
+		if ("${kbFolderName}" == "Home") {
+			Click(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");
 
-				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
-			</then>
-			<else>
-				<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
-			</else>
-		</if>
+			AssertClick(
+				locator1 = "Button#CHOOSE_THIS_FOLDER",
+				value1 = "Choose This Folder"
+			);
+		}
+		else {
+			Click(locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON", value1 = "Choose");
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbFolderName}" />
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD",
+			value1 = "${kbFolderName}"
+		);
 
-		<execute function="Click" locator1="Button#MOVE" />
+		Click(locator1 = "Button#MOVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<while>
-			<condition function="IsElementPresent" locator1="KnowledgeBase#FOLDER_TABLE_HEADER" />
+		while (IsElementPresent(locator1 = "KnowledgeBase#FOLDER_TABLE_HEADER")) {
+			Check.checkAll(locator1 = "KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX");
 
-			<then>
-				<execute function="Check#checkAll" locator1="KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX" />
+			Click(locator1 = "Icon#DELETE");
 
-				<execute function="Click" locator1="Icon#DELETE" />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately."
+			);
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+			Alert.viewSuccessMessage();
+		}
+	}
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-	</command>
+	macro viewFolderNameCP {
+		var key_kbFolderName = "${kbFolderName}";
 
-	<command name="viewFolderNameCP">
-		<var name="key_kbFolderName" value="${kbFolderName}" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
+			value1 = "${kbFolderName}"
+		);
+	}
+}

@@ -1,37 +1,45 @@
-<definition>
-	<command name="viewCustomADTMultiColumnPG">
-		<for list="${listPageName}" param="pageName">
-			<var name="key_pageName" value="${pageName}" />
-			<execute function="AssertTextEquals" locator1="SiteMap#ADT_MULTI_COLUMN_PAGE_DISPLAY" value1="${pageName}" />
-		</for>
+definition {
+	macro viewCustomADTMultiColumnPG {
+		for (var pageName : list "${listPageName}") {
+			var key_pageName = "${pageName}";
 
-		<if>
-			<isset var="listChildPageName" />
-			<then>
-				<for list="${listChildPageName}" param="childPageName">
-					<var name="key_childPageName" value="${childPageName}" />
+			AssertTextEquals(
+				locator1 = "SiteMap#ADT_MULTI_COLUMN_PAGE_DISPLAY",
+				value1 = "${pageName}"
+			);
+		}
 
-					<execute function="AssertTextEquals" locator1="SiteMap#ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
-				</for>
-			</then>
-		</if>
-	</command>
+		if (isSet(listChildPageName)) {
+			for (var childPageName : list "${listChildPageName}") {
+				var key_childPageName = "${childPageName}";
 
-	<command name="viewDefaultPG">
-		<for list="${listPageName}" param="pageName">
-			<var name="key_pageName" value="${pageName}" />
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteMap#SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
-		</for>
+				AssertTextEquals(
+					locator1 = "SiteMap#ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY",
+					value1 = "${childPageName}"
+				);
+			}
+		}
+	}
 
-		<if>
-			<isset var="listChildPageName" />
-			<then>
-				<for list="${listChildPageName}" param="childPageName">
-					<var name="key_childPageName" value="${childPageName}" />
+	macro viewDefaultPG {
+		for (var pageName : list "${listPageName}") {
+			var key_pageName = "${pageName}";
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="SiteMap#SITE_MAP_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
-				</for>
-			</then>
-		</if>
-	</command>
-</definition>
+			AssertTextEquals.assertPartialText(
+				locator1 = "SiteMap#SITE_MAP_PAGE_DISPLAY",
+				value1 = "${pageName}"
+			);
+		}
+
+		if (isSet(listChildPageName)) {
+			for (var childPageName : list "${listChildPageName}") {
+				var key_childPageName = "${childPageName}";
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "SiteMap#SITE_MAP_CHILD_PAGE_DISPLAY",
+					value1 = "${childPageName}"
+				);
+			}
+		}
+	}
+}

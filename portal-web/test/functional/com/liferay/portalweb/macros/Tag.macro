@@ -1,149 +1,131 @@
-<definition>
-	<command name="_addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+definition {
+	macro _addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertElementPresent" locator1="TextInput#NAME" />
+		AssertElementPresent(locator1 = "TextInput#NAME");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${tagName}" />
-		</execute>
-	</command>
+		PortletEntry.inputName(name = "${tagName}");
+	}
 
-	<command name="addAutoAssertionTagViaBlogsPG">
-		<execute macro="BlogsNavigator#gotoAddEntry" />
+	macro addAutoAssertionTagViaBlogsPG {
+		BlogsNavigator.gotoAddEntry();
 
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		BlogsEntry.addEntryContent(
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}"
+		);
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
+		Panel.expandPanel(panel = "Categorization");
 
-		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="tag " />
+		Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "tag ");
 
-		<execute function="AssertClick" locator1="AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC" value1="${tagName}">
-			<var name="key_tagName" value="${tagName}" />
-		</execute>
+		AssertClick(
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+			value1 = "${tagName}",
+			key_tagName = "${tagName}"
+		);
 
-		<execute macro="PortletEntry#publish" />
-	</command>
+		PortletEntry.publish();
+	}
 
-	<command name="addCP">
-		<execute macro="Tag#_addCP">
-			<var name="tagName" value="${tagName}" />
-		</execute>
+	macro addCP {
+		Tag._addCP(tagName = "${tagName}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="addViaSiteCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
+	macro addViaSiteCP {
+		Panel.expandPanel(panel = "Categorization");
 
-		<execute macro="AssetCategorization#addTag">
-			<var name="tagName" value="${tagName}" />
-		</execute>
+		AssetCategorization.addTag(tagName = "${tagName}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="addWithNullTitleCP">
-		<execute macro="Tag#_addCP">
-			<var name="tagName" value="${tagName}" />
-		</execute>
+	macro addWithNullTitleCP {
+		Tag._addCP(tagName = "${tagName}");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
+		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
-		<execute macro="Alert#viewRequiredField" />
-	</command>
+		Alert.viewRequiredField();
+	}
 
-	<command name="gotoMerge">
-		<if>
-			<equals arg1="${mergeMethod}" arg2="menuItem" />
-			<then>
-				<execute macro="LexiconEntry#gotoEntryMenuItem">
-					<var name="menuItem" value="Merge" />
-					<var name="rowEntry" value="${tagName}" />
-				</execute>
-			</then>
-			<else>
-				<execute function="Click" locator1="Icon#TOOLBAR_ELLIPSIS" />
-				<execute function="Click" locator1="Button#MERGE" />
-			</else>
-		</if>
-	</command>
+	macro gotoMerge {
+		if ("${mergeMethod}" == "menuItem") {
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Merge", rowEntry = "${tagName}");
+		}
+		else {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
-	<command name="mergeSingleTagWarning">
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+			Click(locator1 = "Button#MERGE");
+		}
+	}
 
-		<execute function="AssertConfirm" value1="Please choose at least 2 tags." />
-	</command>
+	macro mergeSingleTagWarning {
+		AssertClickNoError(locator1 = "Button#SAVE", value1 = "Save");
 
-	<command name="mergeTags">
-		<execute function="ClickNoError" locator1="Button#SAVE" />
+		AssertConfirm(value1 = "Please choose at least 2 tags.");
+	}
 
-		<var name="message" value="Are you sure you want to merge &quot;${tagNameList}&quot; into &quot;${mergedTag}&quot;? This will change all items tagged with &quot;${tagNameList}&quot; to instead be tagged with &quot;${mergedTag}&quot;." />
+	macro mergeTags {
+		ClickNoError(locator1 = "Button#SAVE");
 
-		<execute function="AssertConfirm" value1="${message}" />
+		var message = "Are you sure you want to merge &quot;${tagNameList}&quot; into &quot;${mergedTag}&quot;? This will change all items tagged with &quot;${tagNameList}&quot; to instead be tagged with &quot;${mergedTag}&quot;.";
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		AssertConfirm(value1 = "${message}");
 
-	<command name="mergeTagsSelectAdditionalTags">
-		<execute function="Click" locator1="Button#SELECT" />
+		Alert.viewSuccessMessage();
+	}
 
-		<execute function="SelectFrameTop" />
+	macro mergeTagsSelectAdditionalTags {
+		Click(locator1 = "Button#SELECT");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrameTop();
 
-		<execute macro="LexiconEntry#selectEntry">
-			<var name="rowEntry" value="${tagName}" />
-		</execute>
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="SelectFrameTop" />
+		LexiconEntry.selectEntry(rowEntry = "${tagName}");
 
-		<execute macro="Button#clickDone" />
-	</command>
+		SelectFrameTop();
 
-	<command name="tearDownCP">
-		<if>
-			<equals arg1="${stagingSite}" arg2="true" />
-			<then>
-				<execute macro="ProductMenu#gotoStagingSite" />
-			</then>
-			<else>
-				<execute macro="Navigator#openURL" />
-			</else>
-		</if>
+		Button.clickDone();
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
+	macro tearDownCP {
+		if ("${stagingSite}" == "true") {
+			ProductMenu.gotoStagingSite();
+		}
+		else {
+			Navigator.openURL();
+		}
 
-		<while>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
 
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
+		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-			</then>
-		</while>
+			ClickNoError(locator1 = "Icon#DELETE");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="There are no tags." />
-	</command>
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+		}
 
-	<command name="viewCP">
-		<var name="key_tagName" value="${tagName}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no tags."
+		);
+	}
 
-		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
-	</command>
-</definition>
+	macro viewCP {
+		var key_tagName = "${tagName}";
+
+		AssertTextEquals(locator1 = "Tags#TAG_ENTRY_TABLE_NAME", value1 = "${tagName}");
+	}
+}

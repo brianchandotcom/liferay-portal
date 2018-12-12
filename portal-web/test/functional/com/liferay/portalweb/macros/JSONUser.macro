@@ -1,52 +1,33 @@
-<definition>
-	<command name="_addUser">
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+definition {
 
-		<if>
-			<isset var="userFirstName" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${userFirstName}')" name="userFirstNameEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'userFirstName'." />
-			</else>
-		</if>
+	macro _addUser {
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-		<if>
-			<isset var="userLastName" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${userLastName}')" name="userLastNameEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'userLastName'." />
-			</else>
-		</if>
+		if (isSet(userFirstName)) {
+			var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
+		}
+		else {
+			fail("Please set 'userFirstName'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userScreenName" />
-			</not>
-			<then>
-				<fail message="Please set 'userScreenName'." />
-			</then>
-		</if>
+		if (isSet(userLastName)) {
+			var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
+		}
+		else {
+			fail("Please set 'userLastName'.");
+		}
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		if (!(isSet(userScreenName))) {
+			fail("Please set 'userScreenName'.");
+		}
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var companyId = JSONCompany.getCompanyId();
 
-		<var name="curl"><![CDATA[
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
@@ -74,271 +55,172 @@
 				-d roleIds= \
 				-d userGroupIds= \
 				-d sendEmail=true
-		]]></var>
+		''';
 
-		<echo message="## Adding a 'User' with the following info using JSONWS:" />
+		echo("## Adding a 'User' with the following info using JSONWS:");
 
-		<echo message="## * Company ID: ${companyId}" />
+		echo("## * Company ID: ${companyId}");
 
-		<echo message="## * Email Address: ${userEmailAddress}" />
+		echo("## * Email Address: ${userEmailAddress}");
 
-		<echo message="## * First Name: ${userFirstName}" />
+		echo("## * First Name: ${userFirstName}");
 
-		<echo message="## * Last Name: ${userLastName}" />
+		echo("## * Last Name: ${userLastName}");
 
-		<echo message="## * Screen Name: ${userScreenName}" />
+		echo("## * Screen Name: ${userScreenName}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$[\'userId\']')" name="userId" />
-	</command>
+		var userId = JSONCurlUtil.post("${curl}", "$['userId']");
+	}
 
-	<command name="_deleteUser">
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+	macro _deleteUser {
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-		<execute macro="JSONUser#getUserEmailAddress">
-			<return name="userEmailAddress" />
-			<var name="userId" value="${userId}" />
-		</execute>
+		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/delete-user \
 				-u test@liferay.com:test \
 				-d userId=${userId}
-		]]></var>
+		''';
 
-		<echo message="## Deleting a 'User' with the following info using JSONWS:" />
+		echo("## Deleting a 'User' with the following info using JSONWS:");
 
-		<echo message="## * Email Address: ${userEmailAddress}" />
+		echo("## * Email Address: ${userEmailAddress}");
 
-		<var method="JSONCurlUtil#post('${curl}', '')" name="temporary" />
-	</command>
+		var temporary = JSONCurlUtil.post("${curl}", "");
+	}
 
-	<command name="addUser">
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+	macro addUser {
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userFirstName" />
-			</not>
-			<then>
-				<fail message="Please set 'userFirstName'." />
-			</then>
-		</if>
+		if (!(isSet(userFirstName))) {
+			fail("Please set 'userFirstName'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userLastName" />
-			</not>
-			<then>
-				<fail message="Please set 'userLastName'." />
-			</then>
-		</if>
+		if (!(isSet(userLastName))) {
+			fail("Please set 'userLastName'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userScreenName" />
-			</not>
-			<then>
-				<fail message="Please set 'userScreenName'." />
-			</then>
-		</if>
+		if (!(isSet(userScreenName))) {
+			fail("Please set 'userScreenName'.");
+		}
 
-		<execute macro="JSONUser#_addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-	</command>
+		JSONUser._addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}"
+		);
+	}
 
-	<command name="deleteUserByEmailAddress">
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+	macro deleteUserByEmailAddress {
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<return name="userId" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
-		<execute macro="JSONUser#_deleteUser">
-			<var name="userId" value="${userId}" />
-		</execute>
-	</command>
+		JSONUser._deleteUser(userId = "${userId}");
+	}
 
-	<command name="deleteUserByUserId">
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+	macro deleteUserByUserId {
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-		<execute macro="JSONUser#_deleteUser">
-			<var name="userId" value="${userId}" />
-		</execute>
-	</command>
+		JSONUser._deleteUser(userId = "${userId}");
+	}
 
-	<command name="getUserEmailAddress">
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+	macro getUserEmailAddress {
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var userEmailAddress = JSONCurlUtil.get("${curl}", "$['emailAddress']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'emailAddress\']')" name="userEmailAddress" />
+		return "${userEmailAddress}";
+	}
 
-		<return value="${userEmailAddress}" />
-	</command>
+	macro getUserFirstName {
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-	<command name="getUserFirstName">
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var userFirstName = JSONCurlUtil.get("${curl}", "$['firstName']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'firstName\']')" name="userFirstName" />
+		return "${userFirstName}";
+	}
 
-		<return value="${userFirstName}" />
-	</command>
+	macro getUserIdByEmailAddress {
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-	<command name="getUserIdByEmailAddress">
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'userId\']')" name="userId" />
+		return "${userId}";
+	}
 
-		<return value="${userId}" />
-	</command>
+	macro tearDownByFirstName {
+		if (!(isSet(userFirstName))) {
+			fail("Please set 'userFirstName'.");
+		}
 
-	<command name="tearDownByFirstName">
-		<if>
-			<not>
-				<isset var="userFirstName" />
-			</not>
-			<then>
-				<fail message="Please set 'userFirstName'." />
-			</then>
-		</if>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users-count/company-id/${companyId} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var userCount = JSONCurlUtil.get("${curl}", "$");
 
-		<var method="JSONCurlUtil#get('${curl}', '$')" name="userCount" />
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users/company-id/${companyId}/start/0/end/${userCount} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var userIds = JSONCurlUtil.get("${curl}", "$..['userId']");
+		var userIds = StringUtil.replace("${userIds}", "[", "");
+		var userIds = StringUtil.replace("${userIds}", "]", "");
+		var userIds = StringUtil.replace("${userIds}", "&quot;", "");
 
-		<var method="JSONCurlUtil#get('${curl}', '$..[\'userId\']')" name="userIds" />
+		for (var userId : list "${userIds}") {
+			var currentUserFirstName = JSONUser.getUserFirstName(userId = "${userId}");
 
-		<var method="StringUtil#replace('${userIds}', '[', '')" name="userIds" />
-
-		<var method="StringUtil#replace('${userIds}', ']', '')" name="userIds" />
-
-		<var method="StringUtil#replace('${userIds}', '&quot;', '')" name="userIds" />
-
-		<for list="${userIds}" param="userId">
-			<execute macro="JSONUser#getUserFirstName">
-				<return name="currentUserFirstName" />
-				<var name="userId" value="${userId}" />
-			</execute>
-
-			<if>
-				<contains string="${currentUserFirstName}" substring="${userFirstName}" />
-				<then>
-					<execute macro="JSONUser#deleteUserByUserId">
-						<var name="userId" value="${userId}" />
-					</execute>
-				</then>
-			</if>
-		</for>
-	</command>
-</definition>
+			if (contains("${currentUserFirstName}", "${userFirstName}")) {
+				JSONUser.deleteUserByUserId(userId = "${userId}");
+			}
+		}
+	}
+}

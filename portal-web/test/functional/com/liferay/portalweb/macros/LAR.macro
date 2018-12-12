@@ -1,910 +1,792 @@
-<definition>
-	<command name="_configureExportSiteOptions">
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute function="Type" locator1="SitePagesExport#EXPORT_PROCESS_NAME" value1="${larFileName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="contentDateRange" />
-			<then>
-				<execute macro="ContentConfiguration#contentDateRange">
-					<var name="contentDateRange" value="${contentDateRange}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${exportPermissions}" arg2="true" />
-			<then>
-				<execute macro="ContentConfiguration#exportPermissions" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${uncheckLogo}" arg2="true" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckLogo" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${uncheckSitePagesSettings}" arg2="true" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckSitePagesSettings" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${uncheckSiteTemplateSettings}" arg2="true" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckSiteTemplateSettings" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkPageName" />
-			<then>
-				<execute macro="ContentConfiguration#checkPageName">
-					<var name="checkPageName" value="${checkPageName}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${contentDeletion}" arg2="true" />
-			<then>
-				<execute macro="ContentConfiguration#contentDeletion" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkContentNameList" />
-			<then>
-				<execute macro="ContentConfiguration#checkContentNameList">
-					<var name="checkContentNameList" value="${checkContentNameList}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckContentNameList" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckContentNameList">
-					<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckSubContent" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckSubContent">
-					<var name="mainContent" value="${mainContent}" />
-					<var name="uncheckSubContent" value="${uncheckSubContent}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckSubSubContent" />
-			<then>
-				<execute macro="ContentConfiguration#uncheckSubSubContent">
-					<var name="contentName" value="${contentName}" />
-					<var name="subContent" value="${subContent}" />
-					<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="_export">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
-
-		<if>
-			<not>
-				<isset var="portletName" />
-			</not>
-			<then>
-				<if>
-					<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
-					<then>
-
-						<execute function="Check" locator1="ExportImport#CONTENT" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute function="Type" locator1="ExportImport#EXPORT_FILE_NAME" value1="${larFileName}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${exportIndividualDeletions}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#DELETIONS" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${exportPermissions}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#EXPORT" value1="Export" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<execute function="Click" locator1="ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-
-		<execute function="DownloadTempFile" locator1="${larFileName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="_exportSite">
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute function="Type" locator1="SitePagesExport#EXPORT_PROCESS_NAME" value1="${larFileName}" />
-			</then>
-		</if>
-
-		<execute macro="LAR#exportSuccess" />
-	</command>
-
-	<command name="_gotoExportImport">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Export / Import" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-	</command>
-
-	<command name="_gotoExportSite">
-		<if>
-			<isset var="siteScopeName" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="${siteScopeName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-	</command>
-
-	<command name="_gotoImportSite">
-		<if>
-			<isset var="siteName" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="${siteName}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Import" />
-		</execute>
-	</command>
-
-	<command name="_importSite">
-		<execute function="Pause" locator1="18000" />
-
-		<execute function="Click" locator1="Button#CONTINUE" />
-
-		<if>
-			<equals arg1="${importPermissions}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
-
-				<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${privateLayout}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="ExportImport#PRIVATE_LAYOUT" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkContentNameList" />
-			<then>
-				<execute macro="ContentConfiguration#checkContentNameList">
-					<var name="checkContentNameList" value="${checkContentNameList}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${contentDeletion}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#DELETE_PORTLET_DATA" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${mirrorWithOverwriting}" arg2="true" />
-			<then>
-				<execute macro="LAR#_mirrorWithOverwriting" />
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="Button#BACK" />
-
-		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
-	</command>
-
-	<command name="_mirrorWithOverwriting">
-		<execute function="ScrollWebElementIntoView" locator1="Panel#PANEL">
-			<var name="key_panel" value="Update Data" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Update Data" />
-		</execute>
-
-		<execute function="Click" locator1="ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO" />
-	</command>
-
-	<command name="_selectImportFile">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
-
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Import" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Button#SELECT_FILE" />
-
-		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-
-		<if>
-			<equals arg1="${uploadFrom}" arg2="dependencies" />
-			<then>
-				<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
-			</then>
-			<else>
-				<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
-			</else>
-		</if>
-
-		<execute function="Pause" locator1="30000" />
-
-		<if>
-			<equals arg1="${cannotImport}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-			</then>
-			<elseif>
-				<isset var="importValidationMissingItem" />
-				<then>
-					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
-				</then>
-			</elseif>
-			<elseif>
-				<isset var="import6210buildNumber" />
-				<then>
-					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-					<execute function="AssertTextPresent" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="LAR build number 6210 does not match portal build number" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
-
-				<if>
-					<equals arg1="${mirrorWithOverwriting}" arg2="true" />
-					<then>
-						<execute macro="LAR#_mirrorWithOverwriting" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${importDeletions}" arg2="true" />
-					<then>
-						<execute function="Check" locator1="Checkbox#DELETIONS" />
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<isset var="portletName" />
-					</not>
-					<then>
-						<if>
-							<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
-							<then>
-								<execute function="Check" locator1="ExportImport#CONTENT" />
-							</then>
-						</if>
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${importPermissions}" arg2="true" />
-					<then>
-						<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
-
-						<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
-					</then>
-				</if>
-
-				<execute function="Pause" locator1="5000" />
-
-				<execute function="AssertVisible" locator1="Link#BACK" />
-
-				<execute function="AssertClickNoError" locator1="Button#IMPORT" value1="Import" />
-
-				<if>
-					<isset var="failureExpected" />
-					<then>
-						<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
-					</then>
-					<else>
-						<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
-					</else>
-				</if>
-
-				<execute function="SelectFrame" value1="relative=top" />
-			</else>
-		</if>
-	</command>
-
-	<command name="_selectImportFileSite">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
-
-		<execute function="Pause" locator1="13000" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-
-		<execute function="Pause" locator1="13000" />
-
-		<if>
-			<equals arg1="${uploadFrom}" arg2="dependencies" />
-			<then>
-				<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
-			</then>
-			<else>
-				<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
-			</else>
-		</if>
-
-		<execute function="Pause" locator1="190000" />
-
-		<if>
-			<isset var="importValidationMissingItem" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="cannot be imported." />
-				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="importCampaignValidationError" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="The following data will not be imported:" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="Campaign Tracking Action" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="The original Referenced Asset does not exist in the current environment." />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="importFail" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-		</if>
-	</command>
-
-	<command name="addExportTemplateCP">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Export Templates" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${exportTemplateName}" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${exportTemplateDescription}" />
-		</execute>
-	</command>
-
-	<command name="configureExportOptions">
-		<execute macro="LAR#_configureExportSiteOptions">
-			<var name="checkContentNameList" value="${checkContentNameList}" />
-			<var name="checkPageName" value="${checkPageName}" />
-			<var name="contentDeletion" value="${contentDeletion}" />
-			<var name="contentName" value="${contentName}" />
-			<var name="deleteMissingPages" value="${deleteMissingPages}" />
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="lastDateRange" value="${lastDateRange}" />
-			<var name="mainContent" value="${mainContent}" />
-			<var name="subContent" value="${subContent}" />
-			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
-			<var name="uncheckLogo" value="${uncheckLogo}" />
-			<var name="uncheckSubContent" value="${uncheckSubContent}" />
-			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
-		</execute>
-	</command>
-
-	<command name="configureExportSiteCP">
-		<execute macro="LAR#_gotoExportSite" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="LAR#_configureExportSiteOptions">
-			<var name="checkContentNameList" value="${checkContentNameList}" />
-			<var name="checkPageName" value="${checkPageName}" />
-			<var name="contentDeletion" value="${contentDeletion}" />
-			<var name="contentName" value="${contentName}" />
-			<var name="deleteMissingPages" value="${deleteMissingPages}" />
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="lastDateRange" value="${lastDateRange}" />
-			<var name="mainContent" value="${mainContent}" />
-			<var name="subContent" value="${subContent}" />
-			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
-			<var name="uncheckLogo" value="${uncheckLogo}" />
-			<var name="uncheckSitesPageSettings" value="${uncheckSitesPageSettings}" />
-			<var name="uncheckSiteTemplateSettings" value="${uncheckSiteTemplateSettings}" />
-			<var name="uncheckSubContent" value="${uncheckSubContent}" />
-			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
-		</execute>
-	</command>
-
-	<command name="downloadLar">
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-
-		<execute function="DownloadTempFile" />
-	</command>
-
-	<command name="editExportTemplateCP">
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${exportTemplateNameEdit}" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${exportTemplateDescriptionEdit}" />
-		</execute>
-	</command>
-
-	<command name="exportDDL">
-		<execute macro="LAR#_gotoExportImport" />
-
-		<execute macro="LAR#_export">
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-	</command>
-
-	<command name="exportExportTemplateCP">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Export" />
-		</execute>
-
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute function="Type" locator1="SitePagesExport#EXPORT_PROCESS_NAME" value1="${larFileName}" />
-			</then>
-		</if>
-
-		<execute macro="LAR#exportSuccess" />
-
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_NAME" value1="${larFileName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_NAME" value1="${exportTemplateName}" />
-			</else>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-	</command>
-
-	<command name="exportPortlet">
-		<execute macro="LAR#_gotoExportImport" />
-
-		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
-
-		<execute macro="LAR#_export">
-			<var name="exportIndividualDeletions" value="${exportIndividualDeletions}" />
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#CLOSE" />
-	</command>
-
-	<command name="exportSiteCP">
-		<execute macro="LAR#_gotoExportSite">
-			<var name="siteScopeName" value="${siteScopeName}" />
-		</execute>
-
-		<execute function="Click" locator1="SitePagesExport#CUSTOM_EXPORT_BUTTON" />
-
-		<if>
-			<equals arg1="${privateLayout}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="PagesConfiguration#CHANGE_TO_PRIVATE_PAGES" />
-			</then>
-		</if>
-
-		<execute macro="LAR#_exportSite">
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-	</command>
-
-	<command name="exportSuccess">
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-	</command>
-
-	<command name="exportUserGroups">
-		<execute macro="LAR#_gotoExportImport" />
-
-		<execute macro="LAR#_export">
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-	</command>
-
-	<command name="filterCompletedProcesses">
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Completed" />
-		</execute>
-	</command>
-
-	<command name="gotoExport">
-		<execute macro="LAR#_gotoExportSite">
-			<var name="siteScopeName" value="${siteScopeName}" />
-		</execute>
-	</command>
-
-	<command name="importPortlet">
-		<execute macro="LAR#_gotoExportImport" />
-
-		<execute macro="LAR#_selectImportFile">
-			<var name="cannotImport" value="${cannotImport}" />
-			<var name="failureExpected" value="${failureExpected}" />
-			<var name="importDeletions" value="${importDeletions}" />
-			<var name="importPermissions" value="${importPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="mirrorWithOverwriting" value="${mirrorWithOverwriting}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="uploadFrom" value="${uploadFrom}" />
-		</execute>
-
-		<execute macro="IFrame#closeFrame" />
-	</command>
-
-	<command name="importSiteCP">
-		<execute macro="LAR#_gotoImportSite">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="LAR#_selectImportFileSite">
-			<var name="importCampaignValidationError" value="${importCampaignValidationError}" />
-			<var name="importValidationMissingItem" value="${importValidationMissingItem}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="uploadFrom" value="${uploadFrom}" />
-		</execute>
-
-		<if>
-			<not>
-				<or>
-					<isset var="importValidationMissingItem" />
-					<isset var="importFail" />
-				</or>
-			</not>
-			<then>
-				<execute macro="LAR#_importSite">
-					<var name="checkContentNameList" value="${checkContentNameList}" />
-					<var name="contentDeletion" value="${contentDeletion}" />
-					<var name="contentName" value="${contentName}" />
-					<var name="importPermissions" value="${importPermissions}" />
-					<var name="larFileName" value="${larFileName}" />
-					<var name="privateLayout" value="${privateLayout}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="moveToTheRecycleBinExportTemplate">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Move to Recycle Bin" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="openExportAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet" />
-		</execute>
-	</command>
-
-	<command name="openImportAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet" />
-		</execute>
-	</command>
-
-	<command name="saveExportTemplateCP">
-		<execute macro="Button#clickSave" />
-
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
-	</command>
-
-	<command name="searchTemplate">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${exportTemplateName}" />
-		</execute>
-
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
-	</command>
-
-	<command name="setupContentTargeting">
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-
-				<execute macro="Navigator#gotoStagedView" />
-			</then>
-			<else>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-
-				<execute macro="Navigator#gotoStagedView" />
-			</then>
-			<else>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#addCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2099" />
-			<var name="campaignEndTime" value="12:00 PM" />
-			<var name="campaignInactive" value="${campaignInactive}" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2015" />
-			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="${userSegmentSelect}" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
-
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-
-				<execute macro="Navigator#gotoStagedView" />
-			</then>
-			<else>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="User Segment Name" />
-			<var name="userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
-			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="portletName" value="User Segment Content Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="User Segment Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
-			<var name="belongs" value="true" />
-			<var name="contentTitle" value="Web Content Title" />
-			<var name="contentType" value="Basic Web Content" />
-			<var name="doesNotBelong" value="${doesNotBelong}" />
-			<var name="rowIndexNumber" value="${rowIndexNumber}" />
-			<var name="rowNumber" value="1" />
-			<var name="siteScope" value="${siteScope}" />
-			<var name="toAll" value="true" />
-			<var name="toAny" value="${toAny}" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
-
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="portletName" value="Campaign Content Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Campaign Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentTitle" value="Web Content Title" />
-			<var name="contentType" value="Basic Web Content" />
-			<var name="rowNumber" value="1" />
-		</execute>
-
-		<execute macro="CampaignDisplayPortlet#savePG" />
-
-		<if>
-			<equals arg1="${stagingSetup}" arg2="true" />
-			<then>
-				<execute macro="Navigator#gotoStagedSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="Test Page Name" />
-					<var name="siteName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
-	</command>
-
-	<command name="viewExportTemplateCP">
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
-	</command>
-</definition>
+definition {
+	macro _configureExportSiteOptions {
+		if (isSet(larFileName)) {
+			Type(
+				locator1 = "SitePagesExport#EXPORT_PROCESS_NAME",
+				value1 = "${larFileName}"
+			);
+		}
+
+		if (isSet(contentDateRange)) {
+			ContentConfiguration.contentDateRange(contentDateRange = "${contentDateRange}");
+		}
+
+		if ("${exportPermissions}" == "true") {
+			ContentConfiguration.exportPermissions();
+		}
+
+		if ("${uncheckLogo}" == "true") {
+			ContentConfiguration.uncheckLogo();
+		}
+
+		if ("${uncheckSitePagesSettings}" == "true") {
+			ContentConfiguration.uncheckSitePagesSettings();
+		}
+
+		if ("${uncheckSiteTemplateSettings}" == "true") {
+			ContentConfiguration.uncheckSiteTemplateSettings();
+		}
+
+		if (isSet(checkPageName)) {
+			ContentConfiguration.checkPageName(checkPageName = "${checkPageName}");
+		}
+
+		if ("${contentDeletion}" == "true") {
+			ContentConfiguration.contentDeletion();
+		}
+
+		if (isSet(checkContentNameList)) {
+			ContentConfiguration.checkContentNameList(
+				checkContentNameList = "${checkContentNameList}"
+			);
+		}
+
+		if (isSet(uncheckContentNameList)) {
+			ContentConfiguration.uncheckContentNameList(
+				uncheckContentNameList = "${uncheckContentNameList}"
+			);
+		}
+
+		if (isSet(uncheckSubContent)) {
+			ContentConfiguration.uncheckSubContent(
+				mainContent = "${mainContent}",
+				uncheckSubContent = "${uncheckSubContent}"
+			);
+		}
+
+		if (isSet(uncheckSubSubContent)) {
+			ContentConfiguration.uncheckSubSubContent(
+				contentName = "${contentName}",
+				subContent = "${subContent}",
+				uncheckSubSubContent = "${uncheckSubSubContent}"
+			);
+		}
+	}
+
+	macro _export {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+
+		if (!(isSet(portletName))) {
+			if (IsNotChecked(locator1 = "ExportImport#CONTENT")) {
+				Check(locator1 = "ExportImport#CONTENT");
+			}
+		}
+
+		if (isSet(larFileName)) {
+			Type(locator1 = "ExportImport#EXPORT_FILE_NAME", value1 = "${larFileName}");
+		}
+
+		if ("${exportIndividualDeletions}" == "true") {
+			Check(locator1 = "Checkbox#DELETIONS");
+		}
+
+		if ("${exportPermissions}" == "true") {
+			Check(locator1 = "Checkbox#PERMISSIONS");
+		}
+
+		AssertClick(locator1 = "Button#EXPORT", value1 = "Export");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		Click(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+
+		DownloadTempFile(locator1 = "${larFileName}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro _exportSite {
+		if (isSet(larFileName)) {
+			Type(
+				locator1 = "SitePagesExport#EXPORT_PROCESS_NAME",
+				value1 = "${larFileName}"
+			);
+		}
+
+		LAR.exportSuccess();
+	}
+
+	macro _gotoExportImport {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Export / Import"
+		);
+
+		Pause(locator1 = "5000");
+	}
+
+	macro _gotoExportSite {
+		if (isSet(siteScopeName)) {
+			ProductMenu.gotoSite(site = "${siteScopeName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+	}
+
+	macro _gotoImportSite {
+		if (isSet(siteName)) {
+			ProductMenu.gotoSite(site = "${siteName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Import"
+		);
+	}
+
+	macro _importSite {
+		Pause(locator1 = "18000");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		if ("${importPermissions}" == "true") {
+			Click(locator1 = "ExportImport#PERMISSIONS_TITLE");
+
+			Check.checkToggleSwitch(locator1 = "Checkbox#PERMISSIONS");
+		}
+
+		if ("${privateLayout}" == "true") {
+			Click(locator1 = "ExportImport#PRIVATE_LAYOUT");
+		}
+
+		if (isSet(checkContentNameList)) {
+			ContentConfiguration.checkContentNameList(
+				checkContentNameList = "${checkContentNameList}"
+			);
+		}
+
+		if ("${contentDeletion}" == "true") {
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#DELETE_PORTLET_DATA");
+		}
+
+		if ("${mirrorWithOverwriting}" == "true") {
+			LAR._mirrorWithOverwriting();
+		}
+
+		AssertVisible(locator1 = "Button#BACK");
+
+		AssertClickNoError(
+			locator1 = "SitePagesImport#IMPORT_BUTTON",
+			value1 = "Import"
+		);
+
+		Pause(locator1 = "5000");
+
+		AssertTextEquals(
+			locator1 = "SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1",
+			value1 = "Successful"
+		);
+	}
+
+	macro _mirrorWithOverwriting {
+		ScrollWebElementIntoView(locator1 = "Panel#PANEL", key_panel = "Update Data");
+
+		Panel.expandPanel(panel = "Update Data");
+
+		Click(locator1 = "ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO");
+	}
+
+	macro _selectImportFile {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+
+		NavItem.click(navItem = "Import");
+
+		AssertElementPresent(locator1 = "Button#SELECT_FILE");
+
+		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
+
+		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
+
+		if ("${uploadFrom}" == "dependencies") {
+			SikuliUploadCommonFile(
+				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+				value1 = "${larFileName}"
+			);
+		}
+		else {
+			SikuliUploadTempFile(
+				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+				value1 = "${larFileName}"
+			);
+		}
+
+		Pause(locator1 = "30000");
+
+		if ("${cannotImport}" == "true") {
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "The file ${larFileName} cannot be imported."
+			);
+		}
+		else if (isSet(importValidationMissingItem)) {
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "The file ${larFileName} cannot be imported."
+			);
+
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				value1 = "An unexpected error occurred while uploading your file."
+			);
+		}
+		else if (isSet(import6210buildNumber)) {
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "The file ${larFileName} cannot be imported."
+			);
+
+			AssertTextPresent(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				value1 = "LAR build number 6210 does not match portal build number"
+			);
+		}
+		else {
+			AssertClickNoError(locator1 = "Button#CONTINUE", value1 = "Continue");
+
+			if ("${mirrorWithOverwriting}" == "true") {
+				LAR._mirrorWithOverwriting();
+			}
+
+			if ("${importDeletions}" == "true") {
+				Check(locator1 = "Checkbox#DELETIONS");
+			}
+
+			if (!(isSet(portletName))) {
+				if (IsNotChecked(locator1 = "ExportImport#CONTENT")) {
+					Check(locator1 = "ExportImport#CONTENT");
+				}
+			}
+
+			if ("${importPermissions}" == "true") {
+				Click(locator1 = "ExportImport#PERMISSIONS_TITLE");
+
+				Check.checkToggleSwitch(locator1 = "Checkbox#PERMISSIONS");
+			}
+
+			Pause(locator1 = "5000");
+
+			AssertVisible(locator1 = "Link#BACK");
+
+			AssertClickNoError(locator1 = "Button#IMPORT", value1 = "Import");
+
+			if (isSet(failureExpected)) {
+				AssertTextEquals(
+					locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
+					value1 = "Failed"
+				);
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
+					value1 = "Successful"
+				);
+			}
+
+			SelectFrame(value1 = "relative=top");
+		}
+	}
+
+	macro _selectImportFileSite {
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "5000");
+
+		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
+
+		Pause(locator1 = "13000");
+
+		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
+
+		Pause(locator1 = "13000");
+
+		if ("${uploadFrom}" == "dependencies") {
+			SikuliUploadCommonFile(
+				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+				value1 = "${larFileName}"
+			);
+		}
+		else {
+			SikuliUploadTempFile(
+				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+				value1 = "${larFileName}"
+			);
+		}
+
+		Pause(locator1 = "190000");
+
+		if (isSet(importValidationMissingItem)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "cannot be imported."
+			);
+
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				value1 = "There are missing references that could not be found in the current site. Please import the following elements first:"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				value1 = "${importValidationMissingItem}"
+			);
+		}
+
+		if ("importCampaignValidationError" == "true") {
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				value1 = "The following data will not be imported:"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				value1 = "Campaign Tracking Action"
+			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				value1 = "The original Referenced Asset does not exist in the current environment."
+			);
+		}
+
+		if ("importFail" == "true") {
+			AssertTextEquals(
+				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
+				value1 = "Failed"
+			);
+
+			SelectFrame(value1 = "relative=top");
+		}
+	}
+
+	macro addExportTemplateCP {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${exportTemplateName}");
+
+		PortletEntry.inputDescription(description = "${exportTemplateDescription}");
+	}
+
+	macro configureExportOptions {
+		LAR._configureExportSiteOptions(
+			checkContentNameList = "${checkContentNameList}",
+			checkPageName = "${checkPageName}",
+			contentDeletion = "${contentDeletion}",
+			contentName = "${contentName}",
+			deleteMissingPages = "${deleteMissingPages}",
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}",
+			lastDateRange = "${lastDateRange}",
+			mainContent = "${mainContent}",
+			subContent = "${subContent}",
+			uncheckContentNameList = "${uncheckContentNameList}",
+			uncheckLogo = "${uncheckLogo}",
+			uncheckSubContent = "${uncheckSubContent}",
+			uncheckSubSubContent = "${uncheckSubSubContent}"
+		);
+	}
+
+	macro configureExportSiteCP {
+		LAR._gotoExportSite();
+
+		LexiconEntry.gotoAdd();
+
+		LAR._configureExportSiteOptions(
+			checkContentNameList = "${checkContentNameList}",
+			checkPageName = "${checkPageName}",
+			contentDeletion = "${contentDeletion}",
+			contentName = "${contentName}",
+			deleteMissingPages = "${deleteMissingPages}",
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}",
+			lastDateRange = "${lastDateRange}",
+			mainContent = "${mainContent}",
+			subContent = "${subContent}",
+			uncheckContentNameList = "${uncheckContentNameList}",
+			uncheckLogo = "${uncheckLogo}",
+			uncheckSitesPageSettings = "${uncheckSitesPageSettings}",
+			uncheckSiteTemplateSettings = "${uncheckSiteTemplateSettings}",
+			uncheckSubContent = "${uncheckSubContent}",
+			uncheckSubSubContent = "${uncheckSubSubContent}"
+		);
+	}
+
+	macro downloadLar {
+		Click(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+
+		DownloadTempFile();
+	}
+
+	macro editExportTemplateCP {
+		var key_exportTemplateName = "${exportTemplateName}";
+
+		AssertClick(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME",
+			value1 = "${exportTemplateName}"
+		);
+
+		PortletEntry.inputName(name = "${exportTemplateNameEdit}");
+
+		PortletEntry.inputDescription(description = "${exportTemplateDescriptionEdit}");
+	}
+
+	macro exportDDL {
+		LAR._gotoExportImport();
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}"
+		);
+	}
+
+	macro exportExportTemplateCP {
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+
+		if (isSet(larFileName)) {
+			Type(
+				locator1 = "SitePagesExport#EXPORT_PROCESS_NAME",
+				value1 = "${larFileName}"
+			);
+		}
+
+		LAR.exportSuccess();
+
+		if (isSet(larFileName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_NAME",
+				value1 = "${larFileName}"
+			);
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_NAME",
+				value1 = "${exportTemplateName}"
+			);
+		}
+
+		AssertElementPresent(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+	}
+
+	macro exportPortlet {
+		LAR._gotoExportImport();
+
+		AssertElementPresent(locator1 = "IFrame#DIALOG");
+
+		LAR._export(
+			exportIndividualDeletions = "${exportIndividualDeletions}",
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}",
+			portletName = "${portletName}"
+		);
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
+	macro exportSiteCP {
+		LAR._gotoExportSite(siteScopeName = "${siteScopeName}");
+
+		Click(locator1 = "SitePagesExport#CUSTOM_EXPORT_BUTTON");
+
+		if ("${privateLayout}" == "true") {
+			Click(locator1 = "PagesConfiguration#CHANGE_TO_PRIVATE_PAGES");
+		}
+
+		LAR._exportSite(larFileName = "${larFileName}");
+	}
+
+	macro exportSuccess {
+		AssertClick(locator1 = "SitePagesExport#EXPORT_BUTTON", value1 = "Export");
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+	}
+
+	macro exportUserGroups {
+		LAR._gotoExportImport();
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}"
+		);
+	}
+
+	macro filterCompletedProcesses {
+		Pause(locator1 = "5000");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Completed");
+	}
+
+	macro gotoExport {
+		LAR._gotoExportSite(siteScopeName = "${siteScopeName}");
+	}
+
+	macro importPortlet {
+		LAR._gotoExportImport();
+
+		LAR._selectImportFile(
+			cannotImport = "${cannotImport}",
+			failureExpected = "${failureExpected}",
+			importDeletions = "${importDeletions}",
+			importPermissions = "${importPermissions}",
+			larFileName = "${larFileName}",
+			mirrorWithOverwriting = "${mirrorWithOverwriting}",
+			portletName = "${portletName}",
+			uploadFrom = "${uploadFrom}"
+		);
+
+		IFrame.closeFrame();
+	}
+
+	macro importSiteCP {
+		LAR._gotoImportSite(siteName = "${siteName}");
+
+		LAR._selectImportFileSite(
+			importCampaignValidationError = "${importCampaignValidationError}",
+			importValidationMissingItem = "${importValidationMissingItem}",
+			larFileName = "${larFileName}",
+			uploadFrom = "${uploadFrom}"
+		);
+
+		if (!((isSet(importValidationMissingItem)) || (isSet(importFail)))) {
+			LAR._importSite(
+				checkContentNameList = "${checkContentNameList}",
+				contentDeletion = "${contentDeletion}",
+				contentName = "${contentName}",
+				importPermissions = "${importPermissions}",
+				larFileName = "${larFileName}",
+				privateLayout = "${privateLayout}"
+			);
+		}
+	}
+
+	macro moveToTheRecycleBinExportTemplate {
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro openExportAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet"
+		);
+	}
+
+	macro openImportAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet"
+		);
+	}
+
+	macro saveExportTemplateCP {
+		Button.clickSave();
+
+		var key_exportTemplateName = "${exportTemplateName}";
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME",
+			value1 = "${exportTemplateName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION",
+			value1 = "${exportTemplateDescription}"
+		);
+	}
+
+	macro searchTemplate {
+		Search.searchCP(searchTerm = "${exportTemplateName}");
+
+		var key_exportTemplateName = "${exportTemplateName}";
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME",
+			value1 = "${exportTemplateName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION",
+			value1 = "${exportTemplateDescription}"
+		);
+	}
+
+	macro setupContentTargeting {
+		if ("${stagingSetup}" == "true") {
+			ProductMenu.gotoSite(site = "Site Name");
+
+			Navigator.gotoStagedView();
+		}
+		else {
+			ProductMenu.gotoSite(site = "Site Name");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
+
+		ContentTargetingUserSegment.addCP(
+			userSegmentDescription = "User Segment Description",
+			userSegmentName = "User Segment Name"
+		);
+
+		PortletEntry.save();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		if ("${stagingSetup}" == "true") {
+			ProductMenu.gotoSite(site = "Site Name");
+
+			Navigator.gotoStagedView();
+		}
+		else {
+			ProductMenu.gotoSite(site = "Site Name");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
+
+		ContentTargetingCampaign.addCP(
+			campaignDescription = "Campaign Description",
+			campaignEndDate = "1/1/2099",
+			campaignEndTime = "12:00 PM",
+			campaignInactive = "${campaignInactive}",
+			campaignName = "Campaign Name",
+			campaignPriorityField = "3",
+			campaignStartDate = "1/1/2015",
+			campaignStartTime = "12:00 AM",
+			userSegmentSelect = "${userSegmentSelect}"
+		);
+
+		ContentTargetingCampaign.saveCP();
+
+		if ("${stagingSetup}" == "true") {
+			ProductMenu.gotoSite(site = "Site Name");
+
+			Navigator.gotoStagedView();
+		}
+		else {
+			ProductMenu.gotoSite(site = "Site Name");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "User Segment Name",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "User Segment",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		if ("${stagingSetup}" == "true") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name"
+			);
+		}
+		else {
+			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		}
+
+		Portlet.addPG(i = "${i}", portletName = "User Segment Content Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "User Segment Content Display",
+			portletOption = "Configuration"
+		);
+
+		UserSegmentContentDisplayPortlet.configureDisplayContent(
+			belongs = "true",
+			contentTitle = "Web Content Title",
+			contentType = "Basic Web Content",
+			doesNotBelong = "${doesNotBelong}",
+			rowIndexNumber = "${rowIndexNumber}",
+			rowNumber = "1",
+			siteScope = "${siteScope}",
+			toAll = "true",
+			toAny = "${toAny}",
+			userSegmentName = "User Segment Name"
+		);
+
+		UserSegmentContentDisplayPortlet.savePG();
+
+		if ("${stagingSetup}" == "true") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name"
+			);
+		}
+		else {
+			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		}
+
+		Portlet.addPG(i = "${i}", portletName = "Campaign Content Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Campaign Content Display",
+			portletOption = "Configuration"
+		);
+
+		CampaignDisplayPortlet.configureCampaignRule(
+			campaignName = "Campaign Name",
+			contentTitle = "Web Content Title",
+			contentType = "Basic Web Content",
+			rowNumber = "1"
+		);
+
+		CampaignDisplayPortlet.savePG();
+
+		if ("${stagingSetup}" == "true") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name"
+			);
+		}
+		else {
+			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+		}
+
+		Portlet.addPG(i = "${i}", portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.enableUserSegementFilter();
+	}
+
+	macro viewExportTemplateCP {
+		var key_exportTemplateName = "${exportTemplateName}";
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME",
+			value1 = "${exportTemplateName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION",
+			value1 = "${exportTemplateDescription}"
+		);
+	}
+}

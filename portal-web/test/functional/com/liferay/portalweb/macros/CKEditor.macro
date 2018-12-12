@@ -1,17 +1,17 @@
-<definition>
-	<command name="addContent">
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+definition {
+	macro addContent {
+		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		<execute function="KeyPress" locator1="CKEditor#BODY" value1="${content}" />
+		KeyPress(locator1 = "CKEditor#BODY", value1 = "${content}");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="assertEditorPresent">
-		<execute function="AssertElementPresent" locator1="CKEditor#BODY_FIELD" />
-	</command>
+	macro assertEditorPresent {
+		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
+	}
 
-	<command name="viewEntryContent">
-		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${content}" />
-	</command>
-</definition>
+	macro viewEntryContent {
+		AssertTextEquals(locator1 = "CKEditor#BODY", value1 = "${content}");
+	}
+}

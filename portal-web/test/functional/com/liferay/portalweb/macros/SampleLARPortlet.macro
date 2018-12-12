@@ -1,13 +1,29 @@
-<definition>
-	<command name="addSampleBooking">
-		<execute function="AssertClick" locator1="Samplelarportlet#ADD_SAMPLE_BOOKING_BUTTON" value1="Add Sample Booking" />
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertElementPresent" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_ID" />
-		<execute function="AssertElementPresent" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" />
-	</command>
+definition {
+	macro addSampleBooking {
+		AssertClick(
+			locator1 = "Samplelarportlet#ADD_SAMPLE_BOOKING_BUTTON",
+			value1 = "Add Sample Booking"
+		);
 
-	<command name="viewSampleBookingNumber">
-		<execute function="AssertElementPresent" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_ID" />
-		<execute function="AssertTextEquals" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" value1="${bookingNumber}" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_ID"
+		);
+
+		AssertElementPresent(
+			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER"
+		);
+	}
+
+	macro viewSampleBookingNumber {
+		AssertElementPresent(
+			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_ID"
+		);
+
+		AssertTextEquals(
+			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER",
+			value1 = "${bookingNumber}"
+		);
+	}
+}

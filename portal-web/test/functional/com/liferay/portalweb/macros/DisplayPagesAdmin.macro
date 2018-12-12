@@ -1,44 +1,48 @@
-<definition>
-	<command name="add">
-		<execute macro="LexiconEntry#gotoAdd" />
+definition {
+	macro add {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${displayPageName}" />
-		</execute>
+		PortletEntry.inputName(name = "${displayPageName}");
 
-		<execute macro="Button#clickSave" />
-	</command>
+		Button.clickSave();
+	}
 
-	<command name="markDisplayPageAsDefault">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Mark As Default" />
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+	macro markDisplayPageAsDefault {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Mark As Default",
+			rowEntry = "${rowEntry}"
+		);
 
-		<execute function="AssertVisible" locator1="Card#STICKER">
-			<var name="key_cardText" value="${rowEntry}" />
-		</execute>
-	</command>
+		AssertVisible(locator1 = "Card#STICKER", key_cardText = "${rowEntry}");
+	}
 
-	<command name="openDisplayPagesAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-pages" />
-		</execute>
-	</command>
+	macro openDisplayPagesAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-pages"
+		);
+	}
 
-	<command name="viewPGViaAP">
-		<var name="key_assetContent" value="${webContentContent}" />
-		<var name="key_assetTitle" value="${webContentTitle}" />
+	macro viewPGViaAP {
+		var key_assetContent = "${webContentContent}";
+		var key_assetTitle = "${webContentTitle}";
 
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "${webContentTitle}"
+		);
 
-		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${webContentContent}"
+		);
 
-		<for list="${contentList}" param="content">
-			<execute function="AssertElementPresent" locator1="Fragment#EDITABLE_FIELD_CONTENT">
-				<var name="key_text" value="${content}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
+
+		for (var content : list "${contentList}") {
+			AssertElementPresent(
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT",
+				key_text = "${content}"
+			);
+		}
+	}
+}

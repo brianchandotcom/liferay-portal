@@ -1,225 +1,193 @@
-<definition>
-	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-	<var name="ddlDataDefinitionName" value="Data Definition Name" />
-	<var name="ddlListName" value="List Name" />
+definition {
+	var ddlDataDefinitionDescription = "Data Definition Description";
+	var ddlDataDefinitionName = "Data Definition Name";
+	var ddlListName = "List Name";
 
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlListName}" />
+		Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${ddlListName}");
 
-		<if>
-			<isset var="ddlListDescription" />
-			<then>
-				<execute function="Type#clickAtType" locator1="TextArea#DESCRIPTION" value1="${ddlListDescription}" />
-			</then>
-		</if>
+		if (isSet(ddlListDescription)) {
+			Type.clickAtType(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${ddlListDescription}"
+			);
+		}
 
-		<if>
-			<isset var="workflowDefinition" />
-			<then>
-				<execute function="Select" locator1="DDLEditList#WORKFLOW_SELECT" value1="${workflowDefinition}" />
-			</then>
-		</if>
+		if (isSet(workflowDefinition)) {
+			Select(
+				locator1 = "DDLEditList#WORKFLOW_SELECT",
+				value1 = "${workflowDefinition}"
+			);
+		}
 
-		<execute function="AssertClick" locator1="DDLEditList#DATA_DEFINITION_SELECT" value1="Select" />
-	</command>
+		AssertClick(locator1 = "DDLEditList#DATA_DEFINITION_SELECT", value1 = "Select");
+	}
 
-	<command name="addViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_LIST" value1="Add List" />
+	macro addViaDDLDisplayPG {
+		Click(locator1 = "DDL#PORTLET_ACTIONS_ADD_LIST", value1 = "Add List");
 
-		<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Add List" />
+		AssertTextEquals(locator1 = "Portlet#H3_MODAL_TITLE", value1 = "Add List");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${ddlListName}" />
-		</execute>
+		PortletEntry.inputName(name = "${ddlListName}");
 
-		<if>
-			<isset var="ddlListDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${ddlListDescription}" />
-				</execute>
-			</then>
-		</if>
+		if (isSet(ddlListDescription)) {
+			PortletEntry.inputDescription(description = "${ddlListDescription}");
+		}
 
-		<if>
-			<isset var="workflowDefinition" />
-			<then>
-				<execute function="Select" locator1="DDLEditList#WORKFLOW_SELECT" value1="${workflowDefinition}" />
-			</then>
-		</if>
+		if (isSet(workflowDefinition)) {
+			Select(
+				locator1 = "DDLEditList#WORKFLOW_SELECT",
+				value1 = "${workflowDefinition}"
+			);
+		}
 
-		<execute function="AssertClick" locator1="DDLEditList#DATA_DEFINITION_SELECT" value1="Select" />
+		AssertClick(locator1 = "DDLEditList#DATA_DEFINITION_SELECT", value1 = "Select");
 
-		<execute function="SelectFrameTop" />
-	</command>
+		SelectFrameTop();
+	}
 
-	<command name="assertCannotDeleteRecordViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+	macro assertCannotDeleteRecordViaDDLDisplayPG {
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		MenuItem.viewNotPresent(menuItem = "Delete");
 
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="View" />
-		</execute>
-	</command>
+		MenuItem.viewPresent(menuItem = "View");
+	}
 
-	<command name="deleteCP">
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${ddlListName}" />
-		</execute>
+	macro deleteCP {
+		LexiconEntry.viewEntryName(rowEntry = "${ddlListName}");
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="${ddlListName}" />
-		</execute>
-	</command>
+		LexiconEntry.viewNoEntry(rowEntry = "${ddlListName}");
+	}
 
-	<command name="editCP">
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${ddlListName}" />
-		</execute>
+	macro editCP {
+		LexiconEntry.viewEntryName(rowEntry = "${ddlListName}");
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
+		Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${ddlListNameEdit}");
 
-		<if>
-			<isset var="ddlListDescriptionEdit" />
-			<then>
-				<execute function="Type#clickAtType" locator1="TextArea#DESCRIPTION" value1="${ddlListDescriptionEdit}" />
-			</then>
-		</if>
+		if (isSet(ddlListDescriptionEdit)) {
+			Type.clickAtType(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${ddlListDescriptionEdit}"
+			);
+		}
 
-		<execute function="Click" locator1="Button#SAVE" />
+		Click(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="editPermissions">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${ddlListName}" />
-		</execute>
+	macro editPermissions {
+		Search.searchCP(searchTerm = "${ddlListName}");
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Permissions" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+	}
 
-	<command name="editViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_EDIT_LIST" value1="Edit List" />
+	macro editViaDDLDisplayPG {
+		Click(locator1 = "DDL#PORTLET_ACTIONS_EDIT_LIST", value1 = "Edit List");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${ddlListNameEdit}" />
-		</execute>
+		PortletEntry.inputName(name = "${ddlListNameEdit}");
 
-		<if>
-			<isset var="ddlListDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${ddlListDescriptionEdit}" />
-				</execute>
-			</then>
-		</if>
+		if (isSet(ddlListDescription)) {
+			PortletEntry.inputDescription(description = "${ddlListDescriptionEdit}");
+		}
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
 
-	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#save" />
+	macro saveViaDDLDisplayPG {
+		DDLDataDefinition.save();
 
-		<execute function="Pause" locator1="5000" />
-	</command>
+		Pause(locator1 = "5000");
+	}
 
-	<command name="selectViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_SELECT_LIST" value1="Select List" />
+	macro selectViaDDLDisplayPG {
+		Click(locator1 = "DDL#PORTLET_ACTIONS_SELECT_LIST", value1 = "Select List");
 
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		SelectFrame(locator1 = "DDLConfiguration#CONFIGURATION_IFRAME");
 
-		<var name="key_ddlListName" value="${ddlListName}" />
+		var key_ddlListName = "${ddlListName}";
 
-		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_NAME" value1="${ddlListName}" />
+		AssertClick(
+			locator1 = "DDLConfiguration#LIST_TABLE_NAME",
+			value1 = "${ddlListName}"
+		);
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListName} (Modified)" />
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Displaying List: ${ddlListName} (Modified)"
+		);
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute function="SelectFrameTop" />
-	</command>
+		SelectFrameTop();
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<while>
-			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-			<then>
-				<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
-					<var name="menuItem" value="Delete" />
-				</execute>
+		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-	</command>
+			Alert.viewSuccessMessage();
+		}
+	}
 
-	<command name="viewCP">
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="${ddlListName}" />
-		</execute>
+	macro viewCP {
+		LexiconEntry.viewEntryName(rowEntry = "${ddlListName}");
 
-		<if>
-			<isset var="ddlListDescription" />
-			<then>
-				<var name="key_ddlListDescription" value="${ddlListDescription}" />
+		if (isSet(ddlListDescription)) {
+			var key_ddlListDescription = "${ddlListDescription}";
 
-				<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_DESCRIPTION" value1="${ddlListDescription}" />
-			</then>
-		</if>
+			AssertTextEquals(
+				locator1 = "DDL#LIST_TABLE_DESCRIPTION",
+				value1 = "${ddlListDescription}"
+			);
+		}
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${ddlListName}" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "${ddlListName}");
 
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${ddlListName}" />
-		</execute>
-	</command>
+		SiteAdmin.viewPortletTitle(portletTitle = "${ddlListName}");
+	}
 
-	<command name="viewDeleteRecordOptionViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+	macro viewDeleteRecordOptionViaDDLDisplayPG {
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Delete" />
-		</execute>
-	</command>
+		MenuItem.viewPresent(menuItem = "Delete");
+	}
 
-	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
-	</command>
-</definition>
+	macro viewViaDDLDisplayPG {
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "${ddlListName}"
+		);
+	}
+}

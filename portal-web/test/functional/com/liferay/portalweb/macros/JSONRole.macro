@@ -1,66 +1,48 @@
-<definition>
-	<command name="_addRole">
-		<if>
-			<isset var="roleDescription" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${roleDescription}')" name="roleDescriptionEncoded" />
+definition {
 
-				<var name="roleDescriptionMap"><![CDATA[{"en_US":"${roleDescriptionEncoded}"}]]></var>
-			</then>
-			<else>
-				<var name="roleDescriptionMap" value="{}" />
-			</else>
-		</if>
+	macro _addRole {
 
-		<if>
-			<isset var="roleTitle" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${roleTitle}')" name="roleTitleEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'roleTitle'." />
-			</else>
-		</if>
+		if (isSet(roleDescription)) {
+			var roleDescriptionEncoded = URLUtil.encodeUTF8("${roleDescription}");
 
-		<if>
-			<isset var="roleKey" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${roleKey}')" name="roleKeyEncoded" />
+			var roleDescriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
+		}
+		else {
+			var roleDescriptionMap = "{}";
+		}
 
-				<var name="roleKeyMap"><![CDATA[{"en_US":"${roleKeyEncoded}"}]]></var>
-			</then>
-			<else>
-				<var name="roleKeyMap" value="{}" />
-			</else>
-		</if>
+		if (isSet(roleTitle)) {
+			var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+		}
+		else {
+			fail("Please set 'roleTitle'.");
+		}
 
-		<if>
-			<equals arg1="${roleType}" arg2="regular" />
-			<then>
-				<var name="roleTypeId" value="1" />
-			</then>
-			<elseif>
-				<equals arg1="${roleType}" arg2="site" />
-				<then>
-					<var name="roleTypeId" value="2" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${roleType}" arg2="organization" />
-				<then>
-					<var name="roleTypeId" value="3" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid 'roleType', '${roleType}' must be 'regular/site/organization'." />
-			</else>
-		</if>
+		if (isSet(roleKey)) {
+			var roleKeyEncoded = URLUtil.encodeUTF8("${roleKey}");
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+			var roleKeyMap = '''{"en_US":"${roleKeyEncoded}"}''';
+		}
+		else {
+			var roleKeyMap = "{}";
+		}
 
-		<var name="curl"><![CDATA[
+		if ("${roleType}" == "regular") {
+			var roleTypeId = "1";
+		}
+		else if ("${roleType}" == "site") {
+			var roleTypeId = "2";
+		}
+		else if ("${roleType}" == "organization") {
+			var roleTypeId = "3";
+		}
+		else {
+			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
@@ -70,221 +52,146 @@
 				-d descriptionMap=${roleDescriptionMap} \
 				-d type=${roleTypeId} \
 				-d subtype=
-		]]></var>
+		''';
 
-		<echo message="## Adding a 'Role' with the following info using JSONWS:" />
+		echo("## Adding a 'Role' with the following info using JSONWS:");
 
-		<if>
-			<isset var="roleDescription" />
-			<then>
-				<echo message="## * Role Description: ${roleDescription}" />
-			</then>
-		</if>
+		if (isSet(roleDescription)) {
+			echo("## * Role Description: ${roleDescription}");
+		}
 
-		<echo message="## * Role Name: ${roleTitle}" />
+		echo("## * Role Name: ${roleTitle}");
 
-		<if>
-			<isset var="roleKey" />
-			<then>
-				<echo message="## * Role Title: ${roleKey}" />
-			</then>
-		</if>
+		if (isSet(roleKey)) {
+			echo("## * Role Title: ${roleKey}");
+		}
 
-		<echo message="## * Role Type: ${roleType}" />
+		echo("## * Role Type: ${roleType}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
-	</command>
+		var temp = JSONCurlUtil.post("${curl}", "$");
+	}
 
-	<command name="_assignRoleToUser">
-		<if>
-			<not>
-				<isset var="roleId" />
-			</not>
-			<then>
-				<fail message="Please set 'roleId'." />
-			</then>
-		</if>
+	macro _assignRoleToUser {
+		if (!(isSet(roleId))) {
+			fail("Please set 'roleId'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/add-role-users \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
-		]]></var>
+		''';
 
-		<execute macro="JSONRole#getRoleName">
-			<return name="roleTitle" />
-			<var name="roleId" value="${roleId}" />
-		</execute>
+		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
 
-		<execute macro="JSONUser#getUserEmailAddress">
-			<return name="userEmailAddress" />
-			<var name="userId" value="${userId}" />
-		</execute>
+		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		<echo message="## Assigning a 'User' to a 'Role' with the following info using JSONWS:" />
+		echo("## Assigning a 'User' to a 'Role' with the following info using JSONWS:");
 
-		<echo message="## * Role Name: ${roleTitle}" />
+		echo("## * Role Name: ${roleTitle}");
 
-		<echo message="## * User Email Address: ${userEmailAddress}" />
+		echo("## * User Email Address: ${userEmailAddress}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
-	</command>
+		var temp = JSONCurlUtil.post("${curl}", "$");
+	}
 
-	<command name="addOrganizationRole">
-		<if>
-			<not>
-				<isset var="roleTitle" />
-			</not>
-			<then>
-				<fail message="Please set 'roleTitle'." />
-			</then>
-		</if>
+	macro addOrganizationRole {
+		if (!(isSet(roleTitle))) {
+			fail("Please set 'roleTitle'.");
+		}
 
-		<execute macro="JSONRole#_addRole">
-			<var name="roleDescription" value="${roleDescription}" />
-			<var name="roleKey" value="${roleKey}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="organization" />
-		</execute>
-	</command>
+		JSONRole._addRole(
+			roleDescription = "${roleDescription}",
+			roleKey = "${roleKey}",
+			roleTitle = "${roleTitle}",
+			roleType = "organization"
+		);
+	}
 
-	<command name="addRegularRole">
-		<if>
-			<not>
-				<isset var="roleTitle" />
-			</not>
-			<then>
-				<fail message="Please set 'roleTitle'." />
-			</then>
-		</if>
+	macro addRegularRole {
+		if (!(isSet(roleTitle))) {
+			fail("Please set 'roleTitle'.");
+		}
 
-		<execute macro="JSONRole#_addRole">
-			<var name="roleDescription" value="${roleDescription}" />
-			<var name="roleKey" value="${roleKey}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="regular" />
-		</execute>
-	</command>
+		JSONRole._addRole(
+			roleDescription = "${roleDescription}",
+			roleKey = "${roleKey}",
+			roleTitle = "${roleTitle}",
+			roleType = "regular"
+		);
+	}
 
-	<command name="addSiteRole">
-		<if>
-			<not>
-				<isset var="roleTitle" />
-			</not>
-			<then>
-				<fail message="Please set 'roleTitle'." />
-			</then>
-		</if>
+	macro addSiteRole {
+		if (!(isSet(roleTitle))) {
+			fail("Please set 'roleTitle'.");
+		}
 
-		<execute macro="JSONRole#_addRole">
-			<var name="roleDescription" value="${roleDescription}" />
-			<var name="roleKey" value="${roleKey}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="site" />
-		</execute>
-	</command>
+		JSONRole._addRole(
+			roleDescription = "${roleDescription}",
+			roleKey = "${roleKey}",
+			roleTitle = "${roleTitle}",
+			roleType = "site"
+		);
+	}
 
-	<command name="assignRoleToUser">
-		<if>
-			<not>
-				<isset var="roleTitle" />
-			</not>
-			<then>
-				<fail message="Please set 'roleTitle'." />
-			</then>
-		</if>
+	macro assignRoleToUser {
+		if (!(isSet(roleTitle))) {
+			fail("Please set 'roleTitle'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-		<execute macro="JSONRole#getRoleIdByName">
-			<return name="roleId" />
-			<var name="roleTitle" value="${roleTitle}" />
-		</execute>
+		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
 
-		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<return name="userId" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
-		<execute macro="JSONRole#_assignRoleToUser">
-			<var name="roleId" value="${roleId}" />
-			<var name="userId" value="${userId}" />
-		</execute>
-	</command>
+		JSONRole._assignRoleToUser(roleId = "${roleId}", userId = "${userId}");
+	}
 
-	<command name="getRoleIdByName">
-		<if>
-			<isset var="roleTitle" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${roleTitle}')" name="roleTitleEncoded" />
+	macro getRoleIdByName {
+		if (isSet(roleTitle)) {
+			var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+			var roleTitleEncoded = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
+		}
+		else {
+			fail("Please set 'roleTitle'.");
+		}
 
-				<var method="StringUtil#replace('${roleTitleEncoded}', '+', '%20')" name="roleTitleEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'roleTitle'." />
-			</else>
-		</if>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/role/get-role/company-id/${companyId}/name/${roleTitleEncoded} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var roleId = JSONCurlUtil.get("${curl}", "$['roleId']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'roleId\']')" name="roleId" />
+		return "${roleId}";
+	}
 
-		<return value="${roleId}" />
-	</command>
+	macro getRoleName {
+		if (!(isSet(roleId))) {
+			fail("Please set 'roleId'.");
+		}
 
-	<command name="getRoleName">
-		<if>
-			<not>
-				<isset var="roleId" />
-			</not>
-			<then>
-				<fail message="Please set 'roleId'." />
-			</then>
-		</if>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/role/get-role/role-id/${roleId} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var roleTitle = JSONCurlUtil.get("${curl}", "$['name']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'name\']')" name="roleTitle" />
-
-		<return value="${roleTitle}" />
-	</command>
-</definition>
+		return "${roleTitle}";
+	}
+}

@@ -1,47 +1,54 @@
-<definition>
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Add Organization" />
-			<var name="rowEntry" value="${orgName}" />
-		</execute>
+definition {
+	macro addCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Add Organization",
+			rowEntry = "${orgName}"
+		);
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${suborgName}" />
+		Type(locator1 = "TextInput#NAME", value1 = "${suborgName}");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${suborgName}" />
-	</command>
+		AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${suborgName}");
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Organization#tearDownCP">
-			<var name="orgName" value="Suborganization*" />
-		</execute>
-	</command>
+	macro tearDownCP {
+		Organization.tearDownCP(orgName = "Suborganization*");
+	}
 
-	<command name="viewCP">
-		<execute macro="Organization#viewSubOrganizationCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-			<var name="suborgName" value="${suborgName}" />
-			<var name="suborgType" value="${suborgType}" />
-		</execute>
+	macro viewCP {
+		Organization.viewSubOrganizationCP(
+			orgName = "${orgName}",
+			orgType = "${orgType}",
+			suborgName = "${suborgName}",
+			suborgType = "${suborgType}"
+		);
 
-		<var name="key_suborgName" value="${suborgName}" />
+		var key_suborgName = "${suborgName}";
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${suborgName}" />
-		</execute>
+		LexiconEntry.openEntryMenu(rowEntry = "${suborgName}");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		MenuItem.click(menuItem = "Edit");
 
-		<var name="key_orgType" value="${orgType}" />
+		var key_orgType = "${orgType}";
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Edit ${suborgName}" />
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${suborgName}" />
-		<execute function="AssertTextEquals#assertValue" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE" value1="${orgType}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-	</command>
-</definition>
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Edit ${suborgName}");
+
+		AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${suborgName}");
+
+		AssertTextEquals.assertValue(
+			locator1 = "UsersAndOrganizationsEditOrganization#DETAILS_TYPE",
+			value1 = "${orgType}"
+		);
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME",
+			value1 = "${orgName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE",
+			value1 = "${orgType}"
+		);
+	}
+}

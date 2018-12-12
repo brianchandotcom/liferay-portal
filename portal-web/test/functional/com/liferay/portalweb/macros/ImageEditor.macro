@@ -1,82 +1,77 @@
-<definition>
-	<command name="_applyChanges">
-		<execute function="AssertClick" locator1="Button#APPLY_EFFECTS" value1="Apply" />
-	</command>
+definition {
+	macro _applyChanges {
+		AssertClick(locator1 = "Button#APPLY_EFFECTS", value1 = "Apply");
+	}
 
-	<command name="_saveFile">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
+	macro _saveFile {
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
 
-	<command name="applyChangesAndSaveFile">
-		<execute macro="ImageEditor#_applyChanges" />
+	macro applyChangesAndSaveFile {
+		ImageEditor._applyChanges();
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute macro="ImageEditor#_saveFile" />
-	</command>
+		ImageEditor._saveFile();
+	}
 
-	<command name="gotoImageEditorViaDM">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+	macro gotoImageEditorViaDM {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
+		Click(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit With Image Editor" />
-		</execute>
+		MenuItem.click(menuItem = "Edit With Image Editor");
 
-		<execute function="SelectFrame" locator1="ImageEditor#IMAGE_EDITOR_IFRAME" />
-	</command>
+		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
+	}
 
-	<command name="gotoImageEditorViaItemSelector">
-		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
+	macro gotoImageEditorViaItemSelector {
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
-		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		<var name="key_navTab" value="${navTab}" />
+		var key_navTab = "${navTab}";
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="${navTab}" />
+		AssertClick(
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "${navTab}"
+		);
 
-		<var method="StringUtil#replace('${imageFileName}', ' ', '+')" name="key_imageFileName" />
+		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 
-		<execute function="Pause" locator1="1000" />
+		Pause(locator1 = "1000");
 
-		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
 
-		<execute function="Click" locator1="Icon#EDIT_PENCIL" />
+		Click(locator1 = "Icon#EDIT_PENCIL");
 
-		<execute function="SelectFrameTop" value1="relative=top" />
+		SelectFrameTop(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="ImageEditor#IMAGE_EDITOR_IFRAME" />
-	</command>
+		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
+	}
 
-	<command name="gotoRotateImage">
-		<execute function="Click" locator1="Button#TRANSFORM" />
+	macro gotoRotateImage {
+		Click(locator1 = "Button#TRANSFORM");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Rotate" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Rotate");
+	}
 
-	<command name="rotateImage">
-		<execute macro="ImageEditor#gotoRotateImage" />
+	macro rotateImage {
+		ImageEditor.gotoRotateImage();
 
-		<if>
-			<equals arg1="${rotateDirection}" arg2="left" />
-			<then>
-				<execute function="Click" locator1="Button#ROTATE_LEFT" />
-			</then>
-			<elseif>
-				<equals arg1="${rotateDirection}" arg2="right" />
-				<then>
-					<execute function="Click" locator1="Button#ROTATE_RIGHT" />
-				</then>
-			</elseif>
-		</if>
-	</command>
+		if ("${rotateDirection}" == "left") {
+			Click(locator1 = "Button#ROTATE_LEFT");
+		}
+		else if ("${rotateDirection}" == "right") {
+			Click(locator1 = "Button#ROTATE_RIGHT");
+		}
+	}
 
-	<command name="viewBaseControls">
-		<execute function="AssertVisible" locator1="Button#TRANSFORM" />
-		<execute function="AssertVisible" locator1="Button#FILTER_EFFECT" />
-		<execute function="AssertVisible" locator1="Button#COLOR_EFFECT" />
-	</command>
-</definition>
+	macro viewBaseControls {
+		AssertVisible(locator1 = "Button#TRANSFORM");
+
+		AssertVisible(locator1 = "Button#FILTER_EFFECT");
+
+		AssertVisible(locator1 = "Button#COLOR_EFFECT");
+	}
+}

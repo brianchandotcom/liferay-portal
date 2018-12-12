@@ -1,90 +1,71 @@
-<definition>
-	<command name="gotoContact">
-		<execute macro="Navigator#gotoNavUnderline">
-			<var name="navUnderline" value="Contact" />
-		</execute>
-	</command>
+definition {
+	macro gotoContact {
+		Navigator.gotoNavUnderline(navUnderline = "Contact");
+	}
 
-	<command name="gotoDisplaySettings">
-		<execute macro="UserNavigator#gotoPreferences" />
+	macro gotoDisplaySettings {
+		UserNavigator.gotoPreferences();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Display Settings" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Display Settings");
+	}
 
-	<command name="gotoEdit">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
+	macro gotoEdit {
+		Click.waitForMenuToggleJSClick(
+			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS",
+			key_rowEntry = "${rowEntry}"
+		);
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Edit");
+	}
 
-	<command name="gotoGeneral">
-		<if>
-			<condition function="IsElementNotPresent" locator1="NavUnderline#ACTIVE_NAV_UNDERLINE_LINK" />
-			<then>
-				<execute macro="Navigator#gotoNavUnderline">
-					<var name="navUnderline" value="General" />
-				</execute>
-			</then>
-		</if>
-	</command>
+	macro gotoGeneral {
+		if (IsElementNotPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
+			Navigator.gotoNavUnderline(navUnderline = "General");
+		}
+	}
 
-	<command name="gotoMemberships">
-		<execute macro="UserNavigator#gotoGeneral" />
+	macro gotoMemberships {
+		UserNavigator.gotoGeneral();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Memberships" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Memberships");
+	}
 
-	<command name="gotoOrganizations">
-		<execute macro="UserNavigator#gotoGeneral" />
+	macro gotoOrganizations {
+		UserNavigator.gotoGeneral();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Organizations" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Organizations");
+	}
 
-	<command name="gotoPassword">
-		<execute macro="UserNavigator#gotoGeneral" />
+	macro gotoPassword {
+		UserNavigator.gotoGeneral();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Password" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Password");
+	}
 
-	<command name="gotoPreferences">
-		<execute macro="Navigator#gotoNavUnderline">
-			<var name="navUnderline" value="Preferences" />
-		</execute>
-	</command>
+	macro gotoPreferences {
+		Navigator.gotoNavUnderline(navUnderline = "Preferences");
+	}
 
-	<command name="gotoProfileAndDashboard">
-		<execute macro="UserNavigator#gotoGeneral" />
+	macro gotoProfileAndDashboard {
+		UserNavigator.gotoGeneral();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Profile and Dashboard" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Profile and Dashboard");
+	}
 
-	<command name="gotoRoles">
-		<execute macro="UserNavigator#gotoGeneral" />
+	macro gotoRoles {
+		UserNavigator.gotoGeneral();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Roles" />
-		</execute>
-	</command>
+		Navigator.gotoNavNested(navNested = "Roles");
+	}
 
-	<command name="gotoUser">
-		<var name="key_userScreenName" value="${userScreenName}" />
+	macro gotoUser {
+		var key_userScreenName = "${userScreenName}";
 
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		AssertClick(
+			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
+			value1 = "${userScreenName}"
+		);
 
-		<execute function="Pause" locator1="1000" />
-	</command>
-</definition>
+		Pause(locator1 = "1000");
+	}
+}

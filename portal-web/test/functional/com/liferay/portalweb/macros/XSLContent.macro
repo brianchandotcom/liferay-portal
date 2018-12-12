@@ -1,58 +1,105 @@
-<definition>
-	<command name="configureConfigurationAdminXSL">
-		<execute function="Type" locator1="TextArea#URL" value1="@portlet_context_url@,@portal_url@" />
+definition {
+	macro configureConfigurationAdminXSL {
+		Type(locator1 = "TextArea#URL", value1 = "@portlet_context_url@,@portal_url@");
 
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="xml.doctype.declaration.allowed" />
-		</execute>
+		FormFields.enableCheckbox(fieldName = "xml.doctype.declaration.allowed");
 
-		<execute macro="SystemSettings#saveConfiguration" />
-	</command>
+		SystemSettings.saveConfiguration();
+	}
 
-	<command name="gotoDocumentURL">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+	macro gotoDocumentURL {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
+		AssertClick(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
+			value1 = "${dmDocumentTitle}"
+		);
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			value1 = "Test Test"
+		);
 
-		<execute function="Click" locator1="Icon#INFO" />
+		Click(locator1 = "Icon#INFO");
 
-		<execute function="ClickNoError" locator1="DocumentsAndMediaDocument#DETAILS_URL" />
+		ClickNoError(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
 
-		<execute function="Pause" locator1="5000" />
-	</command>
+		Pause(locator1 = "5000");
+	}
 
-	<command name="viewConfigurationXSLContent">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	macro viewConfigurationXSLContent {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XML_URL" value1="@portlet_context_url@/example.xml" />
-		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XSL_URL" value1="@portlet_context_url@/example.xsl" />
+		AssertTextEquals(
+			locator1 = "TextInput#SETUP_XML_URL",
+			value1 = "@portlet_context_url@/example.xml"
+		);
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TextInput#SETUP_XSL_URL",
+			value1 = "@portlet_context_url@/example.xsl"
+		);
 
-	<command name="viewConsoleError">
-		<execute function="AssertConsoleTextPresent" value1="${consoleTextError}" />
-	</command>
+		SelectFrameTop(value1 = "relative=top");
+	}
 
-	<command name="viewErrorMessage">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="An error occurred while processing your XML and XSL." />
-	</command>
+	macro viewConsoleError {
+		AssertConsoleTextPresent(value1 = "${consoleTextError}");
+	}
 
-	<command name="viewXSLPortletHymnDisplay">
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TITLE" value1="My Hymn Collection" />
+	macro viewErrorMessage {
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "An error occurred while processing your XML and XSL."
+		);
+	}
 
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_TITLE_HEADER" value1="Title" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_ARTIST_HEADER" value1="Artist" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_COUNTRY_HEADER" value1="Country" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_YEAR_HEADER" value1="Year" />
+	macro viewXSLPortletHymnDisplay {
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TITLE",
+			value1 = "My Hymn Collection"
+		);
 
-		<var name="key_titleEntry" value="${tableTitleEntry}" />
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_TITLE_HEADER",
+			value1 = "Title"
+		);
 
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_TITLE_ENTRY" value1="${tableTitleEntry}" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_ARTIST_ENTRY" value1="${tableArtistEntry}" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_COUNTRY_ENTRY" value1="${tableCountryEntry}" />
-		<execute function="AssertTextEquals" locator1="XSLContentPortlet#TABLE_YEAR_ENTRY" value1="${tableYearEntry}" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_ARTIST_HEADER",
+			value1 = "Artist"
+		);
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_COUNTRY_HEADER",
+			value1 = "Country"
+		);
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_YEAR_HEADER",
+			value1 = "Year"
+		);
+
+		var key_titleEntry = "${tableTitleEntry}";
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_TITLE_ENTRY",
+			value1 = "${tableTitleEntry}"
+		);
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_ARTIST_ENTRY",
+			value1 = "${tableArtistEntry}"
+		);
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_COUNTRY_ENTRY",
+			value1 = "${tableCountryEntry}"
+		);
+
+		AssertTextEquals(
+			locator1 = "XSLContentPortlet#TABLE_YEAR_ENTRY",
+			value1 = "${tableYearEntry}"
+		);
+	}
+}

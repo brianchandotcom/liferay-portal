@@ -1,67 +1,50 @@
-<definition>
-	<command name="_gotoAddCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
-			</else>
-		</if>
-	</command>
+definition {
+	macro _gotoAddCollection {
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+		}
+		else {
+			Button.click(button = "New");
+		}
+	}
 
-	<command name="add">
-		<if>
-			<isset var="pageTemplateType" />
-			<then>
-				<var name="menuItem" value="${pageTemplateType}" />
-			</then>
-			<else>
-				<var name="menuItem" value="Content Page Template" />
-			</else>
-		</if>
+	macro add {
+		if (isSet(pageTemplateType)) {
+			var menuItem = "${pageTemplateType}";
+		}
+		else {
+			var menuItem = "Content Page Template";
+		}
 
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="${menuItem}" />
-		</execute>
+		LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${pageTemplateName}" />
-		</execute>
+		PortletEntry.inputName(name = "${pageTemplateName}");
 
-		<execute macro="Button#clickSave" />
-	</command>
+		Button.clickSave();
+	}
 
-	<command name="addCollection">
-		<execute macro="PageTemplatesAdmin#_gotoAddCollection" />
+	macro addCollection {
+		PageTemplatesAdmin._gotoAddCollection();
 
-		<execute macro="Collection#editCollection">
-			<var name="collectionDescription" value="${collectionDescription}" />
-			<var name="collectionName" value="${collectionName}" />
-		</execute>
+		Collection.editCollection(
+			collectionDescription = "${collectionDescription}",
+			collectionName = "${collectionName}"
+		);
 
-		<execute macro="Button#clickSave" />
-	</command>
+		Button.clickSave();
+	}
 
-	<command name="openPageTemplatesAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=page-templates" />
-		</execute>
-	</command>
+	macro openPageTemplatesAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=page-templates"
+		);
+	}
 
-	<command name="rename">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Rename" />
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+	macro rename {
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "${rowEntry}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${pageTemplateName}" />
-		</execute>
+		PortletEntry.inputName(name = "${pageTemplateName}");
 
-		<execute macro="Modal#save" />
-	</command>
-</definition>
+		Modal.save();
+	}
+}

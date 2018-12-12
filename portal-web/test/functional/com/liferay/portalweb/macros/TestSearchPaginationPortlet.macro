@@ -1,35 +1,36 @@
-<definition>
-	<command name="search15Results">
-		<var method="PropsUtil#get('browser.type')" name="browserType" />
+definition {
+	macro search15Results {
+		var browserType = PropsUtil.get("browser.type");
 
-		<if>
-			<equals arg1="${browserType}" arg2="firefox" />
-			<then>
-				<execute function="MouseDown" locator1="xpath=(//select//option[2])" />
+		if ("${browserType}" == "firefox") {
+			MouseDown(locator1 = "xpath=(//select//option[2])");
 
-				<execute function="MouseUp" locator1="xpath=(//select//option[17])" />
-			</then>
-			<else>
-				<execute function="KeyPress#keyDown" locator1="xpath=(//select//option[2])" value1="\SHIFT" />
+			MouseUp(locator1 = "xpath=(//select//option[17])");
+		}
+		else {
+			KeyPress.keyDown(locator1 = "xpath=(//select//option[2])", value1 = "\SHIFT");
 
-				<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[16])" value1="\SHIFT" />
-			</else>
-		</if>
+			KeyPress.keyUp(locator1 = "xpath=(//select//option[16])", value1 = "\SHIFT");
+		}
 
-		<execute function="Click" locator1="Button#SEARCH" />
+		Click(locator1 = "Button#SEARCH");
 
-		<execute function="Click" locator1="Button#ITEMS_PER_PAGE" />
+		Click(locator1 = "Button#ITEMS_PER_PAGE");
 
-		<var name="key_itemsPerPage" value="${itemsPerPage}" />
+		var key_itemsPerPage = "${itemsPerPage}";
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${itemsPerPage}" />
-		</execute>
+		MenuItem.click(menuItem = "${itemsPerPage}");
 
-		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 1 - 5 of 15 results." />
+		AssertTextEquals(
+			locator1 = "TestSearchPagination#SEARCH_RESULTS",
+			value1 = "Showing 1 - 5 of 15 results."
+		);
 
-		<execute function="Click" locator1="Pagination#NEXT_LINK" />
+		Click(locator1 = "Pagination#NEXT_LINK");
 
-		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 6 - 10 of 15 results." />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "TestSearchPagination#SEARCH_RESULTS",
+			value1 = "Showing 6 - 10 of 15 results."
+		);
+	}
+}

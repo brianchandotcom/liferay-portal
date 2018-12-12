@@ -1,230 +1,222 @@
-<definition>
-	<command name="_addCP">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
+definition {
+	macro _addCP {
+		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Add Subcategory" />
-			<var name="rowEntry" value="${categoryName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Add Subcategory",
+			rowEntry = "${categoryName}"
+		);
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryName}" />
-		</execute>
+		PortletEntry.inputTitle(title = "${subcategoryName}");
 
-		<if>
-			<not>
-				<contains string="${subcategoryDescription}" substring="{subcategoryDescription}" />
-			</not>
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${subcategoryDescription}" />
-				</execute>
-			</then>
-		</if>
-	</command>
+		if (!(contains("${subcategoryDescription}", "{subcategoryDescription}"))) {
+			PortletEntry.inputDescription(description = "${subcategoryDescription}");
+		}
+	}
 
-	<command name="addCP">
-		<execute macro="Subcategory#_addCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subcategoryDescription" value="${subcategoryDescription}" />
-			<var name="subcategoryName" value="${subcategoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
+	macro addCP {
+		Subcategory._addCP(
+			categoryName = "${categoryName}",
+			subcategoryDescription = "${subcategoryDescription}",
+			subcategoryName = "${subcategoryName}",
+			vocabularyName = "${vocabularyName}"
+		);
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="addDuplicateCP">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
+	macro addDuplicateCP {
+		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Add Subcategory" />
-			<var name="rowEntry" value="${categoryName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Add Subcategory",
+			rowEntry = "${categoryName}"
+		);
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryName}" />
-		</execute>
+		PortletEntry.inputTitle(title = "${subcategoryName}");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		Alert.viewRequestFailedToComplete();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a unique name." />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "Please enter a unique name."
+		);
+	}
 
-	<command name="addPropertyCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${subcategoryName}" />
-		</execute>
+	macro addPropertyCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${subcategoryName}"
+		);
 
-		<execute macro="Navigator#gotoNavUnderline">
-			<var name="navUnderline" value="Properties" />
-		</execute>
+		Navigator.gotoNavUnderline(navUnderline = "Properties");
 
-		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyField}" />
-		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueField}" />
+		Type(
+			locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+			value1 = "${propertiesKeyField}"
+		);
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		Type(
+			locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+			value1 = "${propertiesValueField}"
+		);
 
-	<command name="deleteViaIconCP">
-		<for list="${vocabularyName},${categoryName}" param="rowEntry">
-			<execute macro="LexiconEntry#gotoEntry">
-				<var name="rowEntry" value="${rowEntry}" />
-			</execute>
-		</for>
+		PortletEntry.save();
+	}
 
-		<var name="key_subcategoryName" value="${subcategoryName}" />
+	macro deleteViaIconCP {
+		for (var rowEntry : list "${vocabularyName},${categoryName}") {
+			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+		}
 
-		<execute function="Check" locator1="Categories#SUBCATEGORY_CHECKBOX" />
+		var key_subcategoryName = "${subcategoryName}";
 
-		<execute function="ClickNoError" locator1="Icon#DELETE" />
+		Check(locator1 = "Categories#SUBCATEGORY_CHECKBOX");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		ClickNoError(locator1 = "Icon#DELETE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextNotPresent" value1="${subcategoryName}" />
-	</command>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-	<command name="deleteViaMenuCP">
-		<for list="${vocabularyName},${categoryName}" param="rowEntry">
-			<execute macro="LexiconEntry#gotoEntry">
-				<var name="rowEntry" value="${rowEntry}" />
-			</execute>
-		</for>
+		Alert.viewSuccessMessage();
 
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${subcategoryName}" />
-		</execute>
+		AssertTextNotPresent(value1 = "${subcategoryName}");
+	}
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	macro deleteViaMenuCP {
+		for (var rowEntry : list "${vocabularyName},${categoryName}") {
+			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+		}
 
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextNotPresent" value1="${subcategoryName}" />
-	</command>
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${subcategoryName}"
+		);
 
-	<command name="editCP">
-		<for list="${vocabularyName},${categoryName}" param="rowEntry">
-			<execute macro="LexiconEntry#gotoEntry">
-				<var name="rowEntry" value="${rowEntry}" />
-			</execute>
-		</for>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${subcategoryName}" />
-		</execute>
+		Alert.viewSuccessMessage();
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${subcategoryNameEdit}" />
-		</execute>
+		AssertTextNotPresent(value1 = "${subcategoryName}");
+	}
 
-		<execute macro="PortletEntry#save" />
-	</command>
+	macro editCP {
+		for (var rowEntry : list "${vocabularyName},${categoryName}") {
+			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+		}
 
-	<command name="moveCP">
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${vocabularyName}">
-			<var name="key_rowEntry" value="${vocabularyName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${subcategoryName}"
+		);
 
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${categoryName}">
-			<var name="key_rowEntry" value="${categoryName}" />
-		</execute>
+		PortletEntry.inputTitle(title = "${subcategoryNameEdit}");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move" />
-			<var name="rowEntry" value="${subcategoryName}" />
-		</execute>
+		PortletEntry.save();
+	}
 
-		<execute macro="AssetCategorization#selectCategory">
-			<var name="categoryName" value="${categoryNameMove}" />
-		</execute>
-	</command>
+	macro moveCP {
+		AssertClick(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${vocabularyName}",
+			key_rowEntry = "${vocabularyName}"
+		);
 
-	<command name="searchCP">
-		<for list="${vocabularyName},${categoryName}" param="rowEntry">
-			<execute macro="LexiconEntry#gotoEntry">
-				<var name="rowEntry" value="${rowEntry}" />
-			</execute>
-		</for>
+		AssertClick(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${categoryName}",
+			key_rowEntry = "${categoryName}"
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${subcategorySearchEntry}" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Move",
+			rowEntry = "${subcategoryName}"
+		);
 
-	<command name="viewCategoryPropertyCP">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
+		AssetCategorization.selectCategory(categoryName = "${categoryNameMove}");
+	}
 
-		<var name="key_categoryName" value="${categoryName}" />
+	macro searchCP {
+		for (var rowEntry : list "${vocabularyName},${categoryName}") {
+			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+		}
 
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
+		Search.searchCP(searchTerm = "${subcategorySearchEntry}");
+	}
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${subcategoryName}" />
-		</execute>
+	macro viewCategoryPropertyCP {
+		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
 
-		<execute macro="Navigator#gotoNavUnderline">
-			<var name="navUnderline" value="Properties" />
-		</execute>
+		var key_categoryName = "${categoryName}";
 
-		<execute function="AssertTextEquals" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyField}" />
-		<execute function="AssertTextEquals" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueField}" />
-	</command>
+		Click(locator1 = "Categories#CATEGORY_ENTRY_LINK");
 
-	<command name="viewCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${vocabularyName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${subcategoryName}"
+		);
 
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		Navigator.gotoNavUnderline(navUnderline = "Properties");
 
-		<var name="key_subcategoryName" value="${subcategoryName}" />
+		AssertTextEquals(
+			locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+			value1 = "${propertiesKeyField}"
+		);
 
-		<execute function="AssertTextEquals" locator1="Categories#SUBCATEGORY_ENTRY" value1="${subcategoryName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+			value1 = "${propertiesValueField}"
+		);
+	}
 
-	<command name="viewSearchResultsCP">
-		<if>
-			<isset var="subCategoryNameList" />
-			<then>
-				<for list="${subCategoryNameList}" param="subCategoryName">
-					<var name="key_subCategoryName" value="${subCategoryName}" />
+	macro viewCP {
+		var key_categoryName = "${categoryName}";
 
-					<execute function="AssertTextEquals" locator1="Categories#SUBCATEGORY_ENTRY" value1="${subcategoryName}" />
-				</for>
-			</then>
-		</if>
+		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
 
-		<if>
-			<isset var="subcategoryDescriptionList" />
-			<then>
-				<for list="${subcategoryDescriptionList}" param="categoryDescription">
-					<var name="key_subcategoryDescription" value="${subcategoryDescription}" />
+		AssertClick(
+			locator1 = "Categories#CATEGORY_ENTRY_LINK",
+			value1 = "${categoryName}"
+		);
 
-					<execute function="AssertTextEquals" locator1="Categories#SUBCATEGORY_ENTRY_DESCRIPTION" value1="${subcategoryDescription}" />
-				</for>
-			</then>
-		</if>
+		var key_subcategoryName = "${subcategoryName}";
 
-		<if>
-			<equals arg1="${nullResult}" arg2="true" />
-			<then>
-				<execute macro="PortletEntry#viewEmptyMessage">
-					<var name="entity" value="Categories" />
-				</execute>
-			</then>
-		</if>
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "Categories#SUBCATEGORY_ENTRY",
+			value1 = "${subcategoryName}"
+		);
+	}
+
+	macro viewSearchResultsCP {
+		if (isSet(subCategoryNameList)) {
+			for (var subCategoryName : list "${subCategoryNameList}") {
+				var key_subCategoryName = "${subCategoryName}";
+
+				AssertTextEquals(
+					locator1 = "Categories#SUBCATEGORY_ENTRY",
+					value1 = "${subcategoryName}"
+				);
+			}
+		}
+
+		if (isSet(subcategoryDescriptionList)) {
+			for (var categoryDescription : list "${subcategoryDescriptionList}") {
+				var key_subcategoryDescription = "${subcategoryDescription}";
+
+				AssertTextEquals(
+					locator1 = "Categories#SUBCATEGORY_ENTRY_DESCRIPTION",
+					value1 = "${subcategoryDescription}"
+				);
+			}
+		}
+
+		if ("${nullResult}" == "true") {
+			PortletEntry.viewEmptyMessage(entity = "Categories");
+		}
+	}
+}

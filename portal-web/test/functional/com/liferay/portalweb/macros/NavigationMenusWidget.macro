@@ -1,34 +1,38 @@
-<definition>
-	<command name="chooseMenu">
-		<execute function="Click" locator1="Radio#CHOOSE_MENU" />
+definition {
+	macro chooseMenu {
+		Click(locator1 = "Radio#CHOOSE_MENU");
 
-		<execute function="Click" locator1="Button#SELECT" />
+		Click(locator1 = "Button#SELECT");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="Click" locator1="Card#SPECIFIC_FOOTER_TEXT_LINK">
-			<var name="key_cardText" value="${menuName}" />
-		</execute>
+		Click(locator1 = "Card#SPECIFIC_FOOTER_TEXT_LINK", key_cardText = "${menuName}");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="AssertTextEquals" locator1="NavigationMenusWidget#CHOOSE_MENU_SELECTED_MENU_NAME" value1="${menuName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "NavigationMenusWidget#CHOOSE_MENU_SELECTED_MENU_NAME",
+			value1 = "${menuName}"
+		);
+	}
 
-	<command name="gotoNavigationMenuWidgetConfig">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Navigation Menu" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+	macro gotoNavigationMenuWidgetConfig {
+		Portlet.gotoPortletOptions(
+			portletName = "Navigation Menu",
+			portletOption = "Configuration"
+		);
 
-		<execute macro="IFrame#selectModalFrame" />
-	</command>
+		IFrame.selectModalFrame();
+	}
 
-	<command name="selectNavigation">
-		<execute function="Select" locator1="NavigationMenusWidget#SELECT_NAVIGATION" value1="${menuType}" />
-	</command>
-</definition>
+	macro selectNavigation {
+		Select(
+			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+			value1 = "${menuType}"
+		);
+	}
+}

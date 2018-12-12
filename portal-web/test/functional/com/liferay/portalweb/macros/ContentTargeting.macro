@@ -1,81 +1,75 @@
-<definition>
-	<command name="enableAnalytics">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Audience Targeting Analytics" />
-		</execute>
+definition {
+	macro enableAnalytics {
+		Panel.expandPanel(panel = "Audience Targeting Analytics");
 
-		<for list="${analyticsList}" param="analytic">
-			<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
-				<var name="key_toggleSwitchLabel" value="${analytic}" />
-			</execute>
-		</for>
-	</command>
+		for (var analytic : list "${analyticsList}") {
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "${analytic}"
+			);
+		}
+	}
 
-	<command name="enableAnalyticsViaSiteSettings">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
+	macro enableAnalyticsViaSiteSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
 
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Advanced" />
-		</execute>
+		Navigator.gotoNavTab(navTab = "Advanced");
 
-		<execute macro="ContentTargeting#enableAnalytics">
-			<var name="analyticsList" value="${analyticsList}" />
-		</execute>
+		ContentTargeting.enableAnalytics(analyticsList = "${analyticsList}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="expandPreview">
-		<var name="key_portletName" value="${portletName}" />
+	macro expandPreview {
+		var key_portletName = "${portletName}";
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
-			<then>
-				<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#SPECIFIC_BORDERLESS_BAR" />
+		if (IsElementNotPresent(locator1 = "ContentTargeting#PREVIEW_BUTTON_EXPANDED")) {
+			MouseOver.mouseOverNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 
-				<execute function="Click" locator1="Portlet#SPECIFIC_BORDERLESS_BAR" />
+			Click(locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 
-				<execute function="Click" locator1="ContentTargeting#PREVIEW_BUTTON" />
+			Click(locator1 = "ContentTargeting#PREVIEW_BUTTON");
 
-				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
-			</then>
-		</if>
-	</command>
+			AssertElementPresent(locator1 = "ContentTargeting#PREVIEW_BUTTON_EXPANDED");
+		}
+	}
 
-	<command name="expandPreviewOnStagingLiveMode">
-		<var name="key_portletName" value="${portletName}" />
+	macro expandPreviewOnStagingLiveMode {
+		var key_portletName = "${portletName}";
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
-			<then>
-				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_BUTTON_STAGING_LIVE_MODE" />
+		if (IsElementNotPresent(locator1 = "ContentTargeting#PREVIEW_BUTTON_EXPANDED")) {
+			MouseOver(locator1 = "ContentTargeting#PREVIEW_BUTTON_STAGING_LIVE_MODE");
 
-				<execute function="Click" locator1="ContentTargeting#PREVIEW_BUTTON" />
+			Click(locator1 = "ContentTargeting#PREVIEW_BUTTON");
 
-				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
-			</then>
-		</if>
-	</command>
+			AssertElementPresent(locator1 = "ContentTargeting#PREVIEW_BUTTON_EXPANDED");
+		}
+	}
 
-	<command name="viewEntryOnStagingLiveMode">
-		<var name="key_portletName" value="${portletName}" />
+	macro viewEntryOnStagingLiveMode {
+		var key_portletName = "${portletName}";
 
-		<execute function="AssertTextEquals" locator1="ContentTargeting#VIEW_ENTRY_CONTENT" value1="${entryContentText}" />
+		AssertTextEquals(
+			locator1 = "ContentTargeting#VIEW_ENTRY_CONTENT",
+			value1 = "${entryContentText}"
+		);
 
-		<for list="${previewContentList}" param="previewEntry">
-			<execute macro="ContentTargeting#expandPreviewOnStagingLiveMode">
-				<var name="portletName" value="${portletName}" />
-			</execute>
+		for (var previewEntry : list "${previewContentList}") {
+			ContentTargeting.expandPreviewOnStagingLiveMode(portletName = "${portletName}");
 
-			<var name="key_previewEntry" value="${previewEntry}" />
-			<var name="key_viewEntrySelected" value="${viewSelectedContent}" />
+			var key_previewEntry = "${previewEntry}";
+			var key_viewEntrySelected = "${viewSelectedContent}";
 
-			<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_ENTRY_SELECTED" />
-			<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW" value1="${previewEntry}" />
-		</for>
-	</command>
-</definition>
+			AssertElementPresent(locator1 = "ContentTargeting#PREVIEW_ENTRY_SELECTED");
+
+			AssertTextEquals(
+				locator1 = "ContentTargeting#PREVIEW",
+				value1 = "${previewEntry}"
+			);
+		}
+	}
+}

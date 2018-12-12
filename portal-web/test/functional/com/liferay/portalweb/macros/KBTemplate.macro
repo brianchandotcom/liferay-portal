@@ -1,77 +1,77 @@
-<definition>
-	<command name="addCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+definition {
+	macro addCP {
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		LexiconEntry.gotoAdd();
 
-		<execute macro="AlloyEditor#addTitleAndContent">
-			<var name="content" value="${kbTemplateContent}" />
-			<var name="title" value="${kbTemplateTitle}" />
-		</execute>
+		AlloyEditor.addTitleAndContent(
+			content = "${kbTemplateContent}",
+			title = "${kbTemplateTitle}"
+		);
 
-		<execute macro="PortletEntry#publish" />
-	</command>
+		PortletEntry.publish();
+	}
 
-	<command name="gotoCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+	macro gotoCP {
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="${kbTemplateTitle}" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "${kbTemplateTitle}"
+		);
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Templates" />
-		</execute>
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Templates");
 
-		<if>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+		if (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_1")) {
+			PortletEntry.selectAll();
 
-				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+			AssertClickNoError(locator1 = "Button#DELETE", value1 = "Delete");
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete the selected templates?" />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete the selected templates?"
+			);
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</if>
-	</command>
+			Alert.viewSuccessMessage();
+		}
+	}
 
-	<command name="viewCP">
-		<execute macro="KBTemplate#gotoCP">
-			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
-		</execute>
+	macro viewCP {
+		KBTemplate.gotoCP(kbTemplateTitle = "${kbTemplateTitle}");
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseTemplate#TEMPLATE_TITLE" value1="${kbTemplateTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseTemplate#TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE",
+			value1 = "${kbTemplateTitle}"
+		);
 
-	<command name="viewCPViaAddTemplate">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="${kbTemplateTitle}" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseTemplate#TEMPLATE_CONTENT",
+			value1 = "${kbTemplateContent}"
+		);
+	}
 
-		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateTitle}">
-			<var name="key_editor" value="title" />
-		</execute>
+	macro viewCPViaAddTemplate {
+		LexiconEntry.gotoAddMenuItem(menuItem = "${kbTemplateTitle}");
 
-		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateContent}">
-			<var name="key_editor" value="content" />
-		</execute>
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "${kbTemplateTitle}",
+			key_editor = "title"
+		);
+
+		AssertTextEquals(
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "${kbTemplateContent}",
+			key_editor = "content"
+		);
+	}
+}

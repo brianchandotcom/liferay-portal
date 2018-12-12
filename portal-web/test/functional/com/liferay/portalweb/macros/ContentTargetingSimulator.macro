@@ -1,49 +1,40 @@
-<definition>
-	<command name="configureUserSegmentSimulator">
-		<if>
-			<isset var="configureUserSegmentMatched" />
-			<then>
-				<for list="${configureUserSegmentMatched}" param="userSegmentMatched">
-					<var name="key_userSegmentNotMatched" value="${userSegmentMatched}" />
+definition {
+	macro configureUserSegmentSimulator {
+		if (isSet(configureUserSegmentMatched)) {
+			for (var userSegmentMatched : list "${configureUserSegmentMatched}") {
+				var key_userSegmentNotMatched = "${userSegmentMatched}";
 
-					<if>
-						<condition function="IsElementPresent" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
-						<then>
-							<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
+				if (IsElementPresent(locator1 = "CTSimulator#USER_SEGMENT_NOT_MATCHED")) {
+					var key_userSegmentMatched = "${userSegmentMatched}";
 
-							<execute function="Click" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
-						</then>
-					</if>
-				</for>
-			</then>
-		</if>
+					Click(locator1 = "CTSimulator#USER_SEGMENT_MATCHED");
+				}
+			}
+		}
 
-		<if>
-			<isset var="configureUserSegmentNotMatched" />
-			<then>
-				<for list="${configureUserSegmentNotMatched}" param="userSegmentNotMatched">
-					<var name="key_userSegmentMatched" value="${userSegmentNotMatched}" />
+		if (isSet(configureUserSegmentNotMatched)) {
+			for (var userSegmentNotMatched : list "${configureUserSegmentNotMatched}") {
+				var key_userSegmentMatched = "${userSegmentNotMatched}";
 
-					<if>
-						<condition function="IsElementPresent" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
-						<then>
-							<var name="key_userSegmentNotMatched" value="${userSegmentNotMatched}" />
+				if (IsElementPresent(locator1 = "CTSimulator#USER_SEGMENT_MATCHED")) {
+					var key_userSegmentNotMatched = "${userSegmentNotMatched}";
 
-							<execute function="Click" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
-						</then>
-					</if>
-				</for>
-			</then>
-		</if>
-	</command>
+					Click(locator1 = "CTSimulator#USER_SEGMENT_NOT_MATCHED");
+				}
+			}
+		}
+	}
 
-	<command name="viewUserSegmentsViaSimulator">
-		<execute function="SelectFrame#selectFrameTop" />
+	macro viewUserSegmentsViaSimulator {
+		SelectFrame.selectFrameTop();
 
-		<for list="${userSegments}" param="userSegment">
-			<var name="key_userSegmentNotMatched" value="${userSegment}" />
+		for (var userSegment : list "${userSegments}") {
+			var key_userSegmentNotMatched = "${userSegment}";
 
-			<execute function="AssertTextEquals" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" value1="${userSegment}" />
-		</for>
-	</command>
-</definition>
+			AssertTextEquals(
+				locator1 = "CTSimulator#USER_SEGMENT_NOT_MATCHED",
+				value1 = "${userSegment}"
+			);
+		}
+	}
+}

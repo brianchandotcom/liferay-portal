@@ -1,60 +1,46 @@
-<definition>
-	<command name="assertEquals">
-		<echo message="${expected}" />
-		<echo message="${actual}" />
+definition {
+	macro assertEquals {
+		echo("${expected}");
 
-		<if>
-			<equals arg1="${expected}" arg2="${actual}" />
-			<then>
-				<echo message="PASSED" />
-			</then>
-			<else>
-				<execute macro="TestUtils#fail">
-					<var name="message" value="FAILED: expected '${expected}', actual was '${actual}'" />
-				</execute>
-			</else>
-		</if>
-	</command>
+		echo("${actual}");
 
-	<command name="fail">
-		<if>
-			<not>
-				<isset var="message" />
-			</not>
-			<then>
-				<var name="message" value="FAIL" />
-			</then>
-		</if>
+		if ("${expected}" == "${actual}") {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(
+				message = "FAILED: expected &apos;${expected}&apos;, actual was &apos;${actual}&apos;"
+			);
+		}
+	}
 
-		<echo message="${message}" />
+	macro fail {
+		if (!(isSet(message))) {
+			var message = "FAIL";
+		}
 
-		<fail message="${message}" />
-	</command>
+		echo("${message}");
 
-	<command name="pass">
-		<if>
-			<not>
-				<isset var="message" />
-			</not>
-			<then>
-				<var name="message" value="PASS" />
-			</then>
-		</if>
+		fail("${message}");
+	}
 
-		<echo message="${message}" />
-	</command>
+	macro pass {
+		if (!(isSet(message))) {
+			var message = "PASS";
+		}
 
-	<command name="typeIntoField">
-		<execute macro="Navigator#openURL" />
+		echo("${message}");
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	macro typeIntoField {
+		Navigator.openURL();
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-	</command>
-</definition>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+	}
+}

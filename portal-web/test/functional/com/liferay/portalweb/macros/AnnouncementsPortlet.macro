@@ -1,25 +1,23 @@
-<definition>
-	<command name="configureDisplayCountPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Announcements" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+definition {
+	macro configureDisplayCountPG {
+		Portlet.gotoPortletOptions(
+			portletName = "Announcements",
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="Select" locator1="Select#PAGE_DELTA" value1="5" />
+		Select(locator1 = "Select#PAGE_DELTA", value1 = "5");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute function="SelectFrameTop" />
-	</command>
+		SelectFrameTop();
+	}
 
-	<command name="configurePaginationCP">
-		<execute function="Click" locator1="Dropdown#ENTRIES" />
+	macro configurePaginationCP {
+		Click(locator1 = "Dropdown#ENTRIES");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="${itemsPerPage}" />
-		</execute>
-	</command>
-</definition>
+		MenuItem.click(menuItem = "${itemsPerPage}");
+	}
+}

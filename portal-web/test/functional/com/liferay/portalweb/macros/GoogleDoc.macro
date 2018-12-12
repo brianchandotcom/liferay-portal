@@ -1,29 +1,28 @@
-<definition>
-	<command name="discardChanges">
-		<execute function="AssertClick" locator1="Button#ANY">
-			<var name="key_text" value="Discard Changes" />
-		</execute>
-	</command>
+definition {
+	macro discardChanges {
+		AssertClick(locator1 = "Button#ANY", key_text = "Discard Changes");
+	}
 
-	<command name="editTitleInGoogleDoc">
-		<execute function="Type" locator1="GoogleDoc#TITLE" value1="${dmDocumentTitle}" />
-	</command>
+	macro editTitleInGoogleDoc {
+		Type(locator1 = "GoogleDoc#TITLE", value1 = "${dmDocumentTitle}");
+	}
 
-	<command name="gotoEdit">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+	macro gotoEdit {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
+		Click(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS"
+		);
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit in ${dmGoogleApp}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Edit in ${dmGoogleApp}");
+	}
 
-	<command name="saveAndExit">
-		<execute function="AssertElementPresent" locator1="Button#ANY">
-			<var name="key_text" value="Save and Return to Liferay" />
-		</execute>
+	macro saveAndExit {
+		AssertElementPresent(
+			locator1 = "Button#ANY",
+			key_text = "Save and Return to Liferay"
+		);
 
-		<execute macro="Navigator#openURL" />
-	</command>
-</definition>
+		Navigator.openURL();
+	}
+}

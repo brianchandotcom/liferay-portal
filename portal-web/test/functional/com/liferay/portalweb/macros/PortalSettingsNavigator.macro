@@ -1,55 +1,53 @@
-<definition>
-	<command name="expandAuthenticationPanel">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Authentication" />
-		</execute>
-	</command>
+definition {
+	macro expandAuthenticationPanel {
+		Panel.expandPanel(panel = "Authentication");
+	}
 
-	<command name="gotoCAS">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoCAS {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
-	</command>
+		AssertClick(locator1 = "NavTab#CAS", value1 = "CAS");
+	}
 
-	<command name="gotoFacebook">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoFacebook {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#FACEBOOK" value1="Facebook" />
-	</command>
+		AssertClick(locator1 = "NavTab#FACEBOOK", value1 = "Facebook");
+	}
 
-	<command name="gotoGoogle">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoGoogle {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#GOOGLE" value1="Google" />
-	</command>
+		AssertClick(locator1 = "NavTab#GOOGLE", value1 = "Google");
+	}
 
-	<command name="gotoLDAP">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoLDAP {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
-	</command>
+		AssertClick(locator1 = "NavTab#LDAP", value1 = "LDAP");
+	}
 
-	<command name="gotoNTLM">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoNTLM {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#NTLM" value1="NTLM" />
-	</command>
+		AssertClick(locator1 = "NavTab#NTLM", value1 = "NTLM");
+	}
 
-	<command name="gotoOpenID">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoOpenID {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
-	</command>
+		AssertClick(locator1 = "NavTab#OPENID", value1 = "OpenID");
+	}
 
-	<command name="gotoOpenIDConnect">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoOpenIDConnect {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#OPENID_CONNECT" value1="OpenId Connect" />
-	</command>
+		AssertClick(locator1 = "NavTab#OPENID_CONNECT", value1 = "OpenId Connect");
+	}
 
-	<command name="gotoOpenSSO">
-		<execute macro="PortalSettingsNavigator#expandAuthenticationPanel" />
+	macro gotoOpenSSO {
+		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		<execute function="AssertClick" locator1="NavTab#OPENSSO" value1="OpenSSO" />
-	</command>
-</definition>
+		AssertClick(locator1 = "NavTab#OPENSSO", value1 = "OpenSSO");
+	}
+}

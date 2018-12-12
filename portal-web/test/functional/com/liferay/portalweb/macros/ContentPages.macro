@@ -1,58 +1,38 @@
-<definition>
-	<command name="addPage">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Public Page" />
-		</execute>
+definition {
+	macro addPage {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
-		<if>
-			<not>
-				<isset var="collectionName" />
-			</not>
-			<then>
-				<var name="collectionName" value="Basic Pages" />
-			</then>
-		</if>
+		if (!(isSet(collectionName))) {
+			var collectionName = "Basic Pages";
+		}
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="${collectionName}" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		<if>
-			<isset var="pageTemplateName" />
-			<then>
-				<execute macro="LexiconEntry#gotoEntry">
-					<var name="rowEntry" value="${pageTemplateName}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Card#clickSitePagesCardLink">
-					<var name="cardName" value="Content Page" />
-				</execute>
-			</else>
-		</if>
+		if (isSet(pageTemplateName)) {
+			LexiconEntry.gotoEntry(rowEntry = "${pageTemplateName}");
+		}
+		else {
+			Card.clickSitePagesCardLink(cardName = "Content Page");
+		}
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${pageName}" />
-		</execute>
+		PortletEntry.inputName(name = "${pageName}");
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		Button.click(button = "Save");
 
-		<execute function="SelectFrame#selectFrameTop" />
-	</command>
+		SelectFrame.selectFrameTop();
+	}
 
-	<command name="gotoEditMode">
-		<execute function="Click" locator1="ToggleSwitch#EDIT_MODE" />
+	macro gotoEditMode {
+		Click(locator1 = "ToggleSwitch#EDIT_MODE");
 
-		<execute function="AssertLocation#assertPartialLocation" value1="mode=edit" />
-	</command>
+		AssertLocation.assertPartialLocation(value1 = "mode=edit");
+	}
 
-	<command name="gotoViewMode">
-		<execute function="Click" locator1="ToggleSwitch#EDIT_MODE" />
+	macro gotoViewMode {
+		Click(locator1 = "ToggleSwitch#EDIT_MODE");
 
-		<execute function="AssertLocation#assertPartialLocation" value1="mode=view" />
-	</command>
-</definition>
+		AssertLocation.assertPartialLocation(value1 = "mode=view");
+	}
+}

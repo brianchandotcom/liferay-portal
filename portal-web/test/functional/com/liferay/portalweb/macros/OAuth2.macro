@@ -1,643 +1,538 @@
-<definition>
-	<command name="addApplication">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="OAuth2#inputApplicationValues">
-			<var name="applicationName" value="${applicationName}" />
-			<var name="callbackURI" value="${callbackURI}" />
-			<var name="checkboxUncheckList" value="${checkboxUncheckList}" />
-			<var name="clientProfile" value="${clientProfile}" />
-			<var name="description" value="${description}" />
-			<var name="privacyPolicyURL" value="${privacyPolicyURL}" />
-			<var name="websiteURL" value="${websiteURL}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${applicationName}" />
-	</command>
-
-	<command name="deleteApplication">
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertConfirm#assertPartialConfirmation" value1="Are you sure you want to delete the application?" />
-
-		<execute function="AssertElementNotPresent" locator1="OAuth2#ADMIN_TABLE_APP_NAME">
-			<var name="key_tableName" value="${applicationName}" />
-		</execute>
-	</command>
-
-	<command name="editApplication">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute macro="OAuth2#inputApplicationValues">
-			<return name="newGeneratedClientSecret" />
-			<var name="applicationName" value="${newApplicationName}" />
-			<var name="callbackURI" value="${callbackURI}" />
-			<var name="checkboxCheckList" value="${checkboxCheckList}" />
-			<var name="checkboxUncheckList" value="${checkboxUncheckList}" />
-			<var name="clientId" value="${clientId}" />
-			<var name="clientProfile" value="${clientProfile}" />
-			<var name="clientSecret" value="${clientSecret}" />
-			<var name="description" value="${description}" />
-			<var name="generateNewSecret" value="${generateNewSecret}" />
-			<var name="privacyPolicyURL" value="${privacyPolicyURL}" />
-			<var name="websiteURL" value="${websiteURL}" />
-		</execute>
-
-		<if>
-			<isset var="newApplicationName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${newApplicationName}" />
-			</then>
-		</if>
-
-		<return value="${newGeneratedClientSecret}" />
-	</command>
-
-	<command name="editScopes">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Scopes">
-			<var name="key_navItem" value="Scopes" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Scopes" />
-		</execute>
-
-		<if>
-			<or>
-				<isset var="checkGlobalScope" />
-				<isset var="uncheckGlobalScope" />
-			</or>
-			<then>
-				<execute macro="Navigator#gotoNavUnderline">
-					<var name="navUnderline" value="Global scopes" />
-				</execute>
-
-				<if>
-					<isset var="checkGlobalScope" />
-					<then>
-						<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${checkGlobalScope}" />
-						</execute>
-					</then>
-				</if>
-
-				<if>
-					<isset var="uncheckGlobalScope" />
-					<then>
-						<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${uncheckGlobalScope}" />
-						</execute>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<isset var="resourceCheckList" />
-				<isset var="resourceUncheckList" />
-				<isset var="uncheckAllResourceScopes" />
-			</or>
-			<then>
-				<if>
-					<condition function="IsElementPresent#isVisible" locator1="NavUnderline#NAV_UNDERLINE_LINK">
-						<var name="key_navUnderline" value="Resource scopes" />
-					</condition>
-
-					<then>
-						<execute macro="Navigator#gotoNavUnderline">
-							<var name="navUnderline" value="Resource scopes" />
-						</execute>
-					</then>
-				</if>
-
-				<for list="${resourcePanels}" param="resourcePanel">
-					<execute macro="OAuth2#expandResourcePanel">
-						<var name="resourcePanel" value="${resourcePanel}" />
-					</execute>
-				</for>
-
-				<if>
-					<isset var="resourceCheckList" />
-					<then>
-						<for list="${resourceCheckList}" param="scopeName">
-							<execute function="Check" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${scopeName}" />
-							</execute>
-						</for>
-					</then>
-				</if>
-
-				<if>
-					<isset var="resourceUncheckList" />
-					<then>
-						<for list="${resourceUncheckList}" param="scopeName">
-							<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${scopeName}" />
-							</execute>
-						</for>
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${uncheckAllResourceScopes}" arg2="true" />
-					<then>
-						<var name="count" value="1" />
-
-						<while>
-							<condition function="IsElementPresent" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
-								<var name="key_matchCount" value="${count}" />
-							</condition>
-
-							<then>
-								<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
-									<var name="key_matchCount" value="${count}" />
-								</execute>
-
-								<var method="MathUtil#sum('${count}', '1')" name="count" />
-							</then>
-						</while>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoBack" />
-	</command>
-
-	<command name="expandResourcePanel">
-		<var name="key_panel" value="${resourcePanel}" />
-
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
-				<condition function="IsVisible" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
-			</and>
-			<then>
-				<execute function="Click" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
-			</then>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED" />
-	</command>
-
-	<command name="inputApplicationValues">
-		<if>
-			<isset var="clientId" />
-			<then>
-				<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_BUTTON" />
-
-				<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD" />
-
-				<execute function="Type" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD" value1="${clientId}" />
-
-				<execute macro="Button#clickApply" />
-
-				<if>
-					<condition function="IsElementPresent" locator1="Icon#CLOSE" />
-					<then>
-						<execute macro="IFrame#closeFrame" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<isset var="clientSecret" />
-				<isset var="generateNewSecret" />
-			</or>
-			<then>
-				<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_BUTTON" />
-
-				<if>
-					<equals arg1="${generateNewSecret}" arg2="true" />
-					<then>
-						<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_GENERATE_NEW_SECRET" />
-
-						<var method="selenium#getElementValue('OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD')" name="newGeneratedClientSecret" />
-					</then>
-					<else>
-						<execute function="Click" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD" />
-
-						<execute function="Type" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD" value1="${clientSecret}" />
-					</else>
-				</if>
-
-				<execute macro="Button#clickApply" />
-
-				<if>
-					<condition function="IsElementPresent" locator1="Icon#CLOSE" />
-					<then>
-						<execute macro="IFrame#closeFrame" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<!-- All macros that require return must have return statement that's called. -->
-
-		<return value="${newGeneratedClientSecret}" />
-
-		<if>
-			<isset var="applicationName" />
-			<then>
-				<execute macro="PortletEntry#inputName">
-					<var name="name" value="${applicationName}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="websiteURL" />
-			<then>
-				<execute macro="PortletEntry#inputText">
-					<var name="fieldLabel" value="Website URL" />
-					<var name="text" value="${websiteURL}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="description" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${description}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="callbackURI" />
-			<then>
-				<execute macro="PortletEntry#inputTextArea">
-					<var name="fieldId" value="redirectURIs" />
-					<var name="text" value="${callbackURI}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="privacyPolicyURL" />
-			<then>
-				<execute macro="PortletEntry#inputText">
-					<var name="fieldLabel" value="Privacy Policy URL" />
-					<var name="text" value="${privacyPolicyURL}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="clientProfile" />
-			<then>
-				<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${clientProfile}">
-					<var name="key_fieldLabel" value="Client Profile" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkboxCheckList" />
-			<then>
-				<for list="${checkboxCheckList}" param="checkboxName">
-					<execute function="Check" locator1="OAuth2#ADMIN_INPUT_FORM_CHECKBOX">
-						<var name="key_checkboxName" value="${checkboxName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkboxUncheckList" />
-			<then>
-				<for list="${checkboxUncheckList}" param="checkboxName">
-					<execute function="Uncheck" locator1="OAuth2#ADMIN_INPUT_FORM_CHECKBOX">
-						<var name="key_checkboxName" value="${checkboxName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="revokeGrantedAuthViaAdmin">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Authorizations">
-			<var name="key_navItem" value="Authorizations" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Authorizations" />
-		</execute>
-
-		<execute function="AssertClickNoError" locator1="OAuth2#ADMIN_AUTHORIZATIONS_REVOKE_BUTTON" value1="Revoke">
-			<var name="key_rowEntry" value="${userName}" />
-		</execute>
-
-		<execute function="AssertConfirm#waitForConfirmation" value1="Are you sure you want to revoke the authorization?" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertElementNotPresent" locator1="OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME">
-			<var name="key_userName" value="${userName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoBack" />
-	</command>
-
-	<command name="revokeGrantedAuthViaUser">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="OAuth 2 Connected Applications" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertClickNoError" locator1="OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON" value1="Remove Access" />
-
-		<execute function="AssertConfirm#waitForConfirmation" value1="${applicationName} will no longer have access to your account. Removed access cannot be recovered." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="viewApplication">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<if>
-			<isset var="clientId" />
-			<then>
-				<execute function="AssertTextEquals" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_ID" value1="${clientId}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="clientSecret" />
-			<then>
-				<execute function="AssertTextEquals" locator1="OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET" value1="${clientSecret}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="applicationName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${applicationName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="websiteURL" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${websiteURL}">
-					<var name="key_fieldLabel" value="Website URL" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="description" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${description}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="privacyPolicyURL" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${privacyPolicyURL}">
-					<var name="key_fieldLabel" value="Privacy Policy URL" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="callbackURI" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="TextArea#ANY" value1="${callbackURI}">
-					<var name="key_text" value="redirectURIs" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="clientProfile" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="Select#GENERIC_SELECT_FIELD" value1="${clientProfile}">
-					<var name="key_fieldLabel" value="Client Profile" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkboxCheckList" />
-			<then>
-				<for list="${checkboxCheckList}" param="checkboxName">
-					<execute function="AssertChecked" locator1="OAuth2#ADMIN_INPUT_FORM_CHECKBOX">
-						<var name="key_checkboxName" value="${checkboxName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<execute macro="Navigator#gotoBack" />
-	</command>
-
-	<command name="viewApplicationInTable">
-		<execute function="AssertElementPresent" locator1="OAuth2#ADMIN_TABLE_APP_NAME">
-			<var name="key_tableName" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="OAuth2#ADMIN_TABLE_APP_DESCRIPTION" value1="${description}">
-			<var name="key_tableName" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="OAuth2#ADMIN_TABLE_APP_CLIENT_ID" value1="${clientId}">
-			<var name="key_tableName" value="${applicationName}" />
-		</execute>
-	</command>
-
-	<command name="viewGrantedAuthViaAdmin">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Authorizations">
-			<var name="key_navItem" value="Authorizations" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Authorizations" />
-		</execute>
-
-		<if>
-			<equals arg1="${noAuthorizations}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No authorizations were found." />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME">
-					<var name="key_userName" value="${userName}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Navigator#gotoBack" />
-	</command>
-
-	<command name="viewGrantedAuthViaUser">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="OAuth 2 Connected Applications" />
-		</execute>
-
-		<if>
-			<equals arg1="${noAuthorizations}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No connected applications were found." />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="OAuth2#USER_CONNECTED_APP_TABLE_NAME">
-					<var name="key_appName" value="${applicationName}" />
-				</execute>
-
-				<execute macro="LexiconEntry#gotoEntryMenuItem">
-					<var name="menuItem" value="View" />
-					<var name="rowEntry" value="${applicationName}" />
-				</execute>
-
-				<execute function="AssertTextEquals" locator1="OAuth2#USER_CONNECTED_APP_VIEW_NAME" value1="${applicationName}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="viewScopes">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${applicationName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Scopes">
-			<var name="key_navItem" value="Scopes" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Scopes" />
-		</execute>
-
-		<if>
-			<or>
-				<isset var="allResourceScopesUnchecked" />
-				<isset var="resourceCheckedList" />
-				<isset var="resourceUncheckedList" />
-			</or>
-			<then>
-				<if>
-					<condition function="IsElementPresent#isVisible" locator1="NavUnderline#NAV_UNDERLINE_LINK">
-						<var name="key_navUnderline" value="Resource scopes" />
-					</condition>
-
-					<then>
-						<execute macro="Navigator#gotoNavUnderline">
-							<var name="navUnderline" value="Resource scopes" />
-						</execute>
-					</then>
-				</if>
-
-				<for list="${resourcePanels}" param="resourcePanel">
-					<execute macro="OAuth2#expandResourcePanel">
-						<var name="resourcePanel" value="${resourcePanel}" />
-					</execute>
-				</for>
-
-				<if>
-					<isset var="resourceCheckedList" />
-					<then>
-						<for list="${resourceCheckedList}" param="scopeName">
-							<execute function="AssertChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${scopeName}" />
-							</execute>
-						</for>
-					</then>
-				</if>
-
-				<if>
-					<isset var="resourceUncheckedList" />
-					<then>
-						<for list="${resourceUncheckedList}" param="scopeName">
-							<execute function="AssertNotChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${scopeName}" />
-							</execute>
-						</for>
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${allResourceScopesUnchecked}" arg2="true" />
-					<then>
-						<execute function="AssertElementNotPresent" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED">
-							<var name="key_matchCount" value="1" />
-						</execute>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<isset var="checkedGlobalScope" />
-				<isset var="uncheckedGlobalScope" />
-			</or>
-			<then>
-				<execute macro="Navigator#gotoNavUnderline">
-					<var name="navUnderline" value="Global scopes" />
-				</execute>
-
-				<if>
-					<isset var="checkedGlobalScope" />
-					<then>
-						<execute function="AssertChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${checkedGlobalScope}" />
-						</execute>
-					</then>
-				</if>
-
-				<if>
-					<isset var="uncheckedGlobalScope" />
-					<then>
-						<execute function="AssertNotChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${uncheckedGlobalScope}" />
-						</execute>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute macro="Navigator#gotoBack" />
-	</command>
-</definition>
+definition {
+	macro addApplication {
+		LexiconEntry.gotoAdd();
+
+		OAuth2.inputApplicationValues(
+			applicationName = "${applicationName}",
+			callbackURI = "${callbackURI}",
+			checkboxUncheckList = "${checkboxUncheckList}",
+			clientProfile = "${clientProfile}",
+			description = "${description}",
+			privacyPolicyURL = "${privacyPolicyURL}",
+			websiteURL = "${websiteURL}"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${applicationName}");
+	}
+
+	macro deleteApplication {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertConfirm.assertPartialConfirmation(
+			value1 = "Are you sure you want to delete the application?"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME",
+			key_tableName = "${applicationName}"
+		);
+	}
+
+	macro editApplication {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		var newGeneratedClientSecret = OAuth2.inputApplicationValues(
+			applicationName = "${newApplicationName}",
+			callbackURI = "${callbackURI}",
+			checkboxCheckList = "${checkboxCheckList}",
+			checkboxUncheckList = "${checkboxUncheckList}",
+			clientId = "${clientId}",
+			clientProfile = "${clientProfile}",
+			clientSecret = "${clientSecret}",
+			description = "${description}",
+			generateNewSecret = "${generateNewSecret}",
+			privacyPolicyURL = "${privacyPolicyURL}",
+			websiteURL = "${websiteURL}"
+		);
+
+		if (isSet(newApplicationName)) {
+			AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${newApplicationName}");
+		}
+
+		return "${newGeneratedClientSecret}";
+	}
+
+	macro editScopes {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertClick(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Scopes",
+			key_navItem = "Scopes"
+		);
+
+		AssertElementPresent(
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			key_navItem = "Scopes"
+		);
+
+		if ((isSet(checkGlobalScope)) || (isSet(uncheckGlobalScope))) {
+			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
+
+			if (isSet(checkGlobalScope)) {
+				Check(
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
+					key_scopeName = "${checkGlobalScope}"
+				);
+			}
+
+			if (isSet(uncheckGlobalScope)) {
+				Uncheck(
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
+					key_scopeName = "${uncheckGlobalScope}"
+				);
+			}
+		}
+
+		if ((isSet(resourceCheckList)) || (isSet(resourceUncheckList)) || (isSet(uncheckAllResourceScopes))) {
+			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
+				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
+			}
+
+			for (var resourcePanel : list "${resourcePanels}") {
+				OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
+			}
+
+			if (isSet(resourceCheckList)) {
+				for (var scopeName : list "${resourceCheckList}") {
+					Check(
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
+						key_scopeName = "${scopeName}"
+					);
+				}
+			}
+
+			if (isSet(resourceUncheckList)) {
+				for (var scopeName : list "${resourceUncheckList}") {
+					Uncheck(
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
+						key_scopeName = "${scopeName}"
+					);
+				}
+			}
+
+			if ("${uncheckAllResourceScopes}" == "true") {
+				var count = "1";
+
+				while (IsElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED", key_matchCount = "${count}")) {
+					Uncheck(
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED",
+						key_matchCount = "${count}"
+					);
+
+					var count = MathUtil.sum("${count}", "1");
+				}
+			}
+		}
+
+		PortletEntry.save();
+
+		Navigator.gotoBack();
+	}
+
+	macro expandResourcePanel {
+		var key_panel = "${resourcePanel}";
+
+		if ((IsElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED")) && (IsVisible(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED"))) {
+			Click(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
+		}
+
+		AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED");
+	}
+
+	macro inputApplicationValues {
+		if (isSet(clientId)) {
+			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_BUTTON");
+
+			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD");
+
+			Type(
+				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD",
+				value1 = "${clientId}"
+			);
+
+			Button.clickApply();
+
+			if (IsElementPresent(locator1 = "Icon#CLOSE")) {
+				IFrame.closeFrame();
+			}
+		}
+
+		if ((isSet(clientSecret)) || (isSet(generateNewSecret))) {
+			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_BUTTON");
+
+			if ("${generateNewSecret}" == "true") {
+				Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_GENERATE_NEW_SECRET");
+
+				var newGeneratedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD");
+			}
+			else {
+				Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD");
+
+				Type(
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD",
+					value1 = "${clientSecret}"
+				);
+			}
+
+			Button.clickApply();
+
+			if (IsElementPresent(locator1 = "Icon#CLOSE")) {
+				IFrame.closeFrame();
+			}
+		}
+
+		// All macros that require return must have return statement that's called.
+
+		return "${newGeneratedClientSecret}";
+
+		if (isSet(applicationName)) {
+			PortletEntry.inputName(name = "${applicationName}");
+		}
+
+		if (isSet(websiteURL)) {
+			PortletEntry.inputText(fieldLabel = "Website URL", text = "${websiteURL}");
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
+
+		if (isSet(callbackURI)) {
+			PortletEntry.inputTextArea(fieldId = "redirectURIs", text = "${callbackURI}");
+		}
+
+		if (isSet(privacyPolicyURL)) {
+			PortletEntry.inputText(
+				fieldLabel = "Privacy Policy URL",
+				text = "${privacyPolicyURL}"
+			);
+		}
+
+		if (isSet(clientProfile)) {
+			Select(
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${clientProfile}",
+				key_fieldLabel = "Client Profile"
+			);
+		}
+
+		if (isSet(checkboxCheckList)) {
+			for (var checkboxName : list "${checkboxCheckList}") {
+				Check(
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
+					key_checkboxName = "${checkboxName}"
+				);
+			}
+		}
+
+		if (isSet(checkboxUncheckList)) {
+			for (var checkboxName : list "${checkboxUncheckList}") {
+				Uncheck(
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
+					key_checkboxName = "${checkboxName}"
+				);
+			}
+		}
+
+		PortletEntry.save();
+	}
+
+	macro revokeGrantedAuthViaAdmin {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertClick(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Authorizations",
+			key_navItem = "Authorizations"
+		);
+
+		AssertElementPresent(
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			key_navItem = "Authorizations"
+		);
+
+		AssertClickNoError(
+			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_REVOKE_BUTTON",
+			value1 = "Revoke",
+			key_rowEntry = "${userName}"
+		);
+
+		AssertConfirm.waitForConfirmation(
+			value1 = "Are you sure you want to revoke the authorization?"
+		);
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME",
+			key_userName = "${userName}"
+		);
+
+		Navigator.gotoBack();
+	}
+
+	macro revokeGrantedAuthViaUser {
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "OAuth 2 Connected Applications"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertClickNoError(
+			locator1 = "OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON",
+			value1 = "Remove Access"
+		);
+
+		AssertConfirm.waitForConfirmation(
+			value1 = "${applicationName} will no longer have access to your account. Removed access cannot be recovered."
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewApplication {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		if (isSet(clientId)) {
+			AssertTextEquals(
+				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID",
+				value1 = "${clientId}"
+			);
+		}
+
+		if (isSet(clientSecret)) {
+			AssertTextEquals(
+				locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET",
+				value1 = "${clientSecret}"
+			);
+		}
+
+		if (isSet(applicationName)) {
+			AssertTextEquals(locator1 = "TextInput#NAME", value1 = "${applicationName}");
+		}
+
+		if (isSet(websiteURL)) {
+			AssertTextEquals(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${websiteURL}",
+				key_fieldLabel = "Website URL"
+			);
+		}
+
+		if (isSet(description)) {
+			AssertTextEquals(locator1 = "TextArea#DESCRIPTION", value1 = "${description}");
+		}
+
+		if (isSet(privacyPolicyURL)) {
+			AssertTextEquals(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${privacyPolicyURL}",
+				key_fieldLabel = "Privacy Policy URL"
+			);
+		}
+
+		if (isSet(callbackURI)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextArea#ANY",
+				value1 = "${callbackURI}",
+				key_text = "redirectURIs"
+			);
+		}
+
+		if (isSet(clientProfile)) {
+			AssertSelectedLabel(
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${clientProfile}",
+				key_fieldLabel = "Client Profile"
+			);
+		}
+
+		if (isSet(checkboxCheckList)) {
+			for (var checkboxName : list "${checkboxCheckList}") {
+				AssertChecked(
+					locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX",
+					key_checkboxName = "${checkboxName}"
+				);
+			}
+		}
+
+		Navigator.gotoBack();
+	}
+
+	macro viewApplicationInTable {
+		AssertElementPresent(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME",
+			key_tableName = "${applicationName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_DESCRIPTION",
+			value1 = "${description}",
+			key_tableName = "${applicationName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_CLIENT_ID",
+			value1 = "${clientId}",
+			key_tableName = "${applicationName}"
+		);
+	}
+
+	macro viewGrantedAuthViaAdmin {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertClick(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Authorizations",
+			key_navItem = "Authorizations"
+		);
+
+		AssertElementPresent(
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			key_navItem = "Authorizations"
+		);
+
+		if ("${noAuthorizations}" == "true") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No authorizations were found."
+			);
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_USER_NAME",
+				key_userName = "${userName}"
+			);
+		}
+
+		Navigator.gotoBack();
+	}
+
+	macro viewGrantedAuthViaUser {
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "OAuth 2 Connected Applications"
+		);
+
+		if ("${noAuthorizations}" == "true") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No connected applications were found."
+			);
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "OAuth2#USER_CONNECTED_APP_TABLE_NAME",
+				key_appName = "${applicationName}"
+			);
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View",
+				rowEntry = "${applicationName}"
+			);
+
+			AssertTextEquals(
+				locator1 = "OAuth2#USER_CONNECTED_APP_VIEW_NAME",
+				value1 = "${applicationName}"
+			);
+		}
+	}
+
+	macro viewScopes {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}"
+		);
+
+		AssertClick(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Scopes",
+			key_navItem = "Scopes"
+		);
+
+		AssertElementPresent(
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			key_navItem = "Scopes"
+		);
+
+		if ((isSet(allResourceScopesUnchecked)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
+			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
+				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
+			}
+
+			for (var resourcePanel : list "${resourcePanels}") {
+				OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
+			}
+
+			if (isSet(resourceCheckedList)) {
+				for (var scopeName : list "${resourceCheckedList}") {
+					AssertChecked(
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
+						key_scopeName = "${scopeName}"
+					);
+				}
+			}
+
+			if (isSet(resourceUncheckedList)) {
+				for (var scopeName : list "${resourceUncheckedList}") {
+					AssertNotChecked(
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX",
+						key_scopeName = "${scopeName}"
+					);
+				}
+			}
+
+			if ("${allResourceScopesUnchecked}" == "true") {
+				AssertElementNotPresent(
+					locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED",
+					key_matchCount = "1"
+				);
+			}
+		}
+
+		if ((isSet(checkedGlobalScope)) || (isSet(uncheckedGlobalScope))) {
+			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
+
+			if (isSet(checkedGlobalScope)) {
+				AssertChecked(
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
+					key_scopeName = "${checkedGlobalScope}"
+				);
+			}
+
+			if (isSet(uncheckedGlobalScope)) {
+				AssertNotChecked(
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX",
+					key_scopeName = "${uncheckedGlobalScope}"
+				);
+			}
+		}
+
+		Navigator.gotoBack();
+	}
+}

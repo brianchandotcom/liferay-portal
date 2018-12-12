@@ -1,101 +1,67 @@
-<definition>
-	<command name="getDownloadedTempFileName">
-		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
+definition {
 
-		<var method="StringUtil#split('**/${fileNamePattern}')" name="pattern" />
+	macro getDownloadedTempFileName {
+		var tempDir = PropsUtil.get("output.dir.name");
 
-		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="filePath" />
+		var pattern = StringUtil.split("**/${fileNamePattern}");
+		var filePath = FileUtil.getIncludedResourceURLs("${pattern}", "${tempDir}");
+		var filePath = StringUtil.valueOf("${filePath}");
+		var filePath = RegexUtil.replace("${filePath}", "\[(.*)\]", "1");
+		var filePath = StringUtil.replace("${filePath}", "file:/", "");
+		var fileName = FileUtil.getFileName("${filePath}");
 
-		<var method="StringUtil#valueOf('${filePath}')" name="filePath" />
+		return "${fileName}";
+	}
 
-		<var method="RegexUtil#replace('${filePath}', '\[(.*)\]', '1')" name="filePath" />
+	macro getFileContent {
+		var baseDir = PropsUtil.get("test.base.dir.name");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/${fileName}");
 
-		<var method="StringUtil#replace('${filePath}', 'file:/', '')" name="filePath" />
+		return "${fileContent}";
+	}
 
-		<var method="FileUtil#getFileName('${filePath}')" name="fileName" />
+	macro getSiteName {
+		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<return value="${fileName}" />
-	</command>
+		if (("${siteName}" == "Liferay") || (!(isSet(siteName)))) {
+			if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
+				var portalURL = PropsUtil.get("portal.url");
+				var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+				var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
-	<command name="getFileContent">
-		<var method="PropsUtil#get('test.base.dir.name')" name="baseDir" />
-		<var method="PropsUtil#get('test.dependencies.dir.name')" name="dependenciesDir" />
+				return "${portalURL}";
+			}
+			else {
+				var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		<var method="FileUtil#read('${baseDir}${dependenciesDir}/${fileName}')" name="fileContent" />
+				if ("${testRunEnvironment}" == "EE") {
+					return "Liferay DXP";
+				}
+				else {
+					return "Liferay";
+				}
+			}
+		}
+		else {
+			return "${siteName}";
+		}
+	}
 
-		<return value="${fileContent}" />
-	</command>
+	macro getTestName {
+		var testName = PropsUtil.get("test.name");
+		var testName = RegexUtil.replace("${testName}", "[^\.]*\.(.*)", "1");
 
-	<command name="getSiteName">
-		<var method="PropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		return "${testName}";
+	}
 
-		<if>
-			<or>
-				<equals arg1="${siteName}" arg2="Liferay" />
-				<not>
-					<isset var="siteName" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<and>
-						<equals arg1="${testPortalInstance}" arg2="true" />
-						<not>
-							<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
-						</not>
-					</and>
-					<then>
-						<var method="PropsUtil#get('portal.url')" name="portalURL" />
+	macro setUpPortalInstance {
+		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-						<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
-						<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
-
-						<return value="${portalURL}" />
-					</then>
-					<else>
-						<var method="PropsUtil#get('test.run.environment')" name="testRunEnvironment" />
-
-						<if>
-							<equals arg1="${testRunEnvironment}" arg2="EE" />
-							<then>
-								<return value="Liferay DXP" />
-							</then>
-							<else>
-								<return value="Liferay" />
-							</else>
-						</if>
-					</else>
-				</if>
-			</then>
-			<else>
-				<return value="${siteName}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="getTestName">
-		<var method="PropsUtil#get('test.name')" name="testName" />
-
-		<var method="RegexUtil#replace('${testName}', '[^\.]*\.(.*)', '1')" name="testName" />
-
-		<return value="${testName}" />
-	</command>
-
-	<command name="setUpPortalInstance">
-		<var method="PropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<and>
-				<equals arg1="${testPortalInstance}" arg2="true" />
-				<not>
-					<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
-				</not>
-			</and>
-			<then>
-				<execute macro="SignIn#signInPortalInstanceSetUp" />
-			</then>
-		</if>
-	</command>
-</definition>
+		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
+			SignIn.signInPortalInstanceSetUp();
+		}
+	}
+}

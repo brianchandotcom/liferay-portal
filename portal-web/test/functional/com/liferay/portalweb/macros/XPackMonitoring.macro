@@ -1,24 +1,32 @@
-<definition>
-	<command name="viewAsGuestPG">
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring" />
-		</execute>
+definition {
+	macro viewAsGuestPG {
+		Navigator.openSpecificURL(
+			url = "http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring"
+		);
 
-		<execute function="AssertTextPresent" locator1="//body" value1="X-Pack Monitoring is temporarily unavailable." />
-		<execute function="AssertTextPresent" locator1="//body" value1="Please sign in to access this application." />
-	</command>
+		AssertTextPresent(
+			locator1 = "//body",
+			value1 = "X-Pack Monitoring is temporarily unavailable."
+		);
 
-	<command name="viewPG">
-		<execute function="SelectFrame" locator1="IFrame#XPACK_MONITORING" />
+		AssertTextPresent(
+			locator1 = "//body",
+			value1 = "Please sign in to access this application."
+		);
+	}
 
-		<execute function="AssertTextPresent" locator1="XPackMonitoring#CLUSTER_NAME" value1="LiferayElasticsearchCluster" />
-		<execute function="AssertElementPresent" locator1="XPackMonitoring#MONITORING_CLUSTER_OVERVIEW" />
-		<execute function="AssertElementPresent" locator1="Header#H2_TITLE">
-			<var name="key_title" value="Elasticsearch" />
-		</execute>
+	macro viewPG {
+		SelectFrame(locator1 = "IFrame#XPACK_MONITORING");
 
-		<execute function="AssertElementPresent" locator1="Header#H2_TITLE">
-			<var name="key_title" value="Kibana" />
-		</execute>
-	</command>
-</definition>
+		AssertTextPresent(
+			locator1 = "XPackMonitoring#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster"
+		);
+
+		AssertElementPresent(locator1 = "XPackMonitoring#MONITORING_CLUSTER_OVERVIEW");
+
+		AssertElementPresent(locator1 = "Header#H2_TITLE", key_title = "Elasticsearch");
+
+		AssertElementPresent(locator1 = "Header#H2_TITLE", key_title = "Kibana");
+	}
+}

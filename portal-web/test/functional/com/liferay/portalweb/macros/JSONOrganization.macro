@@ -1,30 +1,20 @@
-<definition>
+definition {
 
-	<command name="_addOrganization">
-		<if>
-			<isset var="organizationName" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${organizationName}')" name="organizationNameEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'organizationName'." />
-			</else>
-		</if>
+	macro _addOrganization {
+		if (isSet(organizationName)) {
+			var organizationNameEncoded = URLUtil.encodeUTF8("${organizationName}");
+		}
+		else {
+			fail("Please set 'organizationName'.");
+		}
 
-		<if>
-			<not>
-				<isset var="organizationSite" />
-			</not>
-			<then>
-				<var name="organizationSite" value="false" />
-			</then>
-		</if>
+		if (!(isSet(organizationSite))) {
+			var organizationSite = "false";
+		}
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
 				-u test@liferay.com:test \
 				-d parentOrganizationId=0 \
@@ -35,222 +25,147 @@
 				-d statusId=12017 \
 				-d comments= \
 				-d site=${organizationSite}
-		]]></var>
+		''';
 
-		<echo message="## Adding a 'Organization' with the following info using jsonws:" />
+		echo("## Adding a 'Organization' with the following info using jsonws:");
 
-		<echo message="## * Organization Name: ${organizationName}" />
+		echo("## * Organization Name: ${organizationName}");
 
-		<echo message="## * Organization Site: ${organizationSite}" />
+		echo("## * Organization Site: ${organizationSite}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$[\'organizationId\']')" name="organizationId" />
-	</command>
+		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
+	}
 
-	<command name="_assignUserToOrganization">
-		<if>
-			<not>
-				<isset var="organizationId" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationId'." />
-			</then>
-		</if>
+	macro _assignUserToOrganization {
+		if (!(isSet(organizationId))) {
+			fail("Please set 'organizationId'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userId" />
-			</not>
-			<then>
-				<fail message="Please set 'userId'." />
-			</then>
-		</if>
+		if (!(isSet(userId))) {
+			fail("Please set 'userId'.");
+		}
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/add-organization-users \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId} \
 				-d userIds=${userId}
-		]]></var>
+		''';
 
-		<execute macro="JSONOrganization#getOrganizationName">
-			<return name="organizationName" />
-			<var name="organizationId" value="${organizationId}" />
-		</execute>
+		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
 
-		<execute macro="JSONUser#getUserEmailAddress">
-			<return name="userEmailAddress" />
-			<var name="userId" value="${userId}" />
-		</execute>
+		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		<echo message="## Assigning a 'User' to an 'Organization' with the following info using JSONWS:" />
+		echo("## Assigning a 'User' to an 'Organization' with the following info using JSONWS:");
 
-		<echo message="## * Organization Name: ${organizationName}" />
+		echo("## * Organization Name: ${organizationName}");
 
-		<echo message="## * User Email Address: ${userEmailAddress}" />
+		echo("## * User Email Address: ${userEmailAddress}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
-	</command>
+		var temp = JSONCurlUtil.post("${curl}", "$");
+	}
 
-	<command name="_deleteOrganization">
-		<if>
-			<not>
-				<isset var="organizationId" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationId'." />
-			</then>
-		</if>
+	macro _deleteOrganization {
+		if (!(isSet(organizationId))) {
+			fail("Please set 'organizationId'.");
+		}
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/organization/delete-organization \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId}
-		]]></var>
+		''';
 
-		<execute macro="JSONOrganization#getOrganizationName">
-			<return name="organizationName" />
-			<var name="organizationId" value="${organizationId}" />
-		</execute>
+		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
 
-		<echo message="## Deleting an 'Organization' with the following info using JSONWS:" />
+		echo("## Deleting an 'Organization' with the following info using JSONWS:");
 
-		<echo message="## * Organization Name: ${organizationName}" />
+		echo("## * Organization Name: ${organizationName}");
 
-		<var method="JSONCurlUtil#post('${curl}', '$[\'organizationId\']')" name="organizationId" />
-	</command>
+		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
+	}
 
-	<command name="addOrganization">
-		<if>
-			<not>
-				<isset var="organizationName" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationName'." />
-			</then>
-		</if>
+	macro addOrganization {
+		if (!(isSet(organizationName))) {
+			fail("Please set 'organizationName'.");
+		}
 
-		<execute macro="JSONOrganization#_addOrganization">
-			<var name="organizationName" value="${organizationName}" />
-			<var name="organizationSite" value="${organizationSite}" />
-		</execute>
-	</command>
+		JSONOrganization._addOrganization(
+			organizationName = "${organizationName}",
+			organizationSite = "${organizationSite}"
+		);
+	}
 
-	<command name="assignUserToOrganization">
-		<if>
-			<not>
-				<isset var="organizationName" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationName'." />
-			</then>
-		</if>
+	macro assignUserToOrganization {
+		if (!(isSet(organizationName))) {
+			fail("Please set 'organizationName'.");
+		}
 
-		<if>
-			<not>
-				<isset var="userEmailAddress" />
-			</not>
-			<then>
-				<fail message="Please set 'userEmailAddress'." />
-			</then>
-		</if>
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
 
-		<execute macro="JSONOrganization#getOrganizationIdByName">
-			<return name="organizationId" />
-			<var name="organizationName" value="${organizationName}" />
-		</execute>
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
 
-		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<return name="userId" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
-		<execute macro="JSONOrganization#_assignUserToOrganization">
-			<var name="organizationId" value="${organizationId}" />
-			<var name="userId" value="${userId}" />
-		</execute>
-	</command>
+		JSONOrganization._assignUserToOrganization(
+			organizationId = "${organizationId}",
+			userId = "${userId}"
+		);
+	}
 
-	<command name="deleteOrganizationByName">
-		<if>
-			<not>
-				<isset var="organizationName" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationName'." />
-			</then>
-		</if>
+	macro deleteOrganizationByName {
+		if (!(isSet(organizationName))) {
+			fail("Please set 'organizationName'.");
+		}
 
-		<execute macro="JSONOrganization#getOrganizationIdByName">
-			<return name="organizationId" />
-			<var name="organizationName" value="${organizationName}" />
-		</execute>
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
 
-		<execute macro="JSONOrganization#_deleteOrganization">
-			<var name="organizationId" value="${organizationId}" />
-		</execute>
-	</command>
+		JSONOrganization._deleteOrganization(organizationId = "${organizationId}");
+	}
 
-	<command name="getOrganizationIdByName">
-		<if>
-			<not>
-				<isset var="organizationName" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationName'." />
-			</then>
-		</if>
+	macro getOrganizationIdByName {
+		if (!(isSet(organizationName))) {
+			fail("Please set 'organizationName'.");
+		}
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/0 \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
+		var organizationId = StringUtil.replace("${organizationId}", "[&quot;", "");
+		var organizationId = StringUtil.replace("${organizationId}", "&quot;]", "");
 
-		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'name\'] == \'${organizationName}\')][\'organizationId\']')" name="organizationId" />
+		return "${organizationId}";
+	}
 
-		<var method="StringUtil#replace('${organizationId}', '[&quot;', '')" name="organizationId" />
+	macro getOrganizationName {
+		if (!(isSet(organizationId))) {
+			fail("Please set 'organizationId'.");
+		}
 
-		<var method="StringUtil#replace('${organizationId}', '&quot;]', '')" name="organizationId" />
+		var portalURL = JSONCompany.getPortalURL();
 
-		<return value="${organizationId}" />
-	</command>
-
-	<command name="getOrganizationName">
-		<if>
-			<not>
-				<isset var="organizationId" />
-			</not>
-			<then>
-				<fail message="Please set 'organizationId'." />
-			</then>
-		</if>
-
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");
 
-		<var method="JSONCurlUtil#get('${curl}', '$[\'name\']')" name="organizationName" />
-
-		<return value="${organizationName}" />
-	</command>
-</definition>
+		return "${organizationName}";
+	}
+}

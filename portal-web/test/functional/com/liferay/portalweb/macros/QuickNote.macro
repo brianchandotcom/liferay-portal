@@ -1,15 +1,18 @@
-<definition>
-	<command name="addPG">
-		<execute function="AssertTextEquals" locator1="QuickNote#NOTE_CONTENT" value1="Click to edit me..." />
+definition {
+	macro addPG {
+		AssertTextEquals(
+			locator1 = "QuickNote#NOTE_CONTENT",
+			value1 = "Click to edit me..."
+		);
 
-		<execute function="MouseOver" locator1="QuickNote#NOTE_CONTENT" />
+		MouseOver(locator1 = "QuickNote#NOTE_CONTENT");
 
-		<execute function="Click" locator1="QuickNote#NOTE_CONTENT_EDITABLE" />
+		Click(locator1 = "QuickNote#NOTE_CONTENT_EDITABLE");
 
-		<execute function="Type" locator1="TextArea#FIELD_INPUT" value1="${noteContent}" />
+		Type(locator1 = "TextArea#FIELD_INPUT", value1 = "${noteContent}");
 
-		<execute function="Click" locator1="QuickNote#OK_BUTTON" />
+		Click(locator1 = "QuickNote#OK_BUTTON");
 
-		<execute function="AssertTextEquals" locator1="QuickNote#NOTE_CONTENT" value1="${noteContent}" />
-	</command>
-</definition>
+		AssertTextEquals(locator1 = "QuickNote#NOTE_CONTENT", value1 = "${noteContent}");
+	}
+}

@@ -1,26 +1,25 @@
-<definition>
+definition {
+	macro assertAutoTagPresent {
+		AssertElementPresent(locator1 = "DocumentsAndMedia#TAG");
+	}
 
-	<command name="assertAutoTagPresent">
-		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#TAG" />
-	</command>
+	macro assertNoAutoTag {
+		AssertElementNotPresent(locator1 = "DocumentsAndMedia#TAG");
+	}
 
-	<command name="assertNoAutoTag">
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#TAG" />
-	</command>
+	macro disableAutoTagging {
+		Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 
-	<command name="disableAutoTagging">
-		<execute function="Check" locator1="Checkbox#ENABLE_AUTO_TAGGING" />
+		PortletEntry.update();
 
-		<execute macro="PortletEntry#update" />
+		Alert.viewSuccessMessage();
+	}
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+	macro enableAutoTagging {
+		Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 
-	<command name="enableAutoTagging">
-		<execute function="Check" locator1="Checkbox#ENABLE_AUTO_TAGGING" />
+		PortletEntry.save();
 
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+	}
+}

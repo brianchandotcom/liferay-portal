@@ -1,310 +1,289 @@
-<definition>
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+definition {
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="WebContentStructures#addName">
-			<var name="structureName" value="${structureName}" />
-		</execute>
+		WebContentStructures.addName(structureName = "${structureName}");
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
+		Panel.expandPanel(panel = "Details");
 
-		<if>
-			<isset var="structureDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescriptionTextInput">
-					<var name="description" value="${structureDescription}" />
-				</execute>
-			</then>
-		</if>
+		if (isSet(structureDescription)) {
+			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="addFavoriteStructure">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="You can add as many as 7 favorites in your quick menu." />
+	macro addFavoriteStructure {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO",
+			value1 = "You can add as many as 7 favorites in your quick menu."
+		);
 
-		<execute function="Click" locator1="Icon#ADD_FAVORITE">
-			<var name="key_rowEntry" value="${structureName}" />
-		</execute>
+		Click(locator1 = "Icon#ADD_FAVORITE", key_rowEntry = "${structureName}");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="addLocalization">
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Name" />
-			<var name="locale" value="${locale}" />
-		</execute>
+	macro addLocalization {
+		PortletEntry.changeLocale(fieldName = "Name", locale = "${locale}");
 
-		<execute macro="WebContentStructures#addName">
-			<var name="structureName" value="${localization1Name}" />
-		</execute>
+		WebContentStructures.addName(structureName = "${localization1Name}");
 
-		<if>
-			<isset var="locale2" />
-			<then>
-				<execute macro="PortletEntry#changeLocale">
-					<var name="fieldName" value="Name" />
-					<var name="locale" value="${locale2}" />
-				</execute>
+		if (isSet(locale2)) {
+			PortletEntry.changeLocale(fieldName = "Name", locale = "${locale2}");
 
-				<execute macro="WebContentStructures#addName">
-					<var name="structureName" value="${localization2Name}" />
-				</execute>
-			</then>
-		</if>
-	</command>
+			WebContentStructures.addName(structureName = "${localization2Name}");
+		}
+	}
 
-	<command name="addName">
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${structureName}" />
-	</command>
+	macro addName {
+		Type.clickAtType(locator1 = "TextInput#NAME", value1 = "${structureName}");
+	}
 
-	<command name="addNullCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addNullCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
+		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute macro="Alert#viewRequiredField" />
+		Alert.viewRequiredField();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="addSubstructure">
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+	macro addSubstructure {
+		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
 
-		<execute function="SelectFrame" value1="relative=top" />
+		SelectFrame(value1 = "relative=top");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<var name="key_ddlDataDefinitionName" value="${parentStructureName}" />
+		var key_ddlDataDefinitionName = "${parentStructureName}";
 
-		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${parentStructureName}" />
+		AssertClickNoError(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "${parentStructureName}"
+		);
 
-		<execute function="AssertConfirm#assertConfirmationNoWait" value1="Selecting a new structure deletes all unsaved content. Do you want to proceed?" />
+		AssertConfirm.assertConfirmationNoWait(
+			value1 = "Selecting a new structure deletes all unsaved content. Do you want to proceed?"
+		);
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="deleteCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
+	macro deleteCP {
+		Navigator.gotoNavItem(navItem = "Structures");
 
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
+		var key_ddlDataDefinitionName = "${structureName}";
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+		Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<if>
-			<equals arg1="${webContentHasReference}" arg2="true" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The structure cannot be deleted because it is required by one or more templates." />
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
-
-	<command name="editSubstructureDefaultValuesCP">
-		<var name="key_ddlDataDefinitionName" value="${substructureName}" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${substructureName}" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit Default Values" />
-			<var name="rowEntry" value="${substructureName}" />
-		</execute>
-
-		<for list="${editSubstructureFieldNames}" param="structureFieldName">
-			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
-			<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="structureFieldName" />
+		MenuItem.clickNoError(menuItem = "Delete");
 
-			<execute function="Type" locator1="DDMField#DDM_INPUT" value1="Edited ${structureFieldName} Field" />
-		</for>
-
-		<execute macro="Button#clickSave" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${substructureName}" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit Default Values" />
-			<var name="rowEntry" value="${substructureName}" />
-		</execute>
-
-		<for list="${editSubstructureFieldNames}" param="structureFieldName">
-			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
-
-			<execute function="AssertTextEquals" locator1="DDMField#DDM_INPUT" value1="Edited ${structureFieldName} Field" />
-		</for>
-
-		<execute function="SelectFrameTop" />
-	</command>
-
-	<command name="saveCP">
-		<execute macro="DDLDataDefinition#save" />
-
-		<if>
-			<isset var="addRoleViewPermissions" />
-			<then>
-				<execute macro="LexiconEntry#gotoEntryMenuItem">
-					<var name="menuItem" value="Permissions" />
-					<var name="rowEntry" value="${structureName}" />
-				</execute>
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		if ("${webContentHasReference}" == "true") {
+			Alert.viewRequestFailedToComplete();
 
-				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-					<var name="addOrRemoveViewPermission" value="Add" />
-					<var name="roleList" value="${addRoleViewPermissions}" />
-				</execute>
-
-				<execute macro="IFrame#selectTopFrame" />
-			</then>
-		</if>
-	</command>
-
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="2" />
-		</execute>
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Structure" />
-		</execute>
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
-
-				<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-				<execute function="AssertConfirm#assertConfirmationNoWait" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-
-		<execute macro="Portlet#viewEmptyMessage">
-			<var name="message" value="There are no results." />
-		</execute>
-	</command>
-
-	<command name="viewCP">
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<if>
-			<isset var="structureName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="structureDescription" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
-			</then>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewFavoriteStructureViaIFrame">
-		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (${indexNumber})" />
-
-		<execute function="ScrollBy" value1="0, 50" />
-
-		<execute function="AssertElementPresent" locator1="Icon#REMOVE_FAVORITE">
-			<var name="key_rowEntry" value="${structureName}" />
-		</execute>
-	</command>
-
-	<command name="viewFavoriteStructureViaPlusButton">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="More" />
-		</execute>
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="favorites" />
-		</execute>
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="${structureName}" />
-		</execute>
-	</command>
-
-	<command name="viewNoFavoriteStructure">
-		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (0)" />
-	</command>
-
-	<command name="viewStructuresViaMoreIFrame">
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${structureName}">
-			<var name="key_rowEntry" value="${structureName}" />
-		</execute>
-	</command>
-
-	<command name="viewTableEntryCP">
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
-	</command>
-
-	<command name="viewTemplateValidation">
-		<execute function="AssertConfirm" value1="Please add a template to render this structure." />
-	</command>
-</definition>
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "The structure cannot be deleted because it is required by one or more templates."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro editSubstructureDefaultValuesCP {
+		var key_ddlDataDefinitionName = "${substructureName}";
+
+		Search.searchCP(searchTerm = "${substructureName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit Default Values",
+			rowEntry = "${substructureName}"
+		);
+
+		for (var structureFieldName : list "${editSubstructureFieldNames}") {
+			var key_fieldDefaultValue = "${structureFieldName}";
+			var structureFieldName = StringUtil.replace("${structureFieldName}", " ", "");
+
+			Type(
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited ${structureFieldName} Field"
+			);
+		}
+
+		Button.clickSave();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		Search.searchCP(searchTerm = "${substructureName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit Default Values",
+			rowEntry = "${substructureName}"
+		);
+
+		for (var structureFieldName : list "${editSubstructureFieldNames}") {
+			var key_fieldDefaultValue = "${structureFieldName}";
+
+			AssertTextEquals(
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited ${structureFieldName} Field"
+			);
+		}
+
+		SelectFrameTop();
+	}
+
+	macro saveCP {
+		DDLDataDefinition.save();
+
+		if (isSet(addRoleViewPermissions)) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "${structureName}"
+			);
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Add",
+				roleList = "${addRoleViewPermissions}"
+			);
+
+			IFrame.selectTopFrame();
+		}
+	}
+
+	macro tearDownCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		Search.searchCP(searchTerm = "2");
+
+		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+
+		Search.searchCP(searchTerm = "Structure");
+
+		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm.assertConfirmationNoWait(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+
+		Portlet.viewEmptyMessage(message = "There are no results.");
+	}
+
+	macro viewCP {
+		var key_ddlDataDefinitionName = "${structureName}";
+
+		if (isSet(structureName)) {
+			AssertTextEquals(
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
+				value1 = "${structureName}"
+			);
+		}
+
+		if (isSet(structureDescription)) {
+			AssertTextEquals(
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION",
+				value1 = "${structureDescription}"
+			);
+		}
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewFavoriteStructureViaIFrame {
+		AssertTextEquals(
+			locator1 = "WC#ADD_TO_FAVORITES",
+			value1 = "Add to Favorites (${indexNumber})"
+		);
+
+		ScrollBy(value1 = "0, 50");
+
+		AssertElementPresent(
+			locator1 = "Icon#REMOVE_FAVORITE",
+			key_rowEntry = "${structureName}"
+		);
+	}
+
+	macro viewFavoriteStructureViaPlusButton {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.viewPresent(menuItem = "More");
+
+		MenuItem.viewPresent(menuItem = "favorites");
+
+		MenuItem.viewPresent(menuItem = "${structureName}");
+	}
+
+	macro viewNoFavoriteStructure {
+		AssertTextEquals(
+			locator1 = "WC#ADD_TO_FAVORITES",
+			value1 = "Add to Favorites (0)"
+		);
+	}
+
+	macro viewStructuresViaMoreIFrame {
+		AssertTextEquals(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${structureName}",
+			key_rowEntry = "${structureName}"
+		);
+	}
+
+	macro viewTableEntryCP {
+		var key_ddlDataDefinitionName = "${structureName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
+			value1 = "${structureName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION",
+			value1 = "${structureDescription}"
+		);
+	}
+
+	macro viewTemplateValidation {
+		AssertConfirm(value1 = "Please add a template to render this structure.");
+	}
+}

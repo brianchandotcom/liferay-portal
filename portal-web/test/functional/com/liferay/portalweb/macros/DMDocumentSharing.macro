@@ -1,69 +1,76 @@
-<definition>
-	<command name="_manageCollaborators">
-		<execute function="Click" locator1="Button#INFO" />
+definition {
+	macro _manageCollaborators {
+		Click(locator1 = "Button#INFO");
 
-		<var name="key_text" value="Manage Collaborators" />
+		var key_text = "Manage Collaborators";
 
-		<execute function="AssertClick" locator1="Button#ANY" value1="Manage Collaborators" />
-	</command>
+		AssertClick(locator1 = "Button#ANY", value1 = "Manage Collaborators");
+	}
 
-	<command name="changePermission">
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+	macro changePermission {
+		DMDocument.viewPG(
+			dmDocumentDescription = "${dmDocumentDescription}",
+			dmDocumentTitle = "${dmDocumentTitle}"
+		);
 
-		<execute macro="DMDocumentSharing#_manageCollaborators" />
+		DMDocumentSharing._manageCollaborators();
 
-		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		<var name="key_userName" value="${userName}" />
+		var key_userName = "${userName}";
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_NAME" value1="${userName}" />
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_NAME",
+			value1 = "${userName}"
+		);
 
-		<execute function="Select" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN" value1="${selectPermission}" />
+		Select(
+			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			value1 = "${selectPermission}"
+		);
 
-		<execute function="AssertSelectedLabel" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN" value1="${selectPermission}" />
+		AssertSelectedLabel(
+			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			value1 = "${selectPermission}"
+		);
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute macro="Alert#viewSuccessMessageText">
-			<var name="successMessage" value="Permissions Changed" />
-		</execute>
-	</command>
+		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
+	}
 
-	<command name="removeCollaborator">
-		<execute macro="DMDocumentSharing#_manageCollaborators" />
+	macro removeCollaborator {
+		DMDocumentSharing._manageCollaborators();
 
-		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		<for list="${collaboratorList}" param="collaborator">
-			<var name="key_userName" value="${collaborator}" />
+		for (var collaborator : list "${collaboratorList}") {
+			var key_userName = "${collaborator}";
 
-			<execute function="Click" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_REMOVE_BUTTON" />
-		</for>
+			Click(locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_REMOVE_BUTTON");
+		}
 
-		<if>
-			<isset var="emptyStateMessage" />
-			<then>
-				<execute function="AssertElementPresent" locator1="DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE" />
-			</then>
-		</if>
+		if (isSet(emptyStateMessage)) {
+			AssertElementPresent(
+				locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE"
+			);
+		}
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute macro="Alert#viewSuccessMessageText">
-			<var name="successMessage" value="Permissions Changed" />
-		</execute>
-	</command>
+		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
+	}
 
-	<command name="viewCollaborators">
-		<execute function="Click" locator1="Button#INFO" />
+	macro viewCollaborators {
+		Click(locator1 = "Button#INFO");
 
-		<for list="${collaboratorList}" param="collaborator">
-			<var name="key_collaborator" value="${collaborator}" />
+		for (var collaborator : list "${collaboratorList}") {
+			var key_collaborator = "${collaborator}";
 
-			<execute function="AssertElementPresent" locator1="DocumentsAndMediaShare#COLLABORATOR_TOOLTIP" value1="${collaborator}" />
-		</for>
-	</command>
-</definition>
+			AssertElementPresent(
+				locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
+				value1 = "${collaborator}"
+			);
+		}
+	}
+}

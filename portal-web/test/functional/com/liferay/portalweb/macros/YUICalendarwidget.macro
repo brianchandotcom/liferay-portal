@@ -1,34 +1,36 @@
-<definition>
-	<command name="addDate">
-		<!--
+definition {
+
+	macro addDate {
+
+		/*
 		To ensure the desired month will always be reached, click "Previous"
 		until it reaches our baseline of May 2016. Then click "Next" until
 		it reaches ${month} ${year}.
-		-->
+		*/
 
-		<var name="key_month" value="May" />
-		<var name="key_year" value="2016" />
+		var key_month = "May";
+		var key_year = "2016";
 
-		<while>
-			<condition function="IsElementNotPresent" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR" />
-			<then>
-				<execute function="Click" locator1="YUICalendarWidget#PREVIOUS_MONTH_ARROW" />
-			</then>
-		</while>
+		while (IsElementNotPresent(locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR")) {
+			Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
+		}
 
-		<var name="key_day" value="${day}" />
-		<var name="key_month" value="${month}" />
-		<var name="key_year" value="${year}" />
+		var key_day = "${day}";
+		var key_month = "${month}";
+		var key_year = "${year}";
 
-		<while>
-			<condition function="IsElementNotPresent" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR" />
-			<then>
-				<execute function="Click" locator1="YUICalendarWidget#NEXT_MONTH_ARROW" />
-			</then>
-		</while>
+		while (IsElementNotPresent(locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR")) {
+			Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
+		}
 
-		<execute function="AssertTextEquals" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR" value1="${month} ${year}" />
+		AssertTextEquals(
+			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR",
+			value1 = "${month} ${year}"
+		);
 
-		<execute function="AssertClick" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_DAY" value1="${day}" />
-	</command>
-</definition>
+		AssertClick(
+			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY",
+			value1 = "${day}"
+		);
+	}
+}

@@ -1,271 +1,282 @@
-<definition>
-	<command name="addPollChoice">
-		<var name="key_choiceField" value="${choiceField}" />
+definition {
+	macro addPollChoice {
+		var key_choiceField = "${choiceField}";
 
-		<execute function="Type" locator1="Polls#CHOICE_FIELD" value1="${pollsQuestionChoice}" />
-	</command>
+		Type(locator1 = "Polls#CHOICE_FIELD", value1 = "${pollsQuestionChoice}");
+	}
 
-	<command name="addPollCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+	macro addPollCP {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${pollsQuestionTitle}" />
-		</execute>
+		PortletEntry.inputTitle(title = "${pollsQuestionTitle}");
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${pollsQuestion}" />
-		</execute>
+		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
+		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
 
-		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
 
-		<if>
-			<isset var="pollsQuestionChoiceC" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-				<execute function="Type" locator1="Polls#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
-			</then>
-		</if>
+		if (isSet(pollsQuestionChoiceC)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+			Type(locator1 = "Polls#CHOICE_C_FIELD", value1 = "${pollsQuestionChoiceC}");
+		}
 
-		<if>
-			<isset var="pollsQuestionChoiceD" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-				<execute function="Type" locator1="Polls#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
-			</then>
-		</if>
+		if (isSet(pollsQuestionChoiceD)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+			Type(locator1 = "Polls#CHOICE_D_FIELD", value1 = "${pollsQuestionChoiceD}");
+		}
 
-		<if>
-			<isset var="pollsQuestionChoiceE" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-				<execute function="Type" locator1="Polls#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
-			</then>
-		</if>
+		if (isSet(pollsQuestionChoiceE)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+			Type(locator1 = "Polls#CHOICE_E_FIELD", value1 = "${pollsQuestionChoiceE}");
+		}
 
-		<if>
-			<isset var="permissions" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Permissions" />
-				</execute>
+		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-				<var name="key_permissionsViewRole" value="${permissionsViewRole}" />
+		if (isSet(permissions)) {
+			Panel.expandPanel(panel = "Permissions");
 
-				<execute function="Select" locator1="Select#PERMISSIONS_VIEW_ROLE" value1="${permissionsViewRole}" />
-			</then>
-		</if>
+			var key_permissionsViewRole = "${permissionsViewRole}";
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
+			Select(
+				locator1 = "Select#PERMISSIONS_VIEW_ROLE",
+				value1 = "${permissionsViewRole}"
+			);
+		}
 
-	<command name="addPollCPWithExpirationDate">
-		<execute macro="LexiconEntry#gotoAdd" />
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${pollsQuestionTitle}" />
-		</execute>
+	macro addPollCPWithExpirationDate {
+		LexiconEntry.gotoAdd();
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${pollsQuestion}" />
-		</execute>
+		PortletEntry.inputTitle(title = "${pollsQuestionTitle}");
 
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
+		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
 
-		<execute function="Uncheck" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
 
-		<execute function="Type" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-		<if>
-			<isset var="pollsQuestionChoiceC" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+		Uncheck(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-				<execute function="Type" locator1="Polls#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
-			</then>
-		</if>
+		Type(locator1 = "TextInput#EXPIRATION_DATE", value1 = "${expirationDate}");
 
-		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
-		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		if (isSet(pollsQuestionChoiceC)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-		<if>
-			<isset var="pollsQuestionChoiceD" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+			Type(locator1 = "Polls#CHOICE_C_FIELD", value1 = "${pollsQuestionChoiceC}");
+		}
 
-				<execute function="Type" locator1="Polls#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
-			</then>
-		</if>
+		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
-		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		AssertTextEquals(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "${expirationDate}"
+		);
 
-		<if>
-			<isset var="pollsQuestionChoiceE" />
-			<then>
-				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+		if (isSet(pollsQuestionChoiceD)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-				<execute function="Type" locator1="Polls#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
-			</then>
-		</if>
+			Type(locator1 = "Polls#CHOICE_D_FIELD", value1 = "${pollsQuestionChoiceD}");
+		}
 
-		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
-		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-		<if>
-			<isset var="permissions" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Permissions" />
-				</execute>
+		AssertTextEquals(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "${expirationDate}"
+		);
 
-				<var name="key_permissionsViewRole" value="${permissionsViewRole}" />
+		if (isSet(pollsQuestionChoiceE)) {
+			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
 
-				<execute function="Select" locator1="Select#PERMISSIONS_VIEW_ROLE" value1="${permissionsViewRole}" />
-			</then>
-		</if>
+			Type(locator1 = "Polls#CHOICE_E_FIELD", value1 = "${pollsQuestionChoiceE}");
+		}
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
+		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
 
-	<command name="addPollPG">
-		<execute function="Click" locator1="Polls#ADD_NEW_POLL" />
+		AssertTextEquals(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "${expirationDate}"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		if (isSet(permissions)) {
+			Panel.expandPanel(panel = "Permissions");
 
-		<execute macro="LexiconEntry#gotoAdd" />
+			var key_permissionsViewRole = "${permissionsViewRole}";
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${pollsQuestionTitle}" />
-		</execute>
+			Select(
+				locator1 = "Select#PERMISSIONS_VIEW_ROLE",
+				value1 = "${permissionsViewRole}"
+			);
+		}
 
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${pollsQuestion}" />
-		</execute>
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+	}
 
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
+	macro addPollPG {
+		Click(locator1 = "Polls#ADD_NEW_POLL");
 
-		<execute macro="Button#clickSave" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		LexiconEntry.gotoAdd();
 
-	<command name="selectPollPG">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Polls#SELECT_QUESTION" />
+		PortletEntry.inputTitle(title = "${pollsQuestionTitle}");
 
-		<execute function="Click" locator1="Polls#SELECT_QUESTION" />
+		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
 
-		<execute function="Select" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
-		<execute macro="PortletEntry#save" />
+		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
 
-		<execute function="AssertSelectedLabel" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
+		Button.clickSave();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro selectPollPG {
+		MouseOver.mouseOverNotVisible(locator1 = "Polls#SELECT_QUESTION");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Polls" />
-		</execute>
+		Click(locator1 = "Polls#SELECT_QUESTION");
 
-		<while>
-			<condition function="IsElementPresent" locator1="Polls#POLLS_TABLE_ACTIONS_GENERIC" />
-			<then>
-				<execute function="Click" locator1="Polls#POLLS_TABLE_ACTIONS_GENERIC" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-				<execute macro="MenuItem#clickNoError">
-					<var name="menuItem" value="Delete" />
-				</execute>
+		Select(
+			locator1 = "Polls#TITLE_DROPDOWN_SELECT",
+			value1 = "${pollsQuestionTitle}"
+		);
 
-				<execute function="AssertConfirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		PortletEntry.save();
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-			</then>
-		</while>
-	</command>
+		AssertSelectedLabel(
+			locator1 = "Polls#TITLE_DROPDOWN_SELECT",
+			value1 = "${pollsQuestionTitle}"
+		);
 
-	<command name="viewPollAsGuestPG">
-		<var name="key_pollsQuestion" value="${pollsQuestion}" />
+		SelectFrame(value1 = "relative=top");
+	}
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="What is your favorite Liferay portlet?" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<for list="${pollsQuestionChoiceList}" param="questionChoiceList">
-			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Polls"
+		);
 
-			<execute function="AssertElementNotPresent" locator1="Polls#POLL_QUESTION_CHOICE" />
-		</for>
+		while (IsElementPresent(locator1 = "Polls#POLLS_TABLE_ACTIONS_GENERIC")) {
+			Click(locator1 = "Polls#POLLS_TABLE_ACTIONS_GENERIC");
 
-		<execute function="AssertElementNotPresent" locator1="Button#VOTE" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />
-	</command>
+			MenuItem.clickNoError(menuItem = "Delete");
 
-	<command name="viewPollChartArea">
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+			AssertConfirm.waitForConfirmation(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
 
-		<execute function="Click" locator1="Polls#POLLS_TABLE_TITLE" />
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully."
+			);
+		}
+	}
 
-		<execute function="Click" locator1="Polls#CHART_AREA" />
+	macro viewPollAsGuestPG {
+		var key_pollsQuestion = "${pollsQuestion}";
 
-		<execute function="SelectWindow#selectPopUp" locator1="null" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Polls#POLL_QUESTION",
+			value1 = "What is your favorite Liferay portlet?"
+		);
 
-		<execute function="AssertElementPresent" locator1="Polls#CHART_IMAGE" />
+		for (var questionChoiceList : list "${pollsQuestionChoiceList}") {
+			var key_pollsQuestionChoice = "${questionChoiceList}";
 
-		<execute function="Close#closeWindow" locator1="null" />
-	</command>
+			AssertElementNotPresent(locator1 = "Polls#POLL_QUESTION_CHOICE");
+		}
 
-	<command name="viewPollPG">
-		<var name="key_pollsQuestion" value="${pollsQuestion}" />
+		AssertElementNotPresent(locator1 = "Button#VOTE");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="${pollsQuestion}" />
+		AssertTextEquals(locator1 = "Message#INFO", value1 = "Please sign in to vote.");
+	}
 
-		<for list="${pollsQuestionChoiceList}" param="questionChoiceList">
-			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
+	macro viewPollChartArea {
+		var key_pollsQuestionTitle = "${pollsQuestionTitle}";
 
-			<execute function="AssertTextPresent" locator1="Polls#POLL_QUESTION_CHOICE" value1="${questionChoiceList}" />
-		</for>
+		Click(locator1 = "Polls#POLLS_TABLE_TITLE");
 
-		<execute function="AssertTextEquals" locator1="Button#VOTE" value1="Vote" />
-	</command>
+		Click(locator1 = "Polls#CHART_AREA");
 
-	<command name="viewVotedPollPG">
-		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
+		SelectWindow.selectPopUp(locator1 = "null");
 
-		<execute function="AssertTextEquals" locator1="Polls#VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
-		<execute function="AssertTextEquals" locator1="Polls#VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
+		AssertElementPresent(locator1 = "Polls#CHART_IMAGE");
 
-		<var name="key_pollsQuestionTotalVotes" value="${pollsQuestionTotalVotes}" />
+		Close.closeWindow(locator1 = "null");
+	}
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#VOTES_TOTAL" value1="Total Votes: ${pollsQuestionTotalVotes}" />
-	</command>
+	macro viewPollPG {
+		var key_pollsQuestion = "${pollsQuestion}";
 
-	<command name="votePollPG">
-		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Polls#POLL_QUESTION",
+			value1 = "${pollsQuestion}"
+		);
 
-		<execute function="Click" locator1="Polls#POLL_QUESTION_CHOICE" />
+		for (var questionChoiceList : list "${pollsQuestionChoiceList}") {
+			var key_pollsQuestionChoice = "${questionChoiceList}";
 
-		<execute function="AssertClick" locator1="Button#VOTE" value1="Vote" />
+			AssertTextPresent(
+				locator1 = "Polls#POLL_QUESTION_CHOICE",
+				value1 = "${questionChoiceList}"
+			);
+		}
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for your vote." />
-	</command>
-</definition>
+		AssertTextEquals(locator1 = "Button#VOTE", value1 = "Vote");
+	}
+
+	macro viewVotedPollPG {
+		var key_pollsQuestionChoice = "${pollsQuestionChoice}";
+
+		AssertTextEquals(
+			locator1 = "Polls#VOTES_PERCENTAGE",
+			value1 = "${pollsQuestionVotePercent}"
+		);
+
+		AssertTextEquals(
+			locator1 = "Polls#VOTES_NUMBER",
+			value1 = "${pollsQuestionVoteCount}"
+		);
+
+		var key_pollsQuestionTotalVotes = "${pollsQuestionTotalVotes}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Polls#VOTES_TOTAL",
+			value1 = "Total Votes: ${pollsQuestionTotalVotes}"
+		);
+	}
+
+	macro votePollPG {
+		var key_pollsQuestionChoice = "${pollsQuestionChoice}";
+
+		Click(locator1 = "Polls#POLL_QUESTION_CHOICE");
+
+		AssertClick(locator1 = "Button#VOTE", value1 = "Vote");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Thank you for your vote."
+		);
+	}
+}

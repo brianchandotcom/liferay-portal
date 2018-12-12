@@ -1,53 +1,49 @@
-<definition>
-	<command name="configureLookAndFeelShowHeaderSearch">
-		<if>
-			<equals arg1="${showHeaderSearch}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
-					<var name="key_toggleSwitchLabel" value="Show Header Search" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${showHeaderSearch}" arg2="false" />
-				<then>
-					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
-						<var name="key_toggleSwitchLabel" value="Show Header Search" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-	</command>
+definition {
+	macro configureLookAndFeelShowHeaderSearch {
+		if ("${showHeaderSearch}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Header Search"
+			);
+		}
+		else if ("${showHeaderSearch}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Header Search"
+			);
+		}
+	}
 
-	<command name="configureLookAndFeelShowMaxMinAppLinks">
-		<if>
-			<equals arg1="${showMaxMinAppLinks}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
-					<var name="key_toggleSwitchLabel" value="Show Maximize/Minimize Application Links" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${showMaxMinAppLinks}" arg2="false" />
-				<then>
-					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
-						<var name="key_toggleSwitchLabel" value="Show Maximize/Minimize Application Links" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-	</command>
+	macro configureLookAndFeelShowMaxMinAppLinks {
+		if ("${showMaxMinAppLinks}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links"
+			);
+		}
+		else if ("${showMaxMinAppLinks}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links"
+			);
+		}
+	}
 
-	<command name="configureLookAndFeelSpecificLook">
-		<execute function="Click" locator1="Radio#SPECIFIC_LOOK" />
-	</command>
+	macro configureLookAndFeelSpecificLook {
+		Click(locator1 = "Radio#SPECIFIC_LOOK");
+	}
 
-	<command name="viewMaxMinPortletOptions">
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Maximize">
-			<var name="key_menuItem" value="Maximize" />
-		</execute>
+	macro viewMaxMinPortletOptions {
+		AssertTextEquals(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Maximize",
+			key_menuItem = "Maximize"
+		);
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Minimize">
-			<var name="key_menuItem" value="Minimize" />
-		</execute>
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Minimize",
+			key_menuItem = "Minimize"
+		);
+	}
+}

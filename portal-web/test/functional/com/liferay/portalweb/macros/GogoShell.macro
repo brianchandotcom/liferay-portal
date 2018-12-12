@@ -1,59 +1,59 @@
-<definition>
-	<command name="executeCommand">
-		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="${commandName}" />
+definition {
+	macro executeCommand {
+		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "${commandName}");
 
-		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
-	</command>
+		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+	}
 
-	<command name="getModuleID">
-		<execute macro="GogoShell#listModuleStatus">
-			<var name="moduleName" value="${moduleName}" />
-		</execute>
+	macro getModuleID {
+		GogoShell.listModuleStatus(moduleName = "${moduleName}");
 
-		<execute function="AssertElementPresent" locator1="GogoShell#OUTPUT_FIELD" />
+		AssertElementPresent(locator1 = "GogoShell#OUTPUT_FIELD");
 
-		<var method="selenium#getText('GogoShell#OUTPUT_FIELD')" name="moduleStatusOutput" />
+		var moduleStatusOutput = selenium.getText("GogoShell#OUTPUT_FIELD");
+		var partialModuleStatusOutput = StringUtil.stripBetween("${moduleStatusOutput}", "START", "Name   ");
+		var moduleID = StringUtil.extractFirst("${partialModuleStatusOutput}", "|");
 
-		<var method="StringUtil#stripBetween('${moduleStatusOutput}', 'START', 'Name   ')" name="partialModuleStatusOutput" />
+		return "${moduleID}";
+	}
 
-		<var method="StringUtil#extractFirst('${partialModuleStatusOutput}', '|')" name="moduleID" />
+	macro listModuleStatus {
+		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "lb ${moduleName}");
 
-		<return value="${moduleID}" />
-	</command>
+		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+	}
 
-	<command name="listModuleStatus">
-		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="lb ${moduleName}" />
+	macro openGogoShellAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet"
+		);
+	}
 
-		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
-	</command>
+	macro startModule {
+		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "start ${moduleID}");
 
-	<command name="openGogoShellAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet" />
-		</execute>
-	</command>
+		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+	}
 
-	<command name="startModule">
-		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="start ${moduleID}" />
+	macro stopModule {
+		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "stop ${moduleID}");
 
-		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
-	</command>
+		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+	}
 
-	<command name="stopModule">
-		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="stop ${moduleID}" />
+	macro viewModuleStatus {
+		GogoShell.listModuleStatus(moduleName = "${moduleName}");
 
-		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "GogoShell#OUTPUT_FIELD",
+			value1 = "${moduleStatus}"
+		);
+	}
 
-	<command name="viewModuleStatus">
-		<execute macro="GogoShell#listModuleStatus">
-			<var name="moduleName" value="${moduleName}" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${moduleStatus}" />
-	</command>
-
-	<command name="viewOutPut">
-		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${outputContent}" />
-	</command>
-</definition>
+	macro viewOutPut {
+		AssertTextEquals.assertPartialText(
+			locator1 = "GogoShell#OUTPUT_FIELD",
+			value1 = "${outputContent}"
+		);
+	}
+}

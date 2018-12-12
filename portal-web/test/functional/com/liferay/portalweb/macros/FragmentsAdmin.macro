@@ -1,125 +1,108 @@
-<definition>
-	<command name="_gotoAddCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
+definition {
+	macro _gotoAddCollection {
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+		}
+		else {
+			Button.click(button = "New");
 
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="Collection" />
-				</execute>
-			</else>
-		</if>
-	</command>
+			MenuItem.click(menuItem = "Collection");
+		}
+	}
 
-	<command name="addCollection">
-		<execute macro="FragmentsAdmin#_gotoAddCollection" />
+	macro addCollection {
+		FragmentsAdmin._gotoAddCollection();
 
-		<execute macro="Collection#editCollection">
-			<var name="collectionDescription" value="${collectionDescription}" />
-			<var name="collectionName" value="${collectionName}" />
-		</execute>
+		Collection.editCollection(
+			collectionDescription = "${collectionDescription}",
+			collectionName = "${collectionName}"
+		);
 
-		<execute macro="Button#clickSave" />
-	</command>
+		Button.clickSave();
+	}
 
-	<command name="addSection">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Section" />
-		</execute>
+	macro addSection {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Section");
 
-		<execute function="AssertTextEquals" locator1="Modal#HEADER" value1="Add Section" />
+		AssertTextEquals(locator1 = "Modal#HEADER", value1 = "Add Section");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${fragmentName}" />
-		</execute>
+		PortletEntry.inputName(name = "${fragmentName}");
 
-		<execute macro="Button#clickSave" />
-	</command>
+		Button.clickSave();
+	}
 
-	<command name="autocompleteFragmentHTML" summary="Type HTML into the fragment HTML editor using the auto complete feature.">
-		<var name="htmlSnippet"><![CDATA[<lfr-]]></var>
+	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
+	macro autocompleteFragmentHTML {
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+		var htmlSnippet = '''<lfr-''';
 
-		<execute function="Click" locator1="FragmentEditor#AUTOCOMPLETE_FIELD">
-			<var name="autocompleteField" value="${autocompleteField}" />
-		</execute>
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="FragmentEditor#HTML_EDITOR_CONTENT" value1="${fragmentHTML}" />
-	</command>
+		Click(
+			locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD",
+			autocompleteField = "${autocompleteField}"
+		);
 
-	<command name="exportCollection">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="${collectionName}" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+			value1 = "${fragmentHTML}"
+		);
+	}
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Export" />
-		</execute>
-	</command>
+	macro exportCollection {
+		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-	<command name="gotoImportCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_ELLIPSIS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
-			</else>
-		</if>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+	}
 
-		<execute macro="Button#click">
-			<var name="button" value="Import" />
-		</execute>
+	macro gotoImportCollection {
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+		else {
+			Button.click(button = "New");
+		}
 
-		<execute macro="IFrame#selectConfigurationFrame" />
-	</command>
+		Button.click(button = "Import");
 
-	<command name="importCollectionFromDependenciesFolder">
-		<execute macro="FragmentsAdmin#gotoImportCollection" />
+		IFrame.selectConfigurationFrame();
+	}
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${collectionZipFile}" />
+	macro importCollectionFromDependenciesFolder {
+		FragmentsAdmin.gotoImportCollection();
 
-		<execute macro="Button#click">
-			<var name="button" value="Import" />
-		</execute>
+		UploadCommonFile(locator1 = "TextInput#FILE", value1 = "${collectionZipFile}");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Button.click(button = "Import");
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		Alert.viewSuccessMessage();
 
-	<command name="importCollectionFromTempFolder">
-		<execute macro="FragmentsAdmin#gotoImportCollection" />
+		IFrame.closeFrame();
+	}
 
-		<execute macro="TestCase#getDownloadedTempFileName">
-			<return name="collectionsZipFileName" />
-			<var name="fileNamePattern" value="collections-*.zip" />
-		</execute>
+	macro importCollectionFromTempFolder {
+		FragmentsAdmin.gotoImportCollection();
 
-		<execute function="UploadTempFile" locator1="TextInput#FILE" value1="${collectionsZipFileName}" />
+		var collectionsZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "collections-*.zip");
 
-		<execute macro="Button#click">
-			<var name="button" value="Import" />
-		</execute>
+		UploadTempFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${collectionsZipFileName}"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Button.click(button = "Import");
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		Alert.viewSuccessMessage();
 
-	<command name="openFragmentsAdmin">
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage/-/fragments" />
-		</execute>
-	</command>
-</definition>
+		IFrame.closeFrame();
+	}
+
+	macro openFragmentsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments"
+		);
+	}
+}

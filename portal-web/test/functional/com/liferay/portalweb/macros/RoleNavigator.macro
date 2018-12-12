@@ -1,23 +1,15 @@
-<definition>
-	<command name="gotoAssignees">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${roleTitle}" />
-		</execute>
+definition {
+	macro gotoAssignees {
+		LexiconEntry.gotoEntry(rowEntry = "${roleTitle}");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Assignees" />
-		</execute>
-	</command>
+		Navigator.gotoNavItem(navItem = "Assignees");
+	}
 
-	<command name="gotoAssigneeType">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${assigneeType}" />
-		</execute>
-	</command>
+	macro gotoAssigneeType {
+		Navigator.gotoNavItem(navItem = "${assigneeType}");
+	}
 
-	<command name="gotoRoleType">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${roleType} Roles" />
-		</execute>
-	</command>
-</definition>
+	macro gotoRoleType {
+		Navigator.gotoNavItem(navItem = "${roleType} Roles");
+	}
+}

@@ -1,128 +1,113 @@
-<definition>
-	<command name="configureDisplaySettings">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+definition {
+	macro configureDisplaySettings {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<for list="${uncheckSetting}" param="SettingName">
-			<execute function="Uncheck" locator1="Checkbox#${SettingName}" />
-		</for>
+		for (var SettingName : list "${uncheckSetting}") {
+			Uncheck(locator1 = "Checkbox#${SettingName}");
+		}
 
-		<execute function="Click" locator1="Button#SAVE" />
+		Click(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro configureSharingAllowUsersToAddWikiToAnyWebsite {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Sharing" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Sharing");
 
-		<if>
-			<equals arg1="${enabled}" arg2="true" />
-			<then>
-				<execute function="Check#checkToggleSwitch" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
-			</then>
-			<else>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
-			</else>
-		</if>
+		if ("${enabled}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
+			);
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
+			);
+		}
 
-		<execute macro="Button#clickSave" />
+		Button.clickSave();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="subscribeToNodeCP">
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+	macro subscribeToNodeCP {
+		var key_wikiNodeName = "${wikiNodeName}";
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Subscribe" />
-		</execute>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Subscribe");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
-	</command>
+		MenuItem.viewPresent(menuItem = "Unsubscribe");
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="Main" />
-		</execute>
+		LexiconEntry.openEntryMenu(rowEntry = "Main");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
+		MenuItem.click(menuItem = "Unsubscribe");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="Main" />
-		</execute>
+		LexiconEntry.openEntryMenu(rowEntry = "Main");
 
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Subscribe" />
-		</execute>
-	</command>
+		MenuItem.viewPresent(menuItem = "Subscribe");
+	}
 
-	<command name="viewConfigurationTabs">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	macro viewConfigurationTabs {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<for list="${isPresent}" param="isPresent">
-			<execute function="AssertElementPresent" locator1="Configuration#${isPresent}" />
-		</for>
+		for (var isPresent : list "${isPresent}") {
+			AssertElementPresent(locator1 = "Configuration#${isPresent}");
+		}
 
-		<for list="${isNotPresent}" param="isNotPresent">
-			<execute function="AssertElementNotPresent" locator1="Configuration#${isNotPresent}" />
-		</for>
-	</command>
+		for (var isNotPresent : list "${isNotPresent}") {
+			AssertElementNotPresent(locator1 = "Configuration#${isNotPresent}");
+		}
+	}
 
-	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro viewConfigureSharingAllowUsersToAddWikiToAnyWebsite {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Sharing" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Sharing");
 
-		<if>
-			<equals arg1="${enabled}" arg2="true" />
-			<then>
-				<execute function="AssertChecked#assertCheckedNotVisible" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
-			</then>
-			<else>
-				<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
-			</else>
-		</if>
+		if ("${enabled}" == "true") {
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
+			);
+		}
+		else {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX"
+			);
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewDisplaySettings">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	macro viewDisplaySettings {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<for list="${uncheckedSetting}" param="SettingName">
-			<execute function="AssertNotChecked" locator1="Checkbox#${SettingName}" />
-		</for>
-	</command>
+		for (var SettingName : list "${uncheckedSetting}") {
+			AssertNotChecked(locator1 = "Checkbox#${SettingName}");
+		}
+	}
 
-	<command name="viewNoPermissionCP">
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Wiki" />
-		</execute>
+	macro viewNoPermissionCP {
+		SiteAdmin.viewPortletTitle(portletTitle = "Wiki");
 
-		<execute function="AssertElementNotPresent" locator1="Button#ADD_WIKI" />
-		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
-	</command>
-</definition>
+		AssertElementNotPresent(locator1 = "Button#ADD_WIKI");
+
+		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
+	}
+}

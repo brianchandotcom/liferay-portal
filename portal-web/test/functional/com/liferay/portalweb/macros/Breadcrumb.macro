@@ -1,184 +1,164 @@
-<definition>
-	<command name="configureBreadcrumb">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+definition {
+	macro configureBreadcrumb {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<if>
-			<isset var="checkSetupName" />
-			<then>
-				<for list="${checkSetupName}" param="checkSetupName">
-					<var name="key_checkSetupName" value="${checkSetupName}" />
+		if (isSet(checkSetupName)) {
+			for (var checkSetupName : list "${checkSetupName}") {
+				var key_checkSetupName = "${checkSetupName}";
 
-					<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
-				</for>
-			</then>
-		</if>
+				Check.checkToggleSwitch(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
+			}
+		}
 
-		<if>
-			<isset var="uncheckSetupName" />
-			<then>
-				<for list="${uncheckSetupName}" param="uncheckSetupName">
-					<var name="key_checkSetupName" value="${uncheckSetupName}" />
+		if (isSet(uncheckSetupName)) {
+			for (var uncheckSetupName : list "${uncheckSetupName}") {
+				var key_checkSetupName = "${uncheckSetupName}";
 
-					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
-				</for>
-			</then>
-		</if>
+				Uncheck.uncheckToggleSwitch(
+					locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH"
+				);
+			}
+		}
 
-		<if>
-			<isset var="selectADTType" />
-			<then>
-				<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${selectADTType}" />
-			</then>
-		</if>
+		if (isSet(selectADTType)) {
+			Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${selectADTType}");
+		}
 
-		<if>
-			<equals arg1="${configureWithoutSave}" arg2="true" />
-			<then>
-				<echo message="Configuring Breadcrumb without saving to check bug." />
-			</then>
-			<else>
-				<execute macro="PortletEntry#save" />
-			</else>
-		</if>
+		if ("${configureWithoutSave}" == "true") {
+			echo("Configuring Breadcrumb without saving to check bug.");
+		}
+		else {
+			PortletEntry.save();
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="displayTemplatePreview">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro displayTemplatePreview {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayStyle}" />
+		Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${displayStyle}");
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="saveDisplayPreview">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro saveDisplayPreview {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewActiveEntry">
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY" value1="${breadcrumbName}" />
-	</command>
+	macro viewActiveEntry {
+		AssertTextEquals(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+			value1 = "${breadcrumbName}"
+		);
+	}
 
-	<command name="viewADTApplied">
-		<var name="key_breadcrumbADTType" value="${breadcrumbADTType}" />
+	macro viewADTApplied {
+		var key_breadcrumbADTType = "${breadcrumbADTType}";
 
-		<execute function="AssertElementPresent" locator1="BreadcrumbPortlet#BREADCRUMB_ADT" />
-	</command>
+		AssertElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_ADT");
+	}
 
-	<command name="viewConfigurationCheckboxes">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro viewConfigurationCheckboxes {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<if>
-			<isset var="checkSetupName" />
-			<then>
-				<for list="${checkSetupName}" param="checkSetupName">
-					<var name="key_checkSetupName" value="${checkSetupName}" />
+		if (isSet(checkSetupName)) {
+			for (var checkSetupName : list "${checkSetupName}") {
+				var key_checkSetupName = "${checkSetupName}";
 
-					<execute function="AssertChecked#assertCheckedNotVisible" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
-				</for>
-			</then>
-		</if>
+				AssertChecked.assertCheckedNotVisible(
+					locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH"
+				);
+			}
+		}
 
-		<if>
-			<isset var="uncheckSetupName" />
-			<then>
-				<for list="${uncheckSetupName}" param="uncheckSetupName">
-					<var name="key_checkSetupName" value="${uncheckSetupName}" />
+		if (isSet(uncheckSetupName)) {
+			for (var uncheckSetupName : list "${uncheckSetupName}") {
+				var key_checkSetupName = "${uncheckSetupName}";
 
-					<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
-				</for>
-			</then>
-		</if>
+				AssertNotChecked.assertNotCheckedNotVisible(
+					locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH"
+				);
+			}
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewConfigurationPreview">
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+	macro viewConfigurationPreview {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<if>
-			<isset var="breadcrumbListVisible" />
-			<then>
-				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<execute macro="Breadcrumb#viewEntry">
-						<var name="breadcrumbName" value="${breadcrumbName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
+		if (isSet(breadcrumbListVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListVisible}") {
+				Breadcrumb.viewEntry(breadcrumbName = "${breadcrumbName}");
+			}
+		}
 
-		<if>
-			<isset var="breadcrumbListNotVisible" />
-			<then>
-				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+		if (isSet(breadcrumbListNotVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListNotVisible}") {
+				var key_breadcrumbName = "${breadcrumbName}";
 
-					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY">
-						<var name="key_breadcrumbName" value="${breadcrumbName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
+				AssertElementNotPresent(
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					key_breadcrumbName = "${breadcrumbName}"
+				);
+			}
+		}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+		SelectFrame(value1 = "relative=top");
+	}
 
-	<command name="viewEntry">
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbName}">
-			<var name="key_breadcrumbName" value="${breadcrumbName}" />
-		</execute>
-	</command>
+	macro viewEntry {
+		AssertTextEquals(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "${breadcrumbName}",
+			key_breadcrumbName = "${breadcrumbName}"
+		);
+	}
 
-	<command name="viewPG">
-		<if>
-			<isset var="breadcrumbListVisible" />
-			<then>
-				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+	macro viewPG {
+		if (isSet(breadcrumbListVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListVisible}") {
+				var key_breadcrumbName = "${breadcrumbName}";
 
-					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbName}" />
-				</for>
-			</then>
-		</if>
+				AssertTextEquals(
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "${breadcrumbName}"
+				);
+			}
+		}
 
-		<if>
-			<isset var="breadcrumbListNotVisible" />
-			<then>
-				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY">
-						<var name="key_breadcrumbName" value="${breadcrumbName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-	</command>
+		if (isSet(breadcrumbListNotVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListNotVisible}") {
+				AssertElementNotPresent(
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					key_breadcrumbName = "${breadcrumbName}"
+				);
+			}
+		}
+	}
 
-	<command name="viewSpecificPG">
-		<if>
-			<isset var="breadcrumbListNotVisible" />
-			<then>
-				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-					<execute function="AssertElementNotPresent" locator1="BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY">
-						<var name="key_breadcrumbName" value="${breadcrumbName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
+	macro viewSpecificPG {
+		if (isSet(breadcrumbListNotVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListNotVisible}") {
+				AssertElementNotPresent(
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
+					key_breadcrumbName = "${breadcrumbName}"
+				);
+			}
+		}
 
-		<if>
-			<isset var="breadcrumListVisible" />
-			<then>
-				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<execute function="AssertElementPresent" locator1="BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY">
-						<var name="key_breadcrumbName" value="${breadcrumbName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-	</command>
-</definition>
+		if (isSet(breadcrumListVisible)) {
+			for (var breadcrumbName : list "${breadcrumbListVisible}") {
+				AssertElementPresent(
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
+					key_breadcrumbName = "${breadcrumbName}"
+				);
+			}
+		}
+	}
+}

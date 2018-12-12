@@ -1,32 +1,34 @@
-<definition>
-	<command name="configureShowAllPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Media Gallery" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+definition {
+	macro configureShowAllPG {
+		Portlet.gotoPortletOptions(
+			portletName = "Media Gallery",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
+		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		PortletEntry.save();
+	}
 
-	<command name="viewCustomADTCarouselPG">
-		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_ITEM" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_PLAY_PAUSE" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_PREVIOUS_ARROW" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_NEXT_ARROW" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_MENU_INDEX" />
-	</command>
+	macro viewCustomADTCarouselPG {
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_ITEM");
 
-	<command name="viewShowAllPG">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_PLAY_PAUSE");
 
-		<for list="Permissions,Add Subfolder,Multiple Media,Add Shortcut,Access from Desktop" param="menuItem">
-			<execute macro="MenuItem#viewPresent">
-				<var name="menuItem" value="${menuItem}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_PREVIOUS_ARROW");
+
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_NEXT_ARROW");
+
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_MENU_INDEX");
+	}
+
+	macro viewShowAllPG {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		for (var menuItem : list "Permissions,Add Subfolder,Multiple Media,Add Shortcut,Access from Desktop") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+	}
+}

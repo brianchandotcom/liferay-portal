@@ -1,338 +1,347 @@
-<definition>
-	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-	<var name="ddlDataDefinitionName" value="Data Definition Name" />
-	<var name="ddlListName" value="List Name" />
-
-	<command name="_add">
-		<if>
-			<condition function="IsTextNotEqual" locator1="Portlet#HEADER" value1="Data Definitions" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Data Definitions" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-			</then>
-		</if>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="DDLDataDefinition#editName">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#_showDetails" />
-
-		<if>
-			<isset var="ddlDataDefinitionDescription" />
-			<then>
-				<execute function="Type#clickAtType" locator1="TextInput#DESCRIPTION" value1="${ddlDataDefinitionDescription}" />
-			</then>
-		</if>
-	</command>
+definition {
+	var ddlDataDefinitionDescription = "Data Definition Description";
+	var ddlDataDefinitionName = "Data Definition Name";
+	var ddlListName = "List Name";
 
-	<command name="_select">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	macro _add {
+		if (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Data Definitions")) {
+			AssertTextEquals(
+				locator1 = "Portlet#H3_MODAL_TITLE",
+				value1 = "Data Definitions"
+			);
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			SelectFrame(locator1 = "IFrame#DIALOG");
+		}
 
-		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${ddlDataDefinitionName}" />
-	</command>
+		LexiconEntry.gotoAdd();
 
-	<command name="_showDetails">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
-			<then>
-				<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
+		DDLDataDefinition.editName(ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
-				<if>
-					<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
-					<then>
-						<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
-					</then>
-				</if>
-			</then>
-		</if>
+		DDLDataDefinition._showDetails();
 
-		<execute function="AssertVisible" locator1="TextInput#DESCRIPTION" />
-	</command>
+		if (isSet(ddlDataDefinitionDescription)) {
+			Type.clickAtType(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${ddlDataDefinitionDescription}"
+			);
+		}
+	}
 
-	<command name="addCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+	macro _select {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute macro="DDLDataDefinition#_add">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-	</command>
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-	<command name="addViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#_add">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		AssertClick(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "${ddlDataDefinitionName}"
+		);
+	}
 
-		<execute function="SelectFrame" value1="relative=top" />
+	macro _showDetails {
+		if (IsElementNotPresent.isNotVisible(locator1 = "TextInput#DESCRIPTION")) {
+			Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
 
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-	</command>
+			if (IsElementNotPresent.isNotVisible(locator1 = "TextInput#DESCRIPTION")) {
+				Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
+			}
+		}
 
-	<command name="clickSave">
-		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
-	</command>
+		AssertVisible(locator1 = "TextInput#DESCRIPTION");
+	}
 
-	<command name="copyCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+	macro addCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		DDLDataDefinition._add(
+			ddlDataDefinitionDescription = "${ddlDataDefinitionDescription}",
+			ddlDataDefinitionName = "${ddlDataDefinitionName}"
+		);
+	}
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+	macro addViaDDLDisplayPG {
+		DDLDataDefinition._add(
+			ddlDataDefinitionDescription = "${ddlDataDefinitionDescription}",
+			ddlDataDefinitionName = "${ddlDataDefinitionName}"
+		);
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Copy" />
-		</execute>
+		SelectFrame(value1 = "relative=top");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${ddlDataDefinitionCopyName}" />
-		</execute>
+		DynamicDataMapping.selectDynamicDataMappingFrame();
+	}
 
-		<if>
-			<equals arg1="${copyFormTemplates}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="DDMSelectTemplate#COPY_FORM_TEMPLATES_CHECKBOX" />
-			</then>
-		</if>
+	macro clickSave {
+		AssertClick(locator1 = "DDMEditStructure#SAVE_BUTTON", value1 = "Save");
+	}
 
-		<if>
-			<equals arg1="${copyDisplayTemplates}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="DDMSelectTemplate#COPY_DISPLAY_TEMPLATES_CHECKBOX" />
-			</then>
-		</if>
+	macro copyCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		Click.waitForMenuToggleJSClick(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS"
+		);
 
-		<execute macro="DDLDataDefinition#viewName">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Copy");
 
-	<command name="deleteCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+		PortletEntry.inputName(name = "${ddlDataDefinitionCopyName}");
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		if ("${copyFormTemplates}" == "true") {
+			Check(locator1 = "DDMSelectTemplate#COPY_FORM_TEMPLATES_CHECKBOX");
+		}
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+		if ("${copyDisplayTemplates}" == "true") {
+			Check(locator1 = "DDMSelectTemplate#COPY_DISPLAY_TEMPLATES_CHECKBOX");
+		}
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		AssertClick(locator1 = "Button#COPY", value1 = "Copy");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		DDLDataDefinition.viewName(
+			ddlDataDefinitionName = "${ddlDataDefinitionCopyName}"
+		);
+	}
 
-		<execute macro="Navigator#openURL" />
+	macro deleteCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+		Click.waitForMenuToggleJSClick(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS">
-			<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-	</command>
+		MenuItem.clickNoError(menuItem = "Delete");
 
-	<command name="deleteNoCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${ddlDataDefinitionName}" />
-		</execute>
+		Alert.viewSuccessMessage();
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		Navigator.openURL();
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="The structure cannot be deleted because it is required by one or more structure links." />
-	</command>
+		AssertElementNotPresent(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS",
+			key_ddlDataDefinitionName = "${ddlDataDefinitionName}"
+		);
+	}
 
-	<command name="editCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+	macro deleteNoCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${ddlDataDefinitionName}" />
-		</execute>
+		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		Click.waitForMenuToggleJSClick(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1"
+		);
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		MenuItem.clickNoError(menuItem = "Delete");
 
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlDataDefinitionNameEdit}" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute macro="DDLDataDefinition#_showDetails" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "The structure cannot be deleted because it is required by one or more structure links."
+		);
+	}
 
-		<execute function="Type#clickAtType" locator1="TextInput#DESCRIPTION" value1="${ddlDataDefinitionDescriptionEdit}" />
-	</command>
+	macro editCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-	<command name="editName">
-		<execute function="Type#clickAtType" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
-	</command>
+		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
 
-	<command name="editPermissionsCP">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		Click.waitForMenuToggleJSClick(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1"
+		);
 
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="${addOrRemoveViewPermission}" />
-			<var name="roleList" value="${roleList}" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Edit");
 
-	<command name="save">
-		<execute macro="Button#clickSave" />
+		Type.clickAtType(
+			locator1 = "TextInput#NAME",
+			value1 = "${ddlDataDefinitionNameEdit}"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		DDLDataDefinition._showDetails();
 
-	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#clickSave" />
+		Type.clickAtType(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "${ddlDataDefinitionDescriptionEdit}"
+		);
+	}
 
-		<execute macro="Alert#viewSuccessMessage" />
+	macro editName {
+		Type.clickAtType(
+			locator1 = "DDMEditStructure#NAME_FIELD",
+			value1 = "${ddlDataDefinitionName}"
+		);
+	}
 
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
+	macro editPermissionsCP {
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-	<command name="selectCP">
-		<execute macro="DDLDataDefinition#_select">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
+			roleList = "${roleList}"
+		);
+	}
 
-		<execute function="SelectFrameTop" />
+	macro save {
+		Button.clickSave();
 
-		<execute function="AssertTextEquals" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="selectViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#_select">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+	macro saveViaDDLDisplayPG {
+		DDLDataDefinition.clickSave();
 
-		<execute function="SelectFrameTop" />
+		Alert.viewSuccessMessage();
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(value1 = "relative=top");
+	}
 
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
-	</command>
+	macro selectCP {
+		DDLDataDefinition._select(ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
-	<command name="setInputFieldLocalization">
-		<var name="key_languageValue" value="${languageValue}" />
+		SelectFrameTop();
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Name" />
-			<var name="locale" value="${languageValue}" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "TextInput#DATA_DEFINITION",
+			value1 = "${ddlDataDefinitionName}"
+		);
+	}
 
-	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+	macro selectViaDDLDisplayPG {
+		DDLDataDefinition._select(ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		SelectFrameTop();
 
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<var name="ddlDataDefinitionName" value="Data Definition" />
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#DATA_DEFINITION",
+			value1 = "${ddlDataDefinitionName}"
+		);
+	}
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${ddlDataDefinitionName}" />
-		</execute>
+	macro setInputFieldLocalization {
+		var key_languageValue = "${languageValue}";
 
-		<execute function="AssertTextNotEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="Contacts" />
+		PortletEntry.changeLocale(fieldName = "Name", locale = "${languageValue}");
+	}
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+	macro tearDownCP {
+		Navigator.openURL();
 
-		<if>
-			<condition function="IsElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
-			<then>
-				<execute macro="PortletEntry#selectAll" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-				<execute function="ClickNoError" locator1="Icon#TIMES" />
+		DDLNavigator.gotoManageDataDefinitions();
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		var ddlDataDefinitionName = "Data Definition";
 
-				<if>
-					<equals arg1="${kfProcessExists}" arg2="true" />
-					<then>
-						<execute macro="Alert#viewRequestFailedToComplete" />
+		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
 
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The structure cannot be deleted because it is required by one or more structure links." />
-					</then>
-					<else>
-						<execute macro="Alert#viewSuccessMessage" />
-					</else>
-				</if>
-			</then>
-		</if>
-	</command>
+		AssertTextNotEquals(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1",
+			value1 = "Contacts"
+		);
 
-	<command name="viewCP">
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		if (IsElementPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1")) {
+			PortletEntry.selectAll();
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${ddlDataDefinitionName}" />
+			ClickNoError(locator1 = "Icon#TIMES");
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Edit ${ddlDataDefinitionName}" />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
 
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
+			if ("${kfProcessExists}" == "true") {
+				Alert.viewRequestFailedToComplete();
 
-		<if>
-			<isset var="ddlDataDefinitionDescription" />
-			<then>
-				<execute macro="DDLDataDefinition#_showDetails" />
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_2",
+					value1 = "The structure cannot be deleted because it is required by one or more structure links."
+				);
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
+		}
+	}
 
-				<execute function="AssertTextEquals" locator1="TextInput#DESCRIPTION" value1="${ddlDataDefinitionDescription}" />
-			</then>
-		</if>
+	macro viewCP {
+		DDLNavigator.gotoManageDataDefinitions();
 
-		<if>
-			<isset var="fieldFieldLabel" />
-			<then>
-				<execute function="AssertElementPresent" locator1="DDMEditStructure#FORM_FIELD">
-					<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-				</execute>
-			</then>
-		</if>
-	</command>
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
-	<command name="viewName">
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		Click(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "${ddlDataDefinitionName}"
+		);
 
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionName}" />
-	</command>
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit ${ddlDataDefinitionName}"
+		);
 
-	<command name="viewParentStructureHeader">
-		<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${ddlDataDefinitionName}"
+		);
 
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+		if (isSet(ddlDataDefinitionDescription)) {
+			DDLDataDefinition._showDetails();
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			AssertTextEquals(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${ddlDataDefinitionDescription}"
+			);
+		}
 
-		<var name="key_assetTitle" value="${assetTitle}" />
+		if (isSet(fieldFieldLabel)) {
+			AssertElementPresent(
+				locator1 = "DDMEditStructure#FORM_FIELD",
+				key_fieldFieldLabel = "${fieldFieldLabel}"
+			);
+		}
+	}
 
-		<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="${assetTitle}" />
-	</command>
-</definition>
+	macro viewName {
+		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME",
+			value1 = "${ddlDataDefinitionName}"
+		);
+	}
+
+	macro viewParentStructureHeader {
+		Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
+
+		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var key_assetTitle = "${assetTitle}";
+
+		AssertTextEquals(locator1 = "NavBar#ASSET_TITLE", value1 = "${assetTitle}");
+	}
+}

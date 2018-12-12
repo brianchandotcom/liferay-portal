@@ -1,25 +1,36 @@
-<definition>
-	<command name="installPatch" summary="Install the following patch onto Liferay Portal. ${patchFileZipURL}">
-		<execute function="AntCommand" locator1="build-test.xml" value1="install-patch -Dpatch.file.zip.url=${patchFileZipURL}" />
-	</command>
+definition {
+	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipURL}"
+	macro installPatch {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL}"
+		);
+	}
 
-	<command name="installPatchOnSpecificServer" summary="Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}">
-		<var method="StringUtil#replace('${nodePort}', '080', '')" name="leadingPortNumber" />
+	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}"
+	macro installPatchOnSpecificServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
 
-		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}"
+		);
+	}
 
-		<execute function="AntCommand" locator1="build-test.xml" value1="install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}" />
-	</command>
+	@summary = "Uninstall all patches from Liferay Portal."
+	macro uninstallPatches {
+		AntCommand(locator1 = "build-test.xml", value1 = "uninstall-patches");
+	}
 
-	<command name="uninstallPatches" summary="Uninstall all patches from Liferay Portal.">
-		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches" />
-	</command>
+	@summary = "Uninstall the following patch onto Liferay Portal server with port ${nodePort}"
+	macro uninstallPatchOnSpecificServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
 
-	<command name="uninstallPatchOnSpecificServer" summary="Uninstall the following patch onto Liferay Portal server with port ${nodePort}">
-		<var method="StringUtil#replace('${nodePort}', '080', '')" name="leadingPortNumber" />
-
-		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
-
-		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}" />
-	</command>
-</definition>
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}"
+		);
+	}
+}

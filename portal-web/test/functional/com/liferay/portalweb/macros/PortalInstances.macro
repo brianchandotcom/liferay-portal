@@ -1,122 +1,125 @@
-<definition>
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+definition {
+	macro addCP {
+		LexiconEntry.gotoAdd();
 
-		<execute function="Type" locator1="TextInput#WEB_ID" value1="${webId}" />
-		<execute function="Type" locator1="TextInput#VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute function="Type" locator1="TextInput#MAIL_DOMAIN" value1="${mailDomain}" />
+		Type(locator1 = "TextInput#WEB_ID", value1 = "${webId}");
 
-		<if>
-			<equals arg1="${maxUsers}" arg2="true" />
-			<then>
-				<execute function="Type" locator1="TextInput#MAX_USERS" value1="${maxUserNumber}" />
-			</then>
-		</if>
+		Type(locator1 = "TextInput#VIRTUAL_HOST", value1 = "${virtualHost}");
 
-		<if>
-			<equals arg1="${portalInstanceActive}" arg2="false" />
-			<then>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
-			</then>
-		</if>
+		Type(locator1 = "TextInput#MAIL_DOMAIN", value1 = "${mailDomain}");
 
-		<execute macro="PortletEntry#save" />
-	</command>
+		if ("${maxUsers}" == "true") {
+			Type(locator1 = "TextInput#MAX_USERS", value1 = "${maxUserNumber}");
+		}
 
-	<command name="deactivatePortalInstance">
-		<var name="key_virtualHost" value="${virtualHost}" />
+		if ("${portalInstanceActive}" == "false") {
+			Uncheck(locator1 = "Checkbox#ACTIVE");
+		}
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${virtualHost}" />
-		</execute>
+		PortletEntry.save();
+	}
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
+	macro deactivatePortalInstance {
+		var key_virtualHost = "${virtualHost}";
 
-		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
+		LexiconEntry.openEntryMenu(rowEntry = "${virtualHost}");
 
-		<execute macro="Button#clickSave" />
+		MenuItem.click(menuItem = "Edit");
 
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_ACTIVE" value1="No" />
-	</command>
+		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ACTIVE");
 
-	<command name="deleteCP">
-		<var name="key_virtualHost" value="${virtualHost}" />
+		Button.clickSave();
 
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_ACTIVE",
+			value1 = "No"
+		);
+	}
 
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${virtualHost}" />
-		</execute>
+	macro deleteCP {
+		var key_virtualHost = "${virtualHost}";
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
+			value1 = "${virtualHost}"
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		LexiconEntry.openEntryMenu(rowEntry = "${virtualHost}");
 
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextNotPresent" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-	</command>
+		MenuItem.clickNoError(menuItem = "Delete");
 
-	<command name="editCP">
-		<var name="key_virtualHost" value="${virtualHost}" />
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		Alert.viewSuccessMessage();
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
-		</execute>
+		AssertTextNotPresent(
+			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
+			value1 = "${virtualHost}"
+		);
+	}
 
-		<execute function="Type" locator1="TextInput#MAIL_DOMAIN" value1="${mailDomain}" />
+	macro editCP {
+		var key_virtualHost = "${virtualHost}";
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
+			value1 = "${virtualHost}"
+		);
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-	<command name="tearDownCP">
-		<execute macro="SignOut#signOutOfSpecificURL">
-			<var name="url" value="http://localhost:8080/" />
-		</execute>
+		Type(locator1 = "TextInput#MAIL_DOMAIN", value1 = "${mailDomain}");
 
-		<execute macro="SignIn#signInSpecificURL">
-			<var name="url" value="http://localhost:8080/" />
-		</execute>
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
+		Alert.viewSuccessMessage();
+	}
 
-		<while>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
-				<var name="key_rowNumber" value="2" />
-			</condition>
+	macro tearDownCP {
+		SignOut.signOutOfSpecificURL(url = "http://localhost:8080/");
 
-			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
-					<var name="key_rowNumber" value="2" />
-				</execute>
+		SignIn.signInSpecificURL(url = "http://localhost:8080/");
 
-				<execute macro="MenuItem#clickNoError">
-					<var name="menuItem" value="Delete" />
-				</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances"
+		);
 
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		while (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS", key_rowNumber = "2")) {
+			Click.waitForMenuToggleJSClick(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS",
+				key_rowNumber = "2"
+			);
 
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-	</command>
+			MenuItem.clickNoError(menuItem = "Delete");
 
-	<command name="viewCP">
-		<var name="key_virtualHost" value="${virtualHost}" />
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
 
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_WEB_ID" value1="${virtualHost}" />
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_MAIL_DOMAIN" value1="${virtualHost}" />
-	</command>
-</definition>
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewCP {
+		var key_virtualHost = "${virtualHost}";
+
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_WEB_ID",
+			value1 = "${virtualHost}"
+		);
+
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
+			value1 = "${virtualHost}"
+		);
+
+		AssertTextEquals(
+			locator1 = "PortalInstances#INSTANCE_TABLE_MAIL_DOMAIN",
+			value1 = "${virtualHost}"
+		);
+	}
+}

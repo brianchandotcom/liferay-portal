@@ -1,82 +1,58 @@
-<definition>
-	<command name="click">
-		<var name="key_navItem" value="${navItem}" />
+definition {
+	macro click {
+		var key_navItem = "${navItem}";
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
-			<then>
-				<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}" />
-			</then>
-		</if>
+		if (IsElementNotPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK")) {
+			AssertClick(locator1 = "NavBar#NAV_ITEM_LINK", value1 = "${navItem}");
+		}
 
-		<execute macro="NavItem#viewActive">
-			<var name="navItem" value="${navItem}" />
-		</execute>
-	</command>
+		NavItem.viewActive(navItem = "${navItem}");
+	}
 
-	<command name="gotoAvailableSites">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Available Sites" />
-		</execute>
-	</command>
+	macro gotoAvailableSites {
+		NavItem.click(navItem = "Available Sites");
+	}
 
-	<command name="gotoConfiguration">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Configuration" />
-		</execute>
-	</command>
+	macro gotoConfiguration {
+		NavItem.click(navItem = "Configuration");
+	}
 
-	<command name="gotoDisplayPages">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-	</command>
+	macro gotoDisplayPages {
+		NavItem.click(navItem = "Display Pages");
+	}
 
-	<command name="gotoOrganizations">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Organizations" />
-		</execute>
-	</command>
+	macro gotoOrganizations {
+		NavItem.click(navItem = "Organizations");
+	}
 
-	<command name="gotoPages">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Pages" />
-		</execute>
-	</command>
+	macro gotoPages {
+		NavItem.click(navItem = "Pages");
+	}
 
-	<command name="gotoPageTemplates">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Page Templates" />
-		</execute>
-	</command>
+	macro gotoPageTemplates {
+		NavItem.click(navItem = "Page Templates");
+	}
 
-	<command name="gotoStructures">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Structures" />
-		</execute>
-	</command>
+	macro gotoStructures {
+		NavItem.click(navItem = "Structures");
+	}
 
-	<command name="gotoTemplates">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Templates" />
-		</execute>
-	</command>
+	macro gotoTemplates {
+		NavItem.click(navItem = "Templates");
+	}
 
-	<command name="gotoUserGroups">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="User Groups" />
-		</execute>
-	</command>
+	macro gotoUserGroups {
+		NavItem.click(navItem = "User Groups");
+	}
 
-	<command name="gotoUsers">
-		<execute macro="NavItem#click">
-			<var name="navItem" value="Users" />
-		</execute>
-	</command>
+	macro gotoUsers {
+		NavItem.click(navItem = "Users");
+	}
 
-	<command name="viewActive">
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="${navItem}" />
-		</execute>
-	</command>
-</definition>
+	macro viewActive {
+		AssertElementPresent(
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
+			key_navItem = "${navItem}"
+		);
+	}
+}

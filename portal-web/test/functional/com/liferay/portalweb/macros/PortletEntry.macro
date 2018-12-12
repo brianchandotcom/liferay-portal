@@ -1,172 +1,165 @@
-<definition>
-	<command name="changeLocale">
-		<execute function="Click" locator1="Button#LOCALIZATION">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
+definition {
+	macro changeLocale {
+		Click(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
 
-		<execute function="Click" locator1="Translation#LOCALIZATION_NAME">
-			<var method="StringUtil#replace('${locale}', '-', '_')" name="key_locale" />
-		</execute>
-	</command>
+		Click(
+			locator1 = "Translation#LOCALIZATION_NAME",
+			key_locale = StringUtil.replace("${locale}", "-", "_")
+		);
+	}
 
-	<command name="clickEditFromEllipsis">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+	macro clickEditFromEllipsis {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-	</command>
+		MenuItem.click(menuItem = "Edit");
+	}
 
-	<command name="clickMoveToRecycleBin">
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Move to Recycle Bin" />
-		</execute>
-	</command>
+	macro clickMoveToRecycleBin {
+		MenuItem.click(menuItem = "Move to Recycle Bin");
+	}
 
-	<command name="deleteViaMenuItem">
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
-			<var name="menuItem" value="Delete" />
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+	macro deleteViaMenuItem {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${rowEntry}"
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-	</command>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+	}
 
-	<command name="deleteViaToolbar">
-		<for list="${rowEntries}" param="rowEntry">
-			<execute macro="LexiconEntry#selectEntry">
-				<var name="key_rowEntry" value="${rowEntry}" />
-			</execute>
-		</for>
+	macro deleteViaToolbar {
+		for (var rowEntry : list "${rowEntries}") {
+			LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
+		}
 
-		<execute function="ClickNoError" locator1="Icon#DELETE" />
+		ClickNoError(locator1 = "Icon#DELETE");
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-	</command>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+	}
 
-	<command name="inputDescription">
-		<execute function="Click" locator1="TextArea#DESCRIPTION" />
+	macro inputDescription {
+		Click(locator1 = "TextArea#DESCRIPTION");
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
-	</command>
+		Type(locator1 = "TextArea#DESCRIPTION", value1 = "${description}");
+	}
 
-	<command name="inputDescriptionTextInput">
-		<execute function="Click" locator1="TextInput#DESCRIPTION" />
+	macro inputDescriptionTextInput {
+		Click(locator1 = "TextInput#DESCRIPTION");
 
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${description}" />
-	</command>
+		Type(locator1 = "TextInput#DESCRIPTION", value1 = "${description}");
+	}
 
-	<command name="inputLocalizedName">
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Name" />
-			<var name="locale" value="${language}" />
-		</execute>
+	macro inputLocalizedName {
+		PortletEntry.changeLocale(fieldName = "Name", locale = "${language}");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${localizedName}" />
-		</execute>
-	</command>
+		PortletEntry.inputName(name = "${localizedName}");
+	}
 
-	<command name="inputName">
-		<execute function="Click" locator1="TextInput#NAME" />
+	macro inputName {
+		Click(locator1 = "TextInput#NAME");
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
-	</command>
+		Type(locator1 = "TextInput#NAME", value1 = "${name}");
+	}
 
-	<command name="inputText">
-		<execute function="Click" locator1="TextInput#GENERIC_TEXT_INPUT">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-		</execute>
+	macro inputText {
+		Click(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_fieldLabel = "${fieldLabel}"
+		);
 
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${text}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
-		</execute>
-	</command>
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${text}",
+			key_fieldLabel = "${fieldLabel}"
+		);
+	}
 
-	<command name="inputTextArea">
-		<execute function="Click" locator1="TextArea#ANY">
-			<var name="key_text" value="${fieldId}" />
-		</execute>
+	macro inputTextArea {
+		Click(locator1 = "TextArea#ANY", key_text = "${fieldId}");
 
-		<execute function="Type" locator1="TextArea#ANY" value1="${text}">
-			<var name="key_text" value="${fieldId}" />
-		</execute>
-	</command>
+		Type(locator1 = "TextArea#ANY", value1 = "${text}", key_text = "${fieldId}");
+	}
 
-	<command name="inputTitle">
-		<execute function="Click" locator1="TextInput#TITLE" />
+	macro inputTitle {
+		Click(locator1 = "TextInput#TITLE");
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${title}" />
-	</command>
+		Type(locator1 = "TextInput#TITLE", value1 = "${title}");
+	}
 
-	<command name="publish">
-		<execute macro="Button#clickPublish" />
+	macro publish {
+		Button.clickPublish();
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="publishAndWait">
-		<execute macro="Button#clickPublish" />
+	macro publishAndWait {
+		Button.clickPublish();
 
-		<execute function="Pause" locator1="3000" />
+		Pause(locator1 = "3000");
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="save">
-		<execute macro="Button#clickSave" />
+	macro save {
+		Button.clickSave();
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="saveAsDraft">
-		<execute macro="Button#clickSaveAsDraft" />
+	macro saveAsDraft {
+		Button.clickSaveAsDraft();
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="selectAll">
-		<if>
-			<condition function="IsNotChecked#isNotCheckedNotVisible" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
-			<then>
-				<execute function="Click" locator1="Checkbox#LEXICON_SELECT_ALL_CONTAINER" />
-			</then>
-			<elseif>
-				<condition function="IsNotChecked" locator1="Checkbox#SELECT_ALL" />
-				<then>
-					<execute function="Click" locator1="Checkbox#SELECT_ALL" />
-				</then>
-			</elseif>
-		</if>
+	macro selectAll {
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+		}
+		else if (IsNotChecked(locator1 = "Checkbox#SELECT_ALL")) {
+			Click(locator1 = "Checkbox#SELECT_ALL");
+		}
 
-		<execute function="AssertChecked#assertCheckedNotVisible" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
-	</command>
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT"
+		);
+	}
 
-	<command name="update">
-		<execute macro="Button#clickUpdate" />
+	macro update {
+		Button.clickUpdate();
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
+		Alert.viewSuccessMessage();
+	}
 
-	<command name="viewEmptyMessage">
-		<var method="StringUtil#toLowerCase('${entity}')" name="entity" />
+	macro viewEmptyMessage {
+		var entity = StringUtil.toLowerCase("${entity}");
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no ${entity}." />
-	</command>
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no ${entity}."
+		);
+	}
 
-	<command name="viewLocale">
-		<execute function="AssertElementPresent" locator1="Translation#CURRENT_LOCALE">
-			<var name="key_locale" value="${locale}" />
-		</execute>
-	</command>
+	macro viewLocale {
+		AssertElementPresent(
+			locator1 = "Translation#CURRENT_LOCALE",
+			key_locale = "${locale}"
+		);
+	}
 
-	<command name="viewNoNavItemLink">
-		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK" />
-	</command>
+	macro viewNoNavItemLink {
+		AssertElementNotPresent(locator1 = "NavBar#NAV_ITEM_LINK");
+	}
 
-	<command name="viewWorkflowStatus">
-		<execute function="AssertTextEquals" locator1="Card#GENERIC_SMALL_TEXT" value1="${workflowStatus}">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-	</command>
-</definition>
+	macro viewWorkflowStatus {
+		AssertTextEquals(
+			locator1 = "Card#GENERIC_SMALL_TEXT",
+			value1 = "${workflowStatus}",
+			key_rowEntry = "${rowEntry}"
+		);
+	}
+}

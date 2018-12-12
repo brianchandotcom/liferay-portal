@@ -1,20 +1,17 @@
-<definition>
-	<command name="gotoMenuBarInformation">
-		<execute macro="MenuBar#gotoInformation" />
-	</command>
+definition {
+	macro gotoMenuBarInformation {
+		MenuBar.gotoInformation();
+	}
 
-	<command name="gotoMenuBarOrganizationSite">
-		<execute macro="MenuBar#gotoOrganizationSite" />
-	</command>
+	macro gotoMenuBarOrganizationSite {
+		MenuBar.gotoOrganizationSite();
+	}
 
-	<command name="gotoOrganizations">
-		<execute function="Pause" locator1="1000" />
+	macro gotoOrganizations {
+		Pause(locator1 = "1000");
 
-		<if>
-			<condition function="IsElementPresent" locator1="NavBar#ORGANIZATIONS" />
-			<then>
-				<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
-			</then>
-		</if>
-	</command>
-</definition>
+		if (IsElementPresent(locator1 = "NavBar#ORGANIZATIONS")) {
+			AssertClick(locator1 = "NavBar#ORGANIZATIONS", value1 = "Organizations");
+		}
+	}
+}

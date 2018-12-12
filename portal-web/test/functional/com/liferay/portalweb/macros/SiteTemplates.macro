@@ -1,375 +1,368 @@
-<definition>
-	<command name="addChildPageViaSiteTemplateCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addChildPage">
-			<var name="childPageName" value="${siteChildPageName}" />
-			<var name="parentPageName" value="${pageName}" />
-		</execute>
-	</command>
-
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${siteTemplateName}" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="This is a site template description">
-			<var name="key_fieldLabel" value="Description" />
-		</execute>
-
-		<if>
-			<equals arg1="${siteTemplateActive}" arg2="No" />
-			<then>
-				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${disableChanges}" arg2="true" />
-			<then>
-				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
-			</then>
-		</if>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="addSitePageViaSiteTemplateCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<if>
-			<contains string="${sitePageType}" substring="{sitePageType}" />
-			<then>
-				<var name="sitePageType" value="Widget Page" />
-			</then>
-		</if>
-
-		<var name="rowEntry" value="${sitePageType}" />
-
-		<if>
-			<not>
-				<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
-			</not>
-			<then>
-				<execute macro="Navigator#gotoNavNested">
-					<var name="navNested" value="Global Templates" />
-				</execute>
-
-				<var name="rowEntry" value="${pageTemplateName}" />
-
-				<execute macro="LexiconEntry#gotoEntry">
-					<var name="rowEntry" value="${rowEntry}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Card#clickSitePagesCardLink">
-					<var name="cardName" value="${rowEntry}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${pageName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${hideFromNavMenu}" arg2="true" />
-			<then>
-				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${sitePageType}" arg2="Content Page" />
-			<then>
-				<execute macro="Button#click">
-					<var name="button" value="Save" />
-				</execute>
-			</then>
-			<else>
-				<for list="1,2" param="iteration">
-					<execute macro="Button#click">
-						<var name="button" value="Save" />
-					</execute>
-				</for>
-			</else>
-		</if>
-	</command>
-
-	<command name="deleteCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<if>
-			<equals arg1="${associatedToSite}" arg2="true" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_DELETE_USED_SITE_TEMPLATES" value1="You cannot delete site templates that are used by a site." />
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
-
-	<command name="deleteViaDeleteIconCP">
-		<execute function="Click" locator1="Checkbox#SITE_TEMPLATE">
-			<var name="key_siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<execute function="ClickNoError" locator1="Icon#DELETE" />
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="editCP">
-		<execute macro="SiteTemplates#gotoSettingsCP">
-			<var name="siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${siteTemplateName} Edit" />
-		</execute>
-
-		<if>
-			<isset var="siteTemplateDescription" />
-			<then>
-				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${siteTemplateDescription}">
-					<var name="key_fieldLabel" value="Description" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="Button#clickSave" />
-	</command>
-
-	<command name="editTemplateStatusCP">
-		<execute macro="SiteTemplates#gotoSettingsCP">
-			<var name="siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<if>
-			<isset var="siteTemplateActiveEdit" />
-			<then>
-				<if>
-					<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
-					<then>
-						<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute macro="Button#clickSave" />
-	</command>
-
-	<command name="gotoSettingsCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-
-		<execute macro="LexiconEntry#openEntryMenu">
-			<var name="rowEntry" value="${siteTemplateName}" />
-		</execute>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Manage" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Configuration" />
-		</execute>
-
-		<execute function="AssertClick" locator1="SiteTemplates#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Site Template Settings" />
-		</execute>
-	</command>
-
-	<command name="gotoViewPages">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-
-		<execute function="SelectWindow" locator1="Home - ${siteTemplateName} - ${siteName}" />
-	</command>
-
-	<command name="resetPageChanges">
-		<execute function="Click" locator1="ControlMenu#INFO" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
-		<execute function="AssertTextEquals" locator1="Button#RESET_CHANGES" value1="Reset Changes" />
-
-		<var name="key_portletTitleName" value="${portletName}" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
-
-		<execute function="AssertClick" locator1="Button#RESET_CHANGES" value1="Reset Changes" />
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#INFO" />
-	</command>
-
-	<command name="tearDownCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<var name="key_siteTemplateName" value="Site Template Name" />
-
-		<while>
-			<condition function="IsElementPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-			<then>
-				<execute macro="LexiconEntry#openEntryMenu">
-					<var name="rowEntry" value="${key_siteTemplateName}" />
-				</execute>
-
-				<execute macro="MenuItem#clickNoError">
-					<var name="menuItem" value="Delete" />
-				</execute>
-
-				<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</while>
-	</command>
-
-	<command name="viewCP">
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}">
-			<var name="key_siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<if>
-			<isset var="siteTemplateDescription" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${siteTemplateDescription}">
-					<var name="key_siteTemplateDescription" value="${siteTemplateDescription}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="viewDefaultCP">
-		<for list="${siteTemplateNameList}" param="siteTemplateName">
-			<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		</for>
-
-		<execute function="AssertElementNotPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_3" />
-	</command>
-
-	<command name="viewDefaultDataLocalizedCP">
-		<for list="${siteTemplateNameList}" param="siteTemplateNameTranslation">
-			<var name="key_siteTemplateName" value="${siteTemplateNameTranslation}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateNameTranslation}" />
-		</for>
-
-		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation">
-			<var name="key_siteTemplateDescription" value="${DescriptionTranslation}" />
-
-			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${DescriptionTranslation}" />
-		</for>
-	</command>
-
-	<command name="viewNoInfoMessage">
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#INFO" />
-		<execute function="AssertTextNotPresent" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
-	</command>
-
-	<command name="viewNoSiteOrWorkflowLinksCP">
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Configuration" />
-		</execute>
-
-		<for list="Site Settings,Social Activities,Workflow Configuration" param="portletName">
-			<var name="key_portletName" value="${portletName}" />
-
-			<execute function="AssertTextNotPresent" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
-		</for>
-
-		<var name="key_portletCategoryName" value="${portletCategoryName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" />
-	</command>
-
-	<command name="viewNoTemplatesDisplay">
-		<execute macro="LexiconEntry#gotoAdd" />
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="${siteTemplateName}" />
-		</execute>
-	</command>
-
-	<command name="viewResetPageChanges">
-		<execute function="AssertTextNotPresent" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
-		<execute function="AssertTextNotPresent" locator1="Button#RESET_CHANGES" value1="Reset Changes" />
-
-		<var name="key_portletTitleName" value="${portletName}" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
-	</command>
-
-	<command name="viewTemplateStatusCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIVE" value1="${siteTemplateActiveEdit}" />
-	</command>
-</definition>
+definition {
+	macro addChildPageViaSiteTemplateCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "${siteTemplateName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addChildPage(
+			childPageName = "${siteChildPageName}",
+			parentPageName = "${pageName}"
+		);
+	}
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${siteTemplateName}");
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "This is a site template description",
+			key_fieldLabel = "Description"
+		);
+
+		if ("${siteTemplateActive}" == "No") {
+			Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#ACTIVE");
+		}
+
+		if ("${disableChanges}" == "true") {
+			Uncheck.uncheckHiddenToggleSwitch(
+				locator1 = "ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES"
+			);
+		}
+
+		PortletEntry.save();
+	}
+
+	macro addSitePageViaSiteTemplateCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "${siteTemplateName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		LexiconEntry.gotoAdd();
+
+		if (contains("${sitePageType}", "{sitePageType}")) {
+			var sitePageType = "Widget Page";
+		}
+
+		var rowEntry = "${sitePageType}";
+
+		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
+			Navigator.gotoNavNested(navNested = "Global Templates");
+
+			var rowEntry = "${pageTemplateName}";
+
+			LexiconEntry.gotoEntry(rowEntry = "${rowEntry}");
+		}
+		else {
+			Card.clickSitePagesCardLink(cardName = "${rowEntry}");
+		}
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if ("${hideFromNavMenu}" == "true") {
+			Uncheck(locator1 = "Checkbox#ADD_TO_NAVIGATION_MENU");
+		}
+
+		if ("${sitePageType}" == "Content Page") {
+			Button.click(button = "Save");
+		}
+		else {
+			for (var iteration : list "1,2") {
+				Button.click(button = "Save");
+			}
+		}
+	}
+
+	macro deleteCP {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${siteTemplateName}");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		if ("${associatedToSite}" == "true") {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DELETE_USED_SITE_TEMPLATES",
+				value1 = "You cannot delete site templates that are used by a site."
+			);
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro deleteViaDeleteIconCP {
+		Click(
+			locator1 = "Checkbox#SITE_TEMPLATE",
+			key_siteTemplateName = "${siteTemplateName}"
+		);
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editCP {
+		SiteTemplates.gotoSettingsCP(siteTemplateName = "${siteTemplateName}");
+
+		PortletEntry.inputName(name = "${siteTemplateName} Edit");
+
+		if (isSet(siteTemplateDescription)) {
+			Type(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${siteTemplateDescription}",
+				key_fieldLabel = "Description"
+			);
+		}
+
+		Button.clickSave();
+	}
+
+	macro editTemplateStatusCP {
+		SiteTemplates.gotoSettingsCP(siteTemplateName = "${siteTemplateName}");
+
+		if (isSet(siteTemplateActiveEdit)) {
+			if ("${siteTemplateActiveEdit}" == "No") {
+				Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#ACTIVE");
+			}
+		}
+
+		Button.clickSave();
+	}
+
+	macro gotoSettingsCP {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}"
+		);
+
+		LexiconEntry.openEntryMenu(rowEntry = "${siteTemplateName}");
+
+		MenuItem.click(menuItem = "Manage");
+
+		ProductMenuHelper.openProductMenu();
+
+		AssertTextEquals(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_NAME",
+			value1 = "${siteTemplateName}"
+		);
+
+		ProductMenuHelper.expandCategory(category = "Configuration");
+
+		AssertClick(
+			locator1 = "SiteTemplates#CONFIGURATION_SITE_TEMPLATE_SETTINGS",
+			value1 = "Site Template Settings"
+		);
+
+		SiteAdmin.viewPortletTitle(portletTitle = "Site Template Settings");
+	}
+
+	macro gotoViewPages {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}"
+		);
+
+		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
+	}
+
+	macro resetPageChanges {
+		Click(locator1 = "ControlMenu#INFO");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
+			value1 = "This page has been changed since the last update from the site template."
+		);
+
+		AssertTextEquals(locator1 = "Button#RESET_CHANGES", value1 = "Reset Changes");
+
+		var key_portletTitleName = "${portletName}";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
+			value1 = "${portletName}"
+		);
+
+		AssertClick(locator1 = "Button#RESET_CHANGES", value1 = "Reset Changes");
+
+		AssertElementNotPresent(locator1 = "ControlMenu#INFO");
+	}
+
+	macro tearDownCP {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		var key_siteTemplateName = "Site Template Name";
+
+		while (IsElementPresent(locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS")) {
+			LexiconEntry.openEntryMenu(rowEntry = "${key_siteTemplateName}");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(
+				value1 = "Are you sure you want to delete this? It will be deleted immediately."
+			);
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewCP {
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}",
+			key_siteTemplateName = "${siteTemplateName}"
+		);
+
+		if (isSet(siteTemplateDescription)) {
+			AssertTextEquals(
+				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION",
+				value1 = "${siteTemplateDescription}",
+				key_siteTemplateDescription = "${siteTemplateDescription}"
+			);
+		}
+	}
+
+	macro viewDefaultCP {
+		for (var siteTemplateName : list "${siteTemplateNameList}") {
+			var key_siteTemplateName = "${siteTemplateName}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+				value1 = "${siteTemplateName}"
+			);
+		}
+
+		AssertElementNotPresent(locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME_3");
+	}
+
+	macro viewDefaultDataLocalizedCP {
+		for (var siteTemplateNameTranslation : list "${siteTemplateNameList}") {
+			var key_siteTemplateName = "${siteTemplateNameTranslation}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+				value1 = "${siteTemplateNameTranslation}"
+			);
+		}
+
+		for (var DescriptionTranslation : list "${siteTemplateDescriptionList}") {
+			var key_siteTemplateDescription = "${DescriptionTranslation}";
+
+			AssertTextEquals(
+				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION",
+				value1 = "${DescriptionTranslation}"
+			);
+		}
+	}
+
+	macro viewNoInfoMessage {
+		AssertElementNotPresent(locator1 = "ControlMenu#INFO");
+
+		AssertTextNotPresent(
+			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
+			value1 = "This page has been changed since the last update from the site template."
+		);
+	}
+
+	macro viewNoSiteOrWorkflowLinksCP {
+		LexiconEntry.viewEntryName(rowEntry = "Site Template Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+		ProductMenuHelper.expandCategory(category = "Configuration");
+
+		for (var portletName : list "Site Settings,Social Activities,Workflow Configuration") {
+			var key_portletName = "${portletName}";
+
+			AssertTextNotPresent(
+				locator1 = "Home#SITE_ADMINISTRATION_NAVIGATION",
+				value1 = "${portletName}"
+			);
+		}
+
+		var key_portletCategoryName = "${portletCategoryName}";
+
+		AssertElementNotPresent(
+			locator1 = "Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED"
+		);
+	}
+
+	macro viewNoTemplatesDisplay {
+		LexiconEntry.gotoAdd();
+
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		MenuItem.viewNotPresent(menuItem = "${siteTemplateName}");
+	}
+
+	macro viewResetPageChanges {
+		AssertTextNotPresent(
+			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
+			value1 = "This page has been changed since the last update from the site template."
+		);
+
+		AssertTextNotPresent(
+			locator1 = "Button#RESET_CHANGES",
+			value1 = "Reset Changes"
+		);
+
+		var key_portletTitleName = "${portletName}";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE",
+			value1 = "${portletName}"
+		);
+	}
+
+	macro viewTemplateStatusCP {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}"
+		);
+
+		AssertTextEquals(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_ACTIVE",
+			value1 = "${siteTemplateActiveEdit}"
+		);
+	}
+}

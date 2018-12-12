@@ -1,8 +1,11 @@
-<definition>
-	<command name="viewClusterStatusInConsole">
-		<execute function="AssertConsoleTextPresent" value1="Accepted view" />
-		<execute function="AssertConsoleTextPresent" value1="com.liferay.portal.cluster.multiple" />
-		<execute function="AssertConsoleTextPresent" value1="com.liferay.portal.cache.multiple" />
-		<execute function="AssertConsoleTextPresent" value1="com.liferay.portal.scheduler.multiple" />
-	</command>
-</definition>
+definition {
+	macro viewClusterStatusInConsole {
+		AssertConsoleTextPresent(value1 = "Accepted view");
+
+		AssertConsoleTextPresent(value1 = "com.liferay.portal.cluster.multiple");
+
+		AssertConsoleTextPresent(value1 = "com.liferay.portal.cache.multiple");
+
+		AssertConsoleTextPresent(value1 = "com.liferay.portal.scheduler.multiple");
+	}
+}

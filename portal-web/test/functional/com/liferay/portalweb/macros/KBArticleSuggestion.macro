@@ -1,101 +1,144 @@
-<definition>
-	<command name="addPG">
-		<execute function="Click" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" />
+definition {
+	macro addPG {
+		Click(locator1 = "KnowledgeBaseSuggestions#CONTENT_INPUT");
 
-		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
+		Type(
+			locator1 = "KnowledgeBaseSuggestions#CONTENT_INPUT",
+			value1 = "${kbSuggestionBody}"
+		);
 
-		<execute function="AssertClick" locator1="Button#MAIN_CONTENT_SUBMIT" value1="Submit" />
+		AssertClick(locator1 = "Button#MAIN_CONTENT_SUBMIT", value1 = "Submit");
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-	<command name="deleteCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+	macro deleteCP {
+		var key_kbArticleTitle = "${kbArticleTitle}";
+		var key_kbSuggestionBody = "${kbSuggestionBody}";
+		var key_rowEntry = "${kbSuggestionBody}";
 
-		<var name="key_rowEntry" value="${kbSuggestionBody}" />
+		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseSuggestions#CONTENT",
+			value1 = "${kbSuggestionBody}"
+		);
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		MenuItem.clickNoError(menuItem = "Delete");
 
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
+		AssertConfirm(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
 
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+	macro gotoSuggestionStatusNew {
+		var key_kbArticleTitle = "${kbArticleTitle}";
 
-	<command name="gotoSuggestionStatusNew">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseSuggestions#NAVIGATION_NEW",
+			value1 = "NEW (${suggestionCount})"
+		);
+	}
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#NAVIGATION_NEW" value1="NEW (${suggestionCount})" />
-	</command>
+	macro moveToInProgressStatus {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Move to In Progress",
+			rowEntry = "${kbSuggestionBody}"
+		);
 
-	<command name="moveToInProgressStatus">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to In Progress" />
-			<var name="rowEntry" value="${kbSuggestionBody}" />
-		</execute>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+	macro moveToResolvedStatus {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Resolve",
+			rowEntry = "${kbSuggestionBody}"
+		);
 
-	<command name="moveToResolvedStatus">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Resolve" />
-			<var name="rowEntry" value="${kbSuggestionBody}" />
-		</execute>
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
+	macro viewNoDuplicatePG {
+		var key_kbSuggestionBody = "${kbSuggestionBody}";
 
-	<command name="viewNoDuplicatePG">
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
+			value1 = "${kbThereAreSuggestionsLink}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="${kbThereAreSuggestionsLink}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#CONTENT_DUPLICATE" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseSuggestions#USER_NAME",
+			value1 = "${kbSuggestionUserName}"
+		);
 
-	<command name="viewNoSuggestions">
-		<execute macro="PortletEntry#viewEmptyMessage">
-			<var name="entity" value="Suggestions" />
-		</execute>
-	</command>
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseSuggestions#CONTENT",
+			value1 = "${kbSuggestionBody}"
+		);
 
-	<command name="viewPG">
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseSuggestions#STATUS",
+			value1 = "${status}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
-	</command>
+		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#CONTENT_DUPLICATE");
+	}
 
-	<command name="viewSubmittedSuggestionCountNoPermissionPG">
-		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
+	macro viewNoSuggestions {
+		PortletEntry.viewEmptyMessage(entity = "Suggestions");
+	}
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#NAVIGATION_BAR" />
+	macro viewPG {
+		var key_kbSuggestionBody = "${kbSuggestionBody}";
 
-		<if>
-			<equals arg1="${kbSuggestionCount}" arg2="1" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="You sent one suggestion for this article." />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="You sent ${kbSuggestionCount} suggestions for this article." />
-			</else>
-		</if>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseSuggestions#USER_NAME",
+			value1 = "${kbSuggestionUserName}"
+		);
 
-	<command name="viewSuggestionStatus">
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseSuggestions#CONTENT",
+			value1 = "${kbSuggestionBody}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
-	</command>
-</definition>
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseSuggestions#STATUS",
+			value1 = "${status}"
+		);
+	}
+
+	macro viewSubmittedSuggestionCountNoPermissionPG {
+		var kbSuggestionCount = "${kbSuggestionCount}";
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS",
+			value1 = "Do you have any suggestions?"
+		);
+
+		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#NAVIGATION_BAR");
+
+		if ("${kbSuggestionCount}" == "1") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
+				value1 = "You sent one suggestion for this article."
+			);
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
+				value1 = "You sent ${kbSuggestionCount} suggestions for this article."
+			);
+		}
+	}
+
+	macro viewSuggestionStatus {
+		var key_kbSuggestionBody = "${kbSuggestionBody}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseSuggestions#STATUS",
+			value1 = "${status}"
+		);
+	}
+}

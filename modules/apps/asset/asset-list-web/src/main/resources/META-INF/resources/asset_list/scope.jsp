@@ -18,10 +18,12 @@
 
 <%
 List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
+
+PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
 <portlet:actionURL name="/asset_list/add_scope_group" var="addGroupURL">
-	<portlet:param name="redirect" value="<%= editAssetListDisplayContext.getPortletURL() %>" />
+	<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 	<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 </portlet:actionURL>
 
@@ -41,7 +43,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
 			emptyResultsMessage="none"
-			iteratorURL="<%= editAssetListDisplayContext.getPortletURL() %>"
+			iteratorURL="<%= portletURL %>"
 			total="<%= selectedGroups.size() %>"
 		>
 			<liferay-ui:search-container-results
@@ -101,7 +103,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 			%>
 
 				<portlet:actionURL name="/asset_list/add_scope_group" var="addScopeGroupURL">
-					<portlet:param name="redirect" value="<%= editAssetListDisplayContext.getPortletURL() %>" />
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				</portlet:actionURL>

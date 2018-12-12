@@ -14,6 +14,8 @@
 
 package com.liferay.bulk.rest.internal.model;
 
+import com.liferay.petra.string.StringPool;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -21,4 +23,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class BulkActionResponseModel {
+
+	public static final BulkActionResponseModel SUCCESS =
+		new BulkActionResponseModel();
+
+	public BulkActionResponseModel() {
+		_status = "success";
+		_description = StringPool.BLANK;
+	}
+
+	public BulkActionResponseModel(Throwable throwable) {
+		_status = "error";
+		_description = throwable.getMessage();
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	private final String _description;
+	private final String _status;
+
 }

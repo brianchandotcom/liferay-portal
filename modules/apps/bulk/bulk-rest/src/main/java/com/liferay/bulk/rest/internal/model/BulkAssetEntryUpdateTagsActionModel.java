@@ -14,11 +14,87 @@
 
 package com.liferay.bulk.rest.internal.model;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Adolfo Pérez
  */
 @XmlRootElement
 public class BulkAssetEntryUpdateTagsActionModel {
+
+	@XmlElement
+	public boolean getAppend() {
+		return _append;
+	}
+
+	@XmlTransient
+	public Map<String, String[]> getParameterMap() {
+		String[] values = _selection.toArray(new String[_selection.size()]);
+
+		if (getRepositoryId() == 0) {
+			return Collections.singletonMap("rowIdsFileEntry", values);
+		}
+
+		Map<String, String[]> parameterMap = new HashMap<>(2);
+
+		parameterMap.put(
+			"repositoryId", new String[] {String.valueOf(_repositoryId)});
+		parameterMap.put("rowIdsFileEntry", values);
+
+		return parameterMap;
+	}
+
+	@XmlElement
+	public long getRepositoryId() {
+		return _repositoryId;
+	}
+
+	@XmlElement
+	public List<String> getSelection() {
+		return _selection;
+	}
+
+	@XmlElement
+	public List<String> getToAddTagNames() {
+		return _toAddTagNames;
+	}
+
+	@XmlElement
+	public List<String> getToRemoveTagNames() {
+		return _toRemoveTagNames;
+	}
+
+	public void setAppend(boolean append) {
+		_append = append;
+	}
+
+	public void setRepositoryId(long repositoryId) {
+		_repositoryId = repositoryId;
+	}
+
+	public void setSelection(List<String> selection) {
+		_selection = selection;
+	}
+
+	public void setToAddTagNames(List<String> toAddTagNames) {
+		_toAddTagNames = toAddTagNames;
+	}
+
+	public void setToRemoveTagNames(List<String> toRemoveTagNames) {
+		_toRemoveTagNames = toRemoveTagNames;
+	}
+
+	private boolean _append;
+	private long _repositoryId;
+	private List<String> _selection;
+	private List<String> _toAddTagNames;
+	private List<String> _toRemoveTagNames;
+
 }

@@ -14,11 +14,57 @@
 
 package com.liferay.bulk.rest.internal.model;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Adolfo Pérez
  */
 @XmlRootElement
 public class BulkAssetEntryCommonTagsActionModel {
+
+	public BulkAssetEntryCommonTagsActionModel() {
+	}
+
+	@XmlTransient
+	public Map<String, String[]> getParameterMap() {
+		String[] values = _selection.toArray(new String[_selection.size()]);
+
+		if (getRepositoryId() == 0) {
+			return Collections.singletonMap("rowIdsFileEntry", values);
+		}
+
+		Map<String, String[]> parameterMap = new HashMap<>(2);
+
+		parameterMap.put(
+			"repositoryId", new String[] {String.valueOf(_repositoryId)});
+		parameterMap.put("rowIdsFileEntry", values);
+
+		return parameterMap;
+	}
+
+	public long getRepositoryId() {
+		return _repositoryId;
+	}
+
+	public List<String> getSelection() {
+		return _selection;
+	}
+
+	public void setRepositoryId(long repositoryId) {
+		_repositoryId = repositoryId;
+	}
+
+	public void setSelection(List<String> selection) {
+		_selection = selection;
+	}
+
+	private long _repositoryId;
+	private List<String> _selection;
+
 }

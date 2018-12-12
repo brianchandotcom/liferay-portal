@@ -1435,7 +1435,7 @@ public class PortalImpl implements Portal {
 				}
 			}
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(3);
 
 			if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
 				sb.append(groupFriendlyURL);
@@ -1456,19 +1456,7 @@ public class PortalImpl implements Portal {
 				sb.append(groupFriendlyURLSuffix);
 			}
 
-			sb.append(canonicalLayoutFriendlyURL);
-
-			if (includeQueryString) {
-				sb.append(
-					_removeSlashForConcatURLPath(sb.toString(), parametersURL));
-			}
-			else if (parametersURL.startsWith(Portal.FRIENDLY_URL_SEPARATOR)) {
-				sb.append(
-					_removeSlashForConcatURLPath(
-						sb.toString(), _removeAllParameters(parametersURL)));
-			}
-
-			return sb.toString();
+			groupFriendlyURL = sb.toString();
 		}
 
 		groupFriendlyURL = groupFriendlyURL.concat(canonicalLayoutFriendlyURL);

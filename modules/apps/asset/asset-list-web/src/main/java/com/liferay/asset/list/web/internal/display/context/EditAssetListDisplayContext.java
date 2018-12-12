@@ -91,6 +91,9 @@ public class EditAssetListDisplayContext {
 		_portletResponse = portletResponse;
 		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public long getAssetListEntryId() {
@@ -104,9 +107,6 @@ public class EditAssetListDisplayContext {
 	}
 
 	public JSONArray getAutoFieldRulesJSONArray() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String queryLogicIndexesParam = ParamUtil.getString(
 			_request, "queryLogicIndexes");
 
@@ -161,7 +161,7 @@ public class EditAssetListDisplayContext {
 					_request, "queryTagNames" + queryLogicIndex, queryValues);
 
 				queryValues = _filterAssetTagNames(
-					themeDisplay.getScopeGroupId(), queryValues);
+					_themeDisplay.getScopeGroupId(), queryValues);
 			}
 			else {
 				queryValues = ParamUtil.getString(
@@ -175,7 +175,7 @@ public class EditAssetListDisplayContext {
 
 				for (AssetCategory category : categories) {
 					categoryIdsTitles.put(
-						category.getTitle(themeDisplay.getLocale()));
+						category.getTitle(_themeDisplay.getLocale()));
 				}
 
 				List<Long> categoryIds = ListUtil.toList(
@@ -213,27 +213,21 @@ public class EditAssetListDisplayContext {
 			return _availableClassNameIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				themeDisplay.getCompanyId(), true);
+				_themeDisplay.getCompanyId(), true);
 
 		return _availableClassNameIds;
 	}
 
 	public Set<Group> getAvailableGroups() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Set<Group> availableGroups = new HashSet<>();
 
-		Company company = themeDisplay.getCompany();
+		Company company = _themeDisplay.getCompany();
 
 		availableGroups.add(company.getGroup());
 
-		availableGroups.add(themeDisplay.getScopeGroup());
+		availableGroups.add(_themeDisplay.getScopeGroup());
 
 		return availableGroups;
 	}
@@ -412,16 +406,13 @@ public class EditAssetListDisplayContext {
 	public Map<String, Map<String, Object>> getManualAddIconDataMap()
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Map<String, Map<String, Object>> manualAddIconDataMap = new HashMap<>();
 
 		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId()),
+				_themeDisplay.getCompanyId()),
 			new AssetRendererFactoryTypeNameComparator(
-				themeDisplay.getLocale()));
+				_themeDisplay.getLocale()));
 
 		for (AssetRendererFactory<?> curRendererFactory :
 				assetRendererFactories) {
@@ -439,12 +430,12 @@ public class EditAssetListDisplayContext {
 			}
 
 			assetBrowserURL.setParameter(
-				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 			assetBrowserURL.setParameter(
 				"multipleSelection", String.valueOf(Boolean.TRUE));
 			assetBrowserURL.setParameter(
 				"selectedGroupIds",
-				String.valueOf(themeDisplay.getScopeGroupId()));
+				String.valueOf(_themeDisplay.getScopeGroupId()));
 			assetBrowserURL.setParameter(
 				"typeSelection", curRendererFactory.getClassName());
 			assetBrowserURL.setParameter(
@@ -461,11 +452,11 @@ public class EditAssetListDisplayContext {
 
 				data.put("destroyOnHide", true);
 				data.put(
-					"groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+					"groupid", String.valueOf(_themeDisplay.getScopeGroupId()));
 				data.put("href", assetBrowserURL.toString());
 
 				String type = curRendererFactory.getTypeName(
-					themeDisplay.getLocale());
+					_themeDisplay.getLocale());
 
 				data.put(
 					"title",
@@ -483,15 +474,15 @@ public class EditAssetListDisplayContext {
 			List<ClassType> assetAvailableClassTypes =
 				classTypeReader.getAvailableClassTypes(
 					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						themeDisplay.getScopeGroupId()),
-					themeDisplay.getLocale());
+						_themeDisplay.getScopeGroupId()),
+					_themeDisplay.getLocale());
 
 			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 				Map<String, Object> data = new HashMap<>();
 
 				data.put("destroyOnHide", true);
 				data.put(
-					"groupid", String.valueOf(themeDisplay.getScopeGroupId()));
+					"groupid", String.valueOf(_themeDisplay.getScopeGroupId()));
 
 				assetBrowserURL.setParameter(
 					"subtypeSelectionId",
@@ -614,12 +605,9 @@ public class EditAssetListDisplayContext {
 			return _referencedModelsGroupIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_referencedModelsGroupIds =
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId(), true);
+				_themeDisplay.getScopeGroupId(), true);
 
 		return _referencedModelsGroupIds;
 	}
@@ -649,19 +637,13 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Group> getSelectedGroups() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				PropertiesParamUtil.getString(
 					_properties, _request, "groupIds")));
 
 		if (ArrayUtil.isEmpty(groupIds)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			return Collections.singletonList(themeDisplay.getScopeGroup());
+			return Collections.singletonList(_themeDisplay.getScopeGroup());
 		}
 
 		return GroupLocalServiceUtil.getGroups(groupIds);
@@ -681,11 +663,8 @@ public class EditAssetListDisplayContext {
 				return null;
 			}
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			portletURL.setParameter(
-				"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+				"groupIds", String.valueOf(_themeDisplay.getScopeGroupId()));
 
 			portletURL.setParameter(
 				"eventName", _portletResponse.getNamespace() + "selectTag");
@@ -701,12 +680,9 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getVocabularyIds() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupsVocabularies(
-				new long[] {themeDisplay.getScopeGroupId()});
+				new long[] {_themeDisplay.getScopeGroupId()});
 
 		return ListUtil.toString(
 			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
@@ -769,9 +745,6 @@ public class EditAssetListDisplayContext {
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassNameId(classNameIds[0]);
@@ -780,7 +753,7 @@ public class EditAssetListDisplayContext {
 				assetRendererFactory.getClassTypeReader();
 
 			ClassType classType = classTypeReader.getClassType(
-				classTypeIds[0], themeDisplay.getLocale());
+				classTypeIds[0], _themeDisplay.getLocale());
 
 			ClassTypeField classTypeField = classType.getClassTypeField(
 				_ddmStructureFieldName);
@@ -877,5 +850,6 @@ public class EditAssetListDisplayContext {
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 	private Boolean _subtypeFieldsFilterEnabled;
+	private final ThemeDisplay _themeDisplay;
 
 }

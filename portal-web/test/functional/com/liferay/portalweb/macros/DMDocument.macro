@@ -661,6 +661,12 @@
 							<execute function="Click" locator1="Radio#MINOR_VERSION" />
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${revision}" arg2="Current" />
+						<then>
+							<execute function="Click" locator1="Radio#CURRENT_VERSION" />
+						</then>
+					</elseif>
 				</if>
 
 				<if>

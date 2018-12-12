@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_VERSION</td>
+	<td>//label[contains(.,'Current Version')]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAJOR_VERSION</td>
 	<td>//label[contains(.,'Major Version')]/input</td>
 	<td></td>

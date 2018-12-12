@@ -39,17 +39,6 @@ public class AssetListTestUtil {
 			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 	}
 
-	public static AssetListEntry addAssetListEntry(long groupId, int type)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			type, serviceContext);
-	}
-
 	public static AssetListEntry addAssetListEntry(long groupId, String title)
 		throws PortalException {
 

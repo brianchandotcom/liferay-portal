@@ -236,7 +236,16 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getURI(String)}
+	 */
+	@Deprecated
 	protected String getURI(HttpServletRequest request, String originalURI) {
+		return getURI(originalURI);
+	}
+
+	protected String getURI(String originalURI) {
 		if (Validator.isNotNull(_contextPath) &&
 			!_contextPath.equals(StringPool.SLASH) &&
 			originalURI.startsWith(_contextPath)) {

@@ -427,7 +427,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			"Writes a digest file to keep track of the parent themes used by " +
 				"this project.");
 
-		if (!GradlePluginsDefaultsUtil.isGitRepo(project)) {
+		if (!GradlePluginsDefaultsUtil.isSubrepository(project)) {
 			for (String themeProjectName :
 					GradlePluginsDefaultsUtil.PARENT_THEME_PROJECT_NAMES) {
 
@@ -625,7 +625,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Project project = executeGulpTask.getProject();
 
-		if (!GradlePluginsDefaultsUtil.isGitRepo(project)) {
+		if (!GradlePluginsDefaultsUtil.isSubrepository(project)) {
 			for (String themeProjectName :
 					GradlePluginsDefaultsUtil.PARENT_THEME_PROJECT_NAMES) {
 

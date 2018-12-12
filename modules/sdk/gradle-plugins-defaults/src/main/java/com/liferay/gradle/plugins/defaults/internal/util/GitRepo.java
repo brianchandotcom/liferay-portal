@@ -27,8 +27,10 @@ import org.gradle.api.UncheckedIOException;
  */
 public class GitRepo {
 
+	public static final String GIT_REPO_FILE_NAME = ".gitrepo";
+
 	public static GitRepo getGitRepo(File dir) {
-		dir = GradleUtil.getRootDir(dir, _GIT_REPO_FILE_NAME);
+		dir = GradleUtil.getRootDir(dir, GIT_REPO_FILE_NAME);
 
 		if (dir == null) {
 			return null;
@@ -37,7 +39,7 @@ public class GitRepo {
 		String content;
 
 		try {
-			File file = new File(dir, _GIT_REPO_FILE_NAME);
+			File file = new File(dir, GIT_REPO_FILE_NAME);
 
 			content = new String(
 				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
@@ -62,7 +64,5 @@ public class GitRepo {
 		this.dir = dir;
 		this.readOnly = readOnly;
 	}
-
-	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";
 
 }

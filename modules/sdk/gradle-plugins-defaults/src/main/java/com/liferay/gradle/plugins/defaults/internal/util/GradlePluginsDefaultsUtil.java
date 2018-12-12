@@ -220,8 +220,9 @@ public class GradlePluginsDefaultsUtil {
 		return true;
 	}
 
-	public static boolean isGitRepo(Project project) {
-		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+	public static boolean isSubrepository(Project project) {
+		File gitRepoDir = GradleUtil.getRootDir(
+			project, GitRepo.GIT_REPO_FILE_NAME);
 
 		if (gitRepoDir != null) {
 			return true;

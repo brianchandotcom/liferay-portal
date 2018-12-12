@@ -23,6 +23,8 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	created() {
+		this._handleOpenStyleTooltip = this._handleOpenStyleTooltip.bind(this);
+		this._handleStyleChanged = this._handleStyleChanged.bind(this);
 		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 	}
 
@@ -130,45 +132,41 @@ class FragmentEntryLinkContent extends Component {
 			this._backgroundImageStyleEditors.forEach(
 				styleEditor => styleEditor.dispose()
 			);
-
-			this._backgroundImageStyleEditors = [];
 		}
 
-		this._backgroundImageStyleEditors = this._styles.flatMap(
-			style => {
-				let value = [];
-
-				if (style.css.backgroundImage !== '') {
-					value = style.nodes.map(
-						node => {
-							const styleEditor = new FragmentStyleEditor(
-								{
-									cssText: style.cssText,
-
-									editorsOptions: {
-										imageSelectorURL: this.imageSelectorURL
-									},
-
-									fragmentEntryLinkId: this.fragmentEntryLinkId,
-									node,
-									portletNamespace: this.portletNamespace,
-									selectorText: style.selectorText,
-									showMapping: this.showMapping,
-									store: this.store,
-									type: 'backgroundImage'
-								}
-							);
-
-							styleEditor.on('openTooltip', this._handleOpenStyleTooltip.bind(this));
-
-							styleEditor.on('styleChanged', this._handleStyleChanged.bind(this));
-
-							return styleEditor;
+		this._backgroundImageStyleEditors = this._styles
+			.filter(
+				style => style.css.backgroundImage
+			)
+			.map(
+				style => style.nodes.map(
+					node => new FragmentStyleEditor(
+						{
+							cssText: style.cssText,
+							editorsOptions: {imageSelectorURL: this.imageSelectorURL},
+							fragmentEntryLinkId: this.fragmentEntryLinkId,
+							node,
+							portletNamespace: this.portletNamespace,
+							selectorText: style.selectorText,
+							showMapping: this.showMapping,
+							store: this.store,
+							type: 'backgroundImage'
 						}
-					);
-				}
+					)
+				)
+			)
+			.reduce(
+				(styleEditorsA, styleEditorsB) => [
+					...styleEditorsA,
+					...styleEditorsB
+				],
+				[]
+			);
 
-				return value;
+		this._backgroundImageStyleEditors.forEach(
+			styleEditor => {
+				styleEditor.on('openTooltip', this._handleOpenStyleTooltip);
+				styleEditor.on('styleChanged', this._handleStyleChanged);
 			}
 		);
 	}

@@ -6,7 +6,7 @@ const SPLIT_REGEX = /({\d+})/g;
 
 /**
  * Generates a unique group id.
- * @returns {string} The unique id.
+ * @return {string} The unique id.
  */
 export function generateGroupId() {
 	return uniqueId(GROUP_ID_NAMESPACE);
@@ -17,7 +17,7 @@ export function generateGroupId() {
  * Used for disallowing groups to be moved into its own deeper nested groups.
  * Example of returned value: ['group_02', 'group_03']
  * @param {Object} criteria The criteria object to search through.
- * @returns {Array}
+ * @return {Array}
  */
 export function getChildGroupIds(criteria) {
 	let childGroupIds = [];
@@ -41,7 +41,7 @@ export function getChildGroupIds(criteria) {
  * @param {*} item The item that will be inserted.
  * @param {Array} list The list where the item will be inserted into.
  * @param {number} index The position where the item will be inserted.
- * @returns {Array}
+ * @return {Array}
  */
 export function insertAtIndex(item, list, index) {
 	return [...list.slice(0, index), item, ...list.slice(index, list.length)];
@@ -51,7 +51,7 @@ export function insertAtIndex(item, list, index) {
  * Removes an item at the specified index.
  * @param {Array} list The list the where an item will be removed.
  * @param {number} index The position where the item will be removed.
- * @returns {Array}
+ * @return {Array}
  */
 export function removeAtIndex(list, index) {
 	return list.filter(
@@ -64,7 +64,7 @@ export function removeAtIndex(list, index) {
  * @param {*} item The item that will be added.
  * @param {Array} list The list where an item will be replaced.
  * @param {number} index The position where the item will be replaced.
- * @returns {Array}
+ * @return {Array}
  */
 export function replaceAtIndex(item, list, index) {
 	return Object.assign(
@@ -88,7 +88,7 @@ export function replaceAtIndex(item, list, index) {
  * @param {string} args Arguments to pass into language key
  * @param {string} join Boolean used to indicate whether to call `.join()` on
  * the array before it is returned. Use `false` if subbing in JSX.
- * @returns {(string|Array)}
+ * @return {(string|Array)}
  */
 export function sub(langKey, args, join = true) {
 	const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);

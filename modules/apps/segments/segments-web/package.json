@@ -5,8 +5,10 @@
 				"env": {
 					"browser": true,
 					"es6": true,
+					"jest": true,
 					"node": true
 				},
+				"extends": "liferay",
 				"parser": "babel-eslint",
 				"parserOptions": {
 					"ecmaVersion": 7
@@ -29,6 +31,7 @@
 		"babel-core": "^6.26.3",
 		"babel-eslint": "^10.0.1",
 		"babel-loader": "^7.0.0",
+		"babel-plugin-module-resolver": "^3.1.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
@@ -43,13 +46,17 @@
 		"liferay-npm-bundler": "^2.0.0",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
 		"odata-v4-parser": "^0.1.29",
+		"react-test-renderer": "^16.6.3",
 		"webpack": "^4.27.0",
 		"webpack-cli": "^3.1.2"
 	},
 	"jest": {
-		"setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
+		"modulePathIgnorePatterns": [
+			"/classes/"
+		],
+		"setupTestFrameworkScriptFile": "<rootDir>/test/js/setup.js",
 		"testMatch": [
-			"<rootDir>/test/js/**/*.js"
+			"<rootDir>/test/js/**/*.es.js"
 		]
 	},
 	"main": "js/index.es.js",

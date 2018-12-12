@@ -33,13 +33,10 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
-import groovy.json.JsonSlurper;
-
 import groovy.lang.Closure;
 
 import java.io.File;
 
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -430,8 +427,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			"Writes a digest file to keep track of the parent themes used by " +
 				"this project.");
 
-		if (!_isGitRepo(project)) {
-			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+		if (!GradlePluginsDefaultsUtil.isGitRepo(project)) {
+			for (String themeProjectName :
+					GradlePluginsDefaultsUtil.PARENT_THEME_PROJECT_NAMES) {
+
 				Project themeProject = _getThemeProject(
 					project, themeProjectName);
 
@@ -448,7 +447,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					themeProject.file("src/main/resources/META-INF/resources"));
 			}
 		}
-		else if (_hasNPMParentThemesDependencies(project)) {
+		else if (GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(
+					project)) {
+
 			writeDigestTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 
 			writeDigestTask.setExcludeIgnoredFiles(false);
@@ -458,7 +459,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			File nodeModulesDir = npmInstallTask.getNodeModulesDir();
 
-			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+			for (String themeProjectName :
+					GradlePluginsDefaultsUtil.PARENT_THEME_PROJECT_NAMES) {
+
 				writeDigestTask.source(
 					new File(nodeModulesDir, "liferay-" + themeProjectName));
 			}
@@ -622,8 +625,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Project project = executeGulpTask.getProject();
 
-		if (!_isGitRepo(project)) {
-			for (String themeProjectName : _PARENT_THEME_PROJECT_NAMES) {
+		if (!GradlePluginsDefaultsUtil.isGitRepo(project)) {
+			for (String themeProjectName :
+					GradlePluginsDefaultsUtil.PARENT_THEME_PROJECT_NAMES) {
+
 				int index = themeProjectName.lastIndexOf("-");
 
 				_configureTaskExecuteGulpLocalDependenciesTheme(
@@ -751,67 +756,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return themeProject;
 	}
 
-	@SuppressWarnings("unchecked")
-	private boolean _hasNPMParentThemesDependencies(Project project) {
-		File packageJSONFile = project.file("package.json");
-
-		if (!packageJSONFile.exists()) {
-			return false;
-		}
-
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		Map<String, Object> packageJSONMap =
-			(Map<String, Object>)jsonSlurper.parse(packageJSONFile);
-
-		Map<String, Object> devDependencies =
-			(Map<String, Object>)packageJSONMap.get("devDependencies");
-
-		if (devDependencies == null) {
-			return false;
-		}
-
-		for (String key : devDependencies.keySet()) {
-			if (key.startsWith("liferay-theme-deps-")) {
-				return true;
-			}
-		}
-
-		for (String parentThemeProjectNames : _PARENT_THEME_PROJECT_NAMES) {
-			String name = "liferay-" + parentThemeProjectNames;
-
-			if (!devDependencies.containsKey(name)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean _isGitRepo(Project project) {
-		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
-
-		if (gitRepoDir != null) {
-			return true;
-		}
-
-		String[] dirNames = {"build-working-dir.xml", "portal-impl"};
-
-		for (String dirName : dirNames) {
-			if (GradleUtil.getRootDir(project, dirName) != null) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private static final String _FRONTEND_COMMON_CSS_NAME =
 		"com.liferay.frontend.css.common";
 
 	private static final String _GROUP = "com.liferay.plugins";
-
-	private static final String[] _PARENT_THEME_PROJECT_NAMES =
-		{"frontend-theme-styled", "frontend-theme-unstyled"};
 
 }

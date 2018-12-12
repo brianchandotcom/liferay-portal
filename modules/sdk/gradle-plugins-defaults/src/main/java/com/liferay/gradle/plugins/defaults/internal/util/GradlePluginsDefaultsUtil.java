@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 
 import com.liferay.gradle.util.Validator;
 
+import groovy.json.JsonSlurper;
+
 import java.io.File;
 
 import java.util.HashSet;
@@ -44,6 +46,9 @@ public class GradlePluginsDefaultsUtil {
 	public static final String[] JSON_VERSION_FILE_NAMES = {
 		"npm-shrinkwrap.json", "package-lock.json", "package.json"
 	};
+
+	public static final String[] PARENT_THEME_PROJECT_NAMES =
+		{"frontend-theme-styled", "frontend-theme-unstyled"};
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 
@@ -176,6 +181,61 @@ public class GradlePluginsDefaultsUtil {
 			project, BundleExtension.class);
 
 		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static boolean hasNPMParentThemesDependencies(Project project) {
+		File packageJSONFile = project.file("package.json");
+
+		if (!packageJSONFile.exists()) {
+			return false;
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> packageJSONMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJSONFile);
+
+		Map<String, Object> devDependencies =
+			(Map<String, Object>)packageJSONMap.get("devDependencies");
+
+		if (devDependencies == null) {
+			return false;
+		}
+
+		for (String key : devDependencies.keySet()) {
+			if (key.startsWith("liferay-theme-deps-")) {
+				return true;
+			}
+		}
+
+		for (String parentThemeProjectName : PARENT_THEME_PROJECT_NAMES) {
+			String name = "liferay-" + parentThemeProjectName;
+
+			if (!devDependencies.containsKey(name)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isGitRepo(Project project) {
+		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+
+		if (gitRepoDir != null) {
+			return true;
+		}
+
+		String[] dirNames = {"build-working-dir.xml", "portal-impl"};
+
+		for (String dirName : dirNames) {
+			if (GradleUtil.getRootDir(project, dirName) != null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static boolean isPrivateProject(Project project) {

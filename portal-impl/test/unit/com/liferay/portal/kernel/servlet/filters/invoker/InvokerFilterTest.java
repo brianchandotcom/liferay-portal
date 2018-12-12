@@ -59,42 +59,36 @@ public class InvokerFilterTest {
 	public void testGetURIWithDoubleSlash() {
 		InvokerFilter invokerFilter = new InvokerFilter();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(
-				HttpMethods.GET,
-				"/c///portal/%2e/login;jsessionid=ae01b0f2af.worker1");
-
-		String originalURI = invokerFilter.getOriginalRequestURI(
-			mockHttpServletRequest);
+		Assert.assertEquals(
+			"/c/portal/login",
+			invokerFilter.getURI(
+				invokerFilter.getOriginalRequestURI(
+					new MockHttpServletRequest(
+						HttpMethods.GET,
+						"/c///portal/%2e/login;jsessionid=ae01b0f2af." +
+							"worker1"))));
 
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(originalURI));
-
-		mockHttpServletRequest = new MockHttpServletRequest(
-			HttpMethods.GET,
-			"/c///portal/%2e/../login;jsessionid=ae01b0f2af.worker1");
-
-		originalURI = invokerFilter.getOriginalRequestURI(
-			mockHttpServletRequest);
-
-		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(originalURI));
+			"/c/portal/login",
+			invokerFilter.getURI(
+				invokerFilter.getOriginalRequestURI(
+					new MockHttpServletRequest(
+						HttpMethods.GET,
+						"/c///portal/%2e/../login;jsessionid=ae01b0f2af." +
+							"worker1"))));
 	}
 
 	@Test
 	public void testGetURIWithJSessionId() {
 		InvokerFilter invokerFilter = new InvokerFilter();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(
-				HttpMethods.GET,
-				"/c/portal/login;jsessionid=ae01b0f2af.worker1");
-
-		String originalURI = invokerFilter.getOriginalRequestURI(
-			mockHttpServletRequest);
-
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(originalURI));
+			"/c/portal/login",
+			invokerFilter.getURI(
+				invokerFilter.getOriginalRequestURI(
+					new MockHttpServletRequest(
+						HttpMethods.GET,
+						"/c/portal/login;jsessionid=ae01b0f2af.worker1"))));
 	}
 
 	@Test

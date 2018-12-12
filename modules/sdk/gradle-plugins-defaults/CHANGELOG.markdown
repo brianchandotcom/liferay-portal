@@ -5213,6 +5213,13 @@ during the execution of the `uploadArchives` task.
 - [LPS-88183]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.38.
 
+## 5.5.144 - 2018-12-12
+
+### Changed
+- [LPS-88306]: Fix the `printStaleArtifact` and `writeArtifactPublishCommands`
+tasks by downloading the NPM parent theme sources before checking if the
+respective `.digest` file needs to be updated.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

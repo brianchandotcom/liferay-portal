@@ -14,6 +14,7 @@
 
 package com.liferay.site.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -24,18 +25,20 @@ import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifie
 import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,14 +53,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CollectionResource.class)
 public class WebSiteCollectionResource
-	implements CollectionResource<GroupWrapper, Long, WebSiteIdentifier> {
+	implements CollectionResource<Group, Long, WebSiteIdentifier> {
 
 	@Override
-	public CollectionRoutes<GroupWrapper, Long> collectionRoutes(
-		CollectionRoutes.Builder<GroupWrapper, Long> builder) {
+	public CollectionRoutes<Group, Long> collectionRoutes(
+		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, ThemeDisplay.class
+			this::_getPageItems, Company.class
 		).build();
 	}
 
@@ -67,17 +70,17 @@ public class WebSiteCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<GroupWrapper, Long> itemRoutes(
-		ItemRoutes.Builder<GroupWrapper, Long> builder) {
+	public ItemRoutes<Group, Long> itemRoutes(
+		ItemRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getGroupWrapper, ThemeDisplay.class
+			this::_getGroup
 		).build();
 	}
 
 	@Override
-	public Representor<GroupWrapper> representor(
-		Representor.Builder<GroupWrapper, Long> builder) {
+	public Representor<Group> representor(
+		Representor.Builder<Group, Long> builder) {
 
 		return builder.types(
 			"WebSite"
@@ -99,9 +102,9 @@ public class WebSiteCollectionResource
 		).addString(
 			"membershipType", Group::getTypeLabel
 		).addString(
-			"privateUrl", GroupWrapper::getPrivateURL
+			"privateUrl", this::_getPrivateURL
 		).addString(
-			"publicUrl", GroupWrapper::getPublicURL
+			"publicUrl", this::_getPublicURL
 		).addStringList(
 			"availableLanguages",
 			group -> Arrays.asList(
@@ -109,34 +112,31 @@ public class WebSiteCollectionResource
 		).build();
 	}
 
-	private GroupWrapper _getGroupWrapper(
-			long groupId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return new GroupWrapper(
-			_groupLocalService.getGroup(groupId), themeDisplay);
+	private String _getDisplayURL(Group group, boolean privateLayout) {
+		return Try.fromFallible(
+			() -> _getThemeDisplay(group, privateLayout)
+		).map(
+			themeDisplay -> group.getDisplayURL(themeDisplay, privateLayout)
+		).orElse(
+			null
+		);
 	}
 
-	private PageItems<GroupWrapper> _getPageItems(
-		Pagination pagination, ThemeDisplay themeDisplay) {
+	private Group _getGroup(long groupId) throws PortalException {
+		return _groupLocalService.getGroup(groupId);
+	}
 
-		List<GroupWrapper> groupWrappers = Stream.of(
-			_groupLocalService.getActiveGroups(
-				themeDisplay.getCompanyId(), true, true,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				new GroupIdComparator(true))
-		).flatMap(
-			List::stream
-		).map(
-			group -> new GroupWrapper(group, themeDisplay)
-		).collect(
-			Collectors.toList()
-		);
+	private PageItems<Group> _getPageItems(
+		Pagination pagination, Company company) {
+
+		List<Group> groups = _groupLocalService.getActiveGroups(
+			company.getCompanyId(), true, true, pagination.getStartPosition(),
+			pagination.getEndPosition(), new GroupIdComparator(true));
 
 		int count = _groupLocalService.getActiveGroupsCount(
-			themeDisplay.getCompanyId(), true, true);
+			company.getCompanyId(), true, true);
 
-		return new PageItems<>(groupWrappers, count);
+		return new PageItems<>(groups, count);
 	}
 
 	private Long _getParentGroupId(Group group) {
@@ -147,7 +147,43 @@ public class WebSiteCollectionResource
 		return null;
 	}
 
+	private String _getPrivateURL(Group group) {
+		return _getDisplayURL(group, true);
+	}
+
+	private String _getPublicURL(Group group) {
+		return _getDisplayURL(group, false);
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group, boolean privateLayout)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = _companyService.getCompanyById(group.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		List<Layout> layouts = _layoutService.getLayouts(
+			group.getGroupId(), privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		themeDisplay.setLayout(layouts.get(0));
+
+		themeDisplay.setSiteGroupId(group.getGroupId());
+
+		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
+
+		return themeDisplay;
+	}
+
+	@Reference
+	private CompanyService _companyService;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 }

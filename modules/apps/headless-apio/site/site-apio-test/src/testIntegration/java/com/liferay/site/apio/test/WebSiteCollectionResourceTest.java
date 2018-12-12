@@ -23,14 +23,12 @@ import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -68,11 +66,11 @@ public class WebSiteCollectionResourceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				group, Locale.getDefault());
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
 
 			PageItems<Group> pageItems = _getPageItems(
-				PaginationRequest.of(50, 1), themeDisplay);
+				PaginationRequest.of(50, 1), company);
 
 			List<Group> groups = (List<Group>)pageItems.getItems();
 
@@ -84,60 +82,13 @@ public class WebSiteCollectionResourceTest {
 	}
 
 	@Test
-	public void testGetGroupWrapper() throws Throwable {
+	public void testGetGroup() throws Throwable {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				group, Locale.getDefault());
-
-			Group finalGroup = _getGroupWrapper(
-				group.getGroupId(), themeDisplay);
+			Group finalGroup = _getGroup(group.getGroupId());
 
 			Assert.assertEquals(group.getName(), finalGroup.getName());
-		}
-		finally {
-			_groupLocalService.deleteGroup(group);
-		}
-	}
-
-	@Test
-	public void testGetGroupWrapperGetPrivateURL() throws Throwable {
-		Group group = GroupTestUtil.addGroup();
-
-		try {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				group, Locale.getDefault());
-
-			String privateURL = _getPrivateURL(group, themeDisplay);
-
-			Assert.assertNotNull(privateURL);
-			Assert.assertTrue(
-				privateURL.endsWith(
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
-							group.getFriendlyURL()));
-		}
-		finally {
-			_groupLocalService.deleteGroup(group);
-		}
-	}
-
-	@Test
-	public void testGetGroupWrapperGetPublicURL() throws Throwable {
-		Group group = GroupTestUtil.addGroup();
-
-		try {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				group, Locale.getDefault());
-
-			String publicURL = _getPublicURL(group, themeDisplay);
-
-			Assert.assertNotNull(publicURL);
-			Assert.assertTrue(
-				publicURL.endsWith(
-					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-						group.getFriendlyURL()));
 		}
 		finally {
 			_groupLocalService.deleteGroup(group);
@@ -151,11 +102,11 @@ public class WebSiteCollectionResourceTest {
 		try {
 			_deactivateGroup(group);
 
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				group, Locale.getDefault());
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
 
 			PageItems<Group> pageItems = _getPageItems(
-				PaginationRequest.of(50, 1), themeDisplay);
+				PaginationRequest.of(50, 1), company);
 
 			List<Group> groups = (List<Group>)pageItems.getItems();
 
@@ -166,62 +117,74 @@ public class WebSiteCollectionResourceTest {
 		}
 	}
 
-	protected ThemeDisplay getThemeDisplay(Group group, Locale locale)
-		throws Exception {
+	@Test
+	public void testGetPrivateUrl() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		try {
+			LayoutTestUtil.addLayout(
+				group.getGroupId(), true,
+				new HashMap<Locale, String>() {
+					{
+						put(LocaleUtil.US, RandomTestUtil.randomString());
+						put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
+					}
+				},
+				new HashMap<Locale, String>() {
+					{
+						put(
+							LocaleUtil.US,
+							StringPool.SLASH + RandomTestUtil.randomString());
+						put(
+							LocaleUtil.SPAIN,
+							StringPool.SLASH + RandomTestUtil.randomString());
+					}
+				});
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(
-			group.getCompanyId());
+			String privateUrl = _getPrivateURL(group);
 
-		themeDisplay.setCompany(company);
+			Assert.assertTrue(
+				"PrivateURL " + privateUrl,
+				privateUrl.endsWith(
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+							group.getFriendlyURL()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
 
-		themeDisplay.setLocale(locale);
-		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
+	@Test
+	public void testGetPublicUrl() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addLayout(
-			group.getGroupId(), true,
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.US, RandomTestUtil.randomString());
-					put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
-				}
-			},
-			new HashMap<Locale, String>() {
-				{
-					put(
-						LocaleUtil.US,
-						StringPool.SLASH + RandomTestUtil.randomString());
-					put(
-						LocaleUtil.SPAIN,
-						StringPool.SLASH + RandomTestUtil.randomString());
-				}
-			});
+		try {
+			LayoutTestUtil.addLayout(
+				group.getGroupId(), false,
+				new HashMap<Locale, String>() {
+					{
+						put(LocaleUtil.US, RandomTestUtil.randomString());
+					}
+				},
+				new HashMap<Locale, String>() {
+					{
+						put(
+							LocaleUtil.US,
+							StringPool.SLASH + RandomTestUtil.randomString());
+					}
+				});
 
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), false,
-			new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.US, RandomTestUtil.randomString());
-					put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
-				}
-			},
-			new HashMap<Locale, String>() {
-				{
-					put(
-						LocaleUtil.US,
-						StringPool.SLASH + RandomTestUtil.randomString());
-					put(
-						LocaleUtil.SPAIN,
-						StringPool.SLASH + RandomTestUtil.randomString());
-				}
-			});
+			String publicUrl = _getPublicURL(group);
 
-		themeDisplay.setLayout(layout);
-
-		return themeDisplay;
+			Assert.assertTrue(
+				publicUrl.endsWith(
+					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+						group.getFriendlyURL()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
 	}
 
 	private Group _deactivateGroup(Group group) throws PortalException {
@@ -233,64 +196,62 @@ public class WebSiteCollectionResourceTest {
 			new ServiceContext());
 	}
 
-	private Group _getGroupWrapper(long groupId, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	private Group _getGroup(long groupId) throws Exception {
 		Class<? extends CollectionResource> clazz =
 			_collectionResource.getClass();
 
-		Method method = clazz.getDeclaredMethod(
-			"_getGroupWrapper", long.class, ThemeDisplay.class);
+		Method method = clazz.getDeclaredMethod("_getGroup", long.class);
 
 		method.setAccessible(true);
 
-		return (Group)method.invoke(_collectionResource, groupId, themeDisplay);
+		return (Group)method.invoke(_collectionResource, groupId);
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, ThemeDisplay themeDisplay)
+			Pagination pagination, Company company)
 		throws Exception {
 
 		Class<? extends CollectionResource> clazz =
 			_collectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, ThemeDisplay.class);
+			"_getPageItems", Pagination.class, Company.class);
 
 		method.setAccessible(true);
 
 		return (PageItems)method.invoke(
-			_collectionResource, pagination, themeDisplay);
+			_collectionResource, pagination, company);
 	}
 
-	private String _getPrivateURL(Group group, ThemeDisplay themeDisplay)
-		throws Exception {
+	private String _getPrivateURL(Group group) throws Exception {
+		Class<? extends CollectionResource> clazz =
+			_collectionResource.getClass();
 
-		Group finalGroup = _getGroupWrapper(group.getGroupId(), themeDisplay);
+		Method method = clazz.getDeclaredMethod("_getPrivateURL", Group.class);
 
-		Class<? extends Group> clazz = finalGroup.getClass();
+		method.setAccessible(true);
 
-		Method method = clazz.getDeclaredMethod("getPrivateURL");
-
-		return (String)method.invoke(finalGroup);
+		return (String)method.invoke(_collectionResource, group);
 	}
 
-	private String _getPublicURL(Group group, ThemeDisplay themeDisplay)
-		throws Exception {
+	private String _getPublicURL(Group group) throws Exception {
+		Class<? extends CollectionResource> clazz =
+			_collectionResource.getClass();
 
-		Group finalGroup = _getGroupWrapper(group.getGroupId(), themeDisplay);
+		Method method = clazz.getDeclaredMethod("_getPublicURL", Group.class);
 
-		Class<? extends Group> clazz = finalGroup.getClass();
+		method.setAccessible(true);
 
-		Method method = clazz.getDeclaredMethod("getPublicURL");
-
-		return (String)method.invoke(finalGroup);
+		return (String)method.invoke(_collectionResource, group);
 	}
 
 	@Inject(
 		filter = "component.name=com.liferay.site.apio.internal.architect.resource.WebSiteCollectionResource"
 	)
 	private CollectionResource _collectionResource;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

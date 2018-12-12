@@ -19,14 +19,11 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,45 +32,38 @@ import org.osgi.service.component.annotations.Reference;
  * Provides the information necessary to expose the <a
  * href="http://schema.org/WebSite">WebSite</a> resources of a <a
  * href="http://schema.org/WebSite">WebSite</a> through a web API. The resources
- * are mapped from the internal model {@link GroupWrapper}.
+ * are mapped from the internal model {@link Group}.
  *
  * @author Eduardo Perez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class WebSiteNestedCollectionRouter
 	implements NestedCollectionRouter
-		<GroupWrapper, Long, WebSiteIdentifier, Long, WebSiteIdentifier> {
+		<Group, Long, WebSiteIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<GroupWrapper, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<GroupWrapper, Long, Long> builder) {
+	public NestedCollectionRoutes<Group, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Group, Long, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, ThemeDisplay.class
+			this::_getPageItems
 		).build();
 	}
 
-	private PageItems<GroupWrapper> _getPageItems(
-			Pagination pagination, long parentGroupId,
-			ThemeDisplay themeDisplay)
+	private PageItems<Group> _getPageItems(
+			Pagination pagination, long parentGroupId)
 		throws PortalException {
 
-		List<GroupWrapper> groupWrappers = Stream.of(
-			_groupService.getGroups(
-				themeDisplay.getCompanyId(), parentGroupId, true,
-				pagination.getStartPosition(), pagination.getEndPosition())
-		).flatMap(
-			List::stream
-		).map(
-			group ->
-				new GroupWrapper(group, themeDisplay)
-		).collect(
-			Collectors.toList()
-		);
-		int count = _groupService.getGroupsCount(
-			themeDisplay.getCompanyId(), parentGroupId, true);
+		Group group = _groupService.getGroup(parentGroupId);
 
-		return new PageItems<>(groupWrappers, count);
+		List<Group> groups = _groupService.getGroups(
+			group.getCompanyId(), parentGroupId, true,
+			pagination.getStartPosition(), pagination.getEndPosition());
+
+		int count = _groupService.getGroupsCount(
+			group.getCompanyId(), parentGroupId, true);
+
+		return new PageItems<>(groups, count);
 	}
 
 	@Reference

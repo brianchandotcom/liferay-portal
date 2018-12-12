@@ -17,8 +17,11 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import java.util.Map;
 
@@ -29,11 +32,7 @@ import java.util.Map;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class AccessControlAdvice extends AnnotationChainableMethodAdvice {
-
-	public AccessControlAdvice() {
-		super(AccessControlled.class);
-	}
+public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
@@ -49,6 +48,14 @@ public class AccessControlAdvice extends AnnotationChainableMethodAdvice {
 			serviceBeanMethodInvocation, accessControlled);
 
 		return null;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(AccessControlled.class);
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.bulk.rest.internal.model;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -21,4 +23,50 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class BulkAssetEntryCommonTagsModel {
+
+	public BulkAssetEntryCommonTagsModel() {
+	}
+
+	public BulkAssetEntryCommonTagsModel(
+		String description, List<String> tagNames) {
+
+		_description = description;
+		_tagNames = tagNames;
+		_status = "success";
+	}
+
+	public BulkAssetEntryCommonTagsModel(Throwable throwable) {
+		_description = throwable.getMessage();
+		_status = "error";
+		_tagNames = null;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	public List<String> getTagNames() {
+		return _tagNames;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public void setStatus(String status) {
+		_status = status;
+	}
+
+	public void setTagNames(List<String> tagNames) {
+		_tagNames = tagNames;
+	}
+
+	private String _description;
+	private String _status;
+	private List<String> _tagNames;
+
 }

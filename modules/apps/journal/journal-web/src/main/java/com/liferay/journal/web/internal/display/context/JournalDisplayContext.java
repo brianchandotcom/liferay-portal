@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
+import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -116,6 +117,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -194,8 +196,9 @@ public class JournalDisplayContext {
 
 	public List<DropdownItem> getArticleActionDropdownItems(
 			JournalArticle article)
-		throws PortalException {
+		throws Exception {
 
+		String redirect = ParamUtil.getString(_request, "redirect");
 		String referringPortletResource = ParamUtil.getString(
 			_request, "referringPortletResource");
 
@@ -234,6 +237,296 @@ public class JournalDisplayContext {
 							dropdownItem.setIcon("move");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "move"));
+						});
+				}
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), article,
+						ActionKeys.PERMISSIONS)) {
+
+					try {
+						String permissionsURL = PermissionsURLTag.doTag(
+							StringPool.BLANK, JournalArticle.class.getName(),
+							HtmlUtil.escape(
+								article.getTitle(_themeDisplay.getLocale())),
+							null, String.valueOf(article.getResourcePrimKey()),
+							LiferayWindowState.POP_UP.toString(), null,
+							_request);
+
+						add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "permissions");
+								dropdownItem.putData(
+									"permissionsURL", permissionsURL);
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "permissions"));
+							});
+					}
+					catch (Exception e) {
+					}
+				}
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), article,
+						ActionKeys.VIEW)) {
+
+					String viewContentURL = getViewContentURL(article);
+
+					if (Validator.isNotNull(viewContentURL)) {
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(viewContentURL);
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "view-content"));
+							});
+					}
+
+					String previewURL = getPreviewURL(article);
+
+					if (Validator.isNotNull(previewURL)) {
+						add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "preview");
+								dropdownItem.putData(
+									"title",
+									HtmlUtil.escape(
+										article.getTitle(
+											_themeDisplay.getLocale())));
+								dropdownItem.putData("previewURL", previewURL);
+
+								String status = "preview";
+
+								if (article.isDraft()) {
+									status = "preview-draft";
+								}
+
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, status));
+							});
+					}
+
+					if (JournalArticlePermission.contains(
+							_themeDisplay.getPermissionChecker(), article,
+							ActionKeys.UPDATE)) {
+
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									_liferayPortletResponse.createRenderURL(),
+									"mvcPath", "/view_article_history.jsp",
+									"redirect", redirect, "backURL",
+									_themeDisplay.getURLCurrent(),
+									"referringPortletResource",
+									referringPortletResource, "articleId",
+									article.getArticleId());
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "view-history"));
+							});
+					}
+
+					if (JournalArticlePermission.contains(
+							_themeDisplay.getPermissionChecker(), article,
+							ActionKeys.SUBSCRIBE)) {
+
+						if (JournalUtil.isSubscribedToArticle(
+								article.getCompanyId(),
+								_themeDisplay.getScopeGroupId(),
+								_themeDisplay.getUserId(),
+								article.getResourcePrimKey())) {
+
+							PortletURL unsubscribeArticleURL =
+								_liferayPortletResponse.createActionURL();
+
+							unsubscribeArticleURL.setParameter(
+								ActionRequest.ACTION_NAME,
+								"unsubscribeArticle");
+
+							unsubscribeArticleURL.setParameter(
+								"redirect", _themeDisplay.getURLCurrent());
+							unsubscribeArticleURL.setParameter(
+								"articleId",
+								String.valueOf(article.getResourcePrimKey()));
+
+							add(
+								dropdownItem -> {
+									dropdownItem.putData(
+										"action", "unsubscribeArticle");
+									dropdownItem.putData(
+										"unsubscribeArticleURL",
+										unsubscribeArticleURL.toString());
+									dropdownItem.setLabel(
+										LanguageUtil.get(
+											_request, "unsubscribe"));
+								});
+						}
+						else {
+							PortletURL subscribeArticleURL =
+								_liferayPortletResponse.createActionURL();
+
+							subscribeArticleURL.setParameter(
+								ActionRequest.ACTION_NAME, "subscribeArticle");
+
+							subscribeArticleURL.setParameter(
+								"redirect", _themeDisplay.getURLCurrent());
+							subscribeArticleURL.setParameter(
+								"articleId",
+								String.valueOf(article.getResourcePrimKey()));
+
+							add(
+								dropdownItem -> {
+									dropdownItem.putData(
+										"action", "subscribeArticle");
+									dropdownItem.putData(
+										"subscribeArticleURL",
+										subscribeArticleURL.toString());
+									dropdownItem.setLabel(
+										LanguageUtil.get(
+											_request, "subscribe"));
+								});
+						}
+					}
+				}
+
+				if (JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(), article.getFolderId(),
+						ActionKeys.ADD_ARTICLE)) {
+
+					if (_journalWebConfiguration.
+							journalArticleForceAutogenerateId()) {
+
+						PortletURL copyArticleURL =
+							_liferayPortletResponse.createActionURL();
+
+						copyArticleURL.setParameter(
+							ActionRequest.ACTION_NAME, "copyArticle");
+
+						copyArticleURL.setParameter(
+							"redirect", _themeDisplay.getURLCurrent());
+						copyArticleURL.setParameter(
+							"groupId", String.valueOf(article.getGroupId()));
+						copyArticleURL.setParameter(
+							"oldArticleId", article.getArticleId());
+						copyArticleURL.setParameter(
+							"version", String.valueOf(article.getVersion()));
+						copyArticleURL.setParameter(
+							"autoArticleId", Boolean.TRUE.toString());
+
+						add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "copyArticle");
+								dropdownItem.putData(
+									"copyArticleURL",
+									copyArticleURL.toString());
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "copy"));
+							});
+					}
+					else {
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									_liferayPortletResponse.createRenderURL(),
+									"mvcPath", "/copy_article.jsp", "redirect",
+									_themeDisplay.getURLCurrent(), "groupId",
+									article.getGroupId(), "oldArticleId",
+									article.getArticleId(), "version",
+									article.getVersion());
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "copy"));
+							});
+					}
+				}
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), article,
+						ActionKeys.EXPIRE) &&
+					article.hasApprovedVersion()) {
+
+					PortletURL expireURL =
+						_liferayPortletResponse.createActionURL();
+
+					expireURL.setParameter(
+						ActionRequest.ACTION_NAME, "expireArticles");
+
+					expireURL.setParameter(
+						"redirect", _themeDisplay.getURLCurrent());
+					expireURL.setParameter(
+						"groupId", String.valueOf(article.getGroupId()));
+					expireURL.setParameter("articleId", article.getArticleId());
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "expireArticles");
+							dropdownItem.putData(
+								"expireURL", expireURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "expire"));
+						});
+				}
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), article,
+						ActionKeys.DELETE)) {
+
+					PortletURL deleteFolderURL =
+						_liferayPortletResponse.createActionURL();
+
+					String actionName = "deleteFolder";
+					String key = "delete";
+
+					if (_trashHelper.isTrashEnabled(
+							_themeDisplay.getScopeGroupId())) {
+
+						actionName = "moveFolderToTrash";
+						key = "move-to-recycle-bin";
+					}
+
+					deleteFolderURL.setParameter(
+						ActionRequest.ACTION_NAME, actionName);
+
+					deleteFolderURL.setParameter(
+						"redirect", _themeDisplay.getURLCurrent());
+					deleteFolderURL.setParameter(
+						"groupId", String.valueOf(article.getGroupId()));
+					deleteFolderURL.setParameter(
+						"articleId", article.getArticleId());
+
+					String label = LanguageUtil.get(_request, key);
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "delete");
+							dropdownItem.putData(
+								"deleteFolderURL", deleteFolderURL.toString());
+							dropdownItem.setLabel(label);
+						});
+				}
+
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (isShowPublishArticleAction(article) && !group.isLayout()) {
+					PortletURL publishArticleURL =
+						_liferayPortletResponse.createActionURL();
+
+					publishArticleURL.setParameter(
+						ActionRequest.ACTION_NAME, "/journal/publish_article");
+
+					publishArticleURL.setParameter(
+						"backURL", _themeDisplay.getURLCurrent());
+					publishArticleURL.setParameter(
+						"groupId", String.valueOf(article.getGroupId()));
+					publishArticleURL.setParameter(
+						"articleId", article.getArticleId());
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "publishToLive");
+							dropdownItem.putData(
+								"publishArticleURL",
+								publishArticleURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "publish-to-live"));
 						});
 				}
 			}
@@ -522,6 +815,139 @@ public class JournalDisplayContext {
 								folder.getFolderId());
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "edit"));
+						});
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/move_entries.jsp", "redirect",
+								_themeDisplay.getURLCurrent(),
+								"rowIdsJournalFolder", folder.getFolderId());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "move"));
+						});
+				}
+
+				if (JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(), folder,
+						ActionKeys.ADD_FOLDER)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/edit_folder.jsp", "redirect",
+								_themeDisplay.getURLCurrent(), "groupId",
+								folder.getGroupId(), "parentFolderId",
+								folder.getFolderId());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "add-subfolder"));
+						});
+				}
+
+				if (JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(), folder,
+						ActionKeys.PERMISSIONS)) {
+
+					try {
+						String permissionsURL = PermissionsURLTag.doTag(
+							StringPool.BLANK, JournalFolder.class.getName(),
+							folder.getName(), null,
+							String.valueOf(folder.getPrimaryKey()),
+							LiferayWindowState.POP_UP.toString(), null,
+							_request);
+
+						add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "permissions");
+								dropdownItem.putData(
+									"permissionsURL", permissionsURL);
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "permissions"));
+							});
+					}
+					catch (Exception e) {
+					}
+				}
+
+				if (JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(), folder,
+						ActionKeys.DELETE)) {
+
+					String redirect = _themeDisplay.getURLCurrent();
+
+					long currentFolderId = ParamUtil.getLong(
+						_request, "folderId");
+
+					if (currentFolderId == folder.getFolderId()) {
+						PortletURL redirectURL =
+							_liferayPortletResponse.createRenderURL();
+
+						redirectURL.setParameter(
+							"groupId", String.valueOf(folder.getGroupId()));
+						redirectURL.setParameter(
+							"folderId",
+							String.valueOf(folder.getParentFolderId()));
+
+						redirect = redirectURL.toString();
+					}
+
+					PortletURL deleteFolderURL =
+						_liferayPortletResponse.createActionURL();
+
+					String actionName = "deleteFolder";
+					String key = "delete";
+
+					if (_trashHelper.isTrashEnabled(
+							_themeDisplay.getScopeGroupId())) {
+
+						actionName = "moveFolderToTrash";
+						key = "move-to-recycle-bin";
+					}
+
+					deleteFolderURL.setParameter(
+						ActionRequest.ACTION_NAME, actionName);
+
+					deleteFolderURL.setParameter("redirect", redirect);
+					deleteFolderURL.setParameter(
+						"groupId", String.valueOf(folder.getGroupId()));
+					deleteFolderURL.setParameter(
+						"folderId", String.valueOf(folder.getFolderId()));
+
+					String label = LanguageUtil.get(_request, key);
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "delete");
+							dropdownItem.putData(
+								"deleteFolderURL", deleteFolderURL.toString());
+							dropdownItem.setLabel(label);
+						});
+				}
+
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (isShowPublishFolderAction(folder) && !group.isLayout()) {
+					PortletURL publishFolderURL =
+						_liferayPortletResponse.createActionURL();
+
+					publishFolderURL.setParameter(
+						ActionRequest.ACTION_NAME, "/journal/publish_folder");
+
+					publishFolderURL.setParameter(
+						"backURL", _themeDisplay.getURLCurrent());
+					publishFolderURL.setParameter(
+						"folderId", String.valueOf(folder.getFolderId()));
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "publishToLive");
+							dropdownItem.putData(
+								"publishFolderURL",
+								publishFolderURL.toString());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "publish-to-live"));
 						});
 				}
 			}

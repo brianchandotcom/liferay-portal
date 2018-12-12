@@ -30,9 +30,9 @@ List<BreadcrumbEntry> breadcrumbEntries = (List<BreadcrumbEntry>)request.getAttr
 		<c:choose>
 			<c:when test="<%= (i < (breadcrumbEntries.size() - 1)) && Validator.isNotNull(breadcrumbEntry.getURL()) %>">
 				<li class="breadcrumb-item">
-					<a class="breadcrumb-link" href="<%= breadcrumbEntry.getURL() %>">
+					<aui:a cssClass="breadcrumb-link" href="<%= breadcrumbEntry.getURL() %>">
 						<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(breadcrumbEntry.getTitle()) %></span>
-					</a>
+					</aui:a>
 				</li>
 			</c:when>
 			<c:otherwise>

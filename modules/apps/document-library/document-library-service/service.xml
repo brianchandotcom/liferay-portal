@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.document.library">
+	<namespace>DL</namespace>
+	<entity local-service="true" name="DLFileEntryPreview" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="fileEntryPreviewId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="fileEntryId" type="long" />
+		<column name="fileVersionId" type="long" />
+		<column name="previewType" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="fileEntryPreviewId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="FileEntryId" return-type="Collection">
+			<finder-column name="fileEntryId" />
+		</finder>
+		<finder name="FileVersionId" return-type="Collection">
+			<finder-column name="fileVersionId" />
+		</finder>
+		<finder name="F_F" return-type="DLFileEntryPreview" unique="true">
+			<finder-column name="fileEntryId" />
+			<finder-column name="fileVersionId" />
+		</finder>
+		<finder name="F_F_P" return-type="DLFileEntryPreview" unique="true">
+			<finder-column name="fileEntryId" />
+			<finder-column name="fileVersionId" />
+			<finder-column name="previewType" />
+		</finder>
+	</entity>
+</service-builder>

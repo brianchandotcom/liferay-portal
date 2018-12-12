@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.document.library.model.DLFileEntryPreview">
+		<field name="fileEntryPreviewId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="fileVersionId" type="long" />
+		<field name="previewType" type="int" />
+	</model>
+</model-hints>

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.spring.aop;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -43,7 +46,7 @@ public abstract class ChainableMethodAdvice {
 
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
 		return nullResult;
 	}

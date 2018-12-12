@@ -70,14 +70,14 @@ public class ServiceBeanAopCacheManager {
 			new ArrayList<>();
 		List<Object> filteredAdviceMethodContexts = new ArrayList<>();
 
-		DefaultMethodContextHelper defaultMethodContextHelper =
-			new DefaultMethodContextHelper(targetClass, method);
+		Map<Class<? extends Annotation>, Annotation> annotations =
+			AnnotationLocator.index(method, targetClass);
 
 		for (ChainableMethodAdvice chainableMethodAdvice :
 				_fullChainableMethodAdvices) {
 
 			Object methodContext = chainableMethodAdvice.createMethodContext(
-				targetClass, method, defaultMethodContextHelper);
+				targetClass, method, annotations);
 
 			if (methodContext != null) {
 				filteredChainableMethodAdvices.add(chainableMethodAdvice);
@@ -98,8 +98,6 @@ public class ServiceBeanAopCacheManager {
 			adviceMethodContexts = filteredAdviceMethodContexts.toArray(
 				new Object[filteredAdviceMethodContexts.size()]);
 		}
-
-		defaultMethodContextHelper._methodAnnotations.clear();
 
 		return new AopMethod(
 			target, method, chainableMethodAdvices, adviceMethodContexts);
@@ -141,31 +139,6 @@ public class ServiceBeanAopCacheManager {
 
 		private final Method _method;
 		private final Object _target;
-
-	}
-
-	private class DefaultMethodContextHelper implements MethodContextHelper {
-
-		@Override
-		public <T extends Annotation> T findAnnotation(
-			Class<T> annotationClass) {
-
-			for (Annotation curAnnotation : _methodAnnotations) {
-				if (curAnnotation.annotationType() == annotationClass) {
-					return (T)curAnnotation;
-				}
-			}
-
-			return null;
-		}
-
-		private DefaultMethodContextHelper(
-			Class<?> targetClass, Method method) {
-
-			_methodAnnotations = AnnotationLocator.locate(method, targetClass);
-		}
-
-		private final List<Annotation> _methodAnnotations;
 
 	}
 

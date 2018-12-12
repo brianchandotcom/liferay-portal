@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author     Zsolt Berentey
@@ -95,10 +97,10 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
 		BufferedIncrement bufferedIncrement =
-			methodContextHelper.findAnnotation(BufferedIncrement.class);
+			(BufferedIncrement)annotations.get(BufferedIncrement.class);
 
 		if (bufferedIncrement == null) {
 			return null;

@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -108,10 +110,9 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		Indexable indexable = methodContextHelper.findAnnotation(
-			Indexable.class);
+		Indexable indexable = (Indexable)annotations.get(Indexable.class);
 
 		if (indexable == null) {
 			return null;

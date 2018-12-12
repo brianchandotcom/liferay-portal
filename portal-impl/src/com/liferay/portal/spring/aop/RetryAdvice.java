@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.HashMap;
@@ -35,9 +36,9 @@ public class RetryAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		Retry retry = methodContextHelper.findAnnotation(Retry.class);
+		Retry retry = (Retry)annotations.get(Retry.class);
 
 		if (retry == null) {
 			return null;

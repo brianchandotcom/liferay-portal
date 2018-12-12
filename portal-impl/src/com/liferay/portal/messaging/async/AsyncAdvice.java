@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.MethodContextHelper;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
@@ -62,11 +62,11 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
-		MethodContextHelper methodContextHelper) {
+		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		Async async = methodContextHelper.findAnnotation(Async.class);
+		Annotation annotation = annotations.get(Async.class);
 
-		if (async == null) {
+		if (annotation == null) {
 			return null;
 		}
 

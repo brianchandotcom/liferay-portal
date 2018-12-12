@@ -23,7 +23,7 @@
 			<%
 			List<String> languageIds = new ArrayList<String>();
 
-			Locale defaultLocale = LocaleUtil.getSiteDefault();
+			Locale defaultLocale = defaultEditLocale;
 
 			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 

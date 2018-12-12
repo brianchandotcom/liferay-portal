@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTas
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -707,6 +708,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		if (Boolean.parseBoolean(force)) {
 			return;
+		}
+
+		Project project = task.getProject();
+
+		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class) &&
+			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
+
+			task.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 		}
 
 		task.onlyIf(

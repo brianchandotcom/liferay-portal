@@ -33,6 +33,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -56,6 +57,11 @@ public class AssetListEntryStagingTest {
 		setUpPermissionThreadLocal();
 
 		_liveGroup = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -162,29 +168,28 @@ public class AssetListEntryStagingTest {
 
 	@Test
 	public void testPublishUpdateAssetList() throws PortalException {
-		AssetListTestUtil.addAssetListEntry(
+		AssetListEntry liveAsset = AssetListTestUtil.addAssetListEntry(
 			_liveGroup.getGroupId(), "Test Title Original");
 
 		_stagingGroup = AssetListStagingTestUtil.enableLocalStaging(
 			_liveGroup, true);
 
-		AssetListEntry liveAsset = AssetListEntryServiceUtil.getAssetListEntry(
-			_liveGroup.getGroupId(), "Test Title Original");
-
 		AssetListEntry stagingAsset =
-			AssetListEntryServiceUtil.getAssetListEntry(
-				_stagingGroup.getGroupId(), "Test Title Original");
+			AssetListEntryLocalServiceUtil.fetchAssetListEntryByUuidAndGroupId(
+				liveAsset.getUuid(), _stagingGroup.getGroupId());
+
+		Assert.assertEquals(stagingAsset.getTitle(), liveAsset.getTitle());
 
 		stagingAsset = AssetListEntryServiceUtil.updateAssetListEntry(
 			stagingAsset.getAssetListEntryId(), "Test Title Edit");
 
 		AssetListStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
 
-		liveAsset = AssetListEntryServiceUtil.getAssetListEntry(
-			_liveGroup.getGroupId(), "Test Title Edit");
+		liveAsset =
+			AssetListEntryLocalServiceUtil.fetchAssetListEntryByUuidAndGroupId(
+				stagingAsset.getUuid(), _liveGroup.getGroupId());
 
-		stagingAsset = AssetListEntryServiceUtil.getAssetListEntry(
-			_stagingGroup.getGroupId(), "Test Title Edit");
+		Assert.assertEquals(stagingAsset.getTitle(), liveAsset.getTitle());
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

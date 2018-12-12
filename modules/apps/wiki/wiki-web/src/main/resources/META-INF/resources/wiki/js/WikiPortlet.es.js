@@ -1,5 +1,5 @@
 import core from 'metal';
-import { EventHandler } from 'metal-events';
+import {EventHandler} from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
@@ -9,6 +9,7 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * @extends {Component}
  */
 class WikiPortlet extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -26,33 +27,53 @@ class WikiPortlet extends PortletBase {
 			this.currentFormatLabel = formatSelect.options[formatSelect.selectedIndex].text.trim();
 			this.currentFormatIndex = formatSelect.selectedIndex;
 
-			this.eventHandler_.add(formatSelect.addEventListener('change', (e) => {
-				this.changeWikiFormat_(e);
-			}));
+			this.eventHandler_.add(
+				formatSelect.addEventListener(
+					'change',
+					(e) => {
+						this.changeWikiFormat_(e);
+					}
+				)
+			);
 		}
 
 		let publishButton = this.one('#publishButton');
 
 		if (publishButton) {
-			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {
-				this.publishPage_(e);
-			}));
+			this.eventHandler_.add(
+				publishButton.addEventListener(
+					'click',
+					(e) => {
+						this.publishPage_(e);
+					}
+				)
+			);
 		}
 
 		let saveButton = this.one('#saveButton');
 
 		if (saveButton) {
-			this.eventHandler_.add(saveButton.addEventListener('click', (e) => {
-				this.saveDraft_(e);
-			}));
+			this.eventHandler_.add(
+				saveButton.addEventListener(
+					'click',
+					(e) => {
+						this.saveDraft_(e);
+					}
+				)
+			);
 		}
 
 		let searchContainerId = this.ns('pageAttachments');
 
 		Liferay.componentReady(searchContainerId).then(
 			(searchContainer) => {
-				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
-					'click', this.removeAttachment_.bind(this), '.delete-attachment'));
+				this.eventHandler_.add(
+					searchContainer.get('contentBox').delegate(
+						'click',
+						this.removeAttachment_.bind(this),
+						'.delete-attachment'
+					)
+				);
 
 				this.searchContainer_ = searchContainer;
 			}
@@ -80,7 +101,8 @@ class WikiPortlet extends PortletBase {
 		if (confirm(confirmMessage)) {
 			this.one('form').setAttribute('action', this.renderUrl);
 			this.save_();
-		} else {
+		}
+		else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
 		}
 	}
@@ -140,6 +162,7 @@ class WikiPortlet extends PortletBase {
 	 */
 	removeTempImages_() {
 		let tempImages = this.all('img[data-random-id]');
+		let discardTempImages = true;
 
 		if (tempImages.length > 0) {
 			if (confirm(this.strings.confirmDiscardImages)) {
@@ -148,12 +171,13 @@ class WikiPortlet extends PortletBase {
 						node.parentElement.remove();
 					}
 				);
-			} else {
-				return false;
+			}
+			else {
+				discardTempImages = false;
 			}
 		}
 
-		return true;
+		return discardTempImages;
 	}
 
 	/**
@@ -199,6 +223,7 @@ class WikiPortlet extends PortletBase {
  * @type {!Object}
  */
 WikiPortlet.STATE = {
+
 	/**
 	 * Portlet's constants
 	 * @instance

@@ -18,22 +18,29 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -95,6 +102,49 @@ public class WebSiteCollectionResourceTest {
 	}
 
 	@Test
+	public void testGetGroupWrapperGetPrivateURL() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			ThemeDisplay themeDisplay = getThemeDisplay(
+				group, Locale.getDefault());
+
+			String privateURL = _getPrivateURL(group, themeDisplay);
+
+			Assert.assertNotNull(privateURL);
+			Assert.assertTrue(
+				privateURL.endsWith(
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+							group.getFriendlyURL()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetGroupWrapperGetPublicURL() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			ThemeDisplay themeDisplay = getThemeDisplay(
+				group, Locale.getDefault());
+
+			String publicURL = _getPublicURL(group, themeDisplay);
+
+			Assert.assertNotNull(publicURL);
+			Assert.assertTrue(
+				publicURL.endsWith(
+					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+						group.getFriendlyURL()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
+	@Test
 	public void testGetInactiveGroup() throws Throwable {
 		Group group = GroupTestUtil.addGroup();
 
@@ -127,7 +177,49 @@ public class WebSiteCollectionResourceTest {
 		themeDisplay.setCompany(company);
 
 		themeDisplay.setLocale(locale);
+		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+
+		LayoutTestUtil.addLayout(
+			group.getGroupId(), true,
+			new HashMap<Locale, String>() {
+				{
+					put(LocaleUtil.US, RandomTestUtil.randomString());
+					put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
+				}
+			},
+			new HashMap<Locale, String>() {
+				{
+					put(
+						LocaleUtil.US,
+						StringPool.SLASH + RandomTestUtil.randomString());
+					put(
+						LocaleUtil.SPAIN,
+						StringPool.SLASH + RandomTestUtil.randomString());
+				}
+			});
+
+		Layout layout = LayoutTestUtil.addLayout(
+			group.getGroupId(), false,
+			new HashMap<Locale, String>() {
+				{
+					put(LocaleUtil.US, RandomTestUtil.randomString());
+					put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
+				}
+			},
+			new HashMap<Locale, String>() {
+				{
+					put(
+						LocaleUtil.US,
+						StringPool.SLASH + RandomTestUtil.randomString());
+					put(
+						LocaleUtil.SPAIN,
+						StringPool.SLASH + RandomTestUtil.randomString());
+				}
+			});
+
+		themeDisplay.setLayout(layout);
 
 		return themeDisplay;
 	}
@@ -169,6 +261,30 @@ public class WebSiteCollectionResourceTest {
 
 		return (PageItems)method.invoke(
 			_collectionResource, pagination, themeDisplay);
+	}
+
+	private String _getPrivateURL(Group group, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Group finalGroup = _getGroupWrapper(group.getGroupId(), themeDisplay);
+
+		Class<? extends Group> clazz = finalGroup.getClass();
+
+		Method method = clazz.getDeclaredMethod("getPrivateURL");
+
+		return (String)method.invoke(finalGroup);
+	}
+
+	private String _getPublicURL(Group group, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Group finalGroup = _getGroupWrapper(group.getGroupId(), themeDisplay);
+
+		Class<? extends Group> clazz = finalGroup.getClass();
+
+		Method method = clazz.getDeclaredMethod("getPublicURL");
+
+		return (String)method.invoke(finalGroup);
 	}
 
 	@Inject(

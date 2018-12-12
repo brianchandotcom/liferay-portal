@@ -89,12 +89,17 @@ public class FunctionalPortalTestBatch
 		sb.append("<ul>");
 
 		for (String test : portalBatchBuildData.getTestList()) {
+			String testName = test.replace("#", "_");
+
+			if (!testName.matches("[^\\.]+\\.[^_]+_.+")) {
+				testName = "LocalFile." + testName;
+			}
+
 			String poshiReportBaseURL = JenkinsResultsParserUtil.combine(
 				"https://", portalBatchBuildData.getTopLevelMasterHostname(),
 				".liferay.com/userContent/",
 				portalBatchBuildData.getUserContentRelativePath(),
-				portalBatchBuildData.getRunID(), "/LocalFile.",
-				test.replace("#", "_"));
+				portalBatchBuildData.getRunID(), "/", testName);
 
 			sb.append("<li>");
 			sb.append(test);

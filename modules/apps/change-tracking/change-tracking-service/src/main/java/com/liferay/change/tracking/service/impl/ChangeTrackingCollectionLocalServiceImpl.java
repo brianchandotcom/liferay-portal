@@ -34,7 +34,8 @@ import java.util.List;
 public class ChangeTrackingCollectionLocalServiceImpl
 	extends ChangeTrackingCollectionLocalServiceBaseImpl {
 
-	public ChangeTrackingCollection addCollection(
+	@Override
+	public ChangeTrackingCollection addChangeTrackingCollection(
 			long companyId, long userId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -43,71 +44,79 @@ public class ChangeTrackingCollectionLocalServiceImpl
 
 		long id = counterLocalService.increment();
 
-		ChangeTrackingCollection collection =
+		ChangeTrackingCollection changeTrackingCollection =
 			changeTrackingCollectionPersistence.create(id);
 
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
-		collection.setCompanyId(companyId);
-		collection.setUserId(user.getUserId());
-		collection.setUserName(user.getFullName());
-		collection.setCreateDate(serviceContext.getCreateDate(now));
-		collection.setModifiedDate(serviceContext.getModifiedDate(now));
+		changeTrackingCollection.setCompanyId(companyId);
+		changeTrackingCollection.setUserId(user.getUserId());
+		changeTrackingCollection.setUserName(user.getFullName());
+		changeTrackingCollection.setCreateDate(
+			serviceContext.getCreateDate(now));
+		changeTrackingCollection.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+		changeTrackingCollection.setName(name);
+		changeTrackingCollection.setDescription(description);
+		changeTrackingCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		collection.setName(name);
-		collection.setDescription(description);
-		collection.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		return changeTrackingCollectionPersistence.update(collection);
+		return changeTrackingCollectionPersistence.update(
+			changeTrackingCollection);
 	}
 
 	@Override
-	public ChangeTrackingCollection deleteCollection(
-		ChangeTrackingCollection collection) {
+	public ChangeTrackingCollection deleteChangeTrackingCollection(
+		ChangeTrackingCollection changeTrackingCollection) {
 
-		List<ChangeTrackingEntry> entries =
+		List<ChangeTrackingEntry> changeTrackingEntries =
 			changeTrackingCollectionPersistence.getChangeTrackingEntries(
-				collection.getChangeTrackingCollectionId());
+				changeTrackingCollection.getChangeTrackingCollectionId());
 
-		for (ChangeTrackingEntry entry : entries) {
+		for (ChangeTrackingEntry changeTrackingEntry : changeTrackingEntries) {
 			int collectionsSize =
 				changeTrackingEntryPersistence.getChangeTrackingCollectionsSize(
-					collection.getChangeTrackingCollectionId());
+					changeTrackingCollection.getChangeTrackingCollectionId());
 
 			if (collectionsSize > 1) {
 				continue;
 			}
 
-			changeTrackingEntryLocalService.deleteChangeTrackingEntry(entry);
+			changeTrackingEntryLocalService.deleteChangeTrackingEntry(
+				changeTrackingEntry);
 		}
 
-		changeTrackingCollectionPersistence.remove(collection);
+		changeTrackingCollectionPersistence.remove(changeTrackingCollection);
 		changeTrackingCollectionPersistence.clearChangeTrackingEntries(
-			collection.getChangeTrackingCollectionId());
+			changeTrackingCollection.getChangeTrackingCollectionId());
 
-		return collection;
+		return changeTrackingCollection;
 	}
 
 	@Override
-	public void deleteCollection(long companyId) {
-		List<ChangeTrackingCollection> collections =
+	public void deleteCompanyChangeTrackingCollections(long companyId) {
+		List<ChangeTrackingCollection> changeTrackingCollections =
 			changeTrackingCollectionPersistence.findByCompanyId(companyId);
 
-		for (ChangeTrackingCollection collection : collections) {
-			changeTrackingCollectionLocalService.deleteCollection(collection);
+		for (ChangeTrackingCollection changeTrackingCollection :
+				changeTrackingCollections) {
+
+			changeTrackingCollectionLocalService.deleteChangeTrackingCollection(
+				changeTrackingCollection);
 		}
 	}
 
 	@Override
-	public ChangeTrackingCollection fetchCollection(
+	public ChangeTrackingCollection fetchChangeTrackingCollection(
 		long companyId, String name) {
 
 		return changeTrackingCollectionPersistence.fetchByC_N(companyId, name);
 	}
 
 	@Override
-	public List<ChangeTrackingCollection> getCollections(long companyId) {
+	public List<ChangeTrackingCollection> getChangeTrackingCollections(
+		long companyId) {
+
 		return changeTrackingCollectionPersistence.findByCompanyId(companyId);
 	}
 

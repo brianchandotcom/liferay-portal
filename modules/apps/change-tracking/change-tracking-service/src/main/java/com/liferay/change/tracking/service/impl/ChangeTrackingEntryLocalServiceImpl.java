@@ -33,57 +33,64 @@ public class ChangeTrackingEntryLocalServiceImpl
 	extends ChangeTrackingEntryLocalServiceBaseImpl {
 
 	@Override
-	public ChangeTrackingEntry addEntry(
-			long companyId, long userId, long collectionId, long classNameId,
-			long classPK, long resourcePrimKey, ServiceContext serviceContext)
+	public ChangeTrackingEntry addChangeTrackingEntry(
+			long companyId, long userId, long changeTrackingCollectionId,
+			long classNameId, long classPK, long resourcePrimKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(collectionId, classNameId, classPK);
+		_validate(changeTrackingCollectionId, classNameId, classPK);
 
 		long id = counterLocalService.increment();
 
-		ChangeTrackingEntry entry = changeTrackingEntryPersistence.create(id);
+		ChangeTrackingEntry changeTrackingEntry =
+			changeTrackingEntryPersistence.create(id);
 
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
-		entry.setCompanyId(companyId);
-		entry.setUserId(user.getUserId());
-		entry.setUserName(user.getFullName());
-		entry.setCreateDate(serviceContext.getCreateDate(now));
-		entry.setModifiedDate(serviceContext.getModifiedDate(now));
+		changeTrackingEntry.setCompanyId(companyId);
+		changeTrackingEntry.setUserId(user.getUserId());
+		changeTrackingEntry.setUserName(user.getFullName());
+		changeTrackingEntry.setCreateDate(serviceContext.getCreateDate(now));
+		changeTrackingEntry.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+		changeTrackingEntry.setClassNameId(classNameId);
+		changeTrackingEntry.setClassPK(classPK);
+		changeTrackingEntry.setResourcePrimKey(resourcePrimKey);
 
-		entry.setClassNameId(classNameId);
-		entry.setClassPK(classPK);
-		entry.setResourcePrimKey(resourcePrimKey);
-
-		entry = changeTrackingEntryPersistence.update(entry);
+		changeTrackingEntry = changeTrackingEntryPersistence.update(
+			changeTrackingEntry);
 
 		changeTrackingCollectionLocalService.
 			addChangeTrackingEntryChangeTrackingCollection(
-				entry.getChangeTrackingEntryId(), collectionId);
+				changeTrackingEntry.getChangeTrackingEntryId(),
+				changeTrackingCollectionId);
 
-		return entry;
+		return changeTrackingEntry;
 	}
 
-	private void _validate(long collectionId, long classNameId, long classPK)
+	private void _validate(
+			long changeTrackingCollectionId, long classNameId, long classPK)
 		throws PortalException {
 
 		changeTrackingCollectionLocalService.getChangeTrackingCollection(
-			collectionId);
+			changeTrackingCollectionId);
 
-		List<ChangeTrackingEntry> entries =
+		List<ChangeTrackingEntry> changeTrackingEntries =
 			changeTrackingEntryPersistence.findByC_C(classNameId, classPK);
 
-		for (ChangeTrackingEntry entry : entries) {
-			List<ChangeTrackingCollection> collections =
+		for (ChangeTrackingEntry changeTrackingEntry : changeTrackingEntries) {
+			List<ChangeTrackingCollection> changeTrackingCollections =
 				changeTrackingCollectionLocalService.
 					getChangeTrackingEntryChangeTrackingCollections(
-						entry.getChangeTrackingEntryId());
+						changeTrackingEntry.getChangeTrackingEntryId());
 
-			for (ChangeTrackingCollection collection : collections) {
-				if (collection.getChangeTrackingCollectionId() ==
-						collectionId) {
+			for (ChangeTrackingCollection changeTrackingCollection :
+					changeTrackingCollections) {
+
+				if (changeTrackingCollection.getChangeTrackingCollectionId() ==
+						changeTrackingCollectionId) {
 
 					throw new DuplicateCTEEntryException();
 				}

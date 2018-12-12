@@ -103,6 +103,13 @@ public abstract class BaseFailureMessageGenerator
 	}
 
 	protected Element getConsoleTextSnippetElement(
+		String consoleText, boolean truncateTop, int start, int end) {
+
+		return Dom4JUtil.toCodeSnippetElement(
+			_getConsoleTextSnippet(consoleText, truncateTop, start, end));
+	}
+
+	protected Element getConsoleTextSnippetElementByEnd(
 		String consoleText, boolean truncateTop, int end) {
 
 		if (end == -1) {
@@ -115,8 +122,13 @@ public abstract class BaseFailureMessageGenerator
 			consoleText, truncateTop, start, end);
 	}
 
-	protected Element getConsoleTextSnippetElement(
-		String consoleText, boolean truncateTop, int start, int end) {
+	protected Element getConsoleTextSnippetElementByStart(
+		String consoleText, boolean truncateTop, int start) {
+
+		int end = Math.min(
+			start + MAX_CONSOLE_TEXT_SNIPPET_LENGTH, consoleText.length() - 1);
+
+		end = consoleText.lastIndexOf("\n", end);
 
 		return Dom4JUtil.toCodeSnippetElement(
 			_getConsoleTextSnippet(consoleText, truncateTop, start, end));

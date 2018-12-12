@@ -42,7 +42,7 @@ public class GenericFailureMessageGenerator
 			return message;
 		}
 
-		return getConsoleTextSnippetElement(consoleText, true, -1);
+		return getConsoleTextSnippetElementByEnd(consoleText, true, -1);
 	}
 
 	protected String getBuildFailedSnippet(String consoleText) {
@@ -66,7 +66,7 @@ public class GenericFailureMessageGenerator
 
 		end = consoleText.indexOf("Total time:", end);
 
-		return getConsoleTextSnippetElement(consoleText, true, end);
+		return getConsoleTextSnippetElementByEnd(consoleText, true, end);
 	}
 
 	protected String getExceptionSnippet(String consoleText) {
@@ -90,7 +90,7 @@ public class GenericFailureMessageGenerator
 
 		end = consoleText.indexOf("\n", end + 500);
 
-		return getConsoleTextSnippetElement(consoleText, true, end);
+		return getConsoleTextSnippetElementByEnd(consoleText, true, end);
 	}
 
 	protected String getMergeTestResultsSnippet(String consoleText) {
@@ -110,7 +110,7 @@ public class GenericFailureMessageGenerator
 			return null;
 		}
 
-		return getConsoleTextSnippetElement(consoleText, true, end);
+		return getConsoleTextSnippetElementByEnd(consoleText, true, end);
 	}
 
 }

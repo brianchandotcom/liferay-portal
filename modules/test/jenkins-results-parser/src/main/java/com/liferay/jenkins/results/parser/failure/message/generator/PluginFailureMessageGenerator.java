@@ -94,7 +94,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getGitCommitPluginsAnchorElement(topLevelBuild), ". Click ",
 				Dom4JUtil.getNewAnchorElement(_BLOG_URL, "here"),
 				" for more details.",
-				getConsoleTextSnippetElement(consoleText, true, end));
+				getConsoleTextSnippetElementByEnd(consoleText, true, end));
 		}
 
 		return messageElement;

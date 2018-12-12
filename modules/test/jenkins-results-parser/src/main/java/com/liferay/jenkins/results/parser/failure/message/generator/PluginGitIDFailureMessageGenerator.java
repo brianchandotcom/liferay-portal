@@ -47,7 +47,7 @@ public class PluginGitIDFailureMessageGenerator
 			" to an existing Git ID from ",
 			Dom4JUtil.getNewElement(
 				"strong", null, getPluginsBranchAnchorElement(topLevelBuild)),
-			".", getConsoleTextSnippetElement(consoleText, true, end));
+			".", getConsoleTextSnippetElementByEnd(consoleText, true, end));
 
 		return messageElement;
 	}

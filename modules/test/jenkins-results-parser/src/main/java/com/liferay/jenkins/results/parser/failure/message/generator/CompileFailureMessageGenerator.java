@@ -29,7 +29,7 @@ public class CompileFailureMessageGenerator
 		if (end != -1) {
 			end = consoleText.indexOf("\n", end);
 
-			return getConsoleTextSnippetElement(consoleText, false, end);
+			return getConsoleTextSnippetElementByEnd(consoleText, false, end);
 		}
 
 		int start = consoleText.indexOf("compileJava FAILED");
@@ -37,13 +37,8 @@ public class CompileFailureMessageGenerator
 		if (start != -1) {
 			start = consoleText.lastIndexOf("\n", start);
 
-			end = Math.min(
-				start + MAX_CONSOLE_TEXT_SNIPPET_LENGTH,
-				consoleText.length() - 1);
-
-			end = consoleText.lastIndexOf("\n", end);
-
-			return getConsoleTextSnippetElement(consoleText, false, start, end);
+			return getConsoleTextSnippetElementByStart(
+				consoleText, false, start);
 		}
 
 		return null;

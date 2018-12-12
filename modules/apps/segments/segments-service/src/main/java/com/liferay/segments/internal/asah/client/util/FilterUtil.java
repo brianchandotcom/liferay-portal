@@ -62,4 +62,7 @@ public class FilterUtil {
 		return sb.toString();
 	}
 
+	private FilterUtil() {
+	}
+
 }

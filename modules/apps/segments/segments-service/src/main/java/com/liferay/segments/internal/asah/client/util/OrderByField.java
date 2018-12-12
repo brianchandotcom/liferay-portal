@@ -21,11 +21,19 @@ package com.liferay.segments.internal.asah.client.util;
 public class OrderByField {
 
 	public static OrderByField asc(String fieldName) {
-		return new OrderByField(fieldName, "asc");
+		return new OrderByField(fieldName, "asc", false);
+	}
+
+	public static OrderByField asc(String fieldName, boolean system) {
+		return new OrderByField(fieldName, "asc", system);
 	}
 
 	public static OrderByField desc(String fieldName) {
-		return new OrderByField(fieldName, "desc");
+		return new OrderByField(fieldName, "desc", false);
+	}
+
+	public static OrderByField desc(String fieldName, boolean system) {
+		return new OrderByField(fieldName, "desc", system);
 	}
 
 	public String getFieldName() {
@@ -36,12 +44,18 @@ public class OrderByField {
 		return _orderBy;
 	}
 
-	private OrderByField(String fieldName, String orderBy) {
+	public boolean isSystem() {
+		return _system;
+	}
+
+	private OrderByField(String fieldName, String orderBy, boolean system) {
 		_fieldName = fieldName;
 		_orderBy = orderBy;
+		_system = system;
 	}
 
 	private final String _fieldName;
 	private final String _orderBy;
+	private final boolean _system;
 
 }

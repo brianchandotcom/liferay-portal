@@ -25,8 +25,19 @@ public class FilterConstants {
 	public static final String COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL =
 		" ge ";
 
+	public static final String COMPARISON_OPERATOR_NOT_EQUALS = " ne ";
+
+	public static final String FIELD_NAME_CONTEXT_INDIVIDUAL =
+		"demographics/?/value";
+
+	public static final String FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT =
+		"fields/?/value";
+
 	public static final String LOGICAL_OPERATOR_AND = " and ";
 
 	public static final String LOGICAL_OPERATOR_OR = " or ";
+
+	private FilterConstants() {
+	}
 
 }

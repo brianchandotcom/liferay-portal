@@ -2,7 +2,10 @@
 	@import "variables";
 
 	@import "clay_button";
-	@import "clay_criteria_builder";
-	@import "clay_criteria_group";
-	@import "clay_criteria_row";
+	@import "criteria_builder";
+	@import "criteria_group";
+	@import "criteria_row";
+	@import "criteria_sidebar";
+	@import "drop_zone";
+	@import "empty_drop_zone";
 }

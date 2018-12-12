@@ -1,0 +1,40 @@
+.empty-drop-zone-root {
+	.empty-drop-zone-target {
+		.empty-drop-zone-indicator {
+			background-color: $primary;
+			height: 2px;
+			visibility: hidden;
+			width: 100%;
+		}
+
+		.empty-drop-zone-help-message {
+			padding: 14px 24px 16px 24px;
+
+			.message-icon {
+				margin-right: 16px;
+			}
+
+			.message-item {
+				align-items: center;
+				color: $mainLighten28;
+				display: flex;
+				font-size: 12px;
+				font-weight: 600;
+
+				&:not(:last-child) {
+					margin-bottom: 16px;
+				}
+			}
+		}
+
+		&.dnd-hover {
+			.empty-drop-zone-help-message {
+				visibility: hidden;
+			}
+
+			.empty-drop-zone-indicator {
+				visibility: visible;
+			}
+		}
+	}
+}

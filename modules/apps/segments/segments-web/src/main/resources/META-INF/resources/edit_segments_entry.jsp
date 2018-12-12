@@ -114,9 +114,11 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 								{
 									initialQuery: '<%= (criterion != null) ? HtmlUtil.escapeJS(criterion.getFilterString()) : StringPool.BLANK %>',
 									inputId: '<%= renderResponse.getNamespace() + "criterionFilter" + segmentsCriteriaContributor.getKey() %>',
+									modelLabel: '<liferay-ui:message key="user" />',
 									properties: <%= JSONFactoryUtil.looseSerialize(segmentsCriteriaContributor.getFields(locale)) %>
 								},
 								{
+									assetsPath: '<%= PortalUtil.getPathContext(request) %>/assets/',
 									spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 								}
 							);

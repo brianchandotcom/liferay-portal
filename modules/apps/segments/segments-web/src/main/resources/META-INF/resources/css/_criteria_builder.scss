@@ -1,0 +1,49 @@
+.criteria-builder-root {
+	display: flex;
+	height: 800px;
+	max-width: 1280px;
+
+	.criteria-builder-section-main {
+		flex: 1;
+		overflow: auto;
+		padding-right: 16px;
+	}
+
+	.criteria-builder-section-sidebar {
+		width: 380px;
+	}
+
+	.criteria-builder-toolbar {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 16px;
+		width: 100%;
+	}
+
+	.drag-icon {
+		color: $mainLighten52;
+
+		&:active {
+			cursor: grabbing;
+		}
+
+		&:hover {
+			cursor: grab;
+		}
+	}
+
+	.empty-state {
+		background-color: $lightBackground;
+		border: 1px solid $mainLighten74;
+		border-left: 3px solid $chartBlue;
+		border-radius: 4px;
+		color: $mainLighten28;
+		cursor: pointer;
+		font-weight: 600;
+		padding: 16px 32px;
+	}
+
+	&.read-only .criteria-group-root.criteria-group-item {
+		padding: 8px;
+	}
+}

@@ -1,0 +1,64 @@
+.criteria-sidebar-root {
+	background-color: $white;
+	border: 1px solid $mainLighten74;
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+
+	.properties-list {
+		list-style: none;
+		height: 100%;
+		margin: 0;
+		overflow: auto;
+		padding: 0;
+
+		.criteria-sidebar-item-root {
+			align-items: center;
+			border-left: 3px solid $chartBlue;
+			display: flex;
+			font-size: 14px;
+			margin: 4px 0;
+			padding: 8px 16px 8px 8px;
+
+			.criteria-sidebar-item-type {
+				margin: 0 8px;
+			}
+
+			.lexicon-icon-drag {
+				color: $mainLighten52;
+			}
+
+			&.dragging {
+				opacity: 0.4;
+			}
+
+			&:active {
+				cursor: grabbing;
+			}
+
+			&:hover {
+				cursor: grab;
+			}
+		}
+
+		.empty-message {
+			align-items: center;
+			display: flex;
+			font-weight: 600;
+			height: 100%;
+			justify-content: center;
+		}
+	}
+
+	.sidebar-header {
+		border-bottom: 1px solid $mainLighten74;
+		font-size: 16px;
+		font-weight: 600;
+		padding: 16px 24px;
+	}
+
+	.sidebar-search {
+		border-bottom: 1px solid $mainLighten74;
+		padding: 16px 24px;
+	}
+}

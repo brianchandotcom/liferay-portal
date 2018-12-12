@@ -4,6 +4,7 @@ import {
 	GROUP,
 	RELATIONAL_OPERATORS
 } from './constants.es';
+import {generateGroupId} from './utils.es';
 import '../libs/odata-parser.js';
 
 const OPERATORS = {
@@ -51,12 +52,10 @@ function addNewGroup({oDataASTNode, prevConjunction}) {
  * @returns An OData query string built from the criteria object.
  */
 function buildQueryString(criteria, queryConjunction) {
-	let queryString = '';
-
-	criteria
+	return criteria
 		.filter(Boolean)
-		.forEach(
-			(criterion, index) => {
+		.reduce(
+			(queryString, criterion, index) => {
 				const {
 					conjunctionName,
 					items,
@@ -84,10 +83,11 @@ function buildQueryString(criteria, queryConjunction) {
 						`${operatorName} (${propertyName}, '${value}')`
 					);
 				}
-			}
-		);
 
-	return queryString;
+				return queryString;
+			},
+			''
+		);
 }
 
 /**
@@ -160,12 +160,12 @@ function isCriteriaGroup(criteria) {
 
 /**
  * Checks if the value is a certain type.
- * @param {array} valueList The list of supported values.
+ * @param {object} types A map of supported types.
  * @param {*} value The value to validate.
  * @returns {boolean}
  */
-function isValueType(valueList, value) {
-	return Object.values(valueList).includes(value);
+function isValueType(types, value) {
+	return Object.values(types).includes(value);
 }
 
 /**
@@ -180,7 +180,7 @@ function isValueType(valueList, value) {
 function isRedundantGroup({lastNodeWasGroup, oDataASTNode, prevConjunction}) {
 	const nextNodeExpressionName = getNextNonGroupExpressionName(oDataASTNode);
 
-	return lastNodeWasGroup || prevConjunction === nextNodeExpressionName || !isValueType(CONJUNCTIONS, nextNodeExpressionName);
+	return lastNodeWasGroup || oDataV4ParserNameMap[prevConjunction] === nextNodeExpressionName || !isValueType(CONJUNCTIONS, nextNodeExpressionName);
 }
 
 /**
@@ -299,6 +299,7 @@ function transformGroupNode(context) {
 		toCriteria(skipGroup(context)) :
 		[{
 			conjunctionName: getConjunctionForGroup(oDataASTNode),
+			groupId: generateGroupId(),
 			items: [...toCriteria(
 				{
 					lastNodeWasGroup: true,
@@ -333,6 +334,7 @@ function transformOperatorNode({oDataASTNode}) {
 function wrapInCriteriaGroup(criteriaArray) {
 	return {
 		conjunctionName: CONJUNCTIONS.AND,
+		groupId: generateGroupId(),
 		items: criteriaArray
 	};
 }

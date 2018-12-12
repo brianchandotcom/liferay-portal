@@ -1,142 +1,140 @@
-<definition component-name="portal-permissions">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Roles" />
+@component-name = "portal-permissions"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Roles";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="PortalSettings#tearDownCP" />
+			PortalSettings.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
+			User.tearDownCP();
 
-				<execute macro="Role#tearDownCP" />
+			Role.tearDownCP();
 
-				<execute macro="Organization#tearDownCP" />
+			Organization.tearDownCP();
 
-				<execute macro="Site#tearDownCP" />
+			Site.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ViewDocumentsAndMediaPortletRegRole" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletRegRole" />
+	@priority = "5"
+	test ViewDocumentsAndMediaPortletRegRole {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletRegRole";
 
-		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="portletName" value="Documents and Media" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Permissions.setUpRegRoleLoginUserCP(
+			portletName = "Documents and Media",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.document.library" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMPortlet#viewNoPermissionCP" />
-	</command>
+		DMPortlet.viewNoPermissionCP();
+	}
 
-	<command name="ViewDocumentsAndMediaPortletSiteRole" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="portletName" value="Documents and Media" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+	@priority = "4"
+	test ViewDocumentsAndMediaPortletSiteRole {
+		Permissions.setUpSiteRoleLoginUserCP(
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.document.library" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMPortlet#viewNoPermissionCP" />
-	</command>
-</definition>
+		DMPortlet.viewNoPermissionCP();
+	}
+}

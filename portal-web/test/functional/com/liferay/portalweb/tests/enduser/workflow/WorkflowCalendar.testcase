@@ -1,484 +1,402 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
-	<property name="testray.main.component.name" value="Workflow" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Calendar" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-			<var name="workflow" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Calendar Page" />
-				</execute>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
-
-				<execute macro="Calendar#tearDown" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ApproveEventWithInvitedUser" priority="5">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithApprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-			<var name="userCalendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewInvitedUserRSVPWithApprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-			<var name="userCalendarName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteAndRestoreEvent" priority="3">
-		<description message="This is a use case for LPS-59572." />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteSpecific">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMe">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteSpecific">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithApprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-			<var name="userCalendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewInvitedUserRSVPWithApprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-			<var name="userCalendarName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RejectEventWithInvitedUser" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="Calendar Event Title" />
-			<var name="workflowAssetType" value="Calendar Event" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="${siteName}" />
-			<var name="userCalendarName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewPendingStatusInEventDetails" priority="2">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#addEventToday">
-			<var name="eventTitle" value="Calendar Event Today Week" />
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
-
-		<execute macro="CalendarEvent#viewStatusViaDetails">
-			<var name="status" value="Pending" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property testray.main.component.name = "Workflow";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "Test Test",
+			workflow = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			Page.tearDownPG();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@priority = "5"
+	test ApproveEventWithInvitedUser {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		var siteName = TestCase.getSiteName();
+
+		CalendarNavigator.gotoView(viewType = "Day");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewNoUserInviteWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithApprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes",
+			userCalendarName = "Test Test"
+		);
+
+		CalendarEvent.viewInvitedUserRSVPWithApprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}",
+			userCalendarName = "Test Test"
+		);
+	}
+
+	@description = "This is a use case for LPS-59572."
+	@priority = "3"
+	test DeleteAndRestoreEvent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.deleteSpecific(eventTitle = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event Title",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewDefaultMyWorkflowTasksCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreCP(assetName = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewTaskAssignedToMe(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.deleteSpecific(eventTitle = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event Title",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewDefaultMyWorkflowTasksCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreCP(assetName = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithApprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes",
+			userCalendarName = "Test Test"
+		);
+
+		CalendarEvent.viewInvitedUserRSVPWithApprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}",
+			userCalendarName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test RejectEventWithInvitedUser {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewNoUserInviteWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}"
+		);
+
+		CalendarEvent.viewNoUserInviteWithUnapprovedWorkflow(
+			eventTitle = "Calendar Event Title",
+			siteCalendarName = "${siteName}",
+			userCalendarName = "Test Test"
+		);
+	}
+
+	@priority = "2"
+	test ViewPendingStatusInEventDetails {
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.addEventToday(
+			eventTitle = "Calendar Event Today Week",
+			viewType = "Week"
+		);
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.viewStatusViaDetails(status = "Pending");
+	}
+}

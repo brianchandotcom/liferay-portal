@@ -1,82 +1,67 @@
-<definition component-name="portal-util-misc">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Nested Portlets" />
-	<property name="testray.main.component.name" value="Nested Portlets" />
+@component-name = "portal-util-misc"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Nested Portlets";
+	property testray.main.component.name = "Nested Portlets";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="ViewWCDNestedPortlets" priority="5">
-		<property name="testray.component.names" value="Training" />
+	@priority = "5"
+	test ViewWCDNestedPortlets {
+		property testray.component.names = "Training";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Nested Portlets Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Web Content Display"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Nested Applications" />
-		</execute>
+		Portlet.addPG(portletName = "Nested Applications");
 
-		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate">
-			<var name="portletName" value="Nested Applications" />
-		</execute>
+		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
+			portletName = "Nested Applications"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
-		<execute macro="NestedPortlets#dragAndDropPortletToPortletColumnPG">
-			<var name="columnNumberFrom" value="2" />
-			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		NestedPortlets.dragAndDropPortletToPortletColumnPG(
+			columnNumberFrom = "2",
+			portletColumnNumberTo = "1",
+			portletName = "Web Content Display"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
-		<execute macro="NestedPortlets#viewPG">
-			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</command>
-</definition>
+		NestedPortlets.viewPG(
+			portletColumnNumberTo = "1",
+			portletName = "Web Content Display"
+		);
+	}
+}

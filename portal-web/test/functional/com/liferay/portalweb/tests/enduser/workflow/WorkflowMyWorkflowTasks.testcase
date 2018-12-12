@@ -1,795 +1,759 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
-
-	<var name="workflowAssetType" value="Blogs Entry" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Workflow#tearDownPortalWorkflow" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Role#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddCommentToTaskAssignedToMe" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-	</command>
-
-	<command name="AddCommentToTaskAssignedToMyRoles" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Assigned to My Roles" />
-		</execute>
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Assigned to My Roles" />
-		</execute>
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-	</command>
-
-	<command name="AddCommentToTaskCompleted" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-	</command>
-
-	<command name="ApproveResubmitTaskByActions" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#resubmitTaskByActions">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="RejectTaskByDetails" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByDetails">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ResubmitTaskByDetails" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#resubmitTaskByDetails">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ReviewerApproveResubmitTaskByActionsUser" priority="3">
-		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Portal Content Reviewer" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
-			<var name="userLoginFullName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
-			<var name="userLoginFullName" value="userfn2 userln2" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
-			<var name="userLoginFullName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#resubmitTaskByActions">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="cards" />
-		</execute>
-
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" />
-		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Pending" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
-			<var name="userLoginFullName" value="userfn2 userln2" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
-			<var name="userLoginFullName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAuthorCP">
-			<var name="entryAuthorFullName" value="userfn1 userln1" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAuthorCP">
-			<var name="entryAuthorFullName" value="userfn1 userln1" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="UpdateDueDateTaskByActions" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#updateDueDateTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDueDateTime" value="12:45 PM" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	var workflowAssetType = "Blogs Entry";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			BlogsEntry.tearDownCP();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+
+			User.tearDownCP();
+
+			Role.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddCommentToTaskAssignedToMe {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.add(workflowComment = "Workflow Comment");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.view(workflowComment = "Workflow Comment");
+	}
+
+	@priority = "3"
+	test AddCommentToTaskAssignedToMyRoles {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.add(workflowComment = "Workflow Comment");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.view(workflowComment = "Workflow Comment");
+	}
+
+	@priority = "3"
+	test AddCommentToTaskCompleted {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.gotoCompletedFilter();
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.add(workflowComment = "Workflow Comment");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.gotoCompletedFilter();
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
+
+		WorkflowComment.view(workflowComment = "Workflow Comment");
+	}
+
+	@priority = "4"
+	test ApproveResubmitTaskByActions {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.resubmitTaskByActions(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Update"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test RejectTaskByDetails {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByDetails(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "5"
+	test ResubmitTaskByDetails {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.resubmitTaskByDetails(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Update"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test ReviewerApproveResubmitTaskByActionsUser {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site Administration",
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			permissionNavigationValue = "Blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			permissionNavigationValue = "Blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(
+			roleTitle = "Portal Content Reviewer",
+			userScreenName = "usersn2"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.resubmitTaskByActions(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Update"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertElementPresent(locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
+
+		AssertTextEquals(locator1 = "Blogs#ICON_VIEW_ENTRY_STATUS", value1 = "Pending");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryAuthorCP(
+			entryAuthorFullName = "userfn1 userln1",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryAuthorCP(
+			entryAuthorFullName = "userfn1 userln1",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "5"
+	test UpdateDueDateTaskByActions {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.updateDueDateTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowDueDateTime = "12:45 PM",
+			workflowTask = "Review"
+		);
+	}
+}

@@ -1,69 +1,72 @@
-<definition component-name="portal-smoke">
-	<property name="portal.release" value="true" />
-	<property name="portal.smoke" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Smoke" />
-	<property name="test.assert.warning.exceptions" value="true" />
+@component-name = "portal-smoke"
+definition {
+	property portal.release = "true";
+	property portal.smoke = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Smoke";
+	property test.assert.warning.exceptions = "true";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="SignIn#signInTestSetup" />
-	</set-up>
+		SignIn.signInTestSetup();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
 
-				<execute macro="Site#tearDownCP" />
+			Site.tearDownCP();
 
-				<execute macro="WebContent#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			WebContent.tearDownCP();
+		}
+	}
 
-	<command name="Smoke" priority="5">
-		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
+	@priority = "5"
+	test Smoke {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.bare.enabled = "true";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property testray.component.names = "Training";
 
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.bare.enabled" value="true" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.runSmoke();
 
-		<execute macro="Smoke#runSmoke" />
+		// Assert mismatching checksum for release bundles
 
-		<!-- Assert mismatching checksum for release bundles -->
-		<execute function="AssertConsoleTextNotPresent" value1="Running validation because of mismatched checksum" />
-	</command>
+		AssertConsoleTextNotPresent(
+			value1 = "Running validation because of mismatched checksum"
+		);
+	}
 
-	<command name="SmokeWithDeveloperProperties" priority="5">
-		<property name="custom.properties" value="include-and-override=portal-developer.properties" />
-		<property name="osgi.module.configuration.file.names" value="com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration" />
-		<property name="osgi.module.configurations" value="cacheEnabled=&quot;false&quot;" />
-		<property name="portal.acceptance" value="true" />
-		<property name="portal.smoke" value="false" />
+	@priority = "5"
+	test SmokeWithDeveloperProperties {
+		property custom.properties = "include-and-override=portal-developer.properties";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration";
+		property osgi.module.configurations = "cacheEnabled=&quot;false&quot;";
+		property portal.acceptance = "true";
+		property portal.smoke = "false";
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="SmokeWithSPADisabled" priority="5">
-		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
-		<property name="portal.smoke" value="false" />
+	@priority = "5"
+	test SmokeWithSPADisabled {
+		property custom.properties = "javascript.single.page.application.enabled=false";
+		property portal.smoke = "false";
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
-</definition>
+		Smoke.runSmoke();
+	}
+}

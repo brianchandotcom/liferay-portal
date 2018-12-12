@@ -1,94 +1,102 @@
-<definition component-name="portal-upgrades">
-	<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.main.component.name" value="Upgrades Core Infrastructure" />
+@component-name = "portal-upgrades"
+definition {
+	property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.main.component.name = "Upgrades Core Infrastructure";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
-	</set-up>
+		Smoke.viewWelcomePage();
+	}
 
-	<command name="ViewPortalSmokeArchive612" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.1.2" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive612 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.upgrades = "true";
+		property portal.version = "6.1.2";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive6130" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.1.30" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive6130 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "6.1.30";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive621015" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.2.10.15" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "6.2.10.15";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive621021" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.2.10.21" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive621021 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "6.2.10.21";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive625" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.2.5" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.upgrades = "true";
+		property portal.version = "6.2.5";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive70106" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="7.0.10.6" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "7.0.10.6";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
 
-	<command name="ViewPortalSmokeArchive704" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="7.0.4" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test ViewPortalSmokeArchive704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.upgrades = "true";
+		property portal.version = "7.0.4";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="Upgrade#viewUpgrade" />
+		Upgrade.viewUpgrade();
 
-		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
-</definition>
+		Upgrade.searchForAssetsAfterUpgrade();
+	}
+}

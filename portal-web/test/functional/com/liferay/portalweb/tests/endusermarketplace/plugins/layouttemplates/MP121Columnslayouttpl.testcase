@@ -1,33 +1,30 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	setUp {
+		User.firstLoginPG();
+	}
 
-	<command name="121ColumnsLayouttplSmoke" priority="4">
-		<property name="layouttpl.plugins.includes" value="1-2-1-columns-layouttpl" />
+	@priority = "4"
+	test 121ColumnsLayouttplSmoke {
+		property layouttpl.plugins.includes = "1-2-1-columns-layouttpl";
+		var appName = "1-2-1 Columns Layout";
 
-		<var name="appName" value="1-2-1 Columns Layout" />
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+		AppManager.uninstallAppCP(appName = "${appName}");
 
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-</definition>
+		AppManager.viewUninstallAppCP(appName = "${appName}");
+	}
+}

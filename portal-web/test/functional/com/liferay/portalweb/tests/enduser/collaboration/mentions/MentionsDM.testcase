@@ -1,246 +1,214 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.component.names" value="Comment,Documents Management,Mentions" />
-	<property name="testray.main.component.name" value="Mentions" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.component.names = "Comment,Documents Management,Mentions";
+	property testray.main.component.name = "Mentions";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
 
-				<execute macro="DMFolder#tearDownCP" />
+			DMFolder.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
+			Page.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			User.tearDownCP();
+		}
+	}
 
-	<command name="ViewMentionViaDMComment" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "5"
+	test ViewMentionViaDMComment {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
+		Portlet.addPG(portletName = "Documents and Media");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="Mentions#addMentionViaComments">
-			<var name="entryComment" value="Comment mentioning" />
-			<var name="mentionsUserFullName" value="Test Test" />
-			<var name="mentionsUserScreenName" value="test" />
-		</execute>
+		Mentions.addMentionViaComments(
+			entryComment = "Comment mentioning",
+			mentionsUserFullName = "Test Test",
+			mentionsUserScreenName = "test"
+		);
 
-		<execute macro="Mentions#viewCommentMentionTagLink">
-			<var name="mentionsUserFullName" value="Test Test" />
-			<var name="mentionsUserScreenName" value="test" />
-		</execute>
-	</command>
+		Mentions.viewCommentMentionTagLink(
+			mentionsUserFullName = "Test Test",
+			mentionsUserScreenName = "test"
+		);
+	}
 
-	<command name="ViewReplyMentionViaDMComment" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "5"
+	test ViewReplyMentionViaDMComment {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
+		Portlet.addPG(portletName = "Documents and Media");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="Mentions#addMentionViaComments">
-			<var name="entryComment" value="Comment mentioning" />
-			<var name="mentionsUserFullName" value="Test Test" />
-			<var name="mentionsUserScreenName" value="test" />
-		</execute>
+		Mentions.addMentionViaComments(
+			entryComment = "Comment mentioning",
+			mentionsUserFullName = "Test Test",
+			mentionsUserScreenName = "test"
+		);
 
-		<execute macro="Mentions#viewCommentMentionTagLink">
-			<var name="mentionsUserFullName" value="Test Test" />
-			<var name="mentionsUserScreenName" value="test" />
-		</execute>
+		Mentions.viewCommentMentionTagLink(
+			mentionsUserFullName = "Test Test",
+			mentionsUserScreenName = "test"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<var name="key_entryComment" value="Comment mentioning" />
+		var key_entryComment = "Comment mentioning";
 
-		<execute function="AssertClick" locator1="Comments#REPLY_TO_COMMENT" value1="Reply" />
+		AssertClick(locator1 = "Comments#REPLY_TO_COMMENT", value1 = "Reply");
 
-		<execute macro="Mentions#addMentionViaComments">
-			<var name="entryComment" value="Comment reply mentioning" />
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-		</execute>
+		Mentions.addMentionViaComments(
+			entryComment = "Comment reply mentioning",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn"
+		);
 
-		<execute macro="Mentions#viewCommentMentionTagLink">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-		</execute>
-	</command>
-</definition>
+		Mentions.viewCommentMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn"
+		);
+	}
+}

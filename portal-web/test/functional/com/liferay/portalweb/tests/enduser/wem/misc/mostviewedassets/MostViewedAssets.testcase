@@ -1,160 +1,123 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Asset Publisher,Most Viewed Assets" />
-	<property name="testray.main.component.name" value="Most Viewed Assets" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Asset Publisher,Most Viewed Assets";
+	property testray.main.component.name = "Most Viewed Assets";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="AssertMostViewedAsset" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+	@priority = "4"
+	test AssertMostViewedAsset {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<for list="1,2" param="n">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Test Page ${n}" />
-			</execute>
-		</for>
+		for (var n : list "1,2") {
+			SitePages.addPublicPage(pageName = "Test Page ${n}");
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Most Viewed Assets" />
-		</execute>
+		Portlet.addPG(portletName = "Most Viewed Assets");
 
-		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
-			<var name="addMetadata" value="true" />
-			<var name="metadataFieldList" value="View Count" />
-			<var name="portletName" value="Most Viewed Assets" />
-		</execute>
+		AssetPublisherPortlet.configureShowMetadataFieldsPG(
+			addMetadata = "true",
+			metadataFieldList = "View Count",
+			portletName = "Most Viewed Assets"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		Portlet.addPG(portletName = "Asset Publisher");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<for list="1,2" param="n">
-			<execute macro="WebContentNavigator#gotoAddCP" />
+		for (var n : list "1,2") {
+			WebContentNavigator.gotoAddCP();
 
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="Web Content Content" />
-				<var name="webContentTitle" value="Web Content Title ${n}" />
-			</execute>
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title ${n}"
+			);
 
-			<execute macro="PortletEntry#publish" />
-		</for>
+			PortletEntry.publish();
+		}
 
-		<var name="count" value="0" />
+		var count = "0";
 
-		<while>
-			<not>
-				<equals arg1="${count}" arg2="3" />
-			</not>
-			<then>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="Test Page 2" />
-					<var name="siteName" value="Site Name" />
-				</execute>
+		while (!("${count}" == "3")) {
+			Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-				<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-					<var name="assetContent" value="Web Content Content" />
-					<var name="assetTitle" value="Web Content Title 1" />
-				</execute>
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title 1"
+			);
 
-				<var method="MathUtil#sum('${count}', '1')" name="count" />
-			</then>
-		</while>
+			var count = MathUtil.sum("${count}", "1");
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetViewCount">
-			<var name="assetTitle" value="Web Content Title 1" />
-			<var name="viewCount" value="3 View" />
-		</execute>
+		AssetPublisherPortlet.viewAssetViewCount(
+			assetTitle = "Web Content Title 1",
+			viewCount = "3 View"
+		);
 
-		<execute macro="AssetPublisherPortlet#viewAssetViewCount">
-			<var name="assetTitle" value="Web Content Title 2" />
-			<var name="viewCount" value="0 View" />
-		</execute>
+		AssetPublisherPortlet.viewAssetViewCount(
+			assetTitle = "Web Content Title 2",
+			viewCount = "0 View"
+		);
 
-		<var name="count" value="0" />
+		var count = "0";
 
-		<while>
-			<not>
-				<equals arg1="${count}" arg2="5" />
-			</not>
-			<then>
-				<execute macro="Navigator#gotoSitePage">
-					<var name="pageName" value="Test Page 2" />
-					<var name="siteName" value="Site Name" />
-				</execute>
+		while (!("${count}" == "5")) {
+			Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-				<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-					<var name="assetContent" value="Web Content Content" />
-					<var name="assetTitle" value="Web Content Title 2" />
-				</execute>
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title 2"
+			);
 
-				<var method="MathUtil#sum('${count}', '1')" name="count" />
-			</then>
-		</while>
+			var count = MathUtil.sum("${count}", "1");
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetViewCount">
-			<var name="assetTitle" value="Web Content Title 2" />
-			<var name="viewCount" value="5 View" />
-		</execute>
+		AssetPublisherPortlet.viewAssetViewCount(
+			assetTitle = "Web Content Title 2",
+			viewCount = "5 View"
+		);
 
-		<execute macro="AssetPublisherPortlet#viewAssetViewCount">
-			<var name="assetTitle" value="Web Content Title 1" />
-			<var name="viewCount" value="3 View" />
-		</execute>
-	</command>
-</definition>
+		AssetPublisherPortlet.viewAssetViewCount(
+			assetTitle = "Web Content Title 1",
+			viewCount = "3 View"
+		);
+	}
+}

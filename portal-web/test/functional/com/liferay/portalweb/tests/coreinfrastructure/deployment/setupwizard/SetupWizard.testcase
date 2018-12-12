@@ -1,165 +1,183 @@
-<definition component-name="portal-deployment-hypersonic">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.prepare.bundle.properties" value="false" />
-	<property name="testray.main.component.name" value="Setup Wizard" />
+@component-name = "portal-deployment-hypersonic"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.prepare.bundle.properties = "false";
+	property testray.main.component.name = "Setup Wizard";
 
-	<command name="HypersonicToHypersonic" priority="5">
-		<property name="database.types" value="hypersonic" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicToHypersonic" />
+	@priority = "5"
+	test HypersonicToHypersonic {
+		property database.types = "hypersonic";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SetupWizard#HypersonicToHypersonic";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.hypersonic.password')" name="databasePassword" />
-			<var name="databaseType" value="Hypersonic" />
-			<var method="PropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.hypersonic.password"),
+			databaseType = "Hypersonic",
+			databaseUserName = PropsUtil.get("database.hypersonic.username"),
+			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
+			jdbcURL = PropsUtil.get("database.hypersonic.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HypersonicToMySQL" priority="5">
-		<property name="database.types" value="mysql" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicToMySQL" />
+	@priority = "5"
+	test HypersonicToMySQL {
+		property database.types = "mysql";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SetupWizard#HypersonicToMySQL";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HypersonicWithSpecialContent" priority="5">
-		<property name="database.types" value="hypersonic" />
-		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicWithSpecialContent" />
+	@priority = "5"
+	test HypersonicWithSpecialContent {
+		property database.types = "hypersonic";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SetupWizard#HypersonicWithSpecialContent";
 
-		<execute macro="SetupWizard#configurePortalNamePG">
-			<var name="portalName" value="" />
-		</execute>
+		SetupWizard.configurePortalNamePG(portalName = "");
 
-		<execute macro="SetupWizard#configureAdministratorUserPG">
-			<var name="administratorEmail" value="" />
-			<var name="administratorFirstName" value="" />
-			<var name="administratorLastName" value="" />
-		</execute>
+		SetupWizard.configureAdministratorUserPG(
+			administratorEmail = "",
+			administratorFirstName = "",
+			administratorLastName = ""
+		);
 
-		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
+		Click(locator1 = "TextInput#PORTAL_NAME");
 
-		<execute macro="SetupWizard#configureDatabasePG">
-			<var name="databasePassword" value="" />
-			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" value="" />
-			<var name="jdbcDriverClassName" value="" />
-			<var name="jdbcURL" value="" />
-		</execute>
+		SetupWizard.configureDatabasePG(
+			databasePassword = "",
+			databaseType = "Hypersonic",
+			databaseUserName = "",
+			jdbcDriverClassName = "",
+			jdbcURL = ""
+		);
 
-		<execute macro="SetupWizard#finishConfigurationPG" />
+		SetupWizard.finishConfigurationPG();
 
-		<for list="Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name" param="filedName">
-			<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required.">
-				<var name="key_filedName" value="${filedName}" />
-			</execute>
-		</for>
+		for (var filedName : list "Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextInput#REQUIRED_ALERT",
+				value1 = "This field is required.",
+				key_filedName = "${filedName}"
+			);
+		}
 
-		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="" />
-		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="" />
+		AssertTextEquals(
+			locator1 = "SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD",
+			value1 = ""
+		);
 
-		<execute function="Refresh" />
+		AssertTextEquals(
+			locator1 = "SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD",
+			value1 = ""
+		);
 
-		<execute macro="SetupWizard#configurePortalNamePG">
-			<var name="portalName" value="1234567890!@#$%^&amp;*()~`" />
-		</execute>
+		Refresh();
 
-		<execute macro="SetupWizard#configureAdministratorUserPG">
-			<var name="administratorEmail" value="1234567890!@#$%^&amp;*()~`" />
-			<var name="administratorFirstName" value="1234567890!@#$%^&amp;*()~`" />
-			<var name="administratorLastName" value="1234567890!@#$%^&amp;*()~`" />
-		</execute>
+		SetupWizard.configurePortalNamePG(portalName = "1234567890!@#$%^&amp;*()~`");
 
-		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
+		SetupWizard.configureAdministratorUserPG(
+			administratorEmail = "1234567890!@#$%^&amp;*()~`",
+			administratorFirstName = "1234567890!@#$%^&amp;*()~`",
+			administratorLastName = "1234567890!@#$%^&amp;*()~`"
+		);
 
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#FIRST_NAME" value1="1234567890!@#$%^&amp;*()~`" />
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#LAST_NAME" value1="1234567890!@#$%^&amp;*()~`" />
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="1234567890!@#$%^&amp;*()~`" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
-	</command>
+		Click(locator1 = "TextInput#PORTAL_NAME");
 
-	<command name="MySQLWithXSSContent" priority="5">
-		<property name="database.types" value="mysql" />
-		<property name="test.name.skip.portal.instance" value="SetupWizard#MySQLWithXSSContent" />
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#FIRST_NAME",
+			value1 = "1234567890!@#$%^&*()~`"
+		);
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName"><![CDATA[<script>alert("xss")</script>]]></var>
-			<var name="administratorLastName"><![CDATA[<script>alert("xss")</script>]]></var>
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-			<var name="portalName"><![CDATA[<script>alert("xss")</script>]]></var>
-		</execute>
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#LAST_NAME",
+			value1 = "1234567890!@#$%^&*()~`"
+		);
 
-		<execute function="AssertAlertNotPresent" />
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#PORTAL_NAME",
+			value1 = "1234567890!@#$%^&*()~`"
+		);
 
-		<var name="actualScript"><![CDATA[<script>alert("xss")</script>]]></var>
-		<var name="escapedScript"><![CDATA[\x3cscript\x3ealert("xss")\x3c/script\x3e]]></var>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+			value1 = "Please enter a valid email address."
+		);
+	}
 
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
+	@priority = "5"
+	test MySQLWithXSSContent {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "SetupWizard#MySQLWithXSSContent";
 
-	<command name="ViewConfiguredSetupWizardValue" priority="5">
-		<property name="database.types" value="mysql" />
-		<property name="test.name.skip.portal.instance" value="SetupWizard#ViewConfiguredSetupWizardValue" />
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = '''<script>alert("xss")</script>''',
+			administratorLastName = '''<script>alert("xss")</script>''',
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"),
+			portalName = '''<script>alert("xss")</script>'''
+		);
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="user@liferay.com" />
-			<var name="administratorFirstName" value="User" />
-			<var name="administratorLastName" value="User" />
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-		</execute>
+		AssertAlertNotPresent();
 
-		<var method="PropsUtil#get('liferay.home.dir.name')" name="liferayHome" />
+		var actualScript = '''<script>alert("xss")</script>''';
 
-		<var method="FileUtil#read('${liferayHome}/portal-setup-wizard.properties')" name="fileContent" />
+		var escapedScript = '''\x3cscript\x3ealert("xss")\x3c/script\x3e''';
 
-		<if>
-			<and>
-				<contains string="${fileContent}" substring="admin.email.from.address=user@liferay.com" />
-				<contains string="${fileContent}" substring="admin.email.from.name=User User" />
-				<contains string="${fileContent}" substring="default.admin.email.address.prefix=user" />
-				<contains string="${fileContent}" substring="default.admin.first.name=User" />
-				<contains string="${fileContent}" substring="default.admin.last.name=User" />
-			</and>
-			<then>
-				<echo message="The configuration was saved successfully in portal-setup-wizard.properties!" />
-			</then>
-			<else>
-				<fail message="Fail to save the configuration in portal file portal-setup-wizard.properties." />
-			</else>
-		</if>
-	</command>
-</definition>
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
+	@priority = "5"
+	test ViewConfiguredSetupWizardValue {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "SetupWizard#ViewConfiguredSetupWizardValue";
+
+		SetupWizard.configurePG(
+			administratorEmail = "user@liferay.com",
+			administratorFirstName = "User",
+			administratorLastName = "User",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/portal-setup-wizard.properties");
+
+		if ((contains("${fileContent}", "admin.email.from.address=user@liferay.com")) && (contains("${fileContent}", "admin.email.from.name=User User")) && (contains("${fileContent}", "default.admin.email.address.prefix=user")) && (contains("${fileContent}", "default.admin.first.name=User")) && (contains("${fileContent}", "default.admin.last.name=User"))) {
+			echo("The configuration was saved successfully in portal-setup-wizard.properties!");
+		}
+		else {
+			fail("Fail to save the configuration in portal file portal-setup-wizard.properties.");
+		}
+	}
+}

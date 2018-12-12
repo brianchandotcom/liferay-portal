@@ -1,21 +1,22 @@
-<definition component-name="core-infrastructure">
-	<property name="testray.main.component.name" value="Deployment" />
+@component-name = "core-infrastructure"
+definition {
+	property testray.main.component.name = "Deployment";
 
-	<set-up>
-		<execute macro="SignIn#signInTestSetup" />
-	</set-up>
+	setUp {
+		SignIn.signInTestSetup();
+	}
 
-	<command name="Smoke" priority="5">
-		<description message="Runs the smoke test on a non-root portal context." />
+	@description = "Runs the smoke test on a non-root portal context."
+	@priority = "5"
+	test Smoke {
+		property portal.acceptance = "true";
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PortalContext#Smoke";
 
-		<property name="portal.acceptance" value="true" />
-		<property name="portal.context" value="liferay" />
-		<property name="skip.clean-app-server-deploy-dir" value="true" />
-		<property name="test.assert.warning.exceptions" value="true" />
-		<property name="test.name.skip.portal.instance" value="PortalContext#Smoke" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="Smoke#runSmoke" />
-	</command>
-</definition>
+		Smoke.runSmoke();
+	}
+}

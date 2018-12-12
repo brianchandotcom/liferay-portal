@@ -1,153 +1,126 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Invite Members" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Invite Members";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
+			Page.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			User.tearDownCP();
+		}
+	}
 
-	<command name="ViewNewSiteMember" priority="4">
-		<description message="This test is skipping portal instance setup due to LPS-75168" />
+	@description = "This test is skipping portal instance setup due to LPS-75168"
+	@priority = "4"
+	test ViewNewSiteMember {
+		property test.name.skip.portal.instance = "InviteMembers#ViewNewSiteMember";
 
-		<property name="test.name.skip.portal.instance" value="InviteMembers#ViewNewSiteMember" />
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page 1");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 1" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Invite Members");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Invite Members" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
+		AssertElementNotPresent(locator1 = "Card#SPECIFIC_TEXT");
 
-		<execute function="AssertElementNotPresent" locator1="Card#SPECIFIC_TEXT" />
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
-		<execute macro="InviteMembers#inviteMembers">
-			<var name="inviteUserFullName" value="userfn userln" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		Pause(locator1 = "1000");
 
-		<execute function="Pause" locator1="1000" />
+		AssertVisible(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 
-		<execute function="AssertVisible" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+		Notifications.viewBadgeCount(notificationCount = "1");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
+		Notifications.gotoNotifications();
 
-		<execute macro="Notifications#gotoNotifications" />
+		Notifications.viewRequest(
+			requestsTitle = "Test Test invited you to join Site Name."
+		);
 
-		<execute macro="Notifications#viewRequest">
-			<var name="requestsTitle" value="Test Test invited you to join Site Name." />
-		</execute>
+		Notifications.acceptRequest(
+			requestsTitle = "Test Test invited you to join Site Name."
+		);
 
-		<execute macro="Notifications#acceptRequest">
-			<var name="requestsTitle" value="Test Test invited you to join Site Name." />
-		</execute>
+		Refresh();
 
-		<execute function="Refresh" />
+		Notifications.viewNoRequest();
 
-		<execute macro="Notifications#viewNoRequest" />
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#viewMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-</definition>
+		Site.viewMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+	}
+}

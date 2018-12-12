@@ -1,355 +1,317 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	var pageName = "Asset Publisher Page";
+	var portletName = "Asset Publisher";
 
-	<var name="pageName" value="Asset Publisher Page" />
-	<var name="portletName" value="Asset Publisher" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Message Boards Message" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsThread#tearDownCP" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="Workflow#tearDownPortalWorkflow" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ApproveBlogsEntryPG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflowViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowPGViaAP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPGViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAsWorkflowAsset">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ApproveMessageBoardsThreadPG" priority="5">
-		<description message="This is a use case for LPS-72846." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addWithWorkflowCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewNoDuplicateTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="MB Thread Message Subject" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="MB Thread Message Subject" />
-			<var name="workflowAssetType" value="Message Boards Message" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewWithWorkflowPGViaAP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="MB Thread Message Subject" />
-			<var name="workflowAssetType" value="Message Boards Message" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPGViaAP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ApproveWebContentPG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#addWithWorkflowPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowPGViaAP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="RejectBlogsEntryPG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflowViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowPGViaAP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowPGViaAP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="webContentTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-</definition>
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Message Boards Message"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsThread.tearDownCP();
+
+			BlogsEntry.tearDownCP();
+
+			WebContent.tearDownCP();
+
+			Page.tearDownPG();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@priority = "4"
+	test ApproveBlogsEntryPG {
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Blogs.addWithWorkflowViaAP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewWithWorkflowPGViaAP(entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewPGViaAP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(
+			workflowAssetTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntryAsWorkflowAsset(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-72846."
+	@priority = "5"
+	test ApproveMessageBoardsThreadPG {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addWithWorkflowCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewNoDuplicateTaskAssignedToMyRoles(
+			workflowAssetTitle = "MB Thread Message Subject",
+			workflowTask = "Review"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "MB Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		MessageboardsThread.viewWithWorkflowPGViaAP(
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "MB Thread Message Subject",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		MessageboardsThread.viewPGViaAP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "4"
+	test ApproveWebContentPG {
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.addWithWorkflowPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewWithWorkflowPGViaAP(webContentTitle = "WC WebContent Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test RejectBlogsEntryPG {
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Blogs.addWithWorkflowViaAP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewWithWorkflowPGViaAP(entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewWithWorkflowPGViaAP(
+			entryTitle = "Blogs Entry Title",
+			webContentTitle = "Blogs Entry Title"
+		);
+	}
+}

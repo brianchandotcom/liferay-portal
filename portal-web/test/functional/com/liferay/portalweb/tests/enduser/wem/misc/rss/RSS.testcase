@@ -1,886 +1,696 @@
-<definition component-name="portal-rss">
-	<property name="osgi.module.configuration.file.names" value="com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration.config" />
-	<property name="osgi.module.configurations" value="com.liferay.portlet.display-category=&quot;category.cms&quot;" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="RSS" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP">
-					<var name="site" value="Liferay" />
-				</execute>
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddFeedBetweenFeeds" priority="3">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="Technology.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedTitle" value="Latimes > Technology News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="rss2.0.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="2" />
-			<var name="feedTitle" value="Reuters > Sports News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="reuters_sports_news.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="Technology,Reuters > Sports News,Latimes > Technology News" param="feedTitle" >
-			<execute macro="RSSPortlet#viewDisplayFeedTitle">
-				<var name="feedTitle" value="${feedTitle}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddFeedWithWrongUrl" priority="4">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="General Announcement" />
-			<var name="feedUrlLink" value="www.theverge.com/rss/index.xml" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewWarningMessageDisplay">
-			<var name="errorMessage" value="The following are invalid URLs: www.theverge.com/rss/index.xml." />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDeleteFeed">
-			<var name="feedTitle" value="General Announcement" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="General Announcement" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="theverge.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="General Announcement" />
-		</execute>
-	</command>
-
-	<command name="AddRSSFeed" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPortletConfigurationInfo" />
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Latimes > Technology News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="rss2.0.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Latimes > Technology News" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="AddWebContentFeed" priority="3">
-		<property name="test.name.skip.portal.instance" value="RSS#AddWebContentFeed" />
-		<property name="testray.component.names" value="Asset Publisher,RSS" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddFeed" />
-
-		<execute macro="WebContent#addFeed">
-			<var name="description" value="WC Feed Description" />
-			<var name="feedContent" value="Content(ddm-text-html)" />
-			<var name="feedTitle" value="WC Feed Title" />
-			<var name="feedType" value="RSS 2.0" />
-			<var name="structureName" value="Basic Web Content" />
-			<var name="targetFriendlyUrl" value="/web/guest/home" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditFeed">
-			<var name="feedName" value="WC Feed Title" />
-		</execute>
-
-		<var method="selenium#getAttribute('//input[contains(@id,\'JournalPortlet_url\') and contains(@value,\'journal/rss\')]@value')" name="rssFeedUrl" />
-		<var method="StringUtil#replace('${rssFeedUrl}', 'localhost', '127.0.0.1')" name="rssFeedUrl" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Web Content Feed Title" />
-			<var name="feedUrlLink" value="${rssFeedUrl}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Web Content Feed Title" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewFeedContent">
-			<var name="feedEntryContent" value="Web Content Content" />
-			<var name="feedEntryTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="ChangeDefaultToNavigationDisplay" priority="3">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="Technology.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#configureFeedDisplayStyle">
-			<var name="feedDisplayStyle" value="Navigation" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewNavigationDisplayFeedTitle">
-			<var name="feedTitle" value="Technology" />
-		</execute>
-	</command>
-
-	<command name="ChangeOrderOfRSSFeeds" priority="3">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="Technology.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedTitle" value="NBA" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="nba.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPG">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="rowIndexNumber" value="1" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPG">
-			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedTitle" value="NBA" />
-			<var name="rowIndexNumber" value="2" />
-		</execute>
-
-		<execute macro="RSSPortlet#changeFeedsOrder">
-			<var name="fromRowNumber" value="1" />
-			<var name="rowLocation" value="Title" />
-			<var name="toRowNumber" value="2" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPG">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="NBA" />
-			<var name="rowIndexNumber" value="1" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPG">
-			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedTitle" value="Technology" />
-			<var name="rowIndexNumber" value="2" />
-		</execute>
-	</command>
-
-	<command name="DeleteFeedFromRSS" priority="4">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Latimes > Technology News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="rss2.0.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Latimes > Technology News" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#deleteFeed">
-			<var name="buttonRowIndexNumber" value="1" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDeleteFeed">
-			<var name="feedTitle" value="Latimes > Technology News" />
-		</execute>
-	</command>
-
-	<command name="DisabledFeedTitle" priority="3">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="Technology.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Technology" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#disableShowFeedTitle" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewNoFeedTitle">
-			<var name="feedTitle" value="Technology" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="EnableRSSFeedFromAssetpublisher" priority="3">
-		<property name="test.name.skip.portal.instance" value="RSS#EnableRSSFeedFromAssetpublisher" />
-		<property name="testray.component.names" value="Asset Publisher,RSS" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="This is the web content test for rss feed" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Asset Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#enableRSSSubscription" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var method="selenium#getAttribute('//div[@class=\'subscribe-action\']/span/a[contains(@href,\'asset_publisher\')]@href')" name="rssFeedUrl" />
-		<var method="StringUtil#replace('${rssFeedUrl}', 'localhost', '127.0.0.1')" name="rssFeedUrl" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Web Asset Publisher" />
-			<var name="feedUrlLink" value="${rssFeedUrl}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Web Asset Publisher" />
-		</execute>
-
-		<execute macro="RSSPortlet#openFeed">
-			<var name="feedTitle" value="Asset Publisher" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="This is the web content test for rss feed" />
-			<var name="assetTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="RemoveRSSPortlet" priority="4">
-		<property name="testray.component.names" value="RSS" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewPortletConfigurationInfo" />
-
-		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-	</command>
-
-	<command name="UpdateRSSFeedViaAssetpublisher" priority="4">
-		<property name="test.name.skip.portal.instance" value="RSS#UpdateRSSFeedViaAssetpublisher" />
-		<property name="testray.component.names" value="Asset Publisher,RSS" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="RSS" />
-			<var name="configurationName" value="Cache" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="RSSPortlet#updateFeedTime">
-			<var name="feedTime" value="1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="This is the web content test for rss feed" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Asset Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#enableRSSSubscription" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var method="selenium#getAttribute('//div[@class=\'subscribe-action\']/span/a[contains(@href,\'asset_publisher\')]@href')" name="rssFeedUrl" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Web Asset Publisher" />
-			<var name="feedUrlLink" value="${rssFeedUrl}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Web Asset Publisher" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewUpdateFeedTitle">
-			<var name="feedHeading" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
-			<var name="assetTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="This is the updated version of web content test for rss feed" />
-			<var name="webContentTitle" value="Web Content Title Updated Feed" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewUpdateFeedTitle">
-			<var name="feedHeading" value="Web Content Title Updated Feed" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="updateFeed" value="true" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Web Asset Publisher" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-rss"
+definition {
+	property osgi.module.configuration.file.names = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration.config";
+	property osgi.module.configurations = "com.liferay.portlet.display-category=&quot;category.cms&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "RSS";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP(site = "Liferay");
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	test AddFeedBetweenFeeds {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			feedType = "file",
+			feedUrlLink = "Technology.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			buttonRowIndexNumber = "1",
+			feedRowIndexNumber = "1",
+			feedTitle = "Latimes &gt; Technology News",
+			feedType = "file",
+			feedUrlLink = "rss2.0.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			buttonRowIndexNumber = "1",
+			feedRowIndexNumber = "2",
+			feedTitle = "Reuters &gt; Sports News",
+			feedType = "file",
+			feedUrlLink = "reuters_sports_news.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		for (var feedTitle : list "Technology,Reuters > Sports News,Latimes > Technology News") {
+			RSSPortlet.viewDisplayFeedTitle(feedTitle = "${feedTitle}");
+		}
+	}
+
+	@priority = "4"
+	test AddFeedWithWrongUrl {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "General Announcement",
+			feedUrlLink = "www.theverge.com/rss/index.xml"
+		);
+
+		RSSPortlet.viewWarningMessageDisplay(
+			errorMessage = "The following are invalid URLs: www.theverge.com/rss/index.xml."
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDeleteFeed(feedTitle = "General Announcement");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "General Announcement",
+			feedType = "file",
+			feedUrlLink = "theverge.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "General Announcement");
+	}
+
+	@priority = "5"
+	test AddRSSFeed {
+		property portal.acceptance = "true";
+		property testray.component.names = "RSS";
+
+		Navigator.gotoPage(pageName = "Welcome");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		RSSPortlet.viewPortletConfigurationInfo();
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Latimes &gt; Technology News",
+			feedType = "file",
+			feedUrlLink = "rss2.0.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes &gt; Technology News");
+	}
+
+	@ignore = "true"
+	@priority = "3"
+	test AddWebContentFeed {
+		property test.name.skip.portal.instance = "RSS#AddWebContentFeed";
+		property testray.component.names = "Asset Publisher,RSS";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddFeed();
+
+		WebContent.addFeed(
+			description = "WC Feed Description",
+			feedContent = "Content(ddm-text-html)",
+			feedTitle = "WC Feed Title",
+			feedType = "RSS 2.0",
+			structureName = "Basic Web Content",
+			targetFriendlyUrl = "/web/guest/home"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditFeed(feedName = "WC Feed Title");
+
+		var rssFeedUrl = selenium.getAttribute("//input[contains(@id,'JournalPortlet_url') and contains(@value,'journal/rss')]@value");
+		var rssFeedUrl = StringUtil.replace("${rssFeedUrl}", "localhost", "127.0.0.1");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Web Content Feed Title",
+			feedUrlLink = "${rssFeedUrl}"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Content Feed Title");
+
+		RSSPortlet.viewFeedContent(
+			feedEntryContent = "Web Content Content",
+			feedEntryTitle = "Web Content Title"
+		);
+	}
+
+	@priority = "3"
+	test ChangeDefaultToNavigationDisplay {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			feedType = "file",
+			feedUrlLink = "Technology.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.configureFeedDisplayStyle(feedDisplayStyle = "Navigation");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewNavigationDisplayFeedTitle(feedTitle = "Technology");
+	}
+
+	@priority = "3"
+	test ChangeOrderOfRSSFeeds {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			feedType = "file",
+			feedUrlLink = "Technology.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			buttonRowIndexNumber = "1",
+			feedRowIndexNumber = "1",
+			feedTitle = "NBA",
+			feedType = "file",
+			feedUrlLink = "nba.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.viewPG(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			rowIndexNumber = "1"
+		);
+
+		RSSPortlet.viewPG(
+			feedRowIndexNumber = "1",
+			feedTitle = "NBA",
+			rowIndexNumber = "2"
+		);
+
+		RSSPortlet.changeFeedsOrder(
+			fromRowNumber = "1",
+			rowLocation = "Title",
+			toRowNumber = "2"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.viewPG(
+			feedRowIndexNumber = "0",
+			feedTitle = "NBA",
+			rowIndexNumber = "1"
+		);
+
+		RSSPortlet.viewPG(
+			feedRowIndexNumber = "1",
+			feedTitle = "Technology",
+			rowIndexNumber = "2"
+		);
+	}
+
+	@priority = "4"
+	test DeleteFeedFromRSS {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoPage(pageName = "Welcome");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Latimes &gt; Technology News",
+			feedType = "file",
+			feedUrlLink = "rss2.0.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes &gt; Technology News");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.deleteFeed(buttonRowIndexNumber = "1");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		RSSPortlet.viewDeleteFeed(feedTitle = "Latimes &gt; Technology News");
+	}
+
+	@priority = "3"
+	test DisabledFeedTitle {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.viewSpecificPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			feedType = "file",
+			feedUrlLink = "Technology.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Technology");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.disableShowFeedTitle();
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewNoFeedTitle(feedTitle = "Technology");
+	}
+
+	@ignore = "true"
+	@priority = "3"
+	test EnableRSSFeedFromAssetpublisher {
+		property test.name.skip.portal.instance = "RSS#EnableRSSFeedFromAssetpublisher";
+		property testray.component.names = "Asset Publisher,RSS";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name 2");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		WebContent.addPGViaAP(
+			webContentContent = "This is the web content test for rss feed",
+			webContentTitle = "Web Content Title"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration"
+		);
+
+		AssetPublisherPortlet.enableRSSSubscription();
+
+		Button.clickSave();
+
+		IFrame.selectTopFrame();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name 2", siteName = "Site Name");
+
+		var rssFeedUrl = selenium.getAttribute("//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]@href");
+		var rssFeedUrl = StringUtil.replace("${rssFeedUrl}", "localhost", "127.0.0.1");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Web Asset Publisher",
+			feedUrlLink = "${rssFeedUrl}"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
+
+		RSSPortlet.openFeed(feedTitle = "Asset Publisher", siteName = "${siteName}");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "This is the web content test for rss feed",
+			assetTitle = "Web Content Title"
+		);
+	}
+
+	@priority = "4"
+	test RemoveRSSPortlet {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoPage(pageName = "Welcome");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.viewSpecificPG(portletName = "RSS Publisher");
+
+		RSSPortlet.viewPortletConfigurationInfo();
+
+		Portlet.deletePG(portletName = "RSS Publisher");
+
+		Navigator.gotoPage(pageName = "Page Name");
+
+		Portlet.viewNoSpecificPG(portletName = "RSS Publisher");
+	}
+
+	@priority = "4"
+	test UpdateRSSFeedViaAssetpublisher {
+		property test.name.skip.portal.instance = "RSS#UpdateRSSFeedViaAssetpublisher";
+		property testray.component.names = "Asset Publisher,RSS";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "RSS",
+			configurationName = "Cache",
+			configurationScope = "System Scope"
+		);
+
+		RSSPortlet.updateFeedTime(feedTime = "1");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		WebContent.addPGViaAP(
+			webContentContent = "This is the web content test for rss feed",
+			webContentTitle = "Web Content Title"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration"
+		);
+
+		AssetPublisherPortlet.enableRSSSubscription();
+
+		Button.clickSave();
+
+		IFrame.selectTopFrame();
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		var rssFeedUrl = selenium.getAttribute("//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]@href");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Web Asset Publisher",
+			feedUrlLink = "${rssFeedUrl}"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
+
+		RSSPortlet.viewUpdateFeedTitle(feedHeading = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "Web Content Title");
+
+		WebContent.addCP(
+			webContentContent = "This is the updated version of web content test for rss feed",
+			webContentTitle = "Web Content Title Updated Feed"
+		);
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+
+		RSSPortlet.viewUpdateFeedTitle(
+			feedHeading = "Web Content Title Updated Feed",
+			pageName = "Site Page Name",
+			updateFeed = "true"
+		);
+
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
+	}
+}

@@ -1,676 +1,664 @@
-<definition component-name="portal-permissions">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Roles" />
-	<property name="testray.main.component.name" value="Roles" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Role#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="PortalSettings#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddSiteRegRole" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="page" value="Public Pages" />
-			<var name="portletName" value="Sites" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_roles_admin_web_portlet_RolesAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Button#ADD" />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_COMMUNITY" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="singleSiteTypePermission" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_COMMUNITY" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Button#ADD" />
-	</command>
-
-	<command name="SearchPermissions" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Parent Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Parent Site Name" />
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Parent Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Parent Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn userln" />
-			<var name="roleTitle" value="Site Administrator" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn userln" />
-			<var name="roleTitle" value="Site Administrator" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_siteName" value="Parent Site Name" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Parent" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#closeProductMenu" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="Parent Site Name" />
-		<execute function="AssertTextNotPresent" value1="Child SiteName" />
-
-		<var name="key_siteName" value="Child SiteName" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Child" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="Child SiteName" />
-		<execute function="AssertTextNotPresent" value1="Parent Site Name" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Site" />
-		</execute>
-
-		<var name="key_siteName" value="Parent Site Name" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="Parent Site Name" />
-
-		<var name="key_siteName" value="Child SiteName" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="Child SiteName" />
-
-		<execute macro="Site#viewSiteAdminPermissionsCP">
-			<var name="siteName" value="Parent Site Name" />
-		</execute>
-
-		<execute macro="Site#viewSiteAdminPermissionsCP">
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-	</command>
-
-	<command name="ViewSiteManageChildSiteSiteRole" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="Site Page" />
-			<var name="portletName" value="Sites" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="UPDATE" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_COMMUNITY" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_siteName" value="Site Name" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Add Child Site" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Blank Site" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Child SiteName2" />
-		</execute>
-
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_siteName" value="Child SiteName1" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Add Child Site" />
-		</execute>
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<var name="key_site" value="Child SiteName2" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Child SiteName2" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_site" value="Child SiteName1" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Child SiteName1" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_site" value="Child SiteName2" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Child SiteName2" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_siteName" value="Child SiteName1" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Add Child Site" />
-		</execute>
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<var name="key_site" value="Child SiteName2" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Child SiteName2" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
-	</command>
-
-	<command name="ViewSiteManagePagesRegRole" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="portletName" value="Sites" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="MANAGE_LAYOUTS" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_site" value="${siteName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="${siteName}" />
-
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<var name="key_site" value="Site Name" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Site Name" />
-
-		<var name="key_siteName" value="Site Name" />
-
-		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="MANAGE_LAYOUTS" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
-	</command>
-</definition>
+@component-name = "portal-permissions"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Roles";
+	property testray.main.component.name = "Roles";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			User.tearDownCP();
+
+			Role.tearDownCP();
+
+			Site.tearDownCP();
+
+			PortalSettings.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddSiteRegRole {
+		Permissions.setUpRegRoleLoginUserCP(
+			page = "Public Pages",
+			portletName = "Sites",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		AssertElementNotPresent(locator1 = "Button#ADD");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_COMMUNITY",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(singleSiteTypePermission = "true", siteName = "Site Name");
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "ADD_COMMUNITY",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		AssertElementNotPresent(locator1 = "Button#ADD");
+	}
+
+	@priority = "5"
+	test SearchPermissions {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Roles Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "View Control Panel Menu",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(
+			roleTitle = "Roles Regrole Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Parent Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(
+			parentSiteName = "Parent Site Name",
+			siteName = "Child SiteName"
+		);
+
+		ProductMenu.gotoSite(site = "Parent Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Parent Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn userln",
+			roleTitle = "Site Administrator"
+		);
+
+		ProductMenu.gotoSite(site = "Child SiteName");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Child SiteName");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn userln",
+			roleTitle = "Site Administrator"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_siteName = "Parent Site Name";
+
+		Search.searchCP(searchTerm = "Parent");
+
+		ProductMenuHelper.closeProductMenu();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Parent Site Name"
+		);
+
+		AssertTextNotPresent(value1 = "Child SiteName");
+
+		var key_siteName = "Child SiteName";
+
+		Search.searchCP(searchTerm = "Child");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Child SiteName"
+		);
+
+		AssertTextNotPresent(value1 = "Parent Site Name");
+
+		Search.searchCP(searchTerm = "Site");
+
+		var key_siteName = "Parent Site Name";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Parent Site Name"
+		);
+
+		var key_siteName = "Child SiteName";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Child SiteName"
+		);
+
+		Site.viewSiteAdminPermissionsCP(siteName = "Parent Site Name");
+
+		Site.viewSiteAdminPermissionsCP(siteName = "Child SiteName");
+	}
+
+	@priority = "4"
+	test ViewSiteManageChildSiteSiteRole {
+		Permissions.setUpSiteRoleLoginUserCP(
+			pageName = "Site Page",
+			portletName = "Sites",
+			roleTitle = "Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName1");
+
+		ProductMenu.gotoSite(site = "Child SiteName1");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(roleTitle = "Regrole Name", userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Siterole Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_COMMUNITY",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_siteName = "Site Name";
+
+		Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
+
+		MenuItem.click(menuItem = "Add Child Site");
+
+		LexiconEntry.gotoEntry(rowEntry = "Blank Site");
+
+		PortletEntry.inputName(name = "Child SiteName2");
+
+		Click(locator1 = "Button#SAVE", value1 = "Save");
+
+		PortletEntry.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_siteName = "Child SiteName1";
+
+		Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
+
+		MenuItem.viewNotPresent(menuItem = "Add Child Site");
+
+		MenuItem.viewNotPresent(menuItem = "Delete");
+
+		var key_site = "Child SiteName2";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "Child SiteName2"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_SUBGROUPS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_site = "Child SiteName1";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "Child SiteName1"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_site = "Child SiteName2";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "Child SiteName2"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "MANAGE_SUBGROUPS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_siteName = "Child SiteName1";
+
+		Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
+
+		MenuItem.viewNotPresent(menuItem = "Add Child Site");
+
+		MenuItem.viewNotPresent(menuItem = "Delete");
+
+		var key_site = "Child SiteName2";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "Child SiteName2"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Pages");
+	}
+
+	@priority = "4"
+	test ViewSiteManagePagesRegRole {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Permissions.setUpRegRoleLoginUserCP(
+			portletName = "Sites",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No sites were found."
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_site = "${siteName}";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "${siteName}"
+		);
+
+		var key_siteName = "${siteName}";
+
+		AssertElementPresent(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		var key_site = "Site Name";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+			value1 = "Site Name"
+		);
+
+		var key_siteName = "Site Name";
+
+		AssertElementPresent(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No sites were found."
+		);
+	}
+}

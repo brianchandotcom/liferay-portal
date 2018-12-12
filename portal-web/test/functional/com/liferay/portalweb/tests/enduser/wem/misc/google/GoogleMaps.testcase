@@ -1,38 +1,34 @@
-<definition component-name="portal-plugins-osgi">
-	<property name="osgi.app.includes" value="google-maps" />
-	<property name="plugins.deployment.type" value="osgi" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Google" />
-	<property name="testray.main.component.name" value="Google" />
+@component-name = "portal-plugins-osgi"
+definition {
+	property osgi.app.includes = "google-maps";
+	property plugins.deployment.type = "osgi";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Google";
+	property testray.main.component.name = "Google";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+	setUp {
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Page");
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="GoogleMapsPortletSmoke" priority="4">
-		<var name="appName" value="Google Maps" />
+	@priority = "4"
+	test GoogleMapsPortletSmoke {
+		var appName = "Google Maps";
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Google Maps" />
-		</execute>
-	</command>
-</definition>
+		Portlet.addPG(portletName = "Google Maps");
+	}
+}

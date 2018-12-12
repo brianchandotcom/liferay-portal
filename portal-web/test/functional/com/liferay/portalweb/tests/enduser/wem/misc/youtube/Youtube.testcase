@@ -1,91 +1,75 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="YouTube" />
-	<property name="testray.main.component.name" value="YouTube" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.component.names = "YouTube";
+	property testray.main.component.name = "YouTube";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Page Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="AddYoutubeVideo" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
+	@priority = "4"
+	test AddYoutubeVideo {
+		Navigator.gotoPage(pageName = "Test Page Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="YouTube" />
-		</execute>
+		Portlet.addPG(portletName = "YouTube");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="YouTube" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "YouTube",
+			portletOption = "Configuration"
+		);
 
-		<execute macro="YoutubePortlet#addVideoId">
-			<var name="videoId" value="PiObSymqSdo" />
-		</execute>
+		YoutubePortlet.addVideoId(videoId = "PiObSymqSdo");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Page Name");
 
-		<execute macro="YoutubePortlet#assertVideoTitle">
-			<var name="videoTitle" value="The Gospel in 6 Minutes - John Piper" />
-		</execute>
+		YoutubePortlet.assertVideoTitle(
+			videoTitle = "The Gospel in 6 Minutes - John Piper"
+		);
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="YouTube" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "YouTube",
+			portletOption = "Configuration"
+		);
 
-		<execute macro="YoutubePortlet#viewPortletConfiguration">
-			<var name="videoId" value="PiObSymqSdo" />
-		</execute>
+		YoutubePortlet.viewPortletConfiguration(videoId = "PiObSymqSdo");
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		IFrame.closeFrame();
+	}
 
-	<command name="YoutubePortletSmoke" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
+	@priority = "4"
+	test YoutubePortletSmoke {
+		Navigator.gotoPage(pageName = "Test Page Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="YouTube" />
-		</execute>
+		Portlet.addPG(portletName = "YouTube");
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletBody" value="Please configure this portlet to make it visible to all users." />
-			<var name="portletName" value="YouTube" />
-		</execute>
-	</command>
-</definition>
+		Portlet.viewPG(
+			portletBody = "Please configure this portlet to make it visible to all users.",
+			portletName = "YouTube"
+		);
+	}
+}

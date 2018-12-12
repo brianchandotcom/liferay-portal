@@ -1,268 +1,240 @@
-<definition component-name="portal-web-forms-and-data-lists">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Dynamic Data Lists" />
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Dynamic Data Lists";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		Site.addBlankCP(siteName = "Staging Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Staging Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Staging Site Name"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Staging Site Name" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoSite(site = "Staging Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="AddWebContentTemplateWithSmallImage" priority="3">
-		<description message="This is a use case for LPS-80085." />
+	@description = "This is a use case for LPS-80085."
+	@priority = "3"
+	test AddWebContentTemplateWithSmallImage {
+		property test.name.skip.portal.instance = "DDMStructuresStaging#AddWebContentTemplateWithSmallImage";
 
-		<property name="test.name.skip.portal.instance" value="DDMStructuresStaging#AddWebContentTemplateWithSmallImage" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Page" />
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		WebContentTemplates.addCP(
+			templateName = "WC Template Name",
+			templateSmallImageURL = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg"
+		);
 
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImageURL" value="http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		WebContentTemplates.viewTableEntryCP(
+			templateName = "WC Template Name",
+			templateSmallImage = "true"
+		);
 
-		<execute macro="WebContentTemplates#viewTableEntryCP">
-			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImage" value="true" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Page" />
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.publishToLive();
 
-		<execute macro="Staging#publishToLive" />
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		WebContentTemplates.viewTableEntryCP(
+			templateName = "WC Template Name",
+			templateSmallImage = "true"
+		);
+	}
 
-		<execute macro="WebContentTemplates#viewTableEntryCP">
-			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImage" value="true" />
-		</execute>
-	</command>
+	@description = "This is a use case for LPS-68661 and LPS-77957."
+	@priority = "4"
+	test CreateWebContentStructureAndTemplate {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name"
+		);
 
-	<command name="CreateWebContentStructureAndTemplate" priority="4">
-		<description message="This is a use case for LPS-68661 and LPS-77957." />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Page" />
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Structures");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Structures");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentTemplates.viewCP(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name"
+		);
 
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Page" />
-			<var name="siteName" value="Staging Site Name" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="Staging#publishToLive" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Navigator.gotoNavItem(navItem = "Structures");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
+		for (var menuItem : list "Edit,Edit Default Values,Permissions,Copy") {
+			LexiconEntry.viewNoEntryMenuItem(
+				menuItem = "${menuItem}",
+				rowEntry = "WC Structure Name"
+			);
+		}
 
-		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<for list="Edit,Edit Default Values,Permissions,Copy" param="menuItem">
-			<execute macro="LexiconEntry#viewNoEntryMenuItem">
-				<var name="menuItem" value="${menuItem}" />
-				<var name="rowEntry" value="WC Structure Name" />
-			</execute>
-		</for>
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
-
-		<for list="Edit,Permissions,Copy" param="menuItem">
-			<execute macro="LexiconEntry#viewNoEntryMenuItem">
-				<var name="menuItem" value="${menuItem}" />
-				<var name="rowEntry" value="WC Template Name" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		for (var menuItem : list "Edit,Permissions,Copy") {
+			LexiconEntry.viewNoEntryMenuItem(
+				menuItem = "${menuItem}",
+				rowEntry = "WC Template Name"
+			);
+		}
+	}
+}

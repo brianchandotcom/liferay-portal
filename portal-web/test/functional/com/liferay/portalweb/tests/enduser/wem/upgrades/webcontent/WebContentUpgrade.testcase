@@ -1,117 +1,123 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Upgrades WEM,Web Content Administration" />
-	<property name="testray.main.component.name" value="Upgrades WEM" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Upgrades WEM,Web Content Administration";
+	property testray.main.component.name = "Upgrades WEM";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="ViewLayoutArchive621015" priority="5">
-		<description message="This is a use case for LPS-75561." />
+	@description = "This is a use case for LPS-75561."
+	@priority = "5"
+	test ViewLayoutArchive621015 {
+		property data.archive.type = "data-archive-pages-administration";
+		property portal.version = "6.2.10.15";
 
-		<property name="data.archive.type" value="data-archive-pages-administration" />
-		<property name="portal.version" value="6.2.10.15" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		AssertTextNotPresent(
+			value1 = "There was an unexpected error. Please refresh the current page."
+		);
+	}
 
-		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
-	</command>
+	@description = "This is a use case for LPS-75561."
+	@priority = "5"
+	test ViewLayoutArchive621021 {
+		property data.archive.type = "data-archive-pages-administration";
+		property portal.version = "6.2.10.21";
 
-	<command name="ViewLayoutArchive621021" priority="5">
-		<description message="This is a use case for LPS-75561." />
+		Navigator.openURL();
 
-		<property name="data.archive.type" value="data-archive-pages-administration" />
-		<property name="portal.version" value="6.2.10.21" />
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#openURL" />
+		AssertTextNotPresent(
+			value1 = "There was an unexpected error. Please refresh the current page."
+		);
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+	@description = "This is a use case for LPS-75561."
+	@priority = "5"
+	test ViewLayoutArchive625 {
+		property data.archive.type = "data-archive-pages-administration";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
-	</command>
+		Navigator.openURL();
 
-	<command name="ViewLayoutArchive625" priority="5">
-		<description message="This is a use case for LPS-75561." />
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<property name="data.archive.type" value="data-archive-pages-administration" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
+		AssertTextNotPresent(
+			value1 = "There was an unexpected error. Please refresh the current page."
+		);
+	}
 
-		<execute macro="Navigator#openURL" />
+	@priority = "5"
+	test ViewWebContentArchive612 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.1.2";
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Upgrade.addWCStructureAndTemplate();
 
-		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
-	</command>
+		Upgrade.publishWCDraft();
+	}
 
-	<command name="ViewWebContentArchive612" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.1.2" />
+	@priority = "5"
+	test ViewWebContentArchive6130 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
+		Upgrade.addWCStructureAndTemplate();
 
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
+		Upgrade.publishWCDraft();
+	}
 
-	<command name="ViewWebContentArchive6130" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test ViewWebContentArchive621015 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
+		Upgrade.addWCStructureAndTemplate();
 
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
+		Upgrade.publishWCDraft();
+	}
 
-	<command name="ViewWebContentArchive621015" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test ViewWebContentArchive621021 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
+		Upgrade.addWCStructureAndTemplate();
 
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
+		Upgrade.publishWCDraft();
+	}
 
-	<command name="ViewWebContentArchive621021" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test ViewWebContentArchive625 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
+		Upgrade.addWCStructureAndTemplate();
 
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
-
-	<command name="ViewWebContentArchive625" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
-
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
-
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
-</definition>
+		Upgrade.publishWCDraft();
+	}
+}

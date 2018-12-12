@@ -1,141 +1,142 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Export/Import Framework" />
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Export/Import Framework";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="DeleteExportTemplate" priority="4">
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+	@priority = "4"
+	test DeleteExportTemplate {
+		LAR.addExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+		LAR.saveExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="LAR#viewExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+		LAR.viewExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="LAR#moveToTheRecycleBinExportTemplate">
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+		LAR.moveToTheRecycleBinExportTemplate(
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Export Template Name" />
-			<var name="assetType" value="Export Import Template" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
+		RecycleBin.viewCP(
+			assetName = "Export Template Name",
+			assetType = "Export Import Template",
+			deleteUser = "Test Test"
+		);
 
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Export Template Name" />
-		</execute>
+		RecycleBin.restoreCP(assetName = "Export Template Name");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Export Templates" />
-		</execute>
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
-		<execute macro="LAR#viewExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-	</command>
+		LAR.viewExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+	}
 
-	<command name="ExportWithRelaunchedProcess" priority="3">
-		<execute macro="LAR#exportSiteCP" />
+	@priority = "3"
+	test ExportWithRelaunchedProcess {
+		LAR.exportSiteCP();
 
-		<var name="key_larFileName" value="${larFileName}" />
+		var key_larFileName = "${larFileName}";
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
 
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+		var valueName = selenium.getText("//ul/li/div/h5");
 
-		<echo message="value name ${valueName}" />
+		echo("value name ${valueName}");
 
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
 
-		<echo message="lar file name ${larFileName}" />
+		echo("lar file name ${larFileName}");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Relaunch" />
-			<var name="rowEntry" value="${larFileName}" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Relaunch",
+			rowEntry = "${larFileName}"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+	}
 
-	<command name="SearchExportTemplate" priority="4">
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+	@priority = "4"
+	test SearchExportTemplate {
+		LAR.addExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
+		LAR.saveExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Export Templates" />
-		</execute>
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
-		<execute macro="LAR#searchTemplate">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-	</command>
-</definition>
+		LAR.searchTemplate(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+	}
+}

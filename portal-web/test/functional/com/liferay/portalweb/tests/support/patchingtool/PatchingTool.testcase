@@ -1,64 +1,56 @@
-<definition component-name="support-qa">
-	<property name="deploy.latest.marketplace.app.disabled" value="true" />
-	<property name="portal.fixpack.release" value="true" />
-	<property name="test.ignore.tomcat.ext.environment" value="true" />
-	<property name="testray.main.component.name" value="Patching Tool" />
+@component-name = "support-qa"
+definition {
+	property deploy.latest.marketplace.app.disabled = "true";
+	property portal.fixpack.release = "true";
+	property test.ignore.tomcat.ext.environment = "true";
+	property testray.main.component.name = "Patching Tool";
+	var testBuildFixPackZipURL = PropsUtil.get("test.build.fix.pack.zip.url");
+	var testBuildFixPackZipURLPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
 
-	<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
-	<var method="PropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
+	setUp {
+		SignIn.signInTestSetup();
+	}
 
-	<set-up>
-		<execute macro="SignIn#signInTestSetup" />
-	</set-up>
+	@description = "Ensures that a fix pack can be reverted."
+	@priority = "5"
+	test RevertFixPack {
+		property skip.install-patch = "true";
+		property test.name.skip.portal.instance = "PatchingTool#RevertFixPack";
 
-	<command name="RevertFixPack" priority="5">
-		<description message="Ensures that a fix pack can be reverted." />
+		SignOut.signOut();
 
-		<property name="skip.install-patch" value="true" />
-		<property name="test.name.skip.portal.instance" value="PatchingTool#RevertFixPack" />
+		Portlet.shutdownServer();
 
-		<execute macro="SignOut#signOut" />
+		PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURL}");
 
-		<execute macro="Portlet#shutdownServer" />
+		Portlet.startServer(
+			deleteLiferayHome = "true",
+			keepCachedAppServerData = "true"
+		);
 
-		<execute macro="PatchingTool#installPatch">
-			<var name="patchFileZipURL" value="${testBuildFixPackZipURL}" />
-		</execute>
+		SignIn.signIn();
 
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="true" />
-			<var name="keepCachedAppServerData" value="true" />
-		</execute>
+		SignOut.signOut();
 
-		<execute macro="SignIn#signIn" />
+		Portlet.shutdownServer();
 
-		<execute macro="SignOut#signOut" />
+		PatchingTool.uninstallPatches();
 
-		<execute macro="Portlet#shutdownServer" />
+		PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURLPrevious}");
 
-		<execute macro="PatchingTool#uninstallPatches" />
+		Portlet.startServer(
+			deleteLiferayHome = "true",
+			keepCachedAppServerData = "true"
+		);
 
-		<execute macro="PatchingTool#installPatch">
-			<var name="patchFileZipURL" value="${testBuildFixPackZipURLPrevious}" />
-		</execute>
+		SignIn.signIn();
 
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="true" />
-			<var name="keepCachedAppServerData" value="true" />
-		</execute>
+		GogoShell.openGogoShellAdmin();
 
-		<execute macro="SignIn#signIn" />
+		GogoShell.executeCommand(commandName = "system:check");
 
-		<execute macro="GogoShell#openGogoShellAdmin" />
-
-		<execute macro="GogoShell#executeCommand">
-			<var name="commandName" value="system:check" />
-		</execute>
-
-		<for list="Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found" param="outputContent">
-			<execute macro="GogoShell#viewOutPut">
-				<var name="outputContent" value="${outputContent}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
+			GogoShell.viewOutPut(outputContent = "${outputContent}");
+		}
+	}
+}

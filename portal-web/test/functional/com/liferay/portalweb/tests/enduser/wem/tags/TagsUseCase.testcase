@@ -1,1063 +1,830 @@
-<definition component-name="portal-tags">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Tags" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Tag#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddAutoAssertionTagViaBlogs" priority="4">
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Navigator#openSiteURL">
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Tag#addAutoAssertionTagViaBlogsPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName" value="tag name 3" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTagPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName" value="tag name 3" />
-		</execute>
-	</command>
-
-	<command name="AddFrontPageTag" priority="4">
-		<property name="testray.component.names" value="Tags,Wiki" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="pageAddTag" value="true" />
-			<var name="tagName" value="wiki tag name" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-	</command>
-
-	<command name="AddMultipleTagsViaBlogs" priority="4">
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-
-		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Page Name" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewTagPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddSelectTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<for list="tag1,tag2,tag3" param="tagName">
-			<execute macro="Navigator#openSiteURL">
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag1,tag3" />
-		</execute>
-
-		<for list="tag1,tag3" param="tagName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Page Name" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<var name="key_entryTitle" value="Entry Title" />
-
-			<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Entry Title" />
-
-			<execute macro="BlogsEntry#viewTagPG">
-				<var name="entryTitle" value="Entry Title" />
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Blogs#addEntryWithTag">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName" value="tag name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTagPG">
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName" value="tag name" />
-		</execute>
-	</command>
-
-	<command name="DisplayTagCloud" priority="5">
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
-			<var name="showAssetCount" value="true" />
-			<var name="showUnusedTags" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
-			<var name="displayTemplate" value="Cloud" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="first tag,second tag" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="tagNameList" value="first tag" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="first tag (2)" />
-			<var name="tagPopularityLevel" value="6" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="second tag (1)" />
-			<var name="tagPopularityLevel" value="3" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="third tag (0)" />
-			<var name="tagPopularityLevel" value="1" />
-		</execute>
-	</command>
-
-	<command name="DisplayTagUsageStatistics" priority="3">
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
-			<var name="displayTemplate" value="Number" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
-			<var name="showAssetCount" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="first tag,second tag" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="tagNameList" value="first tag" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#clickTagView">
-			<var name="tagAssetCount" value="first tag (2)" />
-			<var name="tagName" value="first tag" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#clickTagView">
-			<var name="tagAssetCount" value="second tag (1)" />
-			<var name="tagName" value="second tag" />
-		</execute>
-	</command>
-
-	<command name="DisplayUnusedTags" priority="3">
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
-			<var name="showUnusedTags" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewDefaultPG">
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-	</command>
-
-	<command name="RemoveSelectTagViaBlogs" priority="3">
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Page Name" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewTagPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
-
-		<for list="tag name 1,tag name 3" param="tagName">
-			<execute macro="AssetCategorization#removeTag">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="tag name 1" />
-		<execute function="AssertTextNotPresent" value1="tag name 3" />
-	</command>
-
-	<command name="RemoveTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-
-		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Page Name" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewTagPG">
-				<var name="entryContent" value="Entry Content" />
-				<var name="entryTitle" value="Entry Title" />
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
-
-		<execute macro="AssetCategorization#removeTag">
-			<var name="tagName" value="tag name 1" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="tag name 1" />
-	</command>
-
-	<command name="SearchMultipleTagsViaBlogs" priority="3">
-		<property name="testray.component.names" value="Blogs,Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="search" />
-			<var name="pageTemplateName" value="Search" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTag">
-			<var name="entryContent" value="Entry Content 1" />
-			<var name="entryTitle" value="Entry Title 1" />
-			<var name="tagName" value="blue" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTag">
-			<var name="entryContent" value="Entry Content 2" />
-			<var name="entryTitle" value="Entry Title 2" />
-			<var name="tagName" value="blue green" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTag">
-			<var name="entryContent" value="Entry Content 3" />
-			<var name="entryTitle" value="Entry Title 3" />
-			<var name="tagName" value="yellow" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="blue" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Entry Title 1" />
-			<var name="searchAssetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="yellow" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Entry Title 3" />
-			<var name="searchAssetType" value="Blogs Entry" />
-		</execute>
-	</command>
-
-	<command name="ViewDuplicateTagWarningMessage" priority="3">
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Metadata" />
-		</execute>
-
-		<execute macro="AssetCategorization#addTag">
-			<var name="tagName" value="tagname" />
-		</execute>
-
-		<execute macro="AssetCategorization#addDuplicateTag">
-			<var name="tagName" value="tagname" />
-		</execute>
-	</command>
-
-	<command name="ViewTagCloudDisplayConfiguration" priority="5">
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tag Cloud Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tag Cloud Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tag Cloud" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tag Cloud Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloudConfiguration">
-			<var name="displayTemplate" value="Cloud" />
-		</execute>
-	</command>
-
-	<command name="ViewTagCloudIncrease" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Tags" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
-			<var name="showAssetCount" value="true" />
-			<var name="showUnusedTags" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
-			<var name="displayTemplate" value="Cloud" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="first tag,second tag" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="tagNameList" value="first tag" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="first tag (2)" />
-			<var name="tagPopularityLevel" value="6" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="second tag (1)" />
-			<var name="tagPopularityLevel" value="3" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="first tag,second tag" />
-			<var name="webContentContent" value="Web Content2 Content" />
-			<var name="webContentTitle" value="Web Content2 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Tags Navigation Page" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="first tag (3)" />
-			<var name="tagPopularityLevel" value="6" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewTagCloud">
-			<var name="tagName" value="second tag (2)" />
-			<var name="tagPopularityLevel" value="4" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-tags"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Tags";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Tag.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddAutoAssertionTagViaBlogs {
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Tag.addAutoAssertionTagViaBlogsPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagName = "tag name 3"
+		);
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title"
+		);
+
+		BlogsEntry.viewTagPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagName = "tag name 3"
+		);
+	}
+
+	@priority = "4"
+	test AddFrontPageTag {
+		property testray.component.names = "Tags,Wiki";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		WikiPage.addFrontPagePG(
+			pageAddTag = "true",
+			tagName = "wiki tag name",
+			wikiPageContent = "Wiki FrontPage Content"
+		);
+	}
+
+	@priority = "4"
+	test AddMultipleTagsViaBlogs {
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+
+		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
+			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title"
+			);
+
+			BlogsEntry.viewTagPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title",
+				tagName = "${tagName}"
+			);
+		}
+	}
+
+	@priority = "5"
+	test AddSelectTagViaBlogs {
+		property portal.acceptance = "true";
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		for (var tagName : list "tag1,tag2,tag3") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag1,tag3"
+		);
+
+		for (var tagName : list "tag1,tag3") {
+			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+			var key_entryTitle = "Entry Title";
+
+			AssertClick(locator1 = "BlogsEntry#TITLE_LINK", value1 = "Entry Title");
+
+			BlogsEntry.viewTagPG(entryTitle = "Entry Title", tagName = "${tagName}");
+		}
+	}
+
+	@priority = "5"
+	test AddTagViaBlogs {
+		property portal.acceptance = "true";
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Refresh();
+
+		Blogs.addEntryWithTag(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagName = "tag name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title"
+		);
+
+		BlogsEntry.viewTagPG(entryTitle = "Entry Title", tagName = "tag name");
+	}
+
+	@priority = "5"
+	test DisplayTagCloud {
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		TagsNavigationPortlet.configureFlaggableSettingsPG(
+			showAssetCount = "true",
+			showUnusedTags = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Cloud");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		for (var tagName : list "first tag,second tag,third tag") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "first tag,second tag",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "first tag"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "first tag (2)",
+			tagPopularityLevel = "6"
+		);
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "second tag (1)",
+			tagPopularityLevel = "3"
+		);
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "third tag (0)",
+			tagPopularityLevel = "1"
+		);
+	}
+
+	@priority = "3"
+	test DisplayTagUsageStatistics {
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Number");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.configureFlaggableSettingsPG(showAssetCount = "true");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		for (var tagName : list "first tag,second tag,third tag") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "first tag,second tag",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "first tag"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.clickTagView(
+			tagAssetCount = "first tag (2)",
+			tagName = "first tag"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.clickTagView(
+			tagAssetCount = "second tag (1)",
+			tagName = "second tag"
+		);
+	}
+
+	@priority = "3"
+	test DisplayUnusedTags {
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.configureFlaggableSettingsPG(showUnusedTags = "true");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.viewDefaultPG(
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+	}
+
+	@priority = "3"
+	test RemoveSelectTagViaBlogs {
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
+			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title"
+			);
+
+			BlogsEntry.viewTagPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title",
+				tagName = "${tagName}"
+			);
+		}
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Entry Title");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "tag name 1,tag name 3") {
+			AssetCategorization.removeTag(tagName = "${tagName}");
+		}
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title"
+		);
+
+		AssertTextNotPresent(value1 = "tag name 1");
+
+		AssertTextNotPresent(value1 = "tag name 3");
+	}
+
+	@priority = "5"
+	test RemoveTagViaBlogs {
+		property portal.acceptance = "true";
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+
+		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
+			Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title"
+			);
+
+			BlogsEntry.viewTagPG(
+				entryContent = "Entry Content",
+				entryTitle = "Entry Title",
+				tagName = "${tagName}"
+			);
+		}
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Entry Title");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "tag name 1");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title"
+		);
+
+		AssertTextNotPresent(value1 = "tag name 1");
+	}
+
+	@priority = "3"
+	test SearchMultipleTagsViaBlogs {
+		property testray.component.names = "Blogs,Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Page Name");
+
+		SitePages.addPublicPage(pageName = "search", pageTemplateName = "Search");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Entry Content 1",
+			entryTitle = "Entry Title 1",
+			tagName = "blue"
+		);
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Entry Content 2",
+			entryTitle = "Entry Title 2",
+			tagName = "blue green"
+		);
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Entry Content 3",
+			entryTitle = "Entry Title 3",
+			tagName = "yellow"
+		);
+
+		Navigator.gotoSitePage(pageName = "Page Name", siteName = "Site Name");
+
+		SearchPortlets.searchEmbedded(searchTerm = "blue");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title 1",
+			searchAssetType = "Blogs Entry"
+		);
+
+		SearchPortlets.searchEmbedded(searchTerm = "yellow");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title 3",
+			searchAssetType = "Blogs Entry"
+		);
+	}
+
+	@priority = "3"
+	test ViewDuplicateTagWarningMessage {
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssetCategorization.addTag(tagName = "tagname");
+
+		AssetCategorization.addDuplicateTag(tagName = "tagname");
+	}
+
+	@priority = "5"
+	test ViewTagCloudDisplayConfiguration {
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Tag Cloud Page");
+
+		Navigator.gotoPage(pageName = "Tag Cloud Page");
+
+		Portlet.addPG(portletName = "Tag Cloud");
+
+		Navigator.gotoPage(pageName = "Tag Cloud Page");
+
+		TagsNavigationPortlet.viewTagCloudConfiguration(displayTemplate = "Cloud");
+	}
+
+	@priority = "5"
+	test ViewTagCloudIncrease {
+		property portal.acceptance = "true";
+		property testray.component.names = "Tags";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		TagsNavigationPortlet.configureFlaggableSettingsPG(
+			showAssetCount = "true",
+			showUnusedTags = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Cloud");
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		for (var tagName : list "first tag,second tag,third tag") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Tags"
+			);
+
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "first tag,second tag",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "first tag"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "first tag (2)",
+			tagPopularityLevel = "6"
+		);
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "second tag (1)",
+			tagPopularityLevel = "3"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "first tag,second tag",
+			webContentContent = "Web Content2 Content",
+			webContentTitle = "Web Content2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Tags Navigation Page");
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "first tag (3)",
+			tagPopularityLevel = "6"
+		);
+
+		TagsNavigationPortlet.viewTagCloud(
+			tagName = "second tag (2)",
+			tagPopularityLevel = "4"
+		);
+	}
+}

@@ -1,250 +1,200 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.component.names" value="Wiki" />
-	<property name="testray.main.component.name" value="Notifications" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.component.names = "Wiki";
+	property testray.main.component.name = "Notifications";
+	var pageName = "Wiki Test Page";
+	var portletName = "Wiki";
 
-	<var name="pageName" value="Wiki Test Page" />
-	<var name="portletName" value="Wiki" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Wiki Test Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Wiki Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Wiki");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+	}
 
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPortlet.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiPortlet#tearDownCP" />
+			WikiPage.tearDownCP();
 
-				<execute macro="WikiPage#tearDownCP" />
+			WikiNode.tearDownCP();
 
-				<execute macro="WikiNode#tearDownCP" />
+			Page.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
+			User.tearDownCP();
+		}
+	}
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test ViewWebsiteNotificationForNewWikiPage {
+		Navigator.openURL();
 
-	<command name="ViewWebsiteNotificationForNewWikiPage" priority="4">
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
-		<execute macro="WikiPortlet#subscribeToNodeCP">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "1");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
+		Notifications.gotoNotifications();
 
-		<execute macro="Notifications#gotoNotifications" />
+		Notifications.viewNewContent(
+			assetType = "wiki page",
+			contentBody = "Wiki Page Title",
+			user = "userfn userln"
+		);
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="wiki page" />
-			<var name="contentBody" value="Wiki Page Title" />
-			<var name="user" value="userfn userln" />
-		</execute>
+		Notifications.navigateToContent(contentBody = "Wiki Page Title");
 
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Wiki Page Title" />
-		</execute>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
+	@priority = "4"
+	test ViewWebsiteNotificationForUpdatedWikiPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-	<command name="ViewWebsiteNotificationForUpdatedWikiPage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
-		<execute macro="WikiPortlet#subscribeToNodeCP">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.editPagePG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#editPagePG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "1");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
+		Notifications.gotoNotifications();
 
-		<execute macro="Notifications#gotoNotifications" />
+		Notifications.viewUpdatedContent(
+			assetType = "wiki page",
+			contentBody = "Wiki Page Title",
+			user = "userfn userln"
+		);
 
-		<execute macro="Notifications#viewUpdatedContent">
-			<var name="assetType" value="wiki page" />
-			<var name="contentBody" value="Wiki Page Title" />
-			<var name="user" value="userfn userln" />
-		</execute>
+		Notifications.navigateToContent(contentBody = "Wiki Page Title");
 
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Wiki Page Title" />
-		</execute>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-</definition>
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+}

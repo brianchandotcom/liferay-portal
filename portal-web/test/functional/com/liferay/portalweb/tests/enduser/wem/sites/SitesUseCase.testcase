@@ -1,1624 +1,1393 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="Organization#tearDownCP" />
-
-				<execute macro="Team#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddChildSiteFromImportedSiteTemplate" priority="5">
-		<property name="test.name.skip.portal.instance" value="SitesUsecase#AddChildSiteFromImportedSiteTemplate" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="organizations-7.0.lar" />
-			<var name="portletName" value="Users and Organizations" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="Space Program Academy of Continuing Education" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="College of Agricultural Science" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="College of Agricultural Science" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="class-site-template-7.0.lar" />
-			<var name="portletName" value="Site Templates" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateName" value="Digital Class Room" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="membershipType" value="Private" />
-			<var name="parentSiteName" value="College of Agricultural Science" />
-			<var name="siteName" value="Moon Rocks 101" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="Site#selectPageType">
-			<var name="selectPrivatePages" value="true" />
-			<var name="siteTemplate" value="Digital Class Room" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="membershipType" value="Private" />
-			<var name="parentSiteName" value="College of Agricultural Science" />
-			<var name="siteName" value="Moon Rocks 202" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="Site#selectPageType">
-			<var name="checkPrivatePagesPropagation" value="true" />
-			<var name="selectPrivatePages" value="true" />
-			<var name="siteTemplate" value="Digital Class Room" />
-		</execute>
-
-		<execute macro="Navigator#openPrivateSiteURL">
-			<var name="siteName" value="Moon Rocks 101" />
-		</execute>
-
-		<for list="Courses,Student Boards,Materials" param="pageName">
-			<execute macro="Navigator#gotoPrivateSitePage">
-				<var name="pageName" value="${pageName}" />
-				<var name="siteName" value="Moon Rocks 101" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openPrivateSiteURL">
-			<var name="siteName" value="Moon Rocks 202" />
-		</execute>
-
-		<for list="Courses,Student Boards,Materials" param="pageName">
-			<execute macro="Navigator#gotoPrivateSitePage">
-				<var name="pageName" value="${pageName}" />
-				<var name="siteName" value="Moon Rocks 202" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddOrganizationSitesAndDeactivate" priority="5">
-		<property name="test.name.skip.portal.instance" value="SitesUsecase#AddOrganizationSitesAndDeactivate" />
-		<property name="testray.component.names" value="Site Administration,Training,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Infrastructure" />
-			<var name="configurationName" value="Inactive Request Handler" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="show.inactive.request.message" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name 1" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Organization Name 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#manageMembershipOptionsInSites">
-			<var name="allowManualMembershipManagement" value="true" />
-			<var name="membershipType" value="Open" />
-			<var name="orgName" value="Organization Name 1" />
-			<var name="selectMembershipType" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#viewCP">
-			<var name="siteMember" value="Organization" />
-			<var name="siteName" value="Organization Name 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name 2" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Intranet Site" />
-			<var name="orgName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#manageMembershipOptionsInSites">
-			<var name="allowManualMembershipManagement" value="true" />
-			<var name="membershipType" value="Open" />
-			<var name="orgName" value="Organization Name 2" />
-			<var name="selectMembershipType" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#viewCP">
-			<var name="siteMember" value="Organization" />
-			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Organization Name 1" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Organization Name 2" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name 1" />
-		</execute>
-
-		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Organization Name 1" />
-			<var name="siteTemplate" value="Community" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Organization Name 2" />
-			<var name="siteTemplate" value="Intranet" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#deactivateCP">
-			<var name="siteName" value="Organization Name 2" />
-			<var name="successMessage" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="Page#viewInactiveRequestMessage">
-			<var name="resource" value="site" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
-		<property name="testray.component.names" value="Site Administration,Users and Organization" />
-
-		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Sites" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Sites" />
-			</execute>
-
-			<execute macro="Site#addCommunityCP">
-				<var name="siteName" value="${siteNameListsCount}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Site Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Site Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Site Organization Name" />
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-			<var name="userName" value="Test Test" />
-			<var name="userScreenName" value="test" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Organization Name" />
-		</execute>
-	</command>
-
-	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="3">
-		<property name="testray.component.names" value="Site Administration,User Groups" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Roles Siterole Name" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="Roles Regrole Name" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<for list="ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_SITE_ADMINISTRATION" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-				<var name="roleTitle" value="Roles Regrole Name" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ASSIGN_MEMBERS" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Role" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn userln" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="NavItem#gotoUserGroups" />
-
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="test test" />
-		</execute>
-	</command>
-
-	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="4">
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="privatePageVirtualHostURL" value="www.able.com" />
-			<var name="privateVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Test Private Page" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080/test-private-page" />
-		</execute>
-
-		<execute macro="Site#viewPrivateVirtualHostUrlUserLoginRedirect">
-			<var name="userEmailAddress" value="@liferay.com" />
-		</execute>
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080/test-private-page" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080/test-private-page" />
-		</execute>
-
-		<execute function="AssertLocation" value1="http://www.able.com:8080/test-private-page" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
-		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
-		<property name="test.name.skip.portal.instance" value="SitesUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" />
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editVirtualHostCP">
-			<var name="virtualHostName" value="www.able.com" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationAuthenticationGeneral">
-			<var name="enableRequireStrangers" value="true" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersEmailNotificationsCP" />
-
-		<execute macro="PortalSettings#editConfigurationUsersEmailVerificationNotificationsCP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="publicPageVirtualHostURL" value="www.baker.com" />
-			<var name="publicVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="PropsUtil#get('email.address.1')" name="userName" />
-			<var method="PropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080/" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:8080/" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#addCreateAccountPG">
-			<var method="PropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Gmail#login">
-			<var method="PropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="PropsUtil#get('email.password.2')" name="userPassword" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#gotoMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Account" />
-			<var name="gmailMessageTitle" value="Your New Account" />
-		</execute>
-
-		<var method="selenium#getText('Gmail#EMAIL_PASSWORD')" name="emailPassword" />
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#gotoMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Address Verification" />
-			<var name="gmailMessageTitle" value="Email Address Verification" />
-		</execute>
-
-		<var method="selenium#getText('Gmail#EMAIL_VERIFICATION_CODE')" name="emailVerification" />
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="Email Address Verification,Your New Account,Your New Password" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:8080/" />
-		</execute>
-
-		<execute macro="User#signInPG">
-			<var name="emailPassword" value="${emailPassword}" />
-			<var name="emailVerification" value="${emailVerification}" />
-			<var method="PropsUtil#get('email.address.2')" name="userEmailAddress" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersEmailVerificationNotificationsCP">
-			<var name="emailVerificationURL" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:8080/" />
-		</execute>
-
-		<execute macro="User#editEmailViaMyAccount">
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-		</execute>
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#gotoMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Address Verification" />
-			<var name="gmailMessageTitle" value="Email Address Verification" />
-		</execute>
-
-		<var method="selenium#getText('Gmail#EMAIL_ADDRESS_VERIFICATION_URL')" name="emailAddressVerificationURL" />
-
-		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
-
-		<execute function="SelectWindow" locator1="title=Verify Email Address - ${siteName}" />
-		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="Email Address Verification,Your New Account,Your New Password" />
-		</execute>
-	</command>
-
-	<command name="SiteFriendlyURLLayoutImporter" priority="3">
-		<property name="testray.component.names" value="Site Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#gotoAddPageCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="User Group Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="UserBar#gotoDashboard" />
-
-		<execute function="AssertLocation" value1="${portalURL}/user/usersn" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="/liferay" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/liferay/site-page-name" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/web/liferay/site-page-name" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="/guest" />
-		</execute>
-	</command>
-
-	<command name="SitesDeactivated" priority="3">
-		<property name="test.name.skip.portal.instance" value="SitesUsecase#SitesDeactivated" />
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Infrastructure" />
-			<var name="configurationName" value="Inactive Request Handler" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="show.inactive.request.message" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site1 Name" />
-		</execute>
-
-		<execute macro="Site#selectPageType">
-			<var name="selectPublicPages" value="true" />
-			<var name="siteTemplate" value="Community Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site2 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#editCP">
-			<var name="siteName" value="Site2 Name" />
-			<var name="siteNameEdit" value="Site2 Name Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site1 Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site1 Name" />
-		</execute>
-
-		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site1 Name" />
-			<var name="siteTemplate" value="Community" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site1 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#inactivateCP">
-			<var name="siteName" value="Site1 Name" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site1 Name" />
-		</execute>
-
-		<execute macro="Page#viewInactiveRequestMessage">
-			<var name="resource" value="site" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="SitesDemoSiteManagement" priority="4">
-		<property name="portal.release" value="false" />
-		<property name="test.name.skip.portal.instance" value="SitesUsecase#SitesDemoSiteManagement" />
-		<property name="testray.component.names" value="Site Administration,Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="membershipTypeOption" value="Open" />
-			<var name="siteDescription" value="This is the site description test" />
-			<var name="siteDetails" value="true" />
-			<var name="siteName" value="World Cup - Russia 2018" />
-		</execute>
-
-		<for list="World Cup,Russia,2018" param="tagName">
-			<execute macro="Tag#addViaSiteCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="privatePageVirtualHostURL" value="www.baker.com" />
-			<var name="privateVirtualHosts" value="true" />
-			<var name="publicPageVirtualHostURL" value="www.able.com" />
-			<var name="publicVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="/russia2018" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<for list="Home,Arenas" param="publicPageName">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="${publicPageName}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
-			<execute macro="SitePages#addPublicChildPage">
-				<var name="childPageName" value="${childPageName}" />
-				<var name="parentPageName" value="Arenas" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<for list="Accomodations,Maps" param="privatePageName">
-			<execute macro="SitePages#addPrivatePage">
-				<var name="pageName" value="${privatePageName}" />
-			</execute>
-		</for>
-
-		<execute macro="Site#changeSiteLogo">
-			<var name="logoFile" value="Document_3.png" />
-			<var name="pageName" value="Public Pages" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Page#addJavaScript">
-			<var name="javaScript" value="alert('Welcome to Russia.');" />
-			<var name="pageName" value="Arenas" />
-		</execute>
-
-		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018/Arenas" />
-
-		<execute function="AssertConfirm" value1="Welcome to Russia." />
-
-		<execute macro="User#logoutPG" />
-
-		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018/Arenas" />
-
-		<execute function="AssertConfirm" value1="Welcome to Russia." />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018" />
-
-		<execute macro="Page#viewCustomLogoPG" />
-
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
-			<execute macro="Page#viewChildPageDropdown">
-				<var name="childPageName" value="${childPageName}" />
-				<var name="javaScriptPage" value="Welcome to Russia." />
-				<var name="pageName" value="Arenas" />
-				<var name="viewChildPageDropdown" value="PAGE_2" />
-			</execute>
-		</for>
-
-		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Page#addJavaScript">
-			<var name="javaScript" value=" " />
-			<var name="pageName" value="Arenas" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="World Cup - Russia 2018" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="virtualHostsURL" value="www.baker.com:8080/group/russia2018" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:8080/group/russia2018" />
-		</execute>
-
-		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Accomodations,Maps" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/russia2018" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="LAR#exportSuccess" />
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<var method="selenium#getText('//tr/td[7]//span/a')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="import file name ${larFileName}" />
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Home" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="Page#viewChildPageDropdown">
-				<var name="childPageName" value="${childPageName}" />
-				<var name="pageName" value="Arenas" />
-				<var name="viewChildPageDropdown" value="PAGE_2" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="SiteTeamsPermissions" priority="4">
-		<property name="testray.component.names" value="Permissions,Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="pageTemplateName" value="Blog" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="Blog Page Template" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="Blog Page Template" />
-		</execute>
-
-		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
-			<execute macro="Role#removePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
-				<var name="roleTitle" value="Site Member" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="Blog Page Template" />
-		</execute>
-
-		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount">
-			<execute macro="Team#definePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionsInLineCheckListsCount}" />
-				<var name="teamName" value="Site Team Name" />
-			</execute>
-		</for>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultPortletPG">
-			<var name="pageTemplateName" value="Blog" />
-			<var name="portletTitleList" value="Blogs,Tag Cloud,Recent Bloggers" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="SiteTeamsXSS" priority="4">
-		<property name="testray.component.names" value="Site Administration,XSS" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="teamName"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#assignDefaultSiteTeam">
-			<var name="teamName"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			Site.tearDownCP();
+
+			Organization.tearDownCP();
+
+			Team.tearDownCP();
+
+			Page.tearDownCP();
+
+			UserGroup.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddChildSiteFromImportedSiteTemplate {
+		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LAR.importPortlet(
+			larFileName = "organizations-7.0.lar",
+			portletName = "Users and Organizations",
+			uploadFrom = "dependencies"
+		);
+
+		Organization.viewCP(
+			orgName = "Space Program Academy of Continuing Education",
+			orgType = "Organization"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addSiteCP(orgName = "College of Agricultural Science");
+
+		ProductMenu.gotoSite(site = "College of Agricultural Science");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LAR.importPortlet(
+			larFileName = "class-site-template-7.0.lar",
+			portletName = "Site Templates",
+			uploadFrom = "dependencies"
+		);
+
+		SiteTemplates.viewCP(siteTemplateName = "Digital Class Room");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			parentSiteName = "College of Agricultural Science",
+			siteName = "Moon Rocks 101",
+			siteType = "Blank"
+		);
+
+		Site.selectPageType(
+			selectPrivatePages = "true",
+			siteTemplate = "Digital Class Room"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			parentSiteName = "College of Agricultural Science",
+			siteName = "Moon Rocks 202",
+			siteType = "Blank"
+		);
+
+		Site.selectPageType(
+			checkPrivatePagesPropagation = "true",
+			selectPrivatePages = "true",
+			siteTemplate = "Digital Class Room"
+		);
+
+		Navigator.openPrivateSiteURL(siteName = "Moon Rocks 101");
+
+		for (var pageName : list "Courses,Student Boards,Materials") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "${pageName}",
+				siteName = "Moon Rocks 101"
+			);
+		}
+
+		Navigator.openPrivateSiteURL(siteName = "Moon Rocks 202");
+
+		for (var pageName : list "Courses,Student Boards,Materials") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "${pageName}",
+				siteName = "Moon Rocks 202"
+			);
+		}
+	}
+
+	@priority = "5"
+	test AddOrganizationSitesAndDeactivate {
+		property test.name.skip.portal.instance = "SitesUsecase#AddOrganizationSitesAndDeactivate";
+		property testray.component.names = "Site Administration,Training,Users and Organizations";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Inactive Request Handler",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "show.inactive.request.message");
+
+		SystemSettings.saveConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name 1", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Organization Name 1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.manageMembershipOptionsInSites(
+			allowManualMembershipManagement = "true",
+			membershipType = "Open",
+			orgName = "Organization Name 1",
+			selectMembershipType = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.viewCP(siteMember = "Organization", siteName = "Organization Name 1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name 2", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Intranet Site",
+			orgName = "Organization Name 2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.manageMembershipOptionsInSites(
+			allowManualMembershipManagement = "true",
+			membershipType = "Open",
+			orgName = "Organization Name 2",
+			selectMembershipType = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.viewCP(siteMember = "Organization", siteName = "Organization Name 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(
+			siteName = "Organization Name 1",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(
+			siteName = "Organization Name 2",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+
+		User.firstLoginPG(userEmailAddress = "userea@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Organization Name 1");
+
+		Page.viewDefaultSiteTemplatePagesPG(
+			pageName = "Home",
+			siteName = "Organization Name 1",
+			siteTemplate = "Community"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name 2");
+
+		Page.viewDefaultSiteTemplatePagesPG(
+			pageName = "Home",
+			siteName = "Organization Name 2",
+			siteTemplate = "Intranet"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.deactivateCP(siteName = "Organization Name 2", successMessage = "true");
+
+		Navigator.openSiteURL(siteName = "Organization Name 2");
+
+		Page.viewInactiveRequestMessage(resource = "site");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "3"
+	test MySitesDropDownDoesNotShowUserOrganizationOnTop {
+		property testray.component.names = "Site Administration,Users and Organization";
+
+		for (var siteNameListsCount : list "Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name") {
+			ProductMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites"
+			);
+
+			Site.addCommunityCP(siteName = "${siteNameListsCount}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Site Organization Name", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Site Organization Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Site Organization Name",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userName = "Test Test",
+			userScreenName = "test"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Organization Name");
+	}
+
+	@priority = "3"
+	test OnlySiteOwnersCanAssignSiteRolesToUserGroups {
+		property testray.component.names = "Site Administration,User Groups";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+
+		JSONRole.addRegularRole(
+			roleKey = "Roles Regrole Name",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Regrole Name"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ASSIGN_MEMBERS",
+			resourceName = "com.liferay.portal.kernel.model.Role",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(
+			roleTitle = "Roles Regrole Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn userln",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		NavItem.gotoUserGroups();
+
+		AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test"
+		);
+	}
+
+	@priority = "4"
+	test PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage {
+		property testray.component.names = "Site Administration";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.addVirtualHostsURLCP(
+			privatePageVirtualHostURL = "www.able.com",
+			privateVirtualHosts = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Test Private Page");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
+
+		Site.viewPrivateVirtualHostUrlUserLoginRedirect(
+			userEmailAddress = "@liferay.com"
+		);
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com",
+			virtualHostsURL = "http://www.able.com:8080/test-private-page"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
+
+		AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "3"
+	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
+		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
+		property test.name.skip.portal.instance = "SitesUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured";
+		property testray.component.names = "Site Administration";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
+
+		PortalSettings.editConfigurationAuthenticationGeneral(
+			enableRequireStrangers = "true"
+		);
+
+		PortalSettings.editConfigurationUsersEmailNotificationsCP();
+
+		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.baker.com",
+			publicVirtualHosts = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureMailServerSettings(
+			userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1")
+		);
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+
+		User.logoutPG();
+
+		User.addCreateAccountPG(
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.gotoMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "New Account",
+			gmailMessageTitle = "Your New Account"
+		);
+
+		var emailPassword = selenium.getText("Gmail#EMAIL_PASSWORD");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.gotoMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "Address Verification",
+			gmailMessageTitle = "Email Address Verification"
+		);
+
+		var emailVerification = selenium.getText("Gmail#EMAIL_VERIFICATION_CODE");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(
+			gmailMessageTitleList = "Email Address Verification,Your New Account,Your New Password"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+
+		User.signInPG(
+			emailPassword = "${emailPassword}",
+			emailVerification = "${emailVerification}",
+			userEmailAddress = PropsUtil.get("email.address.2")
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP(
+			emailVerificationURL = "true"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+
+		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.3"));
+
+		Gmail.logoutAndLogin(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.gotoMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "Address Verification",
+			gmailMessageTitle = "Email Address Verification"
+		);
+
+		var emailAddressVerificationURL = selenium.getText("Gmail#EMAIL_ADDRESS_VERIFICATION_URL");
+
+		Click(locator1 = "Gmail#EMAIL_ADDRESS_VERIFICATION_URL");
+
+		SelectWindow(locator1 = "title=Verify Email Address - ${siteName}");
+
+		AssertLocation(value1 = "${emailAddressVerificationURL}");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(
+			gmailMessageTitleList = "Email Address Verification,Your New Account,Your New Password"
+		);
+	}
+
+	@priority = "3"
+	test SiteFriendlyURLLayoutImporter {
+		property testray.component.names = "Site Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.gotoAddPageCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "site Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "User Group Name",
+			userScreenName = "usersn"
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDashboard();
+
+		AssertLocation(value1 = "${portalURL}/user/usersn");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/liferay/site-page-name");
+
+		AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
+	}
+
+	@priority = "3"
+	test SitesDeactivated {
+		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
+		property testray.component.names = "Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Inactive Request Handler",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "show.inactive.request.message");
+
+		SystemSettings.saveConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site1 Name");
+
+		Site.selectPageType(selectPublicPages = "true", siteTemplate = "Community Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site2 Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.editCP(siteName = "Site2 Name", siteNameEdit = "Site2 Name Edit");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site1 Name", userScreenName = "usersn");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site1 Name");
+
+		Page.viewDefaultSiteTemplatePagesPG(
+			pageName = "Home",
+			siteName = "Site1 Name",
+			siteTemplate = "Community"
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoSite(site = "Site1 Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.inactivateCP(siteName = "Site1 Name");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site1 Name");
+
+		Page.viewInactiveRequestMessage(resource = "site");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test SitesDemoSiteManagement {
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
+		property testray.component.names = "Site Administration,Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(
+			membershipTypeOption = "Open",
+			siteDescription = "This is the site description test",
+			siteDetails = "true",
+			siteName = "World Cup - Russia 2018"
+		);
+
+		for (var tagName : list "World Cup,Russia,2018") {
+			Tag.addViaSiteCP(tagName = "${tagName}");
+		}
+
+		Site.addVirtualHostsURLCP(
+			privatePageVirtualHostURL = "www.baker.com",
+			privateVirtualHosts = "true",
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true"
+		);
+
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		for (var publicPageName : list "Home,Arenas") {
+			SitePages.addPublicPage(pageName = "${publicPageName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+			SitePages.addPublicChildPage(
+				childPageName = "${childPageName}",
+				parentPageName = "Arenas"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		for (var privatePageName : list "Accomodations,Maps") {
+			SitePages.addPrivatePage(pageName = "${privatePageName}");
+		}
+
+		Site.changeSiteLogo(logoFile = "Document_3.png", pageName = "Public Pages");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		Page.addJavaScript(
+			javaScript = "alert(&apos;Welcome to Russia.&apos;);",
+			pageName = "Arenas"
+		);
+
+		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+
+		AssertConfirm(value1 = "Welcome to Russia.");
+
+		User.logoutPG();
+
+		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+
+		AssertConfirm(value1 = "Welcome to Russia.");
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+
+		Page.viewCustomLogoPG();
+
+		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+			Page.viewChildPageDropdown(
+				childPageName = "${childPageName}",
+				javaScriptPage = "Welcome to Russia.",
+				pageName = "Arenas",
+				viewChildPageDropdown = "PAGE_2"
+			);
+		}
+
+		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		Page.addJavaScript(javaScript = " ", pageName = "Arenas");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(
+			siteName = "World Cup - Russia 2018",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com",
+			virtualHostsURL = "www.baker.com:8080/group/russia2018"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia2018");
+
+		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/russia2018");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LexiconEntry.gotoAdd();
+
+		LAR.exportSuccess();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		var valueName = selenium.getText("//tr/td[7]//span/a");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("import file name ${larFileName}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+
+		DownloadTempFile();
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name");
+
+		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+			Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+
+			Page.viewChildPageDropdown(
+				childPageName = "${childPageName}",
+				pageName = "Arenas",
+				viewChildPageDropdown = "PAGE_2"
+			);
+		}
+	}
+
+	@priority = "4"
+	test SiteTeamsPermissions {
+		property testray.component.names = "Permissions,Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Blog Page Template",
+			pageTemplateName = "Blog"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn2");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
+
+		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blog Page Template", siteName = "Site Name");
+
+		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+
+		for (var permissionsInLineUncheckListsCount : list "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+				roleTitle = "Site Member"
+			);
+		}
+
+		Navigator.gotoSitePage(pageName = "Blog Page Template", siteName = "Site Name");
+
+		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+
+		for (var permissionsInLineCheckListsCount : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
+			Team.definePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineCheckListsCount}",
+				teamName = "Site Team Name"
+			);
+		}
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(pageName = "Blog Page Template", siteName = "Site Name");
+
+		PageTemplatesAdminGlobalSite.viewDefaultPortletPG(
+			pageTemplateName = "Blog",
+			portletTitleList = "Blogs,Tag Cloud,Recent Bloggers"
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertElementNotPresent(locator1 = "Home#PAGE");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test SiteTeamsXSS {
+		property testray.component.names = "Site Administration,XSS";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = '''<script>alert(123);</script>''',
+			teamName = '''<script>alert(123);</script>'''
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+}

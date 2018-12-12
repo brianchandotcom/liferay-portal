@@ -1,456 +1,390 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
-
-	<var name="page" value="Public Pages" />
-	<var name="pageName" value="Site Page Name" />
-	<var name="siteName" value="Site Name" />
-	<var name="workflowAssetType" value="Page Revision" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Page Revision" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="Workflow#tearDownPortalWorkflow" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="RejectPageRevisionPG" priority="4">
-		<var name="pageName" value="Page Revision Page" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Review)" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Review)" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Update)" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Update)" />
-		</execute>
-	</command>
-
-	<command name="ViewApprovedPageAfterStagingDeactivated" priority="5">
-		<description message="This is a use case for LPS-65319." />
-		<property name="portal.acceptance" value="false" />
-
-		<var name="pageName" value="New Site Page Name" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Review)" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Ready for Publication" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoStagingSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Assigned to Me" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTasksTaskNotPresentCP">
-			<var name="workflowAssetTitle" value="${pageName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-	</command>
-
-	<command name="WithdrawWorkflowSubmissionFromRemovedUser" priority="2">
-		<description message="This is a use case for LPS-58754" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="user@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Site Page Name" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="Site Page Name" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="No Workflow" />
-			<var name="workflowResourceValue" value="Page Revision" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#deactivateCP">
-			<var name="userFirstName" value="userfn" />
-		</execute>
-
-		<execute macro="User#deleteCP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Submissions" />
-		</execute>
-
-		<execute macro="Workflow#withdrawTaskByActions">
-			<var name="workflowAssetTitle" value="Site Page Name" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="Workflow#viewDefaultWorkflowSubmissions" />
-	</command>
-</definition>
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	var page = "Public Pages";
+	var pageName = "Site Page Name";
+	var siteName = "Site Name";
+	var workflowAssetType = "Page Revision";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@priority = "4"
+	test RejectPageRevisionPG {
+		var pageName = "Page Revision Page";
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "${pageName}");
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Staging.submitForPublicationPageRevision();
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Pending (Review)"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${pageName}",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Pending (Review)"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "${pageName}",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "${pageName}",
+			workflowAssetType = "${workflowAssetType}"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Pending (Update)"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Pending (Update)"
+		);
+	}
+
+	@description = "This is a use case for LPS-65319."
+	@priority = "5"
+	test ViewApprovedPageAfterStagingDeactivated {
+		property portal.acceptance = "false";
+		var pageName = "New Site Page Name";
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "${siteName}"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "${pageName}");
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Staging.submitForPublicationPageRevision();
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Pending (Review)"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${pageName}",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "${pageName}",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Page.viewWithWorkflowPG(
+			pageName = "${pageName}",
+			workflowStatus = "Ready for Publication"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "${pageName}", siteName = "${siteName}");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoStagingSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.deactivateStagingCP(siteName = "${siteName}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
+
+		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "${pageName}");
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.deletePage(pageName = "${pageName}");
+	}
+
+	@description = "This is a use case for LPS-58754"
+	@priority = "2"
+	test WithdrawWorkflowSubmissionFromRemovedUser {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "user@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Staging.submitForPublicationPageRevision();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userScreenName = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Site Page Name",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Site Page Name",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Page Revision"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.deactivateCP(userFirstName = "userfn");
+
+		User.deleteCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Submissions"
+		);
+
+		Workflow.withdrawTaskByActions(
+			workflowAssetTitle = "Site Page Name",
+			workflowAssetType = "Page Revision",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Update"
+		);
+
+		Workflow.viewDefaultWorkflowSubmissions();
+	}
+}

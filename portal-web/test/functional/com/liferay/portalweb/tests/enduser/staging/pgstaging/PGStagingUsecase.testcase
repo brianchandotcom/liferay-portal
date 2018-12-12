@@ -1,427 +1,383 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Staging" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Organization#tearDownCP">
-					<var name="orgName" value="Staging Organization Name" />
-				</execute>
-
-				<execute macro="Role#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="BlogsOrganizationWorkflowStaging" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleTitle" value="Organization User" />
-			<var name="roleType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Manage Pages" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
-			<var name="roleTitle" value="Organization User" />
-			<var name="roleType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="usereacr@liferay.com" />
-			<var name="userFirstName" value="userfncr" />
-			<var name="userLastName" value="userlncr" />
-			<var name="userName" value="userfncr userlncr" />
-			<var name="userScreenName" value="usersncr" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="usereacr@liferay.com" />
-			<var name="userScreenName" value="usersncr" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="userFirstName" value="userfncr" />
-			<var name="userLastName" value="userlncr" />
-			<var name="userName" value="userfncr userlncr" />
-			<var name="userScreenName" value="usersncr" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="roleTitle" value="Organization Content Reviewer" />
-			<var name="userFirstName" value="userfncr" />
-			<var name="userLastName" value="userlncr" />
-			<var name="userScreenName" value="usersncr" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="usereaoa@liferay.com" />
-			<var name="userFirstName" value="userfnoa" />
-			<var name="userLastName" value="userlnoa" />
-			<var name="userScreenName" value="usersnoa" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="usereaoa@liferay.com" />
-			<var name="userScreenName" value="usersnoa" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="userFirstName" value="userfnoa" />
-			<var name="userLastName" value="userlnoa" />
-			<var name="userScreenName" value="usersnoa" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="roleTitle" value="Organization Administrator" />
-			<var name="userFirstName" value="userfnoa" />
-			<var name="userLastName" value="userlnoa" />
-			<var name="userScreenName" value="usersnoa" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE">
-			<var name="key_portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="usereaoa@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Portlet#TITLE">
-			<var name="key_portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#addWithWorkflowPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
-			<var name="key_entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="usereacr@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
-			<var name="key_entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="usereaoa@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#TITLE">
-			<var name="key_entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#removePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleTitle" value="Organization User" />
-			<var name="roleType" value="Organization" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			Organization.tearDownCP(orgName = "Staging Organization Name");
+
+			Role.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	test BlogsOrganizationWorkflowStaging {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			permissionNavigationValue = "Blogs",
+			roleTitle = "Organization User",
+			roleType = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX",
+			permissionDefinitionValue = "Manage Pages",
+			permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
+			permissionNavigationValue = "Site Pages",
+			roleTitle = "Organization User",
+			roleType = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(
+			orgName = "Staging Organization Name",
+			orgType = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(orgName = "Staging Organization Name");
+
+		ProductMenu.gotoSite(site = "Staging Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging Test Page");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Staging Organization Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "usereacr@liferay.com",
+			userFirstName = "userfncr",
+			userLastName = "userlncr",
+			userName = "userfncr userlncr",
+			userScreenName = "usersncr"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "usereacr@liferay.com",
+			userScreenName = "usersncr"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Staging Organization Name",
+			userFirstName = "userfncr",
+			userLastName = "userlncr",
+			userName = "userfncr userlncr",
+			userScreenName = "usersncr"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.assignOrgRoleCP(
+			orgName = "Staging Organization Name",
+			roleTitle = "Organization Content Reviewer",
+			userFirstName = "userfncr",
+			userLastName = "userlncr",
+			userScreenName = "usersncr"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "usereaoa@liferay.com",
+			userFirstName = "userfnoa",
+			userLastName = "userlnoa",
+			userScreenName = "usersnoa"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "usereaoa@liferay.com",
+			userScreenName = "usersnoa"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Staging Organization Name",
+			userFirstName = "userfnoa",
+			userLastName = "userlnoa",
+			userScreenName = "usersnoa"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.assignOrgRoleCP(
+			orgName = "Staging Organization Name",
+			roleTitle = "Organization Administrator",
+			userFirstName = "userfnoa",
+			userLastName = "userlnoa",
+			userScreenName = "usersnoa"
+		);
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Staging Organization Name");
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name"
+		);
+
+		Portlet.addPG(pageName = "Staging Test Page", portletName = "Blogs");
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementNotPresent(locator1 = "Portlet#TITLE", key_portletName = "Blogs");
+
+		User.loginPG(password = "test", userEmailAddress = "usereaoa@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementPresent(locator1 = "Portlet#TITLE", key_portletName = "Blogs");
+
+		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name"
+		);
+
+		BlogsEntry.addWithWorkflowPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementNotPresent(
+			locator1 = "BlogsEntry#TITLE",
+			key_entryTitle = "Blogs Entry Title"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "usereacr@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementNotPresent(
+			locator1 = "BlogsEntry#TITLE",
+			key_entryTitle = "Blogs Entry Title"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "usereaoa@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Organization Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
+
+		AssertElementPresent(
+			locator1 = "BlogsEntry#TITLE",
+			key_entryTitle = "Blogs Entry Title"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.removePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			permissionNavigationValue = "Blogs",
+			roleTitle = "Organization User",
+			roleType = "Organization"
+		);
+	}
+}

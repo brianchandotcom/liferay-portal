@@ -1,443 +1,387 @@
-<definition component-name="portal-web-forms-and-data-lists">
-	<property name="custom.properties" value="minifier.enabled=true" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Forms" />
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="ConfigureAutocompleteWithTextField" priority="5">
-		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureAutocompleteWithTextField" />
+	@priority = "5"
+	test ConfigureAutocompleteWithTextField {
+		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureAutocompleteWithTextField";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Data Providers" />
-		</execute>
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+		FormsAdmin.editDataProvider(
+			name = "Country Names",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterLabel2 = "Countries A2",
+			outputParameterName = "Countries Full Name",
+			outputParameterName2 = "Countries A2",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterPath2 = "a2",
+			outputParameterType = "List",
+			outputParameterType2 = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com"
+		);
 
-		<execute macro="FormsAdmin#editDataProvider">
-			<var name="name" value="Country Names" />
-			<var name="outputParameterLabel" value="Countries Full Name" />
-			<var name="outputParameterLabel2" value="Countries A2" />
-			<var name="outputParameterName" value="Countries Full Name" />
-			<var name="outputParameterName2" value="Countries A2" />
-			<var name="outputParameterPath" value="nameCurrentValue" />
-			<var name="outputParameterPath2" value="a2" />
-			<var name="outputParameterType" value="List" />
-			<var name="outputParameterType2" value="List" />
-			<var name="password" value="test" />
-			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
-			<var name="username" value="test@liferay.com" />
-		</execute>
+		FormsAdmin.saveDataProvider();
 
-		<execute macro="FormsAdmin#saveDataProvider" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editName();
 
-		<execute macro="Form#editName" />
+		Form.editDescription();
 
-		<execute macro="Form#editDescription" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field With Autocomplete");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field With Autocomplete" />
-		</execute>
+		Form.gotoAdvancedTab();
 
-		<execute macro="Form#gotoAdvancedTab" />
+		Form.enableAutocompleteConfiguration();
 
-		<execute macro="Form#enableAutocompleteConfiguration" />
+		Form.editFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries A2"
+		);
 
-		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Country Names" />
-			<var name="dataProviderOutput" value="Countries A2" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		Form.save();
 
-		<execute macro="Form#save" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name"
+		);
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Created Form Name" />
-		</execute>
+		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldWithAutocomplete");
 
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-		</execute>
+		Form.gotoAdvancedTab();
 
-		<execute macro="Form#gotoAdvancedTab" />
+		Form.editFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries Full Name"
+		);
 
-		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Country Names" />
-			<var name="dataProviderOutput" value="Countries Full Name" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		Form.save();
 
-		<execute macro="Form#save" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		PortletEntry.save();
 
-		<execute macro="PortletEntry#save" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.editText(fieldName = "TextFieldWithAutocomplete", fieldValue = "Un");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="Un" />
-		</execute>
+		FormFields.selectAutoCompleteOption(autocompleteOption = "United States");
 
-		<execute macro="FormFields#selectAutoCompleteOption">
-			<var name="autocompleteOption" value="United States" />
-		</execute>
+		FormPortlet.submit();
 
-		<execute macro="FormPortlet#submit" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoViewEntries();
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field With Autocomplete",
+			fieldValue = "United States"
+		);
 
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Text Field With Autocomplete" />
-			<var name="fieldValue" value="United States" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoEditFormByName();
 
-		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
+		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldWithAutocomplete");
 
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-		</execute>
+		Form.gotoAdvancedTab();
 
-		<execute macro="Form#gotoAdvancedTab" />
+		AssertVisible(
+			locator1 = "FormFields#RADIO_OPTION_LABEL",
+			key_fieldName = "dataSourceType",
+			key_radioOption = "From Data Provider"
+		);
 
-		<execute function="AssertVisible" locator1="FormFields#RADIO_OPTION_LABEL">
-			<var name="key_fieldName" value="dataSourceType" />
-			<var name="key_radioOption" value="From Data Provider" />
-		</execute>
+		Form.disableAutocompleteConfiguration();
 
-		<execute macro="Form#disableAutocompleteConfiguration" />
+		AssertNotVisible(
+			locator1 = "FormFields#RADIO_OPTION_LABEL",
+			key_fieldName = "dataSourceType",
+			key_radioOption = "From Data Provider"
+		);
 
-		<execute function="AssertNotVisible" locator1="FormFields#RADIO_OPTION_LABEL">
-			<var name="key_fieldName" value="dataSourceType" />
-			<var name="key_radioOption" value="From Data Provider" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		Form.save();
 
-		<execute macro="Form#save" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.editText(fieldName = "TextFieldWithAutocomplete", fieldValue = "Un");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="Un" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "FormFields#AUTOCOMPLETE_OPTION",
+			key_autocompleteOption = "United States"
+		);
+	}
 
-		<execute function="AssertElementNotPresent" locator1="FormFields#AUTOCOMPLETE_OPTION">
-			<var name="key_autocompleteOption" value="United States" />
-		</execute>
-	</command>
+	@priority = "5"
+	test ConfigureWithSelectField {
+		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureWithSelectField";
+		var portalURL = PropsUtil.get("portal.url");
 
-	<command name="ConfigureWithSelectField" priority="5">
-		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureWithSelectField" />
+		Navigator.openURL();
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Navigator#openURL" />
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Data Providers" />
-		</execute>
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Country Names",
+			outputParameterName = "Country Names",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+		FormsAdmin.saveDataProvider();
 
-		<execute macro="FormsAdmin#editDataProvider">
-			<var name="name" value="Liferay Countries" />
-			<var name="outputParameterLabel" value="Country Names" />
-			<var name="outputParameterName" value="Country Names" />
-			<var name="outputParameterPath" value="nameCurrentValue" />
-			<var name="outputParameterType" value="List" />
-			<var name="password" value="test" />
-			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
-			<var name="username" value="test@liferay.com" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="FormsAdmin#saveDataProvider" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Navigator#openURL" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editName();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editDescription();
 
-		<execute macro="Form#editName" />
+		Form.gotoAddField(fieldType = "Select from List");
 
-		<execute macro="Form#editDescription" />
+		Form.editFieldLabel(fieldValue = "Data Provider Select Field");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Select from List" />
-		</execute>
+		Form.editFieldDataProvider(
+			dataProvider = "Liferay Countries",
+			dataProviderOutput = "Country Names"
+		);
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Data Provider Select Field" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Liferay Countries" />
-			<var name="dataProviderOutput" value="Country Names" />
-		</execute>
+		Form.save();
 
-		<execute macro="Form#closeSidebar" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Form#save" />
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		PortletEntry.save();
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="PortletEntry#save" />
+		FormFields.viewSelectLabel(
+			fieldLabel = "Data Provider Select Field",
+			fieldName = "DataProviderSelectField"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.selectSelectOption(
+			fieldName = "SelectField",
+			selectOption = "United States"
+		);
 
-		<execute macro="FormFields#viewSelectLabel">
-			<var name="fieldLabel" value="Data Provider Select Field" />
-			<var name="fieldName" value="DataProviderSelectField" />
-		</execute>
+		FormPortlet.submitSuccessfully();
 
-		<execute macro="FormFields#selectSelectOption">
-			<var name="fieldName" value="SelectField" />
-			<var name="selectOption" value="United States" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="FormPortlet#submitSuccessfully" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Navigator#openURL" />
+		FormsAdminNavigator.gotoViewEntries();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Data Provider Select Field",
+			fieldValue = "United States"
+		);
+	}
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+	@description = "This is a use case for LPS-75682."
+	@priority = "5"
+	test ViewDataRetrievedForGuestUser {
+		property test.name.skip.portal.instance = "FormsDataProvider#ViewDataRetrievedForGuestUser";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Data Provider Select Field" />
-			<var name="fieldValue" value="United States" />
-		</execute>
-	</command>
+		Navigator.openURL();
 
-	<command name="ViewDataRetrievedForGuestUser" priority="5">
-		<description message="This is a use case for LPS-75682." />
-		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ViewDataRetrievedForGuestUser" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
 
-		<execute macro="Navigator#openURL" />
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterName = "Country Name",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com"
+		);
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Data Providers" />
-		</execute>
+		FormFields.selectDataProviderPermission(selectOption = "Anyone (Guest Role)");
 
-		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+		FormsAdmin.saveDataProvider();
 
-		<execute macro="FormsAdmin#editDataProvider">
-			<var name="name" value="Liferay Countries" />
-			<var name="outputParameterLabel" value="Countries Full Name" />
-			<var name="outputParameterName" value="Country Name" />
-			<var name="outputParameterPath" value="nameCurrentValue" />
-			<var name="outputParameterType" value="List" />
-			<var name="password" value="test" />
-			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
-			<var name="username" value="test@liferay.com" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="FormFields#selectDataProviderPermission">
-			<var name="selectOption" value="Anyone (Guest Role)" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormsAdmin#saveDataProvider" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="Navigator#openURL" />
+		Form.editName();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editDescription();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.gotoAddField(fieldType = "Select from List");
 
-		<execute macro="Form#editName" />
+		Form.editFieldLabel(fieldValue = "Countries");
 
-		<execute macro="Form#editDescription" />
+		Form.editFieldDataProvider(
+			dataProvider = "Liferay Countries",
+			dataProviderOutput = "Countries Full Name"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Select from List" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Countries" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Liferay Countries" />
-			<var name="dataProviderOutput" value="Countries Full Name" />
-		</execute>
+		Form.save();
 
-		<execute macro="Form#closeSidebar" />
+		Form.publishForm();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		<execute macro="Form#save" />
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
 
-		<execute macro="Form#publishForm" />
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Afghanistan"
+		);
 
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-		<execute macro="FormFields#viewSelectOptionsList">
-			<var name="fieldName" value="Countries" />
-			<var name="selectOption" value="Afghanistan" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="FormFields#viewSelectOptionsList">
-			<var name="fieldName" value="Countries" />
-			<var name="selectOption" value="Afghanistan" />
-		</execute>
-	</command>
-</definition>
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Afghanistan"
+		);
+	}
+}

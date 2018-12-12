@@ -1,126 +1,123 @@
-<definition component-name="portal-permissions">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Roles" />
+@component-name = "portal-permissions"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Roles";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
 
-				<execute macro="UserGroup#tearDownCP" />
+			UserGroup.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
+			User.tearDownCP();
 
-				<execute macro="Role#tearDownCP" />
+			Role.tearDownCP();
 
-				<execute macro="PortalSettings#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			PortalSettings.tearDownCP();
+		}
+	}
 
-	<command name="AddUserGroupRegRole" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+	@priority = "4"
+	test AddUserGroupRegRole {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
+		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_USER_GROUP" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_USER_GROUP",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.UserGroup",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="ADD_USER_GROUP" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.removePermissionViaAPI(
+			resourceAction = "ADD_USER_GROUP",
+			resourceName = "90",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.UserGroup" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
+		Permissions.removePermissionViaAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.UserGroup",
+			roleTitle = "Regrole Name"
+		);
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
-	</command>
-</definition>
+		AssertElementNotPresent(locator1 = "NavBar#ADD");
+	}
+}

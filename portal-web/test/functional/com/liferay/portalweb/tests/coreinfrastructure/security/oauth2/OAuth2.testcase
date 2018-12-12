@@ -1,254 +1,244 @@
-<definition component-name="portal-security" ignore="true">
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="OAuth 2" />
+@component-name = "portal-security"
+@ignore = "true"
+definition {
+	property portal.upstream = "true";
+	property testray.main.component.name = "OAuth 2";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="addAndEditApplication">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
+	test addAndEditApplication {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth 2 Administration" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration"
+		);
 
-		<execute macro="OAuth2#addApplication">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="callbackURI" value="http://www.liferay.com" />
-			<var name="clientProfile" value="Web Application" />
-			<var name="websiteURL" value="http://www.liferay.com" />
-		</execute>
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com",
+			clientProfile = "Web Application",
+			websiteURL = "http://www.liferay.com"
+		);
 
-		<var method="selenium#getElementValue('OAuth2#ADMIN_INPUT_FORM_CLIENT_ID')" name="generatedClientId" />
-		<var method="selenium#getElementValue('OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET')" name="generatedClientSecret" />
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 
-		<execute macro="OAuth2#inputApplicationValues">
-			<var name="description" value="Registering a new application" />
-			<var name="privacyPolicyURL" value="http://www.liferay.com" />
-		</execute>
+		OAuth2.inputApplicationValues(
+			description = "Registering a new application",
+			privacyPolicyURL = "http://www.liferay.com"
+		);
 
-		<execute macro="Navigator#gotoBack" />
+		Navigator.gotoBack();
 
-		<execute macro="OAuth2#viewApplicationInTable">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="clientId" value="${generatedClientId}" />
-			<var name="description" value="Registering a new application" />
-		</execute>
+		OAuth2.viewApplicationInTable(
+			applicationName = "OAuth Application",
+			clientId = "${generatedClientId}",
+			description = "Registering a new application"
+		);
 
-		<execute macro="OAuth2#viewApplication">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="callbackURI" value="http://www.liferay.com" />
-			<var name="checkboxCheckList" value="Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials" />
-			<var name="clientId" value="${generatedClientId}" />
-			<var name="clientProfile" value="Web Application" />
-			<var name="clientSecret" value="${generatedClientSecret}" />
-			<var name="description" value="Registering a new application" />
-			<var name="privacyPolicyURL" value="http://www.liferay.com" />
-			<var name="websiteURL" value="http://www.liferay.com" />
-		</execute>
+		OAuth2.viewApplication(
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com",
+			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
+			clientId = "${generatedClientId}",
+			clientProfile = "Web Application",
+			clientSecret = "${generatedClientSecret}",
+			description = "Registering a new application",
+			privacyPolicyURL = "http://www.liferay.com",
+			websiteURL = "http://www.liferay.com"
+		);
 
-		<execute macro="OAuth2#editApplication">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="callbackURI" value="http://www.liferay.com/callback" />
-			<var name="checkboxCheckList" value="Token Introspection" />
-			<var name="checkboxUncheckList" value="Refresh Token,Resource Owner Password Credentials" />
-			<var name="clientId" value="abcd1234" />
-			<var name="clientProfile" value="Native Application" />
-			<var name="clientSecret" value="abcd1234" />
-			<var name="description" value="Editing a new application" />
-			<var name="newApplicationName" value="OAuth Application Edited" />
-			<var name="privacyPolicyURL" value="http://www.google.com" />
-			<var name="websiteURL" value="http://www.google.com" />
-		</execute>
+		OAuth2.editApplication(
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com/callback",
+			checkboxCheckList = "Token Introspection",
+			checkboxUncheckList = "Refresh Token,Resource Owner Password Credentials",
+			clientId = "abcd1234",
+			clientProfile = "Native Application",
+			clientSecret = "abcd1234",
+			description = "Editing a new application",
+			newApplicationName = "OAuth Application Edited",
+			privacyPolicyURL = "http://www.google.com",
+			websiteURL = "http://www.google.com"
+		);
 
-		<execute macro="Navigator#gotoBack" />
+		Navigator.gotoBack();
 
-		<execute macro="OAuth2#viewApplicationInTable">
-			<var name="applicationName" value="OAuth Application Edited" />
-			<var name="clientId" value="abcd1234" />
-			<var name="description" value="Editing a new application" />
-		</execute>
+		OAuth2.viewApplicationInTable(
+			applicationName = "OAuth Application Edited",
+			clientId = "abcd1234",
+			description = "Editing a new application"
+		);
 
-		<execute macro="OAuth2#viewApplication">
-			<var name="applicationName" value="OAuth Application Edited" />
-			<var name="callbackURI" value="http://www.liferay.com/callback" />
-			<var name="checkboxCheckList" value="Token Introspection" />
-			<var name="clientId" value="abcd1234" />
-			<var name="clientProfile" value="Native Application" />
-			<var name="clientSecret" value="abcd1234" />
-			<var name="description" value="Editing a new application" />
-			<var name="privacyPolicyURL" value="http://www.google.com" />
-			<var name="websiteURL" value="http://www.google.com" />
-		</execute>
+		OAuth2.viewApplication(
+			applicationName = "OAuth Application Edited",
+			callbackURI = "http://www.liferay.com/callback",
+			checkboxCheckList = "Token Introspection",
+			clientId = "abcd1234",
+			clientProfile = "Native Application",
+			clientSecret = "abcd1234",
+			description = "Editing a new application",
+			privacyPolicyURL = "http://www.google.com",
+			websiteURL = "http://www.google.com"
+		);
 
-		<execute macro="OAuth2#editApplication">
-			<return name="newGeneratedClientSecret" />
-			<var name="applicationName" value="OAuth Application Edited" />
-			<var name="generateNewSecret" value="true" />
-		</execute>
+		var newGeneratedClientSecret = OAuth2.editApplication(
+			applicationName = "OAuth Application Edited",
+			generateNewSecret = "true"
+		);
 
-		<execute macro="Navigator#gotoBack" />
+		Navigator.gotoBack();
 
-		<execute macro="OAuth2#viewApplication">
-			<var name="applicationName" value="OAuth Application Edited" />
-			<var name="clientSecret" value="${newGeneratedClientSecret}" />
-		</execute>
+		OAuth2.viewApplication(
+			applicationName = "OAuth Application Edited",
+			clientSecret = "${newGeneratedClientSecret}"
+		);
 
-		<execute macro="OAuth2#deleteApplication">
-			<var name="applicationName" value="OAuth Application Edited" />
-		</execute>
-	</command>
+		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
+	}
 
-	<command name="editApplicationScopes">
-		<property name="prepare.oauth2.global.scopes" value="true" />
+	test editApplicationScopes {
+		property prepare.oauth2.global.scopes = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth 2 Administration" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration"
+		);
 
-		<execute macro="OAuth2#addApplication">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="checkboxUncheckList" value="Authorization Code" />
-		</execute>
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			checkboxUncheckList = "Authorization Code"
+		);
 
-		<execute macro="Navigator#gotoBack" />
+		Navigator.gotoBack();
 
-		<execute macro="OAuth2#editScopes">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="resourceCheckList" value="everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="Portal Services" />
-		</execute>
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = "everything.write,everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="2">
-			<var name="key_tableName" value="OAuth Application" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
+			value1 = "2",
+			key_tableName = "OAuth Application"
+		);
 
-		<execute macro="OAuth2#viewScopes">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="resourceCheckedList" value="everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="Portal Services" />
-		</execute>
+		OAuth2.viewScopes(
+			applicationName = "OAuth Application",
+			resourceCheckedList = "everything.write,everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
 
-		<execute macro="OAuth2#editScopes">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="checkGlobalScope" value="Everything" />
-		</execute>
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			checkGlobalScope = "Everything"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="7">
-			<var name="key_tableName" value="OAuth Application" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
+			value1 = "7",
+			key_tableName = "OAuth Application"
+		);
 
-		<execute macro="OAuth2#viewScopes">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="checkedGlobalScope" value="Everything" />
-			<var name="resourceCheckedList" value="example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="Portal Services,Sample QA app" />
-		</execute>
+		OAuth2.viewScopes(
+			applicationName = "OAuth Application",
+			checkedGlobalScope = "Everything",
+			resourceCheckedList = "example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile",
+			resourcePanels = "Portal Services,Sample QA app"
+		);
 
-		<execute macro="OAuth2#editScopes">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="resourcePanels" value="Portal Services,Sample QA app" />
-			<var name="uncheckAllResourceScopes" value="true" />
-			<var name="uncheckGlobalScope" value="Everything" />
-		</execute>
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourcePanels = "Portal Services,Sample QA app",
+			uncheckAllResourceScopes = "true",
+			uncheckGlobalScope = "Everything"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="0">
-			<var name="key_tableName" value="OAuth Application" />
-		</execute>
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
+			value1 = "0",
+			key_tableName = "OAuth Application"
+		);
 
-		<execute macro="OAuth2#viewScopes">
-			<var name="allResourceScopesUnchecked" value="true" />
-			<var name="applicationName" value="OAuth Application" />
-			<var name="resourcePanels" value="Portal Services,Sample QA app" />
-			<var name="uncheckedGlobalScope" value="Everything" />
-		</execute>
-	</command>
+		OAuth2.viewScopes(
+			allResourceScopesUnchecked = "true",
+			applicationName = "OAuth Application",
+			resourcePanels = "Portal Services,Sample QA app",
+			uncheckedGlobalScope = "Everything"
+		);
+	}
 
-	<command name="viewAndRevokeGrantedAuthorizations">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
+	test viewAndRevokeGrantedAuthorizations {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth 2 Administration" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration"
+		);
 
-		<execute macro="OAuth2#addApplication">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="checkboxUncheckList" value="Authorization Code" />
-		</execute>
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			checkboxUncheckList = "Authorization Code"
+		);
 
-		<var method="selenium#getElementValue('OAuth2#ADMIN_INPUT_FORM_CLIENT_ID')" name="generatedClientId" />
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="selenium#getElementValue('OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET')" name="generatedClientSecret" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/o/oauth2/token \
 				--data grant_type=client_credentials&client_id=${generatedClientId}&client_secret=${generatedClientSecret}
-		]]></var>
+		''';
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-		</execute>
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
-		<execute macro="Navigator#gotoBack" />
+		Navigator.gotoBack();
 
-		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		OAuth2.viewGrantedAuthViaAdmin(
+			applicationName = "OAuth Application",
+			userName = "Test Test"
+		);
 
-		<execute macro="OAuth2#revokeGrantedAuthViaAdmin">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		OAuth2.revokeGrantedAuthViaAdmin(
+			applicationName = "OAuth Application",
+			userName = "Test Test"
+		);
 
-		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
-			<var name="applicationName" value="OAuth Application" />
-			<var name="noAuthorizations" value="true" />
-		</execute>
+		OAuth2.viewGrantedAuthViaAdmin(
+			applicationName = "OAuth Application",
+			noAuthorizations = "true"
+		);
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
-			<arg value="${curl}" />
-		</execute>
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
-		<execute macro="OAuth2#viewGrantedAuthViaUser">
-			<var name="applicationName" value="OAuth Application" />
-		</execute>
+		OAuth2.viewGrantedAuthViaUser(applicationName = "OAuth Application");
 
-		<execute macro="OAuth2#revokeGrantedAuthViaUser">
-			<var name="applicationName" value="OAuth Application" />
-		</execute>
+		OAuth2.revokeGrantedAuthViaUser(applicationName = "OAuth Application");
 
-		<execute macro="OAuth2#viewGrantedAuthViaUser">
-			<var name="noAuthorizations" value="true" />
-		</execute>
-	</command>
-</definition>
+		OAuth2.viewGrantedAuthViaUser(noAuthorizations = "true");
+	}
+}

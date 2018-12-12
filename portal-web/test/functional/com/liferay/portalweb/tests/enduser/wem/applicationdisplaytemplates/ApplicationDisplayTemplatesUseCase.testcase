@@ -1,944 +1,716 @@
-<definition component-name="portal-wcm">
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="osgi.module.configuration.file.names" value="com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration.config" />
-	<property name="osgi.module.configurations" value="com.liferay.portlet.display-category=&quot;category.cms&quot;" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Content and Application Templates" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="ADT Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddRSSADTViaPortletConfiguration" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Content and Application Templates,RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Latimes > Technology News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="rss2.0.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addManualViaRSS">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#waitForRSSLoad" />
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="RSS Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#waitForRSSLoad" />
-
-		<execute macro="RSSPortlet#viewCustomADT">
-			<var name="feedContentTitle" value="Technology" />
-		</execute>
-	</command>
-
-	<command name="AddRSSADTWithCorruptScript" priority="3">
-		<property name="testray.component.names" value="Content and Application Templates,RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Latimes > Technology News" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="rss2.0.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_rss_navigation_corrupt.ftl" />
-			<var name="adtType" value="RSS" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="RSS Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewCorruptScript" />
-	</command>
-
-	<command name="AddRSSADTWithScript" priority="3">
-		<property name="testray.component.names" value="Content and Application Templates,RSS" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS Publisher" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="RSSPortlet#addFeed">
-			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedTitle" value="Technology" />
-			<var name="feedType" value="file" />
-			<var name="feedUrlLink" value="Technology.xml" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_rss_navigation.ftl" />
-			<var name="adtType" value="RSS" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="RSS Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="RSSPortlet#viewNavigationDisplayFeedTitle">
-			<var name="feedTitle" value="Technology" />
-			<var name="navigationNullADT" value="true" />
-		</execute>
-	</command>
-
-	<command name="ADTAssetPublisher" priority="3">
-		<property name="testray.component.names" value="Asset Publisher,Content and Application Templates" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_asset_publisher_rich_summary.ftl" />
-			<var name="adtType" value="Asset Publisher" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Comments,Comment Ratings,Flags,Print,Ratings,Related Assets" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDefaultWithAllDisplaySettingsCheckboxesPG">
-			<var name="assetDescription" value="WC Content" />
-			<var name="assetTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Asset Publisher Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewCustomADTRichSummaryPG">
-			<var name="assetDescription" value="WC Content" />
-			<var name="assetTitle" value="WC Title" />
-		</execute>
-	</command>
-
-	<command name="ADTBreadcrumb" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Breadcrumb,Content and Application Templates" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Breadcrumb" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewADTApplied">
-			<var name="breadcrumbADTType" value="horizontal" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Breadcrumb" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="selectADTType" value="Arrows" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewADTApplied">
-			<var name="breadcrumbADTType" value="arrows" />
-		</execute>
-	</command>
-
-	<command name="ADTCategoriesNavigation" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Categories,Content and Application Templates" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name 1" />
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Categories Navigation" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_categories_navigation_multi_column.ftl" />
-			<var name="adtType" value="Categories Navigation" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
-			<var name="categoryName" value="Category Name 1" />
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
-			<var name="categoryName" value="Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Categories Navigation Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">
-			<var name="categoryName1" value="Category Name 1" />
-			<var name="categoryName2" value="Category Name 2" />
-			<var name="vocabularyName1" value="Vocabulary Name 1" />
-			<var name="vocabularyName2" value="Vocabulary Name 2" />
-		</execute>
-	</command>
-
-	<command name="ADTDMMediaGallery" priority="3">
-		<property name="testray.component.names" value="Content and Application Templates,Documents Management" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Media Gallery" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="MGPortlet#configureShowAllPG">
-			<var name="pageName" value="ADT Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#addPGViaMG">
-			<var name="mgFolderDescription" value="DM Folder Description" />
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#gotoPGViaMG">
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPGViaMG">
-			<var name="mgDocumentDescription" value="DM Document Description" />
-			<var name="mgDocumentFile" value="Document_1.jpg" />
-			<var name="mgDocumentTitle" value="DM Document Title" />
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#gotoPGViaMG">
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPGViaMG">
-			<var name="mgDocumentDescription" value="DM Document Description 2" />
-			<var name="mgDocumentFile" value="Document_2.jpeg" />
-			<var name="mgDocumentTitle" value="DM Document Title 2" />
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_media_gallery_carousel.ftl" />
-			<var name="adtType" value="Documents and Media" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="MGPortlet#viewShowAllPG" />
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Documents and Media Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="MGPortlet#viewCustomADTCarouselPG" />
-	</command>
-
-	<command name="ADTSiteMap" priority="3">
-		<property name="testray.component.names" value="Content and Application Templates,Sitemap" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="ADT Child Page Name" />
-			<var name="parentPageName" value="ADT Test Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="ADT Test Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="ADT Test Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="ADT Test Page 3" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="ADT Test Page 3" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_sitemap_multi_column.ftl" />
-			<var name="adtType" value="Site Map" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SiteMapPortlet#viewDefaultPG">
-			<var name="listChildPageName" value="ADT Child Page Name" />
-			<var name="listPageName" value="ADT Test Page,ADT Test Page 2,ADT Test Page 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Site Map Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SiteMapPortlet#viewCustomADTMultiColumnPG">
-			<var name="listChildPageName" value="ADT Child Page Name" />
-			<var name="listPageName" value="ADT Test Page,ADT Test Page 2,ADT Test Page 3" />
-		</execute>
-	</command>
-
-	<command name="ADTStagingCategoriesNavigation" priority="3">
-		<property name="testray.component.names" value="Categories,Content and Application Templates,Staging" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name 1" />
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Categories Navigation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_categories_navigation_multi_column.ftl" />
-			<var name="adtType" value="Categories Navigation" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
-			<var name="categoryName" value="Category Name 1" />
-			<var name="vocabularyName" value="Vocabulary Name 1" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
-			<var name="categoryName" value="Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Categories Navigation Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">
-			<var name="categoryName1" value="Category Name 1" />
-			<var name="categoryName2" value="Category Name 2" />
-			<var name="vocabularyName1" value="Vocabulary Name 1" />
-			<var name="vocabularyName2" value="Vocabulary Name 2" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">
-			<var name="categoryName1" value="Category Name 1" />
-			<var name="categoryName2" value="Category Name 2" />
-			<var name="vocabularyName1" value="Vocabulary Name 1" />
-			<var name="vocabularyName2" value="Vocabulary Name 2" />
-		</execute>
-	</command>
-
-	<command name="ADTTagsNavigationPortlet" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Content and Application Templates,Tags" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 2,tag name 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithTags">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewDefaultPG">
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="adt_tags_color.ftl" />
-			<var name="adtType" value="Tags Navigation" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Tags Navigation Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
-			<var name="adtTagColor" value="green" />
-			<var name="tagName" value="tag name 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
-			<var name="adtTagColor" value="orange" />
-			<var name="tagName" value="tag name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
-			<var name="adtTagColor" value="red" />
-			<var name="tagName" value="tag name 3" />
-		</execute>
-	</command>
-
-	<command name="ADTWiki" priority="3">
-		<property name="testray.component.names" value="Content and Application Templates,Wiki" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Test Wiki Content" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoFrontPagePG" />
-
-		<execute macro="WikiPage#viewFrontPageDefaultADTPG">
-			<var name="wikiPageContent" value="Test Wiki Content" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Application Display Templates" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addCP">
-			<var name="adtFile" value="adt_wiki_social.ftl" />
-			<var name="adtType" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="portletName" value="Wiki" />
-			<var name="templateName" value="Wiki Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WikiPage#viewCustomADTSocialPG">
-			<var name="wikiPageContent" value="Test Wiki Content" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property custom.properties = "default.layout.template.id=1_column";
+	property osgi.module.configuration.file.names = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration.config";
+	property osgi.module.configurations = "com.liferay.portlet.display-category=&quot;category.cms&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "ADT Test Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "ADT Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddRSSADTViaPortletConfiguration {
+		property portal.acceptance = "true";
+		property testray.component.names = "Content and Application Templates,RSS";
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Latimes &gt; Technology News",
+			feedType = "file",
+			feedUrlLink = "rss2.0.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		ApplicationDisplayTemplates.addManualViaRSS(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		RSSPortlet.waitForRSSLoad();
+
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "RSS Test ADT");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		RSSPortlet.waitForRSSLoad();
+
+		RSSPortlet.viewCustomADT(feedContentTitle = "Technology");
+	}
+
+	@priority = "3"
+	test AddRSSADTWithCorruptScript {
+		property testray.component.names = "Content and Application Templates,RSS";
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Latimes &gt; Technology News",
+			feedType = "file",
+			feedUrlLink = "rss2.0.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_rss_navigation_corrupt.ftl",
+			adtType = "RSS",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "RSS Test ADT");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		RSSPortlet.viewCorruptScript();
+	}
+
+	@priority = "3"
+	test AddRSSADTWithScript {
+		property testray.component.names = "Content and Application Templates,RSS";
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration"
+		);
+
+		RSSPortlet.addFeed(
+			feedRowIndexNumber = "0",
+			feedTitle = "Technology",
+			feedType = "file",
+			feedUrlLink = "Technology.xml"
+		);
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_rss_navigation.ftl",
+			adtType = "RSS",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "RSS Test ADT");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		RSSPortlet.viewNavigationDisplayFeedTitle(
+			feedTitle = "Technology",
+			navigationNullADT = "true"
+		);
+	}
+
+	@priority = "3"
+	test ADTAssetPublisher {
+		property testray.component.names = "Asset Publisher,Content and Application Templates";
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		WebContent.addPGViaAP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_asset_publisher_rich_summary.ftl",
+			adtType = "Asset Publisher",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(
+			displaySettings = "Comments,Comment Ratings,Flags,Print,Ratings,Related Assets"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		AssetPublisherPortlet.viewDefaultWithAllDisplaySettingsCheckboxesPG(
+			assetDescription = "WC Content",
+			assetTitle = "WC Title"
+		);
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			templateName = "Asset Publisher Test ADT"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		AssetPublisherPortlet.viewCustomADTRichSummaryPG(
+			assetDescription = "WC Content",
+			assetTitle = "WC Title"
+		);
+	}
+
+	@priority = "5"
+	test ADTBreadcrumb {
+		property portal.acceptance = "true";
+		property testray.component.names = "Breadcrumb,Content and Application Templates";
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Breadcrumb");
+
+		Breadcrumb.viewADTApplied(breadcrumbADTType = "horizontal");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Breadcrumb",
+			portletOption = "Configuration"
+		);
+
+		Breadcrumb.configureBreadcrumb(selectADTType = "Arrows");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Breadcrumb.viewADTApplied(breadcrumbADTType = "arrows");
+	}
+
+	@priority = "5"
+	test ADTCategoriesNavigation {
+		property portal.acceptance = "true";
+		property testray.component.names = "Categories,Content and Application Templates";
+
+		ProductMenu.gotoSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
+
+		Category.addCP(
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+
+		Category.addCP(
+			categoryName = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2"
+		);
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Categories Navigation");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_categories_navigation_multi_column.ftl",
+			adtType = "Categories Navigation",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		CategoriesNavigationPortlet.viewDefaultPG(
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1"
+		);
+
+		CategoriesNavigationPortlet.viewDefaultPG(
+			categoryName = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2"
+		);
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			templateName = "Categories Navigation Test ADT"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		CategoriesNavigationPortlet.viewCustomADTMultiColumnPG(
+			categoryName1 = "Category Name 1",
+			categoryName2 = "Category Name 2",
+			vocabularyName1 = "Vocabulary Name 1",
+			vocabularyName2 = "Vocabulary Name 2"
+		);
+	}
+
+	@priority = "3"
+	test ADTDMMediaGallery {
+		property testray.component.names = "Content and Application Templates,Documents Management";
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Media Gallery");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		MGPortlet.configureShowAllPG(pageName = "ADT Test Page");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Folder Description",
+			mgFolderName = "DM Folder Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_1.jpg",
+			mgDocumentTitle = "DM Document Title",
+			mgFolderName = "DM Folder Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "DM Document Description 2",
+			mgDocumentFile = "Document_2.jpeg",
+			mgDocumentTitle = "DM Document Title 2",
+			mgFolderName = "DM Folder Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_media_gallery_carousel.ftl",
+			adtType = "Documents and Media",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		MGPortlet.viewShowAllPG();
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			templateName = "Documents and Media Test ADT"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		MGPortlet.viewCustomADTCarouselPG();
+	}
+
+	@priority = "3"
+	test ADTSiteMap {
+		property testray.component.names = "Content and Application Templates,Sitemap";
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Site Map");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicChildPage(
+			childPageName = "ADT Child Page Name",
+			parentPageName = "ADT Test Page"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "ADT Test Page 2",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "ADT Test Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "ADT Test Page 3",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "ADT Test Page 3",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_sitemap_multi_column.ftl",
+			adtType = "Site Map",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		SiteMapPortlet.viewDefaultPG(
+			listChildPageName = "ADT Child Page Name",
+			listPageName = "ADT Test Page,ADT Test Page 2,ADT Test Page 3"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "Site Map Test ADT");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		SiteMapPortlet.viewCustomADTMultiColumnPG(
+			listChildPageName = "ADT Child Page Name",
+			listPageName = "ADT Test Page,ADT Test Page 2,ADT Test Page 3"
+		);
+	}
+
+	@priority = "3"
+	test ADTStagingCategoriesNavigation {
+		property testray.component.names = "Categories,Content and Application Templates,Staging";
+
+		ProductMenu.gotoSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
+
+		Category.addCP(
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+
+		Category.addCP(
+			categoryName = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2"
+		);
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Categories Navigation");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name"
+		);
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_categories_navigation_multi_column.ftl",
+			adtType = "Categories Navigation",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name"
+		);
+
+		CategoriesNavigationPortlet.viewDefaultPG(
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1"
+		);
+
+		CategoriesNavigationPortlet.viewDefaultPG(
+			categoryName = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2"
+		);
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			templateName = "Categories Navigation Test ADT"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name"
+		);
+
+		CategoriesNavigationPortlet.viewCustomADTMultiColumnPG(
+			categoryName1 = "Category Name 1",
+			categoryName2 = "Category Name 2",
+			vocabularyName1 = "Vocabulary Name 1",
+			vocabularyName2 = "Vocabulary Name 2"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		CategoriesNavigationPortlet.viewCustomADTMultiColumnPG(
+			categoryName1 = "Category Name 1",
+			categoryName2 = "Category Name 2",
+			vocabularyName1 = "Vocabulary Name 1",
+			vocabularyName2 = "Vocabulary Name 2"
+		);
+	}
+
+	@priority = "5"
+	test ADTTagsNavigationPortlet {
+		property portal.acceptance = "true";
+		property testray.component.names = "Content and Application Templates,Tags";
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Blogs Test Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 2,tag name 3"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Blogs.addEntryWithTags(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title",
+			tagNameList = "tag name 3"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		TagsNavigationPortlet.viewDefaultPG(
+			tagNameList = "tag name 1,tag name 2,tag name 3"
+		);
+
+		ApplicationDisplayTemplates.addPG(
+			adtFile = "adt_tags_color.ftl",
+			adtType = "Tags Navigation",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			templateName = "Tags Navigation Test ADT"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		TagsNavigationPortlet.viewADTColorByPopularityPG(
+			adtTagColor = "green",
+			tagName = "tag name 1"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		TagsNavigationPortlet.viewADTColorByPopularityPG(
+			adtTagColor = "orange",
+			tagName = "tag name 2"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		TagsNavigationPortlet.viewADTColorByPopularityPG(
+			adtTagColor = "red",
+			tagName = "tag name 3"
+		);
+	}
+
+	@priority = "3"
+	test ADTWiki {
+		property testray.component.names = "Content and Application Templates,Wiki";
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Test Wiki Content");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiPage.viewFrontPageDefaultADTPG(wikiPageContent = "Test Wiki Content");
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Application Display Templates"
+		);
+
+		ApplicationDisplayTemplates.addCP(
+			adtFile = "adt_wiki_social.ftl",
+			adtType = "Wiki"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Wiki",
+			templateName = "Wiki Test ADT"
+		);
+
+		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");
+
+		WikiPage.viewCustomADTSocialPG(wikiPageContent = "Test Wiki Content");
+	}
+}

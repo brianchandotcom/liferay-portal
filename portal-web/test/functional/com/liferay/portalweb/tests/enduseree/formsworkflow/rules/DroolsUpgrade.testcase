@@ -1,78 +1,86 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Upgrades Forms and Workflow" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Upgrades Forms and Workflow";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade612" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="osgi.modules.includes" value="calevent" />
-		<property name="portal.version" value="6.1.2" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade612 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property osgi.modules.includes = "calevent";
+		property portal.version = "6.1.2";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade6130" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="osgi.modules.includes" value="calevent" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade6130 {
+		property data.archive.type = "data-archive-portal";
+		property osgi.modules.includes = "calevent";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade621015" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade621021" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade625" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade70106" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="7.0.10.6" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
+		Upgrade.ViewDroolsAppManager();
+	}
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade704" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="7.0.4" />
+	@priority = "5"
+	test ViewDroolsInAppManagerAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
 
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
-</definition>
+		Upgrade.ViewDroolsAppManager();
+	}
+}

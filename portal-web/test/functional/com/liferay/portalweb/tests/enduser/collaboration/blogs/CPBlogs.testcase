@@ -1,998 +1,959 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Blogs" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="BlogsEntry#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddBlogsEntries" priority="4">
-		<description message="Ensure that a user can add multiple Blogs Entries." />
-
-		<property name="testray.component.names" value="Blogs" />
-		<property name="testray.main.component.name" value="Blogs" />
-
-		<task summary="Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry1 Content" />
-				<var name="entryTitle" value="Blogs Entry1 Title" />
-			</execute>
-		</task>
-
-		<task summary="Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry2 Content" />
-				<var name="entryTitle" value="Blogs Entry2 Title" />
-			</execute>
-		</task>
-
-		<task summary="Add a blogs entry called 'Blogs Entry3 Title' with content 'Blogs Entry3 Content'">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry3 Content" />
-				<var name="entryTitle" value="Blogs Entry3 Title" />
-			</execute>
-		</task>
-
-		<task summary="Ensure blogs entry 'Blogs Entry1 Title' with content 'Blogs Entry1 Content' can be found">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryCP">
-				<var name="entryTitle" value="Blogs Entry1 Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewEntry">
-				<var name="entryContent" value="Blogs Entry1 Content" />
-				<var name="entryTitle" value="Blogs Entry1 Title" />
-			</execute>
-		</task>
-
-		<task summary="Ensure blogs entry 'Blogs Entry2 Title' with content 'Blogs Entry2 Content' can be found">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryCP">
-				<var name="entryTitle" value="Blogs Entry2 Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewEntry">
-				<var name="entryContent" value="Blogs Entry2 Content" />
-				<var name="entryTitle" value="Blogs Entry2 Title" />
-			</execute>
-		</task>
-
-		<task summary="Ensure blogs entry 'Blogs Entry3 Title' with content 'Blogs Entry3 Content' can be found">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryCP">
-				<var name="entryTitle" value="Blogs Entry3 Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewEntry">
-				<var name="entryContent" value="Blogs Entry3 Content" />
-				<var name="entryTitle" value="Blogs Entry3 Title" />
-			</execute>
-		</task>
-	</command>
-
-	<command name="AddBlogsEntry" priority="5">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryContentNull" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithInvalidContent">
-			<var name="entryInvalidContent" value="" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryTitleEscapeCharacters" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle"><![CDATA[& < > " Escape Characters Entry]]></var>
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle"><![CDATA[& < > " Escape Characters Entry]]></var>
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle"><![CDATA[& < > " Escape Characters Entry]]></var>
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryTitleNull" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithInvalidTitle">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryInvalidTitle" value="" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryWithDMLink" priority="4">
-		<description message="This is a use case for LPS-70143." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="DMDocument#getDMLatestVersionURL">
-			<return name="dmDocument1URL" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="DMDocument#getDMLatestVersionURL">
-			<return name="dmDocument2URL" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addEntryExternalLinkViaBrowseButton">
-			<var name="imageFileName" value="Document_1.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryExternalURL">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryExternalURL" value="${dmDocument1URL}" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addEntryExternalLinkViaBrowseButton">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="imageFileName" value="Document_2.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryExternalURL">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryExternalURL" value="${dmDocument2URL}" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryWithInlineImageViaURL" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
-
-		<execute macro="ItemSelector#addFromURL">
-			<var name="imageSourceURL" value="https://dummyimage.com/600x400/000/fff.jpg" />
-			<var name="navTab" value="URL" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewInlineImage">
-			<var name="uploadFileName" value="https://dummyimage.com/600x400/000/fff.jpg" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryWithSubtitle" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="AddBlogWithFormatting" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="BlogsNavigator#gotoSelectFile" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent"><![CDATA[A World-Renowned Professor<br />It's no secret that Agricultural Science Department professor Dr. Wolfgang von Richter has built his entire career on solving the problem of sustainable living on other planets. For Dr. von Richter, the humble lima bean, which comes from the aptly-named phaseolus lunatus plant of the legume family, is the solution. For years, Dr. von Richter has cultivated variety after variety of lima bean. He's turned lima beans cobalt blue by adding the hardiness of a violet gene; he's grown lima beans the size of fists with his nutrient-rich, hyper-growth soil. But how realistic is his dream of getting lima beans to grow in the harsh, unpredictable, and, frankly, otherworldly conditions of different planets?]]></var>
-			<var name="entrySubtitle" value="A conversation with Dr. Von Richter" />
-			<var name="entryTitle" value="Is the Lima Bean Really the Answer to Our Life on Other Planets?" />
-		</execute>
-
-		<execute macro="BlogsEntry#selectFormattingStyle">
-			<var name="styleFormat" value="Heading 2" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-	</command>
-
-	<command name="CKEditorSmoke" priority="5">
-		<property name="custom.properties" value="editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="AlloyEditor#addTitle">
-			<var name="title" value="CKEditor Entry Title" />
-		</execute>
-
-		<execute macro="CKEditor#assertEditorPresent" />
-
-		<execute macro="CKEditor#addContent">
-			<var name="content" value="CKEditor Entry Content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="CKEditor Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTitle">
-			<var name="entryTitle" value="CKEditor Entry Title" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
-
-		<execute macro="CKEditor#viewEntryContent">
-			<var name="content" value="CKEditor Entry Content" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntries" priority="5">
-		<for list="1,2,3" param="entryCount">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addEntry">
-				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-		</for>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="BlogsNavigator#gotoEntryCP">
-				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-
-			<execute macro="BlogsEntry#viewEntry">
-				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-		</for>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="BlogsNavigator#moveToRecycleBinCP">
-				<var name="assetType" value="Blogs Entry" />
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="BlogsEntry#viewNoCP">
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="PublishBlogsEntryDraft" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addDraft">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#publishDraftCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="SaveBlogsEntryDraft" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addDraft">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryStatus" value="Draft" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="SaveBlogsEntryDraftAuto" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addDraftViaAutoSave">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryStatus" value="Draft" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="SearchBlogsEntryContent" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs1 Entry1 Content1" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="SearchBlogsEntryTitle" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs Entry Title" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Title" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySearchTerm" value="Blogs1 Entry1 Title1" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="SearchBlogsImagesViaItemSelector" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBrowseImage" />
-
-		<execute macro="ItemSelector#searchBlogImages">
-			<var name="imageFileName" value="Document_1.jpg" />
-		</execute>
-	</command>
-
-	<command name="SearchDMImagesViaItemSelector" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBrowseImage" />
-
-		<execute macro="ItemSelector#searchDMImages">
-			<var name="imageFileName" value="Document_1.jpg" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryDraftWithCoverImage" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="BlogsEntry#saveAsDraft" />
-
-		<execute function="Click" locator1="Icon#BACK" />
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="Blogs Entry Title" />
-		<execute function="AssertTextEquals" locator1="Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS" value1="Draft" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-	</command>
-
-	<command name="ViewCoverImageDetails" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBrowseImage" />
-
-		<execute macro="ItemSelector#viewBlogImageDetails">
-			<var name="imageFileName" value="Document_1.jpg" />
-			<var name="imageFormat" value="jpg" />
-			<var name="imageSize" value="13KB" />
-			<var name="imageStatus" value="approved" />
-			<var name="lastModifiedBy" value="Test Test" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-			<var name="versionNumber" value="1.0" />
-		</execute>
-	</command>
-
-	<command name="ViewErrorMessageForNullCustomAbstract" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
-
-		<execute function="AssertClick#assertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE_FIELD_HELPER" value1="This field is required to publish the entry." />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Title" />
-		</execute>
-
-		<execute function="AssertClick#assertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequiredField" />
-	</command>
-</definition>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+		}
+	}
+
+	@description = "Ensure that a user can add multiple Blogs Entries."
+	@priority = "4"
+	test AddBlogsEntries {
+		property testray.component.names = "Blogs";
+		property testray.main.component.name = "Blogs";
+
+		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title"
+			);
+		}
+
+		task ("Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title"
+			);
+		}
+
+		task ("Add a blogs entry called 'Blogs Entry3 Title' with content 'Blogs Entry3 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry3 Content",
+				entryTitle = "Blogs Entry3 Title"
+			);
+		}
+
+		task ("Ensure blogs entry 'Blogs Entry1 Title' with content 'Blogs Entry1 Content' can be found") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry1 Title");
+
+			BlogsEntry.viewEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title"
+			);
+		}
+
+		task ("Ensure blogs entry 'Blogs Entry2 Title' with content 'Blogs Entry2 Content' can be found") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry2 Title");
+
+			BlogsEntry.viewEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title"
+			);
+		}
+
+		task ("Ensure blogs entry 'Blogs Entry3 Title' with content 'Blogs Entry3 Content' can be found") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry3 Title");
+
+			BlogsEntry.viewEntry(
+				entryContent = "Blogs Entry3 Content",
+				entryTitle = "Blogs Entry3 Title"
+			);
+		}
+	}
+
+	@priority = "5"
+	test AddBlogsEntry {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryContentNull {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithInvalidContent(
+			entryInvalidContent = "",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "4"
+	test AddBlogsEntryTitleEscapeCharacters {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''& < > " Escape Characters Entry'''
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = '''& < > " Escape Characters Entry''');
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''& < > " Escape Characters Entry'''
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryTitleNull {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithInvalidTitle(
+			entryContent = "Blogs Entry Content",
+			entryInvalidTitle = ""
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewDefaultCP(entryTitle = "");
+	}
+
+	@description = "This is a use case for LPS-70143."
+	@priority = "4"
+	test AddBlogsEntryWithDMLink {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		var dmDocument1URL = DMDocument.getDMLatestVersionURL(dmDocumentTitle = "Document_1.jpg");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg"
+		);
+
+		var dmDocument2URL = DMDocument.getDMLatestVersionURL(dmDocumentTitle = "Document_2.jpg");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.addEntryExternalLinkViaBrowseButton(
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media"
+		);
+
+		BlogsEntry.viewEntryExternalURL(
+			entryContent = "Blogs Entry Content",
+			entryExternalURL = "${dmDocument1URL}",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.addEntryExternalLinkViaBrowseButton(
+			entryContent = "Blogs Entry Content",
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media"
+		);
+
+		BlogsEntry.viewEntryExternalURL(
+			entryContent = "Blogs Entry Content",
+			entryExternalURL = "${dmDocument2URL}",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryWithInlineImageViaURL {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.addFromURL(
+			imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg",
+			navTab = "URL"
+		);
+
+		Pause(locator1 = "1000");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewInlineImage(
+			uploadFileName = "https://dummyimage.com/600x400/000/fff.jpg"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryWithSubtitle {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "5"
+	test AddBlogWithFormatting {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		LexiconEntry.gotoAdd();
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.uploadFile(
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		BlogsEntry.addEntryContent(
+			entryContent = '''A World-Renowned Professor<br />It's no secret that Agricultural Science Department professor Dr. Wolfgang von Richter has built his entire career on solving the problem of sustainable living on other planets. For Dr. von Richter, the humble lima bean, which comes from the aptly-named phaseolus lunatus plant of the legume family, is the solution. For years, Dr. von Richter has cultivated variety after variety of lima bean. He's turned lima beans cobalt blue by adding the hardiness of a violet gene; he's grown lima beans the size of fists with his nutrient-rich, hyper-growth soil. But how realistic is his dream of getting lima beans to grow in the harsh, unpredictable, and, frankly, otherworldly conditions of different planets?''',
+			entrySubtitle = "A conversation with Dr. Von Richter",
+			entryTitle = "Is the Lima Bean Really the Answer to Our Life on Other Planets?"
+		);
+
+		BlogsEntry.selectFormattingStyle(styleFormat = "Heading 2");
+
+		Button.clickPublish();
+	}
+
+	@priority = "5"
+	test CKEditorSmoke {
+		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		AlloyEditor.addTitle(title = "CKEditor Entry Title");
+
+		CKEditor.assertEditorPresent();
+
+		CKEditor.addContent(content = "CKEditor Entry Content");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "CKEditor Entry Title");
+
+		BlogsEntry.viewTitle(entryTitle = "CKEditor Entry Title");
+
+		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		CKEditor.viewEntryContent(content = "CKEditor Entry Content");
+	}
+
+	@priority = "5"
+	test DeleteBlogsEntries {
+		for (var entryCount : list "1,2,3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry${entryCount} Content",
+				entryTitle = "Blogs Entry${entryCount} Title"
+			);
+		}
+
+		for (var entryCount : list "1,2,3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			BlogsNavigator.gotoEntryCP(
+				entryContent = "Blogs Entry${entryCount} Content",
+				entryTitle = "Blogs Entry${entryCount} Title"
+			);
+
+			BlogsEntry.viewEntry(
+				entryContent = "Blogs Entry${entryCount} Content",
+				entryTitle = "Blogs Entry${entryCount} Title"
+			);
+		}
+
+		for (var entryCount : list "1,2,3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			BlogsNavigator.moveToRecycleBinCP(
+				assetType = "Blogs Entry",
+				entryTitle = "Blogs Entry${entryCount} Title"
+			);
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		for (var entryCount : list "1,2,3") {
+			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
+		}
+	}
+
+	@priority = "4"
+	test PublishBlogsEntryDraft {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.publishDraftCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test SaveBlogsEntryDraft {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test SaveBlogsEntryDraftAuto {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addDraftViaAutoSave(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test SearchBlogsEntryContent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Entry",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Content1",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test SearchBlogsEntryTitle {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Title",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Entry",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Title",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Title1",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test SearchBlogsImagesViaItemSelector {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1"
+		);
+
+		BlogsNavigator.gotoBrowseImage();
+
+		ItemSelector.searchBlogImages(imageFileName = "Document_1.jpg");
+	}
+
+	@priority = "3"
+	test SearchDMImagesViaItemSelector {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1"
+		);
+
+		BlogsNavigator.gotoBrowseImage();
+
+		ItemSelector.searchDMImages(imageFileName = "Document_1.jpg");
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryDraftWithCoverImage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Pause(locator1 = "1000");
+
+		BlogsEntry.saveAsDraft();
+
+		Click(locator1 = "Icon#BACK");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertTextEquals(
+			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
+			value1 = "Blogs Entry Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS",
+			value1 = "Draft"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1"
+		);
+	}
+
+	@priority = "3"
+	test ViewCoverImageDetails {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1"
+		);
+
+		BlogsNavigator.gotoBrowseImage();
+
+		ItemSelector.viewBlogImageDetails(
+			imageFileName = "Document_1.jpg",
+			imageFormat = "jpg",
+			imageSize = "13KB",
+			imageStatus = "approved",
+			lastModifiedBy = "Test Test",
+			uploadFileName = "Document_1.jpg",
+			versionNumber = "1.0"
+		);
+	}
+
+	@priority = "4"
+	test ViewErrorMessageForNullCustomAbstract {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		Panel.expandPanel(panel = "Configuration");
+
+		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
+
+		AssertClick.assertTextClickAt(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#TITLE_FIELD_HELPER",
+			value1 = "This field is required to publish the entry."
+		);
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Title");
+
+		AssertClick.assertTextClickAt(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		Alert.viewRequiredField();
+	}
+}

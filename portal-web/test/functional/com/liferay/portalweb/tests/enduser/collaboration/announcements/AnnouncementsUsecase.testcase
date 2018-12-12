@@ -1,337 +1,305 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Announcements" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Announcements";
+	var pageName = "Announcements Page";
+	var portletName = "Announcements";
 
-	<var name="pageName" value="Announcements Page" />
-	<var name="portletName" value="Announcements" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Announcements Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Announcements Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Announcements Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Announcements Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		Portlet.addPG(portletName = "Announcements");
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Announcements" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Announcements Page");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Announcements Page" />
-				</execute>
+			AnnouncementsEntry.tearDownPG();
 
-				<execute macro="AnnouncementsEntry#tearDownPG" />
+			Page.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
+			User.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
+			Site.tearDownCP();
+		}
+	}
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test ViewAnnouncementsEntryWithDistributedScope {
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-	<command name="ViewAnnouncementsEntryWithDistributedScope" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		AnnouncementsEntry.addPG(
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = "Announcements Entry Title",
+			entryURL = "http://www.google.com"
+		);
 
-		<execute macro="AnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="Announcements Entry Content" />
-			<var name="entryTitle" value="Announcements Entry Title" />
-			<var name="entryURL" value="http://www.google.com" />
-		</execute>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		AnnouncementsEntry.viewPG(
+			announcementType = "General",
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = "Announcements Entry Title"
+		);
 
-		<execute macro="AnnouncementsEntry#viewPG">
-			<var name="announcementType" value="General" />
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="Announcements Entry Content" />
-			<var name="entryTitle" value="Announcements Entry Title" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		Site.addCP(siteName = "Community Site Name", siteType = "Community");
 
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="siteType" value="Community" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Community Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Announcements");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Announcements" />
-		</execute>
+		AnnouncementsEntry.viewPG(
+			announcementType = "General",
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = "Announcements Entry Title"
+		);
 
-		<execute macro="AnnouncementsEntry#viewPG">
-			<var name="announcementType" value="General" />
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="Announcements Entry Content" />
-			<var name="entryTitle" value="Announcements Entry Title" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		AnnouncementsEntry.addPG(
+			distributionScope = "${siteName}",
+			entryContent = "Announcements Entry2 Scoped Content",
+			entryTitle = "Announcements Entry2 Scoped Title",
+			entryURL = "http://www.yahoo.com"
+		);
 
-		<execute macro="AnnouncementsEntry#addPG">
-			<var name="distributionScope" value="${siteName}" />
-			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
-			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-			<var name="entryURL" value="http://www.yahoo.com" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Community Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
+		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
 
-		<execute macro="AnnouncementsEntry#viewNoPG">
-			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		AnnouncementsEntry.viewPG(
+			announcementType = "General",
+			distributionScope = "${siteName}",
+			entryContent = "Announcements Entry2 Scoped Content",
+			entryTitle = "Announcements Entry2 Scoped Title"
+		);
 
-		<execute macro="AnnouncementsEntry#viewPG">
-			<var name="announcementType" value="General" />
-			<var name="distributionScope" value="${siteName}" />
-			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
-			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		AnnouncementsEntry.viewViaEntriesPG(
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = "Announcements Entry Title"
+		);
 
-		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="Announcements Entry Content" />
-			<var name="entryTitle" value="Announcements Entry Title" />
-		</execute>
+		AnnouncementsEntry.viewViaEntriesPG(
+			distributionScope = "${siteName}",
+			entryContent = "Announcements Entry2 Scoped Content",
+			entryTitle = "Announcements Entry2 Scoped Title"
+		);
+	}
 
-		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-			<var name="distributionScope" value="${siteName}" />
-			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
-			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
-	</command>
+	@priority = "3"
+	test ViewAnnouncementsPagination {
+		for (var entryCount : list "1,2,3,4,5,6,7") {
+			Navigator.gotoPage(pageName = "Announcements Page");
 
-	<command name="ViewAnnouncementsPagination" priority="3">
-		<for list="1,2,3,4,5,6,7" param="entryCount">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Announcements Page" />
-			</execute>
+			AnnouncementsEntry.addPG(
+				announcementType = "General",
+				distributionScope = "General",
+				entryContent = "Announcements Entry Content ${entryCount}",
+				entryTitle = "Announcements Entry Title ${entryCount}",
+				entryURL = "http://www.liferay.com"
+			);
+		}
 
-			<execute macro="AnnouncementsEntry#addPG">
-				<var name="announcementType" value="General" />
-				<var name="distributionScope" value="General" />
-				<var name="entryContent" value="Announcements Entry Content ${entryCount}" />
-				<var name="entryTitle" value="Announcements Entry Title ${entryCount}" />
-				<var name="entryURL" value="http://www.liferay.com" />
-			</execute>
-		</for>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "5");
 
-		<execute macro="AnnouncementsPortlet#configureDisplayCountPG">
-			<var name="maxDisplayItems" value="5" />
-		</execute>
+		Navigator.gotoPage(pageName = "Announcements Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		for (var viewEntryCount : list "3,4,5,6,7") {
+			AnnouncementsEntry.viewViaEntriesPG(
+				distributionScope = "General",
+				entryContent = "Announcements Entry Content ${viewEntryCount}",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				entryURL = "http://www.liferay.com"
+			);
+		}
 
-		<for list="3,4,5,6,7" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-				<var name="distributionScope" value="General" />
-				<var name="entryContent" value="Announcements Entry Content ${viewEntryCount}" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-				<var name="entryURL" value="http://www.liferay.com" />
-			</execute>
-		</for>
+		for (var viewEntryCount : list "1,2") {
+			AssertElementNotPresent(
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="1,2" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		AssertClick(locator1 = "Pagination#NEXT_LINK", value1 = "Next");
 
-		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
+		for (var viewEntryCount : list "1,2") {
+			AnnouncementsEntry.viewViaEntriesPG(
+				distributionScope = "General",
+				entryContent = "Announcements Entry Content ${viewEntryCount}",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				entryURL = "http://www.liferay.com"
+			);
+		}
 
-		<for list="1,2" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-				<var name="distributionScope" value="General" />
-				<var name="entryContent" value="Announcements Entry Content ${viewEntryCount}" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-				<var name="entryURL" value="http://www.liferay.com" />
-			</execute>
-		</for>
+		for (var viewEntryCount : list "3,4,5,6,7") {
+			AssertElementNotPresent(
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="3,4,5,6,7" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		AssertClick(locator1 = "Pagination#PREVIOUS_LINK", value1 = "Previous");
 
-		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
+		for (var viewEntryCount : list "3,4,5,6,7") {
+			AnnouncementsEntry.viewViaEntriesPG(
+				distributionScope = "General",
+				entryContent = "Announcements Entry Content ${viewEntryCount}",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}",
+				entryURL = "http://www.liferay.com"
+			);
+		}
 
-		<for list="3,4,5,6,7" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-				<var name="distributionScope" value="General" />
-				<var name="entryContent" value="Announcements Entry Content ${viewEntryCount}" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-				<var name="entryURL" value="http://www.liferay.com" />
-			</execute>
-		</for>
+		for (var viewEntryCount : list "1,2") {
+			AssertElementNotPresent(
+				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="1,2" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Announcements and Alerts"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Announcements and Alerts" />
-		</execute>
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5");
 
-		<execute macro="AnnouncementsPortlet#configurePaginationCP">
-			<var name="itemsPerPage" value="5" />
-		</execute>
+		for (var viewEntryCount : list "1,2,3,4,5") {
+			AnnouncementsEntry.viewList(
+				distributionScope = "General",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="1,2,3,4,5" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewList">
-				<var name="distributionScope" value="General" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		for (var viewEntryCount : list "6,7") {
+			AssertElementNotPresent(
+				locator1 = "Blogs#ENTRY_TABLE_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="6,7" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		Click(locator1 = "Pagination#NEXT_LINK");
 
-		<execute function="Click" locator1="Pagination#NEXT_LINK" />
+		for (var viewEntryCount : list "6,7") {
+			AnnouncementsEntry.viewList(
+				distributionScope = "General",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="6,7" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewList">
-				<var name="distributionScope" value="General" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		for (var viewEntryCount : list "1,2,3,4,5") {
+			AssertElementNotPresent(
+				locator1 = "Blogs#ENTRY_TABLE_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="1,2,3,4,5" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" />
+		for (var viewEntryCount : list "1,2,3,4,5") {
+			AnnouncementsEntry.viewList(
+				distributionScope = "General",
+				entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
 
-		<for list="1,2,3,4,5" param="viewEntryCount">
-			<execute macro="AnnouncementsEntry#viewList">
-				<var name="distributionScope" value="General" />
-				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
-
-		<for list="6,7" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
-				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		for (var viewEntryCount : list "6,7") {
+			AssertElementNotPresent(
+				locator1 = "Blogs#ENTRY_TABLE_TITLE",
+				key_entryTitle = "Announcements Entry Title ${viewEntryCount}"
+			);
+		}
+	}
+}

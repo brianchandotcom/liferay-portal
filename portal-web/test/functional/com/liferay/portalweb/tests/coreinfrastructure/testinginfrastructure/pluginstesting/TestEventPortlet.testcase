@@ -1,46 +1,41 @@
-<definition component-name="portal-test-plugins">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="portlet.plugins.includes" value="test-event-portlet" />
+@component-name = "portal-test-plugins"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Test Plugins";
+	property portlet.plugins.includes = "test-event-portlet";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	setUp {
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="ViewEvent" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "4"
+	test ViewEvent {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Event Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Test Event Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Event Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Event Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Event Consumer" />
-		</execute>
+		Portlet.addPG(portletName = "Event Consumer");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Event Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Event Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Event Producer" />
-		</execute>
+		Portlet.addPG(portletName = "Event Producer");
 
-		<execute function="Click" locator1="TestEventProducer#EVENT_PRODUCER_PORTLET_LINK" />
+		Click(locator1 = "TestEventProducer#EVENT_PRODUCER_PORTLET_LINK");
 
-		<execute function="AssertTextEquals" locator1="TestEventConsumer#EVENT_CONSUMER_PORTLET_BODY" value1="PASSED" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "TestEventConsumer#EVENT_CONSUMER_PORTLET_BODY",
+			value1 = "PASSED"
+		);
+	}
+}

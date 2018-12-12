@@ -1,72 +1,60 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Fragments" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="JSONFragment#addFragmentCollection">
-			<var name="groupName" value="Test Site Name" />
-			<var name="name" value="Collection Name" />
-		</execute>
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name"
+		);
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AutocompleteFragment" priority="4">
-		<description message="This is a test for LPS-80503. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented." />
+	@description = "This is a test for LPS-80503. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented."
+	@priority = "4"
+	test AutocompleteFragment {
+		// Go to fragments editor
 
-		<!-- Go to fragments editor -->
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-		<execute macro="FragmentsAdmin#addSection">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
+		// Autocomplete editable fragment
 
-		<!-- Autocomplete editable fragment -->
+		var fragmentHTML = '''<lfr-editable id="" type="image">''';
 
-		<var name="fragmentHTML"><![CDATA[<lfr-editable id="" type="image">]]></var>
+		FragmentsAdmin.autocompleteFragmentHTML(
+			autocompleteField = "lfr-editable:image",
+			fragmentHTML = "${fragmentHTML}"
+		);
 
-		<execute macro="FragmentsAdmin#autocompleteFragmentHTML">
-			<var name="autocompleteField" value="lfr-editable:image" />
-			<var name="fragmentHTML" value="${fragmentHTML}" />
-		</execute>
+		// Autocomplete widget fragment
 
-		<!-- Autocomplete widget fragment -->
+		var fragmentHTML = '''<lfr-widget-asset-list>''';
 
-		<var name="fragmentHTML"><![CDATA[<lfr-widget-asset-list>]]></var>
-
-		<execute macro="FragmentsAdmin#autocompleteFragmentHTML">
-			<var name="autocompleteField" value="lfr-widget-asset-list" />
-			<var name="fragmentHTML" value="${fragmentHTML}" />
-		</execute>
-	</command>
-</definition>
+		FragmentsAdmin.autocompleteFragmentHTML(
+			autocompleteField = "lfr-widget-asset-list",
+			fragmentHTML = "${fragmentHTML}"
+		);
+	}
+}

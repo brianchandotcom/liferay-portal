@@ -1,142 +1,140 @@
-<definition component-name="portal-deployment-hypersonic-ee">
-	<property name="portal.acceptance" value="true" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="setup.wizard.enabled" value="true" />
-	<property name="test.prepare.bundle.properties" value="false" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.component.names" value="Training" />
-	<property name="testray.main.component.name" value="Setup Wizard" />
+@component-name = "portal-deployment-hypersonic-ee"
+definition {
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property setup.wizard.enabled = "true";
+	property test.prepare.bundle.properties = "false";
+	property test.run.environment = "EE";
+	property testray.component.names = "Training";
+	property testray.main.component.name = "Setup Wizard";
 
-	<command name="HSQLtoDB2" priority="4">
-		<property name="database.types" value="db2" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoDB2" />
+	@priority = "4"
+	test HSQLtoDB2 {
+		property database.types = "db2";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.db2.password')" name="databasePassword" />
-			<var name="databaseType" value="DB2" />
-			<var method="PropsUtil#get('database.db2.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.db2.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.db2.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.db2.password"),
+			databaseType = "DB2",
+			databaseUserName = PropsUtil.get("database.db2.username"),
+			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
+			jdbcURL = PropsUtil.get("database.db2.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
+		Smoke.viewWelcomePage(userFirstName = "Joe", userLastName = "Bloggs");
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HSQLtoDB2SampleDataDisabled" priority="4">
-		<property name="database.types" value="db2" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoDB2SampleDataDisabled" />
+	@priority = "4"
+	test HSQLtoDB2SampleDataDisabled {
+		property database.types = "db2";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2SampleDataDisabled";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="addSampleData" value="false" />
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.db2.password')" name="databasePassword" />
-			<var name="databaseType" value="DB2" />
-			<var method="PropsUtil#get('database.db2.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.db2.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.db2.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			addSampleData = "false",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.db2.password"),
+			databaseType = "DB2",
+			databaseUserName = PropsUtil.get("database.db2.username"),
+			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
+			jdbcURL = PropsUtil.get("database.db2.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HSQLtoOracle" priority="4">
-		<property name="database.types" value="oracle" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoOracle" />
+	@priority = "4"
+	test HSQLtoOracle {
+		property database.types = "oracle";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.oracle.password')" name="databasePassword" />
-			<var name="databaseType" value="Oracle" />
-			<var method="PropsUtil#get('database.oracle.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.oracle.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.oracle.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.oracle.password"),
+			databaseType = "Oracle",
+			databaseUserName = PropsUtil.get("database.oracle.username"),
+			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
+			jdbcURL = PropsUtil.get("database.oracle.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
+		Smoke.viewWelcomePage(userFirstName = "Joe", userLastName = "Bloggs");
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HSQLtoOracleSampleDataDisabled" priority="4">
-		<property name="database.types" value="oracle" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoOracleSampleDataDisabled" />
+	@priority = "4"
+	test HSQLtoOracleSampleDataDisabled {
+		property database.types = "oracle";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracleSampleDataDisabled";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="addSampleData" value="false" />
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.oracle.password')" name="databasePassword" />
-			<var name="databaseType" value="Oracle" />
-			<var method="PropsUtil#get('database.oracle.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.oracle.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.oracle.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			addSampleData = "false",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.oracle.password"),
+			databaseType = "Oracle",
+			databaseUserName = PropsUtil.get("database.oracle.username"),
+			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
+			jdbcURL = PropsUtil.get("database.oracle.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HSQLtoSybase" priority="4">
-		<property name="database.types" value="sybase" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoSybase" />
+	@priority = "4"
+	test HSQLtoSybase {
+		property database.types = "sybase";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybase";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.sybase.password')" name="databasePassword" />
-			<var name="databaseType" value="Sybase" />
-			<var method="PropsUtil#get('database.sybase.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.sybase.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.sybase.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.sybase.password"),
+			databaseType = "Sybase",
+			databaseUserName = PropsUtil.get("database.sybase.username"),
+			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
+			jdbcURL = PropsUtil.get("database.sybase.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
+		Smoke.viewWelcomePage(userFirstName = "Joe", userLastName = "Bloggs");
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="HSQLtoSybaseSampleDataDisabled" priority="4">
-		<property name="database.types" value="sybase" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardHSQL#HSQLtoSybaseSampleDataDisabled" />
+	@priority = "4"
+	test HSQLtoSybaseSampleDataDisabled {
+		property database.types = "sybase";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataDisabled";
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="addSampleData" value="false" />
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var method="PropsUtil#get('database.sybase.password')" name="databasePassword" />
-			<var name="databaseType" value="Sybase" />
-			<var method="PropsUtil#get('database.sybase.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.sybase.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.sybase.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configurePG(
+			addSampleData = "false",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.sybase.password"),
+			databaseType = "Sybase",
+			databaseUserName = PropsUtil.get("database.sybase.username"),
+			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
+			jdbcURL = PropsUtil.get("database.sybase.url")
+		);
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
-</definition>
+		Smoke.runSmoke();
+	}
+}

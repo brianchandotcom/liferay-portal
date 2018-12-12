@@ -1,2655 +1,2289 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Blogs" />
-
-	<var name="pageName" value="Blogs Page" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Blogs#tearDownConfigurationScopePG">
-					<var name="pageName" value="Blogs Page" />
-				</execute>
-
-				<execute macro="Organization#tearDownCP" />
-
-				<execute macro="PortalInstances#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddBlogsEntryWithHTML" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithHTML">
-			<var name="entryContent"><![CDATA[<b>Bold Type</b> <i>Italics</i>]]></var>
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Bold Type Italics" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContentBold" value="Bold Type" />
-			<var name="entryContentItalics" value="Italics" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryWithInlineImage" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addContentWithInlineImage">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewInlineImage">
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryWithSpecialCharacters" priority="5">
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-	</command>
-
-	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page 1" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsConfiguration#selectMaximumItemstoDisplay">
-			<var name="maximumItemsToDisplay" value="75" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#uncheckComments" />
-		<execute macro="BlogsConfiguration#uncheckRelatedAssets" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsConfiguration#gotoRSS" />
-
-		<execute macro="BlogsConfiguration#uncheckRSSSubscriptionCheckbox" />
-
-		<execute macro="Button#clickSave" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Blogs";
+	var pageName = "Blogs Page";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsConfiguration#viewDefaultConfiguration" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Liferay" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsConfiguration#gotoRSS" />
-
-		<execute macro="BlogsConfiguration#viewDefaultConfigurationRSS" />
-	</command>
-
-	<command name="ChangeBlogsEntryCoverImage" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<for list="1,2" param="entryCount">
-			<execute macro="DMDocument#addCP">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_3" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_3.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_3" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBrowseImage" />
-
-		<execute macro="ItemSelector#searchDMImages">
-			<var name="imageFileName" value="Document_1" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
-
-		<var name="key_imageFileName" value="Document_1.jpg" />
-
-		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1" />
-		</execute>
-	</command>
-
-	<command name="ChangeBlogsRatingType" priority="4">
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Social" />
-		</execute>
-
-		<execute macro="PortalSettings#configureBlogsRatingType">
-			<var name="ratingType" value="Stars" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Ratings#AVERAGE_LABEL" value1="Average (0 Votes)" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
-	</command>
-
-	<command name="DeleteBlogsEntry" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#moveToRecycleBinCP">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteDraftBlogsEntry" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addDraft">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinDraftCP">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="DemoTrackbackURL" priority="4">
-		<property name="custom.properties" value="blogs.trackback.enabled=true" />
-		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#DemoTrackbackURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addWithTrackbackURLPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryContent2" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-			<var name="entryTitle2" value="Blogs Entry2 Title" />
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewPG">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="[...] Blogs Entry2 Content [...] Read More" />
-			<var name="userFullName" value="Test Test" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Link#READ_MORE" value1="Read More" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
-
-		<execute macro="PortalInstances#addCP">
-			<var name="mailDomain" value="www.able.com" />
-			<var name="virtualHost" value="www.able.com" />
-			<var name="webId" value="www.able.com" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@www.able.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
-
-		<var name="key_entryContent" value="Blogs Entry3 Content" />
-		<var name="key_entryTitle" value="Blogs Entry3 Title" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry3-title" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="BlogsEntry#addWithTrackbackURLPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryContent2" value="Blogs Entry4 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-			<var name="entryTitle2" value="Blogs Entry4 Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="virtualHosts" value="true" />
-			<var name="virtualHostsURL" value="www.able.com:8080" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry4 Content" />
-			<var name="entryTitle" value="Blogs Entry4 Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewPG">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="[...] Blogs Entry4 Content [...] Read More" />
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-			<var name="userFullName" value="Test Test" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry3-title" />
-
-		<execute function="AssertClick" locator1="Link#READ_MORE" value1="Read More" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry4 Content" />
-			<var name="entryTitle" value="Blogs Entry4 Title" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
-		</execute>
-
-		<var name="key_entryContent" value="Blogs Entry5 Content" />
-		<var name="key_entryTitle" value="Blogs Entry5 Title" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="BlogsEntry#addWithTrackbackURLPG">
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryContent2" value="Blogs Entry6 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
-			<var name="entryTitle2" value="Blogs Entry6 Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="virtualHosts" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry6 Content" />
-			<var name="entryTitle" value="Blogs Entry6 Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoPG">
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewPG">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="[...] Blogs Entry6 Content [...] Read More" />
-			<var name="userFullName" value="Test Test" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title" />
-
-		<execute function="AssertClick" locator1="Link#READ_MORE" value1="Read More" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry6 Content" />
-			<var name="entryTitle" value="Blogs Entry6 Title" />
-		</execute>
-	</command>
-
-	<command name="ImportBlogsCommentLAR" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="Blogs Entry Comment" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewPG">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="userFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="Blogs.portlet.lar" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="Blogs.portlet.lar" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewPG">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="userFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RestoreBlogsEntry" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#moveToRecycleBinCP">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetRestoreLocation" value="Blogs" />
-			<var name="assetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="StagingBlogs" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs Aggregator" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Recent Bloggers" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RecentBloggers#viewPG">
-			<var name="entryAuthor" value="Test Test" />
-			<var name="postCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkContentNameList" value="Blogs" />
-			<var name="checkPageName" value="Blogs Page 1" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RecentBloggers#viewPG">
-			<var name="entryAuthor" value="Test Test" />
-			<var name="postCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#configureScopePG">
-			<var name="scopeSelection" value="Blogs Page 2 (Create New)" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1,Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#configureSelectionMethod">
-			<var name="selectionMethod" value="Scope" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkContentNameList" value="Blogs,Navigation Menus" />
-			<var name="checkPageName" value="Blogs Page 2" />
-			<var name="contentDateRange" value="All" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
-		</execute>
-	</command>
-
-	<command name="StagingBlogsCP" priority="3">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#StagingBlogsCP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-	</command>
-
-	<command name="StagingBlogsWithScheduledPublishing" priority="3">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#StagingBlogsWithScheduledPublishing" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsEntry#scheduleBlogEntry" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Not Published (1)" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkContentNameList" value="Blogs" />
-			<var name="checkPageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#viewNoEntryCP" />
-
-		<execute function="Pause" locator1="180000" />
-
-		<execute function="Refresh" />
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntriesAsGuestViaAP" priority="4">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntriesAsGuestViaAP" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="BlogsEntry#removeViewPermissionsPG">
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title 2" />
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing" priority="4">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsEntry#editDisplayDateYear" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Not Published (1)" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsEntry#editDisplayDate">
-			<var name="displayTimeMinute" value="00" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="PortletEntry#viewNoNavItemLink" />
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryAsPublishedViaAP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Blogs#addViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#editEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-			<var name="entrySubtitle" value="" />
-			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#saveAsDraft" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#publishDraftCP">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title Edit" />
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers" priority="3">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<var name="entryAuthor" value="Test Test" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<var method="StringUtil#replace('Blogs Entry Title', ' ', '-')" name="entryTitleURL" />
-
-		<var method="StringUtil#lowerCase('${entryTitleURL}')" name="entryTitleURL" />
-
-		<var method="StringUtil#replace('Blogs Page', ' ', '-')" name="pageNameURL" />
-
-		<var method="StringUtil#lowerCase('${pageNameURL}')" name="pageNameURL" />
-
-		<var name="friendlyURL" value="${portalURL}/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${friendlyURL}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Recent Bloggers Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Recent Bloggers Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Recent Bloggers Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Recent Bloggers" />
-		</execute>
-
-		<var name="key_entryAuthor" value="Test Test" />
-
-		<execute function="AssertClick" locator1="Blogs#RECENT_BLOGGER_USER_NAME" value1="Test Test" />
-
-		<execute function="AssertLocation" value1="${friendlyURL}" />
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page2" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
-
-		<execute macro="BlogsConfiguration#selectScopePG">
-			<var name="scopeSelection" value="Blogs Page2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page2" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectScopeCP">
-			<var name="scopeDefault" value="Default" />
-			<var name="scopeSelection" value="Blogs Page2" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAuthorCP">
-			<var name="entryAuthorFullName" value="Test Test" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="Blogs Entry Title" />
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
-
-		<execute macro="BlogsConfiguration#viewScopeSelection">
-			<var name="scopeSelection" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
-
-		<execute macro="BlogsConfiguration#selectScopePG">
-			<var name="scopeSelection" value="Blogs Page2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithCoverImageFromDMFolders" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder 1 Description" />
-			<var name="dmFolderName" value="DM Folder 1 Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder 1 Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderDescription" value="DM SubFolder 1 Description" />
-			<var name="dmSubFolderName" value="DM SubFolder 1 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM SubFolder 1 Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder 2 Description" />
-			<var name="dmFolderName" value="DM Folder 2 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder 2 Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderDescription" value="DM SubFolder 2 Description" />
-			<var name="dmSubFolderName" value="DM SubFolder 2 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM SubFolder 2 Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithCoverImageFromDMFolders">
-			<var name="dmFolderName" value="DM Folder 1 Name" />
-			<var name="dmSubFolderName" value="DM SubFolder 1 Name" />
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-			<var name="imageFileName" value="Document_1.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithCoverImageFromDMFolders">
-			<var name="dmFolderName" value="DM Folder 2 Name" />
-			<var name="dmSubFolderName" value="DM SubFolder 2 Name" />
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-			<var name="imageFileName" value="Document_2.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE">
-			<var name="key_uploadFileName" value="Document_1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE">
-			<var name="key_uploadFileName" value="Document_2" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithCustomAbstract" priority="4">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryWithCustomAbstract" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithCustomAbstract">
-			<var name="entryAbstractDescription" value="Blogs Entry Custom Abstract" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewAbstractDisplay">
-			<var name="entryAbstractDescription" value="Blogs Entry Custom Abstract" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryWithAbstractPG">
-			<var name="entryAbstractDescription" value="Blogs Entry Custom Abstract" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithDefaultAbstract" priority="4">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntryWithDefaultAbstract" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithDefaultAbstract">
-			<var name="entryAbstractDescription" value="Blogs Entry Custom Abstract" />
-			<var name="entryContent" value="Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects." />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewAbstractDisplay">
-			<var name="entryAbstractDescription" value="Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent..." />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryWithAbstractPG">
-			<var name="entryAbstractDescription" value="Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent..." />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects." />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Aggregator Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs Aggregator" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsEntry#scheduleBlogEntry" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Not Published (1)" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-
-		<execute macro="BlogsEntry#addCustomAbstract">
-			<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryViaBlogsAggregatorPG" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryAsGuestPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryViaBlogsAggregatorPG" />
-
-		<execute function="Pause" locator1="180000" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
-
-		<var name="key_entryAbstractDescription" value="Blogs Entry Abstract Description" />
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertTextEquals" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
-
-		<execute function="AssertClick" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Aggregator Page" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
-
-		<execute function="AssertClick" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithImageEditedViaItemSelector" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-		</execute>
-
-		<execute macro="ImageEditor#gotoImageEditorViaItemSelector">
-			<var name="imageFileName" value="Document_2.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ImageEditor#rotateImage">
-			<var name="rotateDirection" value="right" />
-		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="ImageEditor#applyChangesAndSaveFile" />
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_2 (1).jpg" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
-			<var name="dmDocumentVersionNumber" value="1.0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewInlineImage">
-			<var name="uploadFileName"><![CDATA[Document_2+%281%29.jpg]]></var>
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost" priority="3">
-		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="privatePageVirtualHostURL" value="www.baker.com" />
-			<var name="privateVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="baseURL" value="http://www.baker.com:8080/group/guest" />
-			<var name="pageName" value="Private Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
-			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntryWithUploadedCoverImage">
-			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewNoBlogsDraftDisplaysInAP" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#editDraftPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryContentEdit" value="Blogs Entry Content Draft" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="entryTitleEdit" value="Blogs Entry Title Draft" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#BACK" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Not Published (1)" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content Draft" />
-			<var name="entryTitle" value="Blogs Entry Title Draft" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewManualNoAssetsMessagePG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Not Published (1)" />
-		</execute>
-
-		<execute macro="Blogs#editEntryPG">
-			<var name="entryContent" value="Blogs Entry Content Draft" />
-			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Draft" />
-			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title Edit" />
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
-			<var name="assetTitle" value="Blogs Entry Title Draft" />
-			<var name="entryContent" value="Blogs Entry Content Draft" />
-			<var name="entryTitle" value="Blogs Entry Title Draft" />
-		</execute>
-	</command>
-
-	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs Aggregator" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<var name="key_portletName" value="Blogs Aggregator" />
-
-		<execute function="AssertTextPresent" locator1="Portlet#TITLE" value1="Blogs Aggregator" />
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Setup" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
-
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
-
-		<execute macro="IFrame#closeFrame" />
-
-		<var name="key_modalTitle" value="Configuration" />
-
-		<execute function="Click" locator1="Button#CLOSE_MODAL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<for list="Organization1 Name,Organization2 Name,Organization3 Name" param="orgName">
-			<execute macro="Organization#addCP">
-				<var name="orgName" value="${orgName}" />
-				<var name="orgType" value="Organization" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-		</for>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#searchCP">
-			<var name="orgName" value="Organization3 Name" />
-			<var name="searchTerm" value="Organization3 Name" />
-		</execute>
-
-		<execute macro="Organization#selectParentOrganizationCP">
-			<var name="orgName" value="Organization3 Name" />
-			<var name="parentOrgName" value="Organization1 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#viewParentOrganizationCP">
-			<var name="orgName" value="Organization1 Name" />
-			<var name="parentOrgExist" value="true" />
-			<var name="parentOrgName" value="Organization1 Name" />
-			<var name="subOrgName" value="Organization3 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#viewParentOrganizationCP">
-			<var name="orgName" value="Organization2 Name" />
-			<var name="parentOrgExist" value="false" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewParentOrganizationPG">
-			<var name="orgName" value="Organization2 Name" />
-			<var name="parentOrgName" value="" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewParentOrganizationPG">
-			<var name="orgName" value="Organization3 Name" />
-			<var name="parentOrgName" value="Organization1 Name" />
-		</execute>
-	</command>
-</definition>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			BlogsEntry.tearDownCP();
+
+			Blogs.tearDownConfigurationScopePG(pageName = "Blogs Page");
+
+			Organization.tearDownCP();
+
+			PortalInstances.tearDownCP();
+
+			Page.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddBlogsEntryWithHTML {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithHTML(
+			entryContent = '''<b>Bold Type</b> <i>Italics</i>''',
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Bold Type Italics",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContentBold = "Bold Type",
+			entryContentItalics = "Italics",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryWithInlineImage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Pause(locator1 = "3000");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
+	}
+
+	@priority = "5"
+	test AddBlogsEntryWithSpecialCharacters {
+
+		Blogs.addEntry(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+	}
+
+	@priority = "4"
+	test AllowMultiplePortletConfigurationsPerSite {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page 1", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page 1",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page 2", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Site Page 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.selectMaximumItemstoDisplay(maximumItemsToDisplay = "75");
+
+		BlogsConfiguration.uncheckComments();
+
+		BlogsConfiguration.uncheckRelatedAssets();
+
+		Button.clickSave();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.gotoRSS();
+
+		BlogsConfiguration.uncheckRSSSubscriptionCheckbox();
+
+		Button.clickSave();
+
+		Navigator.gotoSitePage(pageName = "Site Page 2", siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.viewDefaultConfiguration();
+
+		Navigator.openSiteURL(siteName = "Liferay");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.gotoRSS();
+
+		BlogsConfiguration.viewDefaultConfigurationRSS();
+	}
+
+	@priority = "3"
+	test ChangeBlogsEntryCoverImage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		for (var entryCount : list "1,2") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${entryCount}.jpg",
+				dmDocumentTitle = "Document_${entryCount}.jpg"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_3",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_3.jpg"
+		);
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_3"
+		);
+
+		BlogsNavigator.gotoBrowseImage();
+
+		ItemSelector.searchDMImages(imageFileName = "Document_1");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		var key_imageFileName = "Document_1.jpg";
+
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1"
+		);
+	}
+
+	@priority = "4"
+	test ChangeBlogsRatingType {
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		Navigator.gotoNavTab(navTab = "Social");
+
+		PortalSettings.configureBlogsRatingType(ratingType = "Stars");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_LABEL",
+			value1 = "Average (0 Votes)"
+		);
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntry {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.moveToRecycleBinCP(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.deleteCP(assetName = "Blogs Entry Title", assetType = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "4"
+	test DeleteDraftBlogsEntry {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.moveToRecycleBinDraftCP(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.deleteCP(assetName = "Blogs Entry Title", assetType = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "4"
+	test DemoTrackbackURL {
+		property custom.properties = "blogs.trackback.enabled=true";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "BlogsUsecase#DemoTrackbackURL";
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		BlogsEntry.addWithTrackbackURLPG(
+			entryContent = "Blogs Entry1 Content",
+			entryContent2 = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry1 Title",
+			entryTitle2 = "Blogs Entry2 Title",
+			pageName = "Blogs Page"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "[...] Blogs Entry2 Content [...] Read More",
+			userFullName = "Test Test"
+		);
+
+		AssertClick(locator1 = "Link#READ_MORE", value1 = "Read More");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances"
+		);
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com"
+		);
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Blogs Page",
+			url = "http://www.able.com:8080"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry3 Content",
+			entryTitle = "Blogs Entry3 Title"
+		);
+
+		var key_entryContent = "Blogs Entry3 Content";
+		var key_entryTitle = "Blogs Entry3 Title";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Blogs#ENTRY_COMMENTS_COUNT",
+			value1 = "0"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry3 Content",
+			entryTitle = "Blogs Entry3 Title"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL",
+			value1 = "http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry3-title"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Blogs Page",
+			url = "http://www.able.com:8080"
+		);
+
+		BlogsEntry.addWithTrackbackURLPG(
+			entryContent = "Blogs Entry3 Content",
+			entryContent2 = "Blogs Entry4 Content",
+			entryTitle = "Blogs Entry3 Title",
+			entryTitle2 = "Blogs Entry4 Title",
+			pageName = "Blogs Page",
+			siteName = "http://www.able.com:8080",
+			virtualHosts = "true",
+			virtualHostsURL = "www.able.com:8080"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry4 Content",
+			entryTitle = "Blogs Entry4 Title"
+		);
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry3 Content",
+			entryTitle = "Blogs Entry3 Title"
+		);
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "[...] Blogs Entry4 Content [...] Read More",
+			entryContent = "Blogs Entry3 Content",
+			entryTitle = "Blogs Entry3 Title",
+			userFullName = "Test Test"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL",
+			value1 = "http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry3-title"
+		);
+
+		AssertClick(locator1 = "Link#READ_MORE", value1 = "Read More");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry4 Content",
+			entryTitle = "Blogs Entry4 Title"
+		);
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			virtualHostsURL = "http://www.able.com:8080"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Blogs Page",
+			url = "http://www.able.com:8080"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry5 Content",
+			entryTitle = "Blogs Entry5 Title"
+		);
+
+		var key_entryContent = "Blogs Entry5 Content";
+		var key_entryTitle = "Blogs Entry5 Title";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Blogs#ENTRY_COMMENTS_COUNT",
+			value1 = "0"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry5 Content",
+			entryTitle = "Blogs Entry5 Title"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL",
+			value1 = "http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Blogs Page",
+			url = "http://www.able.com:8080"
+		);
+
+		BlogsEntry.addWithTrackbackURLPG(
+			entryContent = "Blogs Entry5 Content",
+			entryContent2 = "Blogs Entry6 Content",
+			entryTitle = "Blogs Entry5 Title",
+			entryTitle2 = "Blogs Entry6 Title",
+			pageName = "Blogs Page",
+			virtualHosts = "true",
+			virtualHostsURL = "http://www.able.com:8080"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry6 Content",
+			entryTitle = "Blogs Entry6 Title"
+		);
+
+		BlogsNavigator.gotoPG(
+			entryContent = "Blogs Entry5 Content",
+			entryTitle = "Blogs Entry5 Title"
+		);
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "[...] Blogs Entry6 Content [...] Read More",
+			userFullName = "Test Test"
+		);
+
+		AssertTextEquals.assertValue(
+			locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL",
+			value1 = "http://www.able.com:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title"
+		);
+
+		AssertClick(locator1 = "Link#READ_MORE", value1 = "Read More");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry6 Content",
+			entryTitle = "Blogs Entry6 Title"
+		);
+	}
+
+	@priority = "4"
+	test ImportBlogsCommentLAR {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.tearDownCP();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test RestoreBlogsEntry {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.moveToRecycleBinCP(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "Blogs Entry Title",
+			assetRestoreLocation = "Blogs",
+			assetType = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test StagingBlogs {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page 1", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page 1",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs Aggregator");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Recent Bloggers");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page 2", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		RecentBloggers.viewPG(entryAuthor = "Test Test", postCount = "1");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			viewEntryTitle = "Blogs Entry Title 1"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Blogs",
+			checkPageName = "Blogs Page 1"
+		);
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		RecentBloggers.viewPG(entryAuthor = "Test Test", postCount = "1");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			viewEntryTitle = "Blogs Entry Title 1"
+		);
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 2", siteName = "Site Name");
+
+		BlogsConfiguration.configureScopePG(
+			scopeSelection = "Blogs Page 2 (Create New)"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 2", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			viewEntryTitle = "Blogs Entry Title 1,Blogs Entry Title 2"
+		);
+
+		BlogsAggregatorPortlet.configureSelectionMethod(selectionMethod = "Scope");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			viewEntryTitle = "Blogs Entry Title 1",
+			viewNoEntryTitle = "Blogs Entry Title 2"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Blogs,Navigation Menus",
+			checkPageName = "Blogs Page 2",
+			contentDateRange = "All"
+		);
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Blogs Page 2", siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page 1", siteName = "Site Name");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			viewEntryTitle = "Blogs Entry Title 1",
+			viewNoEntryTitle = "Blogs Entry Title 2"
+		);
+	}
+
+	@priority = "3"
+	test StagingBlogsCP {
+		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsCP";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+	}
+
+	@priority = "3"
+	test StagingBlogsWithScheduledPublishing {
+		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.scheduleBlogEntry();
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Blogs",
+			checkPageName = "Blogs Page"
+		);
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Blogs.viewNoEntryCP();
+
+		Pause(locator1 = "180000");
+
+		Refresh();
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntriesAsGuestViaAP {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.deletePG(portletName = "Blogs");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Refresh();
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		BlogsEntry.removeViewPermissionsPG(
+			entryTitle = "Blogs Entry Title 2",
+			roleTitle = "Guest"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title 2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewNoEntryViaAPPG(
+			assetTitle = "Blogs Entry Title 2",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDateYear();
+
+		PortletEntry.publish();
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDate(displayTimeMinute = "00");
+
+		PortletEntry.publish();
+
+		PortletEntry.viewNoNavItemLink();
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryAsPublishedViaAP {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedViaAP";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Asset Publisher Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Asset Publisher Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Blogs.addViaAP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.editEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entrySubtitle = "",
+			entrySubtitleEdit = "Blogs Entry Subtitle Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit"
+		);
+
+		BlogsEntry.saveAsDraft();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewNoEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.publishDraftCP(
+			entryContent = "Blogs Entry Content Edit",
+			entrySubtitle = "Blogs Entry Subtitle Edit",
+			entryTitle = "Blogs Entry Title Edit"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title Edit",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers";
+		var portalURL = PropsUtil.get("portal.url");
+		var entryAuthor = "Test Test";
+		var entryContent = "Blogs Entry Content";
+		var entryTitle = "Blogs Entry Title";
+		var entryTitleURL = StringUtil.replace("Blogs Entry Title", " ", "-");
+		var entryTitleURL = StringUtil.lowerCase("${entryTitleURL}");
+		var pageNameURL = StringUtil.replace("Blogs Page", " ", "-");
+		var pageNameURL = StringUtil.lowerCase("${pageNameURL}");
+		var friendlyURL = "${portalURL}/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}";
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.openSpecificURL(url = "${friendlyURL}");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Recent Bloggers Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Recent Bloggers Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Recent Bloggers Page");
+
+		Portlet.addPG(portletName = "Recent Bloggers");
+
+		var key_entryAuthor = "Test Test";
+
+		AssertClick(locator1 = "Blogs#RECENT_BLOGGER_USER_NAME", value1 = "Test Test");
+
+		AssertLocation(value1 = "${friendlyURL}");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page2", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page2");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration"
+		);
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsNavigator.gotoConfigurationScopePG();
+
+		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page2");
+
+		Navigator.gotoPage(pageName = "Blogs Page2");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsConfiguration.selectScopeCP(
+			scopeDefault = "Default",
+			scopeSelection = "Blogs Page2"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryAuthorCP(
+			entryAuthorFullName = "Test Test",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertClick(locator1 = "Blogs#ENTRY_TABLE_TITLE", value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration"
+		);
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsNavigator.gotoConfigurationScopePG();
+
+		BlogsConfiguration.viewScopeSelection(scopeSelection = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration"
+		);
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsNavigator.gotoConfigurationScopePG();
+
+		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryWithCoverImageFromDMFolders {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder 1 Description",
+			dmFolderName = "DM Folder 1 Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder 1 Name");
+
+		DMFolder.addSubfolderPG(
+			dmSubFolderDescription = "DM SubFolder 1 Description",
+			dmSubFolderName = "DM SubFolder 1 Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 1 Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder 2 Description",
+			dmFolderName = "DM Folder 2 Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder 2 Name");
+
+		DMFolder.addSubfolderPG(
+			dmSubFolderDescription = "DM SubFolder 2 Description",
+			dmSubFolderName = "DM SubFolder 2 Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 2 Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntryWithCoverImageFromDMFolders(
+			dmFolderName = "DM Folder 1 Name",
+			dmSubFolderName = "DM SubFolder 1 Name",
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title",
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntryWithCoverImageFromDMFolders(
+			dmFolderName = "DM Folder 2 Name",
+			dmSubFolderName = "DM SubFolder 2 Name",
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title",
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		AssertElementPresent(
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE",
+			key_uploadFileName = "Document_1"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		AssertElementPresent(
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE",
+			key_uploadFileName = "Document_2"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryWithCoverImageUploadedToDM {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Pause(locator1 = "1000");
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryWithCustomAbstract {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithCustomAbstract";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryWithDefaultAbstract {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithDefaultAbstract";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithDefaultAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Blogs Aggregator Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Aggregator Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		Portlet.addPG(portletName = "Blogs Aggregator");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.scheduleBlogEntry();
+
+		PortletEntry.publish();
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(
+			entryAbstractDescription = "Blogs Entry Abstract Description"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoEntryAsGuestPG(entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
+
+		Pause(locator1 = "180000");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Blogs Aggregator"
+		);
+
+		var key_entryAbstractDescription = "Blogs Entry Abstract Description";
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertTextEquals(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#CONTENT_ABSTRACT",
+			value1 = "Blogs Entry Abstract Description"
+		);
+
+		AssertClick(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Blogs Aggregator"
+		);
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#CONTENT_ABSTRACT",
+			value1 = "Blogs Entry Abstract Description"
+		);
+
+		AssertClick(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryWithImageEditedViaItemSelector {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		ImageEditor.gotoImageEditorViaItemSelector(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media"
+		);
+
+		ImageEditor.rotateImage(rotateDirection = "right");
+
+		Pause(locator1 = "3000");
+
+		ImageEditor.applyChangesAndSaveFile();
+
+		Pause(locator1 = "3000");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		AssertClick(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
+
+		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Blogs");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2 (1).jpg");
+
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.addVirtualHostsURLCP(
+			privatePageVirtualHostURL = "www.baker.com",
+			privateVirtualHosts = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Private Blogs Page");
+
+		Navigator.gotoSpecificURLPage(
+			baseURL = "http://www.baker.com:8080/group/guest",
+			pageName = "Private Blogs Page"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|'''
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntryWithUploadedCoverImage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
+
+		Button.clickPublish();
+
+		Pause(locator1 = "30000");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewNoBlogsDraftDisplaysInAP {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Asset Publisher Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Asset Publisher Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.editDraftPG(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Draft",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Draft"
+		);
+
+		Click(locator1 = "Icon#BACK");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content Draft",
+			entryTitle = "Blogs Entry Title Draft"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		Blogs.editEntryPG(
+			entryContent = "Blogs Entry Content Draft",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Draft",
+			entryTitleEdit = "Blogs Entry Title Edit"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title Edit",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit"
+		);
+
+		BlogsEntry.viewNoEntryViaAPPG(
+			assetTitle = "Blogs Entry Title Draft",
+			entryContent = "Blogs Entry Content Draft",
+			entryTitle = "Blogs Entry Title Draft"
+		);
+	}
+
+	@priority = "4"
+	test ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs Aggregator");
+
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration"
+		);
+
+		var key_portletName = "Blogs Aggregator";
+
+		AssertTextPresent(locator1 = "Portlet#TITLE", value1 = "Blogs Aggregator");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Navigator.gotoNavItem(navItem = "Setup");
+
+		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(
+			locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME"
+		);
+
+		AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+
+		IFrame.closeFrame();
+
+		var key_modalTitle = "Configuration";
+
+		Click(locator1 = "Button#CLOSE_MODAL");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		for (var orgName : list "Organization1 Name,Organization2 Name,Organization3 Name") {
+			Organization.addCP(orgName = "${orgName}", orgType = "Organization");
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+		}
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Organization3 Name",
+			searchTerm = "Organization3 Name"
+		);
+
+		Organization.selectParentOrganizationCP(
+			orgName = "Organization3 Name",
+			parentOrgName = "Organization1 Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.viewParentOrganizationCP(
+			orgName = "Organization1 Name",
+			parentOrgExist = "true",
+			parentOrgName = "Organization1 Name",
+			subOrgName = "Organization3 Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.viewParentOrganizationCP(
+			orgName = "Organization2 Name",
+			parentOrgExist = "false"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsAggregatorPortlet.viewParentOrganizationPG(
+			orgName = "Organization2 Name",
+			parentOrgName = ""
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsAggregatorPortlet.viewParentOrganizationPG(
+			orgName = "Organization3 Name",
+			parentOrgName = "Organization1 Name"
+		);
+	}
+}

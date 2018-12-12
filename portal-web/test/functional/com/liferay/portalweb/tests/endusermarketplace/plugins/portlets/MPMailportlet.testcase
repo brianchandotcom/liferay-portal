@@ -1,55 +1,46 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+	setUp {
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Page");
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="MailPortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="mail-portlet" />
+	@priority = "4"
+	test MailPortletSmoke {
+		property portlet.plugins.includes = "mail-portlet";
+		var appName = "Mail";
 
-		<var name="appName" value="Mail" />
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Mail");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Mail" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+		AppManager.uninstallAppCP(appName = "${appName}");
 
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-</definition>
+		AppManager.viewUninstallAppCP(appName = "${appName}");
+	}
+}

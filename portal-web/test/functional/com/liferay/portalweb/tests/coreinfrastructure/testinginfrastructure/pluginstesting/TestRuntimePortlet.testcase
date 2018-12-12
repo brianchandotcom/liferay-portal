@@ -1,42 +1,37 @@
-<definition component-name="portal-test-plugins">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Security" />
-	<property name="portlet.plugins.includes" value="test-runtime-action-portlet,test-runtime-parent-portlet" />
+@component-name = "portal-test-plugins"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Security";
+	property portlet.plugins.includes = "test-runtime-action-portlet,test-runtime-parent-portlet";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+	setUp {
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Runtime Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Runtime Page");
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="Smoke" priority="5">
-		<description message="This is a test case for LPS-56769." />
+	@description = "This is a test case for LPS-56769."
+	@priority = "5"
+	test Smoke {
+		property portal.acceptance = "true";
 
-		<property name="portal.acceptance" value="true" />
+		Navigator.gotoPage(pageName = "Test Runtime Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Runtime Page" />
-		</execute>
+		Portlet.addPG(portletName = "Test Runtime Parent");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Test Runtime Parent" />
-		</execute>
+		Click(locator1 = "Button#EXECUTE");
 
-		<execute function="Click" locator1="Button#EXECUTE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-</definition>
+		Alert.viewSuccessMessage();
+	}
+}

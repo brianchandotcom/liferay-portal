@@ -1,106 +1,270 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="portlet.plugins.includes" value="test-localized-portlet" />
-	<property name="testray.component.names" value="Site Localization" />
-	<property name="testray.main.component.name" value="Site Localization" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property portlet.plugins.includes = "test-localized-portlet";
+	property testray.component.names = "Site Localization";
+	property testray.main.component.name = "Site Localization";
+	var pageName = "Test Localization";
+	var portletName = "Test Localized Portlet";
 
-	<var name="pageName" value="Test Localization" />
-	<var name="portletName" value="Test Localized Portlet" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "${pageName}");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		Navigator.gotoPage(pageName = "${pageName}");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		Portlet.addPG(pageName = "${pageName}", portletName = "${portletName}");
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test CheckLocalizationChinese {
+		Click(locator1 = "TestLocalized#CHINESE_LOCALIZATION");
 
-	<command name="CheckLocalizationChinese" priority="4">
-		<execute function="Click" locator1="TestLocalized#CHINESE_LOCALIZATION" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_2" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_3" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_4" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_5" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_6" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_7" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_8" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_9" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_10" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_11" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_12" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_13" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute function="AssertTextNotPresent" value1="FAILED" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
+			value1 = "PASSED"
+		);
 
-	<command name="CheckLocalizationFrench" priority="4">
-		<execute function="Click" locator1="TestLocalized#FRENCH_LOCALIZATION" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_2" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_3" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_4" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_5" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_6" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_7" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_8" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_9" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_10" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_11" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_12" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_13" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute function="AssertTextNotPresent" value1="FAILED" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
+			value1 = "PASSED"
+		);
 
-	<command name="CheckLocalizationSpanish" priority="4">
-		<execute function="Click" locator1="TestLocalized#SPANISH_LOCALIZATION" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_2" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_3" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_4" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_5" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_6" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_7" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_8" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_9" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_10" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_11" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_12" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_13" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute function="AssertTextNotPresent" value1="FAILED" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
+			value1 = "PASSED"
+		);
+
+		AssertTextNotPresent(value1 = "FAILED");
+	}
+
+	@priority = "4"
+	test CheckLocalizationFrench {
+		Click(locator1 = "TestLocalized#FRENCH_LOCALIZATION");
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
+			value1 = "PASSED"
+		);
+
+		AssertTextNotPresent(value1 = "FAILED");
+	}
+
+	@priority = "4"
+	test CheckLocalizationSpanish {
+		Click(locator1 = "TestLocalized#SPANISH_LOCALIZATION");
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_1",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_2",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_3",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_4",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_5",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_6",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_7",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_8",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_9",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_10",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_11",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_12",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_13",
+			value1 = "PASSED"
+		);
+
+		AssertTextEquals(
+			locator1 = "TestLocalized#LOCALIZATION_TEST_14",
+			value1 = "PASSED"
+		);
+
+		AssertTextNotPresent(value1 = "FAILED");
+	}
+}

@@ -1,846 +1,671 @@
-<definition component-name="portal-document-management-ee">
-	<property name="osgi.app.includes" value="sharepoint-rest" />
-	<property name="portal.ssl.enabled" value="true" />
-	<property name="portal.upstream" value="false" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Documents Management" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<var method="PropsUtil#get('sharepoint.oauth.authorization.grant.endpoint')" name="authorizationGrantEndpoint" />
-		<var method="PropsUtil#get('sharepoint.oauth.authorization.token.endpoint')" name="authorizationTokenEndpoint" />
-		<var method="PropsUtil#get('sharepoint.oauth.client.id')" name="clientId" />
-		<var method="PropsUtil#get('sharepoint.oauth.client.secret')" name="clientSecret" />
-		<var method="PropsUtil#get('sharepoint.oauth.configuration.name')" name="configurationName" />
-		<var method="PropsUtil#get('sharepoint.oauth.configuration.resource')" name="configurationResource" />
-		<var method="PropsUtil#get('sharepoint.oauth.configuration.scope')" name="configurationScope" />
-		<var method="PropsUtil#get('sharepoint.oauth.site.domain')" name="siteDomain" />
-		<var method="PropsUtil#get('sharepoint.oauth.tenant.id')" name="tenantId" />
-		<var method="PropsUtil#get('sharepoint.oauth.user.name')" name="userName" />
-		<var method="PropsUtil#get('sharepoint.oauth.user.password')" name="userPassword" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Collaboration" />
-			<var name="configurationName" value="Sharepoint OAuth2" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute function="Click" locator1="Button#ADD" />
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${configurationName}">
-			<var name="key_text" value="name" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${authorizationGrantEndpoint}">
-			<var name="key_text" value="authorizationGrantEndpoint" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${authorizationTokenEndpoint}">
-			<var name="key_text" value="authorizationTokenEndpoint" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${clientId}">
-			<var name="key_text" value="clientId" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${clientSecret}">
-			<var name="key_text" value="clientSecret" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${configurationScope}">
-			<var name="key_text" value="scope" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${tenantId}">
-			<var name="key_text" value="tenantId" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${siteDomain}">
-			<var name="key_text" value="siteDomain" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1="${configurationResource}">
-			<var name="key_text" value="resource" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoAddRepositoryCP" />
-
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${configurationName}">
-			<var name="key_fieldLabel" value="Name" />
-		</execute>
-
-		<execute macro="DMRepository#addSharepoint">
-			<var name="dmRepositoryLibraryPath" value="Documentos compartidos" />
-			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
-			<var name="dmRepositorySiteAbsoluteURL" value="https://liferaycolab.sharepoint.com" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW" value1="${configurationName}">
-			<var name="key_dmRepositoryName" value="${configurationName}" />
-		</execute>
-
-		<execute macro="MicrosoftLogin#accountSignIn">
-			<var name="userEmail" value="${userName}" />
-			<var name="userPassword" value="${userPassword}" />
-		</execute>
-
-		<execute macro="MicrosoftLogin#confirmSharepointApp">
-			<var name="dmRepositoryName" value="${configurationName}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
-
-	<command name="CheckinDocument" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_3.txt" />
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="DMDocument#viewCheckedoutCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#checkinCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<var name="key_dmDocumentTitle" value="Document_3.txt" />
-
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED" />
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedinCP">
-			<var name="dmDocumentVersionNumber" value="2.0" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-	</command>
-
-	<command name="DeleteDocumentInSubfolder" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="DM Folder3 Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder3 Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder3 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder3 Name" />
-		</execute>
-
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-			<var name="recycleBinDisabled" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder3 Name" />
-		</execute>
-
-		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewDefaultCP" />
-	</command>
-
-	<command name="DeleteSubfolder" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#deleteCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="recycleBinDisabled" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMFolder#cannotViewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
-	<command name="EditDocumentFile" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_3.doc" />
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="34KB" />
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentFileEdit" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="30KB" />
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentMetadataCP">
-			<var name="metadataData" value="image/jpeg" />
-			<var name="metadataLabel" value="Content Type" />
-		</execute>
-
-		<execute macro="DMDocument#cannotViewDocumentMetadataCP">
-			<var name="metadataData" value="ISO-8859-1" />
-			<var name="metadataLabel" value="Content Encoding" />
-		</execute>
-	</command>
-
-	<command name="MoveCheckedoutDocumentToFolder" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Sharepoint Subfolder" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="cards" />
-		</execute>
-
-		<execute macro="DMDocument#moveToSubFolderCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Collaboration Test Application" />
-			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
-		</execute>
-
-		<execute macro="DMDocument#viewMovedToFolderCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Sharepoint Subfolder" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-	</command>
-
-	<command name="MoveDocumentToHome" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.odt" />
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-		</execute>
-
-		<execute macro="DMDocument#moveToFolderCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-			<var name="dmFolderName" value="Home" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-		</execute>
-	</command>
-
-	<command name="SearchDocumentViaHome" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_3.odt" />
-			<var name="dmDocumentTitle" value="Document_3.odt" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Document_3.odt" />
-		</execute>
-
-		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_3.odt" />
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-	</command>
-
-	<command name="ViewDocumentAsGuest" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoRepository">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<var name="key_dmFolderName" value="Collaboration Test Application" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="Collaboration Test Application" />
-
-		<execute function="AssertElementPresent" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" />
-	</command>
-
-	<command name="ViewEditedCheckedoutDocument" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.xls" />
-			<var name="dmDocumentTitle" value="Document_1.xls" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_1.xls" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Document_1.xls" />
-		</execute>
-
-		<execute macro="DMDocument#editCmd">
-			<var name="dmDocumentTitleEdit" value="Document_1_Edit.xls" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP">
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-	</command>
-
-	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Document_1.docx" />
-		</execute>
-
-		<execute macro="DMDocument#editCmd">
-			<var name="dmDocumentTitleEdit" value="Document_1.jpg" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="The source file does not have the same extension as the original file." />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-		</execute>
-	</command>
-
-	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_3.docx" />
-			<var name="dmDocumentTitle" value="Document_3.docx" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Document_3.docx" />
-		</execute>
-
-		<execute macro="DMDocument#editCmd">
-			<var name="dmDocumentTitleEdit" value="Document_3" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="The source file does not have the same extension as the original file." />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="https://localhost:8443" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.docx" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_3.docx" />
-		</execute>
-	</command>
-
-	<command name="ViewRepository" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-
-		<execute macro="DMRepository#viewBreadcrumb">
-			<var name="dmRepositoryName" value="Collaboration Test Application" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-document-management-ee"
+definition {
+	property osgi.app.includes = "sharepoint-rest";
+	property portal.ssl.enabled = "true";
+	property portal.upstream = "false";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		var authorizationGrantEndpoint = PropsUtil.get("sharepoint.oauth.authorization.grant.endpoint");
+		var authorizationTokenEndpoint = PropsUtil.get("sharepoint.oauth.authorization.token.endpoint");
+		var clientId = PropsUtil.get("sharepoint.oauth.client.id");
+		var clientSecret = PropsUtil.get("sharepoint.oauth.client.secret");
+		var configurationName = PropsUtil.get("sharepoint.oauth.configuration.name");
+		var configurationResource = PropsUtil.get("sharepoint.oauth.configuration.resource");
+		var configurationScope = PropsUtil.get("sharepoint.oauth.configuration.scope");
+		var siteDomain = PropsUtil.get("sharepoint.oauth.site.domain");
+		var tenantId = PropsUtil.get("sharepoint.oauth.tenant.id");
+		var userName = PropsUtil.get("sharepoint.oauth.user.name");
+		var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Collaboration",
+			configurationName = "Sharepoint OAuth2",
+			configurationScope = "System Scope"
+		);
+
+		Click(locator1 = "Button#ADD");
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationName}",
+			key_text = "name"
+		);
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${authorizationGrantEndpoint}",
+			key_text = "authorizationGrantEndpoint"
+		);
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${authorizationTokenEndpoint}",
+			key_text = "authorizationTokenEndpoint"
+		);
+
+		Type(locator1 = "TextArea#ANY", value1 = "${clientId}", key_text = "clientId");
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${clientSecret}",
+			key_text = "clientSecret"
+		);
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationScope}",
+			key_text = "scope"
+		);
+
+		Type(locator1 = "TextArea#ANY", value1 = "${tenantId}", key_text = "tenantId");
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${siteDomain}",
+			key_text = "siteDomain"
+		);
+
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${configurationResource}",
+			key_text = "resource"
+		);
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${configurationName}",
+			key_fieldLabel = "Name"
+		);
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryPath = "Documentos compartidos",
+			dmRepositoryName = "Sharepoint (${configurationName})",
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com"
+		);
+
+		PortletEntry.save();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
+			value1 = "${configurationName}",
+			key_dmRepositoryName = "${configurationName}"
+		);
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}"
+		);
+
+		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "${configurationName}");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test CheckinDocument {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.txt",
+			dmDocumentTitle = "Document_3.txt"
+		);
+
+		Pause(locator1 = "5000");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_3.txt",
+			dmRepositoryName = "true"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		Pause(locator1 = "5000");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMDocument.checkinCP(dmRepositoryName = "true");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		var key_dmDocumentTitle = "Document_3.txt";
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.viewCheckedinCP(
+			dmDocumentVersionNumber = "2.0",
+			dmRepositoryName = "true"
+		);
+	}
+
+	@priority = "4"
+	test DeleteDocumentInSubfolder {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder3 Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "Document_2.doc"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.doc");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.deleteCP(
+			dmDocumentTitle = "Document_2.doc",
+			recycleBinDisabled = "true"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test DeleteSubfolder {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMFolder.addSubfolderCP(dmSubFolderName = "DM Folder Name");
+
+		DMFolder.deleteCP(dmFolderName = "DM Folder Name", recycleBinDisabled = "true");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
+	}
+
+	@priority = "4"
+	test EditDocumentFile {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.doc",
+			dmDocumentTitle = "Document_3.doc"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(dmDocumentSize = "34KB", dmDocumentTitle = "Document_3.doc");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_3.doc"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(dmDocumentSize = "30KB", dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "image/jpeg",
+			metadataLabel = "Content Type"
+		);
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "ISO-8859-1",
+			metadataLabel = "Content Encoding"
+		);
+	}
+
+	@priority = "4"
+	test MoveCheckedoutDocumentToFolder {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMFolder.addSubfolderCP(dmSubFolderName = "Sharepoint Subfolder");
+
+		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt"
+		);
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmRepositoryName = "true"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMDocument.moveToSubFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Collaboration Test Application",
+			dmSubFolderName = "Sharepoint Subfolder"
+		);
+
+		DMDocument.viewMovedToFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Sharepoint Subfolder"
+		);
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+	}
+
+	@priority = "4"
+	test MoveDocumentToHome {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "Document_1.odt"
+		);
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "Document_1.odt",
+			dmFolderName = "Home"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.odt");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
+	}
+
+	@priority = "4"
+	test SearchDocumentViaHome {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.odt",
+			dmDocumentTitle = "Document_3.odt"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		Search.searchCP(searchTerm = "Document_3.odt");
+
+		DMDocument.viewSearchResultsCP(
+			dmDocumentTitle = "Document_3.odt",
+			dmRepositoryName = "Collaboration Test Application"
+		);
+	}
+
+	@priority = "4"
+	test ViewDocumentAsGuest {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRepository(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
+
+		DMDocument.viewPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			dmRepositoryName = "true"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_dmFolderName = "Collaboration Test Application";
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "Collaboration Test Application"
+		);
+
+		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
+	}
+
+	@priority = "4"
+	test ViewEditedCheckedoutDocument {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.xls",
+			dmDocumentTitle = "Document_1.xls"
+		);
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_1.xls",
+			dmRepositoryName = "true"
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.xls");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1_Edit.xls");
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1_Edit.xls");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1_Edit.xls");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+	}
+
+	@priority = "4"
+	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "Document_1.docx"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.docx");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1.jpg");
+
+		Click(locator1 = "Button#PUBLISH");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "The source file does not have the same extension as the original file."
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.docx");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
+	}
+
+	@priority = "4"
+	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.docx",
+			dmDocumentTitle = "Document_3.docx"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_3.docx");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "Document_3");
+
+		Click(locator1 = "Button#PUBLISH");
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "The source file does not have the same extension as the original file."
+		);
+
+		Navigator.openSpecificURL(url = "https://localhost:8443");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.docx");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
+	}
+
+	@priority = "4"
+	test ViewRepository {
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application");
+	}
+}

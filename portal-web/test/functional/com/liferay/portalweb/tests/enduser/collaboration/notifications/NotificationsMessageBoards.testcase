@@ -1,509 +1,380 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Notifications" />
-
-	<var name="pageName" value="Message Boards Page" />
-	<var name="portletName" value="Message Boards" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsCategory#tearDownCP" />
-
-				<execute macro="MessageboardsThread#tearDownCP" />
-
-				<execute macro="Notifications#tearDownUnreadNotifications" />
-
-				<execute macro="Page#tearDownCP" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Notifications";
+	var pageName = "Message Boards Page";
+	var portletName = "Message Boards";
 
-				<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="FilterByReadAndUnread" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="MessageboardsPortlet#subscribePG" />
+		User.firstLoginPG();
 
-		<execute macro="User#logoutPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject1" />
-		</execute>
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		Portlet.addPG(portletName = "Message Boards");
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject2" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#logoutPG" />
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="activePanel" value="Notifications" />
-			<var name="notificationCount" value="2" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="Notifications#gotoNotifications" />
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+	}
 
-		<execute macro="Notifications#goToFilterValues">
-			<var name="filterValues" value="Read" />
-		</execute>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="Notifications#viewDefaultContent" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
 
-		<execute macro="Notifications#goToFilterValues">
-			<var name="filterValues" value="Unread" />
-		</execute>
+			MessageboardsThread.tearDownCP();
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="MB Thread Message Subject1" />
-			<var name="user" value="userfn userln" />
-		</execute>
+			Notifications.tearDownUnreadNotifications();
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="MB Thread Message Subject2" />
-			<var name="user" value="userfn userln" />
-		</execute>
+			Page.tearDownCP();
 
-		<execute macro="PortletEntry#selectAll" />
+			NotificationsPortlet.tearDownUserDeliveries();
 
-		<execute function="Click" locator1="Icon#MARK_AS_READ" />
+			User.tearDownCP();
+		}
+	}
 
-		<execute macro="Notifications#viewDefaultContent" />
+	@priority = "5"
+	test FilterByReadAndUnread {
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="Notifications#viewNoNotifications">
-			<var name="activePanel" value="Notifications" />
-		</execute>
+		MessageboardsPortlet.subscribePG();
 
-		<execute macro="Navigator#openURL" />
+		User.logoutPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Notifications" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="PortletEntry#selectAll" />
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute function="Click" locator1="Icon#MARK_AS_UNREAD" />
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject1"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="2" />
-		</execute>
-	</command>
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject2"
+		);
 
-	<command name="ViewNoWebsiteNotificationForNewThreadInCategory" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "2"
+		);
 
-		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="Adds" />
-			<var name="contentType" value="Message Boards" />
-			<var name="notificationType" value="Website" />
-		</execute>
+		Notifications.gotoNotifications();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		Notifications.goToFilterValues(filterValues = "Read");
 
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		Notifications.viewDefaultContent();
 
-		<execute macro="MessageboardsCategory#subscribePG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		Notifications.goToFilterValues(filterValues = "Unread");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "MB Thread Message Subject1",
+			user = "userfn userln"
+		);
 
-		<execute macro="User#logoutPG" />
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "MB Thread Message Subject2",
+			user = "userfn userln"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		PortletEntry.selectAll();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		Click(locator1 = "Icon#MARK_AS_READ");
 
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		Notifications.viewDefaultContent();
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
+		Notifications.viewNoNotifications(activePanel = "Notifications");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="User#logoutPG" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Notifications"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		PortletEntry.selectAll();
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
+		Click(locator1 = "Icon#MARK_AS_UNREAD");
 
-	<command name="ViewNoWebsiteNotificationForUpdatedThreadInCategory" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		Notifications.viewBadgeCount(notificationCount = "2");
+	}
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+	@priority = "4"
+	test ViewNoWebsiteNotificationForNewThreadInCategory {
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="Updates" />
-			<var name="contentType" value="Message Boards" />
-			<var name="notificationType" value="Website" />
-		</execute>
+		NotificationsPortlet.gotoNotificationDelivery();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Adds",
+			contentType = "Message Boards",
+			notificationType = "Website"
+		);
 
-		<execute macro="MessageboardsCategory#subscribePG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
 
-		<execute macro="MessageboardsThread#editPG">
-			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
+	@priority = "4"
+	test ViewNoWebsiteNotificationForUpdatedThreadInCategory {
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-	<command name="ViewWebsiteNotificationForNewThreadInCategory" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
+		NotificationsPortlet.gotoNotificationDelivery();
 
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="MessageboardsCategory#subscribePG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Updates",
+			contentType = "Message Boards",
+			notificationType = "Website"
+		);
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		<execute macro="User#logoutPG" />
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "0");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
+		User.logoutPG();
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="MB Thread Message Subject" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="userName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewWebsiteNotificationForUpdatedThreadInCategory" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#subscribePG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editPG">
-			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewUpdatedContent">
-			<var name="assetType" value="message boards message" />
-			<var name="contentBody" value="MB Thread Message Subject Edit" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="MB Thread Message Subject Edit" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread Message Body Edit" />
-			<var name="threadSubject" value="MB Thread Message Subject Edit" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-</definition>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.editPG(
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject",
+			threadSubjectEdit = "MB Thread Message Subject Edit"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForNewThreadInCategory {
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "MB Thread Message Subject",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "userfn userln"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForUpdatedThreadInCategory {
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.editPG(
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject",
+			threadSubjectEdit = "MB Thread Message Subject Edit"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewUpdatedContent(
+			assetType = "message boards message",
+			contentBody = "MB Thread Message Subject Edit",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject Edit");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject Edit"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+}

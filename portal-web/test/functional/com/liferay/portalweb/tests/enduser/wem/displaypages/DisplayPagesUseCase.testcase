@@ -1,406 +1,352 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Display Pages" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
+		User.firstLoginPG();
 
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
 
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+	}
 
-				<execute macro="MyAccount#openMyAccountAdmin" />
-
-				<execute macro="User#deleteProfileImage" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-				<execute macro="Button#click">
-					<var name="button" value="Save" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-	<command name="MapWebContentAuthor" priority="5">
-		<description message="This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page." />
+			MyAccount.openMyAccountAdmin();
 
-		<!-- Add a display page with author name and profile fields mapped. -->
+			User.deleteProfileImage();
 
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
+			Button.click(button = "Save");
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+			User.tearDownCP();
+		}
+	}
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Image" />
-		</execute>
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="itemName" value="Author Name" />
-		</execute>
+	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page."
+	@priority = "5"
+	test MapWebContentAuthor {
+		// Add a display page with author name and profile fields mapped.
 
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Image" />
-			<var name="id" value="image" />
-			<var name="itemName" value="Author Profile Image" />
-		</execute>
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
 
-		<execute macro="Button#clickPublish" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<!-- Add profile image for the super admin user. -->
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Image"
+		);
 
-		<execute macro="MyAccount#openMyAccountAdmin" />
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
 
-		<execute macro="User#changeProfileImage">
-			<var name="imageName" value="marketplace_icon.png" />
-		</execute>
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			itemName = "Author Name"
+		);
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Image",
+			id = "image",
+			itemName = "Author Profile Image"
+		);
 
-		<!-- Add a web content article as the super admin user. -->
+		Button.clickPublish();
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		// Add profile image for the super admin user.
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		MyAccount.openMyAccountAdmin();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
+		User.changeProfileImage(imageName = "marketplace_icon.png");
 
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
+		Button.click(button = "Save");
 
-		<!-- Assert super admin name and profile image appear. -->
+		// Add a web content article as the super admin user.
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Test Test" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="1" />
-		</execute>
+		WebContentNavigator.gotoAddCP();
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="" />
-			<var name="key_fragmentClass" value="image" />
-			<var name="key_position" value="2" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
 
-		<execute function="SikuliAssertElementPresent" locator1="Fragment#MARKETPLACE_ICON_PNG" />
-	</command>
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
 
-	<command name="MapWebContentLastEditor" priority="5">
-		<description message="This is a test for LPS-86550. Users should be able to map last editor name and author profile image to a fragment editable field in a display page." />
+		// Assert super admin name and profile image appear.
 
-		<!-- Add a display page with last editor name and profile fields mapped. -->
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
 
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Test Test",
+			key_fragmentClass = "rich-text",
+			key_position = "1"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "",
+			key_fragmentClass = "image",
+			key_position = "2"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Image" />
-		</execute>
+		SikuliAssertElementPresent(locator1 = "Fragment#MARKETPLACE_ICON_PNG");
+	}
 
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
+	@description = "This is a test for LPS-86550. Users should be able to map last editor name and author profile image to a fragment editable field in a display page."
+	@priority = "5"
+	test MapWebContentLastEditor {
+		// Add a display page with last editor name and profile fields mapped.
 
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="itemName" value="Last Editor Name" />
-		</execute>
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
 
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Image" />
-			<var name="id" value="image" />
-			<var name="itemName" value="Last Editor Profile Image" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<execute macro="Button#clickPublish" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Image"
+		);
 
-		<!-- Add profile image for the super admin user. -->
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
 
-		<execute macro="MyAccount#openMyAccountAdmin" />
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			itemName = "Last Editor Name"
+		);
 
-		<execute macro="User#changeProfileImage">
-			<var name="imageName" value="marketplace_icon.png" />
-		</execute>
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Image",
+			id = "image",
+			itemName = "Last Editor Profile Image"
+		);
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		Button.clickPublish();
 
-		<!-- Add a second user with permission to edit web content articles. -->
+		// Add profile image for the super admin user.
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="Userfn" />
-			<var name="userLastName" value="Userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		MyAccount.openMyAccountAdmin();
 
-		<execute macro="User#openUsersAdmin" />
+		User.changeProfileImage(imageName = "marketplace_icon.png");
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Button.click(button = "Save");
 
-		<execute macro="User#openUsersAdmin" />
+		// Add a second user with permission to edit web content articles.
 
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn"
+		);
 
-		<!-- Add profile image for the second user. -->
+		User.openUsersAdmin();
 
-		<execute macro="User#openUsersAdmin" />
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="UserNavigator#gotoUser">
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.openUsersAdmin();
 
-		<execute macro="User#changeProfileImage">
-			<var name="imageName" value="Document_4.jpg" />
-		</execute>
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		// Add profile image for the second user.
 
-		<!-- Add a web content article as the super admin user. -->
+		User.openUsersAdmin();
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
+		User.changeProfileImage(imageName = "Document_4.jpg");
 
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<!-- Assert super admin name and profile image appear. -->
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Test Test" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="" />
-			<var name="key_fragmentClass" value="image" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<!-- Edit the web content article as the second user. -->
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="Userfn Userln" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="Webcontent Content Edit" />
-			<var name="webContentTitleEdit" value="Webcontent Title Edit" />
-		</execute>
-
-		<!-- Assert super admin name and profile image appear. -->
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Userfn Userln" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="" />
-			<var name="key_fragmentClass" value="image" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="SikuliAssertElementPresent" locator1="Fragment#DOCUMENT_4_PNG" />
-	</command>
-
-	<command name="ViewDisplayPageWithComplexRichTextFragments" priority="4">
-		<description message="Add a fragment with multiple editable fields in it." />
-
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Multiple Editables" />
-		</execute>
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Multiple Editables" />
-			<var name="id" value="test1" />
-			<var name="itemName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Multiple Editables" />
-			<var name="id" value="test2" />
-			<var name="itemName" value="Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Multiple Editables" />
-			<var name="id" value="test3" />
-			<var name="itemName" value="Tags" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Multiple Editables" />
-			<var name="id" value="test4" />
-			<var name="itemName" value="Publish Date" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="tag1,tag2,tag3" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#viewPGViaAP">
-			<var name="contentList" value="Webcontent Title,Webcontent Content,tag1,tag2,tag3" />
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-	</command>
-</definition>
+		Button.click(button = "Save");
+
+		// Add a web content article as the super admin user.
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		// Assert super admin name and profile image appear.
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Test Test",
+			key_fragmentClass = "rich-text",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "",
+			key_fragmentClass = "image",
+			key_position = "2"
+		);
+
+		// Edit the web content article as the second user.
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "Userfn Userln"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "Webcontent Content Edit",
+			webContentTitleEdit = "Webcontent Title Edit"
+		);
+
+		// Assert super admin name and profile image appear.
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Userfn Userln",
+			key_fragmentClass = "rich-text",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "",
+			key_fragmentClass = "image",
+			key_position = "2"
+		);
+
+		SikuliAssertElementPresent(locator1 = "Fragment#DOCUMENT_4_PNG");
+	}
+
+	@description = "Add a fragment with multiple editable fields in it."
+	@priority = "4"
+	test ViewDisplayPageWithComplexRichTextFragments {
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Multiple Editables"
+		);
+
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test1",
+			itemName = "Title"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test2",
+			itemName = "Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test3",
+			itemName = "Tags"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Multiple Editables",
+			id = "test4",
+			itemName = "Publish Date"
+		);
+
+		Button.clickPublish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.addArticleCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.addWithTagCP(tagNameList = "tag1,tag2,tag3");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		DisplayPagesAdmin.viewPGViaAP(
+			contentList = "Webcontent Title,Webcontent Content,tag1,tag2,tag3",
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+	}
+}

@@ -1,737 +1,670 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Site Templates" />
-	<property name="testray.main.component.name" value="Site Templates" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="SiteTemplates#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddSiteTemplate" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTemplateApplySiteTemplateChangesToSite" priority="4">
-		<property name="portal.release" value="false" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Template Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-			<var name="siteType" value="Site Template" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewNoPortletsPresentPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Site Template Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="Portlet#PORTLET_CONTENT" />
-			<then>
-				<execute function="Refresh" />
-			</then>
-		</if>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTemplateChangeCurrentTheme" priority="5">
-		<description message="This is a use case for LPS-74307." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="Page#changeCurrentTheme">
-			<var name="pageName" value="Home" />
-			<var name="themeName" value="Fjord" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Template Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-			<var name="siteType" value="Site Template" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute macro="Page#viewCurrentTheme">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Home" />
-			<var name="themeName" value="Fjord" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTemplateDisablePageModification" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="disableChanges" value="true" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Template Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-			<var name="siteType" value="Site Template" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute macro="Page#viewPageLockCheck" />
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
-	</command>
-
-	<command name="DeactivateDefaultSiteTemplate" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#editTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="No" />
-			<var name="siteTemplateName" value="Community Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="No" />
-			<var name="siteTemplateName" value="Community Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="guest" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewNoTemplatesDisplay">
-			<var name="siteTemplateName" value="Community Site" />
-		</execute>
-	</command>
-
-	<command name="DeleteSiteTemplate" priority="5">
-		<description message="This is a use case for LPS-87081." />
-
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#deleteCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewDefaultCP">
-			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#deleteViaDeleteIconCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewDefaultCP">
-			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />
-		</execute>
-	</command>
-
-	<command name="DeleteSiteTemplateAssociatedWithASite" priority="4">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#deleteCP">
-			<var name="associatedToSite" value="true" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-	</command>
-
-	<command name="EditSiteTemplate" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateDescription" value="This is a site template description" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#editCP">
-			<var name="siteTemplateDescription" value="Site Template Description Edit" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateDescription" value="Site Template Description Edit" />
-			<var name="siteTemplateName" value="Site Template Name Edit" />
-		</execute>
-	</command>
-
-	<command name="EditSiteTemplateStatus" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#editTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="No" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="No" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-	</command>
-
-	<command name="LocalizeDefaultSiteTemplates" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewDefaultCP">
-			<var name="siteTemplateNameList" value="Community Site,Intranet Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Account Settings" />
-		</execute>
-
-		<execute macro="MyAccount#changeUserLanguage">
-			<var name="languageName" value="español (España)" />
-			<var name="saveButton" value="Save" />
-			<var name="successMessage" value="Su petición ha terminado con éxito." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sitios web" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Plantillas de sitio web" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">
-			<var name="siteTemplateDescriptionList" value="Sitio con foro y wiki,Sitio con documentos y noticias" />
-			<var name="siteTemplateNameList" value="Sitio de comunidad,Sitio de intranet" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Mi cuenta" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Mi cuenta" />
-		</execute>
-
-		<execute macro="MyAccount#changeUserLanguage">
-			<var name="languageName" value="English (United States)" />
-			<var name="saveButton" value="Guardar" />
-			<var name="successMessage" value="Your request completed successfully." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewDefaultCP">
-			<var name="siteTemplateNameList" value="Community Site,Intranet Site" />
-		</execute>
-	</command>
-
-	<command name="OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Template Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-			<var name="siteType" value="Site Template" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="ControlMenu#ADD" />
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Template Site Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="User#loginUserPG" />
-	</command>
-
-	<command name="ResetPageChanges" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteTemplateName" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Categories Navigation" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tags Navigation" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewResetPageChanges">
-			<var name="columnNumberFrom" value="2" />
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSiteViaLink">
-			<var name="site" value="Community Site" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="2" />
-			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#resetPageChanges">
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewResetPageChanges">
-			<var name="columnNumberFrom" value="1" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-	</command>
-
-	<command name="SiteTemplateXSS" priority="4">
-		<description message="This is a use case for LPS-44550" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateName"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="siteType" value="Site Template" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-</definition>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Site Templates";
+	property testray.main.component.name = "Site Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+
+			SiteTemplates.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name"
+		);
+	}
+
+	@priority = "4"
+	test AddSiteTemplateApplySiteTemplateChangesToSite {
+		property portal.release = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(
+			siteName = "Site Template Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template"
+		);
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		Portlet.viewNoPortletsPresentPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		ProductMenu.gotoSiteViaLink(site = "Site Template Name");
+
+		Portlet.addPG(portletName = "Hello World");
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
+			Refresh();
+		}
+
+		Portlet.viewPG(portletName = "Hello World");
+	}
+
+	@description = "This is a use case for LPS-74307."
+	@priority = "5"
+	test AddSiteTemplateChangeCurrentTheme {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		Page.changeCurrentTheme(pageName = "Home", themeName = "Fjord");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(
+			siteName = "Site Template Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template"
+		);
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Home",
+			themeName = "Fjord"
+		);
+	}
+
+	@priority = "4"
+	test AddSiteTemplateDisablePageModification {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			disableChanges = "true",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(
+			siteName = "Site Template Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template"
+		);
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		Page.viewPageLockCheck();
+
+		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+	}
+
+	@priority = "4"
+	test DeactivateDefaultSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.editTemplateStatusCP(
+			siteTemplateActiveEdit = "No",
+			siteTemplateName = "Community Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewTemplateStatusCP(
+			siteTemplateActiveEdit = "No",
+			siteTemplateName = "Community Site"
+		);
+
+		Navigator.openSiteURL(siteName = "guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Community Site");
+	}
+
+	@description = "This is a use case for LPS-87081."
+	@priority = "5"
+	test DeleteSiteTemplate {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewDefaultCP(
+			siteTemplateNameList = "Intranet Site,Community Site"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		SiteTemplates.deleteViaDeleteIconCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.viewDefaultCP(
+			siteTemplateNameList = "Intranet Site,Community Site"
+		);
+	}
+
+	@priority = "4"
+	test DeleteSiteTemplateAssociatedWithASite {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.deleteCP(
+			associatedToSite = "true",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+	}
+
+	@priority = "4"
+	test EditSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		SiteTemplates.viewCP(
+			siteTemplateDescription = "This is a site template description",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.editCP(
+			siteTemplateDescription = "Site Template Description Edit",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewCP(
+			siteTemplateDescription = "Site Template Description Edit",
+			siteTemplateName = "Site Template Name Edit"
+		);
+	}
+
+	@priority = "5"
+	test EditSiteTemplateStatus {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.editTemplateStatusCP(
+			siteTemplateActiveEdit = "No",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewTemplateStatusCP(
+			siteTemplateActiveEdit = "No",
+			siteTemplateName = "Site Template Name"
+		);
+	}
+
+	@priority = "4"
+	test LocalizeDefaultSiteTemplates {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewDefaultCP(
+			siteTemplateNameList = "Community Site,Intranet Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Account Settings"
+		);
+
+		MyAccount.changeUserLanguage(
+			languageName = "español (España)",
+			saveButton = "Save",
+			successMessage = "Su petición ha terminado con éxito."
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sitios web",
+			panel = "Control Panel",
+			portlet = "Plantillas de sitio web"
+		);
+
+		SiteTemplates.viewDefaultDataLocalizedCP(
+			siteTemplateDescriptionList = "Sitio con foro y wiki,Sitio con documentos y noticias",
+			siteTemplateNameList = "Sitio de comunidad,Sitio de intranet"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Mi cuenta",
+			panel = "User",
+			portlet = "Mi cuenta"
+		);
+
+		MyAccount.changeUserLanguage(
+			languageName = "English (United States)",
+			saveButton = "Guardar",
+			successMessage = "Your request completed successfully."
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.viewDefaultCP(
+			siteTemplateNameList = "Community Site,Intranet Site"
+		);
+	}
+
+	@priority = "4"
+	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(
+			siteName = "Site Template Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template"
+		);
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		AssertElementPresent(locator1 = "ControlMenu#ADD");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.logoutUserPG();
+
+		User.loginUserPG(userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoSite(site = "Site Template Site Name");
+
+		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+
+		User.logoutUserPG();
+
+		User.loginUserPG();
+	}
+
+	@priority = "5"
+	test ResetPageChanges {
+		property testray.component.names = "Training";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Home",
+			siteName = "${siteName}",
+			siteTemplateName = "Community Site"
+		);
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		ProductMenu.gotoSiteViaLink(site = "Community Site");
+
+		Portlet.addPG(portletName = "Categories Navigation");
+
+		ProductMenu.gotoSiteViaLink(site = "Community Site");
+
+		Portlet.addPG(portletName = "Tags Navigation");
+
+		ProductMenu.gotoSiteViaLink(site = "Community Site");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Asset Publisher"
+		);
+
+		ProductMenu.gotoSiteViaLink(site = "Community Site");
+
+		SiteTemplates.viewResetPageChanges(
+			columnNumberFrom = "2",
+			portletName = "Asset Publisher"
+		);
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Message Boards"
+		);
+
+		ProductMenu.gotoSiteViaLink(site = "Community Site");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "2",
+			columnNumberTo = "1",
+			portletName = "Message Boards"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(siteName = "Site Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Message Boards"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		SiteTemplates.resetPageChanges(
+			columnNumberTo = "2",
+			portletName = "Message Boards"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		SiteTemplates.viewResetPageChanges(
+			columnNumberFrom = "1",
+			portletName = "Message Boards"
+		);
+	}
+
+	@description = "This is a use case for LPS-44550"
+	@priority = "4"
+	test SiteTemplateXSS {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = '''<script>alert(123);</script>'''
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = '''<script>alert(123);</script>''',
+			siteType = "Site Template",
+			uncheckPropagation = "true"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+}

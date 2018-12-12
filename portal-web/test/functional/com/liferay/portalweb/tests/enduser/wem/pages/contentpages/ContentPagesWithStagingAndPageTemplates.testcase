@@ -1,130 +1,113 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Content Pages" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
 
-		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="PageTemplatesAdmin#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		<execute macro="PageTemplatesAdmin#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
+		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<execute macro="Button#clickPublish" />
-	</set-up>
+		Button.clickPublish();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="PublishContentPage" priority="5">
-		<description message="Content pages created from page templates can be published to live and will not appear in live until published." />
-		<property name="portal.acceptance" value="true" />
+	@description = "Content pages created from page templates can be published to live and will not appear in live until published."
+	@priority = "5"
+	test PublishContentPage {
+		property portal.acceptance = "true";
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="ContentPages#addPage">
-			<var name="collectionName" value="Page Template Collection" />
-			<var name="pageName" value="Test Content Page Name" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
+		ContentPages.addPage(
+			collectionName = "Page Template Collection",
+			pageName = "Test Content Page Name",
+			pageTemplateName = "Page Template Name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/test-content-page-name"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
+		AssertTextPresent(value1 = "The requested resource could not be found.");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#publishCustomPublication" />
+		Staging.publishCustomPublication();
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-</definition>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+}

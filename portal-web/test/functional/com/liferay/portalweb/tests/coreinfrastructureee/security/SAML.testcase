@@ -1,787 +1,701 @@
-<definition component-name="portal-authentication-ee">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="app.server.bundles.size" value="1" />
-	<property name="databases.size" value="1" />
-	<property name="dummy.socket.proxy.disabled" value="true" />
-	<property name="osgi.app.includes" value="saml" />
-	<property name="plugins.deployment.type" value="osgi" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="SAML" />
-
-	<!-- All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth) -->
-
-	<set-up>
-		<execute macro="User#firstLoginPG">
-			<var name="rememberMeChecked" value="false" />
-		</execute>
-	</set-up>
-
-	<command name="AddUserInheritedRolesAsSAMLAttributeStatements" priority="5">
-		<property name="test.name.skip.portal.instance" value="SAML#AddUserInheritedRolesAsSAMLAttributeStatements" />
-
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
-
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="Attributes" value="siteRoles" />
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
-			<var name="categoryPriority" value="DEBUG" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="TestSiteRole" />
-			<var name="roleTitle" value="TestSiteRole" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
+@component-name = "portal-authentication-ee"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property app.server.bundles.size = "1";
+	property databases.size = "1";
+	property dummy.socket.proxy.disabled = "true";
+	property osgi.app.includes = "saml";
+	property plugins.deployment.type = "osgi";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "SAML";
 
-		<execute macro="Site#assignSiteRoleToUserGroup">
-			<var name="roleName" value="TestSiteRole" />
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
+	// All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth)
+
+	setUp {
+		User.firstLoginPG(rememberMeChecked = "false");
+	}
+
+	@priority = "5"
+	test AddUserInheritedRolesAsSAMLAttributeStatements {
+		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			Attributes = "siteRoles",
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
 
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="test" />
-		</execute>
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG"
+		);
 
-		<execute macro="Navigator#openURL" />
+		JSONRole.addSiteRole(roleKey = "TestSiteRole", roleTitle = "TestSiteRole");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="test" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="User#viewUserInfomationRolesCP">
-			<var name="roleTitle" value="TestSiteRole" />
-			<var name="roleType" value="Inherited Site Roles" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="User#logoutPG" />
+		Navigator.openURL();
 
-		<execute macro="User#viewLoggedOutPG" />
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080/" />
-		</execute>
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		<execute macro="User#viewLoggedOutPG" />
+		Navigator.openURL();
 
-		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="password" value="test" />
-			<var name="specificURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		ProductMenu.gotoSite(site = "Site Name");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
 
-		<execute function="AssertConsoleTextPresent" value1="TestSiteRole" />
-	</command>
+		Site.assignUserGroupAsMemberCP(
+			siteName = "Site Name",
+			userGroupName = "UG UserGroup Name"
+		);
 
-	<command name="AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" />
-		<property name="web.xml.timeout" value="2" />
+		Navigator.openURL();
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="idpSessionIdleTimeout" value="480" />
-			<var name="idpSessionMaximumAge" value="0" />
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		ProductMenu.gotoSite(site = "Site Name");
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
 
-		<execute macro="User#logoutPG" />
+		Site.assignSiteRoleToUserGroup(
+			roleName = "TestSiteRole",
+			userGroupName = "UG UserGroup Name"
+		);
 
-		<execute macro="User#viewLoggedOutPG" />
+		Navigator.openURL();
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="false" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "test"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute function="Pause" locator1="120000" />
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		User.gotoEditCP(userScreenName = "test");
 
-		<execute function="Refresh" />
+		User.viewUserInfomationRolesCP(
+			roleTitle = "TestSiteRole",
+			roleType = "Inherited Site Roles"
+		);
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="SAML Admin" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+		User.logoutPG(specificURL = "http://www.able.com:9080/");
 
-		<execute macro="SAMLRole#configureIdentityProvider">
-			<var name="idpSessionIdleTimeout" value="60" />
-			<var name="idpSessionMaximumAge" value="0" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="User#logoutPG" />
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="false" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		AssertConsoleTextPresent(value1 = "TestSiteRole");
+	}
 
-		<execute macro="Navigator#openURL" />
+	@priority = "4"
+	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
+		property test.name.skip.portal.instance = "CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
+		property web.xml.timeout = "2";
 
-		<execute function="Pause" locator1="120000" />
+		SAML.configureLiferaySAMLAsIdP(
+			idpSessionIdleTimeout = "480",
+			idpSessionMaximumAge = "0",
+			samlEntityID = "samlidp"
+		);
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute function="Refresh" />
+		User.logoutPG();
 
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
+		User.viewLoggedOutPG();
 
-	<command name="AssertSSOSessionExistsAfterSPSessionTimeout" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExistsAfterSPSessionTimeout" />
-		<property name="web.xml.timeout" value="2" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "false",
+			samlEnabled = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="User#logoutPG" />
+		Pause(locator1 = "120000");
 
-		<execute macro="User#viewLoggedOutPG" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		Refresh();
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="false" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
 
-		<execute function="Pause" locator1="120000" />
+		SAMLNavigation.gotoIdentityProvider();
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		SAMLRole.configureIdentityProvider(
+			idpSessionIdleTimeout = "60",
+			idpSessionMaximumAge = "0"
+		);
 
-		<execute function="Refresh" />
+		User.logoutPG();
 
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		User.viewLoggedOutPG();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
-	</command>
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "false",
+			samlEnabled = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	<command name="AssertSSOSessionExpiresAfterMaximumSessionAge" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExpiresAfterMaximumSessionAge" />
-		<property name="web.xml.timeout" value="2" />
+		Navigator.openURL();
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="idpSessionIdleTimeout" value="0" />
-			<var name="idpSessionMaximumAge" value="180" />
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		Pause(locator1 = "120000");
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute macro="User#logoutPG" />
+		Refresh();
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.viewLoggedOutPG();
+	}
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+	@priority = "4"
+	test AssertSSOSessionExistsAfterSPSessionTimeout {
+		property test.name.skip.portal.instance = "CPSAML#AssertSSOSessionExistsAfterSPSessionTimeout";
+		property web.xml.timeout = "2";
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="false" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<execute macro="Navigator#openURL" />
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute function="Pause" locator1="120000" />
+		User.logoutPG();
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		User.viewLoggedOutPG();
 
-		<execute function="Refresh" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "false",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute function="Pause" locator1="120000" />
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		Pause(locator1 = "120000");
 
-		<execute function="Refresh" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
+		Refresh();
 
-	<command name="SPInitiatedSSOWithScreenNameIdentifier" priority="4">
-		<property name="test.name.skip.portal.instance" value="SPInitiatedSSOWithScreenNameIdentifier" />
+		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+	}
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="screenName" />
-			<var name="nameIdentifierFormat" value="Unspecified" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+	@priority = "4"
+	test AssertSSOSessionExpiresAfterMaximumSessionAge {
+		property test.name.skip.portal.instance = "CPSAML#AssertSSOSessionExpiresAfterMaximumSessionAge";
+		property web.xml.timeout = "2";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
+		SAML.configureLiferaySAMLAsIdP(
+			idpSessionIdleTimeout = "0",
+			idpSessionMaximumAge = "180",
+			samlEntityID = "samlidp"
+		);
 
-		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
-			<var name="categoryPriority" value="DEBUG" />
-		</execute>
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.viewLoggedOutPG();
 
-		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="password" value="test" />
-			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "false",
+			samlEnabled = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute function="AssertConsoleTextPresent" value1="nameid-format:unspecified" />
-	</command>
+		Navigator.openURL();
 
-	<command name="ValidateVulnerabilitiesXMLAttacks" priority="5">
-		<description message="This is a use case for LPS-50747." />
+		Pause(locator1 = "120000");
 
-		<property name="test.name.skip.portal.instance" value="CPSAML#ValidateVulnerabilitiesXMLAttacks" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		Refresh();
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#logoutPG" />
+		Pause(locator1 = "120000");
 
-		<execute macro="User#viewLoggedOutPG" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="password" value="test" />
-			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Refresh();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.viewLoggedOutPG();
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+	@priority = "4"
+	test SPInitiatedSSOWithScreenNameIdentifier {
+		property test.name.skip.portal.instance = "SPInitiatedSSOWithScreenNameIdentifier";
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<execute macro="Navigator#getCurrentURL">
-			<return name="adminEditURL" />
-		</execute>
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<var name="maliciousURL">
-			<![CDATA[
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG"
+		);
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+
+		AssertConsoleTextPresent(value1 = "nameid-format:unspecified");
+	}
+
+	@description = "This is a use case for LPS-50747."
+	@priority = "5"
+	test ValidateVulnerabilitiesXMLAttacks {
+		property test.name.skip.portal.instance = "CPSAML#ValidateVulnerabilitiesXMLAttacks";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		var adminEditURL = Navigator.getCurrentURL();
+
+		var maliciousURL = '''
 				${adminEditURL}/&_15_content=%3C!DOCTYPE%20lolz%20%5B%0A%3C!ENTITY%20lol%20%22lol%22%3E%0A%3C!ENTITY%20lol2%20%22%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%22%3E%0A%3C!ENTITY%20lol3%20%22%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%22%3E%0A%3C!ENTITY%20lol4%20%22%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%22%3E%0A%3C!ENTITY%20lol5%20%22%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%22%3E%0A%3C!ENTITY%20lol6%20%22%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%22%3E%0A%3C!ENTITY%20lol7%20%22%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%22%3E%0A%3C!ENTITY%20lol8%20%22%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%22%3E%0A%3C!ENTITY%20lol9%20%22%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%22%3E%0A%5D%3E%0A%3Clolz%3E%26lol9%3B%3C%2Flolz%3E
-			]]>
-		</var>
+			''';
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${maliciousURL}" />
-		</execute>
+		Navigator.openSpecificURL(url = "${maliciousURL}");
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="Navigator#getCurrentURL">
-			<return name="adminEditURL" />
-		</execute>
+		var adminEditURL = Navigator.getCurrentURL();
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${maliciousURL}" />
-		</execute>
+		Navigator.openSpecificURL(url = "${maliciousURL}");
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content 2" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "Web Content Content 2",
+			webContentTitle = "Web Content Title 2"
+		);
 
-		<execute macro="PortletEntry#publish" />
-	</command>
+		PortletEntry.publish();
+	}
 
-	<command name="ViewIdPInitiatedSSO" priority="4">
-		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
+	@description = "Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
+	@priority = "4"
+	test ViewIdPInitiatedSSO {
+		property environment.acceptance = "false";
+		property test.name.skip.portal.instance = "CPSAML#ViewIdPInitiatedSSO";
 
-		<property name="environment.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="CPSAML#ViewIdPInitiatedSSO" />
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		User.viewLoggedOutPG();
 
-		<execute macro="User#viewLoggedOutPG" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		// Verify SP is logged in
 
-		<!-- Verify SP is logged in -->
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "false",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="false" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		// Verify IdP is logged in
 
-		<!-- Verify IdP is logged in -->
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		// Logout SP and verify SP is logged out
 
-		<!-- Logout SP and verify SP is logged out -->
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="User#viewLoggedOutPG" />
+		// Verify IdP is also logged out
 
-		<!-- Verify IdP is also logged out -->
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		User.viewLoggedOutPG();
+	}
 
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
+	@description = "LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
+	@priority = "4"
+	test ViewIdPInitiatedSSOWithRememberMeChecked {
+		property test.name.skip.portal.instance = "CPSAML#ViewIdPInitiatedSSOWithRememberMeChecked";
 
-	<command name="ViewIdPInitiatedSSOWithRememberMeChecked" priority="4">
-		<description message="LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not." />
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<property name="test.name.skip.portal.instance" value="CPSAML#ViewIdPInitiatedSSOWithRememberMeChecked" />
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="User#logoutPG" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="User#viewLoggedOutPG" />
+		// Verify SP is logged in
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<!-- Verify SP is logged in -->
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		// Verify IdP is logged in
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		Navigator.openURL();
 
-		<!-- Verify IdP is logged in -->
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="Navigator#openURL" />
+		// Logout SP and verify SP is logged out
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-		<!-- Logout SP and verify SP is logged out -->
+		User.viewLoggedOutPG();
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+		// Verify IdP is also logged out
 
-		<execute macro="User#viewLoggedOutPG" />
+		Navigator.openURL();
 
-		<!-- Verify IdP is also logged out -->
+		User.viewLoggedOutPG();
+	}
 
-		<execute macro="Navigator#openURL" />
+	@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
+	@priority = "4"
+	test ViewSingleLogoutHTTPPostBindingInConsole {
+		property test.name.skip.portal.instance = "CPSAML#ViewSingleLogoutHTTPPostBindingInConsole";
 
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
-		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-		<property name="test.name.skip.portal.instance" value="CPSAML#ViewSingleLogoutHTTPPostBindingInConsole" />
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
-			<var name="categoryPriority" value="DEBUG" />
-		</execute>
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="User#logoutPG" />
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		User.viewLoggedOutPG();
 
-		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
-			<var name="password" value="test" />
-			<var name="rememberMeChecked" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		AssertConsoleTextPresent(
+			value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+		);
+	}
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+	@priority = "4"
+	test ViewSingleLogoutWithMultipleSPs {
+		property app.server.bundles.size = "2";
+		property databases.size = "2";
+		property test.name.skip.portal.instance = "CPSAML#ViewSingleLogoutWithMultipleSPs";
 
-		<execute macro="User#viewLoggedOutPG" />
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<execute function="AssertConsoleTextPresent" value1="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" />
-	</command>
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	<command name="ViewSingleLogoutWithMultipleSPs" priority="4">
-		<property name="app.server.bundles.size" value="2" />
-		<property name="databases.size" value="2" />
-		<property name="test.name.skip.portal.instance" value="CPSAML#ViewSingleLogoutWithMultipleSPs" />
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp2",
+			spURL = "http://www.baker.com:10080"
+		);
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp2" />
-			<var name="spURL" value="http://www.baker.com:10080" />
-		</execute>
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedOutPG" />
+		// Verify IdP is logged in
 
-		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="password" value="test" />
-			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<!-- Verify IdP is logged in -->
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.gotoLoginPage();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:10080" />
-		</execute>
+		// Initiate Single Logout for first SP
 
-		<execute macro="Navigator#gotoLoginPage" />
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		User.viewLoggedOutPG();
 
-		<!-- Initiate Single Logout for first SP -->
+		// Verify IdP is logged out
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.viewLoggedOutPG();
 
-		<!-- Verify IdP is logged out -->
+		// Verify second SP is logged out
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-		<execute macro="User#viewLoggedOutPG" />
+		User.viewLoggedOutPG();
+	}
 
-		<!-- Verify second SP is logged out -->
+	@description = "Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
+	@priority = "4"
+	test ViewSPInitiatedSSO {
+		property environment.acceptance = "false";
+		property test.name.skip.portal.instance = "CPSAML#ViewSPInitiatedSSO";
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.baker.com:10080" />
-		</execute>
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "emailAddress",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	<command name="ViewSPInitiatedSSO" priority="4">
-		<description message="Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in." />
+		User.logoutPG();
 
-		<property name="environment.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="CPSAML#ViewSPInitiatedSSO" />
+		User.viewLoggedOutPG();
 
-		<execute macro="SAML#configureLiferaySAMLAsIdP">
-			<var name="samlEntityID" value="samlidp" />
-		</execute>
+		// Verify SP is logged in
 
-		<execute macro="SAML#configureLiferaySAMLAsSP">
-			<var name="nameIdentifierAttributeName" value="emailAddress" />
-			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-		</execute>
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedOutPG" />
+		// Verify IdP is logged in
 
-		<!-- Verify SP is logged in -->
+		Navigator.openURL();
 
-		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="password" value="test" />
-			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		// Logout SP and verify SP is logged out
 
-		<!-- Verify IdP is logged in -->
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-		<execute macro="Navigator#openURL" />
+		User.viewLoggedOutPG();
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		// Verify IdP is also logged out
 
-		<!-- Logout SP and verify SP is logged out -->
+		Navigator.openURL();
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
-
-		<execute macro="User#viewLoggedOutPG" />
-
-		<!-- Verify IdP is also logged out -->
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#viewLoggedOutPG" />
-	</command>
-</definition>
+		User.viewLoggedOutPG();
+	}
+}

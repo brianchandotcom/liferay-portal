@@ -1,1343 +1,1348 @@
-<definition component-name="portal-knowledge-base">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Knowledge Base" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Vocabulary#tearDownCP" />
-
-				<execute macro="KBFolder#tearDownCP" />
-
-				<execute macro="KBTemplate#tearDownCP" />
-
-				<execute macro="KBArticle#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddChildArticleToKBArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleAsDraft" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="saveAsDraft" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbStatus" value="Draft" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticlesViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Knowledge Base" />
-			</execute>
-
-			<execute macro="KBArticle#viewCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddKBArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleViaTemplateCP" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBTemplate#addCP">
-			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleWithAttachmentViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleAttachment" value="Document_1.txt" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticleWithAttachmentCP">
-			<var name="kbArticleAttachment" value="Document_1.txt (0KB) Delete" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
-			<var name="kbArticleRelatedAssetType" value="Blogs Entry" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
-
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
-
-		<execute macro="KBArticle#viewBlogsEntryRelatedAsset" />
-	</command>
-
-	<command name="AddKBArticleWithCategory" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetType" value="Knowledge Base Article" />
-			<var name="requiredCheckbox" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleWithHTMLViaKBAdmin" priority="4">
-		<var name="kbArticleContentSource">
-			<![CDATA[<b>Knowledge Base&rsquo;s Article Content</b>]]>
-		</var>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleAddViaSource" value="true" />
-			<var name="kbArticleContentSource" value="${kbArticleContentSource}" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewCPWithHTML">
-			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#CONTENT" />
-	</command>
-
-	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Infrastructure" />
-			<var name="configurationName" value="Upload Servlet Request" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">
-			<var name="maxFileSize" value="2048" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCPWithInvalidAttachmentSize">
-			<var name="kbArticleAttachment" value="Document_1.png" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="maxFileSize" value="2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="noAttachment" value="true" />
-		</execute>
-	</command>
-
-	<command name="AddKBArticleWithoutRequiredCategory" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetType" value="Knowledge Base Article" />
-			<var name="required" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbMissingRequiredCategory" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="AddKBFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#viewFolderNameCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 2 Description" />
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-	</command>
-
-	<command name="AddTemplateCP" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBTemplate#addCP">
-			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBTemplate#viewCP">
-			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-	</command>
-
-	<command name="CancelAddKBArticle" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#cancelAddKBArticle">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-	</command>
-
-	<command name="CancelEditKBArticle" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="cancel" value="true" />
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-	</command>
-
-	<command name="CannotAddDuplicateKBFolder" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbAddDuplicate" value="true" />
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-	</command>
-
-	<command name="DeleteKBArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#selectArticleCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#deleteCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-	</command>
-
-	<command name="DeleteKBFolder" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#viewFolderNameCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#deleteCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-	</command>
-
-	<command name="EditKBArticleAndAddAttachmentViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleAttachment" value="Document_1.txt" />
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticleWithAttachmentCP">
-			<var name="kbArticleAttachment" value="Document_1.txt (0KB) Delete" />
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditKBArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditKBFolder" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#viewFolderNameCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#editCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description Edited" />
-			<var name="kbFolderEditedName" value="KB Folder 1 Edited" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#viewFolderNameCP">
-			<var name="kbFolderName" value="KB Folder 1 Edited" />
-		</execute>
-	</command>
-
-	<command name="RemoveParentArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Parent" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBArticle#selectParentArticleCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Knowledge Base Article Content Child" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="Knowledge Base Article Title Parent" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="Home" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-	</command>
-
-	<command name="SaveEditedKBArticleAsDraft">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
-			<var name="saveAsDraft" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
-			<var name="kbStatus" value="Draft" />
-		</execute>
-	</command>
-
-	<command name="SelectParentArticleViaKBAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Parent" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-
-		<execute macro="KBArticle#selectParentArticleCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Knowledge Base Article Content Child" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Title Child" />
-		</execute>
-	</command>
-
-	<command name="ViewChildArticleInKBArticleViaKBAdmin" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-	</command>
-
-	<command name="ViewDuplicateFriendlyURLIsNotAllowed" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewFriendlyURLCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleFriendlyURL" value="knowledge-base-article-title-1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleDuplicateFriendlyURL" value="true" />
-			<var name="kbArticleFriendlyURL" value="knowledge-base-article-title" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-	</command>
-
-	<command name="ViewImportedKBArticlesPrioritization" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-			<var name="kbPriority" value="4.0" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="In the last learning path, you built an application using the Model-View-Controller portlet framework." />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 4 Child 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Adding methods to the service layer." />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 5 Child 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMarkdownChangedPriorities.zip" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Liferay permissions system is composed of several components." />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 4 Child 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Adding methods to the service layer." />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 5 Child 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#selectAllCP" />
-
-		<execute macro="KBArticle#deleteCP" />
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="false" />
-			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-			<var name="kbPriority" value="4.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-			<var name="kbPriority" value="5.0" />
-		</execute>
-
-		<execute macro="KBArticle#selectAllCP" />
-
-		<execute macro="KBArticle#deleteCP" />
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="false" />
-			<var name="kbZipFile" value="KBArticlesWithNoPriorityPrefix.zip" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-			<var name="kbPriority" value="4.0" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlePriority" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<for list="1,2" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-	</command>
-
-	<command name="ViewKBTemplateViaAddKBArticleCP" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBTemplate#addCP">
-			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBTemplate#viewCPViaAddTemplate">
-			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
-			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
-		</execute>
-	</command>
-
-	<command name="ViewNoErrorAfterImportWithoutParentMarkdownFiles" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesNoIntroMarkdown.zip" />
-		</execute>
-
-		<execute macro="KBArticle#viewUploadFailed">
-			<var name="kbImportFail" value="false" />
-		</execute>
-	</command>
-
-	<command name="ViewPendingKBArticleContent" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Knowledge Base Article" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbWorkflowAction" value="Submit for Publication" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbWorkflowStatus" value="Pending" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-knowledge-base"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSiteWorkflow();
+
+			BlogsEntry.tearDownCP();
+
+			Vocabulary.tearDownCP();
+
+			KBFolder.tearDownCP();
+
+			KBTemplate.tearDownCP();
+
+			KBArticle.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddChildArticleToKBArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+	}
+
+	@priority = "4"
+	test AddKBArticleAsDraft {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			saveAsDraft = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Draft"
+		);
+	}
+
+	@priority = "4"
+	test AddKBArticlesViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Title ${kbCount}"
+			);
+		}
+
+		for (var kbCount : list "1,2,3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Knowledge Base"
+			);
+
+			KBArticle.viewCP(
+				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Title ${kbCount}"
+			);
+		}
+	}
+
+	@priority = "4"
+	test AddKBArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+	}
+
+	@priority = "3"
+	test AddKBArticleViaTemplateCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+	}
+
+	@priority = "4"
+	test AddKBArticleWithAttachmentViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleAttachment = "Document_1.txt",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (0KB) Delete",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+	}
+
+	@priority = "3"
+	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleRelatedAssetTitle = "Blogs Entry Title",
+			kbArticleRelatedAssetType = "Blogs Entry",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleRelatedAssetTitle = "Blogs Entry Title",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		var kbArticleRelatedAssetTitle = "Blogs Entry Title";
+		var key_kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}";
+
+		AssertClick(
+			locator1 = "AssetRelatedAssets#KB_RELATED_ASSETS_LINKS",
+			value1 = "${kbArticleRelatedAssetTitle}"
+		);
+
+		KBArticle.viewBlogsEntryRelatedAsset();
+	}
+
+	@priority = "4"
+	test AddKBArticleWithCategory {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Knowledge Base Article",
+			requiredCheckbox = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			categoryName = "Category Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		KBArticle.viewCP(
+			categoryName = "Category Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "4"
+	test AddKBArticleWithHTMLViaKBAdmin {
+
+		var kbArticleContentSource = '''<b>Knowledge Base&rsquo;s Article Content</b>''';
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleAddViaSource = "true",
+			kbArticleContentSource = "${kbArticleContentSource}",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewCPWithHTML(
+			kbArticleContent = "Knowledge Base’s Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#CONTENT");
+	}
+
+	@priority = "3"
+	test AddKBArticleWithInvalidAttachmentSize {
+		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope"
+		);
+
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(
+			maxFileSize = "2048"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCPWithInvalidAttachmentSize(
+			kbArticleAttachment = "Document_1.png",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			maxFileSize = "2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			noAttachment = "true"
+		);
+	}
+
+	@priority = "3"
+	test AddKBArticleWithoutRequiredCategory {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Knowledge Base Article",
+			required = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbMissingRequiredCategory = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "5"
+	test AddKBFolder {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewDefaultCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2 Description",
+			kbFolderName = "KB Folder 2"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test AddTemplateCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBTemplate.viewCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+	}
+
+	@priority = "3"
+	test CancelAddKBArticle {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.cancelAddKBArticle(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "3"
+	test CancelEditKBArticle {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.editCP(
+			cancel = "true",
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+	}
+
+	@priority = "3"
+	test CannotAddDuplicateKBFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.addCP(
+			kbAddDuplicate = "true",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+	}
+
+	@priority = "4"
+	test DeleteKBArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.deleteCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test DeleteKBFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewDefaultCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
+
+		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
+	}
+
+	@priority = "4"
+	test EditKBArticleAndAddAttachmentViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.editCP(
+			kbArticleAttachment = "Document_1.txt",
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (0KB) Delete",
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test EditKBArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.editCP(
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test EditKBFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewDefaultCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
+
+		KBFolder.editCP(
+			kbFolderDescription = "KB Folder 1 Description Edited",
+			kbFolderEditedName = "KB Folder 1 Edited",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1 Edited");
+	}
+
+	@priority = "4"
+	test RemoveParentArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content Parent",
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content Child",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBArticle.moveArticleCP(
+			kbArticleCurrentParent = "Home",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBArticle.selectParentArticleCP(
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Article Content Child",
+			kbChildArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBArticle.moveArticleCP(
+			kbArticleCurrentParent = "Knowledge Base Article Title Parent",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBFolder.selectParentCP(kbFolderName = "Home");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content Child",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+	}
+
+	test SaveEditedKBArticleAsDraft {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.editCP(
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
+			saveAsDraft = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit",
+			kbStatus = "Draft"
+		);
+	}
+
+	@priority = "4"
+	test SelectParentArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content Parent",
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content Child",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBArticle.moveArticleCP(
+			kbArticleCurrentParent = "Home",
+			kbArticleTitle = "Knowledge Base Article Title Child"
+		);
+
+		KBArticle.selectParentArticleCP(
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title Parent"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Article Content Child",
+			kbChildArticleTitle = "Knowledge Base Article Title Child"
+		);
+	}
+
+	@priority = "3"
+	test ViewChildArticleInKBArticleViaKBAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewDuplicateFriendlyURLIsNotAllowed {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewFriendlyURLCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleFriendlyURL = "knowledge-base-article-title-1",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleDuplicateFriendlyURL = "true",
+			kbArticleFriendlyURL = "knowledge-base-article-title",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewImportedKBArticlesPrioritization {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "1.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "2.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "3.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5",
+			kbPriority = "4.0"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 4"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "In the last learning path, you built an application using the Model-View-Controller portlet framework.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 5"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Adding methods to the service layer.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdownChangedPriorities.zip"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 4"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Liferay permissions system is composed of several components.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 5"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Adding methods to the service layer.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "false",
+			kbZipFile = "KBArticlesWithMarkdown.zip"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "4.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5",
+			kbPriority = "5.0"
+		);
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "false",
+			kbZipFile = "KBArticlesWithNoPriorityPrefix.zip"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbPriority = "1.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4",
+			kbPriority = "4.0"
+		);
+	}
+
+	@priority = "4"
+	test ViewKBArticlePriority {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		for (var kbCount : list "1,2") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Title ${kbCount}"
+			);
+		}
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Title 1",
+			kbPriority = "1.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Title 2",
+			kbPriority = "2.0"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBTemplateViaAddKBArticleCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBTemplate.viewCPViaAddTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewNoErrorAfterImportWithoutParentMarkdownFiles {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesNoIntroMarkdown.zip"
+		);
+
+		KBArticle.viewUploadFailed(kbImportFail = "false");
+	}
+
+	@priority = "3"
+	test ViewPendingKBArticleContent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowStatus = "Pending"
+		);
+	}
+}

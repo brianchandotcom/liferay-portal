@@ -1,3311 +1,3006 @@
-<definition component-name="portal-knowledge-base">
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Knowledge Base" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-
-				<execute macro="KBFolder#tearDownCP" />
-
-				<execute macro="KBArticle#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddCommentInWorkflowSubmission" priority="5">
-		<description message="This is a use case for LPS-68599." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Knowledge Base Article" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbWorkflowAction" value="Submit for Publication" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="WorkflowAsset#gotoViaNotification">
-			<var name="assetType" value="Knowledge Base Article" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="Workflow Comment" />
-		</execute>
-	</command>
-
-	<command name="AddKBChildArticleAsDraft" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Parent Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#addChildPGViaKBDisplay">
-			<var name="kbArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
-			<var name="saveAsDraft" value="true" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Parent Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
-			<var name="kbStatus" value="Draft" />
-		</execute>
-	</command>
-
-	<command name="DeleteConfiguredKBFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Article Content" />
-			<var name="kbArticleTitle" value="KB Article Outside Folder" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder Description" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Article Content" />
-			<var name="kbArticleTitle" value="KB Article Inside Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#configureKBFolderDisplay">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#deleteCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
-
-		<execute macro="KBArticle#configureKBArticleDisplayPG">
-			<var name="kbArticleTitle" value="KB Article Outside Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Article Content" />
-			<var name="kbArticleTitle" value="KB Article Outside Folder" />
-		</execute>
-	</command>
-
-	<command name="DeleteImportedArticles" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#selectAllCP" />
-
-		<execute macro="KBArticle#deleteCP" />
-	</command>
-
-	<command name="EditKBArticleWithCustomField" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldType" value="True/False" />
-			<var name="resourceName" value="Knowledge Base Article" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCPWithBooleanCustomField">
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleTitle" value="KB Article Title" />
-			<var name="selectBoolean" value="True" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldValue" value="true" />
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleTitle" value="KB Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleContentEdit" value="KB Article Content Edited" />
-			<var name="kbArticleTitle" value="KB Article Title" />
-			<var name="kbArticleTitleEdit" value="KB Article Title Edited" />
-			<var name="selectBoolean" value="False" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldValue" value="false" />
-			<var name="kbArticleContent" value="KB Article Content Edited" />
-			<var name="kbArticleTitle" value="KB Article Title Edited" />
-		</execute>
-	</command>
-
-	<command name="EditKBFolderWithCustomField" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Date" />
-			<var name="customFieldType" value="Date" />
-			<var name="resourceName" value="Knowledge Base Folder" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="customField" value="01/01/2017" />
-			<var name="kbFolderDescription" value="KB Folder 2017 Description" />
-			<var name="kbFolderName" value="KB Folder 2017 Name" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="customField" value="01/01/2010" />
-			<var name="kbFolderDescription" value="KB Folder 2010 Description" />
-			<var name="kbFolderName" value="KB Folder 2010 Name" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2017 Name" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base 2017 Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base 2017 Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2010 Name" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base 2010 Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base 2010 Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 2017 Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base 2017 Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base 2017 Article Title" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 2010 Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base 2010 Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base 2010 Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<var name="entries" value="2010,2017" />
-
-		<for list="${entries}" param="kbEntry">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Knowledge Base" />
-			</execute>
-
-			<execute macro="LexiconEntry#gotoEntryMenuItem">
-				<var name="menuItem" value="Edit" />
-				<var name="rowEntry" value="${kbEntry}" />
-			</execute>
-
-			<execute function="AssertTextEquals" locator1="TextInput#CUSTOM_FIELD" value1="01/01/${kbEntry}" />
-		</for>
-	</command>
-
-	<command name="SaveEditedChildArticleAsDraft" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Parent Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#addChildPGViaKBDisplay">
-			<var name="kbArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticlePG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Child Article Content Edited" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Child Article Title Edited" />
-			<var name="saveAsDraft" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Parent Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Child Article Content Edited" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Edited" />
-			<var name="kbStatus" value="Draft" />
-		</execute>
-	</command>
-
-	<command name="SearchChildArticleViaSearchPortletPG" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Child" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Knowledge Base Child Article Content" />
-			<var name="searchAssetTitle" value="Knowledge Base Child Article Title" />
-			<var name="searchAssetType" value="Knowledge Base Article" />
-		</execute>
-	</command>
-
-	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder Description" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article 2 Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article 2 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#configureKBArticleDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Knowledge" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Knowledge Base Article 2 Content" />
-			<var name="searchAssetTitle" value="Knowledge Base Article 2 Title" />
-			<var name="searchAssetType" value="Knowledge Base Article" />
-		</execute>
-	</command>
-
-	<command name="SearchKBArticleViaSearchPortlet" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Knowledge" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Knowledge Base Article Content" />
-			<var name="searchAssetTitle" value="Knowledge Base Article Title" />
-			<var name="searchAssetType" value="Knowledge Base Article" />
-		</execute>
-	</command>
-
-	<command name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article's Content" />
-			<var name="kbArticleFriendlyURL" value="knowledge-base-article-s-title" />
-			<var name="kbArticleTitle" value="Knowledge Base Article's Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetSummary" value="Knowledge Base Article's Content" />
-			<var name="searchAssetTitle" value="Knowledge Base Article" />
-			<var name="searchAssetType" value="Knowledge Base Article" />
-		</execute>
-	</command>
-
-	<command name="ViewChildArticleViaUserDefinedFriendlyURL" priority="3">
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#addChildPGViaKBDisplay">
-			<var name="kbArticleContent" value="Child Article Content" />
-			<var name="kbArticleFriendlyURL" value="Friendly URL" />
-			<var name="kbArticleTitle" value="Child Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticlePG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbChildArticleContent" value="Child Article Content" />
-			<var name="kbChildArticleTitle" value="Child Article Title" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/knowledge-base-page/-/knowledge_base/friendly-url" />
-	</command>
-
-	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder Description" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#configureKBArticleDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewDefaultFolderViaKBDisplay" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder Description" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
-	</command>
-
-	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewImageViaContentCmd">
-			<var name="kbMarkdownImage" value="lds-first-launch-3.png" />
-			<var name="kbMarkdownImageCaption" value="Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio." />
-		</execute>
-	</command>
-
-	<command name="ViewImportedKBArticlesWithMultiplePeerHierarchies" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
-		</execute>
-	</command>
-
-	<command name="ViewImportedKBArticleWithImagesAsKBAttachments" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewImageViaContentCmd" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#viewDefaultCP" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewAttachmentCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
-		</execute>
-	</command>
-
-	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="4">
-		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Knowledge Base" />
-			<var name="configurationName" value="Service" />
-			<var name="configurationScope" value="Site Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="sourceURLEnabled" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="applyNumericalPrefix" value="true" />
-			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleCP">
-			<var name="kbChildArticleContent" value="Using tabs is a good way to keep your portlet’s UI clean and organized." />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewSourceURLCP">
-			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewSourceURLPG">
-			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticleFriendlyURL" priority="4">
-		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewKBArticleFriendlyURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleFriendlyURL" value="friendly-url-test" />
-			<var name="kbArticleTitle" value="Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="KB Article 2 Content" />
-			<var name="kbArticleTitle" value="KB Article 2 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBDisplayPG">
-			<var name="kbArticleTitle" value="KB Article 2 Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBDisplayPG">
-			<var name="kbArticleFriendlyURL" value="kb-article-2-title" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBDisplayPG">
-			<var name="kbArticleFriendlyURL" value="friendly-url-test" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleTitle" value="Article Title" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticleGitHubSourceURL" priority="3">
-		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Knowledge Base" />
-			<var name="configurationName" value="Service" />
-			<var name="configurationScope" value="Site Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="sourceURLEnabled" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleSourceURL" value="http://www.google.com" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewSourceURLCP">
-			<var name="kbArticleSourceURL" value="http://www.google.com" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="KB Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="KB Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="KB Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBDisplayPG">
-			<var name="history" value="true" />
-			<var name="print" value="true" />
-			<var name="sourceURL" value="true" />
-			<var name="subscribe" value="true" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticleNoHierarchyInFolder" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 2 Description" />
-			<var name="kbFolderName" value="Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Test Content" />
-			<var name="kbArticleTitle" value="Article 1 Title" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Test Content" />
-			<var name="kbArticleTitle" value="Article 2 Title" />
-		</execute>
-
-		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="Article 1 Title" />
-		</execute>
-
-		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="Article 2 Title" />
-		</execute>
-
-		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="Folder 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewNoHierarchyPG">
-			<var name="kbArticleTitle" value="Article 1 Title" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlesHierarchyWithinFolders" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 1 Content 1 Child" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 1 Content 1 Grandchild" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 2 Description" />
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 2 Content 1 Child" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Child" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addChildArticleViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 2 Content 1 Grandchild" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Child" />
-			<var name="kbGrandchildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1 Grandchild" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
-			<var name="kbGrandchildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1 Grandchild" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page 1" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page 1" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page 1" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Knowledge Base Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="KBArticle#selectScopePG">
-			<var name="currentKBPageScope" value="Liferay" />
-			<var name="newKBPageScope" value="Knowledge Base Display Page 1 (Create New)" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page 2" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Knowledge Base Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="KBArticle#selectScopePG">
-			<var name="currentKBPageScope" value="Liferay" />
-			<var name="newKBPageScope" value="Knowledge Base Display Page 2 (Create New)" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#setScopeCP">
-			<var name="kbPageScope" value="Knowledge Base Display Page 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#setScopeCP">
-			<var name="kbPageScope" value="Knowledge Base Display Page 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlesInKBFolder" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlesInMultipleKBFolders" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1 Description" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 2 Description" />
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticleSuggestionsWorkflow" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
-			<var name="suggestionCount" value="1" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#moveToInProgressStatus">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-			<var name="kbSuggestionUserName" value="userfn userln" />
-			<var name="status" value="In Progress" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-			<var name="kbSuggestionUserName" value="userfn userln" />
-			<var name="status" value="Resolved" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#deleteCP">
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
-
-		<execute macro="KBArticleSuggestion#viewNoSuggestions" />
-	</command>
-
-	<command name="ViewKBArticleSuggestionsWorkflowNotificationEmail" priority="3">
-		<property name="test.smtp.server.enabled" value="true" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="2" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#configureEmailCP">
-			<var name="emailFrom" value="true" />
-			<var name="suggestionInProgress" value="true" />
-			<var name="suggestionReceived" value="true" />
-			<var name="suggestionResolved" value="true" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#subscribeCP" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="KB Article Content" />
-			<var name="kbArticleTitle" value="KB Article Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="KB Article Title" />
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#viewSuggestionStatus">
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-			<var name="status" value="New" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#moveToInProgressStatus">
-			<var name="kbArticleTitle" value="KB Article Title" />
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewSuggestionStatus">
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-			<var name="status" value="In Progress" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
-			<var name="kbArticleTitle" value="KB Article Title" />
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewSuggestionStatus">
-			<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
-			<var name="status" value="Resolved" />
-		</execute>
-
-		<execute macro="MockMock#viewMail">
-			<var name="asset" value="suggestion" />
-			<var name="content" value="View your resolved suggestion here" />
-			<var name="recipient" value="Test 2" />
-			<var name="sender" value="Test Test" />
-			<var name="subject" value="We have resolved your suggestion for article KB Article Title" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticlesWithTheSamePriorityViaNavigationLinks" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Parent Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#viewKBArticlePriorityCP">
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${kbCount}" />
-				<var name="kbPriority" value="${kbCount}.0" />
-			</execute>
-		</for>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-	</command>
-
-	<command name="ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder Description" />
-			<var name="kbFolderName" value="KB Root Folder" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Root Folder" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 1" />
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Root Folder" />
-		</execute>
-
-		<execute macro="KBFolder#addCP">
-			<var name="kbFolderDescription" value="KB Folder 2" />
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#configureKBFolderDisplay">
-			<var name="kbFolderName" value="KB Root Folder" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBFolder#gotoViaKBDisplayPG">
-			<var name="kbFolderName" value="KB Folder 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewSuggestionsWithPermissions" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="poweruser@liferay.com" />
-			<var name="userFirstName" value="Power" />
-			<var name="userLastName" value="User" />
-			<var name="userScreenName" value="poweruser" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Power User" />
-			<var name="userScreenName" value="poweruser" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="poweruser" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="poweruser@liferay.com" />
-			<var name="userScreenName" value="poweruser" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="user1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="user1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="user2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="user2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
-			<var name="suggestionCount" value="1" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
-			<var name="kbSuggestionUserName" value="Test Test" />
-			<var name="status" value="New" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="user1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 1" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 2" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewSubmittedSuggestionCountNoPermissionPG">
-			<var name="kbSuggestionCount" value="2" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="user2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#addPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="User 2 Knowledge Base Article Suggestion 1" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewSubmittedSuggestionCountNoPermissionPG">
-			<var name="kbSuggestionCount" value="1" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="poweruser@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 4 suggestions." />
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="User 2 Knowledge Base Article Suggestion 1" />
-			<var name="kbSuggestionUserName" value="userfn2 userln2" />
-			<var name="status" value="New" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 2" />
-			<var name="kbSuggestionUserName" value="userfn1 userln1" />
-			<var name="status" value="New" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 1" />
-			<var name="kbSuggestionUserName" value="userfn1 userln1" />
-			<var name="status" value="New" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
-			<var name="kbSuggestionUserName" value="Test Test" />
-			<var name="status" value="New" />
-		</execute>
-	</command>
-
-	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#addChildArticleViaKBAdmin">
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-				<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child ${kbCount}" />
-				<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
-			</execute>
-		</for>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#viewKBArticlePriorityCP">
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
-				<var name="kbPriority" value="${kbCount}.0" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoChildArticleDescriptiveDetails">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit. This article should remain priority two." />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 2" />
-		</execute>
-
-		<for list="1,2,3" param="kbCount">
-			<execute macro="KBArticle#viewKBArticlePriorityCP">
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
-				<var name="kbPriority" value="${kbCount}.0" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-		</execute>
-
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edit. This article should remain priority two." />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-		</execute>
-	</command>
-
-	<command name="ViewUnchangedKBArticleTitleViaLocalizedPage" priority="3">
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="Knowledge Base Display Page" />
-			<var name="parentPageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#configureChildPage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Page#gotoChildPagePG">
-			<var name="childPageName" value="Knowledge Base Display Page" />
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="Page#viewTranslationsPG">
-			<var name="defaultLanguageLocalizationMessage" value="Display the page in English (United States)." />
-			<var name="preferredLanguageLocalizationMessage" value="Establecer español (España) como su idioma preferido." />
-			<var name="sitePageURL" value="${portalURL}/es/web/guest/knowledge-base-display-page" />
-			<var name="translationLanguageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#editPGViaLocalizedKBDisplay">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edited" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edited" />
-			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
-		</execute>
-
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edited" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-knowledge-base"
+definition {
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSiteWorkflow();
+
+			KBFolder.tearDownCP();
+
+			KBArticle.tearDownCP();
+
+			User.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-68599."
+	@priority = "5"
+	test AddCommentInWorkflowSubmission {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Knowledge Base Article",
+			user = "userfn userln"
+		);
+
+		WorkflowComment.add(workflowComment = "Workflow Comment");
+	}
+
+	@priority = "3"
+	test AddKBChildArticleAsDraft {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Parent Article Content",
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.addChildPGViaKBDisplay(
+			kbArticleContent = "Knowledge Base Child Article Content",
+			kbArticleTitle = "Knowledge Base Child Article Title",
+			saveAsDraft = "true"
+		);
+
+		Pause(locator1 = "5000");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Parent Article Content",
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Child Article Content",
+			kbArticleTitle = "Knowledge Base Child Article Title",
+			kbStatus = "Draft"
+		);
+	}
+
+	@priority = "5"
+	test DeleteConfiguredKBFolder {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Article Content",
+			kbArticleTitle = "KB Article Outside Folder"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.addCP(
+			kbArticleContent = "Article Content",
+			kbArticleTitle = "KB Article Inside Folder"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.configureKBFolderDisplay(kbFolderName = "KB Folder");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.deleteCP(kbFolderName = "KB Folder");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewDefaultViaKBDisplayPG();
+
+		KBArticle.configureKBArticleDisplayPG(
+			kbArticleTitle = "KB Article Outside Folder"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Article Content",
+			kbArticleTitle = "KB Article Outside Folder"
+		);
+	}
+
+	@priority = "5"
+	test DeleteImportedArticles {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMetadata.zip"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+	}
+
+	@priority = "3"
+	test EditKBArticleWithCustomField {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Boolean",
+			customFieldType = "True/False",
+			resourceName = "Knowledge Base Article"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCPWithBooleanCustomField(
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title",
+			selectBoolean = "True"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewPG(
+			customFieldName = "Boolean",
+			customFieldValue = "true",
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.editCP(
+			kbArticleContent = "KB Article Content",
+			kbArticleContentEdit = "KB Article Content Edited",
+			kbArticleTitle = "KB Article Title",
+			kbArticleTitleEdit = "KB Article Title Edited",
+			selectBoolean = "False"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewPG(
+			customFieldName = "Boolean",
+			customFieldValue = "false",
+			kbArticleContent = "KB Article Content Edited",
+			kbArticleTitle = "KB Article Title Edited"
+		);
+	}
+
+	@priority = "3"
+	test EditKBFolderWithCustomField {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Date",
+			customFieldType = "Date",
+			resourceName = "Knowledge Base Folder"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			customField = "01/01/2017",
+			kbFolderDescription = "KB Folder 2017 Description",
+			kbFolderName = "KB Folder 2017 Name"
+		);
+
+		KBFolder.addCP(
+			customField = "01/01/2010",
+			kbFolderDescription = "KB Folder 2010 Description",
+			kbFolderName = "KB Folder 2010 Name"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2017 Name");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base 2017 Article Content",
+			kbArticleTitle = "Knowledge Base 2017 Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2010 Name");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base 2010 Article Content",
+			kbArticleTitle = "Knowledge Base 2010 Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2017 Name");
+
+		Refresh();
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base 2017 Article Content",
+			kbArticleTitle = "Knowledge Base 2017 Article Title"
+		);
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2010 Name");
+
+		Refresh();
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base 2010 Article Content",
+			kbArticleTitle = "Knowledge Base 2010 Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		var entries = "2010,2017";
+
+		for (var kbEntry : list "${entries}") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Knowledge Base"
+			);
+
+			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "${kbEntry}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "01/01/${kbEntry}"
+			);
+		}
+	}
+
+	@priority = "3"
+	test SaveEditedChildArticleAsDraft {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Parent Article Content",
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.addChildPGViaKBDisplay(
+			kbArticleContent = "Knowledge Base Child Article Content",
+			kbArticleTitle = "Knowledge Base Child Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewChildArticlePG(
+			kbArticleTitle = "Knowledge Base Parent Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		KBArticle.editCP(
+			kbArticleContentEdit = "Knowledge Base Child Article Content Edited",
+			kbArticleTitle = "Knowledge Base Child Article Title",
+			kbArticleTitleEdit = "Knowledge Base Child Article Title Edited",
+			saveAsDraft = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Parent Article Content",
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Parent Article Title"
+		);
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Child Article Content Edited",
+			kbArticleTitle = "Knowledge Base Child Article Title Edited",
+			kbStatus = "Draft"
+		);
+	}
+
+	@priority = "4"
+	test SearchChildArticleViaSearchPortletPG {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Child");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Child Article Content",
+			searchAssetTitle = "Knowledge Base Child Article Title",
+			searchAssetType = "Knowledge Base Article"
+		);
+	}
+
+	@priority = "3"
+	test SearchKBArticleInFolderViaSearchPortlet {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article 2 Content",
+			kbArticleTitle = "Knowledge Base Article 2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.configureKBArticleDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbFolderName = "KB Folder"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article 2 Content",
+			searchAssetTitle = "Knowledge Base Article 2 Title",
+			searchAssetType = "Knowledge Base Article"
+		);
+	}
+
+	@priority = "4"
+	test SearchKBArticleViaSearchPortlet {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article Content",
+			searchAssetTitle = "Knowledge Base Article Title",
+			searchAssetType = "Knowledge Base Article"
+		);
+	}
+
+	@priority = "3"
+	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article&apos;s Content",
+			kbArticleFriendlyURL = "knowledge-base-article-s-title",
+			kbArticleTitle = "Knowledge Base Article&apos;s Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Knowledge Base");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Knowledge Base Article&apos;s Content",
+			searchAssetTitle = "Knowledge Base Article",
+			searchAssetType = "Knowledge Base Article"
+		);
+	}
+
+	@priority = "3"
+	test ViewChildArticleViaUserDefinedFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.addChildPGViaKBDisplay(
+			kbArticleContent = "Child Article Content",
+			kbArticleFriendlyURL = "Friendly URL",
+			kbArticleTitle = "Child Article Title"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewChildArticlePG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Child Article Content",
+			kbChildArticleTitle = "Child Article Title"
+		);
+
+		AssertLocation(
+			value1 = "${portalURL}/web/guest/knowledge-base-page/-/knowledge_base/friendly-url"
+		);
+	}
+
+	@priority = "3"
+	test ViewConfiguredKBArticleWithinFolderViaKBDisplay {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.configureKBArticleDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Title 2",
+			kbFolderName = "KB Folder"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+	}
+
+	@priority = "3"
+	test ViewDefaultFolderViaKBDisplay {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.viewDefaultCP();
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewDefaultViaKBDisplayPG();
+	}
+
+	@priority = "4"
+	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5"
+		);
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1"
+		);
+
+		KBArticle.viewImageViaContentCmd(
+			kbMarkdownImage = "lds-first-launch-3.png",
+			kbMarkdownImageCaption = "Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio."
+		);
+	}
+
+	@priority = "4"
+	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMarkdown.zip"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 4"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 5"
+		);
+	}
+
+	@priority = "4"
+	test ViewImportedKBArticleWithImagesAsKBAttachments {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMetadata.zip"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2"
+		);
+
+		KBArticle.viewImageViaContentCmd();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.viewDefaultCP();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewAttachmentCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewImportedKBArticleWithSourceURLMetadata {
+		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Knowledge Base",
+			configurationName = "Service",
+			configurationScope = "Site Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "sourceURLEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.importCP(
+			applyNumericalPrefix = "true",
+			kbZipFile = "KBArticlesWithMetadata.zip"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Using tabs is a good way to keep your portlet’s UI clean and organized.",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2"
+		);
+
+		KBArticle.viewSourceURLCP(
+			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewSourceURLPG(
+			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1"
+		);
+	}
+
+	@priority = "4"
+	test ViewKBArticleFriendlyURL {
+		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleFriendlyURL";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "KB Article Content",
+			kbArticleFriendlyURL = "friendly-url-test",
+			kbArticleTitle = "Article Title"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "KB Article 2 Content",
+			kbArticleTitle = "KB Article 2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display");
+
+		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article 2 Title");
+
+		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "kb-article-2-title");
+
+		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Article Title");
+
+		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "friendly-url-test");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "Article Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBArticleGitHubSourceURL {
+		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Knowledge Base",
+			configurationName = "Service",
+			configurationScope = "Site Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "sourceURLEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleSourceURL = "http://www.google.com",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.viewSourceURLCP(
+			kbArticleSourceURL = "http://www.google.com",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Welcome");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "KB Page", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "KB Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "KB Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		KBArticle.viewKBDisplayPG(
+			history = "true",
+			print = "true",
+			sourceURL = "true",
+			subscribe = "true"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBArticleNoHierarchyInFolder {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "Folder 1"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2 Description",
+			kbFolderName = "Folder 2"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Test Content",
+			kbArticleTitle = "Article 1 Title"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Test Content",
+			kbArticleTitle = "Article 2 Title"
+		);
+
+		KBArticle.moveArticleCP(
+			kbArticleCurrentParent = "Home",
+			kbArticleTitle = "Article 1 Title"
+		);
+
+		KBFolder.selectParentCP(kbFolderName = "Folder 1");
+
+		KBArticle.moveArticleCP(
+			kbArticleCurrentParent = "Home",
+			kbArticleTitle = "Article 2 Title"
+		);
+
+		KBFolder.selectParentCP(kbFolderName = "Folder 2");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Page");
+
+		KBArticle.viewNoHierarchyPG(kbArticleTitle = "Article 1 Title");
+	}
+
+	@priority = "4"
+	test ViewKBArticlesHierarchyWithinFolders {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1",
+			kbChildArticleContent = "Knowledge Base Article Folder 1 Content 1 Child",
+			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child",
+			kbChildArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
+			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2 Description",
+			kbFolderName = "KB Folder 2"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1",
+			kbChildArticleContent = "Knowledge Base Article Folder 2 Content 1 Child",
+			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Child"
+		);
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1",
+			kbChildArticleContent = "Knowledge Base Article Folder 2 Content 1 Grandchild",
+			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Grandchild"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2");
+
+		Refresh();
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1",
+			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Child",
+			kbGrandchildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Grandchild"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1 Grandchild",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1 Grandchild"
+		);
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1",
+			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child",
+			kbGrandchildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBArticlesInDifferentScopesPerSite {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page 1",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page 1",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page 1");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Knowledge Base Display",
+			portletOption = "Configuration"
+		);
+
+		KBArticle.selectScopePG(
+			currentKBPageScope = "Liferay",
+			newKBPageScope = "Knowledge Base Display Page 1 (Create New)"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page 2",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page 2");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Knowledge Base Display",
+			portletOption = "Configuration"
+		);
+
+		KBArticle.selectScopePG(
+			currentKBPageScope = "Liferay",
+			newKBPageScope = "Knowledge Base Display Page 2 (Create New)"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title for Page 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title for Page 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page 1");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title for Page 1"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page 2");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title for Page 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewKBArticlesInKBFolder {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewKBArticlesInMultipleKBFolders {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 2",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2 Description",
+			kbFolderName = "KB Folder 2"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 2",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 2",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 2"
+		);
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 2",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewKBArticleSuggestionsWorkflow {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "Knowledge Base Article Suggestion"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoSuggestionsNavigationCP();
+
+		KBArticleSuggestion.gotoSuggestionStatusNew(suggestionCount = "1");
+
+		KBArticleSuggestion.moveToInProgressStatus(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "Knowledge Base Article Suggestion"
+		);
+
+		KBArticle.gotoSuggestionsNavigationCP();
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "userfn userln",
+			status = "In Progress"
+		);
+
+		KBArticleSuggestion.moveToResolvedStatus(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "Knowledge Base Article Suggestion"
+		);
+
+		KBArticle.gotoSuggestionsNavigationCP();
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "userfn userln",
+			status = "Resolved"
+		);
+
+		KBArticleSuggestion.deleteCP(
+			kbSuggestionBody = "Knowledge Base Article Suggestion"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoSuggestionsNavigationCP();
+
+		KBArticleSuggestion.viewNoSuggestions();
+	}
+
+	@priority = "3"
+	test ViewKBArticleSuggestionsWorkflowNotificationEmail {
+		property test.smtp.server.enabled = "true";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Test",
+			userLastName = "2",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.configureEmailCP(
+			emailFrom = "true",
+			suggestionInProgress = "true",
+			suggestionReceived = "true",
+			suggestionResolved = "true",
+			userEmailAddress = "test@liferay.com",
+			userName = "Test Test"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.subscribeCP();
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoSuggestionsNavigationPG();
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "New"
+		);
+
+		KBArticleSuggestion.moveToInProgressStatus(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content"
+		);
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "In Progress"
+		);
+
+		KBArticleSuggestion.moveToResolvedStatus(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content"
+		);
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "Resolved"
+		);
+
+		MockMock.viewMail(
+			asset = "suggestion",
+			content = "View your resolved suggestion here",
+			recipient = "Test 2",
+			sender = "Test Test",
+			subject = "We have resolved your suggestion for article KB Article Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.addCP(
+				kbArticleContent = "Knowledge Base Article Parent Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}"
+			);
+		}
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.viewKBArticlePriorityCP(
+				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}",
+				kbPriority = "${kbCount}.0"
+			);
+		}
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 2",
+			kbPriority = "2.0"
+		);
+
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Parent Title 3",
+			kbPriority = "3.0"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.gotoNextArticlePG(
+			kbDisplayNextArticle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.gotoNextArticlePG(
+			kbDisplayNextArticle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 3",
+			kbArticleTitle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.gotoPreviousArticle(
+			kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.gotoPreviousArticle(
+			kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.gotoNextArticlePG(
+			kbDisplayNextArticle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.gotoNextArticlePG(
+			kbDisplayNextArticle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 3",
+			kbArticleTitle = "Knowledge Base Article Parent Title 3"
+		);
+
+		KBArticle.gotoPreviousArticle(
+			kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 2",
+			kbArticleTitle = "Knowledge Base Article Parent Title 2"
+		);
+
+		KBArticle.gotoPreviousArticle(
+			kbDisplayPreviousArticle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+	}
+
+	@priority = "3"
+	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Root Folder"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1",
+			kbFolderName = "KB Folder 1"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2",
+			kbFolderName = "KB Folder 2"
+		);
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.configureKBFolderDisplay(kbFolderName = "KB Root Folder");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1"
+		);
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewSuggestionsWithPermissions {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "poweruser@liferay.com",
+			userFirstName = "Power",
+			userLastName = "User",
+			userScreenName = "poweruser"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(roleTitle = "Power User", userScreenName = "poweruser");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "poweruser"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "poweruser@liferay.com",
+			userScreenName = "poweruser"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoSuggestionsNavigationPG();
+
+		KBArticleSuggestion.gotoSuggestionStatusNew(suggestionCount = "1");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "Test Test",
+			status = "New"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "user1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 1"
+		);
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 2"
+		);
+
+		KBArticleSuggestion.viewSubmittedSuggestionCountNoPermissionPG(
+			kbSuggestionCount = "2"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "user2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 2 Knowledge Base Article Suggestion 1"
+		);
+
+		KBArticleSuggestion.viewSubmittedSuggestionCountNoPermissionPG(
+			kbSuggestionCount = "1"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "poweruser@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
+			value1 = "There are 4 suggestions."
+		);
+
+		KBArticle.gotoSuggestionsNavigationPG();
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 2 Knowledge Base Article Suggestion 1",
+			kbSuggestionUserName = "userfn2 userln2",
+			status = "New"
+		);
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 2",
+			kbSuggestionUserName = "userfn1 userln1",
+			status = "New"
+		);
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 1",
+			kbSuggestionUserName = "userfn1 userln1",
+			status = "New"
+		);
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "Test Test",
+			status = "New"
+		);
+	}
+
+	@priority = "3"
+	test ViewUnchangedKBArticlePriorityAfterEdit {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.addChildArticleViaKBAdmin(
+				kbArticleTitle = "Knowledge Base Article Parent Title 1",
+				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${kbCount}",
+				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${kbCount}"
+			);
+		}
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.viewKBArticlePriorityCP(
+				kbArticleTitle = "Knowledge Base Article Parent Title 1 Child ${kbCount}",
+				kbPriority = "${kbCount}.0"
+			);
+		}
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.editCP(
+			kbArticleContentEdit = "Knowledge Base Article Content Edit. This article should remain priority two.",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 2",
+			kbArticleTitleEdit = "Knowledge Base Article Parent Title 1 Child 2"
+		);
+
+		for (var kbCount : list "1,2,3") {
+			KBArticle.viewKBArticlePriorityCP(
+				kbArticleTitle = "Knowledge Base Article Parent Title 1 Child ${kbCount}",
+				kbPriority = "${kbCount}.0"
+			);
+		}
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1"
+		);
+
+		KBArticle.gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(
+			kbArticleTitle = "Knowledge Base Article Parent Title 1",
+			kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child 2"
+		);
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content Edit. This article should remain priority two.",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 2"
+		);
+	}
+
+	@priority = "3"
+	test ViewUnchangedKBArticleTitleViaLocalizedPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicChildPage(
+			childPageName = "Knowledge Base Display Page",
+			parentPageName = "Welcome"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.configureChildPage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Navigator.openURL();
+
+		Page.gotoChildPagePG(
+			childPageName = "Knowledge Base Display Page",
+			pageName = "Welcome"
+		);
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		Page.viewTranslationsPG(
+			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+			sitePageURL = "${portalURL}/es/web/guest/knowledge-base-display-page",
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain)."
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
+
+		KBArticle.editPGViaLocalizedKBDisplay(
+			kbArticleContentEdit = "Knowledge Base Article Content Edited",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edited",
+			localizedSuccessMessage = "Su petición ha terminado con éxito."
+		);
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content Edited",
+			kbArticleTitle = "Knowledge Base Article Title Edited"
+		);
+	}
+}

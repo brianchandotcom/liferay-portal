@@ -1,443 +1,317 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Notifications" />
-
-	<var name="pageName" value="Documents and Media Page" />
-	<var name="portletName" value="Documents and Media" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ViewNoWebsiteNotificationForNewDocumentInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="Adds" />
-			<var name="contentType" value="Documents and Media" />
-			<var name="notificationType" value="Website" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Notifications";
+	var pageName = "Documents and Media Page";
+	var portletName = "Documents and Media";
 
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
+		User.firstLoginPG();
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewNoWebsiteNotificationForUpdatedDocumentInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="Updates" />
-			<var name="contentType" value="Documents and Media" />
-			<var name="notificationType" value="Website" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		Portlet.addPG(portletName = "Documents and Media");
 
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.enableActionsMenuOnPortlet();
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewWebsiteNotificationForNewDocumentInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="document" />
-			<var name="contentBody" value="DM Document Title" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTitleCmdPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewWebsiteNotificationForUpdatedDocumentInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewUpdatedContent">
-			<var name="assetType" value="document" />
-			<var name="contentBody" value="DM Document Title Edit" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTitleCmdPG">
-			<var name="dmDocumentTitle" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-</definition>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			Page.tearDownCP();
+
+			NotificationsPortlet.tearDownUserDeliveries();
+
+			User.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test ViewNoWebsiteNotificationForNewDocumentInFolder {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		NotificationsPortlet.gotoNotificationDelivery(notificationCount = "0");
+
+		IFrame.selectConfigurationFrame();
+
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Adds",
+			contentType = "Documents and Media",
+			notificationType = "Website"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.subscribePG();
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewNoWebsiteNotificationForUpdatedDocumentInFolder {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		NotificationsPortlet.gotoNotificationDelivery(notificationCount = "0");
+
+		IFrame.selectConfigurationFrame();
+
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Updates",
+			contentType = "Documents and Media",
+			notificationType = "Website"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.subscribePG();
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForNewDocumentInFolder {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.subscribePG();
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "document",
+			contentBody = "DM Document Title",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "DM Document Title");
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForUpdatedDocumentInFolder {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.subscribePG();
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewUpdatedContent(
+			assetType = "document",
+			contentBody = "DM Document Title Edit",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "DM Document Title Edit");
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title Edit");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+}

@@ -1,1898 +1,1573 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-
-				<execute macro="WebContentStructures#tearDownCP">
-					<var name="siteScopeName" value="Global" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddEmbeddedPortletFreemarkerTemplate" priority="3">
-		<property name="osgi.app.includes" value="currency-converter" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="NavItem#gotoTemplates" />
+		User.firstLoginPG();
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<var name="templateScript"><![CDATA[<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />]]></var>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
-
-		<execute macro="PortletEntry#save" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		<execute function="SelectFrameTop" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+			WebContentStructures.tearDownCP(siteScopeName = "Global");
+		}
+	}
 
-		<execute macro="WebContent#addStructuredPGViaWCD">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
+	@priority = "3"
+	test AddEmbeddedPortletFreemarkerTemplate {
+		property osgi.app.includes = "currency-converter";
+		property testray.component.names = "Web Content Administration";
 
-		<execute macro="Portlet#viewBody">
-			<var name="portletBody" value="Welcome to Liferay" />
-			<var name="portletName" value="Hello World" />
-		</execute>
-	</command>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
 
-	<command name="AddEmbeddedPortletVelocityTemplate" priority="3">
-		<property name="osgi.app.includes" value="currency-converter" />
-		<property name="testray.component.names" value="Web Content Administration" />
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
+		NavItem.gotoStructures();
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
 
-		<execute macro="NavItem#gotoStructures" />
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="vm" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		NavItem.gotoTemplates();
 
-		<var name="templateScript"><![CDATA[$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")]]></var>
+		LexiconEntry.gotoAdd();
 
-		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="PortletEntry#save" />
+		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />''';
 
-		<execute function="SelectFrameTop" />
+		Type.typeAceEditor(
+			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
+			value1 = "${templateScript}"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addStructuredPGViaWCD">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Portlet#viewBody">
-			<var name="portletBody" value="Welcome to Liferay" />
-			<var name="portletName" value="Hello World" />
-		</execute>
-	</command>
-
-	<command name="AddStructureWithSeparatorField" priority="4">
-		<description message="This is a use case for LPS-52248." />
+		PortletEntry.save();
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SelectFrameTop();
 
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Separator" />
-			<var name="fieldFieldLabel" value="Separator" />
-			<var name="fieldName" value="Separator" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel" />
-		<execute function="AssertConsoleTextNotPresent" value1="freemarker.core.NonStringException" />
-	</command>
-
-	<command name="AddStructureWithSubfield" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addFieldNested">
-			<var name="field" value="Integer" />
-			<var name="fieldFieldLabel" value="Integer" />
-			<var name="fieldName" value="Integer" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentInteger" value="123" />
-			<var name="webContentText" value="Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewNestedField">
-			<var name="fieldName" value="Text" />
-			<var name="nestedField" value="Integer" />
-			<var name="nestedFieldData" value="123" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name" />
-		</execute>
-
-		<for list="Text,Integer" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var name="fieldName" value="${structureFieldName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddStructureWithUnlocalizableFields" priority="4">
-		<property name="testray.component.names" value="Localization,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentNavigator#gotoEditStructure">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#editFieldLocalizable">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="Text" />
-			<var name="webContentTextBox" value="Text Box" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Title Spanish" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Text Spanish" />
-		</execute>
-
-		<execute macro="FormFields#editTextMultiline">
-			<var name="fieldName" value="TextBox" />
-			<var name="fieldValue" value="Text Box Spanish" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewUnlocalizableTextBox">
-			<var name="editLocalizedTextBox" value="Text Box Unlocalized" />
-			<var name="localizedText" value="Text Spanish" />
-			<var name="localizedTextBox" value="Text Box" />
-			<var name="localizedTitle" value="Title Spanish" />
-			<var name="webContentTextBox" value="Text Box" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddStructureWithWebContentAndGeolocationFields" priority="5">
-		<description message="This is a use case for LPS-69560." />
-
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent 1 Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent 1 Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Web Content" />
-			<var name="fieldFieldLabel" value="Web Content" />
-			<var name="fieldName" value="WebContent" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Geolocation" />
-			<var name="fieldFieldLabel" value="Geolocation" />
-			<var name="fieldName" value="Geolocation" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="fieldName" value="WebContent" />
-			<var name="webContentSelectWCFile" value="WC WebContent 1 Title" />
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCPWithoutContentField">
-			<var name="field" value="Web Content" />
-			<var name="fieldData" value="WC WebContent 1 Title" />
-			<var name="fieldFieldLabel" value="Web Content" />
-			<var name="fieldName" value="WebContent" />
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCPWithoutContentField">
-			<var name="field" value="Geolocation" />
-			<var name="fieldFieldLabel" value="Geolocation" />
-			<var name="fieldName" value="Geolocation" />
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Global WC Structure Description" />
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateDescription" value="Local WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="Local WC Template Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
-			<var name="fieldName" value="Text" />
-			<var name="selectStructureName" value="Basic Web Content" />
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateName" value="Local WC Template Name" />
-			<var name="webContentContent" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithColorField" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Color" />
-			<var name="fieldFieldLabel" value="Color" />
-			<var name="fieldName" value="Color" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Color" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentColor" value="FFFFFF" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Content#addPG">
-			<var name="assetTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="#FFFFFF" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Structure Description" />
-			<var name="structureName" value="Global Structure" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="addRoleViewPermissions" value="Power User" />
-			<var name="structureName" value="Global Structure" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="addRoleViewPermissions" value="Power User" />
-			<var name="structureName" value="Global Structure" />
-			<var name="templateDescription" value="Template Description" />
-			<var name="templateName" value="Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addRoleViewPermissions">
-			<var name="roles" value="Power User" />
-			<var name="templateName" value="Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#editSubstructureDefaultValuesCP">
-			<var name="editSubstructureFieldNames" value="Text" />
-			<var name="substructureName" value="Global Structure" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userFirstName" value="test1" />
-			<var name="userLastName" value="test1" />
-			<var name="userScreenName" value="test1test" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userScreenName" value="test1test" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="test1" />
-			<var name="userLastName" value="test1" />
-			<var name="userScreenName" value="test1test" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="test1 test1" />
-			<var name="roleTitle" value="Site Administrator" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test1@liferay.com" />
-			<var name="userLoginFullName" value="test1 test1" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="Global Structure" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="saveAsDraft" value="true" />
-			<var name="structureName" value="Global Structure" />
-			<var name="webContentText" value="Web Content Text" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithImageField" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContentWithCustomStructures#AddWebContentWithImageField" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Image" />
-			<var name="fieldFieldLabel" value="Image" />
-			<var name="fieldName" value="Image" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Image" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentImage" value="Document_2.jpeg" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewImageFieldViaWCD" />
-	</command>
-
-	<command name="AddWebContentWithStructure" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithTemplateXSL" priority="3">
-		<property name="testray.component.names" value="Web Content Administration,XSL" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateFile" value="xsl_template.xsl" />
-			<var name="templateLanguage" value="xsl" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoPreviewViaHeaderCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#preview">
-			<var name="fieldName" value="Text" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentStructures#deleteCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentHasReference" value="true" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#deleteCP">
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentHasReference" value="true" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentStructures#deleteCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentHasReference" value="true" />
-		</execute>
-	</command>
-
-	<command name="EditArticleMadeFromGlobalStructure" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Global WC Structure Description" />
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="Global WC Template Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
-			<var name="fieldName" value="Text" />
-			<var name="selectStructureName" value="Basic Web Content" />
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateName" value="Global WC Template Name" />
-			<var name="webContentContent" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editPGViaWCD">
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateName" value="WC Template2 Name" />
-			<var name="webContentContentEdit" value="WC WebContent Text Edit" />
-			<var name="webContentText" value="WC WebContent Text Edit" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publishAndWait" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditGlobalWebContentTemplate" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Global WC Structure Description" />
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Global WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="Global WC Template Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
-			<var name="fieldName" value="Text" />
-			<var name="selectStructureName" value="Basic Web Content" />
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateName" value="Global WC Template Name" />
-			<var name="webContentContent" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#editTemplate">
-			<var name="editTemplateButton" value="true" />
-			<var name="structureName" value="Global WC Structure Name" />
-			<var name="templateName" value="Template Edit" />
-			<var name="webContentContent" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewSelectedTemplateCP">
-			<var name="templateName" value="Template Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="EditWebContentTemplate" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template1 Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template1 Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template2 Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template2 Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#selectTemplateCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template1 Name" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewSelectedTemplateCP">
-			<var name="templateName" value="WC Template1 Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="UseStructureAndTemplateFromParentSiteHierarchy" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContentWithCustomStructures#UseStructureAndtemplateFromParentSiteHierarchy" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="SystemSettings#openSystemSettingsAdmin" />
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Web Content" />
-			<var name="configurationName" value="Administration" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="showAncestorScopesByDefault" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="JSONGroup#addChildSite">
-			<var name="groupName" value="Child SiteName" />
-			<var name="parentGroupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="HTML" />
-			<var name="fieldFieldLabel" value="HTML" />
-			<var name="fieldName" value="HTML" />
-			<var name="structureFieldName" value="HTML" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="HTML" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="child-sitename" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="child-sitename" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#viewTableEntryCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute function="Click" locator1="TextInput#TITLE" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="AlloyEditor#typeEditor">
-			<var name="content" value="WC WebContent Content" />
-			<var name="editor" value="HTML" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewStructureViaAddMenuCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-	</command>
-
-	<command name="ViewSourceContainsNoGarbageData" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Image" />
-			<var name="fieldFieldLabel" value="Image" />
-			<var name="fieldName" value="image" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text,Image" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="title" />
-			<var name="fieldValue" value="English (United States) Title" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Web Content Images" />
-			<var name="uploadFileName" value="Document_3.png" />
-		</execute>
-
-		<execute macro="FormFields#editTextAlt">
-			<var name="fieldName" value="image" />
-			<var name="fieldValue" value="English (United States) Image Description" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="title" />
-			<var name="fieldValue" value="Spanish (Spain) Title" />
-		</execute>
-
-		<execute macro="FormFields#editTextAlt">
-			<var name="fieldName" value="image" />
-			<var name="fieldValue" value="Spanish (Spain) Image Description" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="en-US" />
-		</execute>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="title" />
-			<var name="fieldValue" value="English (United States) Title" />
-		</execute>
-
-		<execute macro="FormFields#viewTextValueAlt">
-			<var name="fieldName" value="image" />
-			<var name="fieldValue" value="English (United States) Image Description" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="title" />
-			<var name="fieldValue" value="Spanish (Spain) Title" />
-		</execute>
-
-		<execute macro="FormFields#viewTextValueAlt">
-			<var name="fieldName" value="image" />
-			<var name="fieldValue" value="Spanish (Spain) Image Description" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="English (United States) Title" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="View Source" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="WC#SOURCE_GARBAGE_DATA" />
-	</command>
-
-	<command name="WebContentAdministrationDataValidation" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addNullCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editNullCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentContentEdit" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addNullCP" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addNullCP" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addNullCP" />
-	</command>
-
-	<command name="WebcontentAdministrationTemplateValidation" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Image" />
-			<var name="fieldFieldLabel" value="Image" />
-			<var name="fieldName" value="Image" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertClickNoError" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-
-		<execute macro="WebContentStructures#viewTemplateValidation" />
-
-		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="WebContentStructures#viewTemplateValidation" />
-	</command>
-</definition>
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			webContentTitle = "WC Title"
+		);
+
+		Portlet.viewBody(
+			portletBody = "Welcome to Liferay",
+			portletName = "Hello World"
+		);
+	}
+
+	@priority = "3"
+	test AddEmbeddedPortletVelocityTemplate {
+		property osgi.app.includes = "currency-converter";
+		property testray.component.names = "Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateLanguage = "vm",
+			templateName = "WC Template Name"
+		);
+
+		var templateScript = '''$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")''';
+
+		Type.typeAceEditor(
+			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
+			value1 = "${templateScript}"
+		);
+
+		PortletEntry.save();
+
+		SelectFrameTop();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			webContentTitle = "WC Title"
+		);
+
+		Portlet.viewBody(
+			portletBody = "Welcome to Liferay",
+			portletName = "Hello World"
+		);
+	}
+
+	@description = "This is a use case for LPS-52248."
+	@priority = "4"
+	test AddStructureWithSeparatorField {
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Separator",
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		AssertConsoleTextNotPresent(
+			value1 = "Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel"
+		);
+
+		AssertConsoleTextNotPresent(value1 = "freemarker.core.NonStringException");
+	}
+
+	@priority = "4"
+	test AddStructureWithSubfield {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DynamicDataMapping.addFieldNested(
+			field = "Integer",
+			fieldFieldLabel = "Integer",
+			fieldName = "Integer"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentInteger = "123",
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewNestedField(
+			fieldName = "Text",
+			nestedField = "Integer",
+			nestedFieldData = "123"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
+
+		for (var structureFieldName : list "Text,Integer") {
+			DynamicDataMapping.viewField(
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}"
+			);
+		}
+	}
+
+	@priority = "4"
+	test AddStructureWithUnlocalizableFields {
+		property testray.component.names = "Localization,Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		for (var structureFieldName : list "Text,Text Box") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		for (var structureFieldName : list "Text Box") {
+			DynamicDataMapping.editFieldLocalizable(
+				fieldFieldLabel = "${structureFieldName}"
+			);
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text,Text Box",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Text",
+			webContentTextBox = "Text Box",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		WebContent.addCP(webContentTitle = "Title Spanish");
+
+		FormFields.editText(fieldName = "Text", fieldValue = "Text Spanish");
+
+		FormFields.editTextMultiline(
+			fieldName = "TextBox",
+			fieldValue = "Text Box Spanish"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewUnlocalizableTextBox(
+			editLocalizedTextBox = "Text Box Unlocalized",
+			localizedText = "Text Spanish",
+			localizedTextBox = "Text Box",
+			localizedTitle = "Title Spanish",
+			webContentTextBox = "Text Box",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-69560."
+	@priority = "5"
+	test AddStructureWithWebContentAndGeolocationFields {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent 1 Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent 1 Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Geolocation",
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "WebContent",
+			webContentSelectWCFile = "WC WebContent 1 Title",
+			webContentTitle = "WC WebContent 2 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 2 Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent 2 Title");
+
+		WebContent.viewCPWithoutContentField(
+			field = "Web Content",
+			fieldData = "WC WebContent 1 Title",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent",
+			webContentTitle = "WC WebContent 2 Title"
+		);
+
+		WebContent.viewCPWithoutContentField(
+			field = "Geolocation",
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation",
+			webContentTitle = "WC WebContent 2 Title"
+		);
+	}
+
+	@priority = "4"
+	test AddWebContentViaWCDWithGlobalStructureAndLocalTemplate {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Global WC Structure Description",
+			structureName = "Global WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Global WC Structure Name",
+			templateDescription = "Local WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "Local WC Template Name"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addWithGlobalStructurePGViaWCD(
+			fieldName = "Text",
+			selectStructureName = "Basic Web Content",
+			structureName = "Global WC Structure Name",
+			templateName = "Local WC Template Name",
+			webContentContent = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "3"
+	test AddWebContentWithColorField {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Color",
+			fieldFieldLabel = "Color",
+			fieldName = "Color"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Color",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentColor = "FFFFFF",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+		Content.addPG(assetTitle = "WC WebContent Title");
+
+		WebContent.viewPGViaWCD(webContentContent = "#FFFFFF");
+	}
+
+	@priority = "3"
+	test AddWebContentWithGlobalStructureAndEditedDefaultValues {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Global Structure"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(
+			addRoleViewPermissions = "Power User",
+			structureName = "Global Structure"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			addRoleViewPermissions = "Power User",
+			structureName = "Global Structure",
+			templateDescription = "Template Description",
+			templateName = "Template Name"
+		);
+
+		WebContentTemplates.addRoleViewPermissions(
+			roles = "Power User",
+			templateName = "Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.editSubstructureDefaultValuesCP(
+			editSubstructureFieldNames = "Text",
+			substructureName = "Global Structure"
+		);
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "test1@liferay.com",
+			userFirstName = "test1",
+			userLastName = "test1",
+			userScreenName = "test1test"
+		);
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "test1@liferay.com",
+			userScreenName = "test1test"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "test1",
+			userLastName = "test1",
+			userScreenName = "test1test"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignSiteRoleCP(
+			resourceName = "test1 test1",
+			roleTitle = "Site Administrator"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test1@liferay.com",
+			userLoginFullName = "test1 test1"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Global Structure");
+
+		WebContent.addWithStructureCP(
+			saveAsDraft = "true",
+			structureName = "Global Structure",
+			webContentText = "Web Content Text",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+	}
+
+	@priority = "4"
+	test AddWebContentWithImageField {
+		property test.name.skip.portal.instance = "WebContentWithCustomStructures#AddWebContentWithImageField";
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Image",
+			fieldName = "Image"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Image",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentImage = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.viewImageFieldViaWCD();
+	}
+
+	@priority = "4"
+	test AddWebContentWithStructure {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "3"
+	test AddWebContentWithTemplateXSL {
+		property testray.component.names = "Web Content Administration,XSL";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateFile = "xsl_template.xsl",
+			templateLanguage = "xsl",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContentNavigator.gotoPreviewViaHeaderCP(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.preview(
+			fieldName = "Text",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test DeleteTemplateAndStructureWithReferencedWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentStructures.deleteCP(
+			structureName = "WC Structure Name",
+			webContentHasReference = "true"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.deleteCP(
+			templateName = "WC Template Name",
+			webContentHasReference = "true"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentStructures.deleteCP(
+			structureName = "WC Structure Name",
+			webContentHasReference = "true"
+		);
+	}
+
+	@priority = "4"
+	test EditArticleMadeFromGlobalStructure {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Global WC Structure Description",
+			structureName = "Global WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Global WC Structure Name",
+			templateDescription = "Global WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "Global WC Template Name"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addWithGlobalStructurePGViaWCD(
+			fieldName = "Text",
+			selectStructureName = "Basic Web Content",
+			structureName = "Global WC Structure Name",
+			templateName = "Global WC Template Name",
+			webContentContent = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.editPGViaWCD(
+			structureName = "Global WC Structure Name",
+			templateName = "WC Template2 Name",
+			webContentContentEdit = "WC WebContent Text Edit",
+			webContentText = "WC WebContent Text Edit",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "5"
+	test EditContentWithTitleAndAllFieldsNull {
+		property testray.component.names = "Training,Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publishAndWait();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test EditGlobalWebContentTemplate {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Global WC Structure Description",
+			structureName = "Global WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Global WC Structure Name",
+			templateDescription = "Global WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "Global WC Template Name"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addWithGlobalStructurePGViaWCD(
+			fieldName = "Text",
+			selectStructureName = "Basic Web Content",
+			structureName = "Global WC Structure Name",
+			templateName = "Global WC Template Name",
+			webContentContent = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.editTemplate(
+			editTemplateButton = "true",
+			structureName = "Global WC Structure Name",
+			templateName = "Template Edit",
+			webContentContent = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewSelectedTemplateCP(
+			templateName = "Template Edit",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test EditWebContentTemplate {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template1 Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template1 Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template2 Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template2 Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.selectTemplateCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template1 Name"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewSelectedTemplateCP(
+			templateName = "WC Template1 Name",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test UseStructureAndTemplateFromParentSiteHierarchy {
+		property test.name.skip.portal.instance = "WebContentWithCustomStructures#UseStructureAndtemplateFromParentSiteHierarchy";
+		property testray.component.names = "Web Content Administration";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "showAncestorScopesByDefault");
+
+		SystemSettings.saveConfiguration();
+
+		JSONGroup.addChildSite(
+			groupName = "Child SiteName",
+			parentGroupName = "Test Site Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "HTML",
+			fieldFieldLabel = "HTML",
+			fieldName = "HTML",
+			structureFieldName = "HTML"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "HTML",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "child-sitename");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "child-sitename");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.viewTableEntryCP(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		Click(locator1 = "TextInput#TITLE");
+
+		PortletEntry.inputTitle(title = "WC WebContent Title");
+
+		AlloyEditor.typeEditor(content = "WC WebContent Content", editor = "HTML");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "3"
+	test ViewGlobalStructureViaAddMenuInLiferaySite {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewStructureViaAddMenuCP(structureName = "WC Structure Name");
+	}
+
+	@priority = "4"
+	test ViewSourceContainsNoGarbageData {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Image",
+			fieldName = "image"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text,Image",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		FormFields.editText(
+			fieldName = "title",
+			fieldValue = "English (United States) Title"
+		);
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Web Content Images",
+			uploadFileName = "Document_3.png"
+		);
+
+		FormFields.editTextAlt(
+			fieldName = "image",
+			fieldValue = "English (United States) Image Description"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		FormFields.editText(fieldName = "title", fieldValue = "Spanish (Spain) Title");
+
+		FormFields.editTextAlt(
+			fieldName = "image",
+			fieldValue = "Spanish (Spain) Image Description"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "en-US");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "English (United States) Title"
+		);
+
+		FormFields.viewTextValueAlt(
+			fieldName = "image",
+			fieldValue = "English (United States) Image Description"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "Spanish (Spain) Title"
+		);
+
+		FormFields.viewTextValueAlt(
+			fieldName = "image",
+			fieldValue = "Spanish (Spain) Image Description"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = "English (United States) Title"
+		);
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "View Source");
+
+		AssertElementNotPresent(locator1 = "WC#SOURCE_GARBAGE_DATA");
+	}
+
+	@priority = "4"
+	test WebContentAdministrationDataValidation {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addNullCP(webContentContent = "WC WebContent Content");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editNullCP(
+			webContentContent = "WC WebContent Content",
+			webContentContentEdit = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addNullCP();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addNullCP();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addNullCP();
+	}
+
+	@priority = "4"
+	test WebcontentAdministrationTemplateValidation {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Image",
+			fieldName = "Image"
+		);
+
+		WebContentStructures.saveCP();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentNavigator.gotoAddPGViaWCD(structureName = "WC Structure Name");
+
+		WebContent.addCP(webContentTitle = "WC WebContent Title");
+
+		AssertClickNoError(locator1 = "Button#SAVE_AS_DRAFT", value1 = "Save as Draft");
+
+		WebContentStructures.viewTemplateValidation();
+
+		AssertClickNoError(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		WebContentStructures.viewTemplateValidation();
+	}
+}

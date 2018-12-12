@@ -1,422 +1,341 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddStructures" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 1" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name 1" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 2" />
-		</execute>
-
-		<for list="HTML,Image,Integer,Link to Page" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name 2" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 3" />
-		</execute>
-
-		<for list="Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name 3" />
-		</execute>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="NavItem#gotoStructures" />
+		User.firstLoginPG();
 
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 1" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name 1" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="NavItem#gotoStructures" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 2" />
-		</execute>
+	@priority = "5"
+	test AddStructures {
+		property testray.component.names = "Training,Web Content Administration";
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name 2" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<for list="HTML,Image,Integer,Link to Page" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
+		NavItem.gotoStructures();
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 1"
+		);
 
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name 3" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name 3" />
-		</execute>
+		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
 
-		<for list="Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-	</command>
+		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
 
-	<command name="AddStructureViaLocaleURL" priority="4">
-		<description message="This is a use case for LPS-77387." />
-		<property name="test.name.skip.portal.instance" value="WebContentStructures#AddStructureViaLocaleURL" />
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		NavItem.gotoStructures();
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/en/" />
-		</execute>
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 2"
+		);
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
 
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
+		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
 
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="Navigator#ensureLocaleURL">
-			<var name="locale" value="en" />
-		</execute>
-
-		<execute macro="WebContentStructures#addName">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescriptionTextInput">
-			<var name="description" value="WC Structure Description" />
-		</execute>
+		NavItem.gotoStructures();
 
-		<execute function="SelectFrame" value1="relative=top" />
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 3"
+		);
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
+		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
 
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavItem#gotoStructures" />
+		NavItem.gotoStructures();
 
-		<execute function="AssertElementNotPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
-			<var name="key_ddlDataDefinitionName" value="WC Structure Name" />
-		</execute>
-	</command>
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 1"
+		);
 
-	<command name="EditSubstructureDefaultValues" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 1");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
+			DynamicDataMapping.viewField(
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
 
-		<execute macro="NavItem#gotoStructures" />
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name1" />
-		</execute>
+		NavItem.gotoStructures();
 
-		<for list="Text,Text Box,Image,Documents and Media" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 2"
+		);
 
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name1" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 2");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
+			DynamicDataMapping.viewField(
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
 
-		<execute macro="NavItem#gotoStructures" />
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		NavItem.gotoStructures();
 
-		<execute macro="WebContentStructures#addName">
-			<var name="structureName" value="2" />
-		</execute>
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name 3"
+		);
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 3");
 
-		<execute macro="PortletEntry#inputDescriptionTextInput">
-			<var name="description" value="WC Structure Description" />
-		</execute>
+		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
+			DynamicDataMapping.viewField(
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+	}
 
-		<execute macro="WebContentStructures#addSubstructure">
-			<var name="parentStructureName" value="WC Structure Name1" />
-			<var name="structureName" value="2" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Integer" />
-			<var name="fieldFieldLabel" value="Integer" />
-			<var name="fieldName" value="Integer" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name1" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#editSubstructureDefaultValuesCP">
-			<var name="editSubstructureFieldNames" value="Text" />
-			<var name="substructureName" value="2" />
-		</execute>
-	</command>
-
-	<command name="ValidateDDMNavigation" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
+	@description = "This is a use case for LPS-77387."
+	@priority = "4"
+	test AddStructureViaLocaleURL {
+		property test.name.skip.portal.instance = "WebContentStructures#AddStructureViaLocaleURL";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
+		Navigator.openSpecificURL(url = "${portalURL}/en/");
 
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentNavigator#gotoManageTemplatesViaStructures">
-			<var name="structureName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="Test WC Template Description" />
-			<var name="templateName" value="Test WC Template" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Test WC Template" />
-		</execute>
-
-		<execute macro="Navigator#gotoBack" />
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Templates for Structure: Basic Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewTableEntryCP">
-			<var name="templateDescription" value="Test WC Template Description" />
-			<var name="templateName" value="Test WC Template" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewTableEntryCP">
-			<var name="templateDescription" value="" />
-			<var name="templateName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentStructures#viewTableEntryCP">
-			<var name="structureDescription" value="Basic Web Content" />
-			<var name="structureName" value="Basic Web Content" />
-		</execute>
-	</command>
-
-	<command name="ViewFavoriteStructure" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<var name="n" value="0" />
-
-		<while>
-			<not>
-				<equals arg1="${n}" arg2="15" />
-			</not>
-			<then>
-				<execute macro="WebContentStructures#addCP">
-					<var name="structureDescription" value="WC Structure Description" />
-					<var name="structureName" value="WC Structure Name ${n}" />
-				</execute>
-
-				<execute macro="DynamicDataMapping#addField">
-					<var name="field" value="HTML" />
-					<var name="fieldFieldLabel" value="HTML" />
-					<var name="fieldName" value="HTML" />
-				</execute>
-
-				<execute macro="WebContentStructures#saveCP">
-					<var name="structureName" value="${structureName}" />
-				</execute>
-
-				<var method="MathUtil#sum('${n}', '1')" name="n" />
-			</then>
-		</while>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoMoreStructuresViaPlusButton">
-			<var name="pageMod" value="8 of 17" />
-		</execute>
-
-		<for list="Basic Web Content,WC Structure Name 0,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9,WC Structure Name 10,WC Structure Name 11,WC Structure Name 12,WC Structure Name 13,WC Structure Name 14" param="structureName">
-			<execute macro="WebContentStructures#viewStructuresViaMoreIFrame">
-				<var name="structureName" value="${structureName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#viewNoFavoriteStructure" />
-
-		<execute macro="WebContentStructures#addFavoriteStructure">
-			<var name="structureName" value="WC Structure Name 9" />
-		</execute>
-
-		<execute macro="WebContentStructures#viewFavoriteStructureViaIFrame">
-			<var name="indexNumber" value="1" />
-			<var name="structureName" value="WC Structure Name 9" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentStructures#viewFavoriteStructureViaPlusButton">
-			<var name="structureName" value="WC Structure Name 9" />
-		</execute>
-	</command>
-</definition>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		Navigator.ensureLocaleURL(locale = "en");
+
+		WebContentStructures.addName(structureName = "WC Structure Name");
+
+		Panel.expandPanel(panel = "Details");
+
+		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
+
+		SelectFrame(value1 = "relative=top");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		AssertElementNotPresent(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2",
+			key_ddlDataDefinitionName = "WC Structure Name"
+		);
+	}
+
+	@priority = "4"
+	test EditSubstructureDefaultValues {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name1"
+		);
+
+		for (var structureFieldName : list "Text,Text Box,Image,Documents and Media") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name1");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentStructures.addName(structureName = "2");
+
+		Panel.expandPanel(panel = "Details");
+
+		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
+
+		WebContentStructures.addSubstructure(
+			parentStructureName = "WC Structure Name1",
+			structureName = "2"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Integer",
+			fieldFieldLabel = "Integer",
+			fieldName = "Integer"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name1");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.editSubstructureDefaultValuesCP(
+			editSubstructureFieldNames = "Text",
+			substructureName = "2"
+		);
+	}
+
+	@priority = "4"
+	test ValidateDDMNavigation {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(
+			structureName = "Basic Web Content"
+		);
+
+		WebContentTemplates.addCP(
+			templateDescription = "Test WC Template Description",
+			templateName = "Test WC Template"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Test WC Template");
+
+		Navigator.gotoBack();
+
+		SiteAdmin.viewPortletTitle(
+			portletTitle = "Templates for Structure: Basic Web Content"
+		);
+
+		WebContentTemplates.viewTableEntryCP(
+			templateDescription = "Test WC Template Description",
+			templateName = "Test WC Template"
+		);
+
+		WebContentTemplates.viewTableEntryCP(
+			templateDescription = "",
+			templateName = "Basic Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		SiteAdmin.viewPortletTitle(portletTitle = "Web Content");
+
+		WebContentStructures.viewTableEntryCP(
+			structureDescription = "Basic Web Content",
+			structureName = "Basic Web Content"
+		);
+	}
+
+	@priority = "4"
+	test ViewFavoriteStructure {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		var n = "0";
+
+		while (!("${n}" == "15")) {
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name ${n}"
+			);
+
+			DynamicDataMapping.addField(
+				field = "HTML",
+				fieldFieldLabel = "HTML",
+				fieldName = "HTML"
+			);
+
+			WebContentStructures.saveCP(structureName = "${structureName}");
+
+			var n = MathUtil.sum("${n}", "1");
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 17");
+
+		for (var structureName : list "Basic Web Content,WC Structure Name 0,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9,WC Structure Name 10,WC Structure Name 11,WC Structure Name 12,WC Structure Name 13,WC Structure Name 14") {
+			WebContentStructures.viewStructuresViaMoreIFrame(
+				structureName = "${structureName}"
+			);
+		}
+
+		WebContentStructures.viewNoFavoriteStructure();
+
+		WebContentStructures.addFavoriteStructure(structureName = "WC Structure Name 9");
+
+		WebContentStructures.viewFavoriteStructureViaIFrame(
+			indexNumber = "1",
+			structureName = "WC Structure Name 9"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentStructures.viewFavoriteStructureViaPlusButton(
+			structureName = "WC Structure Name 9"
+		);
+	}
+}

@@ -1,934 +1,888 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Adaptive Media" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-	</tear-down>
-
-	<command name="AddAMIWithHighDensityResolution" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="addHighDensityDisplay" value="true" />
-			<var name="description" value="Low resolution variant" />
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Low Resolution-2x" />
-			<var name="maxHeight" value="960" />
-			<var name="maxWidth" value="640" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="Low Resolution" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantDescription">
-			<var name="description" value="Low resolution variant" />
-		</execute>
-	</command>
-
-	<command name="AddAMIWithZeroPixels" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Zero Resolution" />
-			<var name="maxHeight" value="0" />
-			<var name="maxWidth" value="0" />
-			<var name="zero" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution">
-			<var name="imageName" value="Zero Resolution" />
-		</execute>
-	</command>
-
-	<command name="AddAndEditEntriesWithSpecialCharacters" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="description" value="1234567890!@#$%^&amp;*()~`" />
-			<var name="imageName" value="abcdefghijklmnopqrstuvwxyz" />
-			<var name="maxHeight" value="25" />
-			<var name="maxWidth" value="25" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="abcdefghijklmnopqrstuvwxyz" />
-			<var name="imageNameEdit" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="1234567890!@#$%^&amp;*()~`" />
-			<var name="maxHeight" value="75" />
-			<var name="maxWidth" value="75" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="1234567890!@#$%^&amp;*()~`" />
-			<var name="imageNameEdit" value="[]\{}|:&quot;;',./&gt;&lt;?" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantDescription">
-			<var name="description" value="1234567890!@#$%^&amp;*()~`" />
-		</execute>
-	</command>
-
-	<command name="AddAndUpdateAMIWithImagesInDM" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptRemainingImages">
-			<var name="imageName" value="Low Resolution" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="High Resolution" />
-			<var name="maxHeight" value="1280" />
-			<var name="maxWidth" value="1440" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="High Resolution" />
-			<var name="maxHeight" value="1280" />
-			<var name="maxWidth" value="1440" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#selectAdaptiveMediaImage">
-			<var name="imageName" value="High Resolution" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNumberOfAdaptedImages">
-			<var name="numberOfAdaptedImages" value="0/1" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="High Resolution" />
-			<var name="imageNameEdit" value="High Resolution Edited" />
-			<var name="maxHeightEdit" value="1080" />
-			<var name="maxWidthEdit" value="1920" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#selectAdaptiveMediaImage">
-			<var name="imageName" value="High Resolution Edited" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNumberOfAdaptedImages">
-			<var name="numberOfAdaptedImages" value="0/1" />
-		</execute>
-	</command>
-
-	<command name="AddDuplicateImageResolution" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="customID" value="custom-id" />
-			<var name="imageName" value="Image Variant With Custom ID" />
-			<var name="maxHeight" value="350" />
-			<var name="maxWidth" value="450" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="customID" value="custom-id" />
-			<var name="duplicate" value="true" />
-			<var name="imageName" value="Image Variant With Duplicate Custom ID" />
-			<var name="maxHeight" value="350" />
-			<var name="maxWidth" value="450" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution" />
-	</command>
-
-	<command name="AddImageResolutionWithNoDimensions" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="testResolutionNoDimensions" />
-			<var name="maxHeight" value="" />
-			<var name="maxWidth" value="" />
-			<var name="noDimensions" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution">
-			<var name="imageName" value="testResolutionNoDimensions" />
-		</execute>
-	</command>
-
-	<command name="AddImageResolutionWithSingleDimension" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="description" value="Image Resolution Width" />
-			<var name="imageName" value="testResolutionWidth" />
-			<var name="maxHeight" value="" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="testResolutionWidth" />
-			<var name="maxHeight" value="Auto" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="description" value="Image Resolution Height" />
-			<var name="imageName" value="testResolutionHeight" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="testResolutionHeight" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="Auto" />
-		</execute>
-	</command>
-
-	<command name="AssertAdaptedImageInBlogsEntry" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="Adaptive Media Image Description" />
-			<var name="dmDocumentFile" value="high_resolution_photo.jpg" />
-			<var name="dmDocumentTitle" value="high_resolution_photo.jpg" />
-		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Entry With Adaptive Media Image" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
-
-		<execute macro="ItemSelector#selectDMImage">
-			<var name="imageFileName" value="high_resolution_photo.jpg" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute function="Pause" locator1="2000" />
-
-		<execute macro="AdaptiveMedia#viewImageVariantURL">
-			<var name="imageName" value="high_resolution_photo.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-	</command>
-
-	<command name="AssertAdaptedImageInWebContent" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="Adaptive Media Image Description" />
-			<var name="dmDocumentFile" value="high_resolution_photo.jpg" />
-			<var name="dmDocumentTitle" value="high_resolution_photo.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithDocumentCP">
-			<var name="dmDocumentTitle" value="high_resolution_photo.jpg" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantURL">
-			<var name="imageName" value="high_resolution_photo.jpg" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-	</command>
-
-	<command name="CannotAddNonNumericWidthOrHeight" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addNonNumericImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="notallowed" />
-			<var name="maxWidth" value="notallowed" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-		</execute>
-	</command>
-
-	<command name="EditAndDeleteDisabledAMI" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageState" value="Enabled" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#disableImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageState" value="Disabled" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageNameEdit" value="Large Image Variant" />
-			<var name="maxHeightEdit" value="1000" />
-			<var name="maxWidthEdit" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="imageState" value="Disabled" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#deleteImageResolution">
-			<var name="imageName" value="Large Image Variant" />
-		</execute>
-	</command>
-
-	<command name="EditImageResolutionWithAdaptedImages" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageState" value="Enabled" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageNameEdit" value="Small Image Variant Edited" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant Edited" />
-			<var name="imageState" value="Enabled" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-	</command>
-
-	<command name="EditImageResolutionWithNoDimensions" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="testResolution" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="testResolution" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="testResolution" />
-			<var name="imageNameEdit" value="testResolutionEdit" />
-			<var name="maxHeightEdit" value="" />
-			<var name="maxWidthEdit" value="" />
-			<var name="noDimensions" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution">
-			<var name="imageName" value="testResolutionEdit" />
-		</execute>
-	</command>
-
-	<command name="EditImageResolutionWithoutAdaptedImage" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageState" value="Enabled" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageIDEdit" value="large-image" />
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageNameEdit" value="Large Image Variant" />
-			<var name="maxHeightEdit" value="1000" />
-			<var name="maxWidthEdit" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="imageState" value="Enabled" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-	</command>
-
-	<command name="EditImageResolutionWithSingleDimension" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="testResolutionWidth" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="testResolutionWidth" />
-			<var name="imageNameEdit" value="testResolutionWidthEdit" />
-			<var name="maxHeightEdit" value="" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="testResolutionWidthEdit" />
-			<var name="maxHeight" value="Auto" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="testResolutionHeight" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="testResolutionHeight" />
-			<var name="imageNameEdit" value="testResolutionHeightEdit" />
-			<var name="maxWidthEdit" value="" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="testResolutionHeightEdit" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="Auto" />
-		</execute>
-	</command>
-
-	<command name="OptimizeAllImageResolutions" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Medium Image Variant" />
-			<var name="maxHeight" value="500" />
-			<var name="maxWidth" value="500" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptAllImages" />
-	</command>
-
-	<command name="ViewAutomaticAndCustomImageVariantIDs" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="Small Image Variant" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantID">
-			<var name="imageVariantID" value="small-image-variant" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="imageNameEdit" value="Edited Small Image Variant" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="Edited Small Image Variant" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantID">
-			<var name="imageVariantID" value="edited-small-image-variant" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="customID" value="custom-id" />
-			<var name="imageName" value="Image Variant With Custom ID" />
-			<var name="maxHeight" value="200" />
-			<var name="maxWidth" value="200" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="Image Variant With Custom ID" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantID">
-			<var name="imageVariantID" value="custom-id" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#editImageResolution">
-			<var name="imageName" value="Image Variant With Custom ID" />
-			<var name="imageNameEdit" value="Custom ID Should Not Change" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
-			<var name="imageName" value="Custom ID Should Not Change" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageVariantID">
-			<var name="imageVariantID" value="custom-id" />
-		</execute>
-	</command>
-
-	<command name="ViewNoImageResolutionInNewVirtualInstance" priority="4">
-		<property name="test.name.skip.portal.instance" value="AdaptiveMedia#ViewNoImageResolutionInNewVirtualInstance" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
-
-		<execute macro="PortalInstances#addCP">
-			<var name="mailDomain" value="www.able.com" />
-			<var name="virtualHost" value="www.able.com" />
-			<var name="webId" value="www.able.com" />
-		</execute>
-
-		<execute macro="PortalInstances#viewCP">
-			<var name="virtualHost" value="www.able.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="This should not appear on new virtual instance" />
-			<var name="maxHeight" value="300" />
-			<var name="maxWidth" value="300" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@www.able.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNoImageResolution">
-			<var name="imageName" value="This should not appear on new virtual instance" />
-		</execute>
-	</command>
-
-	<command name="ViewNumberOfAdaptedImagesAfterAdaptingImages" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Low Resolution" />
-			<var name="maxHeight" value="480" />
-			<var name="maxWidth" value="320" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<for list="1,2" param="entryCount">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Documents and Media" />
-			</execute>
-
-			<execute macro="DMDocument#addCP">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptRemainingImages">
-			<var name="imageName" value="Low Resolution" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#disableImageResolution">
-			<var name="imageName" value="Low Resolution" />
-			<var name="imageState" value="Disabled" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Another Site Name" />
-		</execute>
-
-		<for list="1,2" param="entryCount">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Documents and Media" />
-			</execute>
-
-			<execute macro="DMDocument#addCP">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.jpg" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#selectAdaptiveMediaImage">
-			<var name="imageName" value="Low Resolution" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNumberOfAdaptedImages">
-			<var name="numberOfAdaptedImages" value="2/4" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#enableImageResolution">
-			<var name="imageName" value="Low Resolution" />
-			<var name="imageState" value="Enabled" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptRemainingImages">
-			<var name="imageName" value="Low Resolution" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#selectAdaptiveMediaImage">
-			<var name="imageName" value="Low Resolution" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewNumberOfAdaptedImages">
-			<var name="numberOfAdaptedImages" value="4/4" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Adaptive Media";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	}
+
+	@priority = "5"
+	test AddAMIWithHighDensityResolution {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			addHighDensityDisplay = "true",
+			description = "Low resolution variant",
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution-2x",
+			maxHeight = "960",
+			maxWidth = "640",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "Low Resolution");
+
+		AdaptiveMedia.viewImageVariantDescription(
+			description = "Low resolution variant"
+		);
+	}
+
+	@priority = "5"
+	test AddAMIWithZeroPixels {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Zero Resolution",
+			maxHeight = "0",
+			maxWidth = "0",
+			zero = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution(imageName = "Zero Resolution");
+	}
+
+	@priority = "4"
+	test AddAndEditEntriesWithSpecialCharacters {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			description = "1234567890!@#$%^&amp;*()~`",
+			imageName = "abcdefghijklmnopqrstuvwxyz",
+			maxHeight = "25",
+			maxWidth = "25"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "abcdefghijklmnopqrstuvwxyz",
+			imageNameEdit = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "1234567890!@#$%^&amp;*()~`",
+			maxHeight = "75",
+			maxWidth = "75"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "1234567890!@#$%^&amp;*()~`",
+			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+		AdaptiveMedia.viewImageVariantDescription(
+			description = "1234567890!@#$%^&amp;*()~`"
+		);
+	}
+
+	@priority = "5"
+	test AddAndUpdateAMIWithImagesInDM {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320",
+			percentAdapted = "0"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.adaptRemainingImages(
+			imageName = "Low Resolution",
+			percentAdapted = "100"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "High Resolution",
+			maxHeight = "1280",
+			maxWidth = "1440"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "High Resolution",
+			maxHeight = "1280",
+			maxWidth = "1440",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/1");
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "High Resolution",
+			imageNameEdit = "High Resolution Edited",
+			maxHeightEdit = "1080",
+			maxWidthEdit = "1920"
+		);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution Edited");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/1");
+	}
+
+	@priority = "4"
+	test AddDuplicateImageResolution {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			customID = "custom-id",
+			imageName = "Image Variant With Custom ID",
+			maxHeight = "350",
+			maxWidth = "450"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			customID = "custom-id",
+			duplicate = "true",
+			imageName = "Image Variant With Duplicate Custom ID",
+			maxHeight = "350",
+			maxWidth = "450"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution();
+	}
+
+	@priority = "4"
+	test AddImageResolutionWithNoDimensions {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "testResolutionNoDimensions",
+			maxHeight = "",
+			maxWidth = "",
+			noDimensions = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionNoDimensions");
+	}
+
+	@priority = "4"
+	test AddImageResolutionWithSingleDimension {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			description = "Image Resolution Width",
+			imageName = "testResolutionWidth",
+			maxHeight = "",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "testResolutionWidth",
+			maxHeight = "Auto",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			description = "Image Resolution Height",
+			imageName = "testResolutionHeight",
+			maxHeight = "1000",
+			maxWidth = ""
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "testResolutionHeight",
+			maxHeight = "1000",
+			maxWidth = "Auto"
+		);
+	}
+
+	@priority = "5"
+	test AssertAdaptedImageInBlogsEntry {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Adaptive Media Image Description",
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "high_resolution_photo.jpg"
+		);
+
+		Pause(locator1 = "3000");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry With Adaptive Media Image");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.selectDMImage(
+			imageFileName = "high_resolution_photo.jpg",
+			navTab = "Documents and Media"
+		);
+
+		Pause(locator1 = "2000");
+
+		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
+
+		Button.clickPublish();
+	}
+
+	@priority = "5"
+	test AssertAdaptedImageInWebContent {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Adaptive Media Image Description",
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "high_resolution_photo.jpg"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithDocumentCP(
+			dmDocumentTitle = "high_resolution_photo.jpg",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
+
+		Button.clickPublish();
+	}
+
+	@priority = "5"
+	test CannotAddNonNumericWidthOrHeight {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addNonNumericImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "notallowed",
+			maxWidth = "notallowed"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution(imageName = "Small Image Variant");
+	}
+
+	@priority = "5"
+	test EditAndDeleteDisabledAMI {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Small Image Variant",
+			imageState = "Enabled",
+			maxHeight = "100",
+			maxWidth = "100",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.disableImageResolution(
+			imageName = "Small Image Variant",
+			imageState = "Disabled",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Small Image Variant",
+			imageNameEdit = "Large Image Variant",
+			maxHeightEdit = "1000",
+			maxWidthEdit = "1000"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Large Image Variant",
+			imageState = "Disabled",
+			maxHeight = "1000",
+			maxWidth = "1000",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.deleteImageResolution(imageName = "Large Image Variant");
+	}
+
+	@priority = "5"
+	test EditImageResolutionWithAdaptedImages {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Small Image Variant",
+			imageState = "Enabled",
+			maxHeight = "100",
+			maxWidth = "100",
+			percentAdapted = "0"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Small Image Variant",
+			imageNameEdit = "Small Image Variant Edited"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Small Image Variant Edited",
+			imageState = "Enabled",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+	}
+
+	@priority = "4"
+	test EditImageResolutionWithNoDimensions {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "testResolution",
+			maxHeight = "1000",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "testResolution",
+			maxHeight = "1000",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "testResolution",
+			imageNameEdit = "testResolutionEdit",
+			maxHeightEdit = "",
+			maxWidthEdit = "",
+			noDimensions = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionEdit");
+	}
+
+	@priority = "5"
+	test EditImageResolutionWithoutAdaptedImage {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Small Image Variant",
+			imageState = "Enabled",
+			maxHeight = "100",
+			maxWidth = "100",
+			percentAdapted = "0"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageIDEdit = "large-image",
+			imageName = "Small Image Variant",
+			imageNameEdit = "Large Image Variant",
+			maxHeightEdit = "1000",
+			maxWidthEdit = "1000"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Large Image Variant",
+			imageState = "Enabled",
+			maxHeight = "1000",
+			maxWidth = "1000",
+			percentAdapted = "0"
+		);
+	}
+
+	@priority = "4"
+	test EditImageResolutionWithSingleDimension {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "testResolutionWidth",
+			maxHeight = "1000",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "testResolutionWidth",
+			imageNameEdit = "testResolutionWidthEdit",
+			maxHeightEdit = ""
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "testResolutionWidthEdit",
+			maxHeight = "Auto",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "testResolutionHeight",
+			maxHeight = "1000",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "testResolutionHeight",
+			imageNameEdit = "testResolutionHeightEdit",
+			maxWidthEdit = ""
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "testResolutionHeightEdit",
+			maxHeight = "1000",
+			maxWidth = "Auto"
+		);
+	}
+
+	@priority = "4"
+	test OptimizeAllImageResolutions {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Medium Image Variant",
+			maxHeight = "500",
+			maxWidth = "500"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Large Image Variant",
+			maxHeight = "1000",
+			maxWidth = "1000"
+		);
+
+		AdaptiveMedia.adaptAllImages();
+	}
+
+	@priority = "4"
+	test ViewAutomaticAndCustomImageVariantIDs {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Small Image Variant",
+			maxHeight = "100",
+			maxWidth = "100"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "Small Image Variant");
+
+		AdaptiveMedia.viewImageVariantID(imageVariantID = "small-image-variant");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Small Image Variant",
+			imageNameEdit = "Edited Small Image Variant"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "Edited Small Image Variant");
+
+		AdaptiveMedia.viewImageVariantID(imageVariantID = "edited-small-image-variant");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			customID = "custom-id",
+			imageName = "Image Variant With Custom ID",
+			maxHeight = "200",
+			maxWidth = "200"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "Image Variant With Custom ID");
+
+		AdaptiveMedia.viewImageVariantID(imageVariantID = "custom-id");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Image Variant With Custom ID",
+			imageNameEdit = "Custom ID Should Not Change"
+		);
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "Custom ID Should Not Change");
+
+		AdaptiveMedia.viewImageVariantID(imageVariantID = "custom-id");
+	}
+
+	@priority = "4"
+	test ViewNoImageResolutionInNewVirtualInstance {
+		property test.name.skip.portal.instance = "AdaptiveMedia#ViewNoImageResolutionInNewVirtualInstance";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances"
+		);
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com"
+		);
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "This should not appear on new virtual instance",
+			maxHeight = "300",
+			maxWidth = "300"
+		);
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.viewNoImageResolution(
+			imageName = "This should not appear on new virtual instance"
+		);
+	}
+
+	@priority = "5"
+	test ViewNumberOfAdaptedImagesAfterAdaptingImages {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320"
+		);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320",
+			percentAdapted = "0"
+		);
+
+		for (var entryCount : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Documents and Media"
+			);
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${entryCount}.jpg",
+				dmDocumentTitle = "Document_${entryCount}.jpg"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.adaptRemainingImages(
+			imageName = "Low Resolution",
+			percentAdapted = "100"
+		);
+
+		AdaptiveMedia.disableImageResolution(
+			imageName = "Low Resolution",
+			imageState = "Disabled",
+			percentAdapted = "100"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Another Site Name");
+
+		for (var entryCount : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Documents and Media"
+			);
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${entryCount}.jpg",
+				dmDocumentTitle = "Document_${entryCount}.jpg"
+			);
+		}
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media"
+		);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "2/4");
+
+		AdaptiveMedia.enableImageResolution(
+			imageName = "Low Resolution",
+			imageState = "Enabled"
+		);
+
+		AdaptiveMedia.adaptRemainingImages(
+			imageName = "Low Resolution",
+			percentAdapted = "100"
+		);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "4/4");
+	}
+}

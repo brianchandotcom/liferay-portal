@@ -1,189 +1,144 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Content Pages" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Search" />
-		</execute>
+		JSONLayout.addPublicLayout(groupName = "Test Site Name", layoutName = "Search");
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/search" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search Results" />
-		</execute>
+		Portlet.addPG(portletName = "Search Results");
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/search" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Type Facet" />
-		</execute>
+		Portlet.addPG(portletName = "Type Facet");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
-	</set-up>
+		PageEditor.expandContentPageFragmentSidebar();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="FilterByPageFacet" priority="5">
-		<description message="This is a test for LPS-78928. Content pages will appear when users filter search results by page facet." />
-		<property name="portal.acceptance" value="true" />
+	@description = "This is a test for LPS-78928. Content pages will appear when users filter search results by page facet."
+	@priority = "5"
+	test FilterByPageFacet {
+		property portal.acceptance = "true";
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Static Text" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Static Text"
+		);
 
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="This is static text" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Web Content Title" />
-		</execute>
+		JSONWebcontent.addWebContent(
+			content = "This is static text",
+			groupName = "Test Site Name",
+			title = "Web Content Title"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="static" />
-		</execute>
+		Search.searchCP(searchTerm = "static");
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
+		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Web Content Title" />
-		</execute>
+		Search.viewResultAssetTitle(searchAssetTitle = "Web Content Title");
 
-		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
-			<var name="key_checkboxName" value="Page" />
-			<var name="key_facetClass" value="Type" />
-		</execute>
+		Check(
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC",
+			key_checkboxName = "Page",
+			key_facetClass = "Type"
+		);
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
+		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
-		<execute macro="Search#viewNoResultAssetTitle">
-			<var name="searchAssetTitle" value="Web Content Title" />
-		</execute>
-	</command>
+		Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Title");
+	}
 
-	<command name="SearchEditableText" priority="5">
-		<description message="This is a test for LPS-78928. Editable text in content pages is searchable." />
-		<property name="portal.acceptance" value="true" />
+	@description = "This is a test for LPS-78928. Editable text in content pages is searchable."
+	@priority = "5"
+	test SearchEditableText {
+		property portal.acceptance = "true";
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="duis" />
-		</execute>
+		Search.searchCP(searchTerm = "duis");
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
+		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name?p_l_mode=edit" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit"
+		);
 
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="text" value="New editable fragment text" />
-		</execute>
+		PageEditor.editFragmentText(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			text = "New editable fragment text"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="editable" />
-		</execute>
+		Search.searchCP(searchTerm = "editable");
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
+		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="duis" />
-		</execute>
+		Search.searchCP(searchTerm = "duis");
 
-		<execute macro="Search#viewNoResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
-	</command>
+		Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+	}
 
-	<command name="SearchStaticText" priority="5">
-		<description message="This is a test for LPS-78928. Static text in content pages is searchable." />
-		<property name="portal.acceptance" value="true" />
+	@description = "This is a test for LPS-78928. Static text in content pages is searchable."
+	@priority = "5"
+	test SearchStaticText {
+		property portal.acceptance = "true";
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Static Text" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Static Text"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="static" />
-		</execute>
+		Search.searchCP(searchTerm = "static");
 
-		<execute macro="Search#viewResultAssetTitle">
-			<var name="searchAssetTitle" value="Test Content Page Name" />
-		</execute>
-	</command>
-</definition>
+		Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+	}
+}

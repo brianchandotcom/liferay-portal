@@ -1,1781 +1,1509 @@
-<definition component-name="portal-categories">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Categories" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddCategorywithLocalization" priority="4">
-		<property name="testray.component.names" value="Categories,Localization" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCategoryLocalizationCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="locale" value="de_DE" />
-			<var name="localizationName" value="Kategorienamen" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="User#editDisplaySettingsCP">
-			<var name="languageName" value="Deutsch (Deutschland)" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Category Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Category Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Category Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SearchPortlets#addWidgets">
-			<var name="searchPortletList" value="Search Bar,Search Results" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Category Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Category Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchWidget">
-			<var name="searchTerm" value="Kategorienamen" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Web Content Title" />
-			<var name="searchAssetType" value="Webcontent" />
-		</execute>
-	</command>
-
-	<command name="AddCategorywithSiteRole" priority="4">
-		<property name="testray.component.names" value="Categories,Permissions,Roles" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Category Role Name" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Category" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Vocabulary" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Category" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Category Role Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddPageWithRequiredVocabulary" priority="4">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetType" value="Page" />
-			<var name="required" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Page#addCategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Test Page Name" />
-		</execute>
-	</command>
-
-	<command name="AddSubcategoryConfigureParentCategory" priority="3">
-		<property name="test.name.skip.portal.instance" value="CategoriesUseCase#AddSubcategoryConfigureParentCategory" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Assets" />
-			<var name="configurationName" value="Asset Categories Web" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="SystemSettings#configureDisplayStyle">
-			<var name="displayStyle" value="Flattened Tree" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Topic" />
-		</execute>
-
-		<execute macro="Category#viewPath">
-			<var name="categoryName" value="Category Name" />
-			<var name="path" value="Topic > Category Name" />
-		</execute>
-
-		<execute macro="Category#viewPath">
-			<var name="categoryName" value="Subcategory Name" />
-			<var name="path" value="Topic > Category Name > Subcategory Name" />
-		</execute>
-	</command>
-
-	<command name="AddSubcategoryProperty" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#viewCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Subcategory#addPropertyCP">
-			<var name="propertiesKeyField" value="Subcategory Key" />
-			<var name="propertiesValueField" value="Subcategory Value" />
-			<var name="subcategoryName" value="Subcategory Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#viewCategoryPropertyCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="propertiesKeyField" value="Subcategory Key" />
-			<var name="propertiesValueField" value="Subcategory Value" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="AddVocabularyWithAssetSubtype" priority="3">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageTemplatesViaStructures">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetSubtype" value="Basic Web Content" />
-			<var name="assetType" value="Web Content Article" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Metadata" />
-		</execute>
-
-		<execute macro="AssetCategorization#addCategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Metadata" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="Vocabulary Name" />
-	</command>
-
-	<command name="AddVocabularyWithMultipleAssetTypes" priority="4">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="required" value="true" />
-		</execute>
-
-		<execute macro="Button#clickAddRow" />
-
-		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="required" value="true" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Page Name" />
-		</execute>
-
-		<execute macro="Page#viewNoSelectCategory">
-			<var name="pageName" value="Page Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="required" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addFailWithoutRequiredCategoryAssetTypeCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="AddWCWithOptionalVocabularyAssetType" priority="3">
-		<property name="portal.release" value="false" />
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#viewNoCategoryCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="DeletePartialCategory" priority="4">
-		<property name="testray.component.names" value="Categories,Permissions,Roles" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Category Role Name" />
-			<var name="roleTitle" value="Category Role Name" />
-		</execute>
-
-		<for list="ADD_VOCABULARY,ADD_CATEGORY" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.asset.categories" />
-				<var name="roleTitle" value="Category Role Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<for list="VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet" />
-				<var name="roleTitle" value="Category Role Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet" />
-				<var name="roleTitle" value="Category Role Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Category Role Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Category Role Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#deletePartialCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#viewCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="DisableMultipleCategories" priority="4">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="allowMultipleCategories" value="false" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<for list="Category Name 1,Category Name 2" param="categoryName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Category#addCP">
-				<var name="categoryName" value="${categoryName}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithMultipleCategories">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name 2" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryNotVisibleCP">
-			<var name="categoryName" value="Category Name 1" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#editCP">
-			<var name="allowMultipleCategories" value="true" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithMultipleCategories">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
-			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-		</execute>
-	</command>
-
-	<command name="DuplicateCategoriesViaWebContentCopy" priority="3">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationVocabularyCP">
-			<var name="vocabularyNameList" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#copyCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title Duplicate 1" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title Duplicate 1" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationVocabularyCP">
-			<var name="vocabularyNameList" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-		</execute>
-	</command>
-
-	<command name="ExportImportWCWithCategoryViaAP" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Subcategory WC Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Subcategory WC Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Categories Navigation" />
-		</execute>
-
-		<execute macro="LAR#exportSiteCP">
-			<var name="siteScopeName" value="Test Site Name" />
-		</execute>
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="lar file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Import Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Import Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Import Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#selectCategoryPG">
-			<var name="categoryName" value="Category Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Import Site Name" />
-		</execute>
-
-		<execute macro="CategoriesNavigationPortlet#selectCategoryPG">
-			<var name="categoryName" value="Subcategory Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Subcategory WC Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="import-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="import-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Subcategory WC Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Subcategory Name" />
-			<var name="webContentTitle" value="Subcategory WC Title" />
-		</execute>
-	</command>
-
-	<command name="ImportLAR" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="Moon-Rocks-Unit-Category-Hierarchy.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-	</command>
-
-	<command name="MoveSubcategory" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<for list="dog,cat" param="categoryName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Category#addCP">
-				<var name="categoryName" value="${categoryName}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-		</for>
-
-		<for list="bone,milk" param="subcategoryName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Subcategory#addCP">
-				<var name="categoryName" value="dog" />
-				<var name="subcategoryName" value="${subcategoryName}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-		</for>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#moveCP">
-			<var name="categoryName" value="dog" />
-			<var name="categoryNameMove" value="cat" />
-			<var name="subcategoryName" value="milk" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#viewCP">
-			<var name="categoryName" value="cat" />
-			<var name="subcategoryName" value="milk" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="SearchCategory" priority="4">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="black and white" />
-			<var name="categoryName" value="panda" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="brown or white" />
-			<var name="categoryName" value="llama" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<for list="llama,panda" param="categoryName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Category#searchCP">
-				<var name="categorySearchEntry" value="${categoryName}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-
-			<execute macro="Category#viewSearchResultsCP">
-				<var name="categoryNameList" value="${categoryName}" />
-			</execute>
-		</for>
-
-		<for list="brown,black" param="categoryDescription">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Category#searchCP">
-				<var name="categorySearchEntry" value="${categoryDescription}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-
-			<execute macro="Category#viewSearchResultsCP">
-				<var name="categoryDefinitionList" value="${categoryDescription}" />
-			</execute>
-		</for>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#searchCP">
-			<var name="categorySearchEntry" value="white" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#viewSearchResultsCP">
-			<var name="categoryDefinitionList" value="brown or white,black and white" />
-			<var name="categoryNameList" value="llama,panda" />
-		</execute>
-	</command>
-
-	<command name="SearchCategoryWithNullResult" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#searchCP">
-			<var name="categorySearchEntry" value="Null" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#viewSearchResultsCP">
-			<var name="nullResult" value="true" />
-		</execute>
-	</command>
-
-	<command name="SearchEditedCategory" priority="4">
-		<property name="testray.component.names" value="Categories,Documents Management" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Search Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="categoryNameList" value="Category Name" />
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#editCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="categoryNameEdit" value="Edited" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Search Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SearchPortlets#addWidgets">
-			<var name="searchPortletList" value="Search Bar,Search Results" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchWidget">
-			<var name="searchTerm" value="Edited" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="DM Document Title" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-	</command>
-
-	<command name="SearchSubcategory" priority="4">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryDescription" value="friendly chops" />
-			<var name="subcategoryName" value="beard hair" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryDescription" value="handlebar" />
-			<var name="subcategoryName" value="mustache hair" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<for list="beard,mustache" param="categoryName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Subcategory#searchCP">
-				<var name="categoryName" value="Category Name" />
-				<var name="subcategorySearchEntry" value="${subcategoryName}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-
-			<execute macro="Subcategory#viewSearchResultsCP">
-				<var name="categoryNameList" value="${categoryName}" />
-			</execute>
-		</for>
-
-		<for list="friendly chops,handlebar" param="categoryDescription">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Subcategory#searchCP">
-				<var name="categoryName" value="Category Name" />
-				<var name="categorySearchEntry" value="${subcategoryDescription}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-
-			<execute macro="Subcategory#viewSearchResultsCP">
-				<var name="subcategoryDefinitionList" value="${subcategoryDescription}" />
-			</execute>
-		</for>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#searchCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="categorySearchEntry" value="hair" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Subcategory#viewSearchResultsCP">
-			<var name="subcategoryDefinitionList" value="friendly chops,handlebar" />
-			<var name="subcategoryNameList" value="mustache,beard" />
-		</execute>
-	</command>
-
-	<command name="SearchSubcategoryWithNullResult" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#searchCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subCategorySearchEntry" value="Null" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Subcategory#viewSearchResultsCP">
-			<var name="nullResult" value="true" />
-		</execute>
-	</command>
-
-	<command name="SearchVocabulary" priority="4">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyDescription" value="Sushi" />
-			<var name="vocabularyName" value="Food Vocab" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyDescription" value="Futbol" />
-			<var name="vocabularyName" value="Sport Vocab" />
-		</execute>
-
-		<for list="Food,Sport" param="vocabularyName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Search#searchCP">
-				<var name="searchTerm" value="${vocabularyName}" />
-			</execute>
-
-			<execute macro="Vocabulary#viewSearchResultsCP">
-				<var name="vocabularyNameList" value="${vocabularyName} Vocab" />
-			</execute>
-		</for>
-
-		<for list="Sushi,Futbol" param="vocabularyDescription">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Search#searchCP">
-				<var name="searchTerm" value="${vocabularyDescription}" />
-			</execute>
-
-			<execute macro="Vocabulary#viewSearchResultsCP">
-				<var name="vocabularyDefinitionList" value="${vocabularyDescription}" />
-			</execute>
-		</for>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Vocab" />
-		</execute>
-
-		<execute macro="Vocabulary#viewSearchResultsCP">
-			<var name="vocabularyDefinitionList" value="Sushi,Futbol" />
-			<var name="vocabularyNameList" value="Food Vocab,Sport Vocab" />
-		</execute>
-	</command>
-
-	<command name="SearchVocabularyWithNullResult" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyDescription" value="Vocabulary Description" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="Null" />
-		</execute>
-
-		<execute macro="Vocabulary#viewSearchResultsCP">
-			<var name="nullResult" value="true" />
-		</execute>
-	</command>
-
-	<command name="UseCategoryFromParentSiteViaSiteHierarchy" priority="4">
-		<property name="testray.component.names" value="Categories,Site Administration,Web Content Administration" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="parentSiteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Site#openSitesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="${parentSiteName}" />
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC Content Body" />
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteNameURL" value="Child SiteName" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name" />
-		</execute>
-	</command>
-
-	<command name="ViewCannotAddDuplicateSubCategory" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#addDuplicateCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
-	<command name="ViewFlattenedTreeCategoryNavigationDisplayStyle" priority="3">
-		<property name="test.name.skip.portal.instance" value="CategoriesUseCase#ViewFlattenedTreeCategoryNavigationDisplayStyle" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Assets" />
-			<var name="configurationName" value="Asset Categories Web" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="SystemSettings#configureDisplayStyle">
-			<var name="displayStyle" value="Flattened Tree" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Topic" />
-		</execute>
-
-		<execute macro="Category#viewPath">
-			<var name="categoryName" value="Category Name" />
-			<var name="path" value="Topic > Category Name" />
-		</execute>
-
-		<execute macro="Category#viewPath">
-			<var name="categoryName" value="Subcategory Name" />
-			<var name="path" value="Topic > Category Name > Subcategory Name" />
-		</execute>
-	</command>
-
-	<command name="ViewNavigation" priority="3">
-		<property name="testray.component.names" value="Categories" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#viewNavigationCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-categories"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Categories";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test AddCategorywithLocalization {
+		property testray.component.names = "Categories,Localization";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.addCategoryLocalizationCP(
+			categoryName = "Category Name",
+			locale = "de_DE",
+			localizationName = "Kategorienamen",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		User.openUsersAdmin(siteURLKey = "test-site-name");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin(siteURLKey = "test-site-name");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin(siteURLKey = "test-site-name");
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin(siteURLKey = "test-site-name");
+
+		User.editDisplaySettingsCP(
+			languageName = "Deutsch (Deutschland)",
+			userScreenName = "usersn"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Category Page Name"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Category Page Name",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Category Page Name",
+			siteName = "Test Site Name"
+		);
+
+		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Category Page Name",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Category Page Name",
+			siteName = "Test Site Name"
+		);
+
+		SearchPortlets.searchWidget(searchTerm = "Kategorienamen");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Web Content Title",
+			searchAssetType = "Webcontent"
+		);
+	}
+
+	@priority = "4"
+	test AddCategorywithSiteRole {
+		property testray.component.names = "Categories,Permissions,Roles";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Category Role Name");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site Administration",
+			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
+			permissionNavigationValue = "Categories",
+			roleTitle = "Category Role Name",
+			roleType = "Site"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX",
+			permissionDefinitionValue = "Add Category",
+			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
+			permissionNavigationValue = "Categories",
+			roleTitle = "Category Role Name",
+			roleType = "Site"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX",
+			permissionDefinitionValue = "Add Vocabulary",
+			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
+			permissionNavigationValue = "Categories",
+			roleTitle = "Category Role Name",
+			roleType = "Site"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
+			permissionNavigationValue = "Categories",
+			roleTitle = "Category Role Name",
+			roleType = "Site"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX",
+			permissionDefinitionValue = "Add Category",
+			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
+			permissionNavigationValue = "Categories",
+			roleTitle = "Category Role Name",
+			roleType = "Site"
+		);
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Category Role Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test AddPageWithRequiredVocabulary {
+		property testray.component.names = "Categories";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Page",
+			required = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Test Page Name");
+
+		Page.addCategory(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		PortletEntry.save();
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Page.viewSpecificPG(pageNameList = "Test Page Name");
+	}
+
+	@priority = "3"
+	test AddSubcategoryConfigureParentCategory {
+		property test.name.skip.portal.instance = "CategoriesUseCase#AddSubcategoryConfigureParentCategory";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Categories Web",
+			configurationScope = "System Scope"
+		);
+
+		SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Topic"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Topic"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoEntry(rowEntry = "Topic");
+
+		Category.viewPath(
+			categoryName = "Category Name",
+			path = "Topic &gt; Category Name"
+		);
+
+		Category.viewPath(
+			categoryName = "Subcategory Name",
+			path = "Topic &gt; Category Name &gt; Subcategory Name"
+		);
+	}
+
+	@priority = "3"
+	test AddSubcategoryProperty {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.viewCP(
+			categoryName = "Category Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Subcategory.addPropertyCP(
+			propertiesKeyField = "Subcategory Key",
+			propertiesValueField = "Subcategory Value",
+			subcategoryName = "Subcategory Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.viewCategoryPropertyCP(
+			categoryName = "Category Name",
+			propertiesKeyField = "Subcategory Key",
+			propertiesValueField = "Subcategory Value",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "3"
+	test AddVocabularyWithAssetSubtype {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(
+			structureName = "WC Structure Name"
+		);
+
+		WebContentTemplates.addCP(
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetSubtype = "Basic Web Content",
+			assetType = "Web Content Article",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "WC Title");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssetCategorization.addCategory(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextNotPresent(value1 = "Vocabulary Name");
+	}
+
+	@priority = "4"
+	test AddVocabularyWithMultipleAssetTypes {
+		property testray.component.names = "Categories";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Vocabulary Name");
+
+		Vocabulary.addAssociatedAssetType(assetType = "Blogs Entry", required = "true");
+
+		Button.clickAddRow();
+
+		Vocabulary.addAssociatedAssetType(
+			assetType = "Web Content Article",
+			required = "true",
+			rowNumber = "2"
+		);
+
+		Button.clickSave();
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Page Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Page Name");
+
+		Page.viewNoSelectCategory(
+			pageName = "Page Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "3"
+	test AddWCFailWithRequiredVocabularyAssetType {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Web Content Article",
+			required = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addFailWithoutRequiredCategoryAssetTypeCP(
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "3"
+	test AddWCWithOptionalVocabularyAssetType {
+		property portal.release = "false";
+		property testray.component.names = "Categories,Web Content Administration";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Web Content Article",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		Bookmark.viewNoCategoryCP(vocabularyName = "Vocabulary Name");
+	}
+
+	@priority = "4"
+	test DeletePartialCategory {
+		property testray.component.names = "Categories,Permissions,Roles";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		JSONRole.addSiteRole(
+			roleKey = "Category Role Name",
+			roleTitle = "Category Role Name"
+		);
+
+		for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.asset.categories",
+				roleTitle = "Category Role Name",
+				roleType = "site"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Category Role Name",
+			roleType = "site"
+		);
+
+		for (var resourceActionIndex : list "VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+				roleTitle = "Category Role Name",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet",
+				roleTitle = "Category Role Name",
+				roleType = "site"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Category Role Name",
+			roleType = "site"
+		);
+
+		User.openUsersAdmin(siteURLKey = "test-site-name");
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Category Role Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name 2",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.deletePartialCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.viewCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "4"
+	test DisableMultipleCategories {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(
+			allowMultipleCategories = "false",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		for (var categoryName : list "Category Name 1,Category Name 2") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "${categoryName}",
+				vocabularyName = "Vocabulary Name"
+			);
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithMultipleCategories(
+			categoryNameList = "Category Name 1,Category Name 2",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name 2",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryNotVisibleCP(
+			categoryName = "Category Name 1",
+			webContentTitle = "Web Content Title"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.editCP(
+			allowMultipleCategories = "true",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithMultipleCategories(
+			categoryNameList = "Category Name 1,Category Name 2",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title Multiple Categories"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = "Web Content Title Multiple Categories"
+		);
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name 1,Category Name 2",
+			webContentTitle = "Web Content Title Multiple Categories"
+		);
+	}
+
+	@priority = "3"
+	test DuplicateCategoriesViaWebContentCopy {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationVocabularyCP(
+			vocabularyNameList = "Vocabulary Name"
+		);
+
+		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.copyCP(webContentTitle = "Web Content Title");
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = "Web Content Title Duplicate 1"
+		);
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title Duplicate 1"
+		);
+
+		WebContent.viewCategorizationVocabularyCP(
+			vocabularyNameList = "Vocabulary Name"
+		);
+
+		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
+	}
+
+	@priority = "5"
+	test ExportImportWCWithCategoryViaAP {
+		property testray.component.names = "Training";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Subcategory WC Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Subcategory WC Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Categories Navigation");
+
+		LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("lar file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Import Site Name");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Import Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Import Site Name"
+		);
+
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Import Site Name"
+		);
+
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Subcategory Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Subcategory WC Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Subcategory WC Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Subcategory Name",
+			webContentTitle = "Subcategory WC Title"
+		);
+	}
+
+	@priority = "5"
+	test ImportLAR {
+		property testray.component.names = "Training";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(
+			larFileName = "Moon-Rocks-Unit-Category-Hierarchy.lar",
+			uploadFrom = "dependencies"
+		);
+	}
+
+	@priority = "3"
+	test MoveSubcategory {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		for (var categoryName : list "dog,cat") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "${categoryName}",
+				vocabularyName = "Vocabulary Name"
+			);
+		}
+
+		for (var subcategoryName : list "bone,milk") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.addCP(
+				categoryName = "dog",
+				subcategoryName = "${subcategoryName}",
+				vocabularyName = "Vocabulary Name"
+			);
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.moveCP(
+			categoryName = "dog",
+			categoryNameMove = "cat",
+			subcategoryName = "milk",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.viewCP(
+			categoryName = "cat",
+			subcategoryName = "milk",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "4"
+	test SearchCategory {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.addCP(
+			categoryDescription = "black and white",
+			categoryName = "panda",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.addCP(
+			categoryDescription = "brown or white",
+			categoryName = "llama",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		for (var categoryName : list "llama,panda") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.searchCP(
+				categorySearchEntry = "${categoryName}",
+				vocabularyName = "Vocabulary Name"
+			);
+
+			Category.viewSearchResultsCP(categoryNameList = "${categoryName}");
+		}
+
+		for (var categoryDescription : list "brown,black") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.searchCP(
+				categorySearchEntry = "${categoryDescription}",
+				vocabularyName = "Vocabulary Name"
+			);
+
+			Category.viewSearchResultsCP(categoryDefinitionList = "${categoryDescription}");
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.searchCP(
+			categorySearchEntry = "white",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.viewSearchResultsCP(
+			categoryDefinitionList = "brown or white,black and white",
+			categoryNameList = "llama,panda"
+		);
+	}
+
+	@priority = "3"
+	test SearchCategoryWithNullResult {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.searchCP(
+			categorySearchEntry = "Null",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.viewSearchResultsCP(nullResult = "true");
+	}
+
+	@priority = "4"
+	test SearchEditedCategory {
+		property testray.component.names = "Categories,Documents Management";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.addCP(categoryName = "Category Name", vocabularyName = "Topic");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Search Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			categoryNameList = "Category Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			vocabularyName = "Topic"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.editCP(
+			categoryName = "Category Name",
+			categoryNameEdit = "Edited",
+			vocabularyName = "Topic"
+		);
+
+		Navigator.gotoSitePage(pageName = "Search Page", siteName = "Test Site Name");
+
+		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
+
+		SearchPortlets.searchWidget(searchTerm = "Edited");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document"
+		);
+	}
+
+	@priority = "4"
+	test SearchSubcategory {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.addCP(
+			categoryName = "Category Name",
+			subcategoryDescription = "friendly chops",
+			subcategoryName = "beard hair",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.addCP(
+			categoryName = "Category Name",
+			subcategoryDescription = "handlebar",
+			subcategoryName = "mustache hair",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		for (var categoryName : list "beard,mustache") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "${subcategoryName}",
+				vocabularyName = "Vocabulary Name"
+			);
+
+			Subcategory.viewSearchResultsCP(categoryNameList = "${categoryName}");
+		}
+
+		for (var categoryDescription : list "friendly chops,handlebar") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				categorySearchEntry = "${subcategoryDescription}",
+				vocabularyName = "Vocabulary Name"
+			);
+
+			Subcategory.viewSearchResultsCP(
+				subcategoryDefinitionList = "${subcategoryDescription}"
+			);
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.searchCP(
+			categoryName = "Category Name",
+			categorySearchEntry = "hair",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Subcategory.viewSearchResultsCP(
+			subcategoryDefinitionList = "friendly chops,handlebar",
+			subcategoryNameList = "mustache,beard"
+		);
+	}
+
+	@priority = "3"
+	test SearchSubcategoryWithNullResult {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.searchCP(
+			categoryName = "Category Name",
+			subCategorySearchEntry = "Null",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Subcategory.viewSearchResultsCP(nullResult = "true");
+	}
+
+	@priority = "4"
+	test SearchVocabulary {
+		property testray.component.names = "Categories";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(vocabularyDescription = "Sushi", vocabularyName = "Food Vocab");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(
+			vocabularyDescription = "Futbol",
+			vocabularyName = "Sport Vocab"
+		);
+
+		for (var vocabularyName : list "Food,Sport") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "${vocabularyName}");
+
+			Vocabulary.viewSearchResultsCP(vocabularyNameList = "${vocabularyName} Vocab");
+		}
+
+		for (var vocabularyDescription : list "Sushi,Futbol") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "${vocabularyDescription}");
+
+			Vocabulary.viewSearchResultsCP(
+				vocabularyDefinitionList = "${vocabularyDescription}"
+			);
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Search.searchCP(searchTerm = "Vocab");
+
+		Vocabulary.viewSearchResultsCP(
+			vocabularyDefinitionList = "Sushi,Futbol",
+			vocabularyNameList = "Food Vocab,Sport Vocab"
+		);
+	}
+
+	@priority = "3"
+	test SearchVocabularyWithNullResult {
+		property testray.component.names = "Categories";
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(
+			vocabularyDescription = "Vocabulary Description",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Search.searchCP(searchTerm = "Null");
+
+		Vocabulary.viewSearchResultsCP(nullResult = "true");
+	}
+
+	@priority = "4"
+	test UseCategoryFromParentSiteViaSiteHierarchy {
+		property testray.component.names = "Categories,Site Administration,Web Content Administration";
+
+		var parentSiteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Site.openSitesAdmin(siteURLKey = "test-site-name");
+
+		Site.addBlankCP(
+			parentSiteName = "${parentSiteName}",
+			siteName = "Child SiteName"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC Content Body",
+			webContentTitle = "WC Content Title"
+		);
+
+		Navigator.openSiteURL(siteNameURL = "Child SiteName");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
+
+		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
+	}
+
+	@priority = "3"
+	test ViewCannotAddDuplicateSubCategory {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.addDuplicateCP(
+			categoryName = "Category Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+
+	@priority = "3"
+	test ViewFlattenedTreeCategoryNavigationDisplayStyle {
+		property test.name.skip.portal.instance = "CategoriesUseCase#ViewFlattenedTreeCategoryNavigationDisplayStyle";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Categories Web",
+			configurationScope = "System Scope"
+		);
+
+		SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.addCP(categoryName = "Category Name", vocabularyName = "Topic");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Subcategory.addCP(
+			categoryName = "Category Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Topic"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoEntry(rowEntry = "Topic");
+
+		Category.viewPath(
+			categoryName = "Category Name",
+			path = "Topic &gt; Category Name"
+		);
+
+		Category.viewPath(
+			categoryName = "Subcategory Name",
+			path = "Topic &gt; Category Name &gt; Subcategory Name"
+		);
+	}
+
+	@priority = "3"
+	test ViewNavigation {
+		property testray.component.names = "Categories";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		JSONCategory.addSubcategory(
+			categoryName = "Category Name",
+			groupName = "Test Site Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.viewNavigationCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+}

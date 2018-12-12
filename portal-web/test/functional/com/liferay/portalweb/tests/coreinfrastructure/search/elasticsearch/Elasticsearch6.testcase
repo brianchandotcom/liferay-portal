@@ -1,148 +1,137 @@
-<definition component-name="portal-search">
-	<property name="portal.release" value="true" />
-	<property name="portal.suite.search.engine" value="elasticsearch6" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Elasticsearch Impl" />
+@component-name = "portal-search"
+definition {
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch6";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Elasticsearch Impl";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsThread#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsThread.tearDownCP();
 
-				<execute macro="DMDocument#tearDownCP" />
+			DMDocument.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command ignore="true" name="AssertSystemSettingsPropogateToModule" priority="3">
-		<!-- Ignoring test until LPS-65459 is resolved -->
+	@ignore = "true"
+	@priority = "3"
+	test AssertSystemSettingsPropogateToModule {
+		// Ignoring test until LPS-65459 is resolved
 
-		<property name="test.name.skip.portal.instance" value="Elasticsearch6#AssertSystemSettingsPropogateToModule" />
+		property test.name.skip.portal.instance = "Elasticsearch6#AssertSystemSettingsPropogateToModule";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
 
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Search" />
-			<var name="configurationName" value="Elasticsearch 6" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Elasticsearch 6",
+			configurationScope = "System Scope"
+		);
 
-		<execute macro="SystemSettings#editTextAreaSetting">
-			<var name="settingName" value="Cluster Name" />
-			<var name="settingValue" value="LiferayElasticsearchCluster1" />
-		</execute>
+		SystemSettings.editTextAreaSetting(
+			settingName = "Cluster Name",
+			settingValue = "LiferayElasticsearchCluster1"
+		);
 
-		<execute macro="SystemSettings#saveConfiguration" />
+		SystemSettings.saveConfiguration();
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:9200" />
-		</execute>
+		Navigator.openSpecificURL(url = "http://localhost:9200");
 
-		<execute macro="Elasticsearch#viewClusterStatus">
-			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
-		</execute>
-	</command>
+		Elasticsearch.viewClusterStatus(
+			clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;"
+		);
+	}
 
-	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">
-		<property name="environment.acceptance" value="false" />
-		<property name="portal.acceptance" value="true" />
-		<property name="remote.elasticsearch.cluster.size" value="2" />
-		<property name="remote.elasticsearch.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="Elasticsearch6#ElasticsearchRemoteClusterSmokeTest" />
+	@priority = "5"
+	test ElasticsearchRemoteClusterSmokeTest {
+		property environment.acceptance = "false";
+		property portal.acceptance = "true";
+		property remote.elasticsearch.cluster.size = "2";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch6#ElasticsearchRemoteClusterSmokeTest";
 
-		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
-			<var name="numberOfNodes" value="2" />
-		</execute>
+		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "2");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="Orange" />
-			<var name="threadSubject" value="Apple" />
-		</execute>
+		MessageboardsThread.addCP(threadBody = "Orange", threadSubject = "Apple");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="Orange" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="Apple" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "Orange",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Apple"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Apple" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document"
+		);
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Message Boards Message" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Orange" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Orange");
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document"
+		);
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Apple" />
-			<var name="searchAssetType" value="Message Boards Message" />
-		</execute>
-	</command>
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message"
+		);
+	}
 
-	<command name="OSGiConfigSmokeTest" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config" />
-		<property name="osgi.module.configurations" value="clusterName=&quot;LiferayElasticsearchCluster1&quot;" />
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test OSGiConfigSmokeTest {
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config";
+		property osgi.module.configurations = "clusterName=&quot;LiferayElasticsearchCluster1&quot;";
+		property portal.acceptance = "true";
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:9200" />
-		</execute>
+		Navigator.openSpecificURL(url = "http://localhost:9200");
 
-		<execute macro="Elasticsearch#viewClusterStatus">
-			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
-		</execute>
-	</command>
-</definition>
+		Elasticsearch.viewClusterStatus(
+			clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;"
+		);
+	}
+}

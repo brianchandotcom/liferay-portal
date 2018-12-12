@@ -1,264 +1,229 @@
-<definition component-name="portal-document-management">
-	<property name="osgi.app.includes" value="oauth, oauth-api, oauth-service, oauth-web, sync-encryptor, sync-oauth, sync-security, sync-service, sync-web" />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Sync" />
+@component-name = "portal-document-management"
+definition {
+	property osgi.app.includes = "oauth, oauth-api, oauth-service, oauth-web, sync-encryptor, sync-oauth, sync-security, sync-service, sync-web";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Sync";
+	var pageName = "Sync Page";
+	var portletName = "Documents and Media";
 
-	<var name="pageName" value="Sync Page" />
-	<var name="portletName" value="Documents and Media" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Sync Connector Admin"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sync Connector Admin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Sync Page", sitePageType = "Widget Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Sync Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Sync Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Sync Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		Portlet.addPG(portletName = "Documents and Media");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
+		DMDocument.enableActionsMenuOnPortlet();
 
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+	}
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
+			DMFolder.tearDownCP();
 
-				<execute macro="DMFolder#tearDownCP" />
+			DMDocumentType.tearDownCP();
 
-				<execute macro="DMDocumentType#tearDownCP" />
+			Page.tearDownCP();
+		}
+	}
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "5"
+	test AddDocument {
+		property portal.acceptance = "false";
+		property testray.component.names = "Training";
 
-	<command name="AddDocument" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="testray.component.names" value="Training" />
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "Document_1.docx"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.docx",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.docx" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpeg",
+			dmDocumentTitle = "Document_1.jpeg"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpeg" />
-			<var name="dmDocumentTitle" value="Document_1.jpeg" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileType = "Image",
+			dmDocumentTitle = "Document_1.jpeg",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFileType" value="Image" />
-			<var name="dmDocumentTitle" value="Document_1.jpeg" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileType = "Image",
+			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFileType" value="Image" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Generated_by_adobe.jpg",
+			dmDocumentTitle = "Generated_by_adobe.jpg"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Generated_by_adobe.jpg" />
-			<var name="dmDocumentTitle" value="Generated_by_adobe.jpg" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileType = "Image",
+			dmDocumentTitle = "Generated_by_adobe.jpg",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFileType" value="Image" />
-			<var name="dmDocumentTitle" value="Generated_by_adobe.jpg" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.mp3",
+			dmDocumentTitle = "Document_2.mp3"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_2.mp3" />
-			<var name="dmDocumentTitle" value="Document_2.mp3" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.mp3",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_2.mp3" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "Document_1.odt"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.odt" />
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.odt",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.odt" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.pdf",
+			dmDocumentTitle = "Document_1.pdf"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.pdf" />
-			<var name="dmDocumentTitle" value="Document_1.pdf" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.pdf",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.pdf" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.png" />
-			<var name="dmDocumentTitle" value="Document_1.png" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileType = "Image",
+			dmDocumentTitle = "Document_1.png",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFileType" value="Image" />
-			<var name="dmDocumentTitle" value="Document_1.png" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.xls",
+			dmDocumentTitle = "Document_1.xls"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.xls" />
-			<var name="dmDocumentTitle" value="Document_1.xls" />
-		</execute>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.xls",
+			dmDocumentType = "Basic Document"
+		);
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.xls" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sync Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sync Page" />
-		</execute>
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.xlsx",
+			dmDocumentTitle = "Document_1.xlsx"
+		);
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.xlsx" />
-			<var name="dmDocumentTitle" value="Document_1.xlsx" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.xlsx" />
-			<var name="dmDocumentType" value="Basic Document" />
-		</execute>
-	</command>
-</definition>
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.xlsx",
+			dmDocumentType = "Basic Document"
+		);
+	}
+}

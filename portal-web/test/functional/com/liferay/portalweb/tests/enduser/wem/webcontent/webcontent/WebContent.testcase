@@ -1,1347 +1,1095 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddWebContentDraft" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addDraft">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoViewStatus">
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentExpirationDate" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#addExpirationDateCP">
-			<var name="expirationDate" value="01/02/3000" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewExpirationDateCP">
-			<var name="expirationDate" value="01/02/3000" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentTitleEscapeCharacter" priority="4">
-		<property name="testray.component.names" value="Web Content Administration,XSS" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
-		</execute>
-	</command>
-
-	<command name="CannotRepublishExpiredWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#expireCP">
-			<var name="webContentTitleList" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute macro="Alert#viewExpireContentFailedMessage" />
-	</command>
-
-	<command name="CompareWebContentVersionsHistory" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent New Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent New Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View History" />
-			<var name="rowEntry" value="WC WebContent New Title" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Compare to..." />
-			<var name="rowEntry" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCompareVersions">
-			<var name="newContent" value="WC WebContent New Content" />
-			<var name="version" value="1.1" />
-		</execute>
-	</command>
-
-	<command name="DeleteWebContent" priority="5">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#deleteCP">
-			<var name="siteURLKey" value="test-site-name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteWebContentTitleEscapeCharacter" priority="3">
-		<property name="testray.component.names" value="Web Content Administration,XSS" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
-		</execute>
-
-		<execute macro="WebContent#deleteCP">
-			<var name="siteURLKey" value="test-site-name" />
-			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
-			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
-		</execute>
-	</command>
-
-	<command name="EditBasicWebContentStructureAndTemplate" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContent#EditBasicWebContentStructureAndTemplate" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentNavigator#gotoEditStructure">
-			<var name="structureName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Basic Web Content Edit" />
-		</execute>
-
-		<for list="Date,Image" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var name="fieldName" value="${structureFieldName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Basic Web Content Edit" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Basic Web Content Edit" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="Basic Web Content Description" />
-		</execute>
-
-		<for list="Date,Image" param="templateFieldName">
-			<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-				<var name="templateFieldNames" value="${templateFieldName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentNavigator#gotoEditStructure">
-			<var name="structureName" value="Basic Web Content Edit" />
-		</execute>
-
-		<for list="Date,Image" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var name="fieldName" value="${structureFieldName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="structureName" value="Basic Web Content Edit" />
-			<var name="templateDescription" value="Basic Web Content Description" />
-			<var name="templateName" value="Basic Web Content Edit" />
-			<var name="templateScript"><![CDATA[${Image.getData()}]]></var>
-		</execute>
-	</command>
-
-	<command name="EditWCAddLocalization" priority="4">
-		<property name="testray.component.names" value="Localization,Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Contenido de la web Contenido" />
-			<var name="webContentTitle" value="WC Contenido de la web Titulo" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Contenido de la web Contenido" />
-			<var name="webContentTitle" value="WC Contenido de la web Titulo" />
-		</execute>
-	</command>
-
-	<command name="EditWebContent" priority="5">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditWebContentViaArticleTitle" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#searchCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="ExpireEditWebContent" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#expireCP">
-			<var name="webContentTitleList" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="ExpireLastestVersion" priority="4">
-		<description message="This is a use case for LPS-80208." />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#expireSpecificVersionCP">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="ExpireMultipleWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<for list="1,2,3" param="i">
-			<execute macro="WebContent#openWebContentAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentTitle" value="WC WebContent Title ${i}" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#expireCP">
-			<var name="webContentTitleList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
-		</execute>
-
-		<for list="1,2,3" param="i">
-			<execute macro="WebContent#openWebContentAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoEditCP">
-				<var name="webContentTitle" value="WC WebContent Title ${i}" />
-			</execute>
-
-			<execute macro="WebContent#viewStatus">
-				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentStatus" value="Expired" />
-				<var name="webContentTitle" value="WC WebContent Title ${i}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="ExpireWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#expireCP">
-			<var name="webContentTitleList" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="MoveMultipleWebContentToFolder" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
-			<execute macro="WebContent#openWebContentAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#moveMultipleToFolderCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="rowEntryCheckList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
-			<execute macro="WebContent#viewTitle">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="MoveWebContentToFolder" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#moveToFolderCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="MoveWebContentToFolderTraining" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#moveToFolderCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="PublishDraftWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addDraft">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoViewStatus">
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewApprovedStatus">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="SearchWebContent" priority="5">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#searchCP">
-			<var name="webContentFolder" value="Home" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#searchNoResultsCP">
-			<var name="searchQuery" value="WC2 WebContent2 Title2" />
-			<var name="webContentFolder" value="Home" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="UserEditWebContent" priority="4">
-		<property name="testray.component.names" value="Permissions,Roles,Users and Organizations,Web Content Administration" />
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="Web Content Administrator Role" />
-			<var name="roleTitle" value="Web Content Administrator Role" />
-		</execute>
-
-		<for list="ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalFolder" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Web Content Administrator Role" />
-		</execute>
-
-		<for list="VIEW,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Web Content Administrator Role" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#addAllMembersCP" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="WebContent#viewUserEditCP">
-			<var name="userFirstLast" value="userfn userln" />
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="ViewContentNotLostWithBlankTitle" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addNullCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="ViewDisplayStyleCP" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="JSONWebcontent#addWebContent">
-			<var name="content" value="WC WebContent Content" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewDisplayStyleCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<for list="1,2,3,4,5" param="index">
-			<execute macro="JSONCategory#addCategory">
-				<var name="groupName" value="Test Site Name" />
-				<var name="title" value="Category Name ${index}" />
-				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithMultipleCategories">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC Content Body" />
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
-		</execute>
-	</command>
-
-	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
-		<property name="testray.component.names" value="Categories,Web Content Administration" />
-
-		<for list="1,2,3,4,5" param="index">
-			<execute macro="JSONCategory#addVocabulary">
-				<var name="groupName" value="Test Site Name" />
-				<var name="title" value="Vocabulary Name ${index}" />
-			</execute>
-
-			<execute macro="JSONCategory#addCategory">
-				<var name="groupName" value="Test Site Name" />
-				<var name="title" value="Category Name" />
-				<var name="vocabularyName" value="Vocabulary Name ${index}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationVocabularyCP">
-			<var name="vocabularyNameList" value="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" />
-		</execute>
-	</command>
-
-	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="3">
-		<property name="testray.component.names" value="Related Assets,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 1 Content" />
-			<var name="webContentTitle" value="WC WebContent 1 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 1 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 2 Content" />
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 2 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 3 Content" />
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 4 Content" />
-			<var name="webContentTitle" value="WC WebContent 4 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 4 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 5 Content" />
-			<var name="webContentTitle" value="WC WebContent 5 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 5 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent 6 Content" />
-			<var name="webContentTitle" value="WC WebContent 6 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 6 Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="WebContent#paginateRelatedAssets">
-			<var name="assetType" value="Basic Web Content" />
-			<var name="itemsPerPage" value="5" />
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPaginateRelatedAssets">
-			<var name="itemsPerPage" value="5 Entries" />
-			<var name="numberOfPages" value="Showing 1 to 5 of 6 entries." />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="WebContent#addExistingRelatedAssetCP">
-			<var name="assetTitle" value="WC WebContent 5 Title" />
-			<var name="assetType" value="Basic Web Content" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="metadataNameList" value="Related Assets" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewRelatedAssetsPGViaWCD">
-			<var name="assetTitle" value="WC WebContent 5 Title" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test AddWebContentDraft {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addDraft(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Draft",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Draft",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "3"
+	test AddWebContentExpirationDate {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.addExpirationDateCP(expirationDate = "01/02/3000");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewExpirationDateCP(expirationDate = "01/02/3000");
+	}
+
+	@priority = "4"
+	test AddWebContentTitleEscapeCharacter {
+		property testray.component.names = "Web Content Administration,XSS";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = '''<!-- -->'''
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(
+			webContentTitle = '''<!-- -->''',
+			webContentTitleEscapeCharacter = '''&lt;!-- --&gt;'''
+		);
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = '''<!-- -->''',
+			webContentTitleEscapeCharacter = '''&lt;!-- --&gt;'''
+		);
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = '''<!-- -->''',
+			webContentTitleEscapeCharacter = '''&lt;!-- --&gt;'''
+		);
+	}
+
+	@priority = "4"
+	test CannotRepublishExpiredWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Expired",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		Button.clickPublish();
+
+		Alert.viewRequestFailedToComplete();
+
+		Alert.viewExpireContentFailedMessage();
+	}
+
+	@priority = "4"
+	test CompareWebContentVersionsHistory {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent New Content",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent New Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View History",
+			rowEntry = "WC WebContent New Title"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Compare to...",
+			rowEntry = "WC WebContent Title"
+		);
+
+		WebContent.viewCompareVersions(
+			newContent = "WC WebContent New Content",
+			version = "1.1"
+		);
+	}
+
+	@priority = "5"
+	test DeleteWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "3"
+	test DeleteWebContentTitleEscapeCharacter {
+		property testray.component.names = "Web Content Administration,XSS";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = '''<!-- -->'''
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(
+			webContentTitle = '''<!-- -->''',
+			webContentTitleEscapeCharacter = '''&lt;!-- --&gt;'''
+		);
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = '''<!-- -->''',
+			webContentTitleEscapeCharacter = '''&lt;!-- --&gt;'''
+		);
+	}
+
+	@priority = "4"
+	test EditBasicWebContentStructureAndTemplate {
+		property test.name.skip.portal.instance = "WebContent#EditBasicWebContentStructureAndTemplate";
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Basic Web Content");
+
+		PortletEntry.inputName(name = "Basic Web Content Edit");
+
+		for (var structureFieldName : list "Date,Image") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}"
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "Basic Web Content Edit");
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Basic Web Content"
+		);
+
+		PortletEntry.inputName(name = "Basic Web Content Edit");
+
+		Panel.expandPanel(panel = "Details");
+
+		PortletEntry.inputDescription(description = "Basic Web Content Description");
+
+		for (var templateFieldName : list "Date,Image") {
+			WebContentTemplates.inputTemplateAddScreenFields(
+				templateFieldNames = "${templateFieldName}"
+			);
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Basic Web Content Edit");
+
+		for (var structureFieldName : list "Date,Image") {
+			DynamicDataMapping.viewField(
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}"
+			);
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.viewCP(
+			structureName = "Basic Web Content Edit",
+			templateDescription = "Basic Web Content Description",
+			templateName = "Basic Web Content Edit",
+			templateScript = '''${Image.getData()}'''
+		);
+	}
+
+	@priority = "4"
+	test EditWCAddLocalization {
+		property testray.component.names = "Localization,Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		WebContent.addCP(
+			webContentContent = "WC Contenido de la web Contenido",
+			webContentTitle = "WC Contenido de la web Titulo"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC Contenido de la web Contenido",
+			webContentTitle = "WC Contenido de la web Titulo"
+		);
+	}
+
+	@priority = "5"
+	test EditWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "5"
+	test EditWebContentViaArticleTitle {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.searchCP(webContentTitle = "WC WebContent Title");
+
+		LexiconEntry.gotoEntry(rowEntry = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "3"
+	test ExpireEditWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireCP(webContentTitleList = "WC WebContent Title Edit");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content Edit",
+			webContentStatus = "Expired",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@description = "This is a use case for LPS-80208."
+	@priority = "4"
+	test ExpireLastestVersion {
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title Edit"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title Edit");
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "4"
+	test ExpireMultipleWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var i : list "1,2,3") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title ${i}"
+			);
+
+			PortletEntry.publish();
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireCP(
+			webContentTitleList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3,"
+		);
+
+		for (var i : list "1,2,3") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title ${i}");
+
+			WebContent.viewStatus(
+				webContentContent = "WC WebContent Content",
+				webContentStatus = "Expired",
+				webContentTitle = "WC WebContent Title ${i}"
+			);
+		}
+	}
+
+	@priority = "4"
+	test ExpireWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Expired",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test MoveMultipleWebContentToFolder {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "${webContentTitle}"
+			);
+
+			PortletEntry.publish();
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.moveMultipleToFolderCP(
+			folderName = "WC Folder Name",
+			rowEntryCheckList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+	}
+
+	@priority = "4"
+	test MoveWebContentToFolder {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "5"
+	test MoveWebContentToFolderTraining {
+		property testray.component.names = "Training";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "4"
+	test PublishDraftWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addDraft(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Draft",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Draft",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "5"
+	test SearchWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.searchCP(
+			webContentFolder = "Home",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.searchNoResultsCP(
+			searchQuery = "WC2 WebContent2 Title2",
+			webContentFolder = "Home",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test UserEditWebContent {
+		property testray.component.names = "Permissions,Roles,Users and Organizations,Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		JSONRole.addRegularRole(
+			roleKey = "Web Content Administrator Role",
+			roleTitle = "Web Content Administrator Role"
+		);
+
+		for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalFolder",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Web Content Administrator Role"
+		);
+
+		for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.assignRegRoleCP(
+			roleTitle = "Web Content Administrator Role",
+			userScreenName = "usersn"
+		);
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.addAllMembersCP();
+
+		User.logoutPG();
+
+		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title Edit");
+
+		WebContent.viewUserEditCP(
+			userFirstLast = "userfn userln",
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test ViewContentNotLostWithBlankTitle {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addNullCP(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "3"
+	test ViewDisplayStyleCP {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewDisplayStyleCP(webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "4"
+	test ViewMultipleCategoriesViaWebContent {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		for (var index : list "1,2,3,4,5") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name ${index}",
+				vocabularyName = "Vocabulary Name"
+			);
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithMultipleCategories(
+			categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC Content Body",
+			webContentTitle = "WC Content Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5",
+			webContentTitle = "WC Content Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5"
+		);
+	}
+
+	@priority = "4"
+	test ViewMultipleVocabulariesViaAddWebContent {
+		property testray.component.names = "Categories,Web Content Administration";
+
+		for (var index : list "1,2,3,4,5") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name ${index}"
+			);
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name ${index}"
+			);
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "WC Title");
+
+		WebContent.viewCategorizationVocabularyCP(
+			vocabularyNameList = "Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5"
+		);
+	}
+
+	@priority = "3"
+	test WebContentAdministrationPaginatingRelatedAssets {
+		property testray.component.names = "Related Assets,Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 1 Content",
+			webContentTitle = "WC WebContent 1 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 1 Title");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 2 Content",
+			webContentTitle = "WC WebContent 2 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 2 Title");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 3 Content",
+			webContentTitle = "WC WebContent 3 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 3 Title");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 4 Content",
+			webContentTitle = "WC WebContent 4 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 4 Title");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 5 Content",
+			webContentTitle = "WC WebContent 5 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 5 Title");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 6 Content",
+			webContentTitle = "WC WebContent 6 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 6 Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 3 Title");
+
+		WebContent.paginateRelatedAssets(
+			assetType = "Basic Web Content",
+			itemsPerPage = "5",
+			webContentTitle = "WC WebContent 3 Title"
+		);
+
+		WebContent.viewPaginateRelatedAssets(
+			itemsPerPage = "5 Entries",
+			numberOfPages = "Showing 1 to 5 of 6 entries."
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent 3 Title");
+
+		WebContent.addExistingRelatedAssetCP(
+			assetTitle = "WC WebContent 5 Title",
+			assetType = "Basic Web Content",
+			siteName = "Test Site Name"
+		);
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent 3 Title"
+		);
+
+		WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Related Assets");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewRelatedAssetsPGViaWCD(assetTitle = "WC WebContent 5 Title");
+	}
+}

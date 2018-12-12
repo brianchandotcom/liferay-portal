@@ -1,140 +1,127 @@
-<definition component-name="portal-web-forms-and-data-lists">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Dynamic Data Lists" />
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Dynamic Data Lists";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
 
-		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="English (United States),Spanish (Spain),Portuguese (Brazil)" />
-			<var name="defaultSiteLanguage" value="Portuguese (Brazil)" />
-			<var name="displaySettings" value="Display Settings" />
-		</execute>
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Spanish (Spain),Portuguese (Brazil)",
+			defaultSiteLanguage = "Portuguese (Brazil)",
+			displaySettings = "Display Settings"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<execute macro="DDLDataDefinition#addCP" />
+		DDLDataDefinition.addCP();
 
-		<execute macro="TestCase#getFileContent">
-			<return name="sourceJSON" />
-			<var name="fileName" value="complexDDMStructure.json" />
-		</execute>
+		var sourceJSON = TestCase.getFileContent(fileName = "complexDDMStructure.json");
 
-		<execute macro="DynamicDataMapping#addFieldViaJSON">
-			<var name="sourceJSON" value="${sourceJSON}" />
-		</execute>
+		DynamicDataMapping.addFieldViaJSON(sourceJSON = "${sourceJSON}");
 
-		<execute macro="DDLDataDefinition#setInputFieldLocalization">
-			<var name="languageValue" value="pt_BR" />
-		</execute>
+		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt_BR");
 
-		<execute macro="DDLDataDefinition#editName" />
+		DDLDataDefinition.editName();
 
-		<execute macro="DDLDataDefinition#save" />
+		DDLDataDefinition.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<execute macro="DDLList#addCP" />
+		DDLList.addCP();
 
-		<execute macro="DDLDataDefinition#selectCP" />
+		DDLDataDefinition.selectCP();
 
-		<execute macro="DDLDataDefinition#save" />
+		DDLDataDefinition.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="DDLList#tearDownCP" />
+			DDLList.tearDownCP();
 
-				<execute macro="DDLDataDefinition#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			DDLDataDefinition.tearDownCP();
+		}
+	}
 
-	<command name="ViewFieldInputWhenSwitchingTranslations" priority="4">
-		<description message="This is a use case for LPS-69325." />
+	@description = "This is a use case for LPS-69325."
+	@priority = "4"
+	test ViewFieldInputWhenSwitchingTranslations {
+		DDLRecord.addCP();
 
-		<execute macro="DDLRecord#addCP" />
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "pt-BR Categoria",
+			fieldName = "Categoria"
+		);
 
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="pt-BR Categoria" />
-			<var name="fieldName" value="Categoria" />
-		</execute>
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "pt-BR Pergunta",
+			fieldName = "Pergunta"
+		);
 
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="pt-BR Pergunta" />
-			<var name="fieldName" value="Pergunta" />
-		</execute>
+		for (var language : list "es-ES,en-US") {
+			PortletEntry.changeLocale(locale = "${language}");
 
-		<for list="es-ES,en-US" param="language">
-			<execute macro="PortletEntry#changeLocale">
-				<var name="locale" value="${language}" />
-			</execute>
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Categoria",
+				fieldName = "Categoria"
+			);
 
-			<execute macro="DDLRecord#populateFieldText">
-				<var name="ddlRecordFieldData" value="${language} Categoria" />
-				<var name="fieldName" value="Categoria" />
-			</execute>
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Pergunta",
+				fieldName = "Pergunta"
+			);
+		}
 
-			<execute macro="DDLRecord#populateFieldText">
-				<var name="ddlRecordFieldData" value="${language} Pergunta" />
-				<var name="fieldName" value="Pergunta" />
-			</execute>
-		</for>
+		for (var language : list "pt-BR,en-US,es-ES,") {
+			PortletEntry.changeLocale(locale = "${language}");
 
-		<for list="pt-BR,en-US,es-ES," param="language">
-			<execute macro="PortletEntry#changeLocale">
-				<var name="locale" value="${language}" />
-			</execute>
+			FormFields.viewTextValue(
+				fieldName = "Categoria",
+				fieldValue = "${language} Categoria"
+			);
 
-			<execute macro="FormFields#viewTextValue">
-				<var name="fieldName" value="Categoria" />
-				<var name="fieldValue" value="${language} Categoria" />
-			</execute>
-
-			<execute macro="FormFields#viewTextValue">
-				<var name="fieldName" value="Pergunta" />
-				<var name="fieldValue" value="${language} Pergunta" />
-			</execute>
-		</for>
-	</command>
-</definition>
+			FormFields.viewTextValue(
+				fieldName = "Pergunta",
+				fieldValue = "${language} Pergunta"
+			);
+		}
+	}
+}

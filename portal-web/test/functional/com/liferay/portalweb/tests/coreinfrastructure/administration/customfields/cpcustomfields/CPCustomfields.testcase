@@ -1,398 +1,380 @@
-<definition component-name="portal-user-management-and-portal-configuration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Custom Fields" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="CustomFields#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddCustomFieldsSmoke" priority="4">
-		<property name="osgi.app.includes" value="bookmarks" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldType" value="True/False" />
-			<var name="resourceName" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Date" />
-			<var name="customFieldType" value="Date" />
-			<var name="resourceName" value="Bookmarks Entry" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Decimal" />
-			<var name="customFieldType" value="Decimal Number (64-bit)" />
-			<var name="resourceName" value="Bookmarks Folder" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Decimal" />
-			<var name="customFieldType" value="Group of Decimal Numbers (64-bit)" />
-			<var name="resourceName" value="Document" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Decimal" />
-			<var name="customFieldType" value="Decimal Number (32-bit)" />
-			<var name="resourceName" value="Documents Folder" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Integer" />
-			<var name="customFieldType" value="Integer (64-bit)" />
-			<var name="resourceName" value="Message Boards Category" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Integer" />
-			<var name="customFieldType" value="Group of Integers (64-bit)" />
-			<var name="resourceName" value="Message Boards Message" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Number" />
-			<var name="customFieldType" value="Decimal Number or Integer (64-bit)" />
-			<var name="resourceName" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Integer" />
-			<var name="customFieldType" value="Integer (16-bit)" />
-			<var name="resourceName" value="Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Integer" />
-			<var name="customFieldType" value="Group of Integers (16-bit)" />
-			<var name="resourceName" value="Role" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Text" />
-			<var name="resourceName" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Group of Text Values" />
-			<var name="resourceName" value="User" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Group of Text Values" />
-			<var name="resourceName" value="User Group" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Localized Text" />
-			<var name="resourceName" value="Web Content Article" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Number" />
-			<var name="customFieldType" value="Group of Decimal Numbers or Integers (64-bit)" />
-			<var name="resourceName" value="Wiki Page" />
-		</execute>
-	</command>
-
-	<command name="AddCustomFieldUserBoolean" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldType" value="True/False" />
-			<var name="resourceName" value="User" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserCustomFieldsCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldValue" value="False" />
-		</execute>
-	</command>
-
-	<command name="EditCustomFieldUserBoolean" priority="5">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldType" value="True/False" />
-			<var name="resourceName" value="User" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#editCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldType" value="True/False" />
-			<var name="defaultValue" value="True" />
-			<var name="resourceName" value="User" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserCustomFieldsCP">
-			<var name="customFieldName" value="Boolean" />
-			<var name="customFieldValue" value="True" />
-		</execute>
-	</command>
-
-	<command name="EditRevertCustomFieldWikiPage" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Custom Fields" />
-		</execute>
-
-		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Text" />
-			<var name="resourceName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="customFieldText" value="Wiki Text Custom Field" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#editPagePG">
-			<var name="customFieldTextEdit" value="Wiki Text Custom Field Edit" />
-			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewPagePG">
-			<var name="customFieldText" value="Wiki Text Custom Field Edit" />
-			<var name="wikiPageContent" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#revertEditPG">
-			<var name="wikiPageRevisionNew" value="1.2" />
-			<var name="wikiPageRevisionOld" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiVersionSummary" value="Reverted to 1.0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewPagePG">
-			<var name="customFieldText" value="Wiki Text Custom Field" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Custom Fields";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			CustomFields.tearDownCP();
+
+			User.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddCustomFieldsSmoke {
+		property osgi.app.includes = "bookmarks";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Boolean",
+			customFieldType = "True/False",
+			resourceName = "Blogs Entry"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Date",
+			customFieldType = "Date",
+			resourceName = "Bookmarks Entry"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Decimal",
+			customFieldType = "Decimal Number (64-bit)",
+			resourceName = "Bookmarks Folder"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Decimal",
+			customFieldType = "Group of Decimal Numbers (64-bit)",
+			resourceName = "Document"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Decimal",
+			customFieldType = "Decimal Number (32-bit)",
+			resourceName = "Documents Folder"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Integer",
+			customFieldType = "Integer (64-bit)",
+			resourceName = "Message Boards Category"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Integer",
+			customFieldType = "Group of Integers (64-bit)",
+			resourceName = "Message Boards Message"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Number",
+			customFieldType = "Decimal Number or Integer (64-bit)",
+			resourceName = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Integer",
+			customFieldType = "Integer (16-bit)",
+			resourceName = "Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Integer",
+			customFieldType = "Group of Integers (16-bit)",
+			resourceName = "Role"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text",
+			customFieldType = "Text",
+			resourceName = "Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text",
+			customFieldType = "Group of Text Values",
+			resourceName = "User"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text",
+			customFieldType = "Group of Text Values",
+			resourceName = "User Group"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text",
+			customFieldType = "Localized Text",
+			resourceName = "Web Content Article"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Number",
+			customFieldType = "Group of Decimal Numbers or Integers (64-bit)",
+			resourceName = "Wiki Page"
+		);
+	}
+
+	@priority = "5"
+	test AddCustomFieldUserBoolean {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Boolean",
+			customFieldType = "True/False",
+			resourceName = "User"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserCustomFieldsCP(
+			customFieldName = "Boolean",
+			customFieldValue = "False"
+		);
+	}
+
+	@priority = "5"
+	test EditCustomFieldUserBoolean {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Boolean",
+			customFieldType = "True/False",
+			resourceName = "User"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.editCP(
+			customFieldName = "Boolean",
+			customFieldType = "True/False",
+			defaultValue = "True",
+			resourceName = "User"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserCustomFieldsCP(
+			customFieldName = "Boolean",
+			customFieldValue = "True"
+		);
+	}
+
+	@priority = "4"
+	test EditRevertCustomFieldWikiPage {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text",
+			customFieldType = "Text",
+			resourceName = "Wiki Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Wiki Test Page");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			customFieldText = "Wiki Text Custom Field",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		WikiPage.editPagePG(
+			customFieldTextEdit = "Wiki Text Custom Field Edit",
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		WikiPage.viewPagePG(
+			customFieldText = "Wiki Text Custom Field Edit",
+			wikiPageContent = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.revertEditPG(
+			wikiPageRevisionNew = "1.2",
+			wikiPageRevisionOld = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiVersionSummary = "Reverted to 1.0"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPagePG(
+			customFieldText = "Wiki Text Custom Field",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+}

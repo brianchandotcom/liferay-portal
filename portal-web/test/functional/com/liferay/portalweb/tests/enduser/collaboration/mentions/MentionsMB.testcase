@@ -1,188 +1,183 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Mentions" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Mentions";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsCategory#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
 
-				<execute macro="MessageboardsThread#tearDownCP">
-					<var name="assetType" value="Message Boards Thread" />
-				</execute>
+			MessageboardsThread.tearDownCP(assetType = "Message Boards Thread");
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ViewMentionViaMessageBoardsThread" priority="5">
-		<execute macro="Navigator#openURL" />
+	@priority = "5"
+	test ViewMentionViaMessageBoardsThread {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="Mentions#addMentionViaMessageBoardThread">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		Mentions.addMentionViaMessageBoardThread(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
 
-		<execute macro="Mentions#viewMentionTagLink">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-		</execute>
-	</command>
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn"
+		);
+	}
 
-	<command name="ViewMentionViaMessageBoardsThreadReply" priority="5">
-		<execute macro="Navigator#openURL" />
+	@priority = "5"
+	test ViewMentionViaMessageBoardsThreadReply {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		MessageboardsThread.addCP(
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="Mentions#addMentionViaMessageBoardsReply">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-			<var name="threadBody" value="Thread Reply Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		Mentions.addMentionViaMessageBoardsReply(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			threadBody = "Thread Reply Body",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
 
-		<execute macro="MessageboardsThread#viewReplyCP">
-			<var name="replyCount" value="2" />
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadBody2" value="Thread Reply Body" />
-			<var name="threadSubject" value="Thread Subject" />
-			<var name="userName" value="Test Test" />
-			<var name="userName2" value="Test Test" />
-		</execute>
+		MessageboardsThread.viewReplyCP(
+			replyCount = "2",
+			threadBody = "Thread Body",
+			threadBody2 = "Thread Reply Body",
+			threadSubject = "Thread Subject",
+			userName = "Test Test",
+			userName2 = "Test Test"
+		);
 
-		<execute macro="Mentions#viewMentionTagLink">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-		</execute>
-	</command>
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn"
+		);
+	}
 
-	<command name="ViewMentionViaUpdatedMessageBoardsThread" priority="5">
-		<execute macro="Navigator#openURL" />
+	@priority = "5"
+	test ViewMentionViaUpdatedMessageBoardsThread {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		MessageboardsThread.addCP(
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="Mentions#addMentionViaMessageBoardThreadEdit">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		Mentions.addMentionViaMessageBoardThreadEdit(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject"
+		);
 
-		<execute macro="Mentions#viewMentionTagLink">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
-		</execute>
-	</command>
-</definition>
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn"
+		);
+	}
+}

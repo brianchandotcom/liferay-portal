@@ -1,261 +1,217 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Notifications" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Notifications";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
 
-				<execute macro="BlogsEntry#tearDownCP" />
+			BlogsEntry.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
+			Page.tearDownCP();
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			User.tearDownCP();
+		}
+	}
 
-	<command name="MarkNotificationAsReadAndAcceptRequest" priority="4">
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+	@priority = "4"
+	test MarkNotificationAsReadAndAcceptRequest {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		Portlet.addPG(portletName = "Blogs");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="siteType" value="Community" />
-		</execute>
+		Site.addCP(siteName = "Community Site Name", siteType = "Community");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blank Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Blank Page", sitePageType = "Widget Page");
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blank Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blank Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Invite Members Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Invite Members Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Invite Members Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Invite Members Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Invite Members Page" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Invite Members Page",
+			siteName = "Community Site Name"
+		);
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Invite Members" />
-		</execute>
+		Portlet.addPG(portletName = "Invite Members");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Invite Members Page" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Invite Members Page",
+			siteName = "Community Site Name"
+		);
 
-		<execute macro="InviteMembers#inviteMembers">
-			<var name="inviteUserFullName" value="userfn userln" />
-		</execute>
+		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="Blogs#subscribePG" />
+		Blogs.subscribePG();
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="2" />
-		</execute>
+		Notifications.viewBadgeCount(notificationCount = "2");
 
-		<execute macro="Notifications#gotoNotifications" />
+		Notifications.gotoNotifications();
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title" />
-			<var name="user" value="Test Test" />
-		</execute>
+		Notifications.viewNewContent(
+			assetType = "Blogs Entry",
+			contentBody = "Blogs Entry Title",
+			user = "Test Test"
+		);
 
-		<execute macro="Notifications#viewRequest">
-			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
-		</execute>
+		Notifications.viewRequest(
+			requestsTitle = "Test Test invited you to join Community Site Name."
+		);
 
-		<execute macro="Notifications#acceptRequest">
-			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
-		</execute>
+		Notifications.acceptRequest(
+			requestsTitle = "Test Test invited you to join Community Site Name."
+		);
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="Notifications#viewNoRequest" />
+		Notifications.viewNoRequest();
 
-		<execute macro="Notifications#viewNoNotifications" />
+		Notifications.viewNoNotifications();
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
 
-	<command name="ViewDefaultNotificationsPortletDeliveryOptions" priority="3">
-		<property name="osgi.app.includes" value="bookmarks" />
+	@priority = "3"
+	test ViewDefaultNotificationsPortletDeliveryOptions {
+		property osgi.app.includes = "bookmarks";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Notifications" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Notifications"
+		);
 
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		NotificationsPortlet.gotoNotificationDelivery();
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="NotificationsPortlet#viewDefaultNotificationDeliveries" />
-	</command>
+		NotificationsPortlet.viewDefaultNotificationDeliveries();
+	}
 
-	<command name="ViewNoNotification" priority="5">
-		<execute macro="Notifications#viewNoNotifications">
-			<var name="activePanel" value="Profile" />
-		</execute>
+	@priority = "5"
+	test ViewNoNotification {
+		Notifications.viewNoNotifications(activePanel = "Profile");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Notifications" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Notifications"
+		);
 
-		<execute macro="Notifications#viewNoRequest" />
+		Notifications.viewNoRequest();
 
-		<execute macro="Notifications#viewNoNotificationEntry" />
-	</command>
-</definition>
+		Notifications.viewNoNotificationEntry();
+	}
+}

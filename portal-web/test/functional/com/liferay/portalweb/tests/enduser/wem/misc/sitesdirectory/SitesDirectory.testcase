@@ -1,175 +1,129 @@
-<definition component-name="portal-wcm">
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Navigation" />
-	<property name="testray.main.component.name" value="Navigation" />
+@component-name = "portal-wcm"
+definition {
+	property portal.upstream = "true";
+	property testray.component.names = "Navigation";
+	property testray.main.component.name = "Navigation";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="DisplayStyleOptions" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test DisplayStyleOptions {
+		property portal.acceptance = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
+		Portlet.addPG(portletName = "Sites Directory");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName 1" />
-		</execute>
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 1");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName 2" />
-		</execute>
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 2");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName 3" />
-		</execute>
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName 3");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
 
-		<execute macro="SitesDirectory#viewDefaultConfigurationPG" />
+		SitesDirectory.viewDefaultConfigurationPG();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="SitesDirectory#viewDescriptivePG">
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		SitesDirectory.viewDescriptivePG(siteName = "${siteName}");
 
-		<execute macro="SitesDirectory#viewDescriptivePG">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
 
-		<execute macro="SitesDirectory#configureSetupPG">
-			<var name="directorySites" value="Parent Level" />
-		</execute>
+		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="No sites were found." />
+		AssertTextEquals(locator1 = "Message#INFO_2", value1 = "No sites were found.");
 
-		<execute macro="SitesDirectory#configureSetupPG">
-			<var name="directoryDisplayStyle" value="List Hierarchy" />
-			<var name="directorySites" value="Top Level" />
-		</execute>
+		SitesDirectory.configureSetupPG(
+			directoryDisplayStyle = "List Hierarchy",
+			directorySites = "Top Level"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
 
-		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="availableSiteName" value="${siteName}" />
-			<var name="childSiteName1" value="Child SiteName 1" />
-			<var name="childSiteName2" value="Child SiteName 2" />
-			<var name="childSiteName3" value="Child SiteName 3" />
-			<var name="currentSiteName" value="Site Name" />
-		</execute>
-	</command>
-</definition>
+		SitesDirectory.viewListHierarchyPG(
+			availableSiteName = "${siteName}",
+			childSiteName1 = "Child SiteName 1",
+			childSiteName2 = "Child SiteName 2",
+			childSiteName3 = "Child SiteName 3",
+			currentSiteName = "Site Name"
+		);
+	}
+}

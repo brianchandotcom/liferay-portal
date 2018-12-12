@@ -1,389 +1,368 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Display Pages" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Title" />
-			<var name="id" value="title" />
-			<var name="itemName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="itemName" value="content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="DeactivateStagingAfterPublish" priority="4">
-		<description message="Published web content with display pages should remain if staging is deactivated." />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
-			<var name="key_cardText" value="Display Page Name" />
-		</execute>
-	</command>
-
-	<command name="PublishDisplayPage" priority="5">
-		<description message="Display pages only appear in live view after being published and should appear properly. This is a test case for LPS-86373 where web content articles lost their reference to display pages." />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-
-	<command name="PublishDisplayPageMarkedAsDefault" priority="5">
-		<description message="This tests one of the workarounds of LPS-86373." />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-
-	<command name="PublishEditedDisplayPage" priority="5">
-		<description message="Edits to display pages should not reflect in the live site until published." />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Content" />
-			<var name="id" value="content" />
-			<var name="itemName" value="Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Title",
+			id = "title",
+			itemName = "Title"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			itemName = "content"
+		);
+
+		PortletEntry.publish();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "Published web content with display pages should remain if staging is deactivated."
+	@priority = "4"
+	test DeactivateStagingAfterPublish {
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Staging.deactivateStagingCP(siteName = "Test Site Name");
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		AssertVisible(
+			locator1 = "Card#SPECIFIC_LARGE_TEXT",
+			key_cardText = "Display Page Name"
+		);
+	}
+
+	@description = "Display pages only appear in live view after being published and should appear properly. This is a test case for LPS-86373 where web content articles lost their reference to display pages."
+	@priority = "5"
+	test PublishDisplayPage {
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertTextPresent(value1 = "The requested resource could not be found.");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+
+	@description = "This tests one of the workarounds of LPS-86373."
+	@priority = "5"
+	test PublishDisplayPageMarkedAsDefault {
+		property portal.acceptance = "true";
+
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertTextPresent(value1 = "The requested resource could not be found.");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+
+	@description = "Edits to display pages should not reflect in the live site until published."
+	@priority = "5"
+	test PublishEditedDisplayPage {
+		property portal.acceptance = "true";
+
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.publish();
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Display Page Name"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Content",
+			id = "content",
+			itemName = "Title"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+	}
+}

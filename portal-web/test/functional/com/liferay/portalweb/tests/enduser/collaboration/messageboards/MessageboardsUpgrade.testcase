@@ -1,61 +1,66 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Message Boards" />
-	<property name="testray.main.component.name" value="Upgrades Collaboration" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Message Boards";
+	property testray.main.component.name = "Upgrades Collaboration";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="ViewMessageBoardsArchive6130" priority="5">
-		<property name="data.archive.type" value="data-archive-message-boards" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test ViewMessageBoardsArchive6130 {
+		property data.archive.type = "data-archive-message-boards";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#addMessageBoards" />
+		Upgrade.addMessageBoards();
 
-		<execute macro="Upgrade#viewMessageBoards" />
-	</command>
+		Upgrade.viewMessageBoards();
+	}
 
-	<command name="ViewMessageBoardsArchive621015" priority="5">
-		<property name="data.archive.type" value="data-archive-message-boards" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test ViewMessageBoardsArchive621015 {
+		property data.archive.type = "data-archive-message-boards";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#addMessageBoards" />
+		Upgrade.addMessageBoards();
 
-		<execute macro="Upgrade#viewMessageBoards" />
-	</command>
+		Upgrade.viewMessageBoards();
+	}
 
-	<command name="ViewMessageBoardsArchive621021" priority="5">
-		<property name="data.archive.type" value="data-archive-message-boards" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test ViewMessageBoardsArchive621021 {
+		property data.archive.type = "data-archive-message-boards";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#addMessageBoards" />
+		Upgrade.addMessageBoards();
 
-		<execute macro="Upgrade#viewMessageBoards" />
-	</command>
+		Upgrade.viewMessageBoards();
+	}
 
-	<command name="ViewMessageBoardsArchive625" priority="5">
-		<property name="data.archive.type" value="data-archive-message-boards" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
+	@priority = "5"
+	test ViewMessageBoardsArchive625 {
+		property data.archive.type = "data-archive-message-boards";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#addMessageBoards" />
+		Upgrade.addMessageBoards();
 
-		<execute macro="Upgrade#viewMessageBoards" />
-	</command>
-</definition>
+		Upgrade.viewMessageBoards();
+	}
+}

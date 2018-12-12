@@ -1,47 +1,51 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sybase" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.main.component.name" value="Upgrades Core Infrastructure" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.main.component.name = "Upgrades Core Infrastructure";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="ViewPortletsPermissionsAfterUpgrade6130" priority="5">
-		<property name="data.archive.type" value="data-archive-portlets-permissions" />
-		<property name="database.types" value="db2,mysql,oracle,sybase" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test ViewPortletsPermissionsAfterUpgrade6130 {
+		property data.archive.type = "data-archive-portlets-permissions";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#ViewPortletsPermissions" />
-	</command>
+		Upgrade.ViewPortletsPermissions();
+	}
 
-	<command name="ViewPortletsPermissionsAfterUpgrade621015" priority="5">
-		<property name="data.archive.type" value="data-archive-portlets-permissions" />
-		<property name="database.types" value="db2,mysql,oracle,sybase" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test ViewPortletsPermissionsAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portlets-permissions";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#ViewPortletsPermissions" />
-	</command>
+		Upgrade.ViewPortletsPermissions();
+	}
 
-	<command name="ViewPortletsPermissionsAfterUpgrade621021" priority="5">
-		<property name="data.archive.type" value="data-archive-portlets-permissions" />
-		<property name="database.types" value="db2,mysql,oracle,postgresql,sybase" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test ViewPortletsPermissionsAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portlets-permissions";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#ViewPortletsPermissions" />
-	</command>
-</definition>
+		Upgrade.ViewPortletsPermissions();
+	}
+}

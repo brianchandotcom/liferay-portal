@@ -1,3358 +1,2775 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Staging" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ActivateStagingPageVersioningWithCustomDefaultLanguage" priority="5">
-		<property name="test.name.skip.portal.instance" value="Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Staging Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="English (United States)" />
-			<var name="defaultSiteLanguage" value="English (United States)" />
-			<var name="displaySettings" value="Display Settings" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="DeletePublishTemplate" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#disableRecycleBinCP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#addPublishTemplate">
-			<var name="publishTemplateDescription" value="Publish Template Description" />
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-
-		<execute macro="Staging#savePublishTemplate">
-			<var name="publishTemplateDescription" value="Publish Template Description" />
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#deletePublishTemplate">
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-	</command>
-
-	<command name="ModifyInitalPageVariationSetup" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#modifyVariation">
-			<var name="enableOnPublicPages" value="true" />
-		</execute>
-	</command>
-
-	<command name="NotStagedAssets" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="noContent" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Staging#viewNotStagedAssetMessageOnStaging" />
-
-		<execute macro="Staging#viewAddButtonExists" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Staging#viewAddButtonExists" />
-	</command>
-
-	<command name="PublishDeleteWCFolderWithArticleViaAP" priority="4">
-		<description message="This is a use case for LPS-82674." />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#moveArticlesToFolderCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentArticlesList" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Folder" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Alert#viewInfoMessageSpecific">
-			<var name="infoMessage" value="There are no results." />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC Folder Description" />
-			<var name="assetTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Webcontent Content" />
-			<var name="assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Alert#viewInfoMessageSpecific">
-			<var name="infoMessage" value="There are no results." />
-		</execute>
-	</command>
-
-	<command name="PublishRenamedTags" priority="4">
-		<description message="This is a use case for LPS-80492." />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WebContent Content" />
-			<var name="webContentTitle" value="WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#addTagPGViaWCD">
-			<var name="tagName" value="tag name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#viewCP">
-			<var name="tagName" value="tag name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="tag name" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="tag name edit" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#viewCP">
-			<var name="tagName" value="tag name edit" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewNoEntryMenuItem">
-			<var name="menuItem" value="Merge" />
-			<var name="rowEntry" value="tag name edit" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewNoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="tag name edit" />
-		</execute>
-	</command>
-
-	<command name="PublishTemplateWithPages" priority="4">
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Staging Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#addPublishTemplate">
-			<var name="publishTemplateDescription" value="Publish Template Description" />
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkPrivatePages" value="Private Staging Page" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkPublicPages" value="Staging Test Page" />
-		</execute>
-	</command>
-
-	<command name="RemoveTagsFromPublishBlogAndDM" priority="4">
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#addContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
-
-		<execute macro="BlogsEntry#addTag">
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTagPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="tagNameList" value="stagingtag" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewTag">
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTagPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewTag">
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Tag#tearDownCP">
-			<var name="stagingSite" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoTag">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="tagName" value="stagingtag" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewNoTag">
-			<var name="tagName" value="stagingtag" />
-		</execute>
-	</command>
-
-	<command name="StagingAssetPublisher" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Asset Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetTypeNotAvailable">
-			<var name="assetType" value="Page Revision" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Asset Publisher" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetTypeNotAvailable">
-			<var name="assetType" value="Page Revision" />
-		</execute>
-	</command>
-
-	<command name="StagingCopyFromLive" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor." />
-			<var name="entrySubtitle" value="Nemes Nagy Ágnes" />
-			<var name="entryTitle" value="Tavaszi felhők" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#markAsReadyForPublication" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#editEntryPG">
-			<var name="entryContent" value="Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor." />
-			<var name="entryContentEdit" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-			<var name="entrySubtitle" value="Nemes Nagy Ágnes" />
-			<var name="entrySubtitleEdit" value="Nemes Nagy Ágnes" />
-			<var name="entryTitle" value="Tavaszi felhők" />
-			<var name="entryTitleEdit" value="Tavaszi felhők" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#copyFromLive">
-			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Staging" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor." />
-			<var name="entryTitle" value="Tavaszi felhők" />
-		</execute>
-	</command>
-
-	<command name="StagingDemoDocumentsAndMedia" priority="5">
-		<property name="custom.properties" value="default.layout.template.id=1_column" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingDemoDocumentsAndMedia" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Documents and Media" />
-			<var name="configurationName" value="Service" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">
-			<var name="key_fieldLabel" value="Maximum File Size" />
-		</execute>
-
-		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name Empty" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoMetadataSets" />
-
-		<execute macro="DMMetadataSet#add">
-			<var name="dmMetadataSetFieldNames" value="Text,Number" />
-			<var name="metadataSetName" value="DM Metadata Set Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Boolean" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="metadataSetName" value="DM Metadata Set Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name Empty" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addDocumentTypePG">
-			<var name="booleanField" value="Boolean Field" />
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.mp3" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="numberField" value="1234" />
-			<var name="textField" value="Text" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="booleanValue" value="Yes" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="numberValue" value="1234" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="textContent" value="Text" />
-		</execute>
-	</command>
-
-	<command name="StagingEditWebContents" priority="5">
-		<description message="This is a use case for LPS-82431." />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContent#viewTitle">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoEditCP">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-
-			<execute macro="WebContent#editCP">
-				<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-				<var name="webContentTitle" value="${webContentTitle}" />
-				<var name="webContentTitleEdit" value="${webContentTitle} Edit" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="StagingKaleoPageRevision" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 1" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 2" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 3" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Page Revision" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 1" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Test Page Name 1,Test Page Name 2,Test Page Name 3" />
-		</execute>
-	</command>
-
-	<command name="StagingKaleoWebContentLinkingUnapprovedContent" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Page Revision" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
-			<var name="workflowAssetTitle" value="Web Content Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
-			<var name="workflowAssetTitle" value="Staging Test Page" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Web Content Display" />
-
-		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Web Content Display" />
-
-		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title is not approved." />
-	</command>
-
-	<command name="StagingMultipleDM" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#addMultiplePG">
-			<var name="dmDocumentFileList" value="Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt" param="dmDocumentTitle">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Staging Test Page" />
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="DMDocument#viewPG">
-				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewStagingDetailsPG" />
-	</command>
-
-	<command name="StagingOnlyApprovedPublishToLive" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="Web Content Content 1" />
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="Web Content Content 2" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title 1" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title 1" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="Web Content Title 2 is not approved." />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#markAsReadyForPublication" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
-			<then>
-				<execute function="AssertTextNotEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
-			</else>
-		</if>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title 2" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title 2" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#markAsReadyForPublication" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewRecycleBinMessage">
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewRecycleBinMessage">
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteDMDocumentType" priority="3">
-		<description message="This is a use case for LPS-80494." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteDMDocumentType" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Link to Page" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Type Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Type Title" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Type Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Type Title" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteDocumentSubtypeViaAP" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addDMMarketingBannerCP">
-			<var name="bannerDescription" value="Banner Description" />
-			<var name="bannerName" value="Banner Name" />
-			<var name="businessGoal" value="Customer Service" />
-			<var name="campaignTheme" value="Making a Difference" />
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="legalReview" value="YES" />
-			<var name="marketingSelect" value="Company Philosophy" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
-			<var name="assetSubtype" value="Marketing Banner" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="DM Document Description" />
-			<var name="assetTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewDMMarketingBannerPG">
-			<var name="assetTitle" value="DM Document Title" />
-			<var name="bannerDescription" value="Banner Description" />
-			<var name="bannerName" value="Banner Name" />
-			<var name="campaignTheme" value="Making a Difference" />
-			<var name="legalReview" value="Yes" />
-			<var name="marketingSelect" value="Company Philosophy" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveBlogsPG" priority="5">
-		<description message="This is a use case for LPS-72461." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveBlogsPG" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertConsoleTextNotPresent" value1="RuntimeException" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveBlogsWithWorkflow" priority="5">
-		<description message="This is a use case for LPS-74206." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveBlogsWithWorkflow" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="NavItem#gotoConfiguration" />
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="Click" locator1="Notifications#USER_BAR_BADGE_COUNT" />
-
-		<execute function="Click" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" />
-
-		<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="Test Test sent you a Blogs Entry for review in the workflow." />
-
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Assign to Me" />
-		</execute>
-
-		<execute macro="Workflow#confirmWorkflowAction" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowActivityComment" value="Process is approved" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertConsoleTextNotPresent" value1="RuntimeException" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLivePolls" priority="5">
-		<description message="This is a use case for LPS-72478." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLivePolls" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Polls Display" />
-		</execute>
-
-		<execute macro="Polls#addPollPG">
-			<var name="pollsQuestion" value="Test Remote Staging Poll Display" />
-			<var name="pollsQuestionChoiceA" value="Yes" />
-			<var name="pollsQuestionChoiceB" value="No" />
-			<var name="pollsQuestionTitle" value="Remote Staging Polls Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Polls#selectPollPG">
-			<var name="pollsQuestionTitle" value="Remote Staging Polls Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Polls#viewPollPG">
-			<var name="pollsQuestion" value="Test Remote Staging Poll Display" />
-			<var name="pollsQuestionChoiceList" value="Yes,No" />
-		</execute>
-
-		<execute macro="Polls#votePollPG">
-			<var name="pollsQuestionChoice" value="Yes" />
-		</execute>
-
-		<execute macro="Polls#viewVotedPollPG">
-			<var name="pollsQuestionChoice" value="Yes" />
-			<var name="pollsQuestionTotalVotes" value="1" />
-			<var name="pollsQuestionVoteCount" value="1" />
-			<var name="pollsQuestionVotePercent" value="100%" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="Polls#viewVotedPollPG">
-			<var name="pollsQuestionChoice" value="Yes" />
-			<var name="pollsQuestionTotalVotes" value="1" />
-			<var name="pollsQuestionVoteCount" value="1" />
-			<var name="pollsQuestionVotePercent" value="100%" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveWebContent" priority="4">
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContent" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Structure Description" />
-			<var name="structureName" value="Structure Name" />
-		</execute>
-
-		<for list="Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Structure Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Structure Name" />
-			<var name="templateDescription" value="Template Description" />
-			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateName" value="Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="Structure Name" />
-			<var name="templateName" value="Template Name" />
-			<var name="webContentText" value="Staging Web Content Text" />
-			<var name="webContentTextBox" value="Staging Web Content Body" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="dateRangeEndDate"><![CDATA[1/2]]></var>
-		<var name="dateRangeStartDate"><![CDATA[1/1]]></var>
-
-		<execute macro="Staging#setContentDateRange">
-			<var name="dateRangeEndDate" value="${dateRangeEndDate}" />
-			<var name="dateRangeStartDate" value="${dateRangeStartDate}" />
-		</execute>
-
-		<var name="key_contentName" value="Web Content" />
-
-		<execute function="AssertElementNotPresent" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="All" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Remote Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<var name="key_webContentTitle" value="Web Content Title" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE_ON_LIVE" value1="Web Content Title" />
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="Structure Description" />
-			<var name="structureName" value="Structure Name" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveWebContentViaPortletCP" priority="5">
-		<description message="This is a use case for LPS-82839." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContentCP" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Staging#publishToLiveNowViaPortletCP" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Remote Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="onLive" value="true" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveWebContentViaPortletPG" priority="5">
-		<description message="This is a use case for LPS-81950." />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContentViaPortletPG" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Staging Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Staging Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Staging" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_PUBLISH_PAGE_FIRST_MESSAGE" value1="This widget is placed in a page that does not exist in the live site. Publish the page first." />
-		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Staging Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Staging Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Staging Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#publishToLiveNowViaPortletPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Staging Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="StagingRemoteLiveWebContentWithManualChosenID" priority="3">
-		<description message="This is a use case for LPS-81953" />
-
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContentWithManualChosenID" />
-
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Web Content" />
-			<var name="configurationName" value="Administration" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#disableCheckbox">
-			<var name="fieldName" value="journalArticleForceAutogenerateId" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentId" value="12345" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Remote Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WC#ENTRY_TABLE_ID" value1="12345">
-			<var name="key_webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="StagingWithPublishTemplate" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page 1" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page 2" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page 3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 3" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#addPublishTemplate">
-			<var name="publishTemplateDescription" value="Publish Template Description" />
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="applicationName" value="Documents and Media" />
-			<var name="checkPageName" value="Test Page 1,Test Page 2" />
-			<var name="uncheckContentNameList" value="Blogs" />
-		</execute>
-
-		<execute macro="Staging#savePublishTemplate">
-			<var name="publishTemplateDescription" value="Publish Template Description" />
-			<var name="publishTemplateName" value="Publish Template Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLivePublishTemplate">
-			<var name="publishTemplateName" value="Publish Template Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Test Page 1,Test Page 2" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewPGViaAP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="ViewHistoryVersionWithDeletedUser" priority="4">
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#addPageVariationPG">
-			<var name="pageVariationName" value="Test Page Variation Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
-
-		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
-
-		<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="test test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#deactivateCP">
-			<var name="userFirstName" value="userfn" />
-		</execute>
-
-		<execute macro="User#deleteCP" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#changePageVariationInHistory">
-			<var name="pageVariationName" value="Main Variation" />
-			<var name="pageVariationNameMenulistName" value="Test Page Variation Name" />
-		</execute>
-
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersion" value="${historyVersion}" />
-		</execute>
-	</command>
-
-	<command name="ViewPageOrderWithStaging" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page 1" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page 2" />
-		</execute>
-
-		<execute macro="Page#viewPagesOrder">
-			<var name="pageName1" value="Staging Test Page" />
-			<var name="pageName2" value="Test Page 1" />
-			<var name="pageName3" value="Test Page 2" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Page#viewPagesOrder">
-			<var name="pageName1" value="Staging Test Page" />
-			<var name="pageName2" value="Test Page 1" />
-			<var name="pageName3" value="Test Page 2" />
-		</execute>
-	</command>
-
-	<command name="ViewPublishDocumentTypeWithConfiguredAssetType" priority="5">
-		<description message="This is a use case for LPS-82355." />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewPGViaAP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Text" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="DMDocumentType#viewCP">
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
-			<var name="assetSubtype" value="DM Document Type Name" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#viewCP">
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute function="AssertConsoleTextNotPresent" value1="com.liferay.exportimport.kernel.exception.MissingReferenceException" />
-	</command>
-
-	<command name="ViewPublishedContentAfterStagingUndo" priority="4">
-		<property name="portal.release" value="false" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Calendar" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Staging#undoStagingPageVersioningPG" />
-
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="Calendar,Wiki,Documents and Media" param="publishedPortlet">
-			<execute macro="Portlet#viewPG">
-				<var name="portletName" value="${publishedPortlet}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="ViewPublishWCWithConfiguredCategoriesFilter" priority="3">
-		<description message="This is a use case for LPS-82688." />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Web Content Without Category" />
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content Without Category" />
-			<var name="assetTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Web Content With Category" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="WebContent#viewVersion">
-			<var name="version" value="1.0" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content With Category" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="WebContent#viewVersion">
-			<var name="version" value="1.1" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
-			<var name="categoryName" value="Category Name" />
-			<var name="queryAndOperator" value="Any" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Web Content Without Category" />
-			<var name="assetTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content With Category" />
-			<var name="assetTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Web Content Without Category" />
-			<var name="assetTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content With Category" />
-			<var name="assetTitle" value="Web Content Title 2" />
-		</execute>
-	</command>
-
-	<command name="ViewSimplePublicationAfterDeleteDocumentInGlobal" priority="4">
-		<description message="This is a use case for LPS-77935." />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithDocumentCP">
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-			<var name="siteName" value="Global" />
-			<var name="webContentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute function="AssertElementNotPresent" locator1="StagingPublishToLive#SIMPLE_PUBLICATION_DELETION">
-			<var name="key_itemName" value="Documents and Media" />
-		</execute>
-	</command>
-
-	<command name="ViewSingleAssetPublication" priority="5">
-		<description message="This is a use case for LPS-76633." />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#addCP">
-			<var name="bookmarkDescription" value="This is a test bookmark!" />
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Staging#publishViaSAP">
-			<var name="assetTitle" value="Web Content Title" />
-			<var name="confirmMessage" value="Are you sure you want to publish the selected web content?" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Staging#publishViaSAP">
-			<var name="assetTitle" value="Test Bookmark" />
-			<var name="confirmMessage" value="Are you sure you want to publish to live?" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Staging#publishViaSAP">
-			<var name="assetTitle" value="DM Document Title" />
-			<var name="confirmMessage" value="Are you sure you want to publish the selected document?" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="onLive" value="true" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "5"
+	test ActivateStagingPageVersioningWithCustomDefaultLanguage {
+		property test.name.skip.portal.instance = "Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage";
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Private Staging Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States)",
+			defaultSiteLanguage = "English (United States)",
+			displaySettings = "Display Settings"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+	}
+
+	@priority = "4"
+	test DeletePublishTemplate {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.disableRecycleBinCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.addPublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name"
+		);
+
+		Staging.savePublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.deletePublishTemplate(publishTemplateName = "Publish Template Name");
+	}
+
+	@priority = "3"
+	test ModifyInitalPageVariationSetup {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.modifyVariation(enableOnPublicPages = "true");
+	}
+
+	@priority = "5"
+	test NotStagedAssets {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(noContent = "true", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Staging.viewNotStagedAssetMessageOnStaging();
+
+		Staging.viewAddButtonExists();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Staging.viewAddButtonExists();
+	}
+
+	@description = "This is a use case for LPS-82674."
+	@priority = "4"
+	test PublishDeleteWCFolderWithArticleViaAP {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		WebContent.addArticleCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.moveArticlesToFolderCP(
+			folderName = "WC Folder Name",
+			webContentArticlesList = "Webcontent Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC Folder Description",
+			assetTitle = "WC Folder Name"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Webcontent Content",
+			assetTitle = "Webcontent Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+	}
+
+	@description = "This is a use case for LPS-80492."
+	@priority = "4"
+	test PublishRenamedTags {
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WebContent Title"
+		);
+
+		WebContent.addTagPGViaWCD(tagName = "tag name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
+
+		Tag.viewCP(tagName = "tag name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "tag name");
+
+		PortletEntry.inputName(name = "tag name edit");
+
+		PortletEntry.save();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
+
+		Tag.viewCP(tagName = "tag name edit");
+
+		LexiconEntry.viewNoEntryMenuItem(menuItem = "Merge", rowEntry = "tag name edit");
+
+		LexiconEntry.viewNoEntryMenuItem(menuItem = "Edit", rowEntry = "tag name edit");
+	}
+
+	@priority = "4"
+	test PublishTemplateWithPages {
+		SitePages.addPrivatePage(pageName = "Private Staging Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Staging.addPublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name"
+		);
+
+		Staging.configurePublishToLive(checkPrivatePages = "Private Staging Page");
+
+		Staging.configurePublishToLive(checkPublicPages = "Staging Test Page");
+	}
+
+	@priority = "4"
+	test RemoveTagsFromPublishBlogAndDM {
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		BlogsEntry.addTag(tagName = "stagingtag");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewTagPG(entryTitle = "Blogs Entry Title", tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "stagingtag"
+		);
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTag(tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewTagPG(entryTitle = "Blogs Entry Title", tagName = "stagingtag");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTag(tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Tag.tearDownCP(stagingSite = "true");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewNoTag(entryTitle = "Blogs Entry Title", tagName = "stagingtag");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewNoTag(tagName = "stagingtag");
+	}
+
+	@priority = "3"
+	test StagingAssetPublisher {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration"
+		);
+
+		AssetPublisherPortlet.viewAssetTypeNotAvailable(assetType = "Page Revision");
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		Pause(locator1 = "30000");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.deactivateStagingCP(siteName = "Community Site Name");
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration"
+		);
+
+		AssetPublisherPortlet.viewAssetTypeNotAvailable(assetType = "Page Revision");
+	}
+
+	@priority = "4"
+	test StagingCopyFromLive {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor.",
+			entrySubtitle = "Nemes Nagy Ágnes",
+			entryTitle = "Tavaszi felhők"
+		);
+
+		Pause(locator1 = "1000");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.markAsReadyForPublication();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Blogs.editEntryPG(
+			entryContent = "Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor.",
+			entryContentEdit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			entrySubtitle = "Nemes Nagy Ágnes",
+			entrySubtitleEdit = "Nemes Nagy Ágnes",
+			entryTitle = "Tavaszi felhők",
+			entryTitleEdit = "Tavaszi felhők"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.copyFromLive(portletName = "Blogs", portletOption = "Staging");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor.",
+			entryTitle = "Tavaszi felhők"
+		);
+	}
+
+	@priority = "5"
+	test StagingDemoDocumentsAndMedia {
+		property custom.properties = "default.layout.template.id=1_column";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Staging#StagingDemoDocumentsAndMedia";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Service",
+			configurationScope = "System Scope"
+		);
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "30000000",
+			key_fieldLabel = "Maximum File Size"
+		);
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name Empty"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.add(
+			dmMetadataSetFieldNames = "Text,Number",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Boolean",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name Empty");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addDocumentTypePG(
+			booleanField = "Boolean Field",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mp3",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numberField = "1234",
+			textField = "Text"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(booleanValue = "Yes");
+
+		DMDocument.viewDocumentTypePG(numberValue = "1234");
+
+		DMDocument.viewDocumentTypePG(textContent = "Text");
+	}
+
+	@description = "This is a use case for LPS-82431."
+	@priority = "5"
+	test StagingEditWebContents {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "${webContentTitle}"
+			);
+
+			PortletEntry.publish();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+			WebContent.editCP(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "${webContentTitle}",
+				webContentTitleEdit = "${webContentTitle} Edit"
+			);
+		}
+	}
+
+	@priority = "3"
+	test StagingKaleoPageRevision {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name 1");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 1",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name 2");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 2",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.addPG(portletName = "Wiki");
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name 3");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 3",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewDefaultMyWorkflowTasksCP();
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Community Site Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewDefaultMyWorkflowTasksCP();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 1",
+			siteName = "Community Site Name"
+		);
+
+		Page.viewSpecificPG(
+			pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3"
+		);
+	}
+
+	@priority = "3"
+	test StagingKaleoWebContentLinkingUnapprovedContent {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Staging.submitForPublicationPageRevision();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewAssignedToMyRolesTasksCP(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewAssignedToMyRolesTasksCP(
+			workflowAssetTitle = "Staging Test Page",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		User.logoutUserPG();
+
+		Navigator.openSiteURL(siteName = "Organization Name");
+
+		var key_portletTitleName = "Web Content Display";
+
+		AssertElementNotPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		var key_portletTitleName = "Web Content Display";
+
+		AssertElementNotPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#WORKFLOW_UNAPPROVED",
+			value1 = "Web Content Title is not approved."
+		);
+	}
+
+	@priority = "5"
+	test StagingMultipleDM {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Staging Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var dmDocumentTitle : list "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt") {
+			Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+			DMDocument.viewPG(dmDocumentTitle = "${dmDocumentTitle}");
+		}
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		DMDocument.viewStagingDetailsPG();
+	}
+
+	@priority = "5"
+	test StagingOnlyApprovedPublishToLive {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging Test Page 2");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "Web Content Content 1",
+			webContentTitle = "Web Content Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
+
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "Web Content Content 2",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Web Content Title 1",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Web Content Title 1",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "Web Content Content 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "Web Content Title 2 is not approved."
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.markAsReadyForPublication();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "Web Content Content 1"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
+
+		if (IsElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT")) {
+			AssertTextNotEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Title 2"
+			);
+		}
+		else {
+			AssertElementNotPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Web Content Title 2",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Web Content Title 2",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
+
+		Staging.markAsReadyForPublication();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "Web Content Content 2"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
+
+		WebContentDisplayPortlet.viewRecycleBinMessage(
+			webContentTitle = "Web Content Title 2"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
+
+		WebContentDisplayPortlet.viewRecycleBinMessage(
+			webContentTitle = "Web Content Title 2"
+		);
+	}
+
+	@description = "This is a use case for LPS-80494."
+	@priority = "3"
+	test StagingRemoteDMDocumentType {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteDMDocumentType";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Link to Page",
+			dmDocumentTypeName = "DM Document Type Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Type Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Type Title",
+			dmDocumentTypeName = "DM Document Type Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title");
+	}
+
+	@priority = "3"
+	test StagingRemoteDocumentSubtypeViaAP {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteDocumentSubtypeViaAP";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addDMMarketingBannerCP(
+			bannerDescription = "Banner Description",
+			bannerName = "Banner Name",
+			businessGoal = "Customer Service",
+			campaignTheme = "Making a Difference",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			legalReview = "YES",
+			marketingSelect = "Company Philosophy"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "Marketing Banner",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title"
+		);
+
+		DMDocument.viewDMMarketingBannerPG(
+			assetTitle = "DM Document Title",
+			bannerDescription = "Banner Description",
+			bannerName = "Banner Name",
+			campaignTheme = "Making a Difference",
+			legalReview = "Yes",
+			marketingSelect = "Company Philosophy"
+		);
+	}
+
+	@description = "This is a use case for LPS-72461."
+	@priority = "5"
+	test StagingRemoteLiveBlogsPG {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveBlogsPG";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Pause(locator1 = "5000");
+
+		AssertConsoleTextNotPresent(value1 = "RuntimeException");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-74206."
+	@priority = "5"
+	test StagingRemoteLiveBlogsWithWorkflow {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveBlogsWithWorkflow";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		NavItem.gotoConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
+
+		Click(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT");
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Test Test sent you a Blogs Entry for review in the workflow."
+		);
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowActivityComment = "Process is approved",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Pause(locator1 = "5000");
+
+		AssertConsoleTextNotPresent(value1 = "RuntimeException");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-72478."
+	@priority = "5"
+	test StagingRemoteLivePolls {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLivePolls";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Polls Display");
+
+		Polls.addPollPG(
+			pollsQuestion = "Test Remote Staging Poll Display",
+			pollsQuestionChoiceA = "Yes",
+			pollsQuestionChoiceB = "No",
+			pollsQuestionTitle = "Remote Staging Polls Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Polls.selectPollPG(pollsQuestionTitle = "Remote Staging Polls Name");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Polls.viewPollPG(
+			pollsQuestion = "Test Remote Staging Poll Display",
+			pollsQuestionChoiceList = "Yes,No"
+		);
+
+		Polls.votePollPG(pollsQuestionChoice = "Yes");
+
+		Polls.viewVotedPollPG(
+			pollsQuestionChoice = "Yes",
+			pollsQuestionTotalVotes = "1",
+			pollsQuestionVoteCount = "1",
+			pollsQuestionVotePercent = "100%"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		Polls.viewVotedPollPG(
+			pollsQuestionChoice = "Yes",
+			pollsQuestionTotalVotes = "1",
+			pollsQuestionVoteCount = "1",
+			pollsQuestionVotePercent = "100%"
+		);
+	}
+
+	@priority = "4"
+	test StagingRemoteLiveWebContent {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContent";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name"
+		);
+
+		for (var structureFieldName : list "Text,Text Box") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Text,Text Box",
+			templateName = "Template Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentText = "Staging Web Content Text",
+			webContentTextBox = "Staging Web Content Body",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		var dateRangeEndDate = '''1/2''';
+
+		var dateRangeStartDate = '''1/1''';
+
+		Staging.setContentDateRange(
+			dateRangeEndDate = "${dateRangeEndDate}",
+			dateRangeStartDate = "${dateRangeStartDate}"
+		);
+
+		var key_contentName = "Web Content";
+
+		AssertElementNotPresent(
+			locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(contentDateRange = "All");
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoSite(site = "Remote Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		var key_webContentTitle = "Web Content Title";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
+			value1 = "Web Content Title"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name"
+		);
+	}
+
+	@description = "This is a use case for LPS-82839."
+	@priority = "5"
+	test StagingRemoteLiveWebContentViaPortletCP {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentCP";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		ProductMenu.gotoSite(site = "Remote Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "Web Content Title");
+	}
+
+	@description = "This is a use case for LPS-81950."
+	@priority = "5"
+	test StagingRemoteLiveWebContentViaPortletPG {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletPG";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Staging Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Staging Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Staging"
+		);
+
+		IFrame.selectConfigurationFrame();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Staging#STAGING_PUBLISH_PAGE_FIRST_MESSAGE",
+			value1 = "This widget is placed in a page that does not exist in the live site. Publish the page first."
+		);
+
+		AssertElementNotPresent(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Staging Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Staging Page",
+			siteName = "Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Staging Page",
+			siteName = "Site Name"
+		);
+
+		Staging.publishToLiveNowViaPortletPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Staging Page",
+			siteName = "Remote Site"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@description = "This is a use case for LPS-81953"
+	@priority = "3"
+	test StagingRemoteLiveWebContentWithManualChosenID {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentWithManualChosenID";
+
+		Staging.remoteStagingSetUp(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.disableCheckbox(fieldName = "journalArticleForceAutogenerateId");
+
+		SystemSettings.saveConfiguration();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentId = "12345",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals(
+			locator1 = "WC#ENTRY_TABLE_ID",
+			value1 = "12345",
+			key_webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test StagingWithPublishTemplate {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page 1");
+
+		SitePages.addPublicPage(pageName = "Test Page 2");
+
+		SitePages.addPublicPage(pageName = "Test Page 3");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 3", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Pause(locator1 = "30000");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.addPublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name"
+		);
+
+		Staging.configurePublishToLive(
+			applicationName = "Documents and Media",
+			checkPageName = "Test Page 1,Test Page 2",
+			uncheckContentNameList = "Blogs"
+		);
+
+		Staging.savePublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLivePublishTemplate(
+			publishTemplateName = "Publish Template Name",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
+
+		Page.viewSpecificPG(pageNameList = "Test Page 1,Test Page 2");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Portlet.viewSpecificPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
+
+		DMDocument.viewPGViaAP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewHistoryVersionWithDeletedUser {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name"
+		);
+
+		Staging.addPageVariationPG(pageVariationName = "Test Page Variation Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name"
+		);
+
+		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+		Click(locator1 = "Staging#HISTORY_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+
+		var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.deactivateCP(userFirstName = "userfn");
+
+		User.deleteCP();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name"
+		);
+
+		Staging.changePageVariationInHistory(
+			pageVariationName = "Main Variation",
+			pageVariationNameMenulistName = "Test Page Variation Name"
+		);
+
+		Staging.viewHistoryVersionPG(historyVersion = "${historyVersion}");
+	}
+
+	@priority = "4"
+	test ViewPageOrderWithStaging {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page 1");
+
+		SitePages.addPublicPage(pageName = "Test Page 2");
+
+		Page.viewPagesOrder(
+			pageName1 = "Staging Test Page",
+			pageName2 = "Test Page 1",
+			pageName3 = "Test Page 2"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		Page.viewPagesOrder(
+			pageName1 = "Staging Test Page",
+			pageName2 = "Test Page 1",
+			pageName3 = "Test Page 2"
+		);
+	}
+
+	@description = "This is a use case for LPS-82355."
+	@priority = "5"
+	test ViewPublishDocumentTypeWithConfiguredAssetType {
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMDocument.viewPGViaAP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name"
+		);
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "DM Document Type Name",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(
+			value1 = "com.liferay.exportimport.kernel.exception.MissingReferenceException"
+		);
+	}
+
+	@priority = "4"
+	test ViewPublishedContentAfterStagingUndo {
+		property portal.release = "false";
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Calendar");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		Staging.undoStagingPageVersioningPG();
+
+		Portlet.viewNoSpecificPG(portletName = "Bookmarks");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		for (var publishedPortlet : list "Calendar,Wiki,Documents and Media") {
+			Portlet.viewPG(portletName = "${publishedPortlet}");
+		}
+	}
+
+	@description = "This is a use case for LPS-82688."
+	@priority = "3"
+	test ViewPublishWCWithConfiguredCategoriesFilter {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.addArticleCP(
+			webContentContent = "Web Content Without Category",
+			webContentTitle = "Web Content Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Without Category",
+			assetTitle = "Web Content Title 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.addArticleCP(
+			webContentContent = "Web Content With Category",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		WebContent.viewVersion(version = "1.0", webContentTitle = "Web Content Title 2");
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content With Category",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		WebContent.viewVersion(version = "1.1", webContentTitle = "Web Content Title 2");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.configureCategoriesFilterPG(
+			categoryName = "Category Name",
+			queryAndOperator = "Any"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Web Content Without Category",
+			assetTitle = "Web Content Title 1"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content With Category",
+			assetTitle = "Web Content Title 2"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Web Content Without Category",
+			assetTitle = "Web Content Title 1"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content With Category",
+			assetTitle = "Web Content Title 2"
+		);
+	}
+
+	@description = "This is a use case for LPS-77935."
+	@priority = "4"
+	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithDocumentCP(
+			dmDocumentTitle = "Document_2.jpg",
+			siteName = "Global",
+			webContentTitle = "Document_2.jpg"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		AssertElementNotPresent(
+			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_DELETION",
+			key_itemName = "Documents and Media"
+		);
+	}
+
+	@description = "This is a use case for LPS-76633."
+	@priority = "5"
+	test ViewSingleAssetPublication {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		Bookmark.addCP(
+			bookmarkDescription = "This is a test bookmark!",
+			bookmarkName = "Test Bookmark",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Staging.publishViaSAP(
+			assetTitle = "Web Content Title",
+			confirmMessage = "Are you sure you want to publish the selected web content?"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		Staging.publishViaSAP(
+			assetTitle = "Test Bookmark",
+			confirmMessage = "Are you sure you want to publish to live?"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		Staging.publishViaSAP(
+			assetTitle = "DM Document Title",
+			confirmMessage = "Are you sure you want to publish the selected document?"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		Bookmark.viewBookmark(
+			bookmarkName = "Test Bookmark",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+}

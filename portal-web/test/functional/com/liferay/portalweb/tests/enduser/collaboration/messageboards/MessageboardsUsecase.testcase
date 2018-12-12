@@ -1,2138 +1,1850 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Message Boards" />
-
-	<var name="pageName" value="Message Boards Page" />
-	<var name="portletName" value="Message Boards" />
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Message Boards";
+	var pageName = "Message Boards Page";
+	var portletName = "Message Boards";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsPortlet#tearDownConfigurationEmailCP" />
-
-				<execute macro="MessageboardsCategory#tearDownCP" />
-
-				<execute macro="MessageboardsThread#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="CopyAndPasteTextInAlloyEditor" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#NEW_THREAD" value1="New Thread" />
-
-		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
-
-		<execute function="Type" locator1="TextInput#SUBJECT" value1="Message Boards Subject" />
-
-		<execute macro="AlloyEditor#typeEditor">
-			<var name="content" value="Message Boards Body" />
-			<var name="editor" value="body" />
-		</execute>
-
-		<execute function="Copy" locator1="TextInput#SUBJECT" />
-
-		<execute function="Paste" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="body" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="Message Boards Subject" />
-			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="Message Boards Subject" />
-			<var name="threadSubject" value="Message Boards Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteMessageboardsThread" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#moveToRecycleBinCP">
-			<var name="assetName" value="MB Thread Message Subject" />
-			<var name="assetType" value="Message Boards Thread" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="MB Thread Message Subject" />
-			<var name="assetType" value="Message Boards Thread" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewDefaultCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="RestoreMessageboardsThread" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#moveToRecycleBinCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="MB Thread Message Subject" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Message Boards Thread" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="SearchMessageBoardsAttachment" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPGWithAttachment">
-			<var name="mbThreadAttachment" value="Document_1.docx" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
-			<var name="searchTerm" value="This is a *.docx file." />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="mbThreadAttachment" value="Document_1.docx" />
-			<var name="searchTerm" value="This is a *.doc x file." />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="SplitMBThread" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadReplyBody" value="MB Thread Reply Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#splitThreadPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadReplyBody" value="MB Thread Reply Body" />
-			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
-			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
-			<var name="threadSplitSubject" value="MB Thread Split Subject" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewSplitThreadPG">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadReplyBody" value="MB Thread Reply Body" />
-			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
-			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
-			<var name="threadSplitSubject" value="MB Thread Split Subject" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ViewBBCodeNoXSSWithRemoteServices" priority="5">
-		<description message="This is a use case for LPS-65368." />
-
-		<property name="custom.properties" value="message.boards.message.formats.default=bbcode" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="JSONMBMessage#addMessage">
-			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Anonymous" />
-			<var name="replyCount" value="1" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewBBCodeNoXSS">
-			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="userName" value="Anonymous" />
-		</execute>
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-
-	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureScopePG">
-			<var name="scopeName" value="Message Boards Page 2 (Create New)" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page 3" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page 3" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureScopePG">
-			<var name="scopeName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Root Thread Message Body" />
-			<var name="threadSubject" value="MB Root Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="MB Category1 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category1 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="MB Category2 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category2 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Root Thread Message Body" />
-			<var name="threadSubject" value="MB Root Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Root Thread Message Body" />
-			<var name="threadSubject" value="MB Root Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category1 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category1 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category2 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category2 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category1 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category1 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category2 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category2 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread2 Message Body" />
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category1 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category1 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category2 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category2 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread2 Message Body" />
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread2 Message Body" />
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Root Thread2 Message Body" />
-			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Root Thread2 Message Body" />
-			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Root Thread2 Message Body" />
-			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Root Thread2 Message Body" />
-			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Root Thread2 Message Body" />
-			<var name="threadsNumber" value="0" />
-			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-			<var name="threadsNumber" value="0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-			<var name="threadsNumber" value="0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 3" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoMessageBoardsCategoryPG">
-			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewNoPG">
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#gotoRecentPostsPG" />
-
-		<execute macro="MessageboardsCategory#viewNoPG">
-			<var name="categoryName" value="MB Category4 Name" />
-		</execute>
-
-		<execute macro="User#loginPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyWithAttachmentPG">
-			<var name="mbThreadAttachment" value="Document_4.jpeg" />
-			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="MB Category3 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
-			<var name="categoryName" value="MB Category3 Name" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="MessageboardsThread#viewReplyPG">
-			<var name="mbThreadAttachment" value="Document_4.jpeg" />
-			<var name="replyCount" value="1" />
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-			<var name="searchTerm" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread3 Message Body" />
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-			<var name="searchTerm" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread4 Message Body" />
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-			<var name="searchTerm" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page 2" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
-			<var name="searchTerm" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
-			<var name="searchTerm" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
-			<var name="searchTerm" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread2 Message Body" />
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
-			<var name="searchTerm" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
-			<var name="threadSubject" value="MB Thread3 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
-			<var name="searchTerm" value="MB Thread4 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
-			<var name="threadSubject" value="MB Thread4 Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="membershipType" value="Private" />
-			<var name="siteName" value="Blank Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Blank Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Blank Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPGWithPermissions">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="viewableBySelection" value="Owner" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Blank Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadReplyBody" value="MB Thread Message Subject Reply" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoMessageBoardsThreadReplyPG">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Blank Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="threadReplyBody" value="MB Thread Message Subject Reply" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<for list="Power User,User" param="roleTitle">
-			<execute macro="PermissionsInline#viewPermissionsRemoved">
-				<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-				<var name="roleTitle" value="${roleTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="PermissionsInline#viewPermissionsChecked">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-	</command>
-
-	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
-		<property name="custom.properties" value="message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp" />
-		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="MessageboardsUsecase#ViewMBThreadAndReplyThreadInGmail" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="needsReply" value="true" />
-			<var method="PropsUtil#get('email.address.2')" name="userName" />
-			<var method="PropsUtil#get('email.password.2')" name="userPassword" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
-
-		<execute macro="PortalInstances#editCP">
-			<var name="mailDomain" value="gmail.com" />
-			<var name="virtualHost" value="localhost" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#editEmailViaMyAccount">
-			<var method="PropsUtil#get('email.address.4')" name="userEmailAddress" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureMessageEmailFromCP">
-			<var method="PropsUtil#get('email.address.2')" name="emailFromAddress" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#subscribePG" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var method="PropsUtil#get('email.address.4')" name="userEmailAddress" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject GMMB1" />
-		</execute>
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="GMMB1" />
-			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="MB Category Name New Message: MB Thread Message Subject GMMB1" />
-		</execute>
-
-		<execute macro="Gmail#replyMail">
-			<var name="gmailReplyMessage" value="MB Thread Message Subject GMMB1 Reply" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}" />
-		</execute>
-
-		<execute function="Pause" locator1="60000" />
-
-		<execute function="Refresh" />
-
-		<execute function="AssertVisible" locator1="Notifications#PROFILE_BADGE_COUNT" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewReplyPG">
-			<var name="replyCount" value="1" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadReplyBody" value="MB Thread Message Subject GMMB1 Reply" />
-			<var name="threadSubject" value="MB Thread Message Subject GMMB1" />
-			<var name="userName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1" />
-		</execute>
-	</command>
-
-	<command name="ViewMessageBoardsBannedUsers" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoMessageBoardsPG">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey">
-			<execute macro="Role#definePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="roleTitle" value="User" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadReplyBody" value="MB Thread2 Reply Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="userfn2 userln2" />
-			<var name="replyCount" value="2" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#banUser">
-			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
-			<var name="userName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="userfn2 userln2" />
-			<var name="replyCount" value="2" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#banUser">
-			<var name="threadReplyBody" value="MB Thread2 Reply Body" />
-			<var name="userName" value="userfn2 userln2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewBannedUserCP">
-			<var name="userScreenName" value="userfn1 userln1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewBannedUserCP">
-			<var name="userScreenName" value="userfn2 userln2" />
-		</execute>
-	</command>
-
-	<command name="ViewMessageBoardsRSS" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body 1" />
-			<var name="threadSubject" value="MB Thread Message Subject 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body 2" />
-			<var name="threadSubject" value="MB Thread Message Subject 2" />
-		</execute>
-
-		<execute macro="RSS#viewFeed">
-			<var name="entryContent" value="MB Thread Message Body 2" />
-			<var name="entryTitle" value="MB Thread Message Subject 2" />
-			<var name="feedSubtitle" value="MB Thread Message Subject 2" />
-			<var name="feedTitle" value="MB Thread Message Subject 2" />
-			<var name="rssURL" value="message_boards" />
-		</execute>
-
-		<execute function="Click" locator1="NavBar#HOME" />
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadSubject" value="MB Thread Message Subject 1" />
-		</execute>
-
-		<execute macro="RSS#viewFeed">
-			<var name="entryContent" value="MB Thread Message Body 1" />
-			<var name="entryTitle" value="MB Thread Message Subject 1" />
-			<var name="feedSubtitle" value="MB Thread Message Subject 1" />
-			<var name="feedTitle" value="MB Thread Message Subject 1" />
-			<var name="rssURL" value="message_boards" />
-		</execute>
-
-		<execute function="Click" locator1="NavBar#HOME" />
-
-		<execute macro="RSS#gotoFeed">
-			<var name="rssURL" value="message_boards" />
-		</execute>
-
-		<execute macro="RSS#viewFeedEntry">
-			<var name="entryContent" value="MB Thread Message Body 1,MB Thread Message Body 2" />
-			<var name="entryTitle" value="MB Thread Message Subject 1,MB Thread Message Subject 2" />
-		</execute>
-	</command>
-
-	<command name="ViewMessageBoardsThreadStatistics" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="1" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread1 Message Body" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editPG">
-			<var name="saveAsDraft" value="true" />
-			<var name="threadBodyEdit" value="MB Thread1 Message Body Edit" />
-			<var name="threadSubject" value="MB Thread1 Message Subject" />
-			<var name="threadSubjectEdit" value="MB Thread1 Message Subject Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountDefaultPG" />
-
-		<execute macro="MessageboardsThread#editViaMyPosts">
-			<var name="threadSubject" value="MB Thread1 Message Subject Edit" />
-			<var name="threadSubjectEdit" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="startedByUserName" value="Test Test" />
-			<var name="threadPostNumber" value="1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread2 Message Body" />
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="startedByUserName" value="Test Test" />
-			<var name="threadPostNumber" value="2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#deletePG">
-			<var name="threadSubject" value="MB Thread2 Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="1" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewNoHTMLXSS" priority="5">
-		<description message="This is a use case for LPS-65365." />
-
-		<property name="custom.properties" value="message.boards.message.formats.default=html" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute macro="MessageboardsThread#viewNoXSSPG">
-			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-
-	<command name="ViewNoMBThreadXSS" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="source" value="true" />
-			<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewNoXSSPG">
-			<var name="sourceContent" value="true" />
-			<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="MB Category Name" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<var name="key_categoryName" value="MB Category Name" />
-		<var name="key_threadSubject" value="MB Thread Message Subject" />
-
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Subscribe" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
-
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute macro="MenuItem#viewPresent">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureMessageAddedEmailCP">
-			<var name="messageAddedEmailEnabled" value="false" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureMessageUpdatedEmailCP">
-			<var name="messageUpdatedEmailEnabled" value="false" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Subscribe" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
-
-		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute macro="MenuItem#viewNotPresent">
-			<var name="menuItem" value="Unsubscribe" />
-		</execute>
-	</command>
-
-	<command name="ViewQuestionOnSplitThread" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPGAsQuestion">
-			<var name="breadcrumbName" value="Home" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#splitThreadPG">
-			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
-			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
-			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
-			<var name="threadSplitSubject" value="MB Thread Split Subject" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewSplitThreadPG">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
-			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
-			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
-			<var name="threadSplitSubject" value="MB Thread Split Subject" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ViewThreadDefaultQuestion" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Message Boards Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP">
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureGeneralCP">
-			<var name="threadAsQuestionByDefaultEnabled" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP">
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyPG">
-			<var name="markAsAnswer" value="true" />
-			<var name="markAsQuestion" value="true" />
-			<var name="threadReplyBody" value="Thread Reply Body" />
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewAnswerPG">
-			<var name="threadSubject" value="Thread Subject" />
-		</execute>
-	</command>
-</definition>
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsPortlet.tearDownConfigurationEmailCP();
+
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			Site.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test CopyAndPasteTextInAlloyEditor {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		AssertClick(locator1 = "Button#NEW_THREAD", value1 = "New Thread");
+
+		AssertElementPresent(locator1 = "TextInput#SUBJECT");
+
+		Type(locator1 = "TextInput#SUBJECT", value1 = "Message Boards Subject");
+
+		AlloyEditor.typeEditor(content = "Message Boards Body", editor = "body");
+
+		Copy(locator1 = "TextInput#SUBJECT");
+
+		Paste(locator1 = "AlloyEditor#EDITOR", key_editor = "body");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "Message Boards Subject",
+			threadSubject = "Message Boards Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Subject",
+			threadSubject = "Message Boards Subject",
+			userName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test DeleteMessageboardsThread {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.moveToRecycleBinCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.deleteCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "5"
+	test RestoreMessageboardsThread {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.moveToRecycleBinCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "MB Thread Message Subject",
+			assetRestoreLocation = "Home",
+			assetType = "Message Boards Thread"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "3"
+	test SearchMessageBoardsAttachment {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPGWithAttachment(
+			mbThreadAttachment = "Document_1.docx",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Search.searchPG(
+			portletName = "Message Boards",
+			searchTerm = "This is a *.docx file."
+		);
+
+		MessageboardsPortlet.viewSearchResultPG(
+			mbThreadAttachment = "Document_1.docx",
+			searchTerm = "This is a *.doc x file.",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test"
+		);
+	}
+
+	@priority = "3"
+	test SplitMBThread {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "1",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.splitThreadPG(
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewSplitThreadPG(
+			pageName = "Message Boards Page",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@description = "This is a use case for LPS-65368."
+	@priority = "5"
+	test ViewBBCodeNoXSSWithRemoteServices {
+		property custom.properties = "message.boards.message.formats.default=bbcode";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		JSONMBMessage.addMessage(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>'''
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Anonymous",
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.viewBBCodeNoXSS(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''',
+			userName = "Anonymous"
+		);
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
+	@priority = "3"
+	test ViewCategoriesAndThreadsOnTwoScopes {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page 2",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		MessageboardsPortlet.configureScopePG(
+			scopeName = "Message Boards Page 2 (Create New)"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Portlet.viewPG(portletName = "Message Boards (Message Boards Page 2)");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page 3",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page 3",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		MessageboardsPortlet.configureScopePG(scopeName = "Message Boards Page 2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		Portlet.viewPG(portletName = "Message Boards (Message Boards Page 2)");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Root Thread Message Body",
+			threadSubject = "MB Root Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category1 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category1 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category2 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category2 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Root Thread Message Body",
+			threadSubject = "MB Root Thread Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Root Thread Message Body",
+			threadSubject = "MB Root Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category1 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category1 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category2 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category2 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category1 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category1 Name"
+		);
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category2 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category2 Name"
+		);
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread2 Message Body",
+			threadSubject = "MB Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category1 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category1 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category2 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category2 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread2 Message Body",
+			threadSubject = "MB Thread2 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread2 Message Body",
+			threadSubject = "MB Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Root Thread2 Message Body",
+			threadSubject = "MB Root Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Root Thread2 Message Body",
+			threadSubject = "MB Root Thread2 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Root Thread2 Message Body",
+			threadSubject = "MB Root Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name"
+		);
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			categoryDescription = "MB Category4 Description",
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Root Thread2 Message Body",
+			threadSubject = "MB Root Thread2 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Root Thread2 Message Body",
+			threadsNumber = "0",
+			threadSubject = "MB Root Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name",
+			threadsNumber = "0"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name",
+			threadsNumber = "0"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category4 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category4 Name"
+		);
+
+		MessageboardsThread.gotoPG(
+			categoryDescription = "MB Category4 Description",
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject"
+		);
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 3");
+
+		PermissionsInline.gotoMessageBoardsCategoryPG(
+			categoryDescription = "MB Category4 Description",
+			categoryName = "MB Category4 Name"
+		);
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.viewNoPG(categoryName = "MB Category4 Name");
+
+		MessageboardsPortlet.gotoRecentPostsPG();
+
+		MessageboardsCategory.viewNoPG(categoryName = "MB Category4 Name");
+
+		User.loginPG();
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		MessageboardsThread.replyWithAttachmentPG(
+			mbThreadAttachment = "Document_4.jpeg",
+			threadReplyBody = "MB Thread1 Reply Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		MessageboardsCategory.gotoPG(
+			categoryDescription = "MB Category3 Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category3 Name"
+		);
+
+		Pause(locator1 = "5000");
+
+		MessageboardsThread.viewReplyPG(
+			mbThreadAttachment = "Document_4.jpeg",
+			replyCount = "1",
+			threadBody = "MB Thread3 Message Body",
+			threadReplyBody = "MB Thread1 Reply Body",
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Search.searchPG(
+			portletName = "Message Boards (Message Boards Page 2)",
+			searchTerm = "MB Thread3 Message Subject"
+		);
+
+		MessageboardsPortlet.viewSearchResultPG(
+			threadBody = "MB Thread3 Message Body",
+			threadSubject = "MB Thread3 Message Subject",
+			userName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Search.searchPG(
+			portletName = "Message Boards (Message Boards Page 2)",
+			searchTerm = "MB Thread4 Message Subject"
+		);
+
+		MessageboardsPortlet.viewSearchResultPG(
+			threadBody = "MB Thread4 Message Body",
+			threadSubject = "MB Thread4 Message Subject",
+			userName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Search.searchPG(
+			portletName = "Message Boards (Message Boards Page 2)",
+			searchTerm = "MB Thread1 Message Subject"
+		);
+
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page 2");
+
+		Search.searchPG(
+			portletName = "Message Boards (Message Boards Page 2)",
+			searchTerm = "MB Thread2 Message Subject"
+		);
+
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(
+			threadSubject = "MB Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Search.searchPG(
+			portletName = "Message Boards",
+			searchTerm = "MB Thread1 Message Subject"
+		);
+
+		MessageboardsPortlet.viewSearchResultPG(
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject",
+			userName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Search.searchPG(
+			portletName = "Message Boards",
+			searchTerm = "MB Thread2 Message Subject"
+		);
+
+		MessageboardsPortlet.viewSearchResultPG(
+			threadBody = "MB Thread2 Message Body",
+			threadSubject = "MB Thread2 Message Subject",
+			userName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Search.searchPG(
+			portletName = "Message Boards",
+			searchTerm = "MB Thread3 Message Subject"
+		);
+
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(
+			threadSubject = "MB Thread3 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Search.searchPG(
+			portletName = "Message Boards",
+			searchTerm = "MB Thread4 Message Subject"
+		);
+
+		MessageboardsPortlet.viewNoSearchResultSubjectPG(
+			threadSubject = "MB Thread4 Message Subject"
+		);
+	}
+
+	@priority = "3"
+	test ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(membershipType = "Private", siteName = "Blank Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name"
+		);
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name"
+		);
+
+		MessageboardsThread.addPGWithPermissions(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			viewableBySelection = "Owner"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name"
+		);
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		PermissionsInline.gotoMessageBoardsThreadReplyPG(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name",
+			siteURL = "true",
+			threadReplyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		for (var roleTitle : list "Power User,User") {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "${roleTitle}"
+			);
+		}
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Owner"
+		);
+	}
+
+	@priority = "4"
+	test ViewMBThreadAndReplyThreadInGmail {
+		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "MessageboardsUsecase#ViewMBThreadAndReplyThreadInGmail";
+		var portalURL = PropsUtil.get("portal.url");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureMailServerSettings(
+			needsReply = "true",
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2")
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances"
+		);
+
+		PortalInstances.editCP(mailDomain = "gmail.com", virtualHost = "localhost");
+
+		JSONUser.addUser(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
+
+		MessageboardsPortlet.configureMessageEmailFromCP(
+			emailFromAddress = PropsUtil.get("email.address.2")
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = PropsUtil.get("email.address.3")
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsPortlet.subscribePG();
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = PropsUtil.get("email.address.4")
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject GMMB1"
+		);
+
+		Pause(locator1 = "30000");
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Test Test",
+			gmailAssetType = "GMMB1",
+			gmailMessageBody = "MB Thread Message Body",
+			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1"
+		);
+
+		Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject GMMB1 Reply");
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+
+		Pause(locator1 = "60000");
+
+		Refresh();
+
+		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.viewReplyPG(
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Message Subject GMMB1 Reply",
+			threadSubject = "MB Thread Message Subject GMMB1",
+			userName = "userfn userln"
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(
+			gmailMessageTitleList = "MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1"
+		);
+	}
+
+	@priority = "3"
+	test ViewMessageBoardsBannedUsers {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		PermissionsInline.gotoMessageBoardsPG(pageName = "Message Boards Page");
+
+		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "User"
+			);
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		User.logoutPG();
+
+		User.loginPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread1 Reply Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		User.logoutPG();
+
+		User.loginPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread2 Reply Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		User.logoutPG();
+
+		User.loginPG();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "userfn2 userln2",
+			replyCount = "2",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread1 Reply Body",
+			userName = "userfn1 userln1"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "userfn2 userln2",
+			replyCount = "2",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread2 Reply Body",
+			userName = "userfn2 userln2"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.viewBannedUserCP(userScreenName = "userfn1 userln1");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.viewBannedUserCP(userScreenName = "userfn2 userln2");
+	}
+
+	@priority = "4"
+	test ViewMessageBoardsRSS {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body 1",
+			threadSubject = "MB Thread Message Subject 1"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body 2",
+			threadSubject = "MB Thread Message Subject 2"
+		);
+
+		RSS.viewFeed(
+			entryContent = "MB Thread Message Body 2",
+			entryTitle = "MB Thread Message Subject 2",
+			feedSubtitle = "MB Thread Message Subject 2",
+			feedTitle = "MB Thread Message Subject 2",
+			rssURL = "message_boards"
+		);
+
+		Click(locator1 = "NavBar#HOME");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadSubject = "MB Thread Message Subject 1"
+		);
+
+		RSS.viewFeed(
+			entryContent = "MB Thread Message Body 1",
+			entryTitle = "MB Thread Message Subject 1",
+			feedSubtitle = "MB Thread Message Subject 1",
+			feedTitle = "MB Thread Message Subject 1",
+			rssURL = "message_boards"
+		);
+
+		Click(locator1 = "NavBar#HOME");
+
+		RSS.gotoFeed(rssURL = "message_boards");
+
+		RSS.viewFeedEntry(
+			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
+			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2"
+		);
+	}
+
+	@priority = "4"
+	test ViewMessageBoardsThreadStatistics {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewStatisticsPostsCountPG(
+			threadPostNumber = "1",
+			userName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread1 Message Body",
+			threadSubject = "MB Thread1 Message Subject"
+		);
+
+		MessageboardsThread.editPG(
+			saveAsDraft = "true",
+			threadBodyEdit = "MB Thread1 Message Body Edit",
+			threadSubject = "MB Thread1 Message Subject",
+			threadSubjectEdit = "MB Thread1 Message Subject Edit"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewStatisticsPostsCountDefaultPG();
+
+		MessageboardsThread.editViaMyPosts(
+			threadSubject = "MB Thread1 Message Subject Edit",
+			threadSubjectEdit = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewStatisticsPostsCountPG(
+			lastPostUserName = "Test Test",
+			startedByUserName = "Test Test",
+			threadPostNumber = "1"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread2 Message Body",
+			threadSubject = "MB Thread2 Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewStatisticsPostsCountPG(
+			lastPostUserName = "Test Test",
+			startedByUserName = "Test Test",
+			threadPostNumber = "2"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.deletePG(threadSubject = "MB Thread2 Message Subject");
+
+		MessageboardsThread.viewStatisticsPostsCountPG(
+			threadPostNumber = "1",
+			userName = "Test Test"
+		);
+	}
+
+	@description = "This is a use case for LPS-65365."
+	@priority = "5"
+	test ViewNoHTMLXSS {
+		property custom.properties = "message.boards.message.formats.default=html";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>'''
+		);
+
+		MessageboardsThread.viewNoXSSPG(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>'''
+		);
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
+	@priority = "4"
+	test ViewNoMBThreadXSS {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			source = "true",
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.viewNoXSSPG(
+			sourceContent = "true",
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "4"
+	test ViewNoSubscribeLinksNoWithEmailNotificationsDisabled {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		MessageboardsCategory.addPG(
+			categoryName = "MB Category Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		var key_categoryName = "MB Category Name";
+		var key_threadSubject = "MB Thread Message Subject";
+
+		Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
+
+		MenuItem.viewPresent(menuItem = "Subscribe");
+
+		AssertClick(
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "MB Category Name"
+		);
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		AssertTextEquals(locator1 = "Link#SUBSCRIBE", value1 = "Subscribe");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+		MenuItem.viewPresent(menuItem = "Unsubscribe");
+
+		AssertClick(
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "MB Thread Message Subject"
+		);
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewPresent(menuItem = "Unsubscribe");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.configureMessageAddedEmailCP(
+			messageAddedEmailEnabled = "false"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.configureMessageUpdatedEmailCP(
+			messageUpdatedEmailEnabled = "false"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
+
+		MenuItem.viewNotPresent(menuItem = "Subscribe");
+
+		AssertClick(
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "MB Category Name"
+		);
+
+		AssertElementNotPresent(locator1 = "Link#SUBSCRIBE");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Unsubscribe");
+
+		AssertClick(
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "MB Thread Message Subject"
+		);
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Unsubscribe");
+	}
+
+	@priority = "3"
+	test ViewQuestionOnSplitThread {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPGAsQuestion(
+			breadcrumbName = "Home",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewMarkedAsQuestionPG(
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread Split Reply Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "1",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		MessageboardsThread.splitThreadPG(
+			threadReplyBody = "MB Thread Split Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewSplitThreadPG(
+			pageName = "Message Boards Page",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Split Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewMarkedAsQuestionPG(
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "3"
+	test ViewThreadDefaultQuestion {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(
+			threadSubject = "Thread Subject"
+		);
+
+		MessageboardsPortlet.configureGeneralCP(
+			threadAsQuestionByDefaultEnabled = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewMarkAsQuestionCheckedCP(
+			threadSubject = "Thread Subject"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			markAsAnswer = "true",
+			markAsQuestion = "true",
+			threadReplyBody = "Thread Reply Body",
+			threadSubject = "Thread Subject"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewAnswerPG(threadSubject = "Thread Subject");
+	}
+}

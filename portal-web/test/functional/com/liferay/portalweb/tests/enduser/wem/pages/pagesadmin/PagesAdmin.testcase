@@ -1,111 +1,106 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Pages Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="SearchPages" priority="5">
-		<description message="This is a test for LPS-76825. A user can search for a page from pages admin." />
+	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
+	@priority = "5"
+	test SearchPages {
+		echo("# Add two pages to root and add one child page.");
 
-		<echo message="# Add two pages to root and add one child page." />
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Page One"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Page One" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Page Two"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Page Two" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Page Three",
+			parentLayoutName = "Page One"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Page Three" />
-			<var name="parentLayoutName" value="Page One" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		echo("# Search for all three pages and assert they all appear.");
 
-		<echo message="# Search for all three pages and assert they all appear." />
+		Search.searchCP(searchTerm = "page");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="page" />
-		</execute>
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page One"
+		);
 
-		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page One" />
-		</execute>
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Two"
+		);
 
-		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Two" />
-		</execute>
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Three"
+		);
 
-		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Three" />
-		</execute>
+		echo("# Search for one page and assert only that page appears.");
 
-		<echo message="# Search for one page and assert only that page appears." />
+		Search.searchCP(searchTerm = "one");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="one" />
-		</execute>
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page One"
+		);
 
-		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page One" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Two"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Two" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Three"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Three" />
-		</execute>
+		echo("# Search for child page and assert that page appears.");
 
-		<echo message="# Search for child page and assert that page appears." />
+		Search.searchCP(searchTerm = "three");
 
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="three" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page One"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page One" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Two"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Two" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
-			<var name="key_rowEntry" value="Page Three" />
-		</execute>
-	</command>
-</definition>
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			key_rowEntry = "Page Three"
+		);
+	}
+}

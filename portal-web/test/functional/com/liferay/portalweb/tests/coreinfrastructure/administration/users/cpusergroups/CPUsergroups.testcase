@@ -1,476 +1,438 @@
-<definition component-name="portal-user-management-and-portal-configuration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="User Groups" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddMember" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewAssignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-
-	<command name="AddUserGroup" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="AddUserGroupNameDuplicate" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userGroupNameVariation" value="Duplicate" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="AddUserGroupNameWithInvalidCharacters" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name*" />
-			<var name="userGroupNameVariation" value="Asterik" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name," />
-			<var name="userGroupNameVariation" value="Comma" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value=" " />
-			<var name="userGroupNameVariation" value="Null" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="1" />
-			<var name="userGroupNameVariation" value="Number" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewDefault" />
-	</command>
-
-	<command name="AddUserGroups" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup1 Name" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup2 Name" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup3 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup1 Name" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup2 Name" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup3 Name" />
-		</execute>
-	</command>
-
-	<command name="DeleteUserGroup" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#deleteCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#viewDefault" />
-	</command>
-
-	<command name="DeleteUserGroupWithMemberAssigned" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#deleteUserCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="EditUserGroup" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#editCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name Edit" />
-		</execute>
-	</command>
-
-	<command name="RemoveMember" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#removeMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewRemoveMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="SearchCurrentMembersAssignedToUserGroup" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPUsergroups#SearchCurrentMembersAssignedToUserGroup" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ID_1" value1="usersn" />
-		<execute function="AssertNotVisible" locator1="UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2" />
-	</command>
-
-	<command name="SearchUserGroup" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="UserGroup#searchCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="ViewPortletUserGroup" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewPortletCP" />
-	</command>
-</definition>
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "User Groups";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			UserGroup.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddMember {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewAssignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+	}
+
+	@priority = "4"
+	test AddUserGroup {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
+	}
+
+	@priority = "3"
+	test AddUserGroupNameDuplicate {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.addCP(
+			userGroupName = "UG UserGroup Name",
+			userGroupNameVariation = "Duplicate"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
+	}
+
+	@priority = "3"
+	test AddUserGroupNameWithInvalidCharacters {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(
+			userGroupName = "UG UserGroup Name*",
+			userGroupNameVariation = "Asterik"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(
+			userGroupName = "UG UserGroup Name,",
+			userGroupNameVariation = "Comma"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = " ", userGroupNameVariation = "Null");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "1", userGroupNameVariation = "Number");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewDefault();
+	}
+
+	@priority = "4"
+	test AddUserGroups {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup1 Name");
+
+		UserGroup.addCP(userGroupName = "UG UserGroup2 Name");
+
+		UserGroup.addCP(userGroupName = "UG UserGroup3 Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup1 Name");
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup2 Name");
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup3 Name");
+	}
+
+	@priority = "5"
+	test DeleteUserGroup {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.deleteCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.viewDefault();
+	}
+
+	@priority = "4"
+	test DeleteUserGroupWithMemberAssigned {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.deleteUserCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
+	}
+
+	@priority = "5"
+	test EditUserGroup {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.editCP(
+			userGroupName = "UG UserGroup Name",
+			userGroupNameEdit = "UG UserGroup Name Edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewCP(userGroupName = "UG UserGroup Name Edit");
+	}
+
+	@priority = "4"
+	test RemoveMember {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.removeMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewRemoveMemberCP(
+			userFirstName = "userfn",
+			userGroupName = "UG UserGroup Name"
+		);
+	}
+
+	@priority = "3"
+	test SearchCurrentMembersAssignedToUserGroup {
+		property test.name.skip.portal.instance = "CPUsergroups#SearchCurrentMembersAssignedToUserGroup";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		Search.searchCP(searchTerm = "usersn");
+
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ID_1",
+			value1 = "usersn"
+		);
+
+		AssertNotVisible(
+			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2"
+		);
+	}
+
+	@priority = "3"
+	test SearchUserGroup {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		UserGroup.searchCP(userGroupName = "UG UserGroup Name");
+	}
+
+	@priority = "3"
+	test ViewPortletUserGroup {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.viewPortletCP();
+	}
+}

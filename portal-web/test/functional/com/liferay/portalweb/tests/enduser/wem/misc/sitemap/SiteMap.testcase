@@ -1,68 +1,59 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Sitemap" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Sitemap";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="JSONLayout#addPrivateLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Name" />
-		</execute>
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name"
+		);
 
-		<execute macro="JSONLayout#addPrivateLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Child Page Name" />
-			<var name="parentLayoutName" value="Site Page Name" />
-		</execute>
-	</set-up>
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Site Page Name"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="DisplayPrivatePageWithChildPage" priority="4">
-		<execute macro="Navigator#gotoPrivateSitePage">
-			<var name="pageName" value="Child Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+	@priority = "4"
+	test DisplayPrivatePageWithChildPage {
+		Navigator.gotoPrivateSitePage(
+			pageName = "Child Page Name",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
+		Portlet.addPG(portletName = "Site Map");
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Site Map");
 
-		<execute macro="SiteMapPortlet#viewDefaultPG">
-			<var name="listChildPageName" value="Child Page Name" />
-			<var name="listPageName" value="Site Page Name" />
-		</execute>
-	</command>
-</definition>
+		SiteMapPortlet.viewDefaultPG(
+			listChildPageName = "Child Page Name",
+			listPageName = "Site Page Name"
+		);
+	}
+}

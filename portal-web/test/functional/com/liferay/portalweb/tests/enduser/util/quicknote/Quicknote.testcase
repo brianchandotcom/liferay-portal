@@ -1,50 +1,40 @@
-<definition component-name="portal-util-misc">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Util" />
+@component-name = "portal-util-misc"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Util";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Quick Note Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Quick Note Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Quick Note Page" />
-		</execute>
-	</set-up>
+		Navigator.gotoPage(pageName = "Quick Note Page");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command ignore="true" name="AddQuickNote" priority="2">
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Quick Note" />
-		</execute>
+	@ignore = "true"
+	@priority = "2"
+	test AddQuickNote {
+		Portlet.addPG(portletName = "Quick Note");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Quick Note Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Quick Note Page");
 
-		<execute macro="QuickNote#addPG">
-			<var name="noteContent" value="Test Note Content" />
-		</execute>
-	</command>
-</definition>
+		QuickNote.addPG(noteContent = "Test Note Content");
+	}
+}

@@ -1,68 +1,54 @@
-<definition component-name="portal-project-template">
-	<property name="portal.acceptance" value="true" />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Project Templates" />
+@component-name = "portal-project-template"
+definition {
+	property portal.acceptance = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Project Templates";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Templates Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Templates Page");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="MvcPortletTemplateSmoke" priority="4">
-		<property name="project.templates" value="mvc-portlet" />
-		<property name="test.name.skip.portal.instance" value="SampleProjectTemplates#MvcPortletTemplateSmoke" />
+	@priority = "4"
+	test MvcPortletTemplateSmoke {
+		property project.templates = "mvc-portlet";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#MvcPortletTemplateSmoke";
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Templates Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Templates Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Samplemvc" />
-		</execute>
+		Portlet.addPG(portletName = "Samplemvc");
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletBody" value="Hello from Samplemvc!" />
-			<var name="portletName" value="Samplemvc" />
-		</execute>
-	</command>
+		Portlet.viewPG(portletBody = "Hello from Samplemvc!", portletName = "Samplemvc");
+	}
 
-	<command name="ThemeTemplateSmoke" priority="4">
-		<property name="project.templates" value="theme" />
-		<property name="test.name.skip.portal.instance" value="SampleProjectTemplates#ThemeTemplateSmoke" />
-		<var name="themeName" value="sampletheme" />
+	@priority = "4"
+	test ThemeTemplateSmoke {
+		property project.templates = "theme";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#ThemeTemplateSmoke";
+		var themeName = "sampletheme";
 
-		<execute macro="Page#changeCurrentTheme">
-			<var name="pageName" value="Templates Page" />
-			<var name="themeName" value="${themeName}" />
-		</execute>
+		Page.changeCurrentTheme(pageName = "Templates Page", themeName = "${themeName}");
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/guest/templates-page" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/templates-page");
 
-		<execute function="AssertHTMLSourceTextPresent" value1="themeId=${themeName}" />
-	</command>
-</definition>
+		AssertHTMLSourceTextPresent(value1 = "themeId=${themeName}");
+	}
+}

@@ -1,199 +1,166 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Navigation" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Navigation";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddChildPage" priority="5">
-		<description message="This is a test for LPS-87134. Assert we can navigate to a child page in the navigation menu widget using pages hierarchy menu." />
+	@description = "This is a test for LPS-87134. Assert we can navigate to a child page in the navigation menu widget using pages hierarchy menu."
+	@priority = "5"
+	test AddChildPage {
+		// Add page and child page
 
-		<!-- Add page and child page -->
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Child Page",
+			parentLayoutName = "Site Page"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Child Page" />
-			<var name="parentLayoutName" value="Site Page" />
-		</execute>
+		// Navigate to child page via Navigation Menu Widget
 
-		<!-- Navigate to child page via Navigation Menu Widget -->
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Test Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Page.gotoChildPagePG(childPageName = "Site Child Page", pageName = "Site Page");
+	}
 
-		<execute macro="Page#gotoChildPagePG">
-			<var name="childPageName" value="Site Child Page" />
-			<var name="pageName" value="Site Page" />
-		</execute>
-	</command>
+	@description = "This is a test for LPS-87134. Assert we can navigate to different pages in the navigation menu widget using pages hierarchy menu."
+	@priority = "5"
+	test AddMultiplePages {
+		// Add multiple pages
 
-	<command name="AddMultiplePages" priority="5">
-		<description message="This is a test for LPS-87134. Assert we can navigate to different pages in the navigation menu widget using pages hierarchy menu." />
+		for (var index : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page ${index}"
+			);
+		}
 
-		<!-- Add multiple pages -->
+		// Navigate to required pages
 
-		<for list="1,2,3" param="index">
-			<execute macro="JSONLayout#addPublicLayout">
-				<var name="groupName" value="Test Site Name" />
-				<var name="layoutName" value="Site Page ${index}" />
-			</execute>
-		</for>
+		for (var index : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page ${index}",
+				siteName = "Test Site Name"
+			);
+		}
+	}
 
-		<!-- Navigate to required pages -->
+	@description = "This is a test for LPS-87134. Assert Pages Hierarchy is the default navigation in the Navigation Menu widget. If this fails we need to either report this as a bug or adjust the rest of the tests in this testcase to set pages hierarchy as the default in the navigation menu widget."
+	@priority = "3"
+	test AssertPagesHierarchyNavigationIsDefault {
+		// Add default page and navigate to site
 
-		<for list="1,2,3" param="index">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Site Page ${index}" />
-				<var name="siteName" value="Test Site Name" />
-			</execute>
-		</for>
-	</command>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
 
-	<command name="AssertPagesHierarchyNavigationIsDefault" priority="3">
-		<description message="This is a test for LPS-87134. Assert Pages Hierarchy is the default navigation in the Navigation Menu widget. If this fails we need to either report this as a bug or adjust the rest of the tests in this testcase to set pages hierarchy as the default in the navigation menu widget." />
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
-		<!-- Add default page and navigate to site -->
+		// Assert pages hierarchy is set as the default
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
+		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		AssertSelectedLabel(
+			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+			value1 = "Public Pages Hierarchy"
+		);
+	}
 
-		<!-- Assert pages hierarchy is set as the default -->
+	@description = "Assert we can edit the site page name and that it updates on the navigation menu widget"
+	@priority = "4"
+	test EditSitePage {
+		// Add page
 
-		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute function="AssertSelectedLabel" locator1="NavigationMenusWidget#SELECT_NAVIGATION" value1="Public Pages Hierarchy" />
-	</command>
+		SitePages.addPublicPage(pageName = "Site Page");
 
-	<command name="EditSitePage" priority="4">
-		<description message="Assert we can edit the site page name and that it updates on the navigation menu widget" />
+		// Edit name
 
-		<!-- Add page -->
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Page.editName(pageNameEdit = "Site Page Edit");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		// Assert name changed
 
-		<!-- Edit name -->
+		Navigator.gotoSitePage(pageName = "Site Page Edit", siteName = "Test Site Name");
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Site Page" />
-		</execute>
+		Page.view(pageName = "Site Page Edit", privacy = "Public Pages");
+	}
 
-		<execute macro="Page#editName">
-			<var name="pageNameEdit" value="Site Page Edit" />
-		</execute>
+	@description = "This is a test for LPS-87134. Assert we can hide pages in the navigation menu widget using pages hierarchy menu."
+	@priority = "4"
+	test HidePages {
+		// Add two pages
 
-		<!-- Assert name changed -->
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Visible"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Edit" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Hidden"
+		);
 
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page Edit" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
+		// Configure the the two pages to make them visible/hidden
 
-	<command name="HidePages" priority="4">
-		<description message="This is a test for LPS-87134. Assert we can hide pages in the navigation menu widget using pages hierarchy menu." />
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<!-- Add two pages -->
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Site Page Visible"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Visible" />
-		</execute>
+		Page.toggleShowInPagesHierarchyMenu(toggleValue = "enable");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Hidden" />
-		</execute>
+		Button.clickSave();
 
-		<!-- Configure the the two pages to make them visible/hidden -->
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Site Page Hidden"
+		);
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Site Page Visible" />
-		</execute>
+		Page.toggleShowInPagesHierarchyMenu(toggleValue = "disable");
 
-		<execute macro="Page#toggleShowInPagesHierarchyMenu">
-			<var name="toggleValue" value="enable" />
-		</execute>
+		Button.clickSave();
 
-		<execute macro="Button#clickSave" />
+		// Assert the visible page can be navigated to and the invisible page is not shown
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Site Page Visible",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Site Page Hidden" />
-		</execute>
-
-		<execute macro="Page#toggleShowInPagesHierarchyMenu">
-			<var name="toggleValue" value="disable" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<!-- Assert the visible page can be navigated to and the invisible page is not shown -->
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Visible" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
-			<var name="key_pageName" value="Site Page Hidden" />
-		</execute>
-	</command>
-</definition>
+		AssertElementNotPresent(
+			locator1 = "Home#PAGE",
+			key_pageName = "Site Page Hidden"
+		);
+	}
+}

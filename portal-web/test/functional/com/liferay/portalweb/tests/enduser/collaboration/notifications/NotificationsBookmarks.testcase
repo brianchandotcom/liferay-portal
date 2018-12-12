@@ -1,286 +1,216 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Notifications" />
-
-	<var name="pageName" value="Bookmarks Page" />
-	<var name="portletName" value="Bookmarks" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Bookmark#tearDownCP" />
-
-				<execute macro="BookmarksFolder#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ViewWebsiteNotificationForNewBookmarkInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="Bookmarks Folder Description" />
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#subscribePG">
-			<var name="folderDescription" value="Bookmarks Folder Description" />
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="bookmarks entry" />
-			<var name="contentBody" value="Bookmark Name" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Bookmark Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Bookmark#viewEntry">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewWebsiteNotificationForUpdatedBookmarkInFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="Bookmarks Folder Description" />
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#subscribePG">
-			<var name="folderDescription" value="Bookmarks Folder Description" />
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Bookmark#editPG">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkNameEdit" value="Bookmark Name Edit" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-			<var name="bookmarkURLEdit" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#gotoNotifications" />
-
-		<execute macro="Notifications#viewUpdatedContent">
-			<var name="assetType" value="bookmarks entry" />
-			<var name="contentBody" value="Bookmark Name Edit" />
-			<var name="user" value="userfn userln" />
-		</execute>
-
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Bookmark Name Edit" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Bookmarks Folder Name" />
-		</execute>
-
-		<execute macro="Bookmark#viewEntry">
-			<var name="bookmarkName" value="Bookmark Name Edit" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Notifications";
+	var pageName = "Bookmarks Page";
+	var portletName = "Bookmarks";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Bookmarks Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Bookmarks Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Bookmark.tearDownCP();
+
+			BookmarksFolder.tearDownCP();
+
+			Page.tearDownCP();
+
+			User.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForNewBookmarkInFolder {
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.addPG(
+			folderDescription = "Bookmarks Folder Description",
+			folderName = "Bookmarks Folder Name"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.subscribePG(
+			folderDescription = "Bookmarks Folder Description",
+			folderName = "Bookmarks Folder Name"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.gotoPG(folderName = "Bookmarks Folder Name");
+
+		Bookmark.addPG(
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "bookmarks entry",
+			contentBody = "Bookmark Name",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "Bookmark Name");
+
+		BookmarksFolder.gotoPG(folderName = "Bookmarks Folder Name");
+
+		Bookmark.viewEntry(
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewWebsiteNotificationForUpdatedBookmarkInFolder {
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.addPG(
+			folderDescription = "Bookmarks Folder Description",
+			folderName = "Bookmarks Folder Name"
+		);
+
+		BookmarksFolder.subscribePG(
+			folderDescription = "Bookmarks Folder Description",
+			folderName = "Bookmarks Folder Name"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.gotoPG(folderName = "Bookmarks Folder Name");
+
+		Bookmark.addPG(
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		BookmarksFolder.gotoPG(folderName = "Bookmarks Folder Name");
+
+		Bookmark.editPG(
+			bookmarkName = "Bookmark Name",
+			bookmarkNameEdit = "Bookmark Name Edit",
+			bookmarkURL = "https://www.liferay.com",
+			bookmarkURLEdit = "https://www.liferay.com"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewUpdatedContent(
+			assetType = "bookmarks entry",
+			contentBody = "Bookmark Name Edit",
+			user = "userfn userln"
+		);
+
+		Notifications.navigateToContent(contentBody = "Bookmark Name Edit");
+
+		BookmarksFolder.gotoPG(folderName = "Bookmarks Folder Name");
+
+		Bookmark.viewEntry(
+			bookmarkName = "Bookmark Name Edit",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+}

@@ -1,159 +1,131 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Staging" />
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoSite(site = "Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
 
-	<command name="CheckPublicationSummaryLocal" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+	@priority = "4"
+	test CheckPublicationSummaryLocal {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.activateStagingCP(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Staging Test Page");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#publishToLive">
-			<var name="publicationName" value="summCheck" />
-		</execute>
+		Staging.publishToLive(publicationName = "summCheck");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#viewPublicationSummary">
-			<var name="publicationTitle" value="summCheck" />
-		</execute>
-	</command>
+		Staging.viewPublicationSummary(publicationTitle = "summCheck");
+	}
 
-	<command name="CheckPublicationSummaryRemote" priority="4">
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="StagingActivation#CheckPublicationSummaryRemote" />
+	@priority = "4"
+	test CheckPublicationSummaryRemote {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryRemote";
 
-		<execute macro="Staging#remoteStagingSetUp">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Staging Test Page");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#publishToLive">
-			<var name="publicationName" value="summCheck" />
-		</execute>
+		Staging.publishToLive(publicationName = "summCheck");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#viewPublicationSummary">
-			<var name="publicationTitle" value="summCheck" />
-		</execute>
-	</command>
+		Staging.viewPublicationSummary(publicationTitle = "summCheck");
+	}
 
-	<command name="DeleteRecycleBinOnStagingActivation" priority="4">
-		<property name="portal.acceptance" value="true" />
+	@priority = "4"
+	test DeleteRecycleBinOnStagingActivation {
+		property portal.acceptance = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		WebContent.addArticleCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
 
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="recycleBinNotification" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.activateStagingCP(
+			recycleBinNotification = "true",
+			siteName = "Site Name"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Web Content Title" />
-		</execute>
-	</command>
-</definition>
+		RecycleBin.viewDefaultCP(assetName = "Web Content Title");
+	}
+}

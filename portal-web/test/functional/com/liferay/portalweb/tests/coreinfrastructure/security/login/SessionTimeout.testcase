@@ -1,114 +1,118 @@
-<definition component-name="portal-security">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Login" />
+@component-name = "portal-security"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Login";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+		}
+	}
 
-	<command name="RedirectOnExpire" priority="5">
-		<description message="This is a use case for LPS-75977." />
+	@description = "This is a use case for LPS-75977."
+	@priority = "5"
+	test RedirectOnExpire {
+		property custom.properties = "session.timeout.redirect.on.expire=true";
+		property test.name.skip.portal.instance = "LoginUsecase#SessionTimeoutRedirectOnExpire";
+		property web.xml.timeout = "2";
 
-		<property name="custom.properties" value="session.timeout.redirect.on.expire=true" />
-		<property name="test.name.skip.portal.instance" value="LoginUsecase#SessionTimeoutRedirectOnExpire" />
-		<property name="web.xml.timeout" value="2" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Session Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Session Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Session Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Session Page" />
-		</execute>
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+		Pause(locator1 = "60000");
 
-		<execute function="Pause" locator1="60000" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "WarningDue to inactivity, your session will expire"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="WarningDue to inactivity, your session will expire" />
+		Pause(locator1 = "60000");
 
-		<execute function="Pause" locator1="60000" />
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "HelloWorld#PORTLET_TITLE",
+			value1 = "Hello World"
+		);
+	}
 
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
-	</command>
+	@priority = "4"
+	test RememberMeChecked {
+		property web.xml.timeout = "2";
 
-	<command name="RememberMeChecked" priority="4">
-		<property name="web.xml.timeout" value="2" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+		Pause(locator1 = "120000");
 
-		<execute function="Pause" locator1="120000" />
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
-		<execute function="Refresh" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
+		Refresh();
 
-		<execute macro="User#loginPG">
-			<var name="rememberMeChecked" value="true" />
-		</execute>
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute macro="Navigator#openURL" />
+		User.loginPG(rememberMeChecked = "true");
 
-		<execute function="Pause" locator1="120000" />
+		Navigator.openURL();
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		Pause(locator1 = "120000");
 
-		<execute function="Refresh" />
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-		</execute>
+		Refresh();
 
-		<execute macro="User#logoutPG" />
+		Smoke.viewWelcomePage(userFirstName = "Test", userLastName = "Test");
 
-		<execute macro="User#loginPG" />
+		User.logoutPG();
 
-		<execute macro="Navigator#openURL" />
+		User.loginPG();
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		Navigator.openURL();
 
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute function="Pause" locator1="120000" />
+		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		Pause(locator1 = "120000");
 
-		<execute function="Refresh" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
-	</command>
-</definition>
+		Refresh();
+
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+	}
+}

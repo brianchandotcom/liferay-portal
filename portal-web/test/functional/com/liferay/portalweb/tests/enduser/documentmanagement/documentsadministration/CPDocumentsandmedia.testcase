@@ -1,699 +1,651 @@
-<definition component-name="portal-document-management">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Documents Management" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="DMFolder#tearDownCP" />
-
-				<execute macro="User#logoutPG" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddContract" priority="4">
-		<description message="This is a use case for LPS-42515" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addContractCP">
-			<var name="contractType" value="NDA" />
-			<var name="dmContractDealName" value="DM Contract Deal Name" />
-			<var name="dmContractDescription" value="DM Contract Description" />
-			<var name="dmContractFile" value="Document_1.pdf" />
-			<var name="dmContractLegalReviewer" value="DM Contract Legal Reviewer" />
-			<var name="dmContractSigningAuthority" value="DM Contract Signing Authority" />
-			<var name="dmContractTitle" value="DM Contract Title" />
-			<var name="effectiveDate" value="06/01/2017" />
-			<var name="expirationDate" value="06/15/2017" />
-			<var name="status" value="Draft" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Contract Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="dateValue" value="6/1/17" />
-			<var name="documentType" value="Contract" />
-			<var name="selectOption" value="NDA" />
-			<var name="textContent" value="DM Contract Legal Reviewer" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="dateValue" value="6/15/17" />
-			<var name="selectOption" value="Draft" />
-			<var name="textContent" value="DM Contract Signing Authority" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="textContent" value="DM Contract Deal Name" />
-		</execute>
-	</command>
-
-	<command name="AddShortcutToSiteDocument" priority="5">
-		<description message="This is a use case for LPS-82073." />
-
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Liferay" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addDMShortcutCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="CheckInDocumentAsCurrentVersion" priority="5">
-		<description message="This test ensures that a user can check in a document without changing versions." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+@component-name = "portal-document-management"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-42515"
+	@priority = "4"
+	test AddContract {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addContractCP(
+			contractType = "NDA",
+			dmContractDealName = "DM Contract Deal Name",
+			dmContractDescription = "DM Contract Description",
+			dmContractFile = "Document_1.pdf",
+			dmContractLegalReviewer = "DM Contract Legal Reviewer",
+			dmContractSigningAuthority = "DM Contract Signing Authority",
+			dmContractTitle = "DM Contract Title",
+			effectiveDate = "06/01/2017",
+			expirationDate = "06/15/2017",
+			status = "Draft"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Contract Title");
+
+		DMDocument.viewDocumentTypePG(
+			dateValue = "6/1/17",
+			documentType = "Contract",
+			selectOption = "NDA",
+			textContent = "DM Contract Legal Reviewer"
+		);
+
+		DMDocument.viewDocumentTypePG(
+			dateValue = "6/15/17",
+			selectOption = "Draft",
+			textContent = "DM Contract Signing Authority"
+		);
+
+		DMDocument.viewDocumentTypePG(textContent = "DM Contract Deal Name");
+	}
+
+	@description = "This is a use case for LPS-82073."
+	@priority = "5"
+	test AddShortcutToSiteDocument {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Check in as current version" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Check in as current version" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#checkinCP">
-			<var name="dmDocumentTitle" value="Check in as current version" />
-			<var name="revision" value="Current" />
-		</execute>
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Liferay");
 
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED">
-			<var name="key_dmDocumentTitle" value="Check in as current version" />
-		</execute>
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="Check in as current version" />
-		</execute>
-
-		<execute macro="DMDocument#expandInfo" />
-
-		<execute macro="DMDocument#selectVersion" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#SIDEBAR_LATEST_VERSION" value1="Version 1.0" />
-	</command>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-	<command name="CheckInDocumentAsMajorVersion" priority="5">
-		<description message="This test ensures that a user can check in a document as a major version." />
+		DMDocument.addDMShortcutCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Site Name"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		DMDocument.viewCP(dmDocumentSize = "0KB", dmDocumentTitle = "DM Document Title");
+	}
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Check in as major version" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Check in as major version" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#checkinCP">
-			<var name="dmDocumentTitle" value="Check in as major version" />
-			<var name="revision" value="Minor" />
-		</execute>
+	@description = "This test ensures that a user can check in a document without changing versions."
+	@priority = "5"
+	test CheckInDocumentAsCurrentVersion {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED">
-			<var name="key_dmDocumentTitle" value="Check in as major version" />
-		</execute>
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="Check in as major version" />
-		</execute>
-
-		<execute macro="DMDocument#expandInfo" />
-
-		<execute macro="DMDocument#selectVersion" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#SIDEBAR_LATEST_VERSION" value1="Version 2.0" />
-	</command>
-
-	<command name="CheckInDocumentAsMinorVersion" priority="5">
-		<description message="This test ensures that a user can check in a document as a minor version." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Check in as minor version" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Check in as minor version" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#checkinCP">
-			<var name="dmDocumentTitle" value="Check in as minor version" />
-			<var name="revision" value="Minor" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED">
-			<var name="key_dmDocumentTitle" value="Check in as minor version" />
-		</execute>
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="Check in as minor version" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#INFO" />
-
-		<execute macro="DMDocument#selectVersion" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#SIDEBAR_LATEST_VERSION" value1="Version 1.1" />
-	</command>
-
-	<command name="EditDocument" priority="5">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#editCP">
-			<var name="dmDocumentDescription" value="DM Document Description1" />
-			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edit" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="DMDocument#viewEditCP">
-			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#editCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderDescriptionEdit" value="DM Folder Description Edit" />
-			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="dmFolderNameEdit" value="DM Folder Name Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name Name" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-	</command>
-
-	<command name="MoveDocumentToFolder" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description1" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#moveToFolderCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewMovedToFolderCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
-	<command name="MoveDocumentToSameFolder" priority="5">
-		<description message="This is a use case for LPS-60405." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#moveToFolderCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmFolderName" value="Home" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="MoveFolderToFolder" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder1 Description" />
-			<var name="dmFolderName" value="DM Folder1 Name" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder2 Description" />
-			<var name="dmFolderName" value="DM Folder2 Name" />
-		</execute>
-
-		<execute macro="DMFolder#moveToFolderCP">
-			<var name="dmFolderName" value="DM Folder1 Name" />
-			<var name="dmFolderName" value="DM Folder2 Name" />
-			<var name="dmFolderName1" value="DM Folder1 Name" />
-			<var name="dmFolderName2" value="DM Folder2 Name" />
-		</execute>
-	</command>
-
-	<command name="MoveToRecycleBinDocument" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description1" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#moveToRecycleBinCP">
-			<var name="assetType" value="Document" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="MoveToRecycleBinFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#moveToRecycleBinCP">
-			<var name="assetType" value="Documents Folder" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
-	<command name="RotateImageViaDMSiteAdmin" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_2.jpg" />
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Portlet#HEADER" value1="Documents and Media" />
-
-		<execute macro="ImageEditor#gotoImageEditorViaDM">
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="ImageEditor#rotateImage">
-			<var name="rotateDirection" value="left" />
-		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="ImageEditor#applyChangesAndSaveFile" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_2.jpg" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
-			<var name="dmDocumentVersionNumber" value="1.1" />
-		</execute>
-	</command>
-
-	<command name="SearchForDocumentInHomeFolder" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="ViewImageEditorControls" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ImageEditor#gotoImageEditorViaDM">
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="ImageEditor#viewBaseControls" />
-	</command>
-</definition>
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Check in as current version"
+		);
+
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in as current version");
+
+		Refresh();
+
+		DMDocument.checkinCP(
+			dmDocumentTitle = "Check in as current version",
+			revision = "Current"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
+			key_dmDocumentTitle = "Check in as current version"
+		);
+
+		DMDocument.checkDocumentCheckboxCP(
+			dmDocumentTitle = "Check in as current version"
+		);
+
+		DMDocument.expandInfo();
+
+		DMDocument.selectVersion();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
+			value1 = "Version 1.0"
+		);
+	}
+
+	@description = "This test ensures that a user can check in a document as a major version."
+	@priority = "5"
+	test CheckInDocumentAsMajorVersion {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Check in as major version"
+		);
+
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in as major version");
+
+		Refresh();
+
+		DMDocument.checkinCP(
+			dmDocumentTitle = "Check in as major version",
+			revision = "Minor"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
+			key_dmDocumentTitle = "Check in as major version"
+		);
+
+		DMDocument.checkDocumentCheckboxCP(
+			dmDocumentTitle = "Check in as major version"
+		);
+
+		DMDocument.expandInfo();
+
+		DMDocument.selectVersion();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
+			value1 = "Version 2.0"
+		);
+	}
+
+	@description = "This test ensures that a user can check in a document as a minor version."
+	@priority = "5"
+	test CheckInDocumentAsMinorVersion {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Check in as minor version"
+		);
+
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in as minor version");
+
+		Refresh();
+
+		DMDocument.checkinCP(
+			dmDocumentTitle = "Check in as minor version",
+			revision = "Minor"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED",
+			key_dmDocumentTitle = "Check in as minor version"
+		);
+
+		DMDocument.checkDocumentCheckboxCP(
+			dmDocumentTitle = "Check in as minor version"
+		);
+
+		Click(locator1 = "Icon#INFO");
+
+		DMDocument.selectVersion();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#SIDEBAR_LATEST_VERSION",
+			value1 = "Version 1.1"
+		);
+	}
+
+	@priority = "5"
+	test EditDocument {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentSize = "0KB", dmDocumentTitle = "DM Document Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit"
+		);
+
+		DMDocument.viewEditCP(dmDocumentTitleEdit = "DM Document Title Edit");
+	}
+
+	@priority = "5"
+	test EditFolder {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.editCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderDescriptionEdit = "DM Folder Description Edit",
+			dmFolderName = "DM Folder Name",
+			dmFolderNameEdit = "DM Folder Name Name"
+		);
+
+		DMFolder.viewCP(
+			dmFolderName = "DM Folder Name Name",
+			specificNameFolder = "true"
+		);
+	}
+
+	@priority = "5"
+	test MoveDocumentToFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentSize = "0KB", dmDocumentTitle = "DM Document Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMDocument.viewMovedToFolderCP(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name"
+		);
+	}
+
+	@description = "This is a use case for LPS-60405."
+	@priority = "5"
+	test MoveDocumentToSameFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "Home"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentSize = "0KB", dmDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "4"
+	test MoveFolderToFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder1 Description",
+			dmFolderName = "DM Folder1 Name"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder2 Description",
+			dmFolderName = "DM Folder2 Name"
+		);
+
+		DMFolder.moveToFolderCP(
+			dmFolderName = "DM Folder1 Name",
+			dmFolderName = "DM Folder2 Name",
+			dmFolderName1 = "DM Folder1 Name",
+			dmFolderName2 = "DM Folder2 Name"
+		);
+	}
+
+	@priority = "5"
+	test MoveToRecycleBinDocument {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.moveToRecycleBinCP(
+			assetType = "Document",
+			dmDocumentTitle = "DM Document Title"
+		);
+	}
+
+	@priority = "5"
+	test MoveToRecycleBinFolder {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.moveToRecycleBinCP(
+			assetType = "Documents Folder",
+			dmFolderName = "DM Folder Name"
+		);
+	}
+
+	@priority = "4"
+	test RotateImageViaDMSiteAdmin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		AssertVisible(locator1 = "Portlet#HEADER", value1 = "Documents and Media");
+
+		ImageEditor.gotoImageEditorViaDM(dmDocumentTitle = "Document_2.jpg");
+
+		ImageEditor.rotateImage(rotateDirection = "left");
+
+		Pause(locator1 = "3000");
+
+		ImageEditor.applyChangesAndSaveFile();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
+
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
+	}
+
+	@priority = "4"
+	test SearchForDocumentInHomeFolder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		Search.searchCP(searchTerm = "DM Document Title");
+
+		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "5"
+	test ViewImageEditorControls {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		ImageEditor.gotoImageEditorViaDM(dmDocumentTitle = "Document_1.jpg");
+
+		ImageEditor.viewBaseControls();
+	}
+}

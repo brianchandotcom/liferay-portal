@@ -1,1602 +1,1244 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Wiki" />
-
-	<var name="pageName" value="Wiki Test Page" />
-	<var name="portletName" value="Wiki" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiPage#tearDownCP" />
-
-				<execute macro="WikiNode#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddChildSiteWikiFrontPageFormatHTML" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="HTML" />
-		</execute>
-
-		<execute macro="WikiEntry#confirmHTML" />
-
-		<execute macro="AlloyEditor#addContent">
-			<var name="content"><![CDATA[<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>]]></var>
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Child Site Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Child Site Page" />
-			<var name="privacy" value="Private Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Child Site Page" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Child Site Page" />
-			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
-
-		<execute macro="AlloyEditor#addContent">
-			<var name="content"><![CDATA[<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>]]></var>
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Child Site Page" />
-			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiNodeName" value="FrontPage" />
-			<var name="wikiPageContent" value="Edited My first paragraph." />
-		</execute>
-	</command>
-
-	<command name="AddWikiFrontPage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-	</command>
-
-	<command name="AddWikiFrontPageAttachment" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addAttachmentViaPageEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="attachmentFileSize" value="13KB" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
-
-	<command name="AddWikiFrontPageAttachments" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<for list="Document_1.jpg,Document_2.mp3,Document_3.doc" param="attachmentFileName">
-			<execute macro="WikiPage#addAttachmentViaPageEdit">
-				<var name="attachmentFileName" value="${attachmentFileName}" />
-				<var name="wikiPageTitle" value="FrontPage" />
-			</execute>
-
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Wiki Test Page" />
-			</execute>
-
-			<execute macro="WikiNavigator#gotoPG">
-				<var name="wikiPageTitle" value="FrontPage" />
-			</execute>
-		</for>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="attachmentFileSize" value="13KB" />
-			<var name="numberOfAttachments" value="3" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_2.mp3" />
-			<var name="attachmentFileSize" value="1KB" />
-			<var name="numberOfAttachments" value="3" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_3.doc" />
-			<var name="attachmentFileSize" value="24KB" />
-			<var name="numberOfAttachments" value="3" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
-
-	<command name="AddWikiFrontPageChildPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewViewCount">
-			<var name="viewCountNumber" value="2" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoChildPagePG">
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewChildPagePG">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-	</command>
-
-	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
-		<var name="welcomeToLiferay">
-			<![CDATA[
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Wiki";
+	var pageName = "Wiki Test Page";
+	var portletName = "Wiki";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Wiki Test Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Wiki Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Wiki");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPage.tearDownCP();
+
+			WikiNode.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddChildSiteWikiFrontPageFormatHTML {
+		property testray.component.names = "Training";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName");
+
+		ProductMenu.gotoSite(site = "Child SiteName");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+
+		AssertClick(
+			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
+			value1 = "This page is empty. Edit it to add some text."
+		);
+
+		WikiEntry.selectPageFormat(pageFormat = "HTML");
+
+		WikiEntry.confirmHTML();
+
+		AlloyEditor.addContent(
+			content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>'''
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoSite(site = "Child SiteName");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Child Site Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Child Site Page",
+			privacy = "Private Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Page.view(pageName = "Child Site Page", privacy = "Private Pages");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Child Site Page",
+			url = "${portalURL}/group/child-sitename/child-site-page"
+		);
+
+		Portlet.addPG(portletName = "Wiki");
+
+		AssertClick(locator1 = "Link#EDIT", value1 = "Edit");
+
+		AlloyEditor.addContent(
+			content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>'''
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Child Site Page",
+			url = "${portalURL}/group/child-sitename/child-site-page"
+		);
+
+		WikiPage.viewFrontPagePG(
+			wikiNodeName = "FrontPage",
+			wikiPageContent = "Edited My first paragraph."
+		);
+	}
+
+	@priority = "4"
+	test AddWikiFrontPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+	}
+
+	@priority = "4"
+	test AddWikiFrontPageAttachment {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.addAttachmentViaPageEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			attachmentFileSize = "13KB",
+			wikiPageTitle = "FrontPage"
+		);
+	}
+
+	@priority = "4"
+	test AddWikiFrontPageAttachments {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		for (var attachmentFileName : list "Document_1.jpg,Document_2.mp3,Document_3.doc") {
+			WikiPage.addAttachmentViaPageEdit(
+				attachmentFileName = "${attachmentFileName}",
+				wikiPageTitle = "FrontPage"
+			);
+
+			Navigator.gotoPage(pageName = "Wiki Test Page");
+
+			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+		}
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			attachmentFileSize = "13KB",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_2.mp3",
+			attachmentFileSize = "1KB",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_3.doc",
+			attachmentFileSize = "24KB",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage"
+		);
+	}
+
+	@priority = "5"
+	test AddWikiFrontPageChildPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		WikiPage.viewViewCount(viewCountNumber = "2");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.addChildPagePG(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiNavigator.gotoChildPagePG(
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title"
+		);
+
+		WikiPage.viewChildPagePG(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title"
+		);
+	}
+
+	@priority = "4"
+	test AddWikiFrontPageChildPageFormatHTML {
+
+		var welcomeToLiferay = '''
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
-			]]>
-		</var>
+			''';
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute function="AssertClick#assertTextClickAtAndPause" locator1="Link#ADD_CHILD_PAGE" value1="Add Child Page" />
+		AssertClick.assertTextClickAtAndPause(
+			locator1 = "Link#ADD_CHILD_PAGE",
+			value1 = "Add Child Page"
+		);
 
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="HTML" />
-		</execute>
+		WikiEntry.selectPageFormat(pageFormat = "HTML");
 
-		<execute macro="WikiEntry#confirmHTML" />
+		WikiEntry.confirmHTML();
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
 
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content" value="${welcomeToLiferay}" />
-		</execute>
+		AlloyEditor.addSourceContent(content = "${welcomeToLiferay}");
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoChildPagePG">
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
+		WikiNavigator.gotoChildPagePG(
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title"
+		);
 
-		<execute macro="WikiPage#viewChildPagePG">
-			<var name="wikiChildPageContent" value="Welcome to LIFERAY" />
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-	</command>
+		WikiPage.viewChildPagePG(
+			wikiChildPageContent = "Welcome to LIFERAY",
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title"
+		);
+	}
 
-	<command name="AddWikiFrontPageChildPages" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "4"
+	test AddWikiFrontPageChildPages {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<for list="1,2,3" param="childPageCount">
-			<execute macro="WikiPage#addChildPagePG">
-				<var name="wikiChildPageContent" value="Wiki FrontPage Child Page${childPageCount} Content" />
-				<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page${childPageCount} Title" />
-				<var name="wikiPageTitle" value="FrontPage" />
-			</execute>
-		</for>
+		for (var childPageCount : list "1,2,3") {
+			WikiPage.addChildPagePG(
+				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
+				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title",
+				wikiPageTitle = "FrontPage"
+			);
+		}
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<for list="1,2,3" param="childPageCount">
-			<execute macro="WikiNavigator#gotoPG">
-				<var name="wikiPageTitle" value="FrontPage" />
-			</execute>
+		for (var childPageCount : list "1,2,3") {
+			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-			<execute macro="WikiNavigator#gotoChildPagePG">
-				<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page${childPageCount} Title" />
-			</execute>
+			WikiNavigator.gotoChildPagePG(
+				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title"
+			);
 
-			<execute macro="WikiPage#viewChildPagePG">
-				<var name="wikiChildPageContent" value="Wiki FrontPage Child Page${childPageCount} Content" />
-				<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page${childPageCount} Title" />
-			</execute>
-		</for>
-	</command>
+			WikiPage.viewChildPagePG(
+				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
+				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title"
+			);
+		}
+	}
 
-	<command name="AddWikiFrontPageChildPageWithInvalidTitle" priority="4">
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+	@priority = "4"
+	test AddWikiFrontPageChildPageWithInvalidTitle {
+		WikiPage.addFrontPagePG(
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki\ Front\ Page\ Child\ Page\ Title\" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki\ Front\ Page\ Child\ Page\ Title\"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki] Front] Page] Child] Page] Title]" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki] Front] Page] Child] Page] Title]"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki[ Front[ Page[ Child[ Page[ Title[" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki[ Front[ Page[ Child[ Page[ Title["
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki; Front; Page; Child; Page; Title;" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki; Front; Page; Child; Page; Title;"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki: Front: Page: Child: Page: Title:" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki: Front: Page: Child: Page: Title:"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki| Front| Page| Child| Page| Title|" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki| Front| Page| Child| Page| Title|"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki&lt; Front&lt; Page&lt; Child&lt; Page&lt; Title&lt;" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki&lt; Front&lt; Page&lt; Child&lt; Page&lt; Title&lt;"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageInvalidTitle" value="true" />
-			<var name="wikiChildPageTitle" value="Wiki&gt; Front&gt; Page&gt; Child&gt; Page&gt; Title&gt;" />
-		</execute>
+		WikiPage.addFrontPageChildPageInvalidTitle(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageInvalidTitle = "true",
+			wikiChildPageTitle = "Wiki&gt; Front&gt; Page&gt; Child&gt; Page&gt; Title&gt;"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageRevision = "1.1",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#viewNoChildPagePGViaAllPages">
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-	</command>
+		WikiPage.viewNoChildPagePGViaAllPages(
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
+			wikiPageRevision = "1.1",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
+	}
 
-	<command name="AddWikiFrontPageContentNoJavascript" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "4"
+	test AddWikiFrontPageContentNoJavascript {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
+		AssertClick(
+			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
+			value1 = "This page is empty. Edit it to add some text."
+		);
 
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="HTML" />
-		</execute>
+		WikiEntry.selectPageFormat(pageFormat = "HTML");
 
-		<execute macro="WikiEntry#confirmHTML" />
+		WikiEntry.confirmHTML();
 
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content">
-			<![CDATA[
+		AlloyEditor.addSourceContent(
+			content = '''
 				<p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="this code should not be read by the client";</script>
-			]]>
-			</var>
-		</execute>
+			'''
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoFrontPagePG" />
+		WikiNavigator.gotoFrontPagePG();
 
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="PASS" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
+		WikiPage.viewFrontPagePG(wikiPageContent = "PASS", wikiPageTitle = "FrontPage");
+	}
 
-	<command name="AddWikiFrontPageFormatCreole" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "4"
+	test AddWikiFrontPageFormatCreole {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="creoleSource" value="true" />
-			<var name="wikiPageContent" value="**Wiki FrontPage Content**" />
-			<var name="wikiPageText" value="Wiki FrontPage Content" />
-		</execute>
+		WikiPage.addFrontPagePG(
+			creoleSource = "true",
+			wikiPageContent = "**Wiki FrontPage Content**",
+			wikiPageText = "Wiki FrontPage Content"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageRevision = "1.1",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
+	}
 
-	<command name="AddWikiFrontPageFormatHTML" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
+	@priority = "5"
+	test AddWikiFrontPageFormatHTML {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="htmlSource" value="true" />
-			<var name="wikiPageContent">
-			<![CDATA[<p><a href="/">Home</a></p>
-			]]>
-			</var>
-		</execute>
+		WikiPage.addFrontPagePG(
+			htmlSource = "true",
+			wikiPageContent = '''<p><a href="/">Home</a></p>
+			'''
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="isOrphanPage" value="true" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoPG(isOrphanPage = "true", wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiPage#viewPG">
-			<var name="isOrphanPage" value="true" />
-			<var name="wikiPageContent" value="Home" />
-			<var name="wikiPageContentLink" value="true" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-	</command>
+		WikiPage.viewPG(
+			isOrphanPage = "true",
+			wikiPageContent = "Home",
+			wikiPageContentLink = "true",
+			wikiPageRevision = "1.1",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
+	}
 
-	<command name="AddWikiPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "5"
+	test AddWikiPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
 
-	<command name="AddWikiPageChildPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "5"
+	test AddWikiPageChildPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="Wiki Child Page Content" />
-			<var name="wikiChildPageTitle" value="Wiki Child Page Title" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiPage.addChildPagePG(
+			wikiChildPageContent = "Wiki Child Page Content",
+			wikiChildPageTitle = "Wiki Child Page Title",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoChildPagePG">
-			<var name="wikiChildPageTitle" value="Wiki Child Page Title" />
-		</execute>
+		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki Child Page Title");
 
-		<execute macro="WikiPage#viewChildPagePG">
-			<var name="wikiChildPageContent" value="Wiki Child Page Content" />
-			<var name="wikiChildPageTitle" value="Wiki Child Page Title" />
-		</execute>
-	</command>
+		WikiPage.viewChildPagePG(
+			wikiChildPageContent = "Wiki Child Page Content",
+			wikiChildPageTitle = "Wiki Child Page Title"
+		);
+	}
 
-	<command name="AddWikiPageFormatHTML" priority="5">
-		<var name="welcomeToLiferay">
-			<![CDATA[
+	@priority = "5"
+	test AddWikiPageFormatHTML {
+
+		var welcomeToLiferay = '''
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
-			]]>
-		</var>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="HTML" />
-		</execute>
-
-		<execute macro="WikiEntry#confirmHTML" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content" value="${welcomeToLiferay}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Welcome to LIFERAY" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Welcome to LIFERAY" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="AddWikiPages" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="WikiPage#addPG">
-				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-			</execute>
-
-			<execute function="Refresh" />
-		</for>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Wiki Test Page" />
-			</execute>
-
-			<execute macro="WikiNavigator#gotoPG">
-				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
-				<var name="wikiPageRevision" value="1.0" />
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-				<var name="wikiPageUsername" value="Test Test" />
-			</execute>
+			''';
 
-			<execute macro="WikiPage#viewPG">
-				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddWikiPageWithInlineImage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoAddPageViaPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.selectPageFormat(pageFormat = "HTML");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiEntry.confirmHTML();
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		AlloyEditor.addSourceContent(content = "${welcomeToLiferay}");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		PortletEntry.publish();
 
-		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addInlineImageViaEdit">
-			<var name="navTab" value="Upload Image" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Welcome to LIFERAY",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		Pause(locator1 = "1000");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiPage.viewPG(
+			wikiPageContent = "Welcome to LIFERAY",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
 
-		<execute macro="WikiPage#viewPageWithAttachment">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="CancelAddPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+	@priority = "5"
+	test AddWikiPages {
+		property testray.component.names = "Training";
 
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="WikiEntry#cancel" />
-
-		<execute macro="WikiTable#viewNoEntry">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="CancelEditPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		for (var entryCount : list "1,2,3") {
+			WikiPage.addPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageTitle = "Wiki Page${entryCount} Title"
+			);
 
-		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+			Refresh();
+		}
 
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
+		for (var entryCount : list "1,2,3") {
+			Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiEntry#cancel" />
+			WikiNavigator.gotoPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageRevision = "1.0",
+				wikiPageTitle = "Wiki Page${entryCount} Title",
+				wikiPageUsername = "Test Test"
+			);
 
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+			WikiPage.viewPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageTitle = "Wiki Page${entryCount} Title"
+			);
+		}
+	}
 
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-	</command>
-
-	<command name="CompareVersionEditFrontPage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "4"
+	test AddWikiPageWithInlineImage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki Front Page Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#editFrontPagePG">
-			<var name="wikiPageContentEdit" value="Wiki Front Page Content Edit" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Front Page Content Edit" />
-			<var name="wikiPageRevision" value="1.2" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Front Page Content Edit" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiPage#compareVersionsPG">
-			<var name="wikiPageContentEdit" value="Wiki Front Page Content Edit" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageVersionDiff" value="Wiki Front Page Content Edit" />
-			<var name="wikiPageVersionNew" value="1.2" />
-			<var name="wikiPageVersionOld" value="1.0" />
-		</execute>
-	</command>
+		WikiPage.addInlineImageViaEdit(
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg"
+		);
 
-	<command name="CopyPage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
+		WikiPage.viewPageWithAttachment(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+	@priority = "5"
+	test CancelAddPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="PortletEntry#publish" />
+		WikiNavigator.gotoAddPageViaPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
-		<execute macro="WikiNavigator#gotoEntryCopyViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiEntry.cancel();
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
-		</execute>
+		WikiTable.viewNoEntry(wikiPageTitle = "Wiki Page Title");
+	}
 
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Copied Wiki Page Content" />
-		</execute>
+	@priority = "5"
+	test CancelEditPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="PortletEntry#publish" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoAddPageViaPG();
 
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
-		</execute>
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Copied Wiki Page Content" />
-		</execute>
-	</command>
+		PortletEntry.publish();
 
-	<command name="DeleteWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiEntry.cancel();
 
-		<execute macro="WikiPage#deletePG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-	<command name="DeleteWikiPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content");
+	}
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+	@priority = "4"
+	test CompareVersionEditFrontPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiPage.addFrontPagePG(
+			wikiPageContent = "Wiki Front Page Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki Front Page Content Edit");
 
-		<execute macro="WikiPage#deletePG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Front Page Content Edit",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Front Page Content Edit",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="WikiPage#viewNoPagePG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-	<command name="EditDraftPage" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiPage.compareVersionsPG(
+			wikiPageContentEdit = "Wiki Front Page Content Edit",
+			wikiPageTitle = "FrontPage",
+			wikiPageVersionDiff = "Wiki Front Page Content Edit",
+			wikiPageVersionNew = "1.2",
+			wikiPageVersionOld = "1.0"
+		);
+	}
 
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
+	@priority = "4"
+	test CopyPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
+		WikiNavigator.gotoAddPageViaPG();
 
-		<execute macro="WikiEntry#saveAsDraft" />
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
+		PortletEntry.publish();
 
-		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute function="Click" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
-		</execute>
+		WikiNavigator.gotoEntryCopyViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+		WikiEntry.addPageTitle(wikiPageTitle = "Copied Wiki Page Title");
 
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Copied Wiki Page Content");
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiTable.viewEntry(
+			draftStatus = "Approved",
+			wikiPageTitle = "Copied Wiki Page Title"
+		);
 
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Copied Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiEntry.viewPageContentBody(wikiPageContent = "Copied Wiki Page Content");
+	}
 
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
-	</command>
+	@priority = "5"
+	test DeleteWikiFrontPage {
+		property portal.acceptance = "true";
 
-	<command name="EditWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiPage.addFrontPagePG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#editFrontPagePG">
-			<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
-		</execute>
+		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+	}
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "5"
+	test DeleteWikiPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content Edit" />
-			<var name="wikiPageRevision" value="1.2" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content Edit" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
 
-	<command name="LinkWikiPage1toWikiPage2" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page1 Content" />
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
+		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
+		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
+	}
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+	@priority = "5"
+	test EditDraftPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiPage#linkPG">
-			<var name="wikiPage1Content" value="Wiki Page1 Content" />
-			<var name="wikiPage1Title" value="Wiki Page1 Title" />
-			<var name="wikiPage2Content" value="Wiki Page2 Content" />
-			<var name="wikiPage2Link" value="[[Wiki Page2 Title]]" />
-			<var name="wikiPage2Title" value="Wiki Page2 Title" />
-		</execute>
+		WikiNavigator.gotoAddPageViaPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
-		<execute macro="WikiNavigator#gotoBodyLinkPG">
-			<var name="wikiPageContent" value="Wiki Page2 Title" />
-		</execute>
+		WikiEntry.saveAsDraft();
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-	</command>
-
-	<command name="RemoveRedirectLinkFromWikiPage" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		WikiNavigator.gotoDraftPagesPG();
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-		<execute macro="WikiPage#renameWikiPagePG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
-		</execute>
+		AssertElementPresent(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
 
-		<execute macro="WikiPage#removeRedirectWikiPagePG">
-			<var name="wikiPage2Content" value="Wiki2 Page2 Content2" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
-		</execute>
+		AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
+		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki2 Page2 Content2" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Rename" />
-		</execute>
-
-		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Rename" />
-		</execute>
-	</command>
-
-	<command name="RenameWikiPageTitle" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#renameWikiPagePG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewRedirectLinkPG">
-			<var name="wikiPageRedirectLink" value="(Redirected from Wiki Page Title)" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Rename" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Rename" />
-		</execute>
-
-		<execute macro="WikiPage#cannotViewRedirectLinkPG" />
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Rename" />
-		</execute>
-	</command>
-
-	<command name="RevertChangeParentWikipage2toWikipage1" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page1 Content" />
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-
-		<execute macro="WikiPage#changeParentWikipagetoWikipagePG">
-			<var name="wikiPage1Title" value="Wiki Page1 Title" />
-			<var name="wikiPage2Content" value="Wiki Page2 Content" />
-			<var name="wikiPage2Title" value="Wiki Page2 Title" />
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-
-		<execute macro="WikiPage#revertChangeParentWikipagetoWikipagePG">
-			<var name="wikiPage1Title" value="Wiki Page1 Title" />
-			<var name="wikiPage2Content" value="Wiki Page2 Content" />
-			<var name="wikiPage2Title" value="Wiki Page2 Title" />
-			<var name="wikiVersion1Summary" value="Changed parent from" />
-			<var name="wikiVersion2Summary" value="Reverted to 1.0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page1 Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page1 Content" />
-			<var name="wikiPageTitle" value="Wiki Page1 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-			<var name="wikiPageRevision" value="1.2" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page2 Content" />
-			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-	</command>
-
-	<command name="RevertEditFrontpage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#editFrontPagePG">
-			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content Edit" />
-			<var name="wikiPageRevision" value="1.2" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#revertEditPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevisionNew" value="1.3" />
-			<var name="wikiPageRevisionOld" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiVersionSummary" value="Reverted to 1.1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.3" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
-
-	<command name="SaveEditedPageAsDraft" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoAddPageViaPG" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
-
-		<execute macro="WikiEntry#saveAsDraft" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Draft" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-	</command>
-</definition>
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Edited Wiki Page Content");
+	}
+
+	@priority = "5"
+	test EditWikiFrontPage {
+		property portal.acceptance = "true";
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki FrontPage Content Edit");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageTitle = "FrontPage"
+		);
+	}
+
+	@priority = "4"
+	test LinkWikiPage1toWikiPage2 {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page1 Content",
+			wikiPageTitle = "Wiki Page1 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page2 Content",
+			wikiPageTitle = "Wiki Page2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page1 Title");
+
+		WikiPage.linkPG(
+			wikiPage1Content = "Wiki Page1 Content",
+			wikiPage1Title = "Wiki Page1 Title",
+			wikiPage2Content = "Wiki Page2 Content",
+			wikiPage2Link = "[[Wiki Page2 Title]]",
+			wikiPage2Title = "Wiki Page2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page1 Title");
+
+		WikiNavigator.gotoBodyLinkPG(wikiPageContent = "Wiki Page2 Title");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page2 Content",
+			wikiPageTitle = "Wiki Page2 Title"
+		);
+	}
+
+	@priority = "3"
+	test RemoveRedirectLinkFromWikiPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.renameWikiPagePG(
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageTitleRename = "Wiki Page Rename"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.removeRedirectWikiPagePG(
+			wikiPage2Content = "Wiki2 Page2 Content2",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageTitleRename = "Wiki Page Rename"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.cannotViewRedirectLinkPG();
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki2 Page2 Content2",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Rename");
+
+		WikiPage.cannotViewRedirectLinkPG();
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Rename"
+		);
+	}
+
+	@priority = "4"
+	test RenameWikiPageTitle {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.renameWikiPagePG(
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageTitleRename = "Wiki Page Rename"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewRedirectLinkPG(
+			wikiPageRedirectLink = "(Redirected from Wiki Page Title)"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Rename"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Rename");
+
+		WikiPage.cannotViewRedirectLinkPG();
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Rename"
+		);
+	}
+
+	@priority = "4"
+	test RevertChangeParentWikipage2toWikipage1 {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page1 Content",
+			wikiPageTitle = "Wiki Page1 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page2 Content",
+			wikiPageTitle = "Wiki Page2 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page2 Title");
+
+		WikiPage.changeParentWikipagetoWikipagePG(
+			wikiPage1Title = "Wiki Page1 Title",
+			wikiPage2Content = "Wiki Page2 Content",
+			wikiPage2Title = "Wiki Page2 Title",
+			wikiPageContent = "Wiki Page2 Content"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page2 Title");
+
+		WikiPage.revertChangeParentWikipagetoWikipagePG(
+			wikiPage1Title = "Wiki Page1 Title",
+			wikiPage2Content = "Wiki Page2 Content",
+			wikiPage2Title = "Wiki Page2 Title",
+			wikiVersion1Summary = "Changed parent from",
+			wikiVersion2Summary = "Reverted to 1.0"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page1 Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page1 Title",
+			wikiPageUsername = "Test Test"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page1 Content",
+			wikiPageTitle = "Wiki Page1 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page2 Content",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "Wiki Page2 Title",
+			wikiPageUsername = "Test Test"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page2 Content",
+			wikiPageTitle = "Wiki Page2 Title"
+		);
+	}
+
+	@priority = "4"
+	test RevertEditFrontpage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki Page Content Edit");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content Edit",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content Edit",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.revertEditPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevisionNew = "1.3",
+			wikiPageRevisionOld = "1.1",
+			wikiPageTitle = "FrontPage",
+			wikiVersionSummary = "Reverted to 1.1"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.3",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "FrontPage"
+		);
+	}
+
+	@priority = "4"
+	test SaveEditedPageAsDraft {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoAddPageViaPG();
+
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
+
+		WikiEntry.saveAsDraft();
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoDraftPagesPG();
+
+		WikiTable.viewEntry(draftStatus = "Draft", wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content");
+	}
+}

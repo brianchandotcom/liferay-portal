@@ -1,547 +1,463 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Page Templates" />
-	<property name="testray.main.component.name" value="Page Templates" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-				<execute macro="PageTemplatesAdminGlobalSite#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddPageTemplate" priority="4">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-	</command>
-
-	<command name="AddSitePageTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#viewPageTemplate">
-			<var name="page" value="Site Page" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#gotoPageTemplateViaEdit">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Page#togglePageTemplateInheritChanges">
-			<var name="toggleValue" value="disable" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#gotoPageTemplateViaEdit">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</command>
-
-	<command name="DeactivateAndActivatePageTemplate" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#deactivateAndActivate">
-			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Not Active" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewStatus">
-			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Not Active" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Public Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Global Templates" />
-		</execute>
-
-		<execute macro="Page#viewPageTemplateTypeNotPresent">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#deactivateAndActivate">
-			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Active" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewStatus">
-			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Active" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Public Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Global Templates" />
-		</execute>
-
-		<execute macro="Page#viewPageTemplateTypePresent">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-	</command>
-
-	<command name="DeletePageTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#deleteCP">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultCP" />
-	</command>
-
-	<command name="EditPageTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#editCP">
-			<var name="pageTemplateActive" value="Not Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-	</command>
-
-	<command name="EditPageTemplateDescription" priority="4">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#editDescription">
-			<var name="pageTemplateDescription" value="This is a page template description" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDescription">
-			<var name="pageTemplateDescription" value="This is a page template description edit" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-	</command>
-
-	<command name="ImportLAR" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="college-and-department-page-templates.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewCP">
-			<var name="pageTemplateName" value="College Landing Page" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewCP">
-			<var name="pageTemplateName" value="Department Landing Page" />
-		</execute>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewPG">
-			<var name="pageTemplateName" value="College Landing Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Media Gallery" />
-		</execute>
-
-		<execute macro="Portlet#viewDuplicatePG">
-			<var name="portletName" value="Web Content Display" />
-			<var name="totalPortletCount" value="3" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewPG">
-			<var name="pageTemplateName" value="Department Landing Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Media Gallery" />
-		</execute>
-
-		<execute macro="Portlet#viewDuplicatePG">
-			<var name="portletName" value="Web Content Display" />
-			<var name="totalPortletCount" value="2" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Members" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-	</command>
-
-	<command name="LocalizeDefaultPageTemplates" priority="4">
-		<property name="test.name.skip.portal.instance" value="WidgetPageTemplates#LocalizeDefaultPageTemplates" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultCP" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Account Settings" />
-		</execute>
-
-		<execute macro="MyAccount#changeUserLanguage">
-			<var name="languageName" value="español (España)" />
-			<var name="saveButton" value="Save" />
-			<var name="successMessage" value="Su petición ha terminado con éxito." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoLocalizedSite">
-			<var name="displayStyle" value="tabla" />
-			<var name="navItem" value="Mis Sitios" />
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Estructuración" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Páginas del sitio web" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultLocalizedCP">
-			<var name="pageTemplateNameList" value="Blog,Búsqueda,Wiki" />
-			<var name="portletTitle" value="Páginas del sitio web" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Mi cuenta" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Mi cuenta" />
-		</execute>
-
-		<execute macro="MyAccount#changeUserLanguage">
-			<var name="languageName" value="English (United States)" />
-			<var name="saveButton" value="Guardar" />
-			<var name="successMessage" value="Your request completed successfully." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultCP" />
-	</command>
-
-	<command name="ViewEditedPageTemplatePageName" priority="4">
-		<property name="testray.component.names" value="Page Templates" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#addCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewPG">
-			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#editCP">
-			<var name="pageTemplateActive" value="Active" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdminGlobalSite#viewPG">
-			<var name="pageTemplateName" value="Page Template Name Edit" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Page Templates";
+	property testray.main.component.name = "Page Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+
+			PageTemplatesAdminGlobalSite.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddPageTemplate {
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+	}
+
+	@priority = "5"
+	test AddSitePageTemplate {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Site Page",
+			pageTemplateName = "Page Template Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Page.viewPageTemplate(
+			page = "Site Page",
+			pageTemplateName = "Page Template Name"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(
+			pageTemplateName = "Page Template Name"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		Portlet.viewPG(portletName = "Blogs");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
+
+		Page.togglePageTemplateInheritChanges(toggleValue = "disable");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(
+			pageTemplateName = "Page Template Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
+	}
+
+	@priority = "4"
+	test DeactivateAndActivatePageTemplate {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.deactivateAndActivate(
+			pageTemplateName = "Page Template Name",
+			pageTemplateStatus = "Not Active"
+		);
+
+		PageTemplatesAdminGlobalSite.viewStatus(
+			pageTemplateName = "Page Template Name",
+			pageTemplateStatus = "Not Active"
+		);
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+
+		Navigator.gotoNavNested(navNested = "Global Templates");
+
+		Page.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.deactivateAndActivate(
+			pageTemplateName = "Page Template Name",
+			pageTemplateStatus = "Active"
+		);
+
+		PageTemplatesAdminGlobalSite.viewStatus(
+			pageTemplateName = "Page Template Name",
+			pageTemplateStatus = "Active"
+		);
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+
+		Navigator.gotoNavNested(navNested = "Global Templates");
+
+		Page.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
+	}
+
+	@priority = "5"
+	test DeletePageTemplate {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Page Template Name");
+
+		PageTemplatesAdminGlobalSite.viewDefaultCP();
+	}
+
+	@priority = "5"
+	test EditPageTemplate {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.editCP(
+			pageTemplateActive = "Not Active",
+			pageTemplateName = "Page Template Name"
+		);
+	}
+
+	@priority = "4"
+	test EditPageTemplateDescription {
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.editDescription(
+			pageTemplateDescription = "This is a page template description",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.viewDescription(
+			pageTemplateDescription = "This is a page template description edit",
+			pageTemplateName = "Page Template Name"
+		);
+	}
+
+	@priority = "5"
+	test ImportLAR {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		LAR.importPortlet(
+			larFileName = "college-and-department-page-templates.lar",
+			uploadFrom = "dependencies"
+		);
+
+		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");
+
+		PageTemplatesAdminGlobalSite.viewCP(
+			pageTemplateName = "Department Landing Page"
+		);
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		PageTemplatesAdminGlobalSite.viewPG(
+			pageTemplateName = "College Landing Page",
+			siteName = "${siteName}"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Media Gallery");
+
+		Portlet.viewDuplicatePG(
+			portletName = "Web Content Display",
+			totalPortletCount = "3"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Asset Publisher");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.viewPG(
+			pageTemplateName = "Department Landing Page",
+			siteName = "${siteName}"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Media Gallery");
+
+		Portlet.viewDuplicatePG(
+			portletName = "Web Content Display",
+			totalPortletCount = "2"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Members");
+
+		Portlet.viewSpecificPG(portletName = "Navigation Menu");
+	}
+
+	@priority = "4"
+	test LocalizeDefaultPageTemplates {
+		property test.name.skip.portal.instance = "WidgetPageTemplates#LocalizeDefaultPageTemplates";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.viewDefaultCP();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Account Settings"
+		);
+
+		MyAccount.changeUserLanguage(
+			languageName = "español (España)",
+			saveButton = "Save",
+			successMessage = "Su petición ha terminado con éxito."
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoLocalizedSite(
+			displayStyle = "tabla",
+			navItem = "Mis Sitios",
+			site = "Global"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Estructuración",
+			panel = "Site Administration",
+			portlet = "Páginas del sitio web"
+		);
+
+		PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
+			pageTemplateNameList = "Blog,Búsqueda,Wiki",
+			portletTitle = "Páginas del sitio web"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Mi cuenta",
+			panel = "User",
+			portlet = "Mi cuenta"
+		);
+
+		MyAccount.changeUserLanguage(
+			languageName = "English (United States)",
+			saveButton = "Guardar",
+			successMessage = "Your request completed successfully."
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.viewDefaultCP();
+	}
+
+	@priority = "4"
+	test ViewEditedPageTemplatePageName {
+		property testray.component.names = "Page Templates";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.addCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		PageTemplatesAdminGlobalSite.viewPG(
+			pageTemplateName = "Page Template Name",
+			siteName = "${siteName}"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		PageTemplatesAdminGlobalSite.editCP(
+			pageTemplateActive = "Active",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdminGlobalSite.viewPG(
+			pageTemplateName = "Page Template Name Edit",
+			siteName = "${siteName}"
+		);
+	}
+}

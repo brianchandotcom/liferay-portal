@@ -1,1357 +1,1081 @@
-<definition component-name="portal-web-forms-and-data-lists">
-	<property name="custom.properties" value="minifier.enabled=true" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Forms" />
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#openURL" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
 
-				<execute macro="ProductMenu#gotoPortlet">
-					<var name="category" value="Content" />
-					<var name="panel" value="Site Administration" />
-					<var name="portlet" value="Forms" />
-				</execute>
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Forms"
+			);
 
-				<execute macro="FormsAdmin#teardownForms" />
+			FormsAdmin.teardownForms();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ConfigureAutofillRule" priority="5">
-		<description message="This is a use case for LPS-70446." />
-		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="FormRules#ConfigureAutofillRule" />
+	@description = "This is a use case for LPS-70446."
+	@priority = "5"
+	test ConfigureAutofillRule {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Data Providers" />
-		</execute>
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterName = "Country Name",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com"
+		);
 
-		<execute macro="FormsAdmin#editDataProvider">
-			<var name="name" value="Liferay Countries" />
-			<var name="outputParameterLabel" value="Countries Full Name" />
-			<var name="outputParameterName" value="Country Name" />
-			<var name="outputParameterPath" value="nameCurrentValue" />
-			<var name="outputParameterType" value="List" />
-			<var name="password" value="test" />
-			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
-			<var name="username" value="test@liferay.com" />
-		</execute>
+		FormsAdmin.saveDataProvider();
 
-		<execute macro="FormsAdmin#saveDataProvider" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editName();
 
-		<execute macro="Form#editName" />
+		Form.editDescription();
 
-		<execute macro="Form#editDescription" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		Form.gotoAddField(fieldType = "Select from List");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Select from List" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Countries");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Countries" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormRules.addRule();
 
-		<execute macro="FormRules#addRule" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "country",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionFieldValue" value="country" />
-			<var name="conditionOperator" value="Contains" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Autofill",
+			actionRowNumber = "1",
+			actionTarget = "Liferay Countries"
+		);
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Autofill" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Liferay Countries" />
-		</execute>
+		FormRules.selectAutofillOutput(dataProviderOutput = "Countries");
 
-		<execute macro="FormRules#selectAutofillOutput">
-			<var name="dataProviderOutput" value="Countries" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="FormRules#save" />
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		Form.save();
 
-		<execute macro="Form#save" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		PortletEntry.save();
 
-		<execute macro="PortletEntry#save" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.viewTextLabel(fieldLabel = "Text Field", fieldName = "TextField");
 
-		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text Field" />
-			<var name="fieldName" value="TextField" />
-		</execute>
+		FormFields.editText(fieldName = "TextField", fieldValue = "test");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="test" />
-		</execute>
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Option"
+		);
 
-		<execute macro="FormFields#viewSelectOptionsList">
-			<var name="fieldName" value="Countries" />
-			<var name="selectOption" value="Option" />
-		</execute>
+		FormFields.editText(fieldName = "TextField", fieldValue = "country");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="country" />
-		</execute>
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Afghanistan"
+		);
+	}
 
-		<execute macro="FormFields#viewSelectOptionsList">
-			<var name="fieldName" value="Countries" />
-			<var name="selectOption" value="Afghanistan" />
-		</execute>
-	</command>
+	@description = "This is a use case for LPS-71592."
+	@priority = "5"
+	test ConfigureCalculateRule {
+		property portal.acceptance = "true";
+		var portalURL = PropsUtil.get("portal.url");
 
-	<command name="ConfigureCalculateRule" priority="5">
-		<description message="This is a use case for LPS-71592." />
-		<property name="portal.acceptance" value="true" />
+		Navigator.openURL();
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Navigator#openURL" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editName();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.gotoAddField(fieldType = "Numeric");
 
-		<execute macro="Form#editName" />
+		Form.editFieldLabel(fieldValue = "Quantity");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Numeric" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Quantity" />
-		</execute>
+		Form.gotoAddField(fieldType = "Numeric");
 
-		<execute macro="Form#closeSidebar" />
+		Form.editFieldLabel(fieldValue = "Value");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Numeric" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Value" />
-		</execute>
+		Form.gotoAddField(fieldType = "Numeric");
 
-		<execute macro="Form#closeSidebar" />
+		Form.editFieldLabel(fieldValue = "Total");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Numeric" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Total" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.addRule();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormRules.selectConditionField(
+			conditionField = "Quantity",
+			conditionRowNumber = "1"
+		);
 
-		<execute macro="FormRules#addRule" />
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1"
+		);
 
-		<execute macro="FormRules#selectConditionField">
-			<var name="conditionField" value="Quantity" />
-			<var name="conditionRowNumber" value="1" />
-		</execute>
+		FormRules.selectAction(action = "Calculate", actionRowNumber = "1");
 
-		<execute macro="FormRules#selectConditionOperator">
-			<var name="conditionOperator" value="Is not empty" />
-			<var name="conditionRowNumber" value="1" />
-		</execute>
+		FormRules.selectCalculateField(calculateFieldOption = "Value");
 
-		<execute macro="FormRules#selectAction">
-			<var name="action" value="Calculate" />
-			<var name="actionRowNumber" value="1" />
-		</execute>
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
 
-		<execute macro="FormRules#selectCalculateField">
-			<var name="calculateFieldOption" value="Value" />
-		</execute>
+		FormRules.selectCalculateField(calculateFieldOption = "Quantity");
 
-		<execute macro="FormRules#chooseCalculateOperator">
-			<var name="calculateOperator" value="*" />
-		</execute>
+		FormRules.selectCalculateResultField(calculateResultField = "Total");
 
-		<execute macro="FormRules#selectCalculateField">
-			<var name="calculateFieldOption" value="Quantity" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="FormRules#selectCalculateResultField">
-			<var name="calculateResultField" value="Total" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormRules#save" />
+		Form.save();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Form#save" />
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		PortletEntry.save();
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="PortletEntry#save" />
+		FormFields.editText(fieldName = "Value", fieldValue = "5");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.editText(fieldName = "Quantity", fieldValue = "10");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Value" />
-			<var name="fieldValue" value="5" />
-		</execute>
+		FormFields.viewTextValue(fieldName = "Total", fieldValue = "50");
+	}
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Quantity" />
-			<var name="fieldValue" value="10" />
-		</execute>
+	@priority = "5"
+	test ConfigureRequireRule {
+		property portal.acceptance = "true";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="Total" />
-			<var name="fieldValue" value="50" />
-		</execute>
-	</command>
+		Navigator.openURL();
 
-	<command name="ConfigureRequireRule" priority="5">
-		<property name="portal.acceptance" value="true" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="Navigator#openURL" />
+		Form.editName();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editFieldLabel(fieldValue = "Text Field");
 
-		<execute macro="Form#editName" />
+		Form.closeSidebar();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.gotoAddField(fieldType = "Date");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Date Field");
 
-		<execute macro="Form#closeSidebar" />
+		Form.closeSidebar();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Date" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Date Field" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
 
-		<execute macro="FormRules#addRule" />
+		FormRules.save();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Require" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Date Field" />
-		</execute>
+		Form.save();
 
-		<execute macro="FormRules#save" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="Form#save" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		FormFields.viewRequiredAsteriskNotPresent();
 
-		<execute macro="PortletEntry#save" />
+		FormFields.editText(fieldName = "TextField", fieldValue = "test");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.viewRequiredAsterisk();
 
-		<execute macro="FormFields#viewRequiredAsteriskNotPresent" />
+		FormPortlet.submitWithValidationError();
+	}
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="test" />
-		</execute>
+	@priority = "5"
+	test ConfigureShowRuleUsingAndCondition {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ConfigureShowRuleUsingAndCondition";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="FormFields#viewRequiredAsterisk" />
+		Navigator.openURL();
 
-		<execute macro="FormPortlet#submitWithValidationError" />
-	</command>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-	<command name="ConfigureShowRuleUsingAndCondition" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="Forms#ConfigureShowRuleUsingAndCondition" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		Form.editName();
 
-		<execute macro="Navigator#openURL" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field 1");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.closeSidebar();
 
-		<execute macro="Form#editName" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		Form.gotoAddField(fieldType = "Date");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Date Field");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Date" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Date Field" />
-		</execute>
+		FormRules.viewRuleConditionDropdownDisabled();
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.addCondition();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormRules.viewRuleConditionDropdownEnabled();
 
-		<execute macro="FormRules#addRule" />
+		FormRules.selectRuleCondition(condition = "AND");
 
-		<execute macro="FormRules#viewRuleConditionDropdownDisabled" />
+		FormRules.viewRuleCondition(condition = "AND", conditonRowNumber = "1");
 
-		<execute macro="FormRules#addCondition" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="FormRules#viewRuleConditionDropdownEnabled" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 2",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "2",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="FormRules#selectRuleCondition">
-			<var name="condition" value="AND" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
 
-		<execute macro="FormRules#viewRuleCondition">
-			<var name="condition" value="AND" />
-			<var name="conditonRowNumber" value="1" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 2" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="2" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		Form.save();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Date Field" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="FormRules#save" />
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Form#save" />
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "Date"
+		);
 
-		<execute macro="PortletEntry#save" />
+		FormFields.editText(fieldName = "TextField2", fieldValue = "test");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "Date");
+	}
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField1" />
-			<var name="fieldValue" value="test" />
-		</execute>
+	@priority = "4"
+	test ConfigureUserBelongsToRule {
+		Navigator.openURL();
 
-		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="Date" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField2" />
-			<var name="fieldValue" value="test" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="Date" />
-		</execute>
-	</command>
+		Form.editName();
 
-	<command name="ConfigureUserBelongsToRule" priority="4">
-		<execute macro="Navigator#openURL" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Public");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.closeSidebar();
 
-		<execute macro="Form#editName" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Manager");
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Public" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Manager" />
-		</execute>
+		FormRules.configureConditionOptions(
+			conditionField = "User",
+			conditionOperator = "Belongs to",
+			conditionRowNumber = "1",
+			conditionValueType = "Site Administrator"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Manager"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormRules.addAction();
 
-		<execute macro="FormRules#addRule" />
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "2",
+			actionTarget = "Manager"
+		);
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="User" />
-			<var name="conditionOperator" value="Belongs to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Site Administrator" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Manager" />
-		</execute>
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Manager",
+			conditionField = "User",
+			conditionFieldConstant = "Site Administrator",
+			conditionOperator = "Belongs to",
+			ruleNumber = "1"
+		);
 
-		<execute macro="FormRules#addAction" />
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Manager",
+			conditionField = "User",
+			conditionFieldConstant = "Site Administrator",
+			conditionOperator = "Belongs to",
+			ruleNumber = "1"
+		);
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Require" />
-			<var name="actionRowNumber" value="2" />
-			<var name="actionTarget" value="Manager" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormRules#save" />
+		Form.save();
 
-		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Require" />
-			<var name="actionTarget" value="Manager" />
-			<var name="conditionField" value="User" />
-			<var name="conditionFieldConstant" value="Site Administrator" />
-			<var name="conditionOperator" value="Belongs to" />
-			<var name="ruleNumber" value="1" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Show" />
-			<var name="actionTarget" value="Manager" />
-			<var name="conditionField" value="User" />
-			<var name="conditionFieldConstant" value="Site Administrator" />
-			<var name="conditionOperator" value="Belongs to" />
-			<var name="ruleNumber" value="1" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="Form#save" />
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		FormPortletNavigator.gotoSelectForm();
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormPortletConfiguration.selectForm();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="FormPortletNavigator#gotoSelectForm" />
+		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
 
-		<execute macro="FormPortletConfiguration#selectForm" />
+		FormFields.viewTextFieldNotVisible(
+			fieldLabel = "Manager",
+			fieldName = "Manager"
+		);
 
-		<execute macro="PortletEntry#save" />
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "test"
+		);
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Public" />
-			<var name="fieldName" value="Public" />
-		</execute>
+		Navigator.gotoPage(pageName = "Form Page");
 
-		<execute macro="FormFields#viewTextFieldNotVisible">
-			<var name="fieldLabel" value="Manager" />
-			<var name="fieldName" value="Manager" />
-		</execute>
+		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
 
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="test" />
-		</execute>
+		FormFields.editText(fieldName = "Public", fieldValue = "Message");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		FormFields.editText(fieldName = "Manager", fieldValue = "Admin Comments");
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Public" />
-			<var name="fieldName" value="Public" />
-		</execute>
+		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Manager" />
-			<var name="fieldName" value="Manager" />
-		</execute>
+		FormPortlet.submitSuccessfully();
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Public" />
-			<var name="fieldValue" value="Message" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Manager" />
-			<var name="fieldValue" value="Admin Comments" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Manager" />
-			<var name="fieldName" value="Manager" />
-		</execute>
+		FormsAdminNavigator.gotoViewEntries();
 
-		<execute macro="FormPortlet#submitSuccessfully" />
+		FormsAdmin.viewFormTableEntry(fieldLabel = "Public", fieldValue = "Message");
 
-		<execute macro="Navigator#openURL" />
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Manager",
+			fieldValue = "Admin Comments"
+		);
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+	@description = "This is a use case for LPS-79095."
+	@priority = "5"
+	test EditRule {
+		Navigator.openURL();
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Public" />
-			<var name="fieldValue" value="Message" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Manager" />
-			<var name="fieldValue" value="Admin Comments" />
-		</execute>
-	</command>
+		Form.editName();
 
-	<command name="EditRule" priority="5">
-		<description message="This is a use case for LPS-79095." />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Navigator#openURL" />
+		Form.editFieldLabel(fieldValue = "Text Field");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#editName" />
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.addRule();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		AssertVisible(locator1 = "Form#ADD_FIELD");
 
-		<execute macro="FormRules#addRule" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Require" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 2" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		Form.save();
 
-		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormsAdminNavigator.gotoEditFormByName();
 
-		<execute macro="FormRules#save" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		FormRules.gotoEdit(ruleNumber = "1");
 
-		<execute macro="Form#save" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test edit",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
+		FormRules.save();
+	}
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+	@description = "This is a use case for LPS-71399."
+	@priority = "4"
+	test UseIsNotEmptyRuleToShowField {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormRules#gotoEdit">
-			<var name="ruleNumber" value="1" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionFieldValue" value="test edit" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		Form.editName();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 2" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormRules#save" />
-	</command>
+		Form.editFieldLabel(fieldValue = "Text Field");
 
-	<command name="UseIsNotEmptyRuleToShowField" priority="4">
-		<description message="This is a use case for LPS-71399." />
+		Form.closeSidebar();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.gotoAddField(fieldType = "Date");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editFieldLabel(fieldValue = "Date Field");
 
-		<execute macro="Form#editName" />
+		Form.closeSidebar();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Date" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Date Field" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		Form.save();
 
-		<execute macro="FormRules#addRule" />
+		Form.publishForm();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionOperator" value="Is not empty" />
-			<var name="conditionRowNumber" value="1" />
-		</execute>
+		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Date Field" />
-		</execute>
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
 
-		<execute macro="FormRules#save" />
+		FormFields.editText(fieldName = "TextField", fieldValue = "1");
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
 
-		<execute macro="Form#save" />
+		FormFields.editText(fieldName = "TextField", fieldValue = "Test");
 
-		<execute macro="Form#publishForm" />
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
 
-		<execute macro="FormsAdminNavigator#openPublishURL">
-			<var name="publishFormURL" value="${publishedFormPublicURL}" />
-		</execute>
+		FormFields.editText(fieldName = "TextField", fieldValue = "%");
 
-		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="1" />
-		</execute>
+		FormFields.editTextWithBackspace(fieldName = "TextField");
 
-		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
+	}
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="Test" />
-		</execute>
+	@description = "This is a use case for LPS-73332."
+	@priority = "2"
+	test ViewExistingFormRuleIsNotCopiedToNewForm {
+		Navigator.openURL();
 
-		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="%" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
+		Form.editName();
 
-		<execute macro="FormFields#editTextWithBackspace">
-			<var name="fieldName" value="TextField" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
-	</command>
+		Form.editFieldLabel(fieldValue = "Text Field 1");
 
-	<command name="ViewExistingFormRuleIsNotCopiedToNewForm" priority="2">
-		<description message="This is a use case for LPS-73332." />
+		Form.closeSidebar();
 
-		<execute macro="Navigator#openURL" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.closeSidebar();
 
-		<execute macro="Form#editName" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="Form#closeSidebar" />
+		Form.save();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormRules#addRule" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 2" />
-		</execute>
+		FormRules.viewNoRules();
+	}
 
-		<execute macro="FormRules#save" />
+	@description = "This is a use case for LPS-71466."
+	@priority = "2"
+	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
+		Navigator.openURL();
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Form#save" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.editName(formName = "Test Form");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		Form.editFieldLabel(fieldValue = "Text Field 1");
 
-		<execute macro="FormRules#viewNoRules" />
-	</command>
+		Form.gotoAdvancedTab();
 
-	<command name="ViewPredefinedValueCanBeUsedToRequireAnotherField" priority="2">
-		<description message="This is a use case for LPS-71466." />
+		FormFields.editText(fieldName = "predefinedValue", fieldValue = "test");
 
-		<execute macro="Navigator#openURL" />
+		Form.closeSidebar();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="Form#editName">
-			<var name="formName" value="Test Form" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#gotoAdvancedTab" />
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="predefinedValue" />
-			<var name="fieldValue" value="test" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.save();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text Field 2",
+			conditionField = "Text Field 1",
+			conditionFieldConstant = "test",
+			conditionOperator = "Is equal to",
+			ruleNumber = "1"
+		);
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="Form#closeSidebar" />
+		Form.publishForm();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormsAdminNavigator.gotoPublishedForm();
 
-		<execute macro="FormRules#addRule" />
+		FormFields.viewRequiredAsterisk();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormPortlet.submit();
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Require" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 2" />
-		</execute>
+		FormFields.viewFieldValidationErrorMessage(
+			fieldName = "TextField2",
+			fieldValidationErrorMessage = "This field is required."
+		);
 
-		<execute macro="FormRules#save" />
+		Refresh();
 
-		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Require" />
-			<var name="actionTarget" value="Text Field 2" />
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldConstant" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="ruleNumber" value="1" />
-		</execute>
+		FormFields.editText(fieldName = "TextField1", fieldValue = "testing");
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		FormFields.viewRequiredAsteriskNotPresent();
 
-		<execute macro="Form#publishForm" />
+		FormPortlet.submitSuccessfully();
+	}
 
-		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
+	@description = "This is a use case for LPS-73332."
+	@priority = "2"
+	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
+		Navigator.openURL();
 
-		<execute macro="FormFields#viewRequiredAsterisk" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormPortlet#submit" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="FormFields#viewFieldValidationErrorMessage">
-			<var name="fieldName" value="TextField2" />
-			<var name="fieldValidationErrorMessage" value="This field is required." />
-		</execute>
+		Form.editName(formName = "Test Form");
 
-		<execute function="Refresh" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField1" />
-			<var name="fieldValue" value="testing" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field 1");
 
-		<execute macro="FormFields#viewRequiredAsteriskNotPresent" />
+		Form.closeSidebar();
 
-		<execute macro="FormPortlet#submitSuccessfully" />
-	</command>
+		Form.gotoAddField(fieldType = "Text Field");
 
-	<command name="ViewPreviousFormRuleIsCopiedToNewDuplicatedForm" priority="2">
-		<description message="This is a use case for LPS-73332." />
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="Navigator#openURL" />
+		Form.closeSidebar();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		FormRules.addRule();
 
-		<execute macro="Form#editName">
-			<var name="formName" value="Test Form" />
-		</execute>
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2"
+		);
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="Form#closeSidebar" />
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		Form.save();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		Form.duplicate(formName = "Test Form");
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Copy of Test Form"
+		);
 
-		<execute macro="FormRules#addRule" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Text Field 2",
+			conditionField = "Text Field 1",
+			conditionFieldConstant = "test",
+			conditionOperator = "Is equal to",
+			ruleNumber = "1"
+		);
+	}
 
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 2" />
-		</execute>
+	@description = "This is a use case for LPS-69733."
+	@priority = "2"
+	test ViewRuleConditionOperatorFieldOptions {
+		Navigator.openURL();
 
-		<execute macro="FormRules#save" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="Form#save" />
+		Form.editName();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="Form#duplicate">
-			<var name="formName" value="Test Form" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Copy of Test Form" />
-		</execute>
+		Form.closeSidebar();
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Show" />
-			<var name="actionTarget" value="Text Field 2" />
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldConstant" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="ruleNumber" value="1" />
-		</execute>
-	</command>
+		FormRules.addRule();
 
-	<command name="ViewRuleConditionOperatorFieldOptions" priority="2">
-		<description message="This is a use case for LPS-69733." />
+		FormRules.viewConditionOperatorOptionsNotPresent(conditionRowNumber = "1");
 
-		<execute macro="Navigator#openURL" />
+		FormRules.selectConditionField(
+			conditionField = "Text Field",
+			conditionRowNumber = "1"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormRules.viewConditionOperatorOptionsIsPresent(conditionRowNumber = "1");
+	}
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+	@description = "This is a use case for LPS-75495."
+	@priority = "3"
+	test ViewShowRuleActivationAfterInputtingUnrelatedField {
+		Navigator.openURL();
 
-		<execute macro="Form#editName" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormsAdminNavigator.gotoAddForm();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
+		Form.editName(formName = "Test Form");
 
-		<execute macro="Form#closeSidebar" />
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		Form.editFieldLabel(fieldValue = "Text Field 1");
 
-		<execute macro="FormRules#addRule" />
+		Form.closeSidebar();
 
-		<execute macro="FormRules#viewConditionOperatorOptionsNotPresent">
-			<var name="conditionRowNumber" value="1" />
-		</execute>
+		Form.gotoAddField(fieldType = "Text Field");
 
-		<execute macro="FormRules#selectConditionField">
-			<var name="conditionField" value="Text Field" />
-			<var name="conditionRowNumber" value="1" />
-		</execute>
+		Form.editFieldLabel(fieldValue = "Text Field 2");
 
-		<execute macro="FormRules#viewConditionOperatorOptionsIsPresent">
-			<var name="conditionRowNumber" value="1" />
-		</execute>
-	</command>
+		Form.closeSidebar();
 
-	<command name="ViewShowRuleActivationAfterInputtingUnrelatedField" priority="3">
-		<description message="This is a use case for LPS-75495." />
+		Form.gotoAddField(fieldType = "Date");
 
-		<execute macro="Navigator#openURL" />
+		Form.editFieldLabel(fieldValue = "Date Field");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
+		FormFields.enableSwitcher(fieldName = "required");
 
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
+		Form.closeSidebar();
 
-		<execute macro="Form#editName">
-			<var name="formName" value="Test Form" />
-		</execute>
+		FormsAdminNavigator.gotoRules();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.addRule();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
 
-		<execute macro="Form#closeSidebar" />
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
+		FormRules.save();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 2" />
-		</execute>
+		FormsAdminNavigator.gotoFormBuilder();
 
-		<execute macro="Form#closeSidebar" />
+		Form.save();
 
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Date" />
-		</execute>
+		Form.publishForm();
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Date Field" />
-		</execute>
+		FormsAdminNavigator.gotoPublishedForm();
 
-		<execute macro="FormFields#enableSwitcher">
-			<var name="fieldName" value="required" />
-		</execute>
+		FormFields.editText(fieldName = "TextField2", fieldValue = "testing");
 
-		<execute macro="Form#closeSidebar" />
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
 
-		<execute macro="FormsAdminNavigator#gotoRules" />
+		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
 
-		<execute macro="FormRules#addRule" />
-
-		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
-			<var name="conditionFieldValue" value="test" />
-			<var name="conditionOperator" value="Is equal to" />
-			<var name="conditionRowNumber" value="1" />
-			<var name="conditionValueType" value="Value" />
-		</execute>
-
-		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Show" />
-			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Date Field" />
-		</execute>
-
-		<execute macro="FormRules#save" />
-
-		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="Form#publishForm" />
-
-		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField2" />
-			<var name="fieldValue" value="testing" />
-		</execute>
-
-		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField1" />
-			<var name="fieldValue" value="test" />
-		</execute>
-
-		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="DateField" />
-		</execute>
-	</command>
-</definition>
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+	}
+}

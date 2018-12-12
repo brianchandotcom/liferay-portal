@@ -1,23 +1,23 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
 
-	<set-up>
-		<execute macro="Portlet#shutdownServer" />
+	setUp {
+		Portlet.shutdownServer();
 
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		Portlet.startServer(deleteLiferayHome = "false");
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<command name="MarketplacePortletContentTargetingSmoke" priority="4">
-		<property name="extraapps.plugins.includes" value="content-targeting" />
+	@priority = "4"
+	test MarketplacePortletContentTargetingSmoke {
+		property extraapps.plugins.includes = "content-targeting";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
-	</command>
-</definition>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
+	}
+}

@@ -1,150 +1,130 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Fragments" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-				<execute macro="Navigator#openURL" />
+			Navigator.openURL();
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="CannotImportInvalidZip" priority="5">
-		<description message="This is a test case for LPS-80625." />
-		<property name="portal.acceptance" value="true" />
+	@description = "This is a test case for LPS-80625."
+	@priority = "5"
+	test CannotImportInvalidZip {
+		property portal.acceptance = "true";
 
-		<execute macro="FragmentsAdmin#gotoImportCollection" />
+		FragmentsAdmin.gotoImportCollection();
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="fragment-invalid-zip.zip" />
+		UploadCommonFile(
+			locator1 = "TextInput#FILE",
+			value1 = "fragment-invalid-zip.zip"
+		);
 
-		<execute macro="Button#click">
-			<var name="button" value="Import" />
-		</execute>
+		Button.click(button = "Import");
 
-		<execute macro="Alert#viewErrorMessage">
-			<var name="errorMessage" value="The selected file is not a valid zip file." />
-		</execute>
+		Alert.viewErrorMessage(
+			errorMessage = "The selected file is not a valid zip file."
+		);
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		IFrame.closeFrame();
+	}
 
-	<command name="CannotImportNonZip" priority="5">
-		<description message="This is a test case for LPS-80625." />
-		<property name="portal.acceptance" value="true" />
+	@description = "This is a test case for LPS-80625."
+	@priority = "5"
+	test CannotImportNonZip {
+		property portal.acceptance = "true";
 
-		<execute macro="FragmentsAdmin#gotoImportCollection" />
+		FragmentsAdmin.gotoImportCollection();
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="Document_1.doc" />
+		UploadCommonFile(locator1 = "TextInput#FILE", value1 = "Document_1.doc");
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (zip)." />
+		AssertTextEquals(
+			locator1 = "Message#ERROR_FORM_VALIDATION",
+			value1 = "Please enter a file with a valid extension (zip)."
+		);
 
-		<execute macro="IFrame#closeFrame" />
-	</command>
+		IFrame.closeFrame();
+	}
 
-	<command name="ExportImportCollectionViewFragment" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test ExportImportCollectionViewFragment {
+		property portal.acceptance = "true";
 
-		<execute macro="FragmentsAdmin#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
-		</execute>
+		FragmentsAdmin.addCollection(
+			collectionDescription = "Collection Description",
+			collectionName = "Collection Name"
+		);
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="FragmentsAdmin#addSection">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_button.html" />
-		</execute>
+		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}"
+		);
 
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_button.css" />
-		</execute>
+		var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CSS_EDITOR",
+			value1 = "${cssSnippet}"
+		);
 
-		<execute macro="TestCase#getFileContent">
-			<return name="javascriptSnippet" />
-			<var name="fileName" value="fragment_button.js" />
-		</execute>
+		var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+			value1 = "${javascriptSnippet}"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="FragmentsAdmin#exportCollection">
-			<var name="collectionName" value="Collection Name" />
-		</execute>
+		FragmentsAdmin.exportCollection(collectionName = "Collection Name");
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="New Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "New Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="new-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "new-site-name");
 
-		<execute macro="FragmentsAdmin#importCollectionFromTempFolder" />
+		FragmentsAdmin.importCollectionFromTempFolder();
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
 
-		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
+		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		<for list="Submit,Cancel" param="button">
-			<execute macro="Button#viewPresent">
-				<var name="button" value="${button}" />
-			</execute>
-		</for>
+		for (var button : list "Submit,Cancel") {
+			Button.viewPresent(button = "${button}");
+		}
 
-		<execute macro="Button#clickNoError">
-			<var name="button" value="Submit" />
-		</execute>
+		Button.clickNoError(button = "Submit");
 
-		<execute function="AssertConfirm" value1="Form submitted" />
+		AssertConfirm(value1 = "Form submitted");
 
-		<execute macro="IFrame#selectTopFrame" />
-	</command>
-</definition>
+		IFrame.selectTopFrame();
+	}
+}

@@ -1,59 +1,60 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.main.component.name" value="Upgrades User and System Management" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.main.component.name = "Upgrades User and System Management";
 
-	<command name="ResetTestUserPasswordAfterUpgrade621015" priority="5">
-		<description message="This is a use case for LPS-73277." />
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.15";
+		property setup.wizard.enabled = "true";
 
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.15" />
-		<property name="setup.wizard.enabled" value="true" />
+		Upgrade.resetTestUserPassword();
+	}
 
-		<execute macro="Upgrade#resetTestUserPassword" />
-	</command>
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.21";
+		property setup.wizard.enabled = "true";
 
-	<command name="ResetTestUserPasswordAfterUpgrade621021" priority="5">
-		<description message="This is a use case for LPS-73277." />
+		Upgrade.resetTestUserPassword();
+	}
 
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.21" />
-		<property name="setup.wizard.enabled" value="true" />
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
+		property setup.wizard.enabled = "true";
 
-		<execute macro="Upgrade#resetTestUserPassword" />
-	</command>
+		Upgrade.resetTestUserPassword();
+	}
 
-	<command name="ResetTestUserPasswordAfterUpgrade625" priority="5">
-		<description message="This is a use case for LPS-73277." />
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
+		property setup.wizard.enabled = "true";
 
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
-		<property name="setup.wizard.enabled" value="true" />
+		Upgrade.resetTestUserPassword();
+	}
 
-		<execute macro="Upgrade#resetTestUserPassword" />
-	</command>
+	@description = "This is a use case for LPS-73277."
+	@priority = "5"
+	test ResetTestUserPasswordAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+		property setup.wizard.enabled = "true";
 
-	<command name="ResetTestUserPasswordAfterUpgrade70106" priority="5">
-		<description message="This is a use case for LPS-73277." />
-
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="7.0.10.6" />
-		<property name="setup.wizard.enabled" value="true" />
-
-		<execute macro="Upgrade#resetTestUserPassword" />
-	</command>
-
-	<command name="ResetTestUserPasswordAfterUpgrade704" priority="5">
-		<description message="This is a use case for LPS-73277." />
-
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="7.0.4" />
-		<property name="setup.wizard.enabled" value="true" />
-
-		<execute macro="Upgrade#resetTestUserPassword" />
-	</command>
-</definition>
+		Upgrade.resetTestUserPassword();
+	}
+}

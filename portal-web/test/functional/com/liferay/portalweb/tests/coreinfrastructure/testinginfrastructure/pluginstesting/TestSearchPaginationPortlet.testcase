@@ -1,42 +1,35 @@
-<definition component-name="portal-test-plugins">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="portlet.plugins.includes" value="sample-service-builder-portlet" />
+@component-name = "portal-test-plugins"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Test Plugins";
+	property portlet.plugins.includes = "sample-service-builder-portlet";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="SearchAndViewPagination" priority="4">
-		<description message="This is a use case for LPS-65608." />
+	@description = "This is a use case for LPS-65608."
+	@priority = "4"
+	test SearchAndViewPagination {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Sample Service Builder Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Sample Service Builder Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Sample Service Builder Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Sample Service Builder Page" />
-		</execute>
+		Portlet.addPG(portletName = "Sample Service Builder");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sample Service Builder" />
-		</execute>
-
-		<execute macro="TestSearchPaginationPortlet#search15Results">
-			<var name="itemsPerPage" value="5" />
-		</execute>
-	</command>
-</definition>
+		TestSearchPaginationPortlet.search15Results(itemsPerPage = "5");
+	}
+}

@@ -1,404 +1,378 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Wiki" />
-	<property name="testray.main.component.name" value="Workflow" />
-
-	<var name="pageName" value="Wiki Page" />
-	<var name="portletName" value="Wiki" />
-	<var name="workflowAssetType" value="Wiki Page" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Wiki Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiNode#tearDownCP" />
-
-				<execute macro="WikiPage#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="Workflow#tearDownPortalWorkflow" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ApproveFrontPageUserEdit" priority="5">
-		<property name="portal.acceptance" value="false" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageWithWorkflowPG">
-			<var name="wikiPageContent" value="Front Page Wiki Content" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiNodeName" value="FrontPage" />
-			<var name="wikiPageContent" value="Front Page Wiki Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewCannotWithdrawTaskByActions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Approved" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RejectFrontPageUserEdit" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageWithWorkflowPG">
-			<var name="wikiPageContent" value="Front Page Wiki Content" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPageDefaultCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RejectWikiPagePG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPageWithWorkflowPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
-
-		<execute macro="WikiPage#viewPageWithWorkflowPG">
-			<var name="wikiPageStatus" value="Pending" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Wiki Page Title" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="Wiki Page Title" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="Wiki Page Title" />
-			<var name="workflowAssetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
-
-		<execute macro="WikiPage#viewPageWithWorkflowPG">
-			<var name="wikiPageStatus" value="Pending" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Wiki";
+	property testray.main.component.name = "Workflow";
+	var pageName = "Wiki Page";
+	var portletName = "Wiki";
+	var workflowAssetType = "Wiki Page";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Wiki Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Wiki Page");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		Portlet.addPG(portletName = "Wiki");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiNode.tearDownCP();
+
+			WikiPage.tearDownCP();
+
+			Page.tearDownPG();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@priority = "5"
+	test ApproveFrontPageUserEdit {
+		property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiPage.viewFrontPagePG(
+			wikiNodeName = "FrontPage",
+			wikiPageContent = "Front Page Wiki Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewCannotWithdrawTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Approved"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test RejectFrontPageUserEdit {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Update"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test RejectWikiPagePG {
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPageWithWorkflowPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoDraftPagesPG();
+
+		WikiPage.viewPageWithWorkflowPG(
+			wikiPageStatus = "Pending",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Wiki Page Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Wiki Page Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "Wiki Page Title",
+			workflowAssetType = "Wiki Page"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoDraftPagesPG();
+
+		WikiPage.viewPageWithWorkflowPG(
+			wikiPageStatus = "Pending",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "Test Test"
+		);
+	}
+}

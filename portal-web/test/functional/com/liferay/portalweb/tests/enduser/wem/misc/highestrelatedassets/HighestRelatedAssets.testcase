@@ -1,152 +1,112 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Asset Publisher,Highest Rated Assets" />
-	<property name="testray.main.component.name" value="Highest Rated Assets" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Asset Publisher,Highest Rated Assets";
+	property testray.main.component.name = "Highest Rated Assets";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="AssertHighestRatededAsset" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+	@priority = "4"
+	test AssertHighestRatededAsset {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<for list="1,2" param="n">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Test Page ${n}" />
-			</execute>
-		</for>
+		for (var n : list "1,2") {
+			SitePages.addPublicPage(pageName = "Test Page ${n}");
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		Portlet.addPG(portletName = "Asset Publisher");
 
-		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Ratings" />
-		</execute>
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Highest Rated Assets" />
-		</execute>
+		Portlet.addPG(portletName = "Highest Rated Assets");
 
-		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Ratings" />
-			<var name="portletName" value="Highest Rated Assets" />
-		</execute>
+		AssetPublisherPortlet.configureDisplaySettings(
+			displaySettings = "Ratings",
+			portletName = "Highest Rated Assets"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<for list="1,2" param="n">
-			<execute macro="WebContentNavigator#gotoAddCP" />
+		for (var n : list "1,2") {
+			WebContentNavigator.gotoAddCP();
 
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="Web Content Content" />
-				<var name="webContentTitle" value="Web Content Title ${n}" />
-			</execute>
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title ${n}"
+			);
 
-			<execute macro="PortletEntry#publish" />
-		</for>
+			PortletEntry.publish();
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 1", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title 1" />
-		</execute>
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title 1"
+		);
 
-		<execute macro="AssetPublisherPortlet#rateAssetPG">
-			<var name="rating" value="3" />
-		</execute>
+		AssetPublisherPortlet.rateAssetPG(rating = "3");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title 2" />
-		</execute>
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title 2"
+		);
 
-		<execute macro="AssetPublisherPortlet#rateAssetPG">
-			<var name="rating" value="5" />
-		</execute>
+		AssetPublisherPortlet.rateAssetPG(rating = "5");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title 1" />
-		</execute>
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title 1"
+		);
 
-		<execute macro="AssetPublisherPortlet#viewAssetRatingPG">
-			<var name="rating" value="3" />
-		</execute>
+		AssetPublisherPortlet.viewAssetRatingPG(rating = "3");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page 2", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title 2" />
-		</execute>
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title 2"
+		);
 
-		<execute macro="AssetPublisherPortlet#viewAssetRatingPG">
-			<var name="rating" value="5" />
-		</execute>
-	</command>
-</definition>
+		AssetPublisherPortlet.viewAssetRatingPG(rating = "5");
+	}
+}

@@ -1,277 +1,247 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Content Pages" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
-	</set-up>
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddContentPage" priority="5">
-		<description message="Add a content page with fragments." />
-		<property name="portal.acceptance" value="true" />
+	@description = "Add a content page with fragments."
+	@priority = "5"
+	test AddContentPage {
+		property portal.acceptance = "true";
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Button" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Button"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Submit" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Submit",
+			key_fragmentClass = "footer",
+			key_position = "3"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Cancel" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Cancel",
+			key_fragmentClass = "footer",
+			key_position = "3"
+		);
 
-		<for list="Submit,Cancel" param="button">
-			<execute macro="Button#viewPresent">
-				<var name="button" value="${button}" />
-			</execute>
-		</for>
-	</command>
+		for (var button : list "Submit,Cancel") {
+			Button.viewPresent(button = "${button}");
+		}
+	}
 
-	<command name="AddContentPageFromPageTemplate" priority="5">
-		<description message="Create a content page from a page template with fragments." />
-		<property name="portal.acceptance" value="true" />
+	@description = "Create a content page from a page template with fragments."
+	@priority = "5"
+	test AddContentPageFromPageTemplate {
+		property portal.acceptance = "true";
 
-		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="PageTemplatesAdmin#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		<execute macro="PageTemplatesAdmin#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
+		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Button" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Button"
+		);
 
-		<execute macro="Button#clickPublish" />
+		Button.clickPublish();
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="ContentPages#addPage">
-			<var name="collectionName" value="Page Template Collection" />
-			<var name="pageName" value="Test Page Name" />
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
+		ContentPages.addPage(
+			collectionName = "Page Template Collection",
+			pageName = "Test Page Name",
+			pageTemplateName = "Page Template Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<for list="Submit,Cancel" param="button">
-			<execute macro="Button#viewPresent">
-				<var name="button" value="${button}" />
-			</execute>
-		</for>
+		for (var button : list "Submit,Cancel") {
+			Button.viewPresent(button = "${button}");
+		}
 
-		<execute macro="Button#clickNoError">
-			<var name="button" value="Submit" />
-		</execute>
+		Button.clickNoError(button = "Submit");
 
-		<execute function="AssertConfirm" value1="Form submitted" />
-	</command>
+		AssertConfirm(value1 = "Form submitted");
+	}
 
-	<command name="AddContentPageWithEditedFragmentText" priority="5">
-		<description message="Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872." />
+	@description = "Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872."
+	@priority = "5"
+	test AddContentPageWithEditedFragmentText {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
+		PageEditor.editFragmentText(
+			fragmentName = "Content",
+			id = "content",
+			text = "New editable fragment text"
+		);
 
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Content" />
-			<var name="id" value="content" />
-			<var name="text" value="New editable fragment text" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "New editable fragment text",
+			key_fragmentClass = "body",
+			key_position = "1"
+		);
+	}
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="1" />
-		</execute>
-	</command>
+	@description = "Users can only edit content pages in edit mode."
+	@priority = "5"
+	test CannotEditInViewMode {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-	<command name="CannotEditInViewMode" priority="5">
-		<description message="Users can only edit content pages in edit mode." />
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		ContentPages.gotoEditMode();
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(locator1 = "ControlMenu#ADD");
 
-		<execute macro="ContentPages#gotoEditMode" />
+		ContentPages.gotoViewMode();
 
-		<execute function="AssertVisible" locator1="ControlMenu#ADD" />
+		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+	}
 
-		<execute macro="ContentPages#gotoViewMode" />
+	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872."
+	@priority = "5"
+	test EditContentPage {
+		property portal.acceptance = "true";
 
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
-	</command>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-	<command name="EditContentPage" priority="5">
-		<description message="Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872." />
-		<property name="portal.acceptance" value="true" />
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
+		ContentPages.gotoEditMode();
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="ContentPages#gotoEditMode" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.editFragmentText(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			text = "New editable fragment text"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
+		ContentPages.gotoViewMode();
 
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="text" value="New editable fragment text" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute macro="ContentPages#gotoViewMode" />
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "New editable fragment text",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-	</command>
-</definition>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+	}
+}

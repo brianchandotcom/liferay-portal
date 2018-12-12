@@ -1,2703 +1,2424 @@
-<definition component-name="portal-user-management-and-portal-configuration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Roles" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="Role#tearDownCP" />
-
-				<execute macro="DDLList#tearDownCP" />
-
-				<execute macro="DDLDataDefinition#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-
-				<execute macro="Organization#tearDownCP" />
-
-				<execute macro="Team#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="Bookmark#tearDownCP" />
-
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="EditTeamPermissions" priority="4">
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
-			<var name="resourceName" value="90" />
-			<var name="roleTitle" value="User" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Roles Siterole Name" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<for list="ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet" />
-				<var name="roleTitle" value="Roles Siterole Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-				<var name="roleTitle" value="Roles Siterole Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Team" />
-				<var name="roleTitle" value="Roles Siterole Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
-				<var name="roleTitle" value="Roles Siterole Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Roles Siterole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Site Page Name" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<var name="key_teamName" value="Site Team Name" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="Site Team Name" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<var name="key_teamName" value="Site Team Name" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="Site Team Name" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="PermissionsInline#gotoSiteTeamsCP">
-			<var name="portletName" value="Site Teams" />
-			<var name="siteScopeName" value="Site Name" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<for list="ACTION_ASSIGN_MEMBERS,ACTION_DELETE,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_VIEW" param="permissionDefinitionKey">
-			<execute macro="Team#definePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="teamName" value="Site Team Name" />
-			</execute>
-		</for>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#editCP">
-			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="teamNameEdit" value="Site Team Name Edit" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name Edit" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-
-	<command name="GroupScopePermissionCheck" priority="4">
-		<property name="osgi.app.includes" value="bookmarks" />
-		<property name="test.name.skip.portal.instance" value="RolesandpermissionsUsecase#GroupScopePermissionCheck" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Group Scope Role Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Group Scope Role Name" />
-			<var name="siteNameScope" value="Liferay" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-			<var name="bookmarkViewableBy" value="Owner" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="google.com Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="siteName" value="google.com Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="siteName" value="google.com Name" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkName" value="Test Bookmark2 Name" />
-			<var name="bookmarkURL" value="https://www.google.com" />
-			<var name="bookmarkViewableBy" value="Owner" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="siteName" value="google.com Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="google.com Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Group Scope Role Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Bookmark#gotoPG">
-			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Bookmark#viewEntry">
-			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="siteName" value="google.com Name" />
-		</execute>
-
-		<execute macro="Bookmark#viewNoPG">
-			<var name="bookmarkName" value="Test Bookmark2 Name" />
-			<var name="bookmarkURL" value="https://www.google.com" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="NoGuestRolePermissionsFromPrivateLayout" priority="3">
-		<property name="custom.properties" value="permissions.check.guest.enabled=false" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Blogs Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoSitepageCP">
-			<var name="pageName" value="Private Blogs Page" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">
-			<var name="key_roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="Navigator#openPrivateSitePageURL">
-			<var name="pageName" value="Private Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">
-			<var name="key_roleTitle" value="Guest" />
-		</execute>
-	</command>
-
-	<command name="RolesOrganizationSearch" priority="4">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
-		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;true&quot;" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Organization" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserOrganizationCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserOrganizationCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignOrgRoleCP">
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Remove" />
-			<var name="roleList" value="Guest,Owner,Site Member,Organization User" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchResultPG">
-			<var name="searchAssetTitle" value="Test Document" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
-		<var name="key_searchAssetTitle" value="Test Document" />
-
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
-
-		<execute macro="DMDocument#viewPGViaSearch">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchNoPG">
-			<var name="searchAssetTitle" value="Test Document" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#search">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="ClassicSearch#viewSearchResultPG">
-			<var name="searchAssetTitle" value="Test Document" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
-		<var name="key_searchAssetTitle" value="Test Document" />
-
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
-
-		<execute macro="DMDocument#viewPGViaSearch">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="RolesPermissionsDynamicDataLists" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Data Recorder Name" />
-			<var name="roleTitle" value="Data Recorder Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_RECORD" />
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
-			<var name="roleTitle" value="Data Recorder Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="View" />
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
-			<var name="roleTitle" value="Data REcorder Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Records Manager Name" />
-			<var name="roleTitle" value="Records Manager Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="UPDATE" />
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
-			<var name="roleTitle" value="Records Manager Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
-			<var name="roleTitle" value="Records Manager Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Data Recorder Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Records Manager Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Dynamic Data Lists Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Dynamic Data Lists Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data Lists Display" />
-		</execute>
-
-		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListDescription" value="Liferay Employee Profiles" />
-			<var name="ddlListName" value="Employees" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Employee" />
-			<var name="fieldName" value="Employee" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Date" />
-			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="StartDate" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Decimal" />
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldName" value="Salary" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Documents and Media" />
-			<var name="fieldFieldLabel" value="Profile Picture" />
-			<var name="fieldName" value="ProfilePicture" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Documents and Media" />
-			<var name="fieldFieldLabel" value="Resume" />
-			<var name="fieldName" value="Resume" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Integer" />
-			<var name="fieldFieldLabel" value="Age" />
-			<var name="fieldName" value="Age" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Number" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Radio" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldOptions">
-			<var name="field" value="Radio" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
-			<var name="fieldOptionsValues" value="1,2,3" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Select" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldOptions">
-			<var name="field" value="Select" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
-			<var name="fieldOptionsValues" value="1,2,3" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Name" />
-			<var name="fieldName" value="Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text Box" />
-			<var name="fieldFieldLabel" value="Description" />
-			<var name="fieldName" value="Description" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
-
-		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
-		</execute>
-
-		<execute macro="DDLList#saveViaDDLDisplayPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Dynamic Data Lists Page" />
-		</execute>
-
-		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldBoolean">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="fieldFieldLabel" value="Employee" />
-			<var name="fieldName" value="Employee" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDate">
-			<var name="ddlRecordFieldData" value="04/01/2015" />
-			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="StartDate" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDecimal">
-			<var name="ddlRecordFieldData" value="35000" />
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldName" value="Salary" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Resume" />
-			<var name="fieldName" value="Resume" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldInteger">
-			<var name="ddlRecordFieldData" value="30" />
-			<var name="fieldFieldLabel" value="Age" />
-			<var name="fieldName" value="Age" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldNumber">
-			<var name="ddlRecordFieldData" value="40" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldRadio">
-			<var name="ddlRecordFieldData" value="QA Engineer" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldSelect">
-			<var name="ddlRecordFieldData" value="5+" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="Joe Engineer" />
-			<var name="fieldFieldLabel" value="Name" />
-			<var name="fieldName" value="Name" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldTextBox">
-			<var name="ddlRecordFieldData" value="Joe Engineer works in QA" />
-			<var name="fieldFieldLabel" value="Description" />
-			<var name="fieldName" value="Description" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Dynamic Data Lists Page" />
-		</execute>
-
-		<var name="key_ddlDataDefinitionName" value="Employee Profile Data Definition" />
-
-		<execute function="AssertElementPresent" locator1="DDL#TOOLBAR_ADD" />
-		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Dynamic Data Lists Page" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" />
-		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="RolesSiteSearch" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Roles Siterole Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPermissionsCP">
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Remove" />
-			<var name="roleList" value="Guest,Owner,Site Member" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Test Document" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
-		<var name="key_searchAssetTitle" value="Test Document" />
-
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
-
-		<execute macro="DMDocument#viewPGViaSearch">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewNoSearchResults">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Test Document" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Test Document" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
-		<var name="key_searchAssetTitle" value="Test Document" />
-
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
-
-		<execute macro="DMDocument#viewPGViaSearch">
-			<var name="dmDocumentDescription" value="This is a test document." />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Test Document" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="RolesSitesPermissionsInheritance" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name 1" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name 2" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name 3" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name 1" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userName" value="userfn1 userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name 2" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userName" value="userfn2 userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="Organization Name 2" />
-			<var name="roleTitle" value="Organization Administrator" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name 3" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userName" value="userfn3 userln3" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup1 Name" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup2 Name" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup3 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup1 Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup2 Name" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup3 Name" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Movie Blogger Name" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Music Fan Name" />
-			<var name="roleTitle" value="Music Fan Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.message.boards" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_CATEGORY" />
-			<var name="resourceName" value="com.liferay.message.boards" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_MESSAGE" />
-			<var name="resourceName" value="com.liferay.message.boards" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_MESSAGE" />
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBMessage" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Sports Journalist Name" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-		</execute>
-
-		<for list="ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Sports Journalist Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal" />
-				<var name="roleTitle" value="Sports Journalist Name" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_TO_PAGE" />
-			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignOrganizationAsMemberCP">
-			<var name="orgName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="userGroupName" value="UG UserGroup3 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn1 userln1" />
-			<var name="roleTitle" value="Music Fan Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn2 userln2" />
-			<var name="roleTitle" value="Movie Blogger Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="UG UserGroup3 Name" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Message Boards" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
-
-		<var name="key_portletTitleName" value="Asset Publisher" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="This is a thread by usersn1" />
-			<var name="threadSubject" value="Music Thread 1" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Message Boards" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
-
-		<var name="key_portletTitleName" value="Asset Publisher" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
-
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
-
-		<execute macro="Blogs#addViaAP">
-			<var name="entryContent" value="This is a movie blog by usersn2" />
-			<var name="entryTitle" value="Movie Blog" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Message Boards" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
-
-		<execute function="AssertTextEquals" locator1="Button#ADD_CATEGORY" value1="Add Category" />
-		<execute function="AssertTextEquals" locator1="Button#NEW_THREAD" value1="New Thread" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="key_portletTitleName" value="Message Boards" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
-
-		<var name="key_portletTitleName" value="Asset Publisher" />
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
-
-		<execute function="AssertElementNotPresent" locator1="Button#ADD_CATEGORY" />
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="This article is by usersn3, a member of user group 3 but not site name 1" />
-			<var name="webContentTitle" value="User Group Article" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="SiteRoleBookmarksInlinePermissions" priority="4">
-		<property name="osgi.app.includes" value="bookmarks" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-			<var name="bookmarkViewableBy" value="Owner" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Bookmark#viewNoPG">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Roles Siterole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="TeamPermissionsSite" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="1,2" param="userNumber">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#addCP">
-				<var name="userEmailAddress" value="userea${userNumber}@liferay.com" />
-				<var name="userFirstName" value="userfn${userNumber}" />
-				<var name="userLastName" value="userln${userNumber}" />
-				<var name="userScreenName" value="usersn${userNumber}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#editPasswordCP">
-				<var name="userEmailAddress" value="userea${userNumber}@liferay.com" />
-				<var name="userScreenName" value="usersn${userNumber}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#editUserSiteCP">
-				<var name="siteName" value="Site Name" />
-				<var name="userScreenName" value="usersn${userNumber}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="PortletEntry#viewEmptyMessage">
-			<var name="entity" value="Site Teams" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="USA Ice Hockey Team Blog" />
-			<var name="pageTemplateName" value="Blog" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="USA Ice Hockey Team Blog" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
-			<var name="roleTitle" value="site-member" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="site-member" />
-		</execute>
-
-		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionDefinitionKey">
-			<execute macro="Team#definePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="teamName" value="Site Team Name" />
-			</execute>
-		</for>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="USA Ice Hockey Team Blog" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="Blogs,Tag Cloud,Recent Bloggers" param="portletTitleName">
-			<var name="key_portletTitleName" value="${portletTitleName}" />
-
-			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
-		</for>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
-			<var name="key_pageName" value="USA Ice Hockey Team Blog" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="ViewAutomaticAssignedRoles" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Control Panel" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
-			<var name="permissionNavigationValue" value="Portal" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="View Site Administration Menu" />
-			<var name="permissionNavigationValue" value="Site Settings > Site" />
-		</execute>
-	</command>
-
-	<command name="ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Repository" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="action.ADD_REPOSITORY" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#removePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Repository" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="Site" />
-		</execute>
-	</command>
-
-	<command name="ViewPreferencesPanelPermissionSiteMemberRole" priority="4">
-		<property name="osgi.app.includes" value="currency-converter" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Currency Converter" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Currency Converter" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Site Member" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX" />
-			<var name="roleTitle" value="Site Member" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Currency Converter" />
-			<var name="portletOption" value="Preferences" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE">
-			<var name="key_pageName" value="Welcome" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
-		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="ViewPrivatePageSiteMemberRole" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Page" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openPrivateURL">
-			<var name="pageName" value="Private Page" />
-		</execute>
-
-		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Private Page" />
-		</execute>
-	</command>
-
-	<command name="ViewRegRolePermissionsDefaultView" priority="4">
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="Roles Regrole Name" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ARTICLE" />
-			<var name="resourceName" value="com.liferay.journal" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com.liferay.journal" />
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Button#PLUS" />
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="WebContent#viewWCViewableByPermissions" />
-	</command>
-</definition>
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Roles";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+
+			Role.tearDownCP();
+
+			DDLList.tearDownCP();
+
+			DDLDataDefinition.tearDownCP();
+
+			User.tearDownCP();
+
+			UserGroup.tearDownCP();
+
+			Organization.tearDownCP();
+
+			Team.tearDownCP();
+
+			Site.tearDownCP();
+
+			Bookmark.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test EditTeamPermissions {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "User"
+		);
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Team",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(pageName = "Site Page Name", portletName = "Web Content Display");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
+
+		var key_teamName = "Site Team Name";
+
+		AssertTextEquals(
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
+			value1 = "Site Team Name"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
+
+		var key_teamName = "Site Team Name";
+
+		AssertTextEquals(
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
+			value1 = "Site Team Name"
+		);
+
+		Navigator.openURL();
+
+		PermissionsInline.gotoSiteTeamsCP(
+			portletName = "Site Teams",
+			siteScopeName = "Site Name",
+			teamName = "Site Team Name"
+		);
+
+		for (var permissionDefinitionKey : list "ACTION_ASSIGN_MEMBERS,ACTION_DELETE,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_VIEW") {
+			Team.definePermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				teamName = "Site Team Name"
+			);
+		}
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.editCP(
+			teamDescriptionEdit = "Site Team Description Edit",
+			teamName = "Site Team Name",
+			teamNameEdit = "Site Team Name Edit"
+		);
+
+		Team.assignMembersCP(
+			teamName = "Site Team Name Edit",
+			userScreenName = "usersn"
+		);
+	}
+
+	@priority = "4"
+	test GroupScopePermissionCheck {
+		property osgi.app.includes = "bookmarks";
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#GroupScopePermissionCheck";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Group Scope Role Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Group Scope Role Name",
+			siteNameScope = "Liferay"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Bookmarks Page");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Bookmark.addPG(
+			bookmarkName = "Test Bookmark1 Name",
+			bookmarkURL = "https://www.liferay.com",
+			bookmarkViewableBy = "Owner"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "google.com Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Bookmarks Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Bookmarks Page",
+			siteName = "google.com Name"
+		);
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		Navigator.gotoSitePage(
+			pageName = "Bookmarks Page",
+			siteName = "google.com Name"
+		);
+
+		Bookmark.addPG(
+			bookmarkName = "Test Bookmark2 Name",
+			bookmarkURL = "https://www.google.com",
+			bookmarkViewableBy = "Owner"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Bookmarks Page",
+			siteName = "google.com Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "google.com Name", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(
+			roleTitle = "Group Scope Role Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Bookmark.gotoPG(
+			bookmarkName = "Test Bookmark1 Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Bookmark.viewEntry(
+			bookmarkName = "Test Bookmark1 Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Bookmarks Page",
+			siteName = "google.com Name"
+		);
+
+		Bookmark.viewNoPG(
+			bookmarkName = "Test Bookmark2 Name",
+			bookmarkURL = "https://www.google.com"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "3"
+	test NoGuestRolePermissionsFromPrivateLayout {
+		property custom.properties = "permissions.check.guest.enabled=false";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Private Blogs Page");
+
+		PermissionsInline.gotoSitepageCP(
+			pageName = "Private Blogs Page",
+			privacy = "Private Pages"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			key_roleTitle = "Guest"
+		);
+
+		Navigator.openPrivateSitePageURL(
+			pageName = "Private Blogs Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		AssertElementNotPresent(
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			key_roleTitle = "Guest"
+		);
+	}
+
+	@priority = "4"
+	test RolesOrganizationSearch {
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
+		property osgi.module.configurations = "classicSearchPortletInFrontPage=&quot;true&quot;";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		RoleNavigator.gotoRoleType(roleType = "Organization");
+
+		Role.add(roleTitle = "Roles Orgrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Organization Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserOrganizationCP(
+			orgName = "Organization Name",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserOrganizationCP(
+			orgName = "Organization Name",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignOrgRoleCP(
+			roleTitle = "Roles Orgrole Name",
+			userScreenName = "usersn2"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name");
+
+		ProductMenu.gotoSite(site = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Documents and Media Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		DMDocument.addPG(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Test Document");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,Owner,Site Member,Organization User"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		ClassicSearch.search(searchTerm = "Test Document");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "Test Document",
+			searchAssetType = "Document"
+		);
+
+		var key_searchAssetTitle = "Test Document";
+
+		AssertClick(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "Test Document"
+		);
+
+		DMDocument.viewPGViaSearch(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder."
+		);
+
+		ClassicSearch.search(searchTerm = "Test Document");
+
+		ClassicSearch.viewSearchNoPG(
+			searchAssetTitle = "Test Document",
+			searchNoResults = "true",
+			searchTerm = "Test Document"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentTitle = "Test Document"
+		);
+
+		ClassicSearch.search(searchTerm = "Test Document");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "Test Document",
+			searchAssetType = "Document"
+		);
+
+		var key_searchAssetTitle = "Test Document";
+
+		AssertClick(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "Test Document"
+		);
+
+		DMDocument.viewPGViaSearch(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test RolesPermissionsDynamicDataLists {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addSiteRole(
+			roleKey = "Data Recorder Name",
+			roleTitle = "Data Recorder Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_RECORD",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Data Recorder Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "View",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Data REcorder Name",
+			roleType = "site"
+		);
+
+		JSONRole.addSiteRole(
+			roleKey = "Records Manager Name",
+			roleTitle = "Records Manager Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Records Manager Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Records Manager Name",
+			roleType = "site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Data Recorder Name",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Records Manager Name",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
+
+		DDLList.addViaDDLDisplayPG(
+			ddlListDescription = "Liferay Employee Profiles",
+			ddlListName = "Employees"
+		);
+
+		DDLDataDefinition.addViaDDLDisplayPG(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Employee Profile Data Definition"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Boolean",
+			fieldFieldLabel = "Employee",
+			fieldName = "Employee"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Date",
+			fieldFieldLabel = "Start Date",
+			fieldName = "StartDate"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Decimal",
+			fieldFieldLabel = "Salary",
+			fieldName = "Salary"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Documents and Media",
+			fieldFieldLabel = "Profile Picture",
+			fieldName = "ProfilePicture"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Documents and Media",
+			fieldFieldLabel = "Resume",
+			fieldName = "Resume"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Integer",
+			fieldFieldLabel = "Age",
+			fieldName = "Age"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Number",
+			fieldFieldLabel = "Weekly Hours",
+			fieldName = "WeeklyHours"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Radio",
+			fieldFieldLabel = "Department",
+			fieldName = "Department"
+		);
+
+		DynamicDataMapping.editFieldOptions(
+			field = "Radio",
+			fieldFieldLabel = "Department",
+			fieldName = "Department",
+			fieldOptionsNames = "Core Engineer,QA Engineer,Support Engineer",
+			fieldOptionsValues = "1,2,3"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Select",
+			fieldFieldLabel = "Years Worked",
+			fieldName = "YearsWorked"
+		);
+
+		DynamicDataMapping.editFieldOptions(
+			field = "Select",
+			fieldFieldLabel = "Years Worked",
+			fieldName = "YearsWorked",
+			fieldOptionsNames = "1-2,3-5,5+",
+			fieldOptionsValues = "1,2,3"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Name",
+			fieldName = "Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Description",
+			fieldName = "Description"
+		);
+
+		DDLDataDefinition.saveViaDDLDisplayPG();
+
+		DDLDataDefinition.selectViaDDLDisplayPG(
+			ddlDataDefinitionName = "Employee Profile Data Definition"
+		);
+
+		DDLList.saveViaDDLDisplayPG();
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		DDLRecord.addViaDDLDisplayPG(
+			ddlDataDefinitionName = "Employee Profile Data Definition"
+		);
+
+		DDLRecord.populateFieldBoolean(
+			ddlRecordFieldData = "Yes",
+			fieldFieldLabel = "Employee",
+			fieldName = "Employee"
+		);
+
+		DDLRecord.populateFieldDate(
+			ddlRecordFieldData = "04/01/2015",
+			fieldFieldLabel = "Start Date",
+			fieldName = "StartDate"
+		);
+
+		DDLRecord.populateFieldDecimal(
+			ddlRecordFieldData = "35000",
+			fieldFieldLabel = "Salary",
+			fieldName = "Salary"
+		);
+
+		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
+			document = "Document_1.txt",
+			fieldFieldLabel = "Resume",
+			fieldName = "Resume"
+		);
+
+		DDLRecord.populateFieldInteger(
+			ddlRecordFieldData = "30",
+			fieldFieldLabel = "Age",
+			fieldName = "Age"
+		);
+
+		DDLRecord.populateFieldNumber(
+			ddlRecordFieldData = "40",
+			fieldFieldLabel = "Weekly Hours",
+			fieldName = "WeeklyHours"
+		);
+
+		DDLRecord.populateFieldRadio(
+			ddlRecordFieldData = "QA Engineer",
+			fieldFieldLabel = "Department",
+			fieldName = "Department"
+		);
+
+		DDLRecord.populateFieldSelect(
+			ddlRecordFieldData = "5+",
+			fieldFieldLabel = "Years Worked",
+			fieldName = "YearsWorked"
+		);
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Joe Engineer",
+			fieldFieldLabel = "Name",
+			fieldName = "Name"
+		);
+
+		DDLRecord.populateFieldTextBox(
+			ddlRecordFieldData = "Joe Engineer works in QA",
+			fieldFieldLabel = "Description",
+			fieldName = "Description"
+		);
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		var key_ddlDataDefinitionName = "Employee Profile Data Definition";
+
+		AssertElementPresent(locator1 = "DDL#TOOLBAR_ADD");
+
+		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		AssertElementNotPresent(locator1 = "DDL#TOOLBAR_ADD");
+
+		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+	}
+
+	@priority = "4"
+	test RolesSiteSearch {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Roles Siterole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Documents and Media Page");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Test Document");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,Owner,Site Member"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Test Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Document",
+			searchAssetType = "Document"
+		);
+
+		var key_searchAssetTitle = "Test Document";
+
+		AssertClick(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "Test Document"
+		);
+
+		DMDocument.viewPGViaSearch(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder."
+		);
+
+		SearchPortlets.searchEmbedded(searchTerm = "Test Document");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Document");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentTitle = "Test Document"
+		);
+
+		SearchPortlets.searchEmbedded(searchTerm = "Test Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Document",
+			searchAssetType = "Document"
+		);
+
+		var key_searchAssetTitle = "Test Document";
+
+		AssertClick(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "Test Document"
+		);
+
+		DMDocument.viewPGViaSearch(
+			dmDocumentDescription = "This is a test document.",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Test Document"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test RolesSitesPermissionsInheritance {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea3@liferay.com",
+			userFirstName = "userfn3",
+			userLastName = "userln3",
+			userScreenName = "usersn3"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea3@liferay.com",
+			userScreenName = "usersn3"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name 1", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name 2", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Organization Name 2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name 3", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization Name 1",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userName = "userfn1 userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization Name 2",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userName = "userfn2 userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.assignOrgRoleCP(
+			orgName = "Organization Name 2",
+			roleTitle = "Organization Administrator",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization Name 3",
+			userFirstName = "userfn3",
+			userLastName = "userln3",
+			userName = "userfn3 userln3",
+			userScreenName = "usersn3"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup1 Name");
+
+		UserGroup.addCP(userGroupName = "UG UserGroup2 Name");
+
+		UserGroup.addCP(userGroupName = "UG UserGroup3 Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup1 Name",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup2 Name",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup3 Name",
+			userScreenName = "usersn3"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+
+		JSONRole.addSiteRole(
+			roleKey = "Movie Blogger Name",
+			roleTitle = "Movie Blogger Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_TO_PAGE",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site"
+		);
+
+		JSONRole.addSiteRole(roleKey = "Music Fan Name", roleTitle = "Music Fan Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_CATEGORY",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_MESSAGE",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_MESSAGE",
+			resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards.kernel.model.MBMessage",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_TO_PAGE",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Music Fan Name",
+			roleType = "site"
+		);
+
+		JSONRole.addSiteRole(
+			roleKey = "Sports Journalist Name",
+			roleTitle = "Sports Journalist Name"
+		);
+
+		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Sports Journalist Name",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Sports Journalist Name",
+				roleType = "site"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Sports Journalist Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_TO_PAGE",
+			resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			roleTitle = "Sports Journalist Name",
+			roleType = "site"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup3 Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn1 userln1",
+			roleTitle = "Music Fan Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn2 userln2",
+			roleTitle = "Movie Blogger Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		Site.assignSiteRoleCP(
+			resourceName = "UG UserGroup3 Name",
+			roleTitle = "Sports Journalist Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		var key_portletTitleName = "Message Boards";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards"
+		);
+
+		var key_portletTitleName = "Asset Publisher";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher"
+		);
+
+		MessageboardsThread.addPG(
+			threadBody = "This is a thread by usersn1",
+			threadSubject = "Music Thread 1"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		var key_portletTitleName = "Message Boards";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards"
+		);
+
+		var key_portletTitleName = "Asset Publisher";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher"
+		);
+
+		AssertElementNotPresent(locator1 = "MessageBoards#ADD_CATEGORY_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
+
+		Blogs.addViaAP(
+			entryContent = "This is a movie blog by usersn2",
+			entryTitle = "Movie Blog"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name 2");
+
+		var key_portletTitleName = "Message Boards";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards"
+		);
+
+		AssertTextEquals(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
+
+		AssertTextEquals(locator1 = "Button#NEW_THREAD", value1 = "New Thread");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea3@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		var key_portletTitleName = "Message Boards";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards"
+		);
+
+		var key_portletTitleName = "Asset Publisher";
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher"
+		);
+
+		AssertElementNotPresent(locator1 = "Button#ADD_CATEGORY");
+
+		WebContent.addPGViaAP(
+			webContentContent = "This article is by usersn3, a member of user group 3 but not site name 1",
+			webContentTitle = "User Group Article"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test SiteRoleBookmarksInlinePermissions {
+		property osgi.app.includes = "bookmarks";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Roles Siterole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Bookmarks Page");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Bookmark.addPG(
+			bookmarkName = "Test Bookmark Name",
+			bookmarkURL = "https://www.liferay.com",
+			bookmarkViewableBy = "Owner"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Bookmark.viewNoPG(
+			bookmarkName = "Test Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Bookmark.viewBookmark(
+			bookmarkName = "Test Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test TeamPermissionsSite {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		for (var userNumber : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.addCP(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.editPasswordCP(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userScreenName = "usersn${userNumber}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.editUserSiteCP(
+				siteName = "Site Name",
+				userScreenName = "usersn${userNumber}"
+			);
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		PortletEntry.viewEmptyMessage(entity = "Site Teams");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "USA Ice Hockey Team Blog",
+			pageTemplateName = "Blog"
+		);
+
+		PermissionsInline.gotoPagePG(pageName = "USA Ice Hockey Team Blog");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest"
+		);
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "site-member"
+		);
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "site-member"
+		);
+
+		for (var permissionDefinitionKey : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
+			Team.definePermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				teamName = "Site Team Name"
+			);
+		}
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "USA Ice Hockey Team Blog",
+			siteName = "Site Name"
+		);
+
+		for (var portletTitleName : list "Blogs,Tag Cloud,Recent Bloggers") {
+			var key_portletTitleName = "${portletTitleName}";
+
+			AssertTextEquals.assertTextCaseInsensitive(
+				locator1 = "Portlet#SPECIFIC_TITLE",
+				value1 = "${portletTitleName}"
+			);
+		}
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		AssertElementNotPresent(
+			locator1 = "Home#PAGE",
+			key_pageName = "USA Ice Hockey Team Blog"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test ViewAutomaticAssignedRoles {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Roles Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "Access in Control Panel",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View Control Panel Menu",
+			permissionNavigationValue = "Portal"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site Administration",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View Site Administration Menu",
+			permissionNavigationValue = "Site Settings &gt; Site"
+		);
+	}
+
+	@priority = "4"
+	test ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
+			permissionDefinitionValue = "Add Repository",
+			roleTitle = "Site Member",
+			roleType = "Site"
+		);
+
+		AssertTextNotPresent(value1 = "action.ADD_REPOSITORY");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.removePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
+			permissionDefinitionValue = "Add Repository",
+			roleTitle = "Site Member",
+			roleType = "Site"
+		);
+	}
+
+	@priority = "4"
+	test ViewPreferencesPanelPermissionSiteMemberRole {
+		property osgi.app.includes = "currency-converter";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Portlet.addPG(portletName = "Currency Converter");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Currency Converter");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Site Member"
+		);
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX",
+			roleTitle = "Site Member"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Currency Converter",
+			portletOption = "Preferences"
+		);
+
+		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+
+		AssertTextEquals.assertTextCaseInsensitive(
+			locator1 = "HelloWorld#PORTLET_TITLE",
+			value1 = "Hello World"
+		);
+
+		AssertElementPresent(locator1 = "HelloWorld#PORTLET_CONTENT");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test ViewPrivatePageSiteMemberRole {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Private Page");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openPrivateURL(pageName = "Private Page");
+
+		Page.viewSpecificPG(pageNameList = "Private Page");
+	}
+
+	@priority = "4"
+	test ViewRegRolePermissionsDefaultView {
+		JSONRole.addRegularRole(
+			roleKey = "Roles Regrole Name",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ARTICLE",
+			resourceName = "com.liferay.journal",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.journal",
+			roleTitle = "Roles Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		SitePages.addPrivatePage(pageName = "Site Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "Site Name", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(
+			roleTitle = "Roles Regrole Name",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		Pause(locator1 = "3000");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		WebContent.viewWCViewableByPermissions();
+	}
+}

@@ -1,1138 +1,932 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Staging" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="DeleteChildPageFromVariationWhereNotEnabled" priority="4">
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="Page 1" />
-			<var name="parentPageName" value="Staging Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
-
-		<execute macro="Page#viewNoPage">
-			<var name="pageName" value="Page 1" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
-	<command name="DeleteHistory" priority="3">
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
-
-		<execute macro="Staging#deleteHistory" />
-
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
-	</command>
-
-	<command name="EnableAndDeleteSitePageVariationPage" priority="4">
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Test Site Pages Variation" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#markAsReadyForPublication" />
-
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Test Site Pages Variation" />
-		</execute>
-
-		<execute macro="Staging#enablePageInSitePagesVariation">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Page#viewNoPage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
-	<command name="PublicationWithoutReadyForPublication" priority="4">
-		<description message="This is a use case for LPS-78292." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive">
-			<var name="pleaseDoNotMarkAsReady" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#viewNoPage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Staging#addPageVariationPG">
-			<var name="pageVariationName" value="Page Variation Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Hello World" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Hello World Custom" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive">
-			<var name="pleaseDoNotMarkAsReady" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Hello World Custom" />
-		</execute>
-	</command>
-
-	<command name="PublishCustomPortletTitle" priority="3">
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
-			<var name="applicationDecorator" value="Decorate" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "4"
+	test DeleteChildPageFromVariationWhereNotEnabled {
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicChildPage(
+			childPageName = "Page 1",
+			parentPageName = "Staging Test Page"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Page 1", siteName = "Site Name");
+
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
+
+		Page.viewNoPage(pageName = "Page 1", privacy = "Public Pages");
+	}
+
+	@priority = "3"
+	test DeleteHistory {
+		Portlet.addPG(portletName = "Sites Directory");
+
+		Staging.deleteHistory();
+
+		Portlet.viewNoSpecificPG(portletName = "Sites Directory");
+	}
+
+	@priority = "4"
+	test EnableAndDeleteSitePageVariationPage {
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation",
+			sitePagesVariationName = "Test Site Pages Variation"
+		);
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Sites Directory Custom" />
-		</execute>
+		ProductMenu.gotoSite(site = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="Navigator#gotoStagedView" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		SitePages.addPublicPage(pageName = "Test Page Name");
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="applicationName" value="Sites Directory" />
-			<var name="markAsReadyForPublication" value="true" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Test Site Pages Variation"
+		);
 
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Sites Directory" />
-		</execute>
+		Staging.enablePageInSitePagesVariation(
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePagesVariationName = "Main Variation"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		SitePages.deletePage(pageName = "Test Page Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Sites Directory Custom" />
-		</execute>
-	</command>
+		Page.viewNoPage(pageName = "Test Page Name", privacy = "Public Pages");
+	}
 
-	<command name="StagingBlogsCP" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
+	@description = "This is a use case for LPS-78292."
+	@priority = "4"
+	test PublicationWithoutReadyForPublication {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Staging Test Page 2");
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Hello World");
 
-		<execute macro="Navigator#gotoStagedView" />
+		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.publishToLive();
 
-		<execute macro="Staging#publishToLive" />
-	</command>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-	<command name="StagingDeletePageVariation" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Page.viewNoPage(pageName = "Staging Test Page 2", privacy = "Public Pages");
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#addPageVariationPG">
-			<var name="pageVariationName" value="Monday" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Portlet.gotoPortletOptions(
+			portletName = "Hello World",
+			portletOption = "Look and Feel Configuration"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Hello World");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="Staging#addPageVariationPG">
-			<var name="pageVariationName" value="Wednesday" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page 2",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Hello World Custom");
 
-		<execute macro="Staging#deletePageVariationPG">
-			<var name="pageVariationName" value="Monday" />
-		</execute>
+		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute function="IsElementNotPresent" locator1="Staging#PAGE_VARIATION" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
 
-		<execute macro="Staging#changePageVariationInHistory">
-			<var name="pageVariationName" value="All Page Variations" />
-			<var name="pageVariationNameMenulistName" value="Wednesday" />
-		</execute>
+		Portlet.viewNoSpecificPG(portletName = "Hello World Custom");
+	}
 
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersionName" value="Wednesday" />
-		</execute>
+	@priority = "3"
+	test PublishCustomPortletTitle {
+		Staging.addSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Staging.viewSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		Portlet.addPG(portletName = "Sites Directory");
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Sites Directory");
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
-	</command>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-	<command name="StagingDeleteSitePagesVariation" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Sites Directory");
 
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Monday" />
-		</execute>
+		PortletEntry.save();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.configureApplicationDecoratorViaLookandfeelPG(
+			applicationDecorator = "Decorate"
+		);
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		PortletEntry.save();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		Portlet.viewSpecificPG(portletName = "Sites Directory Custom");
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Wednesday" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
+		Staging.configurePublishToLive(
+			applicationName = "Sites Directory",
+			markAsReadyForPublication = "true"
+		);
 
-		<execute macro="Staging#deleteSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Monday" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Portlet.viewNoSpecificPG(portletName = "Sites Directory");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Staging.publishToLive();
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Site Map" />
-		</execute>
-	</command>
+		Portlet.viewSpecificPG(portletName = "Sites Directory Custom");
+	}
 
-	<command name="StagingMergeSitePagesVariation1" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+	@priority = "5"
+	test StagingBlogsCP {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
 
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		ProductMenu.gotoSite(site = "Site Name");
 
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page 2" />
-		</execute>
+		Staging.publishToLive();
+	}
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+	@priority = "4"
+	test StagingDeletePageVariation {
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Staging#mergeSitePagesVariation">
-			<var name="sitePagesVariationMergeName" value="Summer" />
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.addPageVariationPG(pageVariationName = "Monday");
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Staging#publishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Staging.publishToLive();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-	<command name="StagingMergeSitePagesVariation2" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.addPageVariationPG(pageVariationName = "Wednesday");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Site Map");
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Staging.deletePageVariationPG(pageVariationName = "Monday");
 
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		IsElementNotPresent(locator1 = "Staging#PAGE_VARIATION");
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Staging.changePageVariationInHistory(
+			pageVariationName = "All Page Variations",
+			pageVariationNameMenulistName = "Wednesday"
+		);
 
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		Staging.viewHistoryVersionPG(historyVersionName = "Wednesday");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page 2" />
-		</execute>
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#mergeSitePagesVariation">
-			<var name="sitePagesVariationMergeName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Summer" />
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Site Map");
+	}
 
-		<execute macro="Staging#changePageVariationPG">
-			<var name="pageVariationName" value="Main Variation (Main Variation)" />
-			<var name="pageVariationNameMenulistName" value="Main Variation" />
-		</execute>
+	@priority = "4"
+	test StagingDeleteSitePagesVariation {
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#enablePageInSitePagesVariation">
-			<var name="pageName" value="Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePagesVariationName" value="Summer" />
-		</execute>
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.addSitePagesVariationPG(sitePagesVariationName = "Monday");
 
-		<execute macro="Staging#markAsReadyForPublication" />
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Staging#changePageVariationPG">
-			<var name="pageVariationName" value="Main Variation" />
-			<var name="pageVariationNameMenulistName" value="Main Variation (Main Variation)" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.publishToLive();
 
-		<execute macro="Staging#publishToLive" />
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="ProductMenu#gotoLiveSite" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.addSitePagesVariationPG(sitePagesVariationName = "Wednesday");
 
-		<execute function="IsElementPresent" locator1="Home#PORTLET">
-			<var name="portletTypeKey" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Site Map");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
+		Staging.deleteSitePagesVariationPG(sitePagesVariationName = "Monday");
 
-	<command name="StagingPageLogo" priority="3">
-		<execute macro="Page#viewDefaultLogoPG" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Navigator#gotoStagedView" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Page#changeLayoutLogo">
-			<var name="logoFile" value="Document_2.png" />
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="Page#viewLayoutLogoPG">
-			<var name="assertLayoutLogoPresent" value="true" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.viewSpecificPG(portletName = "Site Map");
+	}
 
-		<execute macro="Navigator#gotoStagedView" />
+	@priority = "4"
+	test StagingMergeSitePagesVariation1 {
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="All" />
-		</execute>
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		<execute macro="Staging#publishToLive" />
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="Page#viewDefaultLogoPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Page#viewDefaultLogoPG" />
+		SitePages.addPublicPage(pageName = "Page 2");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(pageName = "Page 2", siteName = "Site Name");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.mergeSitePagesVariation(
+			sitePagesVariationMergeName = "Summer",
+			sitePagesVariationName = "Main Variation"
+		);
 
-		<execute macro="Staging#publishToLive" />
+		Staging.markAsReadyForPublication();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Page#viewLayoutLogoPG">
-			<var name="assertLayoutLogoPresent" value="true" />
-		</execute>
-	</command>
+		Staging.markAsReadyForPublication();
 
-	<command name="StagingPortletPublishContentCount" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		Staging.publishToLive();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="PortletEntry#publish" />
+		Navigator.gotoSitePage(pageName = "Page 2", siteName = "Site Name");
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+	}
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+	@priority = "4"
+	test StagingMergeSitePagesVariation2 {
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#gotoStagedView" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		<execute macro="Staging#viewPublishContentCountViaPortletStagingCP">
-			<var name="contentCount" value="1" />
-			<var name="contentInformation" value="Web Content (1)" />
-			<var name="stagingDateRange" value="From Last Publish Date" />
-		</execute>
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#gotoStagedView" />
+		Staging.markAsReadyForPublication();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="Staging#publishToLiveNowViaPortletCP" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Page 2");
 
-		<execute macro="Navigator#gotoStagedView" />
+		Navigator.gotoStagedSitePage(pageName = "Page 2", siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Staging.mergeSitePagesVariation(
+			sitePagesVariationMergeName = "Main Variation",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="Staging#viewNoPublishContentCountViaPortletStagingCP">
-			<var name="stagingDateRange" value="From Last Publish Date" />
-		</execute>
-	</command>
+		Staging.markAsReadyForPublication();
 
-	<command name="StagingPublishLast" priority="4">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Summer",
+			sitePagesVariationName = "Main Variation"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.changePageVariationPG(
+			pageVariationName = "Main Variation (Main Variation)",
+			pageVariationNameMenulistName = "Main Variation"
+		);
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
+		Navigator.gotoStagedSitePage(pageName = "Page 2", siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Staging.enablePageInSitePagesVariation(
+			pageName = "Page 2",
+			privacy = "Public Pages",
+			sitePagesVariationName = "Summer"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		Navigator.gotoStagedSitePage(pageName = "Page 2", siteName = "Site Name");
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		Staging.markAsReadyForPublication();
 
-		<execute macro="PortletEntry#publish" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.changePageVariationPG(
+			pageVariationName = "Main Variation",
+			pageVariationNameMenulistName = "Main Variation (Main Variation)"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="Last" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute function="AssertChecked#assertCheckedNotVisible" locator1="Checkbox#ANY_CHECKBOX" value1="Web Content">
-			<var name="checkboxName" value="Web Content" />
-		</execute>
+		ProductMenu.gotoLiveSite();
 
-		<execute macro="Staging#publishToLive" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		IsElementPresent(
+			locator1 = "Home#PORTLET",
+			portletTypeKey = "Web Content Display"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Page 2", siteName = "Site Name");
+	}
 
-		<execute macro="WebContent#viewTitle">
-			<var name="onLive" value="true" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
+	@priority = "3"
+	test StagingPageLogo {
+		Page.viewDefaultLogoPG();
 
-	<command name="StagingSiteLogo" priority="3">
-		<execute macro="Page#viewDefaultLogoPG" />
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="Navigator#gotoStagedView" />
+		Page.changeLayoutLogo(
+			logoFile = "Document_2.png",
+			pageName = "Staging Test Page"
+		);
 
-		<execute macro="Site#changeSiteLogo">
-			<var name="logoFile" value="Document_2.png" />
-			<var name="pageName" value="Public Pages" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Page.viewLayoutLogoPG(assertLayoutLogoPresent = "true");
 
-		<execute macro="Page#viewCustomLogoPG">
-			<var name="assertLayoutLogoPresent" value="true" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="Navigator#gotoStagedView" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.configurePublishToLive(contentDateRange = "All");
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="uncheckLogo" value="true" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#publishToLive" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Page.viewDefaultLogoPG();
 
-		<execute macro="Page#viewDefaultLogoPG" />
+		Page.viewDefaultLogoPG();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#publishToLive" />
+		Staging.publishToLive();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Page#viewCustomLogoPG" />
-	</command>
+		Page.viewLayoutLogoPG(assertLayoutLogoPresent = "true");
+	}
 
-	<command name="StagingSiteVariationIncompletePage" priority="5">
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
+	@priority = "4"
+	test StagingPortletPublishContentCount {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="Navigator#gotoStagedView" />
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute function="AssertElementPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
+		Navigator.gotoStagedView();
 
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="Staging#enablePageInSitePagesVariation">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
-	</command>
+		Staging.viewPublishContentCountViaPortletStagingCP(
+			contentCount = "1",
+			contentInformation = "Web Content (1)",
+			stagingDateRange = "From Last Publish Date"
+		);
 
-	<command name="StagingVersionHistory" priority="4">
-		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
+		Navigator.gotoStagedView();
 
-		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
+		Staging.publishToLiveNowViaPortletCP();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersion" value="${historyVersion}" />
-		</execute>
+		Navigator.gotoStagedView();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		Staging.viewNoPublishContentCountViaPortletStagingCP(
+			stagingDateRange = "From Last Publish Date"
+		);
+	}
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+	@priority = "4"
+	test StagingPublishLast {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersion" value="${historyVersion}" />
-			<var name="modifiedVersion" value="true" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		<execute macro="Staging#undoStagingPageVersioningPG" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
 
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersion" value="${historyVersion}" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Staging#redoStagingPageVersioningPG" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.configurePublishToLive(contentDateRange = "Last");
 
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			value1 = "Web Content",
+			checkboxName = "Web Content"
+		);
 
-		<execute macro="Staging#viewHistoryVersionPG">
-			<var name="historyVersion" value="${historyVersion}" />
-			<var name="modifiedVersion" value="true" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Staging#publishToLive" />
-	</command>
-</definition>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "Web Content Title");
+	}
+
+	@priority = "3"
+	test StagingSiteLogo {
+		Page.viewDefaultLogoPG();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Site.changeSiteLogo(logoFile = "Document_2.png", pageName = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Page.viewCustomLogoPG(assertLayoutLogoPresent = "true");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(uncheckLogo = "true");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Page.viewDefaultLogoPG();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Page.viewCustomLogoPG();
+	}
+
+	@priority = "5"
+	test StagingSiteVariationIncompletePage {
+		Staging.addSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Site Name"
+		);
+
+		AssertElementPresent(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
+
+		Staging.enablePageInSitePagesVariation(
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePagesVariationName = "Main Variation"
+		);
+	}
+
+	@priority = "4"
+	test StagingVersionHistory {
+		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+
+		Click(locator1 = "Staging#HISTORY_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+
+		var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.viewHistoryVersionPG(historyVersion = "${historyVersion}");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Blogs");
+
+		Staging.viewHistoryVersionPG(
+			historyVersion = "${historyVersion}",
+			modifiedVersion = "true"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.undoStagingPageVersioningPG();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.viewNoSpecificPG(portletName = "Blogs");
+
+		Staging.viewHistoryVersionPG(historyVersion = "${historyVersion}");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.redoStagingPageVersioningPG();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.viewSpecificPG(portletName = "Blogs");
+
+		Staging.viewHistoryVersionPG(
+			historyVersion = "${historyVersion}",
+			modifiedVersion = "true"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+	}
+}

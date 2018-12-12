@@ -1,278 +1,237 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Navigation" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AutomaticChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}display.style.default=" />
-		<property name="testray.component.names" value="Navigation" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<var name="key_pageName" value="Navigation Display Test Page" />
-
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-	</command>
-
-	<command name="NavigationMenuConfigureDisplayTemplate" priority="5">
-		<description message="This is a use case for LPS-67191." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Navigation Test Page1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page1" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="portletName" value="Navigation" />
-			<var name="templateName" value="Split Button Dropdowns" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page1" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="portletName" value="Navigation" />
-			<var name="templateName" value="Bar minimally styled" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Navigation Test Page2" />
-		</execute>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Navigation";
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page2" />
-		</execute>
-
-		<execute macro="Navigator#gotoEditPageViaControlMenu">
-			<var name="pageName" value="Navigation Test Page2" />
-		</execute>
-
-		<execute macro="Page#editName">
-			<var name="pageNameEdit" value="Navigation Test Page2 Edit" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Navigation Test Page2 Edit" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page2 Edit" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		User.firstLoginPG();
+	}
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
-
-		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page1" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Test Page2 Edit">
-			<var name="key_pageName" value="Navigation Test Page2 Edit" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
-			<var name="key_pageName" value="Navigation Test Page2 Edit" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute function="DragAndDrop#dragAndDropToObject" locator1="Home#PAGE_1" locator2="Home#PAGE_2" value1="Welcome" />
-	</command>
-
-	<command name="ValidateReturnToDefaultStyle" priority="3">
-		<property name="custom.properties" value="display.style.default=from-level-1-with-title${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
-		<property name="testray.component.names" value="Navigation" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<var name="key_pageName" value="Navigation Display Test Page" />
-
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="portletName" value="Navigation Menu" />
-			<var name="templateName" value="Bar minimally styled" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-	</command>
-
-	<command name="ViewNoAddPagePermissionsPG" priority="4">
-		<property name="testray.component.names" value="Navigation,Permissions" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Navigation Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="Navigation Page" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionsList" value="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX,CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Power User" />
-		</execute>
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Power User" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Page" />
-		</execute>
-
-		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG" />
-	</command>
-</definition>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			UserGroup.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	test AutomaticChangesToDisplayStyle {
+		property custom.properties = "display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}display.style.default=";
+		property testray.component.names = "Navigation";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Navigation Display Test Page");
+
+		Navigator.gotoPage(pageName = "Navigation Display Test Page");
+
+		Portlet.addPG(portletName = "Navigation Menu");
+
+		var key_pageName = "Navigation Display Test Page";
+
+		AssertTextEquals(
+			locator1 = "Navigation#BREADCRUMB_ENTRY",
+			value1 = "Navigation Display Test Page"
+		);
+	}
+
+	@description = "This is a use case for LPS-67191."
+	@priority = "5"
+	test NavigationMenuConfigureDisplayTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Navigation Test Page1");
+
+		Navigator.gotoPage(pageName = "Navigation Test Page1");
+
+		Portlet.addPG(portletName = "Navigation Menu");
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Navigation",
+			templateName = "Split Button Dropdowns"
+		);
+
+		Navigator.gotoPage(pageName = "Navigation Test Page1");
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Navigation",
+			templateName = "Bar minimally styled"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Navigation Test Page2");
+
+		Navigator.gotoPage(pageName = "Navigation Test Page2");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Navigation Test Page2");
+
+		Page.editName(pageNameEdit = "Navigation Test Page2 Edit");
+
+		Page.view(pageName = "Navigation Test Page2 Edit", privacy = "Public Pages");
+
+		Navigator.gotoPage(pageName = "Navigation Test Page2 Edit");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
+
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Navigation Test Page1");
+
+		AssertClick(
+			locator1 = "Navigation#BREADCRUMB_ENTRY",
+			value1 = "Navigation Test Page2 Edit",
+			key_pageName = "Navigation Test Page2 Edit"
+		);
+
+		AssertVisible(
+			locator1 = "Home#PAGE_ACTIVE",
+			key_pageName = "Navigation Test Page2 Edit"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		DragAndDrop.dragAndDropToObject(
+			locator1 = "Home#PAGE_1",
+			locator2 = "Home#PAGE_2",
+			value1 = "Welcome"
+		);
+	}
+
+	@priority = "3"
+	test ValidateReturnToDefaultStyle {
+		property custom.properties = "display.style.default=from-level-1-with-title${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true";
+		property testray.component.names = "Navigation";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Navigation Display Test Page");
+
+		Navigator.gotoPage(pageName = "Navigation Display Test Page");
+
+		Portlet.addPG(portletName = "Navigation Menu");
+
+		Navigator.gotoPage(pageName = "Navigation Display Test Page");
+
+		var key_pageName = "Navigation Display Test Page";
+
+		AssertTextEquals(
+			locator1 = "Navigation#BREADCRUMB_ENTRY",
+			value1 = "Navigation Display Test Page"
+		);
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Navigation Menu",
+			templateName = "Bar minimally styled"
+		);
+
+		Navigator.gotoPage(pageName = "Navigation Display Test Page");
+
+		AssertTextEquals(
+			locator1 = "Navigation#BREADCRUMB_ENTRY",
+			value1 = "Navigation Display Test Page"
+		);
+	}
+
+	@priority = "4"
+	test ViewNoAddPagePermissionsPG {
+		property testray.component.names = "Navigation,Permissions";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Navigation Page");
+
+		PermissionsInline.gotoPagePG(pageName = "Navigation Page");
+
+		Role.definePermissionPG(
+			permissionsList = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX,CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Power User"
+		);
+
+		IFrame.selectTopFrame();
+
+		Navigator.gotoPage(pageName = "Navigation Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(roleTitle = "Power User", userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Navigation Page");
+
+		Dockbar.viewAddTabsWithNoAddPagePermission();
+
+		User.logoutPG();
+
+		User.loginUserPG();
+	}
+}

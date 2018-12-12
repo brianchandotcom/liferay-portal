@@ -1,114 +1,92 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Fragments" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Staging Test Page" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Staging Test Page"
+		);
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-	</set-up>
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<command name="AssertFragmentsAlwaysPublished" priority="5">
-		<description message="Fragments are published automatically on any publishing process." />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-		<execute macro="JSONFragment#addFragmentCollection">
-			<var name="groupKey" value="Test Site Name-staging" />
-			<var name="name" value="Collection Name" />
-			<var name="site" value="false" />
-		</execute>
+	@description = "Fragments are published automatically on any publishing process."
+	@priority = "5"
+	test AssertFragmentsAlwaysPublished {
+		JSONFragment.addFragmentCollection(
+			groupKey = "Test Site Name-staging",
+			name = "Collection Name",
+			site = "false"
+		);
 
-		<execute macro="JSONFragment#addSection">
-			<var name="collectionName" value="Collection Name" />
-			<var name="groupKey" value="Test Site Name-staging" />
-			<var name="name" value="Fragment Name" />
-			<var name="site" value="false" />
-		</execute>
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			groupKey = "Test Site Name-staging",
+			name = "Fragment Name",
+			site = "false"
+		);
 
-		<execute macro="JSONFragment#assertFragmentCollectionNotInGroup">
-			<var name="collectionName" value="Collection Name" />
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONFragment.assertFragmentCollectionNotInGroup(
+			collectionName = "Collection Name",
+			groupName = "Test Site Name"
+		);
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#publishCustomPublication" />
+		Staging.publishCustomPublication();
 
-		<execute macro="JSONFragment#assertFragmentCollectionInGroup">
-			<var name="collectionName" value="Collection Name" />
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONFragment.assertFragmentCollectionInGroup(
+			collectionName = "Collection Name",
+			groupName = "Test Site Name"
+		);
 
-		<execute macro="JSONFragment#assertFragmentInGroup">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</command>
+		JSONFragment.assertFragmentInGroup(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name",
+			groupName = "Test Site Name"
+		);
+	}
 
-	<command name="AssertFragmentsAreOnlyEditableInStagingView" priority="5">
-		<description message="Page Fragments administration is only be accessible in staging view." />
+	@description = "Page Fragments administration is only be accessible in staging view."
+	@priority = "5"
+	test AssertFragmentsAreOnlyEditableInStagingView {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+		ProductMenuHelper.expandCategory(category = "Build");
 
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Build" />
-		</execute>
+		AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Page Fragments");
 
-		<execute function="AssertVisible" locator1="ProductMenu#PORTLET">
-			<var name="key_portlet" value="Page Fragments" />
-		</execute>
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
-		<execute macro="ProductMenu#gotoLiveSite">
-			<var name="site" value="Site Name" />
-		</execute>
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
+		ProductMenuHelper.expandCategory(category = "Build");
 
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Build" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ProductMenu#PORTLET">
-			<var name="key_portlet" value="Page Fragments" />
-		</execute>
-	</command>
-</definition>
+		AssertElementNotPresent(
+			locator1 = "ProductMenu#PORTLET",
+			key_portlet = "Page Fragments"
+		);
+	}
+}

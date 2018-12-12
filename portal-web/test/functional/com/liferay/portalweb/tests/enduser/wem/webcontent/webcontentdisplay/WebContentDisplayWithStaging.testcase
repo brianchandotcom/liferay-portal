@@ -1,128 +1,104 @@
-<definition component-name="portal-wcd">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Display" />
+@component-name = "portal-wcd"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Display";
+	var pageName = "Web Content Display Page";
+	var portletName = "Web Content Display";
 
-	<var name="pageName" value="Web Content Display Page" />
-	<var name="portletName" value="Web Content Display" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test StagingPublishExpiredWebContentViaWCD {
+		property testray.component.names = "Staging,Web Content Administration";
 
-	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
-		<property name="testray.component.names" value="Staging,Web Content Administration" />
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Staging Test Page"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Staging Test Page" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Staging.viewStagingLocalLivePG();
 
-		<execute macro="Staging#viewStagingLocalLivePG" />
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContent#expireSpecificVersionCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Staging.viewStagingLocalLivePG();
 
-		<execute macro="Staging#viewStagingLocalLivePG" />
+		Staging.gotoPublishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Staging.publishToLive();
 
-		<execute macro="Staging#publishToLive" />
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		WebContent.viewPGViaWCD(
+			expiredContent = "true",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="expiredContent" value="true" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewStatus">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-</definition>
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Expired",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+}

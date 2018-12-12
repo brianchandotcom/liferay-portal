@@ -1,91 +1,101 @@
-<definition component-name="portal-upgrades">
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.component.names" value="Forms" />
-	<property name="testray.main.component.name" value="Upgrades Forms and Workflow" />
+@component-name = "portal-upgrades"
+definition {
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.component.names = "Forms";
+	property testray.main.component.name = "Upgrades Forms and Workflow";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="AddFormAfterUpgrade612" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.1.2" />
+	@priority = "5"
+	test AddFormAfterUpgrade612 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.1.2";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade6130" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test AddFormAfterUpgrade6130 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade621015" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test AddFormAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade621021" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test AddFormAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade625" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
+	@priority = "5"
+	test AddFormAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade70106" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="7.0.10.6" />
+	@priority = "5"
+	test AddFormAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="AddFormAfterUpgrade704" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="7.0.4" />
+	@priority = "5"
+	test AddFormAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
 
-		<execute macro="Upgrade#addForm" />
-	</command>
+		Upgrade.addForm();
+	}
 
-	<command name="ViewAndDeleteFormEntryAfterUpgrade70106" priority="5">
-		<property name="data.archive.type" value="data-archive-form-entry" />
-		<property name="portal.version" value="7.0.10.6" />
+	@priority = "5"
+	test ViewAndDeleteFormEntryAfterUpgrade70106 {
+		property data.archive.type = "data-archive-form-entry";
+		property portal.version = "7.0.10.6";
 
-		<execute macro="Upgrade#viewAndDeleteFormEntry" />
-	</command>
+		Upgrade.viewAndDeleteFormEntry();
+	}
 
-	<command name="ViewAndDeleteFormEntryAfterUpgrade704" priority="5">
-		<property name="data.archive.type" value="data-archive-form-entry" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="7.0.4" />
+	@priority = "5"
+	test ViewAndDeleteFormEntryAfterUpgrade704 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
 
-		<execute macro="Upgrade#viewAndDeleteFormEntry" />
-	</command>
-</definition>
+		Upgrade.viewAndDeleteFormEntry();
+	}
+}

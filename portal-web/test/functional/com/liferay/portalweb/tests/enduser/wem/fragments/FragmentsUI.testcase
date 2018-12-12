@@ -1,179 +1,171 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Fragments" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="FragmentsAdmin#addCollection">
-			<var name="collectionName" value="Collection Name" />
-		</execute>
+		FragmentsAdmin.addCollection(collectionName = "Collection Name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="FragmentsAdmin#addSection">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_button.html" />
-		</execute>
+		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_button.html");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}"
+		);
 
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_button.css" />
-		</execute>
+		var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CSS_EDITOR",
+			value1 = "${cssSnippet}"
+		);
 
-		<execute macro="TestCase#getFileContent">
-			<return name="javascriptSnippet" />
-			<var name="fileName" value="fragment_button.js" />
-		</execute>
+		var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
-	</set-up>
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+			value1 = "${javascriptSnippet}"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddFragmentToContentPage" priority="5">
-		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="portal.acceptance" value="true" />
+	@description = "Add a fragment in the UI and then assert that it displays properly when added to a content page."
+	@priority = "5"
+	test AddFragmentToContentPage {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Submit" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Submit",
+			key_fragmentClass = "footer",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Cancel" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Cancel",
+			key_fragmentClass = "footer",
+			key_position = "1"
+		);
 
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+		AssertElementPresent(locator1 = "Button#SUBMIT");
 
-		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+		AssertElementPresent(locator1 = "Button#CANCEL");
 
-		<execute function="AssertConfirm" value1="Form submitted" />
-	</command>
+		AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
 
-	<command name="EditFragment" priority="5">
-		<description message="Edit a fragment and assert the edits persist." />
-		<property name="portal.acceptance" value="true" />
+		AssertConfirm(value1 = "Form submitted");
+	}
 
-		<execute macro="PortletEntry#publish" />
+	@description = "Edit a fragment and assert the edits persist."
+	@priority = "5"
+	test EditFragment {
+		property portal.acceptance = "true";
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute macro="TestCase#getFileContent">
-			<return name="htmlSnippet" />
-			<var name="fileName" value="fragment_title.html" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+		var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
 
-		<execute macro="TestCase#getFileContent">
-			<return name="cssSnippet" />
-			<var name="fileName" value="fragment_title.css" />
-		</execute>
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}"
+		);
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
+		var cssSnippet = TestCase.getFileContent(fileName = "fragment_title.css");
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#CSS_EDITOR",
+			value1 = "${cssSnippet}"
+		);
 
-		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
+			value1 = ""
+		);
 
-		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET" />
+		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		<execute function="SelectFrameTop" />
+		AssertTextEquals(
+			locator1 = "//div[@class='fragment-header']/h1[@class='title']",
+			value1 = "LOREM IPSUM DOLOR SIT AMET"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		SelectFrameTop();
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
+		PortletEntry.publish();
 
-		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name");
 
-		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET" />
+		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		<execute function="SelectFrameTop" />
-	</command>
+		AssertTextEquals(
+			locator1 = "//div[@class='fragment-header']/h1[@class='title']",
+			value1 = "LOREM IPSUM DOLOR SIT AMET"
+		);
 
-	<command name="ViewFragmentEditorPreview" priority="5">
-		<description message="Fragment editor should show an accurate preview of the fragment." />
-		<property name="portal.acceptance" value="true" />
+		SelectFrameTop();
+	}
 
-		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
+	@description = "Fragment editor should show an accurate preview of the fragment."
+	@priority = "5"
+	test ViewFragmentEditorPreview {
+		property portal.acceptance = "true";
 
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+		SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
-		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+		AssertElementPresent(locator1 = "Button#SUBMIT");
 
-		<execute function="AssertConfirm" value1="Form submitted" />
+		AssertElementPresent(locator1 = "Button#CANCEL");
 
-		<execute function="SelectFrameTop" />
-	</command>
-</definition>
+		AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
+
+		AssertConfirm(value1 = "Form submitted");
+
+		SelectFrameTop();
+	}
+}

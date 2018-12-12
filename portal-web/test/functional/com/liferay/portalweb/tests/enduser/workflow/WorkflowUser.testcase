@@ -1,163 +1,144 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Users and Organizations" />
-	<property name="testray.main.component.name" value="Workflow" />
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Users and Organizations";
+	property testray.main.component.name = "Workflow";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Workflow#tearDownPortalWorkflow" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownPortalWorkflow();
 
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			User.tearDownCP();
+		}
+	}
 
-	<command name="CreateNewUserAccount" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test CreateNewUserAccount {
+		property portal.acceptance = "true";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Configuration" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="User" />
-		</execute>
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "User"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="WorkflowAsset#createNewUserAccount">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-			<var name="workflow" value="true" />
-		</execute>
+		WorkflowAsset.createNewUserAccount(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn",
+			workflow = "true"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="usersn" />
-		</execute>
+		User.searchCP(searchTerm = "usersn");
 
-		<execute macro="User#viewNoUsersFoundCP" />
+		User.viewNoUsersFoundCP();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="userfn userln" />
-			<var name="workflowAssetType" value="User" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "userfn userln",
+			workflowAssetType = "User",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="userfn userln" />
-			<var name="workflowAssetType" value="User" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "userfn userln",
+			workflowAssetType = "User",
+			workflowTask = "Review"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.editPasswordCP(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="user@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
+		User.logoutAndLoginPG(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "user@liferay.com",
+			userScreenName = "usersn"
+		);
+	}
 
-	<command name="ViewUserPreview" priority="4">
-		<description message="This is a use case for LPS-69190." />
+	@description = "This is a use case for LPS-69190."
+	@priority = "4"
+	test ViewUserPreview {
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Configuration" />
-		</execute>
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "User"
+		);
 
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="User" />
-		</execute>
+		User.logoutPG();
 
-		<execute macro="User#logoutPG" />
+		WorkflowAsset.createNewUserAccount(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="WorkflowAsset#createNewUserAccount">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		WorkflowAsset.gotoViaNotification(assetType = "User");
 
-		<execute macro="WorkflowAsset#gotoViaNotification">
-			<var name="assetType" value="User" />
-		</execute>
+		WorkflowAsset.viewUserDetails(userEmailAddress = "user@liferay.com");
 
-		<execute macro="WorkflowAsset#viewUserDetails">
-			<var name="userEmailAddress" value="user@liferay.com" />
-		</execute>
+		Workflow.gotoPreviewView();
 
-		<execute macro="Workflow#gotoPreviewView" />
-
-		<execute macro="WorkflowAsset#viewUserDetails">
-			<var name="userEmailAddress" value="user@liferay.com" />
-		</execute>
-	</command>
-</definition>
+		WorkflowAsset.viewUserDetails(userEmailAddress = "user@liferay.com");
+	}
+}

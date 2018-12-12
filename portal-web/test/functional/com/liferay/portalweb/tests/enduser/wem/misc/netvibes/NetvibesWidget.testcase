@@ -1,40 +1,38 @@
-<definition component-name="portal-plugins-osgi">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="plugins.deployment.type" value="osgi" />
-	<property name="testray.main.component.name" value="Netvibes" />
+@component-name = "portal-plugins-osgi"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property plugins.deployment.type = "osgi";
+	property testray.main.component.name = "Netvibes";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+	setUp {
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Page");
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="NetvibesWidgetPortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="netvibes-widget-portlet" />
+	@priority = "4"
+	test NetvibesWidgetPortletSmoke {
+		property portlet.plugins.includes = "netvibes-widget-portlet";
+		var appName = "Netvibes Widget";
 
-		<var name="appName" value="Netvibes Widget" />
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Netvibes Widget");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Netvibes Widget" />
-		</execute>
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=netvibes-widget-portlet" />
-	</command>
-</definition>
+		AntCommand.antCommand(
+			locator1 = "build-test.xml",
+			value1 = "remove-plugin -Dplugin.name=netvibes-widget-portlet"
+		);
+	}
+}

@@ -1,34 +1,31 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	setUp {
+		User.firstLoginPG();
+	}
 
-	<command name="ZoeHealthcareThemeSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="web-form-portlet" />
-		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
+	@priority = "4"
+	test ZoeHealthcareThemeSmoke {
+		property portlet.plugins.includes = "web-form-portlet";
+		property theme.plugins.includes = "zoe-healthcare-theme";
+		var appName = "Zoe Healthcare";
 
-		<var name="appName" value="Zoe Healthcare" />
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+		AppManager.uninstallAppCP(appName = "${appName}");
 
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-</definition>
+		AppManager.viewUninstallAppCP(appName = "${appName}");
+	}
+}

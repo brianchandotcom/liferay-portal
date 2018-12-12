@@ -1,737 +1,659 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Team#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddSiteTeam" priority="4">
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamAssignUser" priority="4">
-		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewMemberCP">
-			<var name="membershipType" value="User" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamAssignUserGroup" priority="4">
-		<property name="testray.component.names" value="Site Administration,User Groups" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#assignUserGroups">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewMemberCP">
-			<var name="membershipType" value="User Group" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamMultiple" priority="5">
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team1 Description" />
-			<var name="teamName" value="Site Team1 Name" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team2 Description" />
-			<var name="teamName" value="Site Team2 Name" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team3 Description" />
-			<var name="teamName" value="Site Team3 Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team1 Description" />
-			<var name="teamName" value="Site Team1 Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team2 Description" />
-			<var name="teamName" value="Site Team2 Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team3 Description" />
-			<var name="teamName" value="Site Team3 Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamRemoveUser" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewMemberCP">
-			<var name="membershipType" value="User" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#removeMemberCP">
-			<var name="membershipType" value="User" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewNoMembersCP">
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamRemoveUserGroup" priority="4">
-		<property name="testray.component.names" value="Site Administration,User Groups" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserGroupAsMemberCP">
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#assignUserGroups">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewMemberCP">
-			<var name="membershipType" value="User Group" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#removeMemberCP">
-			<var name="membershipType" value="User Group" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#viewNoMembersCP">
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamSearchUserGroups">
-		<property name="testray.component.names" value="Site Administration,User Groups" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="1,2" param="n">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="User Groups" />
-			</execute>
-
-			<execute macro="UserGroup#addCP">
-				<var name="userGroupName" value="User Group Name ${n}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="Site Name" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Members" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Site Memberships" />
-			</execute>
-
-			<execute macro="Site#assignUserGroupAsMemberCP">
-				<var name="userGroupName" value="User Group Name ${n}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#assignUserGroups">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userGroupName" value="User Group Name 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#searchCP">
-			<var name="membershipType" value="User Group" />
-			<var name="searchTerm" value="&quot;User Group Name 1&quot;" />
-		</execute>
-
-		<execute macro="Team#searchCP">
-			<var name="isEmpty" value="true" />
-			<var name="membershipType" value="User Group" />
-			<var name="searchTerm" value="&quot;User Group Name 2&quot;" />
-		</execute>
-	</command>
-
-	<command name="AddSiteTeamSearchUsers">
-		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="1,2" param="n">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#addCP">
-				<var name="userEmailAddress" value="userea${n}@liferay.com" />
-				<var name="userFirstName" value="userfn${n}" />
-				<var name="userLastName" value="userln${n}" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="Site Name" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Members" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Site Memberships" />
-			</execute>
-
-			<execute macro="Site#assignUserAsMemberCP">
-				<var name="userFirstName" value="userfn${n}" />
-				<var name="userLastName" value="userln${n}" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#assignMembersCP">
-			<var name="teamName" value="Site Team Name" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Site Team Name" />
-		</execute>
-
-		<for list="userfn1,userln1,usersn1" param="searchTerm">
-			<execute macro="Team#searchCP">
-				<var name="membershipType" value="User" />
-				<var name="searchTerm" value="${searchTerm}" />
-			</execute>
-		</for>
-
-		<for list="userfn2,userln2,usersn2" param="searchTerm">
-			<execute macro="Team#searchCP">
-				<var name="isEmpty" value="true" />
-				<var name="membershipType" value="User" />
-				<var name="searchTerm" value="${searchTerm}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="DeleteSiteTeam" priority="5">
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#deleteCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#viewDefaultCP">
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-	</command>
-
-	<command name="EditSiteTeam" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Site Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#editCP">
-			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="teamNameEdit" value="Site Team Name Edit" />
-		</execute>
-
-		<execute macro="Team#viewCP">
-			<var name="teamDescription" value="Site Team Description Edit" />
-			<var name="teamName" value="Site Team Name Edit" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Team.tearDownCP();
+
+			UserGroup.tearDownCP();
+
+			User.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddSiteTeam {
+		property testray.component.names = "Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+	}
+
+	@priority = "4"
+	test AddSiteTeamAssignUser {
+		property testray.component.names = "Site Administration,Users and Organizations";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewMemberCP(
+			membershipType = "User",
+			teamName = "Site Team Name",
+			userFirstName = "userfn",
+			userLastName = "userln"
+		);
+	}
+
+	@priority = "4"
+	test AddSiteTeamAssignUserGroup {
+		property testray.component.names = "Site Administration,User Groups";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.assignUserGroups(
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewMemberCP(
+			membershipType = "User Group",
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name"
+		);
+	}
+
+	@priority = "5"
+	test AddSiteTeamMultiple {
+		property testray.component.names = "Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team1 Description",
+			teamName = "Site Team1 Name"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team2 Description",
+			teamName = "Site Team2 Name"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team3 Description",
+			teamName = "Site Team3 Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team1 Description",
+			teamName = "Site Team1 Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team2 Description",
+			teamName = "Site Team2 Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team3 Description",
+			teamName = "Site Team3 Name"
+		);
+	}
+
+	@priority = "5"
+	test AddSiteTeamRemoveUser {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site Administration,Users and Organizations";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewMemberCP(
+			membershipType = "User",
+			teamName = "Site Team Name",
+			userFirstName = "userfn",
+			userLastName = "userln"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.removeMemberCP(
+			membershipType = "User",
+			teamName = "Site Team Name",
+			userFirstName = "userfn",
+			userLastName = "userln"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewNoMembersCP(teamName = "Site Team Name");
+	}
+
+	@priority = "4"
+	test AddSiteTeamRemoveUserGroup {
+		property testray.component.names = "Site Administration,User Groups";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.assignUserGroups(
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewMemberCP(
+			membershipType = "User Group",
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.removeMemberCP(
+			membershipType = "User Group",
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.viewNoMembersCP(teamName = "Site Team Name");
+	}
+
+	test AddSiteTeamSearchUserGroups {
+		property testray.component.names = "Site Administration,User Groups";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		for (var n : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "User Groups"
+			);
+
+			UserGroup.addCP(userGroupName = "User Group Name ${n}");
+
+			ProductMenu.gotoSite(site = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Members",
+				panel = "Site Administration",
+				portlet = "Site Memberships"
+			);
+
+			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name ${n}");
+		}
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.assignUserGroups(
+			teamName = "Site Team Name",
+			userGroupName = "User Group Name 1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
+
+		Team.searchCP(
+			membershipType = "User Group",
+			searchTerm = "&quot;User Group Name 1&quot;"
+		);
+
+		Team.searchCP(
+			isEmpty = "true",
+			membershipType = "User Group",
+			searchTerm = "&quot;User Group Name 2&quot;"
+		);
+	}
+
+	test AddSiteTeamSearchUsers {
+		property testray.component.names = "Site Administration,Users and Organizations";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		for (var n : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.addCP(
+				userEmailAddress = "userea${n}@liferay.com",
+				userFirstName = "userfn${n}",
+				userLastName = "userln${n}",
+				userScreenName = "usersn${n}"
+			);
+
+			ProductMenu.gotoSite(site = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Members",
+				panel = "Site Administration",
+				portlet = "Site Memberships"
+			);
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn${n}",
+				userLastName = "userln${n}",
+				userScreenName = "usersn${n}"
+			);
+		}
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
+
+		for (var searchTerm : list "userfn1,userln1,usersn1") {
+			Team.searchCP(membershipType = "User", searchTerm = "${searchTerm}");
+		}
+
+		for (var searchTerm : list "userfn2,userln2,usersn2") {
+			Team.searchCP(
+				isEmpty = "true",
+				membershipType = "User",
+				searchTerm = "${searchTerm}"
+			);
+		}
+	}
+
+	@priority = "5"
+	test DeleteSiteTeam {
+		property testray.component.names = "Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.deleteCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.viewDefaultCP(teamName = "Site Team Name");
+	}
+
+	@priority = "5"
+	test EditSiteTeam {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Teams"
+		);
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name"
+		);
+
+		Team.editCP(
+			teamDescriptionEdit = "Site Team Description Edit",
+			teamName = "Site Team Name",
+			teamNameEdit = "Site Team Name Edit"
+		);
+
+		Team.viewCP(
+			teamDescription = "Site Team Description Edit",
+			teamName = "Site Team Name Edit"
+		);
+	}
+}

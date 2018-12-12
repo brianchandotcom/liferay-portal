@@ -1,87 +1,66 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
+	var appName = "Knowledge Base";
 
-	<var name="appName" value="Knowledge Base" />
+	setUp {
+		User.firstLoginPG();
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Test Page");
+	}
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-	</set-up>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	@priority = "4"
+	test KnowledgeBasePortletSmoke {
+		property portlet.plugins.includes = "knowledge-base-portlet";
 
-	<command name="KnowledgeBasePortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base (Display)");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base (Display)" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Article");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Article" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Search");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Search" />
-		</execute>
+		Navigator.gotoPage(pageName = "Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Section");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Section" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base (Admin)"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base (Admin)" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+		AppManager.uninstallAppCP(appName = "Knowledge Base");
 
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="Knowledge Base" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="Knowledge Base" />
-		</execute>
-	</command>
-</definition>
+		AppManager.viewUninstallAppCP(appName = "Knowledge Base");
+	}
+}

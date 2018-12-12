@@ -1,111 +1,93 @@
-<definition component-name="portal-collaboration">
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="osgi.app.includes" value="my-subscriptions" />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="plugins.deployment.type" value="osgi" />
-	<property name="testray.main.component.name" value="My Subscriptions" />
-	<property name="test.assert.warning.exceptions" value="true" />
+@component-name = "portal-collaboration"
+definition {
+	property custom.properties = "default.layout.template.id=1_column";
+	property osgi.app.includes = "my-subscriptions";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property plugins.deployment.type = "osgi";
+	property testray.main.component.name = "My Subscriptions";
+	property test.assert.warning.exceptions = "true";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="My Subscriptions Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "My Subscriptions Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="My Subscriptions Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "My Subscriptions Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Subscriptions Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Subscriptions Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="My Subscriptions" />
-		</execute>
-	</set-up>
+		Portlet.addPG(portletName = "My Subscriptions");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="SubscribeAndUnsubscribetoBookmarksRootFolder">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	test SubscribeAndUnsubscribetoBookmarksRootFolder {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Bookmarks Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Bookmarks Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Bookmarks Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Bookmarks Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
+		Portlet.addPG(portletName = "Bookmarks");
 
-		<execute macro="Subscriptions#subscribeViaInfoPanelPG" />
+		Subscriptions.subscribeViaInfoPanelPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Subscriptions Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Subscriptions Page");
 
-		<execute macro="Subscriptions#viewSubscription">
-			<var name="assetName" value="Bookmarks Folder" />
-			<var name="assetTitle" value="Home" />
-			<var name="assetType" value="Bookmarks Folder" />
-		</execute>
+		Subscriptions.viewSubscription(
+			assetName = "Bookmarks Folder",
+			assetTitle = "Home",
+			assetType = "Bookmarks Folder"
+		);
 
-		<execute macro="Subscriptions#unsubscribeViaMySubscriptions">
-			<var name="rowNumber" value="1" />
-		</execute>
+		Subscriptions.unsubscribeViaMySubscriptions(rowNumber = "1");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Subscriptions Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Subscriptions Page");
 
-		<execute macro="Subscriptions#viewDefaultPG" />
+		Subscriptions.viewDefaultPG();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Bookmarks Page");
 
-		<execute macro="Subscriptions#viewUnsubscribedViaInfoPanel" />
-	</command>
-</definition>
+		Subscriptions.viewUnsubscribedViaInfoPanel();
+	}
+}

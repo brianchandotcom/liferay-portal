@@ -1,1865 +1,1772 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="User#tearDownCP" />
+			User.tearDownCP();
 
-				<execute macro="BlogsEntry#tearDownCP" />
+			BlogsEntry.tearDownCP();
 
-				<execute macro="WebContent#tearDownCP" />
+			WebContent.tearDownCP();
 
-				<execute macro="WikiNode#tearDownCP" />
+			WikiNode.tearDownCP();
 
-				<execute macro="WikiPage#tearDownCP" />
+			WikiPage.tearDownCP();
 
-				<execute macro="Page#tearDownPG" />
+			Page.tearDownPG();
 
-				<execute macro="Workflow#tearDownPortalWorkflow" />
+			Workflow.tearDownPortalWorkflow();
 
-				<execute macro="Workflow#tearDownSiteWorkflow" />
+			Workflow.tearDownSiteWorkflow();
 
-				<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
-					<var name="workflowDefinitionTitle" value="Single Approver Edited" />
-				</execute>
-
-				<execute macro="Workflow#tearDownWorkflowDefinitions" />
+			Workflow.tearDownSpecificWorkflowDefinition(
+				workflowDefinitionTitle = "Single Approver Edited"
+			);
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Workflow.tearDownWorkflowDefinitions();
 
-	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+			Site.tearDownCP();
+		}
+	}
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Configuration" />
-		</execute>
+	@priority = "4"
+	test AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope {
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content - Liferay" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content - Liferay" />
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content - Liferay" />
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content - Liferay" />
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content - Site Name" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content - Site Name" />
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="Blogs Entry Content - Site Name" />
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content - Site Name" />
-			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content - Liferay" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTasksTaskNotPresentCP">
-			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
-		</execute>
-	</command>
-
-	<command name="AddDDLRecordWithDoubleApproverDefinition" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_legal_marketing.xml" />
-			<var name="workflowDefinitionTitle" value="Double Approver Definition" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Double Approver Definition" />
-			<var name="workflowDefinitionVersionNumber" value="1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP" />
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="workflowDefinition" value="Double Approver Definition" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP" />
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#addCP" />
-
-		<execute macro="DDLRecord#populateFieldBoolean">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-		</execute>
-
-		<execute macro="DDLRecord#submitForPublication" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetTitle" value="List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="marketing-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords" />
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-			<var name="workflowStatus" value="marketing-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetTitle" value="List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowDefinitionTask" value="Marketing Approved" />
-			<var name="workflowTask" value="marketing-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords" />
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-			<var name="workflowStatus" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetTitle" value="List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords" />
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-			<var name="workflowStatus" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetTitle" value="List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowDefinitionTask" value="Legal Approval" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Boolean" />
-			<var name="fieldName" value="Boolean" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithCategorySpecificDefinition" priority="4">
-		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#AddWebContentWithCategorySpecificDefinition" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_category_specific.xml" />
-			<var name="workflowDefinitionTitle" value="Category Specific" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="Category Specific" />
-			<var name="workflowDefinitionVersionNumber" value="1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="legal" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="other" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Category Specific" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="legal category" />
-			<var name="webContentTitle" value="WC With Legal Category" />
-		</execute>
-
-		<execute macro="WebContent#selectCategory">
-			<var name="categoryName" value="legal" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Button#clickSubmitForPublication" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="legal category" />
-			<var name="webContentTitle" value="WC With Legal Category" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="both categories" />
-			<var name="webContentTitle" value="WC With Multiple Categories" />
-		</execute>
-
-		<execute macro="WebContent#selectCategory">
-			<var name="categoryName" value="legal" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="WebContent#selectCategory">
-			<var name="categoryName" value="other" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Button#clickSubmitForPublication" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="legal category" />
-			<var name="webContentTitle" value="WC With Legal Category" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="other category" />
-			<var name="webContentTitle" value="WC With Other Category" />
-		</execute>
-
-		<execute macro="WebContent#selectCategory">
-			<var name="categoryName" value="other" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Button#clickSubmitForPublication" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="other category" />
-			<var name="webContentTitle" value="WC With Other Category" />
-			<var name="workflowTask" value="content-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithWorkflowCP">
-			<var name="webContentContent" value="no category" />
-			<var name="webContentTitle" value="WC With No Category" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent" value="no category" />
-			<var name="webContentTitle" value="WC With No Category" />
-			<var name="workflowTask" value="content-review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="WC With Legal Category" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="WC With Multiple Categories" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="legal-review" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="WC With Other Category" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="content-review" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMyRoles">
-			<var name="workflowAssetTitle" value="WC With No Category" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="content-review" />
-		</execute>
-	</command>
-
-	<command name="AddWikiPageAsSiteUser" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Wiki Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPageWithWorkflowPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
-
-		<execute macro="WikiPage#viewPageWithWorkflowPG">
-			<var name="wikiPageStatus" value="Pending" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="userfn userln" />
-		</execute>
-
-		<execute macro="UserBar#gotoMyAccount" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<var name="key_workflowAssetTitle" value="Wiki Page Title" />
-
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" value1="Single Approver" />
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="Wiki Page Title" />
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="Wiki Page" />
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="Review" />
-		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
-		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_END_DATE" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Wiki Page Title" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoDraftPagesPG" />
-
-		<execute macro="WikiPage#viewPageWithWorkflowPG">
-			<var name="wikiPageStatus" value="Pending" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Wiki Page Title" />
-			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="userfn userln" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageUsername" value="userfn userln" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="UnpublishAndDeleteUploadedDefinition" priority="5">
-		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#UnpublishAndDeleteUploadedDefinition" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinitionPublished">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Workflow#unpublishWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinitionUnpublished">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Workflow#publishExistingWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Navigator#gotoBack" />
-
-		<execute macro="Workflow#viewDefinitionPublished">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#unpublishWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinitionUnpublished">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Workflow#deleteWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="WorkflowAsset#gotoViaNotification">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Assign to Me" />
-		</execute>
-
-		<execute macro="Workflow#confirmWorkflowAction" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="workflowAssetContent" value="Blogs Entry Content" />
-			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssignedTo" value="Test Test" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Approve" />
-		</execute>
-
-		<execute macro="Workflow#confirmWorkflowAction" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="0" />
-		</execute>
-	</command>
-
-	<command name="ViewInvalidDefinitionAlert" priority="4">
-		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#ViewInvalidDefinitionAlert" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="Invalid Definition" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
-			<then>
-				<execute macro="KaleoDesigner#viewSourceXMLTab" />
-			</then>
-		</if>
-
-		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="WorkflowUpload#FILE_UPLOAD" value1="Document_1.txt" />
-
-		<execute macro="Button#clickPublish" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter valid content." />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a valid definition before publishing." />
-			</else>
-		</if>
-	</command>
-
-	<command name="ViewTaskCount" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<for list="1,2,3" param="number">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addWithWorkflowCP">
-				<var name="webContentContent" value="WC WebContent Content ${number}" />
-				<var name="webContentTitle" value="WC WebContent Title ${number}" />
-			</execute>
-
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addWithWorkflow">
-				<var name="entryContent" value="Blogs Entry Content ${number}" />
-				<var name="entrySubtitle" value="Subtitle ${number}" />
-				<var name="entryTitle" value="Blogs Entry Title ${number}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<for list="1,2,3" param="number">
-			<execute macro="Workflow#viewTaskAssignedToMyRoles">
-				<var name="workflowAssetTitle" value="WC WebContent Title ${number}" />
-				<var name="workflowAssetType" value="Web Content Article" />
-				<var name="workflowTask" value="Review" />
-			</execute>
-
-			<execute macro="Workflow#viewTaskAssignedToMyRoles">
-				<var name="workflowAssetTitle" value="Blogs Entry Title ${number}" />
-				<var name="workflowAssetType" value="Blogs Entry" />
-				<var name="workflowTask" value="Review" />
-			</execute>
-		</for>
-
-		<execute macro="Pagination#viewResults">
-			<var name="results" value="Showing 1 to 6 of 6 entries." />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]" />
-
-		<execute macro="Pagination#changePagination">
-			<var name="itemsPerPage" value="5" />
-		</execute>
-
-		<execute macro="Pagination#viewResults">
-			<var name="results" value="Showing 1 to 5 of 6 entries." />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]" />
-	</command>
-
-	<command name="ViewWebContentConfigurationCP" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewEmailConfigurationCP">
-			<var name="webContentWorkflowEnabled" value="false" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewEmailConfigurationCP">
-			<var name="webContentWorkflowEnabled" value="true" />
-		</execute>
-	</command>
-
-	<command name="ViewWorkflowConfigurationScope" priority="4">
-		<description message="This is a use case for LPS-59108." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="New Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Configuration" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="No Workflow" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="No Workflow" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="New Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Calendar Event" />
-		</execute>
-	</command>
-
-	<command name="ViewWorkflowSubmissionsFromDifferentUsers" priority="5">
-		<description message="This is a use case for LRQA-13519." />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Configuration" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<for list="1,2" param="n">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#addCP">
-				<var name="userEmailAddress" value="usersn${n}@liferay.com" />
-				<var name="userFirstName" value="userfn${n}" />
-				<var name="userLastName" value="userln${n}" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#editUserSiteCP">
-				<var name="siteName" value="${siteName}" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#editPasswordCP">
-				<var name="userEmailAddress" value="usersn${n}@liferay.com" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-
-			<execute macro="User#logoutAndLoginPG">
-				<var name="userLoginEmailAddress" value="usersn${n}@liferay.com" />
-				<var name="userScreenName" value="usersn${n}" />
-			</execute>
-
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addWithWorkflow">
-				<var name="entryContent" value="User ${n} Blog Content Approved" />
-				<var name="entrySubtitle" value="User ${n} Blog Subtitle Approved" />
-				<var name="entryTitle" value="User ${n} Blog Title Approved" />
-			</execute>
-
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Blogs" />
-			</execute>
-
-			<execute macro="Blogs#addWithWorkflow">
-				<var name="entryContent" value="User ${n} Blog Content Pending" />
-				<var name="entrySubtitle" value="User ${n} Blog Subtitle Pending" />
-				<var name="entryTitle" value="User ${n} Blog Title Pending" />
-			</execute>
-
-			<execute macro="User#logoutAndLoginPG">
-				<var name="userLoginEmailAddress" value="test@liferay.com" />
-				<var name="userScreenName" value="Test Test" />
-			</execute>
-
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="My Account" />
-				<var name="panel" value="User" />
-				<var name="portlet" value="My Workflow Tasks" />
-			</execute>
-
-			<execute macro="Workflow#assignToMeTaskByActions">
-				<var name="workflowAssetTitle" value="User ${n} Blog Title Approved" />
-				<var name="workflowAssetType" value="Blogs Entry" />
-				<var name="workflowTask" value="Review" />
-			</execute>
-
-			<execute macro="Workflow#approveTaskByActions">
-				<var name="workflowAssetTitle" value="User ${n} Blog Title Approved" />
-				<var name="workflowAssetType" value="Blogs Entry" />
-				<var name="workflowTask" value="Review" />
-			</execute>
-		</for>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="usersn1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="User 1 Blog Title Pending" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewSubmissionNotPresent">
-			<var name="workflowAssetTitle" value="User 2 Blog Title Pending" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedSubmission">
-			<var name="workflowAssetTitle" value="User 1 Blog Title Approved" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowStatus" value="Approved" />
-		</execute>
-
-		<execute macro="Workflow#viewSubmissionNotPresent">
-			<var name="workflowAssetTitle" value="User 2 Blog Title Approved" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="usersn2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#viewMySubmissions">
-			<var name="workflowAssetTitle" value="User 2 Blog Title Pending" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewSubmissionNotPresent">
-			<var name="workflowAssetTitle" value="User 1 Blog Title Pending" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedSubmission">
-			<var name="workflowAssetTitle" value="User 2 Blog Title Approved" />
-			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowStatus" value="Approved" />
-		</execute>
-
-		<execute macro="Workflow#viewSubmissionNotPresent">
-			<var name="workflowAssetTitle" value="User 1 Blog Title Approved" />
-		</execute>
-	</command>
-
-	<command name="XSSScriptWebContent" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithWorkflowCP">
-			<var name="webContentContent"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-			<var name="workflowActivityComment"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-			<var name="workflowActivityComment"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Test Page" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent"><![CDATA[<script>alert(123);</script>]]></var>
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-</definition>
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content - Liferay",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title - Liferay"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content - Liferay",
+			entryTitle = "Blogs Entry Title - Liferay"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content - Liferay",
+			entryTitle = "Blogs Entry Title - Liferay"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title - Liferay");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title - Liferay");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content - Liferay",
+			entryTitle = "Blogs Entry Title - Liferay"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content - Site Name",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title - Site Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content - Site Name",
+			entryTitle = "Blogs Entry Title - Site Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Site Name",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content - Site Name",
+			entryTitle = "Blogs Entry Title - Site Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Site Name",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title - Site Name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title - Site Name");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content - Site Name",
+			entryTitle = "Blogs Entry Title - Site Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title - Site Name",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content - Liferay",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title - Liferay"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title - Liferay",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewCompletedTasksTaskNotPresentCP(
+			workflowAssetTitle = "Blogs Entry Title - Site Name"
+		);
+	}
+
+	@priority = "5"
+	test AddDDLRecordWithDoubleApproverDefinition {
+		property portal.acceptance = "false";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_legal_marketing.xml",
+			workflowDefinitionTitle = "Double Approver Definition"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.viewDefinition(
+			workflowDefinitionTitle = "Double Approver Definition",
+			workflowDefinitionVersionNumber = "1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.addCP();
+
+		DynamicDataMapping.addField(
+			field = "Boolean",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLList.addCP(workflowDefinition = "Double Approver Definition");
+
+		DDLDataDefinition.selectCP();
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLRecord.addCP();
+
+		DDLRecord.populateFieldBoolean(
+			ddlRecordFieldData = "Yes",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean"
+		);
+
+		DDLRecord.submitForPublication();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "marketing-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords();
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Yes",
+			field = "Boolean",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean",
+			workflowStatus = "marketing-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowDefinitionTask = "Marketing Approved",
+			workflowTask = "marketing-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords();
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Yes",
+			field = "Boolean",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean",
+			workflowStatus = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords();
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Yes",
+			field = "Boolean",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean",
+			workflowStatus = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowDefinitionTask = "Legal Approval",
+			workflowTask = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords(ddlListName = "${ddlListName}");
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Yes",
+			field = "Boolean",
+			fieldFieldLabel = "Boolean",
+			fieldName = "Boolean"
+		);
+	}
+
+	@priority = "4"
+	test AddWebContentWithCategorySpecificDefinition {
+		property test.name.skip.portal.instance = "WorkflowUsecase#AddWebContentWithCategorySpecificDefinition";
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_category_specific.xml",
+			workflowDefinitionTitle = "Category Specific"
+		);
+
+		Workflow.viewDefinition(
+			workflowDefinitionTitle = "Category Specific",
+			workflowDefinitionVersionNumber = "1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(categoryName = "legal", vocabularyName = "Vocabulary Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCP(categoryName = "other", vocabularyName = "Vocabulary Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(
+			workflowDefinition = "Category Specific"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "legal category",
+			webContentTitle = "WC With Legal Category"
+		);
+
+		WebContent.selectCategory(
+			categoryName = "legal",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "legal category",
+			webContentTitle = "WC With Legal Category",
+			workflowTask = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "both categories",
+			webContentTitle = "WC With Multiple Categories"
+		);
+
+		WebContent.selectCategory(
+			categoryName = "legal",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		WebContent.selectCategory(
+			categoryName = "other",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "legal category",
+			webContentTitle = "WC With Legal Category",
+			workflowTask = "legal-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "other category",
+			webContentTitle = "WC With Other Category"
+		);
+
+		WebContent.selectCategory(
+			categoryName = "other",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "other category",
+			webContentTitle = "WC With Other Category",
+			workflowTask = "content-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "no category",
+			webContentTitle = "WC With No Category"
+		);
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = "no category",
+			webContentTitle = "WC With No Category",
+			workflowTask = "content-review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC With Legal Category",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "legal-review"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC With Multiple Categories",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "legal-review"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC With Other Category",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "content-review"
+		);
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC With No Category",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "content-review"
+		);
+	}
+
+	@priority = "4"
+	test AddWikiPageAsSiteUser {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Wiki Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Wiki Page");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPageWithWorkflowPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoDraftPagesPG();
+
+		WikiPage.viewPageWithWorkflowPG(
+			wikiPageStatus = "Pending",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "userfn userln"
+		);
+
+		UserBar.gotoMyAccount();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		var key_workflowAssetTitle = "Wiki Page Title";
+
+		AssertTextEquals(
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE",
+			value1 = "Single Approver"
+		);
+
+		AssertTextEquals(
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
+			value1 = "Wiki Page Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+			value1 = "Wiki Page"
+		);
+
+		AssertTextEquals(
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
+			value1 = "Review"
+		);
+
+		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
+
+		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_END_DATE");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Wiki Page Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoDraftPagesPG();
+
+		WikiPage.viewPageWithWorkflowPG(
+			wikiPageStatus = "Pending",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Wiki Page Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "userfn userln"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageUsername = "userfn userln"
+		);
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+
+	@priority = "5"
+	test UnpublishAndDeleteUploadedDefinition {
+		property test.name.skip.portal.instance = "WorkflowUsecase#UnpublishAndDeleteUploadedDefinition";
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		Workflow.viewDefinitionPublished(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		Workflow.unpublishWorkflowDefinition(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.viewDefinitionUnpublished(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		Workflow.publishExistingWorkflowDefinition(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionPublished(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.unpublishWorkflowDefinition(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Workflow.viewDefinitionUnpublished(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+
+		Workflow.deleteWorkflowDefinition(
+			workflowDefinitionTitle = "New Uploaded Definition"
+		);
+	}
+
+	@priority = "3"
+	test ViewBlogsEntryWorkflowViaNotifications {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		WorkflowAsset.gotoViaNotification(assetType = "Blogs Entry", user = "Test Test");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMeDetails(
+			workflowAssetContent = "Blogs Entry Content",
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssignedTo = "Test Test",
+			workflowTask = "Review"
+		);
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	test ViewInvalidDefinitionAlert {
+		property test.name.skip.portal.instance = "WorkflowUsecase#ViewInvalidDefinitionAlert";
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Invalid Definition");
+
+		if (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB")) {
+			KaleoDesigner.viewSourceXMLTab();
+		}
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "WorkflowUpload#FILE_UPLOAD",
+			value1 = "Document_1.txt"
+		);
+
+		Button.clickPublish();
+
+		if (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB")) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "Please enter valid content."
+			);
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "Please enter a valid definition before publishing."
+			);
+		}
+	}
+
+	@priority = "3"
+	test ViewTaskCount {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		for (var number : list "1,2,3") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithWorkflowCP(
+				webContentContent = "WC WebContent Content ${number}",
+				webContentTitle = "WC WebContent Title ${number}"
+			);
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addWithWorkflow(
+				entryContent = "Blogs Entry Content ${number}",
+				entrySubtitle = "Subtitle ${number}",
+				entryTitle = "Blogs Entry Title ${number}"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		for (var number : list "1,2,3") {
+			Workflow.viewTaskAssignedToMyRoles(
+				workflowAssetTitle = "WC WebContent Title ${number}",
+				workflowAssetType = "Web Content Article",
+				workflowTask = "Review"
+			);
+
+			Workflow.viewTaskAssignedToMyRoles(
+				workflowAssetTitle = "Blogs Entry Title ${number}",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review"
+			);
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
+
+		AssertElementPresent(
+			locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]"
+		);
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
+
+		AssertElementNotPresent(
+			locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]"
+		);
+	}
+
+	@priority = "3"
+	test ViewWebContentConfigurationCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewEmailConfigurationCP(webContentWorkflowEnabled = "false");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewEmailConfigurationCP(webContentWorkflowEnabled = "true");
+	}
+
+	@description = "This is a use case for LPS-59108."
+	@priority = "4"
+	test ViewWorkflowConfigurationScope {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "New Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Calendar Event"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Calendar Event"
+		);
+
+		Navigator.openSiteURL(siteName = "New Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event"
+		);
+	}
+
+	@description = "This is a use case for LRQA-13519."
+	@priority = "5"
+	test ViewWorkflowSubmissionsFromDifferentUsers {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site Administration",
+			roleTitle = "Site Member",
+			roleType = "Site"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Site Member",
+			roleType = "Site"
+		);
+
+		for (var n : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.addCP(
+				userEmailAddress = "usersn${n}@liferay.com",
+				userFirstName = "userfn${n}",
+				userLastName = "userln${n}",
+				userScreenName = "usersn${n}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn${n}");
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.editPasswordCP(
+				userEmailAddress = "usersn${n}@liferay.com",
+				userScreenName = "usersn${n}"
+			);
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "usersn${n}@liferay.com",
+				userScreenName = "usersn${n}"
+			);
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addWithWorkflow(
+				entryContent = "User ${n} Blog Content Approved",
+				entrySubtitle = "User ${n} Blog Subtitle Approved",
+				entryTitle = "User ${n} Blog Title Approved"
+			);
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addWithWorkflow(
+				entryContent = "User ${n} Blog Content Pending",
+				entrySubtitle = "User ${n} Blog Subtitle Pending",
+				entryTitle = "User ${n} Blog Title Pending"
+			);
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userScreenName = "Test Test"
+			);
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "My Account",
+				panel = "User",
+				portlet = "My Workflow Tasks"
+			);
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "User ${n} Blog Title Approved",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review"
+			);
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "User ${n} Blog Title Approved",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review"
+			);
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "usersn1@liferay.com",
+			userScreenName = "usersn1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "User 1 Blog Title Pending",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewSubmissionNotPresent(
+			workflowAssetTitle = "User 2 Blog Title Pending"
+		);
+
+		Workflow.viewCompletedSubmission(
+			workflowAssetTitle = "User 1 Blog Title Approved",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowStatus = "Approved"
+		);
+
+		Workflow.viewSubmissionNotPresent(
+			workflowAssetTitle = "User 2 Blog Title Approved"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "usersn2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Submissions"
+		);
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "User 2 Blog Title Pending",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewSubmissionNotPresent(
+			workflowAssetTitle = "User 1 Blog Title Pending"
+		);
+
+		Workflow.viewCompletedSubmission(
+			workflowAssetTitle = "User 2 Blog Title Approved",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowStatus = "Approved"
+		);
+
+		Workflow.viewSubmissionNotPresent(
+			workflowAssetTitle = "User 1 Blog Title Approved"
+		);
+	}
+
+	@priority = "4"
+	test XSSScriptWebContent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = '''&lt;script&gt;alert(123);&lt;/script&gt;''',
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewWithWorkflowCP(
+			webContentContent = '''<script>alert(123);</script>''',
+			webContentTitle = "WC WebContent Title",
+			workflowStatus = "Pending",
+			workflowTask = "Review"
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review",
+			workflowActivityComment = '''<script>alert(123);</script>'''
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review",
+			workflowActivityComment = '''<script>alert(123);</script>'''
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = '''<script>alert(123);</script>''',
+			webContentTitle = "WC WebContent Title"
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Test Page");
+
+		Navigator.gotoPage(
+			pageName = "Asset Publisher Test Page",
+			siteName = "${siteName}"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Test Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		WebContent.viewPGViaAP(
+			webContentContent = '''<script>alert(123);</script>''',
+			webContentTitle = "WC WebContent Title"
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+}

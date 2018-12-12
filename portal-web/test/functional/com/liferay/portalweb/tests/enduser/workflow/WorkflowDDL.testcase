@@ -1,326 +1,315 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Dynamic Data Lists,Workflow" />
-	<property name="testray.main.component.name" value="Workflow" />
-
-	<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DDLList#tearDownCP" />
-
-				<execute macro="DDLDataDefinition#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="EditDDLRecordViaMyWorkflowTasks" priority="5">
-		<description message="This is a use case for LPS-61212." />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="ddlListName" value="DDL List Name" />
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="ddlListName" value="DDL List Name" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="DDL Record 1" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#submitForPublication" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="ddlListName" value="DDL List Name" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="DDL Record 2" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#submitForPublication" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetContent" value="DDL Record" />
-			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#gotoPreviewEdit" />
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="DDL Record Edit" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="DDLRecord#viewEditPreview">
-			<var name="ddlRecordFieldDataEdit" value="DDL Record Edit" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-			<var name="workflowAssetContent" value="DDL Record Edit" />
-			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-	</command>
-
-	<command name="RejectDynamicdatalistCP" priority="4">
-		<var name="ddlDataDefinitionName" value="DDL Definition" />
-		<var name="ddlListName" value="DDL List" />
-		<var name="ddlRecordFieldData" value="Record Text" />
-		<var name="field" value="Text" />
-		<var name="fieldFieldLabel" value="Text Label" />
-		<var name="fieldName" value="TextName" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="DDL List Description" />
-			<var name="ddlListName" value="DDL List" />
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-		</execute>
-
-		<execute macro="DDLRecord#submitForPublication" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-			<var name="workflowAssetTitle" value="DDL List" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-			<var name="workflowStatus" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-			<var name="workflowAssetTitle" value="DDL List" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-			<var name="workflowAssetTitle" value="DDL List" />
-			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-			<var name="workflowStatus" value="Update" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Dynamic Data Lists,Workflow";
+	property testray.main.component.name = "Workflow";
+	var workflowAssetType = "Dynamic Data Lists Record";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DDLList.tearDownCP();
+
+			DDLDataDefinition.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-61212."
+	@priority = "5"
+	test EditDDLRecordViaMyWorkflowTasks {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLList.addCP(
+			ddlListName = "DDL List Name",
+			workflowDefinition = "Single Approver"
+		);
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition Name");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition Name",
+			ddlListName = "DDL List Name"
+		);
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "DDL Record 1",
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DDLRecord.submitForPublication();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition Name",
+			ddlListName = "DDL List Name"
+		);
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "DDL Record 2",
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DDLRecord.submitForPublication();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "New Data Definition Name for List: DDL List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewTaskAssignedToMeDetails(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetContent = "DDL Record",
+			workflowAssetTitle = "New Data Definition Name for List: DDL List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "Review"
+		);
+
+		Workflow.gotoPreviewEdit();
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "DDL Record Edit",
+			fieldName = "Text"
+		);
+
+		PortletEntry.save();
+
+		DDLRecord.viewEditPreview(
+			ddlRecordFieldDataEdit = "DDL Record Edit",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewTaskAssignedToMeDetails(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetContent = "DDL Record Edit",
+			workflowAssetTitle = "New Data Definition Name for List: DDL List Name",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "Review"
+		);
+	}
+
+	@priority = "4"
+	test RejectDynamicdatalistCP {
+		var ddlDataDefinitionName = "DDL Definition";
+		var ddlListName = "DDL List";
+		var ddlRecordFieldData = "Record Text";
+		var field = "Text";
+		var fieldFieldLabel = "Text Label";
+		var fieldName = "TextName";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "DDL Definition Description",
+			ddlDataDefinitionName = "DDL Definition"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName"
+		);
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List",
+			workflowDefinition = "Single Approver"
+		);
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "DDL Definition");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "DDL Definition",
+			ddlListName = "DDL List"
+		);
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text",
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName"
+		);
+
+		DDLRecord.submitForPublication();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			ddlDataDefinitionName = "DDL Definition",
+			workflowAssetTitle = "DDL List",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords(ddlListName = "DDL List");
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Record Text",
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName",
+			workflowStatus = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.rejectTaskByActions(
+			ddlDataDefinitionName = "DDL Definition",
+			workflowAssetTitle = "DDL List",
+			workflowAssetType = "Dynamic Data Lists Record",
+			workflowTask = "Review"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewRejectedTask(
+			ddlDataDefinitionName = "DDL Definition",
+			workflowAssetTitle = "DDL List",
+			workflowAssetType = "Dynamic Data Lists Record"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords(ddlListName = "DDL List");
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Record Text",
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName",
+			workflowStatus = "Update"
+		);
+	}
+}

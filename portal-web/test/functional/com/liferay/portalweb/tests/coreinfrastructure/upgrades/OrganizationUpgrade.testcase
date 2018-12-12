@@ -1,117 +1,130 @@
-<definition component-name="portal-upgrades">
-	<property name="custom.properties" value="organizations.types=organization,location" />
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.component.names" value="Users and Organizations" />
-	<property name="testray.main.component.name" value="Upgrades User and System Management" />
+@component-name = "portal-upgrades"
+definition {
+	property custom.properties = "organizations.types=organization,location";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.component.names = "Users and Organizations";
+	property testray.main.component.name = "Upgrades User and System Management";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="AddOrganizationAfterUpgrade612" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.1.2" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade612 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.1.2";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade6130" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade6130 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade621015" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade621021" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade625" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="6.2.5" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade70106" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="7.0.10.6" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddOrganizationAfterUpgrade704" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mariadb,mysql,postgresql" />
-		<property name="portal.version" value="7.0.4" />
+	@priority = "5"
+	test AddOrganizationAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
 
-		<execute macro="Upgrade#addOrganization" />
-	</command>
+		Upgrade.addOrganization();
+	}
 
-	<command name="AddUserandSuborganizationAfterUpgrade612" priority="5">
-		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
-		<property name="database.types" value="mysql" />
-		<property name="portal.version" value="6.1.2" />
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade612 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "mysql";
+		property portal.version = "6.1.2";
 
-		<execute macro="Upgrade#addUserAndSuborganization" />
-	</command>
+		Upgrade.addUserAndSuborganization();
+	}
 
-	<command name="AddUserandSuborganizationAfterUpgrade6130" priority="5">
-		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
-		<property name="database.types" value="db2,mysql,oracle,sybase" />
-		<property name="portal.version" value="6.1.30" />
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade6130 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.1.30";
 
-		<execute macro="Upgrade#addUserAndSuborganization" />
-	</command>
+		Upgrade.addUserAndSuborganization();
+	}
 
-	<command name="AddUserandSuborganizationAfterUpgrade621015" priority="5">
-		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
-		<property name="database.types" value="db2,mysql,oracle,sybase" />
-		<property name="portal.version" value="6.2.10.15" />
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade621015 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.2.10.15";
 
-		<execute macro="Upgrade#addUserAndSuborganization" />
-	</command>
+		Upgrade.addUserAndSuborganization();
+	}
 
-	<command name="AddUserandSuborganizationAfterUpgrade621021" priority="5">
-		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
-		<property name="database.types" value="db2,mysql,oracle,postgresql,sybase" />
-		<property name="portal.version" value="6.2.10.21" />
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade621021 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
 
-		<execute macro="Upgrade#addUserAndSuborganization" />
-	</command>
+		Upgrade.addUserAndSuborganization();
+	}
 
-	<command name="AddUserandSuborganizationAfterUpgrade625" priority="5">
-		<property name="data.archive.type" value="data-archive-admin-org-with-user" />
-		<property name="database.types" value="mysql" />
-		<property name="portal.version" value="6.2.5" />
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade625 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "mysql";
+		property portal.version = "6.2.5";
 
-		<execute macro="Upgrade#addUserAndSuborganization" />
-	</command>
-</definition>
+		Upgrade.addUserAndSuborganization();
+	}
+}

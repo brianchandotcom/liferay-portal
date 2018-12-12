@@ -1,369 +1,302 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Wiki" />
-	<property name="testray.main.component.name" value="Staging" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddWikiAndCreateContentWithStagingThenPublishAfterDelete" priority="4">
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="WikiPage#addPG">
-				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-			</execute>
-
-			<execute function="Refresh" />
-		</for>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Wiki";
+	property testray.main.component.name = "Staging";
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute function="AssertElementPresent" locator1="WikiTable#ALL_PAGES_PAGE_2" />
+		User.firstLoginPG();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		<for list="1,2,3" param="entryCount">
-			<execute macro="WikiNavigator#gotoAllPagesPG" />
+		ProductMenu.gotoSite(site = "Site Name");
 
-			<execute macro="WikiPage#deleteCP">
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-			</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-			<execute macro="WikiNavigator#gotoAllPagesPG" />
+		SitePages.addPublicPage(pageName = "Staging Test Page");
 
-			<execute macro="WikiPage#viewNoPagePG">
-				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
-			</execute>
-		</for>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="WikiPage#deletePG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
+		Staging.activateStagingCP(siteName = "Site Name");
+	}
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="Staging#gotoPublishToLive" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
 
-		<execute macro="Staging#publishToLive" />
+	@priority = "4"
+	test AddWikiAndCreateContentWithStagingThenPublishAfterDelete {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.addPG(portletName = "Wiki");
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_PAGE_2" />
-	</command>
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
 
-	<command name="RemoveStagedWikiAttachment" priority="5">
-		<description message="This is a use case for LPS-73992." />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
+		for (var entryCount : list "1,2,3") {
+			WikiPage.addPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageTitle = "Wiki Page${entryCount} Title"
+			);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+			Refresh();
+		}
 
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#addAttachmentViaPageEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Staging.gotoPublishToLive();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Staging.publishToLive();
 
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
 
-		<execute macro="WikiPage#viewPageWithAttachment">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		for (var entryCount : list "1,2,3") {
+			WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+			WikiPage.deleteCP(wikiPageTitle = "Wiki Page${entryCount} Title");
 
-		<execute macro="WikiPage#removeAttachmentViaPageEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+			WikiNavigator.gotoAllPagesPG();
 
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewPageNoAttachment">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="RenameChildPageNameCP" priority="5">
-		<description message="This is a use case for LPS-73471." />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+			WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page${entryCount} Title");
+		}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Add Child Page" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Child Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Child Page Content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Child Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#renameWikiPageCP">
-			<var name="wikiPageTitle" value="Child Page Title" />
-			<var name="wikiPageTitleRename" value="Child Page Title Rename" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Child Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#renameWikiPageCP">
-			<var name="wikiPageTitle" value="Child Page Title" />
-			<var name="wikiPageTitleRename" value="Child Page Title Rename 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#publishCustomPublication" />
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<for list="Child Page Title,Child Page Title Rename,Child Page Title Rename 1" param="wikiPageTitle">
-			<execute macro="LexiconEntry#viewEntryName">
-				<var name="rowEntry" value="${wikiPageTitle}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
+	}
+
+	@description = "This is a use case for LPS-73992."
+	@priority = "5"
+	test RemoveStagedWikiAttachment {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.addAttachmentViaPageEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPageWithAttachment(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.removeAttachmentViaPageEdit(attachmentFileName = "Document_1.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPageNoAttachment(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-73471."
+	@ignore = "true"
+	@priority = "5"
+	test RenameChildPageNameCP {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page 1");
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Add Child Page");
+
+		WikiEntry.addPageTitle(wikiPageTitle = "Child Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Child Page Content");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Child Page Title");
+
+		WikiPage.renameWikiPageCP(
+			wikiPageTitle = "Child Page Title",
+			wikiPageTitleRename = "Child Page Title Rename"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.publishCustomPublication();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Child Page Title");
+
+		WikiPage.renameWikiPageCP(
+			wikiPageTitle = "Child Page Title",
+			wikiPageTitleRename = "Child Page Title Rename 1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.publishCustomPublication();
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		for (var wikiPageTitle : list "Child Page Title,Child Page Title Rename,Child Page Title Rename 1") {
+			LexiconEntry.viewEntryName(rowEntry = "${wikiPageTitle}");
+		}
+	}
+}

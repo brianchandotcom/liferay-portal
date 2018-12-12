@@ -1,1072 +1,848 @@
-<definition component-name="portal-calendar">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
-	<property name="testray.main.component.name" value="Calendar" />
-
-	<var name="pageName" value="Calendar Page" />
-	<var name="portletName" value="Calendar" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Page" />
-			<var name="portletName" value="Calendar" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Calendar Page" />
-				</execute>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
-
-				<execute macro="Calendar#tearDown" />
-
-				<execute macro="Calendar#tearDownColor" />
-
-				<execute macro="CalendarResource#tearDown" />
-
-				<execute macro="CalendarConfiguration#tearDown" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="DeleteRegular" priority="5">
-		<property name="test.name.skip.portal.instance" value="Calendar#DeleteEventRegular" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteSpecific">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-	</command>
-
-	<command name="DeleteRepeatingAllEventsInTheSeries" priority="4">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="2" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="Entire Series" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-	</command>
-
-	<command name="DeleteRepeatingAllFollowing" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="Calendar#DeleteEventRepeatingAllFollowing" />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="2" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="Following Events" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteRepeatingOnlyThisInstance" priority="4">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#setDates">
-			<var name="endDate" value="02/2/2016" />
-			<var name="startDate" value="02/2/2016" />
-		</execute>
-
-		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="02:00 AM" />
-			<var name="startDateTime" value="01:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#setRepeating">
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="2" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="February 2016" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
-			<var name="dateNumber" value="2" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewEventNotToday">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="numberOfOccurrences" value="2" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="Single Event" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="February 2016" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
-			<var name="dateNumber" value="3" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewEventNotToday">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-		</execute>
-	</command>
-
-	<command name="EditAllDay" priority="3">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="All Day" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
-			<var name="eventType" value="All Day" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewAllDay">
-			<var name="eventTitle" value="Calendar Event All Day Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditAllDayReminders" priority="3">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="All Day" />
-			<var name="number1" value="5" />
-			<var name="number2" value="10" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
-			<var name="eventType" value="All Day" />
-			<var name="number1" value="2" />
-			<var name="number2" value="4" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventWithReminders">
-			<var name="eventTitle" value="Calendar Event All Day Title Edit" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewAllDay">
-			<var name="eventTitle" value="Calendar Event All Day Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditAllDayWithUserInvite" priority="3">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="All Day" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
-			<var name="eventType" value="All Day" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewAllDay">
-			<var name="eventTitle" value="Calendar Event All Day Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditAndViewRSVP" priority="4">
-		<description message="This is a use case for LPS-59097." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#addRegular">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#hideCurrentSiteCalendar" />
-
-		<execute macro="CalendarEvent#addRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#showCurrentSiteCalendar" />
-
-		<execute macro="Calendar#hideMyCalendarsCalendar" />
-
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-		</execute>
-
-		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="10:00 AM" />
-			<var name="startDateTime" value="06:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#publishWithUserNotification" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#showMyCalendarsCalendar" />
-
-		<execute macro="Calendar#hideCurrentSiteCalendar" />
-
-		<execute macro="CalendarScheduler#viewNoRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#addRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#showCurrentSiteCalendar" />
-
-		<execute macro="Calendar#hideMyCalendarsCalendar" />
-
-		<execute macro="CalendarScheduler#gotoEditSpecific">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Edited Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#publishWithUserNotification" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#showMyCalendarsCalendar" />
-
-		<execute macro="Calendar#hideCurrentSiteCalendar" />
-
-		<execute macro="CalendarScheduler#viewRSVP">
-			<var name="eventTitle" value="Edited Event Title" />
-			<var name="rsvp" value="Yes" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#showCurrentSiteCalendar" />
-
-		<execute macro="Calendar#hideMyCalendarsCalendar" />
-
-		<execute macro="CalendarScheduler#gotoEditSpecific">
-			<var name="eventTitle" value="Edited Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#setDates">
-			<var name="endDate" value="3/29/2016" />
-			<var name="startDate" value="3/29/2016" />
-		</execute>
-
-		<execute macro="CalendarEvent#publishWithUserNotification" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="March 2016" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
-			<var name="dateNumber" value="29" />
-		</execute>
-
-		<execute macro="Calendar#showMyCalendarsCalendar" />
-
-		<execute macro="Calendar#hideCurrentSiteCalendar" />
-
-		<execute macro="CalendarScheduler#viewNoRSVP">
-			<var name="eventTitle" value="Edited Event Title" />
-			<var name="eventToday" value="false" />
-		</execute>
-	</command>
-
-	<command name="EditRegular" priority="4">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Regular Title Edit" />
-		</execute>
-	</command>
-
-	<command name="EditRegularReminders" priority="3">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventType" value="Regular" />
-			<var name="number1" value="5" />
-			<var name="number2" value="10" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
-			<var name="eventType" value="Regular" />
-			<var name="number1" value="2" />
-			<var name="number2" value="4" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventWithReminders">
-			<var name="eventTitle" value="Calendar Event Regular Title Edit" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Regular Title Edit" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="1" />
-		</execute>
-	</command>
-
-	<command name="EditRegularWithUserInvite" priority="4">
-		<description message="This is a use case for LPS-50026." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="Calendar#hideMyCalendarsCalendar" />
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Regular Title" />
-		</execute>
-
-		<execute macro="CalendarScheduler#editTitle">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-
-		<execute macro="CalendarScheduler#saveEvent" />
-
-		<execute macro="CalendarEvent#saveEventUserInvite" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoEditViaDialogBox" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="New Edited Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#clickPublish" />
-
-		<execute macro="CalendarEvent#saveEventUserInviteCancel" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-	</command>
-
-	<command name="EditRepeating" priority="3">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="1" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
-			<var name="eventType" value="Repeating" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Repeating Title Edit" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="1" />
-		</execute>
-	</command>
-
-	<command name="EditRepeatingAllEventsInTheSeries" priority="3">
-		<description message="This is a use case for LPS-50016." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Original Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#setRepeating">
-			<var name="frequency" value="Daily" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoNextDay" />
-
-		<execute function="Refresh" />
-
-		<execute macro="CalendarNavigator#gotoNextDay" />
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Original Event Title" />
-			<var name="eventToday" value="false" />
-		</execute>
-
-		<execute macro="CalendarScheduler#editTitle">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-
-		<execute macro="CalendarScheduler#saveRepeatingEvent">
-			<var name="saveOption" value="Entire Series" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoToday" />
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-	</command>
-
-	<command name="EditRepeatingAllFollowing" priority="2">
-		<description message="This is a use case for LPS-50017" />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Original Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#setRepeating">
-			<var name="frequency" value="Daily" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoNextDay" />
-
-		<execute function="Refresh" />
-
-		<execute macro="CalendarNavigator#gotoNextDay" />
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Original Event Title" />
-			<var name="eventToday" value="false" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoEditViaDialogBox" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#publishRepeating">
-			<var name="saveOption" value="Following Events" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewTitle">
-			<var name="eventTitle" value="Edited Title" />
-		</execute>
-	</command>
-
-	<command name="EditRepeatingReminders" priority="4">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-			<var name="frequency" value="Daily" />
-			<var name="number1" value="5" />
-			<var name="number2" value="10" />
-			<var name="numberOfOccurrences" value="1" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="duration1" value="Minutes" />
-			<var name="duration2" value="Minutes" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
-			<var name="eventType" value="Repeating" />
-			<var name="number1" value="2" />
-			<var name="number2" value="4" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="reminders" value="true" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventWithReminders">
-			<var name="eventTitle" value="Calendar Event Repeating Title Edit" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Repeating Title Edit" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="1" />
-		</execute>
-	</command>
-
-	<command name="EditRepeatingWithUserInvite" priority="4">
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
-			<var name="frequency" value="Daily" />
-			<var name="numberOfOccurrences" value="1" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#edit">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
-			<var name="eventType" value="Repeating" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Repeating Title Edit" />
-		</execute>
-	</command>
-
-	<command name="SearchInSearchPortletWithTag" priority="4">
-		<description message="This is a use case for LPS-54548." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="tag" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="tag1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewApprovedRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="rsvp" value="Yes" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="tag1" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="Calendar Event Title" />
-			<var name="searchAssetType" value="Calendar Event" />
-		</execute>
-	</command>
-
-	<command name="ViewCalendarChange" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="userfn userln" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="userfn userln" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
-			<var name="calendarName" value="userfn userln" />
-			<var name="menuListOption" value="Hide Calendar" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDefault">
-			<var name="eventTitle" value="Calendar Event" />
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewCorrectCalendarOnEventSwitch" priority="3">
-		<description message="This is a use case for LPS-51222." />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-calendar"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property testray.main.component.name = "Calendar";
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			Calendar.tearDownColor();
+
+			CalendarResource.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			Page.tearDownCP();
+
+			User.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test DeleteRegular {
+		property test.name.skip.portal.instance = "Calendar#DeleteEventRegular";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Regular Title",
+			eventType = "Regular",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.deleteSpecific(eventTitle = "Calendar Event Regular Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event Regular Title",
+			pageName = "Calendar Page"
+		);
+	}
+
+	@priority = "4"
+	test DeleteRepeatingAllEventsInTheSeries {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating",
+			frequency = "Daily",
+			numberOfOccurrences = "2",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.deleteRepeatingEventViaAgendaView(
+			deleteOptionSet = "Entire Series",
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating"
+		);
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event Repeating Title",
+			pageName = "Calendar Page"
+		);
+	}
+
+	@priority = "5"
+	test DeleteRepeatingAllFollowing {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "Calendar#DeleteEventRepeatingAllFollowing";
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating",
+			frequency = "Daily",
+			numberOfOccurrences = "2",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.deleteRepeatingEventViaAgendaView(
+			deleteOptionSet = "Following Events",
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating"
+		);
+
+		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title");
+	}
+
+	@priority = "4"
+	test DeleteRepeatingOnlyThisInstance {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Repeating Title");
+
+		CalendarEvent.setDates(endDate = "02/2/2016", startDate = "02/2/2016");
+
+		CalendarEvent.setTimes(endDateTime = "02:00 AM", startDateTime = "01:00 AM");
+
+		CalendarEvent.setRepeating(frequency = "Daily", numberOfOccurrences = "2");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoMonthViaSmallCalendar(dateMonth = "February 2016");
+
+		CalendarNavigator.gotoSpecificBusyDayViaSmallCalendar(dateNumber = "2");
+
+		CalendarEvent.viewEventNotToday(
+			eventTitle = "Calendar Event Repeating Title",
+			numberOfOccurrences = "2"
+		);
+
+		CalendarEvent.deleteRepeatingEventViaAgendaView(
+			deleteOptionSet = "Single Event",
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoMonthViaSmallCalendar(dateMonth = "February 2016");
+
+		CalendarNavigator.gotoSpecificBusyDayViaSmallCalendar(dateNumber = "3");
+
+		CalendarEvent.viewEventNotToday(eventTitle = "Calendar Event Repeating Title");
+	}
+
+	@priority = "3"
+	test EditAllDay {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event All Day Title",
+			eventType = "All Day",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			eventTitle = "Calendar Event All Day Title",
+			eventTitleEdit = "Calendar Event All Day Title Edit",
+			eventType = "All Day",
+			pageName = "Calendar Page"
+		);
+
+		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
+	}
+
+	@priority = "3"
+	test EditAllDayReminders {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event All Day Title",
+			eventType = "All Day",
+			number1 = "5",
+			number2 = "10",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event All Day Title",
+			eventTitleEdit = "Calendar Event All Day Title Edit",
+			eventType = "All Day",
+			number1 = "2",
+			number2 = "4",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		CalendarScheduler.viewEventWithReminders(
+			eventTitle = "Calendar Event All Day Title Edit"
+		);
+
+		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
+	}
+
+	@priority = "3"
+	test EditAllDayWithUserInvite {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event All Day Title",
+			eventType = "All Day",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			calendarName = "Test Test",
+			eventTitle = "Calendar Event All Day Title",
+			eventTitleEdit = "Calendar Event All Day Title Edit",
+			eventType = "All Day",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page"
+		);
+
+		CalendarEvent.viewAllDay(eventTitle = "Calendar Event All Day Title Edit");
+	}
+
+	@description = "This is a use case for LPS-59097."
+	@priority = "4"
+	test EditAndViewRSVP {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.addRegular(
+			eventTitle = "Calendar Event Title",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.hideCurrentSiteCalendar();
+
+		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+
+		CalendarScheduler.viewRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.showCurrentSiteCalendar();
+
+		Calendar.hideMyCalendarsCalendar();
+
+		CalendarNavigator.gotoEditEvent(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular"
+		);
+
+		CalendarEvent.setTimes(endDateTime = "10:00 AM", startDateTime = "06:00 AM");
+
+		CalendarEvent.publishWithUserNotification();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.showMyCalendarsCalendar();
+
+		Calendar.hideCurrentSiteCalendar();
+
+		CalendarScheduler.viewNoRSVP(eventTitle = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.addRSVP(eventTitle = "Calendar Event Title", rsvp = "Yes");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.showCurrentSiteCalendar();
+
+		Calendar.hideMyCalendarsCalendar();
+
+		CalendarScheduler.gotoEditSpecific(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.editTitle(eventTitle = "Edited Event Title");
+
+		CalendarEvent.publishWithUserNotification();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.showMyCalendarsCalendar();
+
+		Calendar.hideCurrentSiteCalendar();
+
+		CalendarScheduler.viewRSVP(eventTitle = "Edited Event Title", rsvp = "Yes");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.showCurrentSiteCalendar();
+
+		Calendar.hideMyCalendarsCalendar();
+
+		CalendarScheduler.gotoEditSpecific(eventTitle = "Edited Event Title");
+
+		CalendarEvent.setDates(endDate = "3/29/2016", startDate = "3/29/2016");
+
+		CalendarEvent.publishWithUserNotification();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoMonthViaSmallCalendar(dateMonth = "March 2016");
+
+		CalendarNavigator.gotoSpecificBusyDayViaSmallCalendar(dateNumber = "29");
+
+		Calendar.showMyCalendarsCalendar();
+
+		Calendar.hideCurrentSiteCalendar();
+
+		CalendarScheduler.viewNoRSVP(
+			eventTitle = "Edited Event Title",
+			eventToday = "false"
+		);
+	}
+
+	@priority = "4"
+	test EditRegular {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Regular Title",
+			eventType = "Regular",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			eventTitle = "Calendar Event Regular Title",
+			eventTitleEdit = "Calendar Event Regular Title Edit",
+			eventType = "Regular",
+			pageName = "Calendar Page"
+		);
+
+		CalendarEvent.view(eventTitle = "Calendar Event Regular Title Edit");
+	}
+
+	@priority = "3"
+	test EditRegularReminders {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event Regular Title",
+			eventType = "Regular",
+			number1 = "5",
+			number2 = "10",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event Regular Title",
+			eventTitleEdit = "Calendar Event Regular Title Edit",
+			eventType = "Regular",
+			number1 = "2",
+			number2 = "4",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		CalendarScheduler.viewEventWithReminders(
+			eventTitle = "Calendar Event Regular Title Edit"
+		);
+
+		CalendarEvent.view(
+			eventTitle = "Calendar Event Regular Title Edit",
+			frequency = "Daily",
+			numberOfOccurrences = "1"
+		);
+	}
+
+	@description = "This is a use case for LPS-50026."
+	@priority = "4"
+	test EditRegularWithUserInvite {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Regular Title",
+			eventType = "Regular",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		Calendar.hideMyCalendarsCalendar();
+
+		CalendarScheduler.selectSpecificEvent(
+			eventTitle = "Calendar Event Regular Title"
+		);
+
+		CalendarScheduler.editTitle(eventTitle = "Edited Title");
+
+		CalendarScheduler.saveEvent();
+
+		CalendarEvent.saveEventUserInvite();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Edited Title");
+
+		CalendarScheduler.gotoEditViaDialogBox();
+
+		CalendarEvent.editTitle(eventTitle = "New Edited Title");
+
+		CalendarEvent.clickPublish();
+
+		CalendarEvent.saveEventUserInviteCancel();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.view(eventTitle = "Edited Title");
+	}
+
+	@priority = "3"
+	test EditRepeating {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating",
+			frequency = "Daily",
+			numberOfOccurrences = "1",
+			pageName = "Calendar Page"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			eventTitle = "Calendar Event Repeating Title",
+			eventTitleEdit = "Calendar Event Repeating Title Edit",
+			eventType = "Repeating",
+			pageName = "Calendar Page"
+		);
+
+		CalendarEvent.view(
+			eventTitle = "Calendar Event Repeating Title Edit",
+			frequency = "Daily",
+			numberOfOccurrences = "1"
+		);
+	}
+
+	@description = "This is a use case for LPS-50016."
+	@priority = "3"
+	test EditRepeatingAllEventsInTheSeries {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Original Event Title");
+
+		CalendarEvent.setRepeating(frequency = "Daily");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoNextDay();
+
+		Refresh();
+
+		CalendarNavigator.gotoNextDay();
+
+		CalendarScheduler.selectSpecificEvent(
+			eventTitle = "Original Event Title",
+			eventToday = "false"
+		);
+
+		CalendarScheduler.editTitle(eventTitle = "Edited Title");
+
+		CalendarScheduler.saveRepeatingEvent(saveOption = "Entire Series");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoView(viewType = "Day");
+
+		CalendarNavigator.gotoToday();
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Edited Title");
+	}
+
+	@description = "This is a use case for LPS-50017"
+	@priority = "2"
+	test EditRepeatingAllFollowing {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Original Event Title");
+
+		CalendarEvent.setRepeating(frequency = "Daily");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoNextDay();
+
+		Refresh();
+
+		CalendarNavigator.gotoNextDay();
+
+		CalendarScheduler.selectSpecificEvent(
+			eventTitle = "Original Event Title",
+			eventToday = "false"
+		);
+
+		CalendarScheduler.gotoEditViaDialogBox();
+
+		CalendarEvent.editTitle(eventTitle = "Edited Title");
+
+		CalendarEvent.publishRepeating(saveOption = "Following Events");
+
+		CalendarEvent.viewTitle(eventTitle = "Edited Title");
+	}
+
+	@priority = "4"
+	test EditRepeatingReminders {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating",
+			frequency = "Daily",
+			number1 = "5",
+			number2 = "10",
+			numberOfOccurrences = "1",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			duration1 = "Minutes",
+			duration2 = "Minutes",
+			eventTitle = "Calendar Event Repeating Title",
+			eventTitleEdit = "Calendar Event Repeating Title Edit",
+			eventType = "Repeating",
+			number1 = "2",
+			number2 = "4",
+			pageName = "Calendar Page",
+			reminders = "true"
+		);
+
+		CalendarScheduler.viewEventWithReminders(
+			eventTitle = "Calendar Event Repeating Title Edit"
+		);
+
+		CalendarEvent.view(
+			eventTitle = "Calendar Event Repeating Title Edit",
+			frequency = "Daily",
+			numberOfOccurrences = "1"
+		);
+	}
+
+	@priority = "4"
+	test EditRepeatingWithUserInvite {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Repeating Title",
+			eventType = "Repeating",
+			frequency = "Daily",
+			numberOfOccurrences = "1",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.edit(
+			calendarName = "Test Test",
+			eventTitle = "Calendar Event Repeating Title",
+			eventTitleEdit = "Calendar Event Repeating Title Edit",
+			eventType = "Repeating",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page"
+		);
+
+		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title Edit");
+	}
+
+	@description = "This is a use case for LPS-54548."
+	@priority = "4"
+	test SearchInSearchPortletWithTag {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			optionSet = "true",
+			optionSetValue = "tag",
+			pageName = "Calendar Page",
+			specificOptionSetValue = "tag1"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewApprovedRSVP(
+			eventTitle = "Calendar Event Title",
+			rsvp = "Yes"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "tag1");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Calendar Event Title",
+			searchAssetType = "Calendar Event"
+		);
+	}
+
+	@priority = "4"
+	test ViewCalendarChange {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event");
+
+		CalendarEvent.selectCalendar(calendarName = "Test Test");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.view(eventTitle = "Calendar Event");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event",
+			pageName = "Calendar Page"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event");
+
+		CalendarEvent.selectCalendar(calendarName = "userfn userln");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.chooseOtherCalendarMenulistOption(
+			calendarName = "userfn userln",
+			menuListOption = "Hide Calendar"
+		);
+
+		CalendarScheduler.viewDefault(
+			eventTitle = "Calendar Event",
+			pageName = "Calendar Page"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.view(eventTitle = "Calendar Event");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@description = "This is a use case for LPS-51222."
+	@priority = "3"
+	test ViewCorrectCalendarOnEventSwitch {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Site Event");
+
+		CalendarEvent.selectCalendar(calendarName = "${siteName}");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Personal Event");
+
+		CalendarEvent.selectCalendar(calendarName = "Test Test");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "${siteName}",
+			eventTitle = "Site Event"
+		);
+
+		CalendarEvent.viewDetailsResources(calendarName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test",
+			eventTitle = "Personal Event"
+		);
+
+		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "${siteName}",
+			eventTitle = "Site Event"
+		);
+
+		CalendarEvent.viewDetailsResources(calendarName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test",
+			eventTitle = "Personal Event"
+		);
+
+		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
+	}
+}

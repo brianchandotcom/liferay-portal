@@ -1,118 +1,101 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Pages Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="AddPageAndChildPageTranslations" priority="3">
-		<property name="test.name.skip.portal.instance" value="LocalizationWithSitePages#AddPageAndChildPageTranslations" />
-		<property name="testray.component.names" value="Localization,Site Administration,Site Localization,Site Pages Administration" />
+	@priority = "3"
+	test AddPageAndChildPageTranslations {
+		property test.name.skip.portal.instance = "LocalizationWithSitePages#AddPageAndChildPageTranslations";
+		property testray.component.names = "Localization,Site Administration,Site Localization,Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Home");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Home" />
-		</execute>
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Home" />
-		</execute>
+		Page.addPageTranslations(
+			page = "Home",
+			pageTranslation = "es_ES",
+			pageTranslationName = "Casa"
+		);
 
-		<execute macro="Page#addPageTranslations">
-			<var name="page" value="Home" />
-			<var name="pageTranslation" value="es_ES" />
-			<var name="pageTranslationName" value="Casa" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Page.viewTranslationsPG(
+			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+			pageName = "Casa",
+			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+			sitePageURL = "${portalURL}/es/web/site-name/home",
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain)."
+		);
 
-		<execute macro="Page#viewTranslationsPG">
-			<var name="defaultLanguageLocalizationMessage" value="Display the page in English (United States)." />
-			<var name="pageName" value="Casa" />
-			<var name="preferredLanguageLocalizationMessage" value="Establecer español (España) como su idioma preferido." />
-			<var name="sitePageURL" value="${portalURL}/es/web/site-name/home" />
-			<var name="translationLanguageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Page.localizedPG(pageLocale = "Display the page in English (United States)");
 
-		<execute macro="Page#localizedPG">
-			<var name="pageLocale" value="Display the page in English (United States)" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicChildPage(
+			childPageName = "Blog Page",
+			parentPageName = "Home"
+		);
 
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="Blog Page" />
-			<var name="parentPageName" value="Home" />
-		</execute>
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Blog Page",
+			parentPagesHierarchy = "Home"
+		);
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Blog Page" />
-			<var name="parentPagesHierarchy" value="Home" />
-		</execute>
+		Page.addPageTranslations(
+			page = "Blog Page",
+			pageTranslation = "es_ES",
+			pageTranslationName = "Blog Página"
+		);
 
-		<execute macro="Page#addPageTranslations">
-			<var name="page" value="Blog Page" />
-			<var name="pageTranslation" value="es_ES" />
-			<var name="pageTranslationName" value="Blog Página" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#viewTranslationsPG">
-			<var name="childPageName" value="Blog Página" />
-			<var name="defaultLanguageLocalizationMessage" value="Display the page in English (United States)." />
-			<var name="preferredLanguageLocalizationMessage" value="Establecer español (España) como su idioma preferido." />
-			<var name="sitePageURL" value="${portalURL}/es/web/site-name/blog-page" />
-			<var name="translationLanguageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
-		</execute>
-	</command>
-</definition>
+		Page.viewTranslationsPG(
+			childPageName = "Blog Página",
+			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+			sitePageURL = "${portalURL}/es/web/site-name/blog-page",
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain)."
+		);
+	}
+}

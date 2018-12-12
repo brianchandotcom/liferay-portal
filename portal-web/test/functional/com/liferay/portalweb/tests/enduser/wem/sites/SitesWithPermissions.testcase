@@ -1,249 +1,198 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="Site#tearDownCP" />
+			Site.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="SitesTemplatePermissionPersistence" priority="3">
-		<property name="testray.component.names" value="Permissions,Site Administration" />
+	@priority = "3"
+	test SitesTemplatePermissionPersistence {
+		property testray.component.names = "Permissions,Site Administration";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
 
-		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
-			<var name="pageName" value="search" />
-			<var name="pageTemplateName" value="Search" />
-			<var name="siteTemplateName" value="Community Site" />
-		</execute>
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "search",
+			pageTemplateName = "Search",
+			siteTemplateName = "Community Site"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Site.addCommunityCP(siteName = "Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Polls Display" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
-		<execute macro="PermissionsInline#assertDefaultPG">
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.assertDefaultPG(
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
-		<execute macro="PermissionsInline#assertDefaultPG">
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.assertDefaultPG(
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		Portlet.addPG(portletName = "Asset Publisher");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		Portlet.viewTitle(portletName = "Asset Publisher");
 
-		<execute macro="SiteTemplates#resetPageChanges">
-			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		SiteTemplates.resetPageChanges(
+			columnNumberTo = "1",
+			portletName = "Asset Publisher"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
+		Portlet.viewNoSpecificPG(portletName = "Asset Publisher");
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Polls Display" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
-		<execute macro="PermissionsInline#assertDefaultPG">
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.assertDefaultPG(
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Polls#addPollPG">
-			<var name="pollsQuestion" value="What is the most important issue for this election?" />
-			<var name="pollsQuestionChoiceA" value="The Economy" />
-			<var name="pollsQuestionChoiceB" value="The National Debt" />
-			<var name="pollsQuestionTitle" value="Election Poll" />
-		</execute>
+		Polls.addPollPG(
+			pollsQuestion = "What is the most important issue for this election?",
+			pollsQuestionChoiceA = "The Economy",
+			pollsQuestionChoiceB = "The National Debt",
+			pollsQuestionTitle = "Election Poll"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Polls#selectPollPG">
-			<var name="pollsQuestionTitle" value="Election Poll" />
-		</execute>
+		Polls.selectPollPG(pollsQuestionTitle = "Election Poll");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="Polls#viewPollPG">
-			<var name="pollsQuestion" value="What is the most important issue for this election?" />
-			<var name="pollsQuestionChoiceList" value="The Economy,The National Debt" />
-		</execute>
+		Polls.viewPollPG(
+			pollsQuestion = "What is the most important issue for this election?",
+			pollsQuestionChoiceList = "The Economy,The National Debt"
+		);
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
-		<execute macro="PermissionsInline#assertDefaultPG">
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.assertDefaultPG(
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="This is the message boards thread." />
-			<var name="threadSubject" value="Thread" />
-		</execute>
+		MessageboardsThread.addPG(
+			threadBody = "This is the message boards thread.",
+			threadSubject = "Thread"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="This is the message boards thread." />
-			<var name="threadSubject" value="Thread" />
-		</execute>
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "This is the message boards thread.",
+			threadSubject = "Thread"
+		);
 
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="This is the message boards thread." />
-			<var name="threadSubject" value="Thread" />
-		</execute>
+		MessageboardsThread.viewPG(
+			threadBody = "This is the message boards thread.",
+			threadSubject = "Thread"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/site-name/home" />
-		</execute>
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
 
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Message Boards" />
-		</execute>
+		Portlet.viewTitle(portletName = "Message Boards");
 
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="This is the message boards thread." />
-			<var name="threadSubject" value="Thread" />
-		</execute>
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "This is the message boards thread.",
+			threadSubject = "Thread"
+		);
 
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="This is the message boards thread." />
-			<var name="threadSubject" value="Thread" />
-		</execute>
+		MessageboardsThread.viewPG(
+			threadBody = "This is the message boards thread.",
+			threadSubject = "Thread"
+		);
 
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Election Poll" />
-		</execute>
+		Portlet.viewTitle(portletName = "Election Poll");
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />
+		AssertTextEquals(locator1 = "Message#INFO", value1 = "Please sign in to vote.");
 
-		<execute function="AssertElementPresent" locator1="Search#EMBEDDED_SEARCH_BAR" />
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		<execute macro="SignIn#signIn">
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userPassword" value="test" />
-		</execute>
+		SignIn.signIn(userEmailAddress = "test@liferay.com", userPassword = "test");
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/site-name/home" />
-		</execute>
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Polls Display" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Remove" />
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
+		PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Remove" />
-			<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
-		</execute>
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,Owner,Power User,Site Member,User"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/web/site-name/home" />
-		</execute>
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "Message#ERROR_1_COLUMN_1",
+			value1 = "You do not have the roles required to access this portlet."
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_1_COLUMN_2",
+			value1 = "You do not have the roles required to access this portlet."
+		);
+	}
+}

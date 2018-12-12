@@ -1,171 +1,157 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	var workflowAssetType = "Web Content Article";
 
-	<var name="workflowAssetType" value="Web Content Article" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WebContent#tearDownCP" />
+			Workflow.tearDownPortalWorkflow();
 
-				<execute macro="Workflow#tearDownPortalWorkflow" />
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
 
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "5"
+	test ApproveInWCSubfolderWorkflow {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
-	<command name="ApproveInWCSubfolderWorkflow" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
+		Navigator.gotoNavItem(navItem = "Structures");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Structures" />
-		</execute>
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
 
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
+		WebContentFolder.addSubfolderCP(
+			folderName = "WC Folder Name",
+			subfolderDescription = "WC Subfolder Description",
+			subfolderName = "WC Subfolder Name"
+		);
 
-		<execute macro="WebContentFolder#addSubfolderCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="subfolderDescription" value="WC Subfolder Description" />
-			<var name="subfolderName" value="WC Subfolder Name" />
-		</execute>
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Subfolder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow"
+		);
 
-		<execute macro="WebContentFolder#configureWorkflowCP">
-			<var name="folderName" value="WC Subfolder Name" />
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowRestriction" value="Default Workflow" />
-		</execute>
+		WebContentFolder.gotoCP(
+			folderName = "WC Subfolder Name",
+			webContentTitle = "WC Subfolder Name"
+		);
 
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Subfolder Name" />
-			<var name="webContentTitle" value="WC Subfolder Name" />
-		</execute>
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContent.addWithStructureAndWorkflowCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#addWithStructureAndWorkflowCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
 
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
+		WebContentFolder.gotoCP(
+			folderName = "WC Subfolder Name",
+			webContentTitle = "WC Subfolder Name"
+		);
 
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Subfolder Name" />
-			<var name="webContentTitle" value="WC Subfolder Name" />
-		</execute>
+		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContent#viewApprovedStatus">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-</definition>
+		WebContent.viewCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+}

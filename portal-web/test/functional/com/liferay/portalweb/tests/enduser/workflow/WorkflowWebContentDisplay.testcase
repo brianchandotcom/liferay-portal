@@ -1,195 +1,174 @@
-<definition component-name="portal-workflow">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Workflow" />
+@component-name = "portal-workflow"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	var pageName = "Web Content Display Page";
+	var portletName = "Web Content Display";
+	var workflowAssetType = "Web Content Article";
 
-	<var name="pageName" value="Web Content Display Page" />
-	<var name="portletName" value="Web Content Display" />
-	<var name="workflowAssetType" value="Web Content Article" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Web Content Display Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WebContent#tearDownCP" />
+			Page.tearDownPG();
 
-				<execute macro="Page#tearDownPG" />
+			Workflow.tearDownPortalWorkflow();
 
-				<execute macro="Workflow#tearDownPortalWorkflow" />
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
 
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test ApproveWebContentViaWebContentDisplayPG {
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-	<command name="ApproveWebContentViaWebContentDisplayPG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		WebContent.viewWithWorkflowPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title",
+			workflowTask = "Review"
+		);
 
-		<execute macro="WebContent#viewWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		WebContent.viewWithWorkflowPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title",
+			workflowTask = "Review"
+		);
 
-		<execute macro="WebContent#viewWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		WebContent.viewPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
+	@priority = "4"
+	test RejectWebContentViaWebContentDisplayPG {
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-	<command name="RejectWebContentViaWebContentDisplayPG" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
 
-		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
+		Workflow.viewRejectedTask(
+			workflowAssetTitle = "WC WebContent Title",
+			workflowAssetType = "Web Content Article"
+		);
 
-		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="WC WebContent Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowTask" value="Update" />
-		</execute>
-	</command>
-</definition>
+		WebContent.viewWithWorkflowPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title",
+			workflowTask = "Update"
+		);
+	}
+}

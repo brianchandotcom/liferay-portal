@@ -1,142 +1,115 @@
-<definition component-name="portal-security">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Security" />
+@component-name = "portal-security"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Security";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="PortalSettings#tearDownAuthenticationCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PortalSettings.tearDownAuthenticationCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ServiceAccessPolicySmoke" priority="5">
-		<property name="custom.properties" value="json.service.auth.token.hosts.allowed=" />
-		<property name="test.name.skip.portal.instance" value="ServiceAccessPolicy#ServiceAccessPolicySmoke" />
+	@priority = "5"
+	test ServiceAccessPolicySmoke {
+		property custom.properties = "json.service.auth.token.hosts.allowed=";
+		property test.name.skip.portal.instance = "ServiceAccessPolicy#ServiceAccessPolicySmoke";
 
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
+		var companyId = JSONCompany.getCompanyId();
 
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
+		var portalURL = JSONCompany.getPortalURL();
 
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-email-address \
 				-d companyId=${companyId} \
 				-d emailAddress=test@liferay.com
-		]]></var>
+		''';
+		var output = JSONCurlUtil.post("${curl}");
 
-		<var method="JSONCurlUtil#post('${curl}')" name="output" />
+		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress")) {
+			echo("Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
 
-		<if>
-			<contains string="${output}" substring="Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress" />
-			<then>
-				<echo message="Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress" />
-			</then>
-			<else>
-				<fail message="FAIL! Cannot find the warning message." />
-			</else>
-		</if>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Service Access Policy"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Service Access Policy" />
-		</execute>
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = "com.liferay.portal.kernel.service.UserService#getUserByEmailAddress",
+			policyName = "SYSTEM_DEFAULT"
+		);
 
-		<execute macro="ServiceAccessPolicy#editServiceAccessPolicy">
-			<var name="allowedServiceSignature" value="com.liferay.portal.kernel.service.UserService#getUserByEmailAddress" />
-			<var name="policyName" value="SYSTEM_DEFAULT" />
-		</execute>
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "test@liferay.com ");
 
-		<execute macro="JSONUser#getUserIdByEmailAddress">
-			<return name="userId" />
-			<var name="userEmailAddress" value="test@liferay.com " />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-email-address \
 				-d companyId=${companyId} \
 				-d emailAddress=test@liferay.com
-		]]></var>
+		''';
+		var output = JSONCurlUtil.post("${curl}");
 
-		<var method="JSONCurlUtil#post('${curl}')" name="output" />
+		if (contains("${output}", "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}")) {
+			echo("Default user must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}");
+		}
+		else {
+			fail("FAIL! Cannot find the user info message.");
+		}
 
-		<if>
-			<contains string="${output}" substring="must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}" />
-			<then>
-				<echo message="Default user must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}" />
-			</then>
-			<else>
-				<fail message="FAIL! Cannot find the user info message." />
-			</else>
-		</if>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-current-user \
 				-basic \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var output = JSONCurlUtil.post("${curl}");
 
-		<var method="JSONCurlUtil#post('${curl}')" name="output" />
+		if ((contains("${output}", ""agreedToTermsOfUse":true")) && (contains("${output}", ""companyId":"${companyId}""))) {
+			echo("Get current user successful.");
+		}
+		else {
+			fail("FAIL! Cannot find the currrent user.");
+		}
 
-		<if>
-			<and>
-				<contains string="${output}" substring="&quot;agreedToTermsOfUse&quot;:true" />
-				<contains string="${output}" substring="&quot;companyId&quot;:&quot;${companyId}&quot;" />
-			</and>
-			<then>
-				<echo message="Get current user successful." />
-			</then>
-			<else>
-				<fail message="FAIL! Cannot find the currrent user." />
-			</else>
-		</if>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Service Access Policy"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Service Access Policy" />
-		</execute>
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = " ",
+			policyName = "SYSTEM_USER_PASSWORD"
+		);
 
-		<execute macro="ServiceAccessPolicy#editServiceAccessPolicy">
-			<var name="allowedServiceSignature" value=" " />
-			<var name="policyName" value="SYSTEM_USER_PASSWORD" />
-		</execute>
-
-		<var name="curl"><![CDATA[
+		var curl = '''
 			${portalURL}/api/jsonws/user/get-current-user \
 				-basic \
 				-u test@liferay.com:test
-		]]></var>
+		''';
+		var output = JSONCurlUtil.post("${curl}");
 
-		<var method="JSONCurlUtil#post('${curl}')" name="output" />
-
-		<if>
-			<contains string="${output}" substring="Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser" />
-			<then>
-				<echo message="Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser" />
-			</then>
-			<else>
-				<fail message="FAIL! Cannot find the warning message." />
-			</else>
-		</if>
-	</command>
-</definition>
+		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
+			echo("Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
+	}
+}

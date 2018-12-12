@@ -1,156 +1,152 @@
-<definition component-name="portal-deployment-mysql">
-	<property name="database.types" value="mysql" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="setup.wizard.enabled" value="true" />
-	<property name="testray.main.component.name" value="Setup Wizard" />
+@component-name = "portal-deployment-mysql"
+definition {
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property setup.wizard.enabled = "true";
+	property testray.main.component.name = "Setup Wizard";
 
-	<command name="MySQLtoMySQL" priority="4">
-		<execute macro="SetupWizard#configureDefaultPG" />
+	@priority = "4"
+	test MySQLtoMySQL {
+		SetupWizard.configureDefaultPG();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+		Smoke.runSmoke();
+	}
 
-	<command name="MySQLtoMySQLEditedAdministratorUser" priority="4">
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLEditAdministratorUser" />
+	@priority = "4"
+	test MySQLtoMySQLEditedAdministratorUser {
+		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLEditAdministratorUser";
 
-		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
+		SetupWizard.viewDefaultPortalNamePG();
 
-		<execute macro="SetupWizard#configureSampleDataPG">
-			<var name="addSampleData" value="false" />
-		</execute>
+		SetupWizard.configureSampleDataPG(addSampleData = "false");
 
-		<execute macro="SetupWizard#configureAdministratorUserPG">
-			<var name="administratorEmail" value="testsetupwizard@liferay.com" />
-			<var name="administratorFirstName" value="TestSetupWizardFN" />
-			<var name="administratorLastName" value="TestSetupWizardLN" />
-		</execute>
+		SetupWizard.configureAdministratorUserPG(
+			administratorEmail = "testsetupwizard@liferay.com",
+			administratorFirstName = "TestSetupWizardFN",
+			administratorLastName = "TestSetupWizardLN"
+		);
 
-		<execute macro="SetupWizard#configureDatabasePG">
-			<var name="databaseName" value="lportal" />
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-		</execute>
+		SetupWizard.configureDatabasePG(
+			databaseName = "lportal",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
 
-		<execute macro="SetupWizard#finishConfigurationPG" />
+		SetupWizard.finishConfigurationPG();
 
-		<execute macro="SetupWizard#viewConfigurationSavedPG" />
+		SetupWizard.viewConfigurationSavedPG();
 
-		<execute macro="Portlet#shutdownServer" />
+		Portlet.shutdownServer();
 
-		<execute macro="Portlet#startServer">
-			<var name="base_branch" value="${base_branch}" />
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		Portlet.startServer(base_branch = "${base_branch}", deleteLiferayHome = "false");
 
-		<execute macro="SetupWizard#viewConfiguredDatabaseInConsole">
-			<var name="databaseType" value="${databaseType}" />
-		</execute>
+		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
-		<if>
-			<isset var="virtualHostsURL" />
-			<then>
-				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="${virtualHostsURL}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#openURL" />
-			</else>
-		</if>
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+		}
+		else {
+			Navigator.openURL();
+		}
 
-		<execute macro="User#acceptEndUserLicenseAgreement" />
+		User.acceptEndUserLicenseAgreement();
 
-		<execute macro="User#resetPassword">
-			<var name="resetPassword" value="${resetPassword}" />
-			<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
-			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
-		</execute>
+		User.resetPassword(
+			resetPassword = "${resetPassword}",
+			setupWizardEnabled = "${setupWizardEnabled}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}"
+		);
 
-		<execute macro="User#answerPasswordReminder" />
+		User.answerPasswordReminder();
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="TestSetupWizardFN" />
-		</execute>
+		User.viewLoggedInPG(userFirstName = "TestSetupWizardFN");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="Account Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Account Settings"
+		);
 
-		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_ADDRESS" value1="testsetupwizard@liferay.com" />
-		<execute function="AssertTextEquals" locator1="TextInput#FIRST_NAME" value1="TestSetupWizardFN" />
-		<execute function="AssertTextEquals" locator1="TextInput#LAST_NAME" value1="TestSetupWizardLN" />
-		<execute function="AssertTextEquals" locator1="TextInput#SCREEN_NAME" value1="testsetupwizard" />
-	</command>
+		AssertTextEquals(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "testsetupwizard@liferay.com"
+		);
 
-	<command name="MySQLtoMySQLLportal1" priority="5">
-		<property name="databases.size" value="1" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLLportal1" />
+		AssertTextEquals(
+			locator1 = "TextInput#FIRST_NAME",
+			value1 = "TestSetupWizardFN"
+		);
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databaseName" value="lportal1" />
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-		</execute>
+		AssertTextEquals(locator1 = "TextInput#LAST_NAME", value1 = "TestSetupWizardLN");
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
+		AssertTextEquals(locator1 = "TextInput#SCREEN_NAME", value1 = "testsetupwizard");
+	}
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+	@priority = "5"
+	test MySQLtoMySQLLportal1 {
+		property databases.size = "1";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLLportal1";
 
-	<command name="MySQLtoMySQLLportal1SampleDataDisabled" priority="5">
-		<property name="databases.size" value="1" />
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLLportal1SampleDataDisabled" />
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
 
-		<execute macro="SetupWizard#configurePG">
-			<var name="addSampleData" value="false" />
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databaseName" value="lportal1" />
-			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-			<var name="databaseType" value="MySQL" />
-			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
-			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
-			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
-		</execute>
+		Smoke.viewWelcomePage(userFirstName = "Joe", userLastName = "Bloggs");
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.runSmoke();
+	}
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
+	@priority = "5"
+	test MySQLtoMySQLLportal1SampleDataDisabled {
+		property databases.size = "1";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLLportal1SampleDataDisabled";
 
-	<command name="MySQLtoMySQLSampleDataDisabled" priority="4">
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLSampleDataDisabled" />
+		SetupWizard.configurePG(
+			addSampleData = "false",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url")
+		);
 
-		<execute macro="SetupWizard#configureDefaultPG">
-			<var name="addSampleData" value="false" />
-		</execute>
+		Smoke.viewWelcomePage();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.runSmoke();
+	}
 
-		<execute macro="Smoke#runSmoke" />
-	</command>
-</definition>
+	@priority = "4"
+	test MySQLtoMySQLSampleDataDisabled {
+		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLSampleDataDisabled";
+
+		SetupWizard.configureDefaultPG(addSampleData = "false");
+
+		Smoke.viewWelcomePage();
+
+		Smoke.runSmoke();
+	}
+}

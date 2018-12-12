@@ -1,220 +1,188 @@
-<definition component-name="portal-social-networking">
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Social Networking" />
+@component-name = "portal-social-networking"
+definition {
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Social Networking";
+	var pageName = "My Sites Directory Page";
+	var portletName = "My Sites Directory";
 
-	<var name="pageName" value="My Sites Directory Page" />
-	<var name="portletName" value="My Sites Directory" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "My Sites Directory Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="My Sites Directory Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "My Sites Directory Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="My Sites Directory Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		Portlet.addPG(portletName = "My Sites Directory");
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="My Sites Directory" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
+			Page.tearDownCP();
+		}
+	}
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "4"
+	test SearchMySitesDirectory {
+		var pageName = "My Sites Directory Page";
+		var userEmailAddress = "userea@liferay.com";
+		var userFirstName = "userfn";
+		var userLastName = "userln";
+		var userMiddleName = "usermn";
+		var userScreenName = "usersn";
 
-	<command name="SearchMySitesDirectory" priority="4">
-		<var name="pageName" value="My Sites Directory Page" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userMiddleName" value="usermn" />
-		<var name="userScreenName" value="usersn" />
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userMiddleName = "usermn",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
 
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "First Name",
+			searchTerm = "userfn",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="First Name" />
-			<var name="searchTerm" value="userfn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "First Name",
+			searchNoResults = "true",
+			searchTerm = "userfn1",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="First Name" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="userfn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Middle Name",
+			searchTerm = "usermn",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Middle Name" />
-			<var name="searchTerm" value="usermn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Middle Name",
+			searchNoResults = "true",
+			searchTerm = "usermn1",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Middle Name" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="usermn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Last Name",
+			searchTerm = "userln",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Last Name" />
-			<var name="searchTerm" value="userln" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Last Name",
+			searchNoResults = "true",
+			searchTerm = "userln1",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Last Name" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="userln1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Screen Name",
+			searchTerm = "usersn",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Screen Name" />
-			<var name="searchTerm" value="usersn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Screen Name",
+			searchNoResults = "true",
+			searchTerm = "usersn1",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Screen Name" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="usersn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Email Address",
+			searchTerm = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Email Address" />
-			<var name="searchTerm" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Navigator.gotoPage(pageName = "My Sites Directory Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="My Sites Directory Page" />
-		</execute>
-
-		<execute macro="User#advancedSearchViaMySitesDirectoryPG">
-			<var name="searchField" value="Email Address" />
-			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="userea@liferay.com1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-</definition>
+		User.advancedSearchViaMySitesDirectoryPG(
+			searchField = "Email Address",
+			searchNoResults = "true",
+			searchTerm = "userea@liferay.com1",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+	}
+}

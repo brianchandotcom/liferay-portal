@@ -1,442 +1,331 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-	</set-up>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddLocalizedWebContentViaSourceEditor" priority="5">
-		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContentUI#AddLocalizedWebContentViaSourceEditor" />
-		<property name="testray.component.names" value="Training,Web Content Administration" />
+	@priority = "5"
+	test AddLocalizedWebContentViaSourceEditor {
+		property test.name.skip.portal.instance = "LocalizationWithWebContentUI#AddLocalizedWebContentViaSourceEditor";
+		property testray.component.names = "Training,Web Content Administration";
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute macro="WebContentNavigator#gotoAddPGViaWCD" />
+		WebContentNavigator.gotoAddPGViaWCD();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
-		</execute>
+		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[
+		AlloyEditor.addSourceContent(
+			content = '''
 <h2 class="text-center">Space Program Academy of Continuing Education</h2>
 
 <p class="text-center">Dare to Dream out of this world</p>
-]]></var>
-		</execute>
+'''
+		);
 
-		<execute macro="Button#clickPublish" />
+		Button.clickPublish();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world" />
-		</execute>
+		WebContent.viewPGViaWCD(
+			webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world"
+		);
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
-		</execute>
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "Basic S.P.A.C.E. Banner"
+		);
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="ja-JP" />
-		</execute>
+		PortletEntry.changeLocale(fieldName = "Title", locale = "ja-JP");
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner (Japanese Translation)" />
-		</execute>
+		WebContent.addCP(
+			webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)"
+		);
 
-		<execute macro="AlloyEditor#addDescription">
-			<var name="description" value="A Japanese translation of the basic front page banner" />
-		</execute>
+		AlloyEditor.addDescription(
+			description = "A Japanese translation of the basic front page banner"
+		);
 
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[
+		AlloyEditor.addSourceContent(
+			content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>
 
 <p class="text-center">地球から、宇宙の果てへ</p>
-]]></var>
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="ja_JP" />
-			<var name="textIcon" value="日本語-日本" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Space Program 大学生涯教育 地球から、宇宙の果てへ" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="Space Program 大学生涯教育 地球から、宇宙の果てへ" />
-	</command>
-
-	<command name="AddWCWithTranslation" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContent#AddWCWithTranslation" />
-		<property name="testray.component.names" value="Localization,Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Contenido" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Content#addPG">
-			<var name="assetTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es_ES" />
-			<var name="textIcon" value="español-España" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC Contenido" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Editar contenido web" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Título" />
-			<var name="locale" value="es-ES" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Contenido" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
-	</command>
-
-	<command name="WebContentAdministrationLocalization" priority="4">
-		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContentUI#WebContentAdministrationLocalization" />
-		<property name="testray.component.names" value="Localization,Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WebContentStructures#addName">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<execute macro="PortletEntry#inputDescriptionTextInput">
-			<var name="description" value="WC Structure Description" />
-		</execute>
-
-		<execute macro="WebContentStructures#addLocalization">
-			<var name="locale" value="fr_FR" />
-			<var name="locale2" value="zh_CN" />
-			<var name="localization1Name" value="nom de la structure de wc" />
-			<var name="localization2Name" value="wc 结构名称" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#localizeTemplateName">
-			<var name="locale" value="fr_FR" />
-			<var name="locale2" value="zh_CN" />
-			<var name="localization1Name" value="nom de la template de wc" />
-			<var name="localization2Name" value="wc 模板名称" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="fr-FR" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="WC WebContent Titre" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="WC contenu WebContent" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Text" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="fr_FR" />
-			<var name="textIcon" value="français-France" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC contenu WebContent" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Modifier le contenu de Web" />
-			<var name="webContentTitle" value="WC WebContent Titre" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="fr-FR" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentText" value="WC contenu WebContent" />
-			<var name="webContentTitle" value="WC WebContent Titre" />
-		</execute>
-
-		<execute macro="WebContent#viewStructureAndTemplateLocalization">
-			<var name="panel" value="Structure et gabarit" />
-			<var name="structureLocalizationName" value="nom de la structure de wc" />
-			<var name="templateLocalizationName" value="nom de la template de wc" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="zh-CN" />
-			<var name="textIcon" value="中文-中国" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Text" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="网页内容展示" />
-			<var name="portletOption" value="编辑网页内容" />
-		</execute>
-
-		<execute macro="IFrame#selectEditAssetFrame" />
-
-		<execute macro="WebContent#viewStructureAndTemplateLocalization">
-			<var name="panel" value="结构和模板" />
-			<var name="structureLocalizationName" value="wc 结构名称" />
-			<var name="templateLocalizationName" value="wc 模板名称" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-	</command>
-</definition>
+'''
+		);
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(locale = "ja_JP", textIcon = "日本語-日本");
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "English-United States"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		WebContent.viewPGViaWCD(
+			webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world"
+		);
+
+		AssertTextNotPresent(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ"
+		);
+	}
+
+	@priority = "5"
+	test AddWCWithTranslation {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithTranslation";
+		property testray.component.names = "Localization,Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+
+		WebContent.addCP(
+			webContentContent = "WC Contenido",
+			webContentTitle = "WC Titulo"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+
+		Content.addPG(assetTitle = "WC Title");
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(locale = "es_ES", textIcon = "español-España");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Editar contenido web",
+			webContentTitle = "WC Titulo"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Título", locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC Contenido",
+			webContentTitle = "WC Titulo"
+		);
+	}
+
+	@priority = "4"
+	test WebContentAdministrationLocalization {
+		property test.name.skip.portal.instance = "LocalizationWithWebContentUI#WebContentAdministrationLocalization";
+		property testray.component.names = "Localization,Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentStructures.addName(structureName = "WC Structure Name");
+
+		Panel.expandPanel(panel = "Details");
+
+		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
+
+		WebContentStructures.addLocalization(
+			locale = "fr_FR",
+			locale2 = "zh_CN",
+			localization1Name = "nom de la structure de wc",
+			localization2Name = "wc 结构名称"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContentTemplates.localizeTemplateName(
+			locale = "fr_FR",
+			locale2 = "zh_CN",
+			localization1Name = "nom de la template de wc",
+			localization2Name = "wc 模板名称",
+			templateName = "WC Template Name"
+		);
+
+		DDLDataDefinition.save();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "fr-FR");
+
+		WebContent.addCP(webContentTitle = "WC WebContent Titre");
+
+		FormFields.editText(fieldName = "Text", fieldValue = "WC contenu WebContent");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
+
+		LanguagePortlet.selectLanguagePG(locale = "fr_FR", textIcon = "français-France");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC contenu WebContent");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Modifier le contenu de Web",
+			webContentTitle = "WC WebContent Titre"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "fr-FR");
+
+		WebContent.viewCP(
+			webContentText = "WC contenu WebContent",
+			webContentTitle = "WC WebContent Titre"
+		);
+
+		WebContent.viewStructureAndTemplateLocalization(
+			panel = "Structure et gabarit",
+			structureLocalizationName = "nom de la structure de wc",
+			templateLocalizationName = "nom de la template de wc"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		LanguagePortlet.selectLanguagePG(locale = "zh-CN", textIcon = "中文-中国");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
+
+		Portlet.gotoPortletOptions(portletName = "网页内容展示", portletOption = "编辑网页内容");
+
+		IFrame.selectEditAssetFrame();
+
+		WebContent.viewStructureAndTemplateLocalization(
+			panel = "结构和模板",
+			structureLocalizationName = "wc 结构名称",
+			templateLocalizationName = "wc 模板名称"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "English-United States"
+		);
+	}
+}

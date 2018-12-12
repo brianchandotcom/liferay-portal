@@ -1,247 +1,146 @@
-<definition component-name="portal-frontend-infrastructure">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Accessibility" />
-	<property name="testray.main.component.name" value="User Interface" />
+@component-name = "portal-frontend-infrastructure"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Accessibility";
+	property testray.main.component.name = "User Interface";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="Smoke" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test Smoke {
+		property portal.acceptance = "true";
 
-		<execute function="AssertAccessible" />
+		AssertAccessible();
 
-		<execute macro="SignOut#signOut" />
+		SignOut.signOut();
 
-		<execute function="AssertAccessible" />
-	</command>
+		AssertAccessible();
+	}
 
-	<command ignore="true" name="ViewCollaborationPortlets" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@ignore = "true"
+	@priority = "4"
+	test ViewCollaborationPortlets {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Collaboration Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		Portlet.addPG(portletName = "Blogs");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs Aggregator" />
-		</execute>
+		Portlet.addPG(portletName = "Blogs Aggregator");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Recent Bloggers" />
-		</execute>
+		Portlet.addPG(portletName = "Recent Bloggers");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
+		Portlet.addPG(portletName = "Documents and Media");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Media Gallery" />
-		</execute>
+		Portlet.addPG(portletName = "Media Gallery");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
+		Portlet.addPG(portletName = "Wiki");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki Display" />
-		</execute>
+		Portlet.addPG(portletName = "Wiki Display");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
+		Portlet.addPG(portletName = "Message Boards");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Article" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Article");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Search" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Search");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Section" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Section");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Microblogs" />
-		</execute>
+		Portlet.addPG(portletName = "Microblogs");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Microblogs Status Update" />
-		</execute>
+		Portlet.addPG(portletName = "Microblogs Status Update");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
+		Portlet.addPG(portletName = "Bookmarks");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Friends Directory" />
-		</execute>
+		Portlet.addPG(portletName = "Friends Directory");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Page Comments" />
-		</execute>
+		Portlet.addPG(portletName = "Page Comments");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Page Flags" />
-		</execute>
+		Portlet.addPG(portletName = "Page Flags");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Page Ratings" />
-		</execute>
+		Portlet.addPG(portletName = "Page Ratings");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Alerts" />
-		</execute>
+		Portlet.addPG(portletName = "Alerts");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Announcements" />
-		</execute>
+		Portlet.addPG(portletName = "Announcements");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Activities" />
-		</execute>
+		Portlet.addPG(portletName = "Activities");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Group Statistics" />
-		</execute>
+		Portlet.addPG(portletName = "Group Statistics");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Requests" />
-		</execute>
+		Portlet.addPG(portletName = "Requests");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Collaboration Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Collaboration Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="User Statistics" />
-		</execute>
+		Portlet.addPG(portletName = "User Statistics");
 
-		<execute function="AssertAccessible" />
-	</command>
-</definition>
+		AssertAccessible();
+	}
+}

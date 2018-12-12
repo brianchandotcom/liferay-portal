@@ -1,198 +1,183 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WebContent#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
 
-				<execute macro="WebContentTemplates#tearDownCP" />
+			WebContentTemplates.tearDownCP();
 
-				<execute macro="WebContentStructures#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			WebContentStructures.tearDownCP();
+		}
+	}
 
-	<command name="AddFolder" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
+	@priority = "5"
+	test AddFolder {
+		property testray.component.names = "Training,Web Content Administration";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-	</command>
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+	}
 
-	<command name="AddWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
+	@priority = "4"
+	test AddWebContent {
+		property testray.component.names = "Web Content Administration";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
 
-	<command name="AddWebContentMultiple" priority="3">
-		<property name="testray.component.names" value="Web Content Administration" />
+	@priority = "3"
+	test AddWebContentMultiple {
+		property testray.component.names = "Web Content Administration";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content 1" />
-			<var name="webContentTitle" value="WC WebContent Title 1" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 1",
+			webContentTitle = "WC WebContent Title 1"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 1" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title 1");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content 2" />
-			<var name="webContentTitle" value="WC WebContent Title 2" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 2",
+			webContentTitle = "WC WebContent Title 2"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 2" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content 3" />
-			<var name="webContentTitle" value="WC WebContent Title 3" />
-		</execute>
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 3",
+			webContentTitle = "WC WebContent Title 3"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 3" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title 3");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title 1" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 1");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content 1" />
-			<var name="webContentTitle" value="WC WebContent Title 1" />
-		</execute>
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content 1",
+			webContentTitle = "WC WebContent Title 1"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title 2" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 2");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content 2" />
-			<var name="webContentTitle" value="WC WebContent Title 2" />
-		</execute>
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content 2",
+			webContentTitle = "WC WebContent Title 2"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title 3" />
-		</execute>
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 3");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content 3" />
-			<var name="webContentTitle" value="WC WebContent Title 3" />
-		</execute>
-	</command>
-</definition>
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content 3",
+			webContentTitle = "WC WebContent Title 3"
+		);
+	}
+}

@@ -1,713 +1,590 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Wiki" />
-
-	<var name="pageName" value="Wiki Test Page" />
-	<var name="portletName" value="Wiki" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiPage#tearDownCP" />
-
-				<execute macro="WikiNode#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ActivateInitialStagingWithWikiAttachment" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#addAttachmentViaPageEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-			<var name="uncheckContent" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewAttachmentPGViaEdit">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="ConfigurePortletDisplaySettings" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WikiPortlet#viewConfigurationTabs">
-			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS" />
-			<var name="isPresent" value="SETUP_DISPLAY_SETTINGS_PANEL" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Configuration" />
-		</execute>
-
-		<execute macro="WikiPortlet#viewConfigurationTabs">
-			<var name="isNotPresent" value="SETUP_DISPLAY_SETTINGS" />
-			<var name="isPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WikiPortlet#configureDisplaySettings">
-			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WikiPortlet#viewDisplaySettings">
-			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS" />
-		</execute>
-	</command>
-
-	<command name="DeleteDeleteWikiFrontpage" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#moveToRecycleBinCP">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#deleteCP">
-			<var name="assetName" value="FrontPage" />
-			<var name="assetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoFrontPageCP" />
-
-		<execute macro="WikiPage#viewFrontPageDefaultCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
-
-	<command name="importWikiLARLinkNode" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Research Projects" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Research Projects" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Research Projects" />
-			<var name="url" value="${portalURL}/group/guest/research-projects" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="research-projects-update-node.lar" />
-			<var name="mirrorWithOverwriting" value="true" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="Organic Research Projects">
-			<var name="key_wikiPageTitle" value="Organic Research Projects" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="FrontPage">
-			<var name="key_wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute function="AssertClick" locator1="WikiEntry#BODY_LINK" value1="Sweet Potatoes" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="Sweet Potatoes" />
-	</command>
-
-	<command name="RateAndEditPageComment" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiPage#addComment">
-			<var name="entryComment" value="Wiki Page Comment" />
-		</execute>
-
-		<execute macro="WikiPage#rateCommentAsGood" />
-
-		<execute macro="WikiPage#editComment">
-			<var name="entryComment" value="Wiki Page Comment" />
-			<var name="entryCommentEdit" value="Wiki Page Comment Edited" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiPage#viewCommentPG">
-			<var name="entryComment" value="Wiki Page Comment Edited" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiPage#viewCommentRatingGood" />
-	</command>
-
-	<command name="RatePage" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiPage#rate4StarsPG">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiPage#viewRate4StarsPG">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-	</command>
-
-	<command name="RestoreDeleteWikiFrontpage" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#moveToRecycleBinCP">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreOverwriteCP">
-			<var name="assetName" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoFrontPageCP" />
-
-		<execute macro="WikiPage#viewFrontPageCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiFrontPageTitle" value="FrontPage" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-	</command>
-
-	<command name="SearchWikiAttachments" priority="4">
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addAttachmentViaPageEdit">
-			<var name="attachmentFileName" value="Document_1.txt" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#searchPG">
-			<var name="searchTerm" value="document" />
-		</execute>
-
-		<execute macro="WikiPage#viewSearchResultsPG">
-			<var name="wikiAttachment" value="true" />
-			<var name="wikiAttachmentBody" value="Document_1.txt" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
-
-	<command name="SearchWikiComment" priority="4">
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#addComment">
-			<var name="entryComment" value="Wiki FrontPage Child Page Comment Body document" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#searchPG">
-			<var name="searchTerm" value="document" />
-		</execute>
-
-		<execute macro="WikiPage#viewSearchResultsPG">
-			<var name="commentBody" value="Wiki FrontPage Child Page Comment Body document" />
-			<var name="wikiComment" value="true" />
-			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-	</command>
-
-	<command name="ViewNoWikiXSSviaAddPage" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#editFrontPagePG">
-			<var name="wikiPageContentEdit"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
-
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
-
-		<execute function="AssertAlertNotPresent" />
-
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
-
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
-	</command>
-
-	<command name="ViewWikiDraftPagesViaBreadcrumb" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Breadcrumb" />
-		</execute>
-
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Wiki Test Page" />
-			<var name="pathLocator" value="PAGE" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Recent Changes" />
-			<var name="pathLocator" value="PAGE" />
-		</execute>
-
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Wiki Test Page" />
-			<var name="pathLocator" value="CURRENT_LOCATION" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="All Pages" />
-			<var name="pathLocator" value="CURRENT_LOCATION" />
-		</execute>
-
-		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Wiki Test Page" />
-			<var name="pathLocator" value="PAGE" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Draft Pages" />
-			<var name="pathLocator" value="CURRENT_LOCATION" />
-		</execute>
-	</command>
-
-	<command name="WikiNavigationPortletSmoke" priority="4">
-		<execute macro="Navigator#openURL">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tree Menu" />
-		</execute>
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=wiki-navigation-portlet" />
-	</command>
-</definition>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Wiki";
+	var pageName = "Wiki Test Page";
+	var portletName = "Wiki";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Wiki Test Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Wiki Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Wiki");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPage.tearDownCP();
+
+			WikiNode.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test ActivateInitialStagingWithWikiAttachment {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Site Name", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Staging Test Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Staging Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.addAttachmentViaPageEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name", uncheckContent = "Wiki");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+
+	@priority = "4"
+	test ConfigurePortletDisplaySettings {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		WikiPortlet.viewConfigurationTabs(
+			isNotPresent = "NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS",
+			isPresent = "SETUP_DISPLAY_SETTINGS_PANEL"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+
+		WikiPortlet.viewConfigurationTabs(
+			isNotPresent = "SETUP_DISPLAY_SETTINGS",
+			isPresent = "NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		WikiPortlet.configureDisplaySettings(
+			uncheckSetting = "ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		WikiPortlet.viewDisplaySettings(
+			uncheckedSetting = "ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS"
+		);
+	}
+
+	@priority = "5"
+	test DeleteDeleteWikiFrontpage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.moveToRecycleBinCP(wikiNodeName = "Main", wikiPageTitle = "FrontPage");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.deleteCP(assetName = "FrontPage", assetType = "Wiki Page");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewDefaultCP(assetName = "FrontPage");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoFrontPageCP();
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+	}
+
+	@priority = "5"
+	test importWikiLARLinkNode {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Research Projects");
+
+		Page.view(pageName = "Research Projects", privacy = "Private Pages");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Research Projects",
+			url = "${portalURL}/group/guest/research-projects"
+		);
+
+		Portlet.addPG(portletName = "Wiki");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		LAR.importPortlet(
+			larFileName = "research-projects-update-node.lar",
+			mirrorWithOverwriting = "true",
+			uploadFrom = "dependencies"
+		);
+
+		Refresh();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertClick(
+			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
+			value1 = "Organic Research Projects",
+			key_wikiPageTitle = "Organic Research Projects"
+		);
+
+		AssertClick(
+			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
+			value1 = "FrontPage",
+			key_wikiPageTitle = "FrontPage"
+		);
+
+		AssertClick(locator1 = "WikiEntry#BODY_LINK", value1 = "Sweet Potatoes");
+
+		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "Sweet Potatoes");
+	}
+
+	@priority = "5"
+	test RateAndEditPageComment {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.addComment(entryComment = "Wiki Page Comment");
+
+		WikiPage.rateCommentAsGood();
+
+		WikiPage.editComment(
+			entryComment = "Wiki Page Comment",
+			entryCommentEdit = "Wiki Page Comment Edited"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiPage.viewCommentPG(
+			entryComment = "Wiki Page Comment Edited",
+			wikiPageTitle = "Wiki Page 1"
+		);
+
+		WikiPage.viewCommentRatingGood();
+	}
+
+	@priority = "5"
+	test RatePage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.rate4StarsPG(wikiPageTitle = "Wiki Page 1");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.viewRate4StarsPG(wikiPageTitle = "Wiki Page 1");
+	}
+
+	@priority = "5"
+	test RestoreDeleteWikiFrontpage {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.moveToRecycleBinCP(wikiNodeName = "Main", wikiPageTitle = "FrontPage");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreOverwriteCP(assetName = "FrontPage");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoFrontPageCP();
+
+		WikiPage.viewFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiFrontPageTitle = "FrontPage",
+			wikiNodeName = "Main"
+		);
+	}
+
+	@priority = "4"
+	test SearchWikiAttachments {
+		WikiPage.addFrontPagePG(
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addAttachmentViaPageEdit(
+			attachmentFileName = "Document_1.txt",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.searchPG(searchTerm = "document");
+
+		WikiPage.viewSearchResultsPG(
+			wikiAttachment = "true",
+			wikiAttachmentBody = "Document_1.txt",
+			wikiPageTitle = "FrontPage"
+		);
+	}
+
+	@priority = "4"
+	test SearchWikiComment {
+		WikiPage.addFrontPagePG(
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addChildPagePG(
+			wikiChildPageContent = "Wiki FrontPage Child Page Content",
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki FrontPage Child Page Title");
+
+		WikiPage.addComment(
+			entryComment = "Wiki FrontPage Child Page Comment Body document"
+		);
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.searchPG(searchTerm = "document");
+
+		WikiPage.viewSearchResultsPG(
+			commentBody = "Wiki FrontPage Child Page Comment Body document",
+			wikiComment = "true",
+			wikiPageTitle = "Wiki FrontPage Child Page Title"
+		);
+	}
+
+	@priority = "3"
+	test ViewNoWikiXSSviaAddPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.editFrontPagePG(
+			wikiPageContentEdit = '''<script>alert(123);</script>'''
+		);
+
+		AssertClick(locator1 = "Link#EDIT", value1 = "Edit");
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
+	@priority = "4"
+	test ViewWikiDraftPagesViaBreadcrumb {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Breadcrumb");
+
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_RECENT_CHANGES",
+			value1 = "Recent Changes"
+		);
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Wiki Test Page",
+			pathLocator = "PAGE"
+		);
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Recent Changes",
+			pathLocator = "PAGE"
+		);
+
+		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Wiki Test Page",
+			pathLocator = "CURRENT_LOCATION"
+		);
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "All Pages",
+			pathLocator = "CURRENT_LOCATION"
+		);
+
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_DRAFT_PAGES",
+			value1 = "Draft Pages"
+		);
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Wiki Test Page",
+			pathLocator = "PAGE"
+		);
+
+		Breadcrumb.viewPG(
+			breadcrumbListVisible = "Draft Pages",
+			pathLocator = "CURRENT_LOCATION"
+		);
+	}
+
+	@priority = "4"
+	test WikiNavigationPortletSmoke {
+		Navigator.openURL(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Tree Menu");
+
+		AntCommand.antCommand(
+			locator1 = "build-test.xml",
+			value1 = "remove-plugin -Dplugin.name=wiki-navigation-portlet"
+		);
+	}
+}

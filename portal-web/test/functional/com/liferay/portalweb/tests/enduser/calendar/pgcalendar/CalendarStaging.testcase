@@ -1,316 +1,253 @@
-<definition component-name="portal-calendar">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
-	<property name="testray.main.component.name" value="Calendar" />
-
-	<var name="pageName" value="Staging Test Page" />
-	<var name="portletName" value="Calendar" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="portletName" value="Calendar" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Staging Test Page" />
-				</execute>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddEvent" priority="3">
-		<description message="This is a use case for LPS-52083." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
+@component-name = "portal-calendar"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property testray.main.component.name = "Calendar";
+	var pageName = "Staging Test Page";
+	var portletName = "Calendar";
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="page" value="Staging Test Page" />
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		User.firstLoginPG();
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Staging#gotoPublishToLive" />
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="Staging#publishToLive" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Staging Test Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Staging Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="CalendarEvent#publish" />
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Portlet.addPG(pageName = "Staging Test Page", portletName = "Calendar");
+	}
 
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
-		</execute>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Staging Test Page");
 
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
-		</execute>
-
-		<execute macro="CalendarEvent#assertEventNotEditable" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="unavailableCalendarList" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewAvailableCalendars">
-			<var name="availableCalendarList" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoAddViaDayView" />
-
-		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="unavailableCalendarList" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewAvailableCalendars">
-			<var name="availableCalendarList" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="SchedulePublishToLiveWithEventAndResource" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="calendarName" value="Site Name" />
-			<var name="eventTitle" value="Site Name Staged Event" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Site Name Staged Event" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Test Test Live Event" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Test Test Live Event" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Calendar#view">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
-			<var name="eventTitle" value="Site Name Staged Event" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Test Test Live Event" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#schedulePublishToLivePG">
-			<var name="checkContentNameList" value="Calendar" />
-			<var name="scheduleTitleName" value="Staging Schedule Title" />
-		</execute>
-
-		<execute function="Pause" locator1="120000" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Site Name Staged Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Test Test Live Event" />
-		</execute>
-
-		<execute macro="Calendar#view">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-	</command>
-</definition>
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-52083."
+	@priority = "3"
+	test AddEvent {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(page = "Staging Test Page", site = "Site Name");
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title - Staged Edit");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title - Staged Edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		CalendarScheduler.selectSpecificEvent(
+			eventTitle = "Calendar Event Title - Staged Edit"
+		);
+
+		CalendarEvent.assertEventNotEditable();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.viewUnavailableCalendarsNotPresent(
+			unavailableCalendarList = "Site Name"
+		);
+
+		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		CalendarNavigator.gotoView(viewType = "Day");
+
+		CalendarScheduler.gotoAddViaDayView();
+
+		CalendarEvent.viewUnavailableCalendarsNotPresent(
+			unavailableCalendarList = "Site Name"
+		);
+
+		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
+	}
+
+	@priority = "5"
+	test SchedulePublishToLiveWithEventAndResource {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			calendarName = "Site Name",
+			eventTitle = "Site Name Staged Event",
+			eventType = "Regular",
+			pageName = "Staging Test Page",
+			pageStaging = "true",
+			siteName = "Site Name",
+			siteURL = "true"
+		);
+
+		CalendarEvent.view(eventTitle = "Site Name Staged Event");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			calendarName = "Test Test",
+			eventTitle = "Test Test Live Event",
+			eventType = "Regular",
+			pageName = "Staging Test Page",
+			pageStaging = "true",
+			siteName = "Site Name",
+			siteURL = "true"
+		);
+
+		CalendarEvent.view(eventTitle = "Test Test Live Event");
+
+		CalendarResource.add(
+			calendarResourceName = "Calendar Resource Name",
+			calendarType = "Other Calendars"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Calendar.add(
+			calendarName = "Calendar Resource Name",
+			calendarType = "Other Calendars"
+		);
+
+		Calendar.view(
+			calendarName = "Calendar Resource Name",
+			calendarType = "Other Calendars"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		CalendarScheduler.viewSpecificEventNotPresent(
+			eventTitle = "Site Name Staged Event"
+		);
+
+		CalendarResource.viewResourceNameNotPresent(
+			calendarResourceName = "Calendar Resource Name"
+		);
+
+		CalendarEvent.view(eventTitle = "Test Test Live Event");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.schedulePublishToLivePG(
+			checkContentNameList = "Calendar",
+			scheduleTitleName = "Staging Schedule Title"
+		);
+
+		Pause(locator1 = "120000");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		CalendarEvent.view(eventTitle = "Site Name Staged Event");
+
+		CalendarEvent.view(eventTitle = "Test Test Live Event");
+
+		Calendar.view(
+			calendarName = "Calendar Resource Name",
+			calendarType = "Other Calendars"
+		);
+	}
+}

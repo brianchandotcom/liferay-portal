@@ -1,526 +1,406 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Pages Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddPageFromExistingPage" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="pageTemplateName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<for list="Tags Navigation,Categories Navigation,Wiki" param="portletName">
-			<execute macro="Portlet#viewSpecificPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddPagesFullPageApplication" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Hello Soy Portlet,RSS Publisher,Application Authorization Request" param="portlet">
-			<execute macro="SitePages#openPagesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="${portlet} Full Page Application" />
-				<var name="sitePageType" value="Full Page Application" />
-			</execute>
-
-			<execute macro="SitePages#configurePage">
-				<var name="pageName" value="${portlet} Full Page Application" />
-				<var name="portlet" value="${portlet}" />
-				<var name="privacy" value="Public Pages" />
-				<var name="sitePageType" value="Full Page Application" />
-			</execute>
-
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="${portlet} Full Page Application" />
-				<var name="siteName" value="Test Site Name" />
-			</execute>
-
-			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">
-				<var name="key_portletTitleName" value="${portlet}" />
-			</execute>
-
-			<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
-		</for>
-	</command>
-
-	<command name="AddPageWithEscapeCharacter" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Tester&apos;s Page" />
-		</execute>
-	</command>
-
-	<command name="AddPageWithMultipleChildPagesToSite" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
-		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
-			<execute macro="JSONLayout#addPublicLayout">
-				<var name="groupName" value="Test Site Name" />
-				<var name="layoutName" value="${childPageName}" />
-				<var name="parentLayoutName" value="Site Page" />
-			</execute>
-		</for>
-
-		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
-			<execute macro="Page#view">
-				<var name="depth" value="2" />
-				<var name="pageName" value="${childPageName}" />
-				<var name="privacy" value="Public Pages" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddSitePrivateChildPage" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="JSONLayout#addPrivateLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
-		<execute macro="JSONLayout#addPrivateLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Child Page" />
-			<var name="parentLayoutName" value="Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/group/test-site-name/site-child-page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="depth" value="2" />
-			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-	</command>
-
-	<command name="AddSitePrivatePagePortlet" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="JSONLayout#addPrivateLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="${portalURL}/group/test-site-name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-	</command>
-
-	<command name="AddSitePublicPage" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/web/test-site-name/site-page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
-	<command name="AddSitePublicPagePortlet" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-	</command>
-
-	<command name="ChangePageLayout" priority="5">
-		<property name="testray.component.names" value="Site Pages Administration,Training" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Page#viewPageLayout">
-			<var name="pageLayout" value="2 Column (30/70)" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Page#viewPageLayout">
-			<var name="pageLayout" value="1 Column" />
-		</execute>
-
-		<for list="1-2-1 Columns (50/50),1-2-1 Columns (70/30),Freeform,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),2-2 Columns,1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,3-2-3 Columns" param="columnName">
-			<execute macro="SitePages#openPagesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="SitePages#configurePage">
-				<var name="columnName" value="${columnName}" />
-				<var name="pageName" value="Site Page Name" />
-				<var name="privacy" value="Public Pages" />
-				<var name="sitePageType" value="Widget Page" />
-			</execute>
-
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Site Page Name" />
-				<var name="siteName" value="Test Site Name" />
-			</execute>
-
-			<execute macro="Portlet#viewPG">
-				<var name="portletName" value="Web Content Display" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="DeleteSitePages" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
-			<execute macro="JSONLayout#addPublicLayout">
-				<var name="groupName" value="Test Site Name" />
-				<var name="layoutName" value="${pageName}" />
-			</execute>
-		</for>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Site Page 2" />
-		</execute>
-	</command>
-
-	<command name="EditSitePage" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Site Pages Administration,Training" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Page#editName">
-			<var name="pageNameEdit" value="Site Page Edit" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page Edit" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="guest" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="Page#viewSelectedLayoutColumn">
-			<var name="columnName" value="1 Column" />
-		</execute>
-
-		<execute macro="Page#editName">
-			<var name="pageNameEdit" value="Home" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
-	<command name="SaveEmbeddedPageType" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-			<var name="pageTypeURL" value="https://www.google.com" />
-			<var name="sitePageType" value="Embedded" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="pageName" value="Site Page" />
-			<var name="pageTypeURL" value="https://www.liferay.com" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Embedded" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/web/test-site-name" />
-		</execute>
-
-		<execute macro="Page#viewEmbeddedPagePG" />
-	</command>
-
-	<command name="SavePortletPageType" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-			<var name="pageTemplateName" value="Blog" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Blogs#viewControlsPG" />
-	</command>
-
-	<command name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="3">
-		<property name="testray.component.names" value="Site and Page Templates,Site Pages Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteTemplate" value="Community" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewNoInfoMessage" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			Site.tearDownCP();
+
+			User.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddPageFromExistingPage {
+		property testray.component.names = "Training";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		SitePages.addPublicPage(pageName = "Site Page Name", pageTemplateName = "Wiki");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		for (var portletName : list "Tags Navigation,Categories Navigation,Wiki") {
+			Portlet.viewSpecificPG(portletName = "${portletName}");
+		}
+	}
+
+	@priority = "4"
+	test AddPagesFullPageApplication {
+		property testray.component.names = "Site Pages Administration";
+
+		for (var portlet : list "Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Hello Soy Portlet,RSS Publisher,Application Authorization Request") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "${portlet} Full Page Application",
+				sitePageType = "Full Page Application"
+			);
+
+			SitePages.configurePage(
+				pageName = "${portlet} Full Page Application",
+				portlet = "${portlet}",
+				privacy = "Public Pages",
+				sitePageType = "Full Page Application"
+			);
+
+			Navigator.gotoSitePage(
+				pageName = "${portlet} Full Page Application",
+				siteName = "Test Site Name"
+			);
+
+			AssertTextEquals.assertTextCaseInsensitive(
+				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
+				value1 = "${portlet}",
+				key_portletTitleName = "${portlet}"
+			);
+
+			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+		}
+	}
+
+	@priority = "3"
+	test AddPageWithEscapeCharacter {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Tester&apos;s Page");
+	}
+
+	@priority = "3"
+	test AddPageWithMultipleChildPagesToSite {
+		property testray.component.names = "Site Pages Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
+
+		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "${childPageName}",
+				parentLayoutName = "Site Page"
+			);
+		}
+
+		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
+			Page.view(depth = "2", pageName = "${childPageName}", privacy = "Public Pages");
+		}
+	}
+
+	@priority = "4"
+	test AddSitePrivateChildPage {
+		property testray.component.names = "Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
+
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Child Page",
+			parentLayoutName = "Site Page"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Site Page",
+			url = "${portalURL}/group/test-site-name/site-child-page"
+		);
+
+		Page.view(depth = "2", pageName = "Site Child Page", privacy = "Private Pages");
+	}
+
+	@priority = "4"
+	test AddSitePrivatePagePortlet {
+		property testray.component.names = "Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Blogs Page"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Blogs Page",
+			url = "${portalURL}/group/test-site-name"
+		);
+
+		Portlet.addPG(
+			pageAccess = "Private",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			siteName = "Test Site Name",
+			siteURL = "true"
+		);
+	}
+
+	@priority = "4"
+	test AddSitePublicPage {
+		property testray.component.names = "Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Site Page",
+			url = "${portalURL}/web/test-site-name/site-page"
+		);
+
+		Page.view(pageName = "Site Page", privacy = "Public Pages");
+	}
+
+	@priority = "4"
+	test AddSitePublicPagePortlet {
+		property testray.component.names = "Site Pages Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Blogs Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+	}
+
+	@priority = "5"
+	test ChangePageLayout {
+		property testray.component.names = "Site Pages Administration,Training";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Page.viewPageLayout(pageLayout = "2 Column (30/70)");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Page.viewPageLayout(pageLayout = "1 Column");
+
+		for (var columnName : list "1-2-1 Columns (50/50),1-2-1 Columns (70/30),Freeform,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),2-2 Columns,1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,3-2-3 Columns") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.configurePage(
+				columnName = "${columnName}",
+				pageName = "Site Page Name",
+				privacy = "Public Pages",
+				sitePageType = "Widget Page"
+			);
+
+			Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+			Portlet.viewPG(portletName = "Web Content Display");
+		}
+	}
+
+	@priority = "5"
+	test DeleteSitePages {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site Pages Administration";
+
+		for (var pageName : list "Site Page 1,Site Page 2,Site Page 3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "${pageName}"
+			);
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.deletePage(pageName = "Site Page 2");
+	}
+
+	@priority = "5"
+	test EditSitePage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site Pages Administration,Training";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page"
+		);
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
+
+		Page.editName(pageNameEdit = "Site Page Edit");
+
+		Page.view(pageName = "Site Page Edit", privacy = "Public Pages");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Welcome");
+
+		Page.viewSelectedLayoutColumn(columnName = "1 Column");
+
+		Page.editName(pageNameEdit = "Home");
+
+		Navigator.gotoPage(pageName = "Home");
+
+		Page.view(pageName = "Home", privacy = "Public Pages");
+	}
+
+	@priority = "4"
+	test SaveEmbeddedPageType {
+		property testray.component.names = "Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(
+			pageName = "Site Page",
+			pageTypeURL = "https://www.google.com",
+			sitePageType = "Embedded"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.configurePage(
+			pageName = "Site Page",
+			pageTypeURL = "https://www.liferay.com",
+			privacy = "Public Pages",
+			sitePageType = "Embedded"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Site Page",
+			url = "${portalURL}/web/test-site-name"
+		);
+
+		Page.viewEmbeddedPagePG();
+	}
+
+	@priority = "4"
+	test SavePortletPageType {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page", pageTemplateName = "Blog");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Test Site Name");
+
+		Blogs.viewControlsPG();
+	}
+
+	@priority = "3"
+	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
+		property testray.component.names = "Site and Page Templates,Site Pages Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Page.viewDefaultSiteTemplatePagesPG(
+			pageName = "Home",
+			siteName = "Site Name",
+			siteTemplate = "Community",
+			siteURL = "true"
+		);
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Name");
+
+		SiteTemplates.viewNoInfoMessage();
+
+		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+}

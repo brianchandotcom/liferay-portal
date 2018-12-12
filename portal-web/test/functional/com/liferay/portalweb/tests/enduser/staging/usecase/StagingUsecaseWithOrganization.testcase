@@ -1,169 +1,152 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Users and Organizations,Staging" />
-	<property name="testray.main.component.name" value="Staging" />
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Users and Organizations,Staging";
+	property testray.main.component.name = "Staging";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
 
-				<execute macro="User#deactivateCP">
-					<var name="userFirstName" value="userfn" />
-				</execute>
+			User.deactivateCP(userFirstName = "userfn");
 
-				<execute macro="User#deleteCP" />
+			User.deleteCP();
 
-				<execute macro="Organization#tearDownCP">
-					<var name="orgName" value="Staging Organization Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+			Organization.tearDownCP(orgName = "Staging Organization Name");
+		}
+	}
 
-	<command name="StagingOrganizations" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="StagingUsecaseWithOrganizatiton#StagingOrganizations" />
-		<property name="testray.component.names" value="Training" />
+	@priority = "5"
+	test StagingOrganizations {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
+		property testray.component.names = "Training";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
+		Organization.addCP(
+			orgName = "Staging Organization Name",
+			orgType = "Organization"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Staging Organization Name" />
-		</execute>
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Staging Organization Name"
+		);
 
-		<execute macro="JSONUser#addUser">
-			<var name="allowManualMembershipManagement" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		JSONUser.addUser(
+			allowManualMembershipManagement = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Staging Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+		Organization.addMemberCP(
+			orgName = "Staging Organization Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userName = "userfn userln",
+			userScreenName = "usersn"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
+		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Staging Organization Name" />
-		</execute>
+		ProductMenu.gotoSite(site = "Staging Organization Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Staging Organization Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Staging Organization Name"
+		);
 
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="All Site Pages Variations" />
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "All Site Pages Variations",
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Staging Organization Name"
+		);
 
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name" />
-		</execute>
+		Staging.viewSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name"
+		);
 
-		<execute macro="Staging#addPageVariationPG">
-			<var name="pageVariationName" value="Page Variation Name" />
-		</execute>
+		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Staging Organization Name" />
-		</execute>
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Staging Organization Name"
+		);
 
-		<execute macro="Staging#viewPageVariationPG">
-			<var name="pageVariationName" value="Page Variation Name" />
-		</execute>
-	</command>
-</definition>
+		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
+	}
+}

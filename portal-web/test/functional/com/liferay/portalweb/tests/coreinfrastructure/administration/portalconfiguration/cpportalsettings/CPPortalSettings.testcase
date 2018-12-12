@@ -1,669 +1,583 @@
-<definition component-name="portal-user-management-and-portal-configuration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.assert.warning.exceptions" value="true" />
-	<property name="testray.main.component.name" value="Portal Settings" />
-
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<execute macro="PortalSettings#tearDownCP" />
-
-		<execute macro="User#tearDownCP" />
-
-		<execute macro="Role#tearDownCP" />
-
-		<execute macro="Organization#tearDownCP" />
-
-		<execute macro="UserGroup#tearDownCP" />
-
-		<execute macro="Site#tearDownCP" />
-
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
-
-	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-			<var name="orgName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-			<var name="orgName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserInfomationOrganizationSitesCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-	</command>
-
-	<command name="EditDefaultUserAssociationsRoles" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserInfomationRolesCP">
-			<var name="roleTitle" value="Roles Regrole Name" />
-		</execute>
-	</command>
-
-	<command name="EditDefaultUserAssociationsSites" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsSitesCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsSitesCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserInfomationSitesCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#viewUserInfomationUserGroupsCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-	</command>
-
-	<command name="EnterReservedEmailAddress" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#enterReservedEmailAddressCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addReservedEmailAddressCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-
-	<command name="EnterReservedScreenName" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#enterReservedScreenNameCP">
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addReservedScreenNameCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-
-	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
-			<var name="enableAcrossSite" value="false" />
-		</execute>
-
-		<execute macro="PortalSettings#configureContentSharingSubSitesCP">
-			<var name="subSites" value="enabledByDefault" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Site Name" />
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="WC Test Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteScopeType" value="Child Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
-			<var name="childSite" value="true" />
-			<var name="contentSharingAcrossSitesEnabled" value="false" />
-			<var name="globalSiteName" value="Global" />
-			<var name="globalSiteType" value="Global" />
-			<var name="liferaySiteName" value="Liferay" />
-			<var name="liferaySiteType" value="Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="WC WebContent Content" />
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="siteScope1" value="Site Name" />
-			<var name="siteScope2" value="Child SiteName" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addViaAPSelectScope">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="siteScope" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeType" value="Parent Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
-			<var name="childSite" value="true" />
-			<var name="contentSharingAcrossSitesEnabled" value="false" />
-			<var name="globalSiteName" value="Global" />
-			<var name="globalSiteType" value="Global" />
-			<var name="liferaySiteName" value="Liferay" />
-			<var name="liferaySiteType" value="Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Child SiteName" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="siteScope1" value="Site Name" />
-			<var name="siteScope2" value="Child SiteName" />
-		</execute>
-	</command>
-
-	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
-			<var name="enableAcrossSite" value="true" />
-		</execute>
-
-		<execute macro="PortalSettings#configureContentSharingSubSitesCP">
-			<var name="subSites" value="enabledByDefault" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
-			<var name="contentSharingAcrossSitesEnabled" value="true" />
-			<var name="globalSiteName" value="Global" />
-			<var name="globalSiteType" value="Global" />
-			<var name="liferaySiteName" value="${siteName}" />
-			<var name="liferaySiteType" value="Site" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
-			<var name="contentSharingAcrossSitesEnabled" value="true" />
-			<var name="currentSite" value="true" />
-			<var name="globalSiteName" value="Global" />
-			<var name="globalSiteType" value="Global" />
-			<var name="liferaySiteName" value="Liferay" />
-			<var name="liferaySiteType" value="Current Site" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="AP Test Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="siteScope1" value="Site Name" />
-			<var name="siteScope2" value="${siteName}" />
-		</execute>
-	</command>
-
-	<command name="ViewDefaultUserAssociations" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewDefaultUserAssociationsCP" />
-	</command>
-
-	<command name="ViewEmailNotificationsAccountCreatedNotification" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewEmailNotificationsAccountCreatedNotificationCP" />
-	</command>
-
-	<command name="ViewEmailNotificationsPasswordChangedNotification" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewEmailNotificationsPasswordChangedNotificationCP" />
-	</command>
-
-	<command name="ViewEmailNotificationsSender" priority="3">
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewEmailNotificationsSenderCP" />
-	</command>
-
-	<command name="ViewReservedCredentialsScreenNames" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewReservedCredentialsScreenNamesCP" />
-	</command>
-</definition>
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Portal Settings";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		PortalSettings.tearDownCP();
+
+		User.tearDownCP();
+
+		Role.tearDownCP();
+
+		Organization.tearDownCP();
+
+		UserGroup.tearDownCP();
+
+		Site.tearDownCP();
+
+		WebContent.tearDownCP();
+
+		Page.tearDownCP();
+	}
+
+	@priority = "5"
+	test EditDefaultUserAssociationsOrganizationSites {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(orgName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
+			orgName = "Organization Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
+			orgName = "Organization Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserInfomationOrganizationSitesCP(
+			orgName = "Organization Name",
+			siteName = "Organization Name"
+		);
+	}
+
+	@priority = "4"
+	test EditDefaultUserAssociationsRoles {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Roles Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
+			roleTitle = "Roles Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewConfigurationUsersDefaultUserAssociationsRolesCP(
+			roleTitle = "Roles Regrole Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserInfomationRolesCP(roleTitle = "Roles Regrole Name");
+	}
+
+	@priority = "4"
+	test EditDefaultUserAssociationsSites {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewConfigurationUsersDefaultUserAssociationsSitesCP(
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserInfomationSitesCP(siteName = "Site Name");
+	}
+
+	@priority = "4"
+	test EditDefaultUserAssociationsUserGroups {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
+
+		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsUserGroupsCP(
+			userGroupName = "UG UserGroup Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewConfigurationUsersDefaultUserAssociationsUserGroupsCP(
+			userGroupName = "UG UserGroup Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.viewUserInfomationUserGroupsCP(userGroupName = "UG UserGroup Name");
+	}
+
+	@priority = "5"
+	test EnterReservedEmailAddress {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.enterReservedEmailAddressCP(
+			userEmailAddress = "userea@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addReservedEmailAddressCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+	}
+
+	@priority = "5"
+	test EnterReservedScreenName {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.enterReservedScreenNameCP(userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addReservedScreenNameCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+	}
+
+	@priority = "4"
+	test ViewContentSharingDisabledAcrossSitesViaAP {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "false");
+
+		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "AP Test Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(parentSiteName = "Site Name", siteName = "Child SiteName");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "WC Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openSiteURL(siteName = "Child SiteName");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.configureSiteScopePG(
+			siteName = "Child SiteName",
+			siteScopeType = "Child Site"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
+			childSite = "true",
+			contentSharingAcrossSitesEnabled = "false",
+			globalSiteName = "Global",
+			globalSiteType = "Global",
+			liferaySiteName = "Liferay",
+			liferaySiteType = "Site"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewContentSharingPG(
+			assetContent = "WC WebContent Content",
+			assetTitle = "WC WebContent Title",
+			siteScope1 = "Site Name",
+			siteScope2 = "Child SiteName"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Blogs.addViaAPSelectScope(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			siteScope = "Site Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Child SiteName");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureSiteScopePG(
+			siteName = "Site Name",
+			siteScopeType = "Parent Site"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
+			childSite = "true",
+			contentSharingAcrossSitesEnabled = "false",
+			globalSiteName = "Global",
+			globalSiteType = "Global",
+			liferaySiteName = "Liferay",
+			liferaySiteType = "Site"
+		);
+
+		Navigator.openSiteURL(siteName = "Child SiteName");
+
+		AssetPublisherPortlet.viewContentSharingPG(
+			assetContent = "Blogs Entry Content",
+			assetTitle = "Blogs Entry Title",
+			siteScope1 = "Site Name",
+			siteScope2 = "Child SiteName"
+		);
+	}
+
+	@priority = "4"
+	test ViewContentSharingEnabledAcrossSitesViaAP {
+		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "true");
+
+		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "AP Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
+			contentSharingAcrossSitesEnabled = "true",
+			globalSiteName = "Global",
+			globalSiteType = "Global",
+			liferaySiteName = "${siteName}",
+			liferaySiteType = "Site"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Blogs.addViaAP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "AP Test Page");
+
+		Navigator.gotoPage(pageName = "AP Test Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "AP Test Page");
+
+		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
+			contentSharingAcrossSitesEnabled = "true",
+			currentSite = "true",
+			globalSiteName = "Global",
+			globalSiteType = "Global",
+			liferaySiteName = "Liferay",
+			liferaySiteType = "Current Site"
+		);
+
+		Navigator.gotoPage(pageName = "AP Test Page");
+
+		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site Name");
+
+		Navigator.gotoPage(pageName = "AP Test Page");
+
+		AssetPublisherPortlet.viewContentSharingPG(
+			assetContent = "Blogs Entry Content",
+			assetTitle = "Blogs Entry Title",
+			siteScope1 = "Site Name",
+			siteScope2 = "${siteName}"
+		);
+	}
+
+	@priority = "3"
+	test ViewDefaultUserAssociations {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewDefaultUserAssociationsCP();
+	}
+
+	@priority = "3"
+	test ViewEmailNotificationsAccountCreatedNotification {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
+	}
+
+	@priority = "3"
+	test ViewEmailNotificationsPasswordChangedNotification {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
+	}
+
+	@priority = "3"
+	test ViewEmailNotificationsSender {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewEmailNotificationsSenderCP();
+	}
+
+	@priority = "3"
+	test ViewReservedCredentialsScreenNames {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.viewReservedCredentialsScreenNamesCP();
+	}
+}

@@ -1,216 +1,161 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Navigation" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Navigation";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddSubmenuNavigationMenu" priority="5">
-		<description message="This is a test for LPS-75061" />
+	@description = "This is a test for LPS-75061"
+	@priority = "5"
+	test AddSubmenuNavigationMenu {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Test Navigation Menu Name" />
-		</execute>
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Test Navigation Menu Name" />
-		</execute>
+		NavigationMenusAdmin.addItem(item = "Submenu", submenuName = "Test Submenu");
 
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="Submenu" />
-			<var name="submenuName" value="Test Submenu" />
-		</execute>
+		NavigationMenusAdmin.viewItem(itemName = "Test Submenu");
 
-		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Test Submenu" />
-		</execute>
+		NavigationMenusAdmin.addItem(
+			item = "URL",
+			url = "https://www.liferay.com/",
+			urlName = "Liferay"
+		);
 
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="URL" />
-			<var name="url" value="https://www.liferay.com/" />
-			<var name="urlName" value="Liferay" />
-		</execute>
+		NavigationMenusAdmin.viewItem(itemName = "Liferay");
 
-		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Liferay" />
-		</execute>
+		NavigationMenusAdmin.moveItem(direction = "up", itemName = "Liferay");
 
-		<execute macro="NavigationMenusAdmin#moveItem">
-			<var name="direction" value="up" />
-			<var name="itemName" value="Liferay" />
-		</execute>
+		NavigationMenusAdmin.moveItem(direction = "in", itemName = "Liferay");
 
-		<execute macro="NavigationMenusAdmin#moveItem">
-			<var name="direction" value="in" />
-			<var name="itemName" value="Liferay" />
-		</execute>
+		NavigationMenusAdmin.viewItemNested(itemName = "Liferay");
 
-		<execute macro="NavigationMenusAdmin#viewItemNested">
-			<var name="itemName" value="Liferay" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+		NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusWidget#chooseMenu">
-			<var name="menuName" value="Test Navigation Menu Name" />
-		</execute>
+		Portlet.saveAndCloseConfig();
 
-		<execute macro="Portlet#saveAndCloseConfig" />
+		Page.gotoChildPagePG(childPageName = "Liferay", pageName = "Test Submenu");
+	}
 
-		<execute macro="Page#gotoChildPagePG">
-			<var name="childPageName" value="Liferay" />
-			<var name="pageName" value="Test Submenu" />
-		</execute>
-	</command>
+	@description = "This is a test for LPS-75059."
+	@priority = "4"
+	test AddURLNavigationMenu {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
 
-	<command name="AddURLNavigationMenu" priority="4">
-		<description message="This is a test for LPS-75059." />
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
+		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		NavigationMenusAdmin.addItem(
+			item = "URL",
+			url = "https://www.liferay.com/",
+			urlName = "Liferay"
+		);
 
-		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Test Navigation Menu Name" />
-		</execute>
+		NavigationMenusAdmin.viewItem(itemName = "Liferay");
 
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="URL" />
-			<var name="url" value="https://www.liferay.com/" />
-			<var name="urlName" value="Liferay" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
-		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Liferay" />
-		</execute>
+		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+		Portlet.saveAndCloseConfig();
 
-		<execute macro="NavigationMenusWidget#chooseMenu">
-			<var name="menuName" value="Test Navigation Menu Name" />
-		</execute>
+		AssertClick(
+			locator1 = "Home#PAGE",
+			value1 = "Liferay",
+			key_pageName = "Liferay"
+		);
 
-		<execute macro="Portlet#saveAndCloseConfig" />
+		AssertLocation(value1 = "https://www.liferay.com/");
+	}
 
-		<execute function="AssertClick" locator1="Home#PAGE" value1="Liferay">
-			<var name="key_pageName" value="Liferay" />
-		</execute>
+	@description = "This is a test for LPS-76658"
+	@priority = "5"
+	test EditNavigationMenuPageItemName {
+		property portal.acceptance = "true";
 
-		<execute function="AssertLocation" value1="https://www.liferay.com/" />
-	</command>
+		for (var index : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name ${index}"
+			);
+		}
 
-	<command name="EditNavigationMenuPageItemName" priority="5">
-		<description message="This is a test for LPS-76658" />
-		<property name="portal.acceptance" value="true" />
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		<for list="1,2" param="index">
-			<execute macro="JSONLayout#addPublicLayout">
-				<var name="groupName" value="Test Site Name" />
-				<var name="layoutName" value="Test Page Name ${index}" />
-			</execute>
-		</for>
+		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		NavigationMenusAdmin.addItem(
+			item = "Page",
+			pageNames = "Test Page Name 1,Test Page Name 2"
+		);
 
-		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Test Navigation Menu Name" />
-		</execute>
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="Page" />
-			<var name="pageNames" value="Test Page Name 1,Test Page Name 2" />
-		</execute>
+		LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		NavigationMenusAdmin.editItem(
+			item = "Page",
+			itemName = "Test Page Name 2",
+			name = "Test Page Name 3"
+		);
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Test Navigation Menu Name" />
-		</execute>
+		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 3");
 
-		<execute macro="NavigationMenusAdmin#editItem">
-			<var name="item" value="Page" />
-			<var name="itemName" value="Test Page Name 2" />
-			<var name="name" value="Test Page Name 3" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 1",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Test Page Name 3" />
-		</execute>
+		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 1" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
 
-		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+		Portlet.saveAndCloseConfig();
 
-		<execute macro="NavigationMenusWidget#selectNavigation">
-			<var name="menuType" value="Primary Navigation" />
-		</execute>
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 3",
+			siteName = "Test Site Name"
+		);
 
-		<execute macro="Portlet#saveAndCloseConfig" />
+		var portalURL = PropsUtil.get("portal.url");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name 3" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/test-site-name/test-page-name-2" />
-	</command>
-</definition>
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
+	}
+}

@@ -1,105 +1,92 @@
-<definition component-name="portal-knowledge-base">
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Knowledge Base" />
+@component-name = "portal-knowledge-base"
+definition {
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+	var pageName = "Knowledge Base Article Page";
+	var portletName = "Knowledge Base Article";
 
-	<var name="pageName" value="Knowledge Base Article Page" />
-	<var name="portletName" value="Knowledge Base Article" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		SitePages.addPublicPage(pageName = "${pageName}", sitePageType = "Widget Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "${pageName}",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="${pageName}" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "${pageName}");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		Portlet.addPG(portletName = "${portletName}");
+	}
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
+			KBArticle.tearDownCP();
+		}
+	}
 
-				<execute macro="KBArticle#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+	@priority = "3"
+	test DeleteKBArticleViaKBArticle {
+		Navigator.openURL();
 
-	<command name="DeleteKBArticleViaKBArticle" priority="3">
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
+		KBArticle.selectPGViaKBArticle(
+			kbArticleTitle = "Knowledge Base Article Title",
+			pageName = "Knowledge Base Article Page"
+		);
 
-		<execute macro="KBArticle#selectPGViaKBArticle">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="KBArticle#viewPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.deletePG(
+			deleteViaKBArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="KBArticle#deletePG">
-			<var name="deleteViaKBArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewDefaultCP" />
-	</command>
-</definition>
+		KBArticle.viewDefaultCP();
+	}
+}

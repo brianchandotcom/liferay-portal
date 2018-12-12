@@ -1,187 +1,165 @@
-<definition component-name="portal-document-management">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Documents Management" />
+@component-name = "portal-document-management"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
 
-				<execute macro="DMFolder#tearDownCP" />
+			DMFolder.tearDownCP();
 
-				<execute macro="User#logoutPG" />
-			</else>
-		</if>
-	</tear-down>
+			User.logoutPG();
+		}
+	}
 
-	<command name="ConfigureAutoTaggingPerSite" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
+	@priority = "4"
+	test ConfigureAutoTaggingPerSite {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
 
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Assets" />
-			<var name="configurationName" value="Asset Auto Tagging" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Auto Tagging",
+			configurationScope = "System Scope"
+		);
 
-		<execute macro="AutoTagging#enableAutoTagging" />
+		AutoTagging.enableAutoTagging();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Enabled" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Enabled");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Disabled" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Disabled");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
 
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Asset Auto Tagging" />
-		</execute>
+		Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
 
-		<execute macro="AutoTagging#disableAutoTagging" />
+		AutoTagging.disableAutoTagging();
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Enabled" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Enabled");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_4.jpg" />
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="AutoTagging#assertAutoTagPresent" />
+		AutoTagging.assertAutoTagPresent();
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Disabled" />
-		</execute>
+		Navigator.openSiteURL(siteName = "Site Disabled");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_4.jpg" />
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="AutoTagging#assertNoAutoTag" />
-	</command>
+		AutoTagging.assertNoAutoTag();
+	}
 
-	<command name="Smoke" priority="5">
-		<property name="portal.acceptance" value="false" />
+	@priority = "5"
+	test Smoke {
+		property portal.acceptance = "false";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
 
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Assets" />
-			<var name="configurationName" value="Asset Auto Tagging" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Auto Tagging",
+			configurationScope = "System Scope"
+		);
 
-		<execute macro="AutoTagging#enableAutoTagging" />
+		AutoTagging.enableAutoTagging();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_4.jpg" />
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document JPG" />
-		</execute>
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		<execute macro="AutoTagging#assertAutoTagPresent" />
-	</command>
-</definition>
+		AutoTagging.assertAutoTagPresent();
+	}
+}

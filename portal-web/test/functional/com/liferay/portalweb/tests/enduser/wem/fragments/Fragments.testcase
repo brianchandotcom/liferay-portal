@@ -1,202 +1,148 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Fragments" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="JSONFragment#addFragmentCollection">
-			<var name="groupName" value="Test Site Name" />
-			<var name="name" value="Collection Name" />
-		</execute>
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name"
+		);
 
-		<execute macro="JSONFragment#addSection">
-			<var name="collectionName" value="Collection Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="name" value="Fragment Name" />
-		</execute>
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			groupName = "Test Site Name",
+			name = "Fragment Name"
+		);
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="DeleteFragment" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test DeleteFragment {
+		property portal.acceptance = "true";
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#delete">
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
+		LexiconEntry.delete(rowEntry = "Fragment Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
-	</command>
+		LexiconEntry.viewNoEntry(rowEntry = "Fragment Name");
+	}
 
-	<command name="DeleteFragmentCollection" priority="5">
-		<property name="portal.acceptance" value="true" />
+	@priority = "5"
+	test DeleteFragmentCollection {
+		property portal.acceptance = "true";
 
-		<execute macro="Collection#deleteCollection">
-			<var name="collectionName" value="Collection Name" />
-		</execute>
+		Collection.deleteCollection(collectionName = "Collection Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Collection#viewNotPresent">
-			<var name="collectionName" value="Collection Name" />
-		</execute>
-	</command>
+		Collection.viewNotPresent(collectionName = "Collection Name");
+	}
 
-	<command name="RenameFragment" priority="4">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+	@priority = "4"
+	test RenameFragment {
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Rename" />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Rename", rowEntry = "Fragment Name");
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Rename Fragment" />
-		</execute>
+		PortletEntry.inputName(name = "Rename Fragment");
 
-		<execute macro="Modal#save" />
+		Modal.save();
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="Rename Fragment" />
-		</execute>
-	</command>
+		LexiconEntry.viewEntryName(rowEntry = "Rename Fragment");
+	}
 
-	<command name="ViewCannotDeleteFragmentInUse" priority="5">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+	@priority = "5"
+	test ViewCannotDeleteFragmentInUse {
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavItem#gotoPageTemplates" />
+		NavItem.gotoPageTemplates();
 
-		<execute macro="PageTemplatesAdmin#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		<execute macro="PageTemplatesAdmin#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
+		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name"
+		);
 
-		<execute macro="PageEditor#viewAutoSaveMessage" />
+		PageEditor.viewAutoSaveMessage();
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="Error:The fragment entry cannot be deleted because it is required by one or more page templates." />
-			<var name="rowEntry" value="Fragment Name" />
-		</execute>
-	</command>
+		LexiconEntry.delete(
+			failure = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.",
+			rowEntry = "Fragment Name"
+		);
+	}
 
-	<command name="ViewOnlyDraftFragmentsCanBeSaved" priority="4">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+	@priority = "4"
+	test ViewOnlyDraftFragmentsCanBeSaved {
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="FragmentsAdmin#addSection">
-			<var name="fragmentName" value="Fragment Name 2" />
-		</execute>
+		FragmentsAdmin.addSection(fragmentName = "Fragment Name 2");
 
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Fragment Name 2 (Draft)" />
-		</execute>
+		SiteAdmin.viewPortletTitle(portletTitle = "Fragment Name 2 (Draft)");
 
-		<execute macro="PortletEntry#saveAsDraft" />
+		PortletEntry.saveAsDraft();
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
+		Navigator.gotoNavNested(navNested = "Collection Name");
 
-		<execute macro="PortletEntry#viewWorkflowStatus">
-			<var name="rowEntry" value="Fragment Name 2" />
-			<var name="workflowStatus" value="Draft" />
-		</execute>
+		PortletEntry.viewWorkflowStatus(
+			rowEntry = "Fragment Name 2",
+			workflowStatus = "Draft"
+		);
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Fragment Name 2" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Fragment Name 2");
 
-		<var name="htmlSnippet"><![CDATA[
+		var htmlSnippet = '''
 <html>${line.separator}
 <div>${line.separator}
 <span class="test">This is a test.</span>${line.separator}
 </div>${line.separator}
-</html>]]></var>
+</html>''';
 
-		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}"
+		);
 
-		<execute macro="PortletEntry#publish" />
+		PortletEntry.publish();
 
-		<execute function="AssertElementNotPresent" locator1="Button#SAVE_AS_DRAFT" />
-	</command>
-</definition>
+		AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
+	}
+}

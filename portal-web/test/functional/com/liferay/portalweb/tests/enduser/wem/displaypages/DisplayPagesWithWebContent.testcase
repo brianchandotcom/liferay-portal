@@ -1,418 +1,380 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Display Pages" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Title" />
-			<var name="id" value="title" />
-			<var name="itemName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="itemName" value="content" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="ViewDisplayPageMarkedAsDefault" priority="5">
-		<description message="When a display page is marked as default, associated assets will be displayed through the display page by default without need for additional configuration." />
-
-		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Title",
+			id = "title",
+			itemName = "Title"
+		);
 
-	<command name="ViewDisplayPageMetadata" priority="4">
-		<description message="This is a test for LPS-86190. Asset metadata should appear in page source." />
-
-		<echo message="## Add a vocabulary and category." />
-
-		<execute macro="JSONCategory#addVocabulary">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addCategory">
-			<var name="groupName" value="Test Site Name" />
-			<var name="title" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<echo message="## Add a web content article with a category and tag." />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Metadata" />
-		</execute>
-
-		<execute macro="AssetCategorization#addCategory">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="AssetCategorization#addTag">
-			<var name="tagName" value="test tag" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<echo message="## View page source and assert category and tag appear in the metadata." />
-
-		<var method="PropsUtil#get('portal.url')" name="baseURL" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="view-source:${baseURL}/web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertTextPresent" value1="meta content=&quot;test tag,category name&quot;" />
-	</command>
-
-	<command name="ViewDisplayPageViaAssetPublisher" priority="5">
-		<description message="Display pages can be viewed through the asset publisher widget." />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="Webcontent Title">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Webcontent Content">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="Click" locator1="AP#ASSET_ABSTRACT_TITLE">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-
-	<command name="ViewDisplayPageViaFriendlyURL" priority="5">
-		<description message="Display pages can be viewed through friendly URL." />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-
-	<command name="ViewNonDefaultDisplayPage" priority="5">
-		<description message="A selected display page should override the default display page." />
-
-		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Non-Default Display Page" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="itemName" value="content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#mapEditableTextToAsset">
-			<var name="fragmentName" value="Title" />
-			<var name="id" value="title" />
-			<var name="itemName" value="Title" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Non-Default Display Page" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-
-	<command name="ViewNoSelectedDisplayPage" priority="4">
-		<description message="When no display page is selected, assets should not be displayed through the default display page." />
-
-		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Display Page" />
-		</execute>
-
-		<execute function="Click" locator1="WCSelectDisplayPage#NONE" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/-/webcontent-title" />
-		</execute>
-
-		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
-
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="Webcontent Title">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Webcontent Content">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="Click" locator1="AP#ASSET_ABSTRACT_TITLE">
-			<var name="key_assetTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DETAIL_CONTENT" value1="Webcontent Content" />
-
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Title" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Webcontent Content" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
-</definition>
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			itemName = "content"
+		);
+
+		Button.clickPublish();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "When a display page is marked as default, associated assets will be displayed through the display page by default without need for additional configuration."
+	@priority = "5"
+	test ViewDisplayPageMarkedAsDefault {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+
+	@description = "This is a test for LPS-86190. Asset metadata should appear in page source."
+	@priority = "4"
+	test ViewDisplayPageMetadata {
+		echo("## Add a vocabulary and category.");
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name"
+		);
+
+		JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		echo("## Add a web content article with a category and tag.");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssetCategorization.addCategory(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		AssetCategorization.addTag(tagName = "test tag");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		echo("## View page source and assert category and tag appear in the metadata.");
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(
+			url = "view-source:${baseURL}/web/test-site-name/-/webcontent-title"
+		);
+
+		AssertTextPresent(value1 = "meta content=&quot;test tag,category name&quot;");
+	}
+
+	@description = "Display pages can be viewed through the asset publisher widget."
+	@priority = "5"
+	test ViewDisplayPageViaAssetPublisher {
+		property portal.acceptance = "true";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "Webcontent Title",
+			key_assetTitle = "Webcontent Title"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Webcontent Content",
+			key_assetTitle = "Webcontent Title"
+		);
+
+		Click(locator1 = "AP#ASSET_ABSTRACT_TITLE", key_assetTitle = "Webcontent Title");
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+
+	@description = "Display pages can be viewed through friendly URL."
+	@priority = "5"
+	test ViewDisplayPageViaFriendlyURL {
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+
+	@description = "A selected display page should override the default display page."
+	@priority = "5"
+	test ViewNonDefaultDisplayPage {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		DisplayPagesAdmin.add(displayPageName = "Non-Default Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			itemName = "content"
+		);
+
+		PageEditorMapping.mapEditableTextToAsset(
+			fragmentName = "Title",
+			id = "title",
+			itemName = "Title"
+		);
+
+		Button.clickPublish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContent.editDisplayPage(
+			pageName = "Non-Default Display Page",
+			pageType = "Display Pages"
+		);
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "2"
+		);
+	}
+
+	@description = "When no display page is selected, assets should not be displayed through the default display page."
+	@priority = "4"
+	test ViewNoSelectedDisplayPage {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		Panel.expandPanel(panel = "Display Page");
+
+		Click(locator1 = "WCSelectDisplayPage#NONE");
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/-/webcontent-title"
+		);
+
+		AssertTextPresent(value1 = "The requested resource could not be found.");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.addPublicPage(pageName = "Site Page Name");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "Webcontent Title",
+			key_assetTitle = "Webcontent Title"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Webcontent Content",
+			key_assetTitle = "Webcontent Title"
+		);
+
+		Click(locator1 = "AP#ASSET_ABSTRACT_TITLE", key_assetTitle = "Webcontent Title");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
+			value1 = "Webcontent Content"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
+}

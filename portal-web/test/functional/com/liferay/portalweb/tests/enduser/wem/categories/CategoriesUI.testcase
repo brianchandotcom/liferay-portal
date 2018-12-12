@@ -1,73 +1,70 @@
-<definition component-name="portal-categories">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Categories" />
-	<property name="testray.main.component.name" value="Categories" />
+@component-name = "portal-categories"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Categories";
+	property testray.main.component.name = "Categories";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Vocabulary#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Vocabulary.tearDownCP();
+		}
+	}
 
-	<command name="AddSubcategory" priority="4">
-		<execute macro="Navigator#openURL" />
+	@priority = "4"
+	test AddSubcategory {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
 
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
+		Subcategory.addCP(
+			categoryName = "Category Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
 
-		<execute macro="Subcategory#viewCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-</definition>
+		Subcategory.viewCP(
+			categoryName = "Category Name",
+			subcategoryName = "Subcategory Name",
+			vocabularyName = "Vocabulary Name"
+		);
+	}
+}

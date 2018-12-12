@@ -1,40 +1,38 @@
-<definition component-name="marketplace">
-	<property name="marketplace.app.acceptance" value="true" />
-	<property name="testray.main.component.name" value="Marketplace" />
+@component-name = "marketplace"
+definition {
+	property marketplace.app.acceptance = "true";
+	property testray.main.component.name = "Marketplace";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	setUp {
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<execute macro="ProductMenu#gotoSite">
-			<var name="portletName" value="Sites" />
-		</execute>
+	tearDown {
+		ProductMenu.gotoSite(portletName = "Sites");
 
-		<execute macro="Site#tearDownCP" />
+		Site.tearDownCP();
 
-		<execute macro="BlogsEntry#tearDownCP" />
+		BlogsEntry.tearDownCP();
 
-		<execute macro="BookmarksFolder#tearDownCP" />
+		BookmarksFolder.tearDownCP();
 
-		<execute macro="WikiPage#tearDownCP" />
+		WikiPage.tearDownCP();
 
-		<execute macro="Page#tearDownCP" />
+		Page.tearDownCP();
 
-		<execute macro="DMFolder#tearDownCP" />
+		DMFolder.tearDownCP();
 
-		<execute macro="DMDocument#tearDownCP" />
+		DMDocument.tearDownCP();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Test Page");
 
-		<execute macro="CalendarEvent#tearDown" />
+		CalendarEvent.tearDown();
 
-		<execute macro="Calendar#tearDown" />
-	</tear-down>
+		Calendar.tearDown();
+	}
 
-	<command name="MarketplaceSmoke" priority="5">
-		<execute macro="Marketplace#smoke" />
-	</command>
-</definition>
+	@priority = "5"
+	test MarketplaceSmoke {
+		Marketplace.smoke();
+	}
+}

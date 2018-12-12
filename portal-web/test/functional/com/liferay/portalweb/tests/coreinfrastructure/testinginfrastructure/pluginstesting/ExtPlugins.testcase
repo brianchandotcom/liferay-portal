@@ -1,82 +1,94 @@
-<definition component-name="portal-test-plugins">
-	<property name="custom.properties" value="web.server.display.node=true" />
-	<property name="ext.plugins.includes" value="sample-ext" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.assert.warning.exceptions" value="true" />
-	<property name="testray.main.component.name" value="Test Plugins" />
+@component-name = "portal-test-plugins"
+definition {
+	property custom.properties = "web.server.display.node=true";
+	property ext.plugins.includes = "sample-ext";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Test Plugins";
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsThread#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsThread.tearDownCP();
 
-				<execute macro="DMDocument#tearDownCP" />
+			DMDocument.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ViewSampleExtPluginValidationViaDeploy" priority="5">
-		<execute macro="Portlet#assertServerStartup" />
+	@priority = "5"
+	test ViewSampleExtPluginValidationViaDeploy {
+		Portlet.assertServerStartup();
 
-		<execute macro="Portlet#shutdownServer" />
+		Portlet.shutdownServer();
 
-		<execute macro="Portlet#assertServerShutdown" />
+		Portlet.assertServerShutdown();
 
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		Portlet.startServer(deleteLiferayHome = "false");
 
-		<execute macro="Portlet#assertServerStartup" />
+		Portlet.assertServerStartup();
 
-		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
+		AssertConsoleTextPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
 
-		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+		AssertConsoleTextPresent(value1 = "EXT_WEB_SERVLET_INSTALLED");
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO",
+			value1 = "ext_portal_impl_installed_"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="Pause" locator1="120000" />
+		Pause(locator1 = "120000");
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
-		<execute function="Refresh" />
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
-	</command>
+		Refresh();
 
-	<command name="ViewSampleExtPluginValidationViaDirectDeploy" priority="5">
-		<property name="direct.deploy.enabled" value="true" />
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+	}
 
-		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
+	@priority = "5"
+	test ViewSampleExtPluginValidationViaDirectDeploy {
+		property direct.deploy.enabled = "true";
 
-		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+		AssertConsoleTextPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
 
-		<execute macro="User#firstLoginPG" />
+		AssertConsoleTextPresent(value1 = "EXT_WEB_SERVLET_INSTALLED");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
+		User.firstLoginPG();
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO",
+			value1 = "ext_portal_impl_installed_"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
-		<execute function="Pause" locator1="120000" />
+		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
-		<execute function="Refresh" />
+		Pause(locator1 = "120000");
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+	}
+}

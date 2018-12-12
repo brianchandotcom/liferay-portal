@@ -1,52 +1,54 @@
-<definition component-name="portal-frontend-infrastructure">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="User Interface" />
+@component-name = "portal-frontend-infrastructure"
+definition {
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "User Interface";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
+	setUp {
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="WYSIWYG Page" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "WYSIWYG Page");
+	}
 
-	<tear-down>
-		<execute macro="Page#tearDownCP" />
-	</tear-down>
+	tearDown {
+		Page.tearDownCP();
+	}
 
-	<command name="AddContent" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="WYSIWYG Page" />
-		</execute>
+	@priority = "4"
+	test AddContent {
+		Navigator.gotoPage(pageName = "WYSIWYG Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="WYSIWYG" />
-		</execute>
+		Portlet.addPG(portletName = "WYSIWYG");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="WYSIWYG" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "WYSIWYG",
+			portletOption = "Configuration"
+		);
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		<execute function="Type#typeEditor" locator1="CKEditor#BODY_FIELD" value1="WYSIWYG Test Content" />
+		Type.typeEditor(
+			locator1 = "CKEditor#BODY_FIELD",
+			value1 = "WYSIWYG Test Content"
+		);
 
-		<execute function="Click" locator1="Button#SAVE" />
+		Click(locator1 = "Button#SAVE");
 
-		<execute macro="Alert#viewSuccessMessage" />
+		Alert.viewSuccessMessage();
 
-		<execute function="SelectFrameTop" />
+		SelectFrameTop();
 
-		<execute function="Click" locator1="Modal#CLOSE_BUTTON" />
+		Click(locator1 = "Modal#CLOSE_BUTTON");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#PORTLET_CONTENT" value1="WYSIWYG Test Content" />
-	</command>
-</definition>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "WYSIWYG Test Content"
+		);
+	}
+}

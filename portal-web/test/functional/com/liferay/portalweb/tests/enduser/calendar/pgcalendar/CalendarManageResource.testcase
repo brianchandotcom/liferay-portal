@@ -1,359 +1,267 @@
-<definition component-name="portal-calendar">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
-	<property name="testray.main.component.name" value="Calendar" />
-
-	<var name="pageName" value="Calendar Page" />
-	<var name="portletName" value="Calendar" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Page" />
-			<var name="portletName" value="Calendar" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Calendar Page" />
-				</execute>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
-
-				<execute macro="Calendar#tearDown" />
-
-				<execute macro="CalendarConfiguration#tearDown" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="Delete" priority="4">
-		<var name="calendarResourceName" value="Calendar Resource Name" />
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#delete">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#viewDefault">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
-	</command>
-
-	<command name="Search" priority="3">
-		<description message="This is a use case for LPS-59743." />
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
+@component-name = "portal-calendar"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property testray.main.component.name = "Calendar";
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
 
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
+		User.firstLoginPG();
 
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Calendar" />
-			<var name="searchTerm" value="Room Car " />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Search#searchPG">
-			<var name="portletName" value="Calendar" />
-			<var name="searchTerm" value="Room" />
-		</execute>
+		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+	}
 
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
-	</command>
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
 
-	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
-		<description message="This is a use case for LPS-62410." />
+			Calendar.tearDown();
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+			CalendarConfiguration.tearDown();
 
-		<execute macro="CalendarEvent#gotoConfigureInvitations" />
+			Page.tearDownCP();
+		}
+	}
 
-		<execute macro="CalendarEvent#viewResourcesAvailability" />
+	@priority = "4"
+	test Delete {
+		var calendarResourceName = "Calendar Resource Name";
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+		CalendarResource.add(calendarResourceName = "${calendarResourceName}");
 
-		<execute macro="CalendarEvent#selectTimes">
-			<var name="endDateTime" value="11:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+		CalendarResource.delete(calendarResourceName = "${calendarResourceName}");
 
-		<execute macro="CalendarEvent#setEndDateTomorrow" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarEvent#selectTimes">
-			<var name="endDateTime" value="07:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
+		CalendarResource.viewDefault(calendarResourceName = "${calendarResourceName}");
+	}
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+	@description = "This is a use case for LPS-59743."
+	@priority = "3"
+	test Search {
+		CalendarResource.add(calendarResourceName = "Room 1");
 
-		<execute macro="CalendarEvent#publish" />
-	</command>
+		CalendarResource.add(calendarResourceName = "Car1");
 
-	<command name="ViewInactive" priority="2">
-		<description message="This is a use case for LPS-55171." />
+		CalendarResource.add(calendarResourceName = "Truck");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		Search.searchPG(portletName = "Calendar", searchTerm = "Room Car ");
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		CalendarResource.viewResourceName(calendarResourceName = "Room 1");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Calendar" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddResource" />
-
-		<execute macro="CalendarResource#editResourceName">
-			<var name="calendarResourceName" value="Calendar Resource" />
-		</execute>
-
-		<execute macro="CalendarResource#deactivate" />
-
-		<execute macro="CalendarResource#save" />
-
-		<execute macro="CalendarResource#viewDefault" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Calendar#searchOtherCalendars">
-			<var name="searchValue" value="resource" />
-		</execute>
-
-		<execute macro="Calendar#viewOtherCalendarsSearchResultNotPresent">
-			<var name="calendarName" value="Calendar Resource" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#viewInvitationResourceNotPresent">
-			<var name="resourceNameList" value="Calendar Resource" />
-		</execute>
-	</command>
-
-	<command name="ViewInvitedResourceAvailability" priority="3">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="userfn userln" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#view">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="calendarName" value="userfn userln" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="resourcesAvailability" value="true" />
-			<var name="specificOptionSetValue" value="Test Test,Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventNumber" value="2" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-		</execute>
-	</command>
-</definition>
+		CalendarResource.viewResourceName(calendarResourceName = "Car1");
+
+		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Truck");
+
+		Search.searchPG(portletName = "Calendar", searchTerm = "Room");
+
+		CalendarResource.viewResourceName(calendarResourceName = "Room 1");
+
+		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Car1");
+
+		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Truck");
+	}
+
+	@description = "This is a use case for LPS-62410."
+	@priority = "4"
+	test ViewEventDateAndTimeInResourcesAvailability {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.gotoConfigureInvitations();
+
+		CalendarEvent.viewResourcesAvailability();
+
+		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
+
+		CalendarEvent.selectTimes(endDateTime = "11:00 AM", startDateTime = "08:00 AM");
+
+		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
+
+		CalendarEvent.setEndDateTomorrow();
+
+		CalendarEvent.selectTimes(endDateTime = "07:00 AM", startDateTime = "08:00 AM");
+
+		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
+
+		CalendarEvent.publish();
+	}
+
+	@description = "This is a use case for LPS-55171."
+	@priority = "2"
+	test ViewInactive {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+
+		CalendarNavigator.gotoAddResource();
+
+		CalendarResource.editResourceName(calendarResourceName = "Calendar Resource");
+
+		CalendarResource.deactivate();
+
+		CalendarResource.save();
+
+		CalendarResource.viewDefault();
+
+		Navigator.gotoSitePage(pageName = "Calendar Page", siteName = "Site Name");
+
+		Calendar.searchOtherCalendars(searchValue = "resource");
+
+		Calendar.viewOtherCalendarsSearchResultNotPresent(
+			calendarName = "Calendar Resource"
+		);
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.viewInvitationResourceNotPresent(
+			resourceNameList = "Calendar Resource"
+		);
+	}
+
+	@priority = "3"
+	test ViewInvitedResourceAvailability {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarResource.add(calendarResourceName = "Calendar Resource Name");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarResource.view(calendarResourceName = "Calendar Resource Name");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.add(
+			calendarName = "Calendar Resource Name",
+			calendarType = "Other Calendars"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			calendarName = "userfn userln",
+			eventTitle = "Calendar Event All Day Title",
+			eventType = "Regular",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			resourcesAvailability = "true",
+			specificOptionSetValue = "Test Test,Calendar Resource Name"
+		);
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.view(
+			eventNumber = "2",
+			eventTitle = "Calendar Event All Day Title"
+		);
+	}
+}

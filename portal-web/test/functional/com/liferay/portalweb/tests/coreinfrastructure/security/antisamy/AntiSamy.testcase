@@ -1,107 +1,88 @@
-<definition component-name="portal-security">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="AntiSamy" />
+@component-name = "portal-security"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "AntiSamy";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiPage#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPage.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="AssertNoWikiJavascript" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "4"
+	test AssertNoWikiJavascript {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="AntiSamy Test Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "AntiSamy Test Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="AntiSamy Test Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "AntiSamy Test Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
+		Portlet.addPG(portletName = "Wiki");
 
-		<var name="wikiPageContent">
-			<![CDATA[
+		var wikiPageContent = '''
 				<p id='demo'>PASS</p>
 
 				<script type='text/javascript'>
 					document.getElementById('demo').innerHTML = 'FAIL';
 				</script>
-			]]>
-		</var>
+			''';
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="htmlSource" value="true" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		WikiPage.addFrontPagePG(
+			htmlSource = "true",
+			wikiPageContent = "${wikiPageContent}"
+		);
 
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="PASS" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-	</command>
+		WikiPage.viewPG(wikiPageContent = "PASS", wikiPageTitle = "FrontPage");
+	}
 
-	<command name="AssertWebContentJavascript" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "4"
+	test AssertWebContentJavascript {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Web Content Display Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<var name="webContentContent">
-			<![CDATA[
+		var webContentContent = '''
 				<p id='demo'>FAIL</p>
 
 				<script type='text/javascript'>
 					document.getElementById('demo').innerHTML = 'PASS';
 				</script>
-			]]>
-		</var>
+			''';
 
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		WebContent.addPGViaWCD(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "WC WebContent Title"
+		);
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="PASS" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-</definition>
+		WebContent.viewPGViaWCD(
+			webContentContent = "PASS",
+			webContentTitle = "Web Content Title"
+		);
+	}
+}

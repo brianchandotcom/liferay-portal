@@ -1,1603 +1,1399 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Staging" />
-
-	<var name="siteName" value="Site Name" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Staging Test Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="User#tearDownSpecificUser">
-					<var name="userScreenName" value="usersn" />
-				</execute>
-
-				<execute macro="Role#removeStagingAdminRole" />
-
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="StagingDemoLocalLive1" priority="4">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Staging Admin" />
-			<var name="roleTitle" value="Staging Admin" />
-		</execute>
-
-		<for list="PERMISSIONS,OVERRIDE_CHECKOUT,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,PERMISSIONS,MERGE,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfn userln" />
-			<var name="roleTitle" value="Staging Admin" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="uncheckContentNameList" value="Documents and Media" />
-			<var name="uncheckPages" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#viewDefaultPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkContentNameList" value="Documents and Media" />
-			<var name="contentDateRange" value="All" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="StagingDemoLocalLive2" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#createAndAssignStagingAdminToSite">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Page#viewPageLayoutColumn">
-			<var name="columnName" value="1 Column" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#undoStagingPageVersioningPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Page#viewPageLayoutColumn">
-			<var name="columnName" value="2 Columns" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#redoStagingPageVersioningPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Page#viewPageLayoutColumn">
-			<var name="columnName" value="1 Column" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Page#viewPageLayoutColumn">
-			<var name="columnName" value="1 Column" />
-		</execute>
-	</command>
-
-	<command name="StagingDemoLocalLive3" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#createAndAssignStagingAdminToSite">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#editSitePageVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewEditedSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation Edit" />
-			<var name="sitePagesVariationName" value="Christmas Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Christmas Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Wiki" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation Edit" />
-			<var name="sitePagesVariationName" value="Christmas Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#enablePageInSitePagesVariation">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePagesVariationName" value="Main Variation Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Home" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Christmas Variation" />
-			<var name="sitePagesVariationName" value="Main Variation Edit" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Christmas Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewStagingLocalLiveVariationMessagePG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="sitePagesVariationName" value="Christmas Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="None (Empty Site Pages Variation)" />
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Empty Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Empty Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Empty Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewStagingLocalLiveVariationMessagePG">
-			<var name="pageName" value="Empty Page Name" />
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Empty Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#mergeSitePagesVariation">
-			<var name="sitePagesVariationMergeName" value="Christmas Variation" />
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Wiki" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Empty Variation" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-
-	<command name="StagingDemoLocalLive4" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#createAndAssignStagingAdminToSite">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="copySitePagesVariationName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="New Variation" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Wiki" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="deleteMissingPages" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
-			<then>
-				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Wiki" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="Home#PAGE_2" />
-			</else>
-		</if>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="New Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="New Page Name" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Staging#schedulePublishToLivePG">
-			<var name="scheduleTitleName" value="Staging Schedule Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
-			<then>
-				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
-			</then>
-			<else>
-				<execute function="AssertElementNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
-			</else>
-		</if>
-
-		<execute function="Pause" locator1="120000" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
-	</command>
-
-	<command name="StagingLocalLiveWebContent" priority="4">
-		<description message="This is a use case for LPS-82564." />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="Web Content Administrator Role" />
-			<var name="roleTitle" value="Web Content Administrator Role" />
-		</execute>
-
-		<for list="VIEW,UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalFeed" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalFolder" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
-				<var name="roleTitle" value="Web Content Administrator Role" />
-			</execute>
-		</for>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Role#openRolesAdmin" />
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Web Content Administrator Role" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Staging#publishViaSAP">
-			<var name="assetTitle" value="Web Content Title" />
-			<var name="confirmMessage" value="Are you sure you want to publish the selected web content?" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="onLive" value="true" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="StagingLocalLiveWorkflow" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowResourceValue" value="Page Revision" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
-		</execute>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Staging Admin" />
-			<var name="roleTitle" value="Staging Admin" />
-		</execute>
-
-		<for list="VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.Layout" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutBranch" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,PERMISSIONS,MERGE,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.portal.kernel.model.LayoutSetBranch" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
-				<var name="roleTitle" value="Staging Admin" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="JSONRole#addSiteRole">
-			<var name="roleKey" value="Content Creator" />
-			<var name="roleTitle" value="Content Creator" />
-		</execute>
-
-		<for list="PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal" />
-				<var name="roleTitle" value="Content Creator" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="Content Creator" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,PERMISSIONS,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalFeed" />
-				<var name="roleTitle" value="Content Creator" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalFolder" />
-				<var name="roleTitle" value="Content Creator" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Content Creator" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<for list="ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-				<var name="roleTitle" value="Content Creator" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="contentcreator@liferay.com" />
-			<var name="userFirstName" value="userfncreator" />
-			<var name="userLastName" value="creator" />
-			<var name="userScreenName" value="contentcreator" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="contentcreator@liferay.com" />
-			<var name="userScreenName" value="contentcreator" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfncreator" />
-			<var name="userLastName" value="creator" />
-			<var name="userScreenName" value="contentcreator" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfncreator creator" />
-			<var name="roleTitle" value="Content Creator" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfncreator creator" />
-			<var name="roleTitle" value="Staging Admin" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="contentapprover@liferay.com" />
-			<var name="userFirstName" value="userfnapprover" />
-			<var name="userLastName" value="approver" />
-			<var name="userScreenName" value="contentapprover" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="contentapprover@liferay.com" />
-			<var name="userScreenName" value="contentapprover" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfnapprover" />
-			<var name="userLastName" value="approver" />
-			<var name="userScreenName" value="contentapprover" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignSiteRoleCP">
-			<var name="resourceName" value="userfnapprover approver" />
-			<var name="roleTitle" value="Site Content Reviewer" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
-			<var name="userLoginFullName" value="userfncreator creator" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
-			<var name="userLoginFullName" value="userfnapprover approver" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Web Content Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE">
-			<var name="key_portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
-			<var name="userLoginFullName" value="userfncreator creator" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
-			<var name="userLoginFullName" value="userfnapprover approver" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="Home" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="Home" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
-			<var name="userLoginFullName" value="userfncreator creator" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewStagingWorkflowStatusPG">
-			<var name="stagingWorkflowStatus" value="Ready for Publication" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
-			<var name="userLoginFullName" value="userfnapprover approver" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="Home" />
-			<var name="workflowAssetType" value="Page Revision" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="Web Content Title" />
-			<var name="workflowAssetType" value="Web Content Article" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-	</command>
-
-	<command name="StagingPublishPage" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="uncheckPropagation" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#createAndAssignStagingAdminToSite">
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name 1" />
-		</execute>
-
-		<execute macro="Staging#addSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Staging#viewSitePagesVariationPG">
-			<var name="sitePagesVariationName" value="Site Pages Variation Name 2" />
-		</execute>
-
-		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationMenulistName" value="Main Variation" />
-			<var name="sitePagesVariationName" value="Site Pages Variation Name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<execute macro="Staging#markAsReadyForPublication" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Wiki" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="checkPageName" value="Home" />
-		</execute>
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
+	var siteName = "Site Name";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Staging Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			User.tearDownSpecificUser(userScreenName = "usersn");
+
+			Role.removeStagingAdminRole();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "4"
+	test StagingDemoLocalLive1 {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		JSONRole.addSiteRole(roleKey = "Staging Admin", roleTitle = "Staging Admin");
+
+		for (var resourceActionIndex : list "PERMISSIONS,OVERRIDE_CHECKOUT,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,MERGE,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutSetBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn userln",
+			roleTitle = "Staging Admin"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			uncheckContentNameList = "Documents and Media",
+			uncheckPages = "true"
+		);
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMPortlet.viewDefaultPG();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Documents and Media",
+			contentDateRange = "All"
+		);
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+	}
+
+	@priority = "4"
+	test StagingDemoLocalLive2 {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Staging.createAndAssignStagingAdminToSite(siteName = "Community Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Home",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
+
+		Page.viewPageLayoutColumn(columnName = "1 Column");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.undoStagingPageVersioningPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
+
+		Page.viewPageLayoutColumn(columnName = "2 Columns");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.redoStagingPageVersioningPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
+
+		Page.viewPageLayoutColumn(columnName = "1 Column");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
+
+		Page.viewPageLayoutColumn(columnName = "1 Column");
+	}
+
+	@priority = "4"
+	test StagingDemoLocalLive3 {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Staging.createAndAssignStagingAdminToSite(siteName = "Community Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.editSitePageVariationPG(sitePagesVariationName = "Main Variation");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewEditedSitePagesVariationPG(
+			sitePagesVariationName = "Main Variation Edit"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation Edit",
+			sitePagesVariationName = "Christmas Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Christmas Variation");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Page.view(pageName = "Home", privacy = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Wiki",
+			siteName = "Community Site Name"
+		);
+
+		Page.view(pageName = "Wiki", privacy = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation Edit",
+			sitePagesVariationName = "Christmas Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.enablePageInSitePagesVariation(
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePagesVariationName = "Main Variation Edit"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation Edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Page.view(pageName = "Test Page Name", privacy = "Public Pages");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.deletePage(pageName = "Home");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Christmas Variation",
+			sitePagesVariationName = "Main Variation Edit"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Christmas Variation");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Page.view(pageName = "Home", privacy = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewStagingLocalLiveVariationMessagePG(
+			pageName = "Test Page Name",
+			sitePagesVariationName = "Christmas Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "None (Empty Site Pages Variation)",
+			sitePagesVariationName = "Empty Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Empty Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Empty Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Empty Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewStagingLocalLiveVariationMessagePG(
+			pageName = "Empty Page Name",
+			sitePagesVariationName = "Empty Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Empty Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.mergeSitePagesVariation(
+			sitePagesVariationMergeName = "Christmas Variation",
+			sitePagesVariationName = "Empty Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
+
+		Page.view(pageName = "Home", privacy = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Wiki",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
+
+		Page.view(pageName = "Wiki", privacy = "Public Pages");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
+
+		Page.view(pageName = "Test Page Name", privacy = "Public Pages");
+	}
+
+	@priority = "5"
+	test StagingDemoLocalLive4 {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Staging.createAndAssignStagingAdminToSite(siteName = "Community Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "Main Variation",
+			sitePagesVariationName = "New Variation"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.deletePage(pageName = "Wiki");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(deleteMissingPages = "true");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
+			AssertTextNotEquals(locator1 = "Home#PAGE_2", value1 = "Wiki");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "Home#PAGE_2");
+		}
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "New Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "New Page Name",
+			siteName = "Community Site Name"
+		);
+
+		Pause(locator1 = "30000");
+
+		Staging.schedulePublishToLivePG(scheduleTitleName = "Staging Schedule Title");
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		if (IsElementPresent(locator1 = "Home#PAGE_2_GUEST_VIEW")) {
+			AssertTextNotEquals(
+				locator1 = "Home#PAGE_2_GUEST_VIEW",
+				value1 = "New Page Name"
+			);
+		}
+		else {
+			AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
+		}
+
+		Pause(locator1 = "120000");
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		AssertTextEquals(locator1 = "Home#PAGE_2_GUEST_VIEW", value1 = "New Page Name");
+	}
+
+	@description = "This is a use case for LPS-82564."
+	@priority = "4"
+	test StagingLocalLiveWebContent {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		JSONRole.addRegularRole(
+			roleKey = "Web Content Administrator Role",
+			roleTitle = "Web Content Administrator Role"
+		);
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalFeed",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalFolder",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "DELETE,PERMISSIONS,CONFIGURE_PORTLETS,MANAGE_TEAMS,VIEW_STAGING,ASSIGN_USER_ROLES,MANAGE_SUBGROUPS,VIEW_SITE_ADMINISTRATION,ASSIGN_MEMBERS,MANAGE_STAGING,VIEW_MEMBERS,ADD_LAYOUT_SET_BRANCH,MANAGE_LAYOUTS,VIEW,ADD_LAYOUT_BRANCH,MANAGE_ARCHIVED_SETUPS,UPDATE,ADD_LAYOUT,MANAGE_ANNOUNCEMENTS,PUBLISH_STAGING,ADD_COMMUNITY,EXPORT_IMPORT_PORTLET_INFO,PUBLISH_PORTLET_INFO,EXPORT_IMPORT_LAYOUTS,PREVIEW_IN_DEVICE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+				roleTitle = "Web Content Administrator Role"
+			);
+		}
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Role.openRolesAdmin();
+
+		Role.assignRegRoleCP(
+			roleTitle = "Web Content Administrator Role",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Staging.publishViaSAP(
+			assetTitle = "Web Content Title",
+			confirmMessage = "Are you sure you want to publish the selected web content?"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "Web Content Title");
+	}
+
+	@priority = "4"
+	test StagingLocalLiveWorkflow {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision"
+		);
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Workflow.configureWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+
+		JSONRole.addSiteRole(roleKey = "Staging Admin", roleTitle = "Staging Admin");
+
+		for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,MERGE,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutSetBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Staging Admin",
+				roleType = "site"
+			);
+		}
+
+		JSONRole.addSiteRole(roleKey = "Content Creator", roleTitle = "Content Creator");
+
+		for (var resourceActionIndex : list "PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Content Creator",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "DELETE,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Content Creator",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalFeed",
+				roleTitle = "Content Creator",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalFolder",
+				roleTitle = "Content Creator",
+				roleType = "site"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Content Creator",
+			roleType = "site"
+		);
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Content Creator",
+				roleType = "site"
+			);
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "contentcreator@liferay.com",
+			userFirstName = "userfncreator",
+			userLastName = "creator",
+			userScreenName = "contentcreator"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "contentcreator@liferay.com",
+			userScreenName = "contentcreator"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfncreator",
+			userLastName = "creator",
+			userScreenName = "contentcreator"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfncreator creator",
+			roleTitle = "Content Creator"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfncreator creator",
+			roleTitle = "Staging Admin"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "contentapprover@liferay.com",
+			userFirstName = "userfnapprover",
+			userLastName = "approver",
+			userScreenName = "contentapprover"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "contentapprover@liferay.com",
+			userScreenName = "contentapprover"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfnapprover",
+			userLastName = "approver",
+			userScreenName = "contentapprover"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfnapprover approver",
+			roleTitle = "Site Content Reviewer"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentcreator@liferay.com",
+			userLoginFullName = "userfncreator creator"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addWithWorkflowPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentapprover@liferay.com",
+			userLoginFullName = "userfnapprover approver"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		AssertElementNotPresent(
+			locator1 = "Portlet#TITLE",
+			key_portletName = "Web Content Display"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentcreator@liferay.com",
+			userLoginFullName = "userfncreator creator"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.submitForPublicationPageRevision();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentapprover@liferay.com",
+			userLoginFullName = "userfnapprover approver"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Home",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Home",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentcreator@liferay.com",
+			userLoginFullName = "userfncreator creator"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewStagingWorkflowStatusPG(
+			stagingWorkflowStatus = "Ready for Publication"
+		);
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "contentapprover@liferay.com",
+			userLoginFullName = "userfnapprover approver"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "My Workflow Tasks"
+		);
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Home",
+			workflowAssetType = "Page Revision",
+			workflowTask = "Review"
+		);
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Web Content Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review"
+		);
+	}
+
+	@priority = "5"
+	test StagingPublishPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCommunityCP(
+			siteName = "Community Site Name",
+			uncheckPropagation = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Community Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Community Site Name"
+		);
+
+		Staging.createAndAssignStagingAdminToSite(siteName = "Community Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.addSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name 1"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name 1"
+		);
+
+		Staging.addSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name 2"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Staging.viewSitePagesVariationPG(
+			sitePagesVariationName = "Site Pages Variation Name 2"
+		);
+
+		Staging.changeSitePageVariationPG(
+			sitePagesVariationMenulistName = "Main Variation",
+			sitePagesVariationName = "Site Pages Variation Name 2"
+		);
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Home",
+			siteName = "Community Site Name"
+		);
+
+		Portlet.addPG(portletName = "Navigation Menu");
+
+		Staging.markAsReadyForPublication();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.deletePage(pageName = "Wiki");
+
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkPageName = "Home");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
+
+		Portlet.viewPG(portletName = "Navigation Menu");
+
+		Navigator.gotoSitePage(pageName = "Wiki", siteName = "Community Site Name");
+
+		Portlet.viewPG(portletName = "Wiki");
+	}
+}

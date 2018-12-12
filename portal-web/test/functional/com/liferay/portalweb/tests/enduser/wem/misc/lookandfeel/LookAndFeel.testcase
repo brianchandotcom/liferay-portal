@@ -1,107 +1,92 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Look And Feel" />
-	<property name="testray.main.component.name" value="Look And Feel" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Look And Feel";
+	property testray.main.component.name = "Look And Feel";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-	<command name="ConfigureCustomStylesViaLookAndFeelPG" priority="5">
-		<property name="testray.component.names" value="Training" />
+	@priority = "5"
+	test ConfigureCustomStylesViaLookAndFeelPG {
+		property testray.component.names = "Training";
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sign In" />
-		</execute>
+		Portlet.addPG(portletName = "Sign In");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Sign In" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "Sign In",
+			portletOption = "Look and Feel Configuration"
+		);
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="Portlet#configureCustomStylesViaLookandfeelPG" />
+		Portlet.configureCustomStylesViaLookandfeelPG();
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Portlet#viewCustomStylesViaLookandfeelPG" />
+		Portlet.viewCustomStylesViaLookandfeelPG();
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration"
+		);
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
-			<var name="applicationDecorator" value="Borderless" />
-		</execute>
+		Portlet.configureApplicationDecoratorViaLookandfeelPG(
+			applicationDecorator = "Borderless"
+		);
 
-		<execute macro="Button#clickCancel" />
+		Button.clickCancel();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Portlet#viewApplicationDecorator">
-			<var name="decorator" value="decorate" />
-		</execute>
+		Portlet.viewApplicationDecorator(decorator = "decorate");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration"
+		);
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="Portlet#selectApplicationDecorator">
-			<var name="decorator" value="Borderless" />
-		</execute>
+		Portlet.selectApplicationDecorator(decorator = "Borderless");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Portlet#viewApplicationDecorator">
-			<var name="decorator" value="Borderless" />
-		</execute>
+		Portlet.viewApplicationDecorator(decorator = "Borderless");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration"
+		);
 
-		<execute macro="IFrame#selectConfigurationFrame" />
+		IFrame.selectConfigurationFrame();
 
-		<execute macro="Portlet#selectApplicationDecorator">
-			<var name="decorator" value="Barebone" />
-		</execute>
+		Portlet.selectApplicationDecorator(decorator = "Barebone");
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Portlet#viewApplicationDecorator">
-			<var name="decorator" value="Barebone" />
-		</execute>
-	</command>
-</definition>
+		Portlet.viewApplicationDecorator(decorator = "Barebone");
+	}
+}

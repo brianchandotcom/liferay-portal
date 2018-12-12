@@ -1,30 +1,27 @@
-<definition component-name="portal-upgrades">
-	<property name="app.server.types" value="tomcat" />
-	<property name="database.types" value="mysql" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="testray.main.component.name" value="Upgrades Core Infrastructure" />
+@component-name = "portal-upgrades"
+definition {
+	property app.server.types = "tomcat";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.main.component.name = "Upgrades Core Infrastructure";
 
-	<command name="DirectUpgradeFromArchive6012" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.upgrades" value="true" />
-		<property name="portal.version" value="6.0.12" />
-		<property name="skip.start-app-server" value="true" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "5"
+	test DirectUpgradeFromArchive6012 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "6.0.12";
+		property skip.start-app-server = "true";
+		property test.assert.warning.exceptions = "true";
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log");
 
-		<var method="PropsUtil#get('liferay.home.dir.name')" name="liferayHome" />
-
-		<var method="FileUtil#read('${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log')" name="fileContent" />
-
-		<if>
-			<contains string="${fileContent}" substring="You must first upgrade to Liferay Portal 6100" />
-			<then>
-				<echo message="You must first upgrade to Liferay Portal 6100." />
-			</then>
-			<else>
-				<fail message="FAIL! Cannot find the warning message." />
-			</else>
-		</if>
-	</command>
-</definition>
+		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6100")) {
+			echo("You must first upgrade to Liferay Portal 6100.");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
+	}
+}

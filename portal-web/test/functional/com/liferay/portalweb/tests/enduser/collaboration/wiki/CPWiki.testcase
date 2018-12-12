@@ -1,753 +1,635 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Wiki" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WikiNode#tearDownCP" />
-
-				<execute macro="WikiPage#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoFrontPageCP" />
-
-		<execute macro="WikiPage#viewFrontPageCP">
-			<var name="portletName" value="Wiki" />
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-	</command>
-
-	<command name="AddWikiNode" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#viewCP">
-			<var name="numberOfWikiPages" value="0" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-	</command>
-
-	<command name="AddWikiPageToNode" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Wiki";
 
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
+		User.firstLoginPG();
+	}
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#viewCP">
-			<var name="numberOfWikiPages" value="2" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="CKEditorSmoke" priority="5">
-		<property name="test.name.skip.portal.instance" value="CPWiki#CKEditorSmoke" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Wiki" />
-			<var name="configurationName" value="Wiki Service" />
-			<var name="configurationScope" value="Site Scope" />
-		</execute>
-
-		<execute macro="PortalSettings#configureWikiService">
-			<var name="counter" value="12" />
-			<var name="editor" value="ckeditor_creole" />
-		</execute>
-
-		<execute macro="PortalSettings#configureWikiService">
-			<var name="counter" value="13" />
-			<var name="editor" value="creole" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiNode.tearDownCP();
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
-		</execute>
-
-		<execute macro="CKEditor#addContent">
-			<var name="content" value="CKEditor Wiki Page Content" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewCP">
-			<var name="wikiPageContent" value="CKEditor Wiki Page Content" />
-			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="CompareVersionsWikiPage" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#editPageCP">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewCP">
-			<var name="wikiPageContent" value="Wiki Page Content Edit" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#compareVersionsCP">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-			<var name="wikiPageVersionDiff" value="Edit" />
-			<var name="wikiPageVersionNew" value="1.1" />
-			<var name="wikiPageVersionOld" value="1.0" />
-		</execute>
-	</command>
-
-	<command name="DeleteWikiNode" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="WikiNode#deleteCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Wiki Node Name" />
-			<var name="assetType" value="Wiki Node" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#viewMainNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-	</command>
-
-	<command name="EditWikiNode" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="WikiNode#editCP">
-			<var name="wikiNodeDescription" value="Wiki Node Description" />
-			<var name="wikiNodeDescriptionEdit" value="Wiki Node Description Edit" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-			<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#viewCP">
-			<var name="numberOfWikiPages" value="0" />
-			<var name="wikiNodeName" value="Wiki Node Name Edit" />
-		</execute>
-	</command>
-
-	<command name="ImportLarAddWikiPageType" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Wiki" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="space-history-wiki.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="Located in Provincetown, MA, S.P.A.C.E. (Space Program Academy of Continuing Education) was founded in February of 2063 by its current Board of Governors members—Dr. Edith Adams, Dr. Harold Vance, Antony Carelli, and Victoria Allen—as a fully-accredited, internationally-run school for students interested in pursuing a wide range of space-related careers. S.P.A.C.E. also serves as a research center for faculty. S.P.A.C.E.’s foundation came about largely as a result of skyrocketing interest in space-related careers and the limitations on The Space Program." />
-		</execute>
-
-		<for list="FrontPage,Board of Governors,Board of Governors,The Space Program,Antony Carelli,Dr. Harold Vance,Victoria Allen,Dr. Asmund Grey" param="wikiPageTitle">
-			<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-			<execute macro="WikiNavigator#gotoPG">
-				<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="Dr. Asmund Grey, first and current president of S.P.A.C.E., was born Asmund Andrew Grey March 22, 2029 to Drs. Albert and Anita Grey in Stratford-upon-Avon, England." />
-			<var name="wikiPageTitle" value="Dr. Asmund Grey" />
-		</execute>
-	</command>
-
-	<command name="MovePageUnderNewParentPage" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 2" />
-			<var name="wikiPageTitle" value="Wiki Page 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryMoveViaTable">
-			<var name="wikiPageTitle" value="Wiki Page 2" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoChangeParent" />
-
-		<execute macro="WikiPage#selectNewParent">
-			<var name="wikiParentName" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 2" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoChildPagePG">
-			<var name="wikiChildPageTitle" value="Wiki Page 2" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 2" />
-		</execute>
-	</command>
-
-	<command name="MoveToRecycleBinFrontPage" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#moveToRecycleBinCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoFrontPageCP" />
-
-		<execute macro="WikiPage#viewFrontPageDefaultCP">
-			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-	</command>
-
-	<command name="RestoreDeletedPage" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiTable#deleteEntry">
-			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="WikiTable#restoreEntry">
-			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
-		</execute>
-
-		<execute macro="RecycleBinWarning#selectRename" />
-
-		<execute macro="RecycleBinWarning#renameEntry">
-			<var name="renamedTrashEntryTitle" value="Wiki Page 1 Restored" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 1 Restored" />
-		</execute>
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page 1 Restored" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-	</command>
-
-	<command name="ViewWikiEntryRSS" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page RSS" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page RSS" />
-		</execute>
-
-		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="WikiPage#viewRSS">
-			<var name="version" value="1.0" />
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page RSS" />
-		</execute>
-	</command>
-</definition>
+			WikiPage.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddWikiFrontPage {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoFrontPageCP();
+
+		WikiPage.viewFrontPageCP(
+			portletName = "Wiki",
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main"
+		);
+	}
+
+	@priority = "4"
+	test AddWikiNode {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.viewCP(numberOfWikiPages = "0", wikiNodeName = "Wiki Node Name");
+	}
+
+	@priority = "5"
+	test AddWikiPageToNode {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
+		WikiNavigator.gotoAllPagesCP();
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.viewCP(numberOfWikiPages = "2", wikiNodeName = "Wiki Node Name");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+
+	@priority = "5"
+	test CKEditorSmoke {
+		property test.name.skip.portal.instance = "CPWiki#CKEditorSmoke";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Wiki",
+			configurationName = "Wiki Service",
+			configurationScope = "Site Scope"
+		);
+
+		PortalSettings.configureWikiService(counter = "12", editor = "ckeditor_creole");
+
+		PortalSettings.configureWikiService(counter = "13", editor = "creole");
+
+		PortletEntry.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		LexiconEntry.gotoAdd();
+
+		WikiEntry.addPageTitle(wikiPageTitle = "CKEditor Wiki Page Title");
+
+		CKEditor.addContent(content = "CKEditor Wiki Page Content");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		WikiNavigator.gotoCP(wikiPageTitle = "CKEditor Wiki Page Title");
+
+		WikiPage.viewCP(
+			wikiPageContent = "CKEditor Wiki Page Content",
+			wikiPageTitle = "CKEditor Wiki Page Title"
+		);
+	}
+
+	@priority = "4"
+	test CompareVersionsWikiPage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoAllPagesCP();
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoAllPagesCP();
+
+		WikiPage.editPageCP(
+			wikiNodeName = "Main",
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewCP(
+			wikiPageContent = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoAllPagesCP();
+
+		WikiPage.compareVersionsCP(
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageVersionDiff = "Edit",
+			wikiPageVersionNew = "1.1",
+			wikiPageVersionOld = "1.0"
+		);
+	}
+
+	@priority = "5"
+	test DeleteWikiNode {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiNode.deleteCP(wikiNodeName = "Wiki Node Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Wiki Node Name",
+			assetType = "Wiki Node",
+			deleteUser = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.viewMainNode(wikiNodeName = "Main");
+	}
+
+	@priority = "5"
+	test EditWikiNode {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiNode.editCP(
+			wikiNodeDescription = "Wiki Node Description",
+			wikiNodeDescriptionEdit = "Wiki Node Description Edit",
+			wikiNodeName = "Wiki Node Name",
+			wikiNodeNameEdit = "Wiki Node Name Edit"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.viewCP(numberOfWikiPages = "0", wikiNodeName = "Wiki Node Name Edit");
+	}
+
+	@priority = "5"
+	test ImportLarAddWikiPageType {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Wiki");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		LAR.importPortlet(
+			larFileName = "space-history-wiki.lar",
+			uploadFrom = "dependencies"
+		);
+
+		Navigator.gotoSitePage(pageName = "Wiki", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Located in Provincetown, MA, S.P.A.C.E. (Space Program Academy of Continuing Education) was founded in February of 2063 by its current Board of Governors members—Dr. Edith Adams, Dr. Harold Vance, Antony Carelli, and Victoria Allen—as a fully-accredited, internationally-run school for students interested in pursuing a wide range of space-related careers. S.P.A.C.E. also serves as a research center for faculty. S.P.A.C.E.’s foundation came about largely as a result of skyrocketing interest in space-related careers and the limitations on The Space Program."
+		);
+
+		for (var wikiPageTitle : list "FrontPage,Board of Governors,Board of Governors,The Space Program,Antony Carelli,Dr. Harold Vance,Victoria Allen,Dr. Asmund Grey") {
+			WikiNavigator.gotoAllPagesPG();
+
+			WikiNavigator.gotoPG(wikiPageTitle = "${wikiPageTitle}");
+		}
+
+		WikiPage.viewPG(
+			wikiPageContent = "Dr. Asmund Grey, first and current president of S.P.A.C.E., was born Asmund Andrew Grey March 22, 2029 to Drs. Albert and Anita Grey in Stratford-upon-Avon, England.",
+			wikiPageTitle = "Dr. Asmund Grey"
+		);
+	}
+
+	@priority = "5"
+	test MovePageUnderNewParentPage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 2",
+			wikiPageTitle = "Wiki Page 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoEntryMoveViaTable(wikiPageTitle = "Wiki Page 2");
+
+		WikiNavigator.gotoChangeParent();
+
+		WikiPage.selectNewParent(wikiParentName = "Wiki Page 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+
+		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 2");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki Page 2");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 2");
+	}
+
+	@priority = "4"
+	test MoveToRecycleBinFrontPage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.moveToRecycleBinCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoFrontPageCP();
+
+		WikiPage.viewFrontPageDefaultCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main"
+		);
+	}
+
+	@priority = "5"
+	test RestoreDeletedPage {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1 Original"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiTable.deleteEntry(wikiPageTitle = "Wiki Page 1 Original");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1 Original"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		WikiTable.restoreEntry(wikiPageTitle = "Wiki Page 1 Original");
+
+		RecycleBinWarning.selectRename();
+
+		RecycleBinWarning.renameEntry(renamedTrashEntryTitle = "Wiki Page 1 Restored");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiTable.viewEntry(
+			draftStatus = "Approved",
+			wikiPageTitle = "Wiki Page 1 Restored"
+		);
+
+		WikiTable.viewEntry(
+			draftStatus = "Approved",
+			wikiPageTitle = "Wiki Page 1 Original"
+		);
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1 Restored");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+	}
+
+	@priority = "4"
+	test ViewWikiEntryRSS {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page RSS"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page RSS");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content");
+
+		WikiPage.viewRSS(
+			version = "1.0",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page RSS"
+		);
+	}
+}

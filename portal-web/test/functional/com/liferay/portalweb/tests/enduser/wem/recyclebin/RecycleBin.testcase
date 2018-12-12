@@ -1,1638 +1,1361 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Recycle Bin" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="DisableRecycleBin" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="RecycleBin#disableRecycleBinViaSiteSettings" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#deleteWithDisabledRB">
-			<var name="entryTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinBlogs" priority="3">
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetRestoreLocation" value="Blogs" />
-			<var name="assetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinBookmarks" priority="3">
-		<property name="portal.release" value="false" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="Folder Description" />
-			<var name="folderName" value="Folder Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Folder Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#addSubfolderPG">
-			<var name="folderDescription" value="Subfolder Description" />
-			<var name="folderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoSubfolderPG">
-			<var name="folderName" value="Folder Name" />
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="subfolderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="Bookmark Description" />
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Folder Name" />
-		</execute>
-
-		<execute macro="BookmarksFolder#moveSubfolderToRecycleBinPG">
-			<var name="subfolderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Subfolder Name" />
-			<var name="assetType" value="Bookmarks Folder" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Subfolder Name" />
-			<var name="assetRestoreLocation" value="Folder Name" />
-			<var name="assetType" value="Bookmarks Folder" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoSubfolderPG">
-			<var name="folderName" value="Folder Name" />
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="subfolderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoSubfolderPG">
-			<var name="folderName" value="Folder Name" />
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="subfolderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="Bookmark#moveToRecycleBinPG">
-			<var name="bookmarkName" value="Bookmark Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Bookmark Name" />
-			<var name="assetType" value="Bookmarks Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Bookmark Name" />
-			<var name="assetRestoreLocation" value="Subfolder Name" />
-			<var name="assetType" value="Bookmarks Entry" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoSubfolderPG">
-			<var name="folderName" value="Folder Name" />
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="subfolderName" value="Subfolder Name" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinMBAttachment" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCPWithAttachment">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="threadBody" value="MB Body" />
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="threadAttachmentRemove" value="true" />
-			<var name="threadBodyEdit" value="MB Body Edit" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Body Edit" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
-
-		<execute macro="MessageboardsThread#restoreMBAttachmentCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Body Edit" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinScheduledCleanup" priority="3">
-		<property name="custom.properties" value="trash.entry.check.interval=1${line.separator}trash.entries.max.age=1" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="customMaxAge" value="1 minute" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute function="Pause" locator1="120000" />
-
-		<execute function="Refresh" />
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinSearchBlogsEntries" priority="3">
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content 3" />
-			<var name="entryTitle" value="Blogs Entry Title 3" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 3" />
-			<var name="entryTitle" value="Blogs Entry Title 3" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 2" />
-			<var name="entryTitle" value="Blogs Entry Title 2" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="1" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title 1" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="2" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title 2" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="3" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title 3" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinSearchDMEntriesInFolder" priority="3">
-		<property name="custom.properties" value="default.layout.template.id=1_column" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description 1" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title 1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description 2" />
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMFolder#deletePG">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="1" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="DM Document Title 1" />
-			<var name="assetType" value="Document" />
-			<var name="deleteUser" value="test test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="2" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="DM Document Title 2" />
-			<var name="assetType" value="Document" />
-			<var name="deleteUser" value="test test" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinStaging" priority="3">
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC Content" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-			<var name="uncheckContent" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoStagingSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoLiveSite" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="WC Title" />
-			<var name="assetType" value="Web Content Article" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinWebContent" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="WC WebContent Title" />
-			<var name="assetType" value="Web Content Article" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="WC WebContent Title" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinWiki" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki2 Node2 Name2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
-
-		<execute macro="WikiPage#addCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<execute macro="WikiPage#deleteCP">
-			<var name="assetType" value="Wiki Page" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#deleteCP">
-			<var name="assetType" value="Wiki Node" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Wiki Page Title" />
-			<var name="assetType" value="Wiki Page" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Wiki Node Name" />
-			<var name="assetType" value="Wiki Node" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Wiki Node Name" />
-			<var name="assetRestoreLocation" value="Wiki" />
-			<var name="assetType" value="Wiki Node" />
-			<var name="multipleAssets" value="true" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Wiki Page Title" />
-			<var name="assetRestoreLocation" value="Wiki Node" />
-			<var name="assetType" value="Wiki Page" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#viewCP">
-			<var name="numberOfWikiPages" value="2" />
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoCP">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewCP">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
-	<command name="RestoreDMDocumentFromFolderCP" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description 1" />
-			<var name="dmDocumentTitle" value="DM Document Title 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description 2" />
-			<var name="dmDocumentTitle" value="DM Document Title 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description 3" />
-			<var name="dmDocumentTitle" value="DM Document Title 3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#moveToRecycleBinCP">
-			<var name="assetType" value="Documents Folder" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreContentFromFolderCP">
-			<var name="assetName" value="DM Folder Name" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Documents Folder" />
-			<var name="assetType2" value="Document" />
-			<var name="documentName" value="DM Document Title 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title 2" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Title 2" />
-		</execute>
-	</command>
-
-	<command name="RestoreMessageboardsThreadViaRBCP" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addCP">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoCP">
-			<var name="categoryName" value="MB Category Name" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Body" />
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#replyCP">
-			<var name="threadReplyBody" value="MB Body Reply" />
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#deleteCP">
-			<var name="assetType" value="Message Boards Category" />
-			<var name="categoryName" value="MB Category Name" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="MB Category Name" />
-			<var name="assetType" value="Message Boards Category" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="MB Category Name" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Message Boards Category" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewCP">
-			<var name="categoryName" value="MB Category Name" />
-			<var name="replyCount" value="1" />
-			<var name="subcategoriesNumber" value="0" />
-			<var name="threadsNumber" value="1" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="1" />
-			<var name="threadBody" value="MB Body" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewReplyCP">
-			<var name="threadBody" value="MB Body Reply" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RestoreWebContentFromFolderCP" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Folder" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreContentFromFolderCP">
-			<var name="assetName" value="WC Folder Name" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Web Content Folder" />
-			<var name="assetType2" value="Web Content Article" />
-			<var name="documentName" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="RestoreWebContentWithArticleVersions" priority="3">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Description" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="Web Content Content Edit 1" />
-			<var name="webContentTitle" value="Web Content Title" />
-			<var name="webContentTitleEdit" value="Web Content Title Edit 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title Edit 1" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="Web Content Content Edit 2" />
-			<var name="webContentTitle" value="Web Content Title Edit 1" />
-			<var name="webContentTitleEdit" value="Web Content Title Edit 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title Edit 2" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="Web Content Content Edit 3" />
-			<var name="webContentTitle" value="Web Content Title Edit 2" />
-			<var name="webContentTitleEdit" value="Web Content Title Edit 3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContent#expireSpecificVersionCP">
-			<var name="webContentList" value="Web Content Title Edit 1,Web Content Title Edit 2" />
-			<var name="webContentTitle" value="Web Content Title Edit 3" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title Edit 3" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="saveAsDraft" value="true" />
-			<var name="webContentContentEdit" value="Web Content Content Edit Draft" />
-			<var name="webContentTitle" value="Web Content Title Edit 3" />
-			<var name="webContentTitleEdit" value="Web Content Title Edit Draft" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Folder" />
-			<var name="folderName" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="WC Folder Name" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Web Content Folder" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name" />
-			<var name="webContentTitle" value="WC Folder Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View History" />
-			<var name="rowEntry" value="Web Content Title Edit Draft" />
-		</execute>
-
-		<execute macro="WebContent#viewSpecificVersionHistoryCP">
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewSpecificVersionHistoryCP">
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="Web Content Title Edit 1" />
-		</execute>
-
-		<execute macro="WebContent#viewSpecificVersionHistoryCP">
-			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="Web Content Title Edit 2" />
-		</execute>
-
-		<execute macro="WebContent#viewSpecificVersionHistoryCP">
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="Web Content Title Edit 3" />
-		</execute>
-
-		<execute macro="WebContent#viewSpecificVersionHistoryCP">
-			<var name="webContentStatus" value="Draft" />
-			<var name="webContentTitle" value="Web Content Title Edit Draft" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Recycle Bin";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	test DisableRecycleBin {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		RecycleBin.disableRecycleBinViaSiteSettings();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.deleteWithDisabledRB(entryTitle = "Web Content Title");
+	}
+
+	@priority = "3"
+	test RecycleBinBlogs {
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "Blogs Entry Title",
+			assetRestoreLocation = "Blogs",
+			assetType = "Blogs Entry"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinBookmarks {
+		property portal.release = "false";
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Bookmarks");
+
+		BookmarksFolder.addPG(
+			folderDescription = "Folder Description",
+			folderName = "Folder Name"
+		);
+
+		BookmarksFolder.gotoPG(folderName = "Folder Name");
+
+		BookmarksFolder.addSubfolderPG(
+			folderDescription = "Subfolder Description",
+			folderName = "Subfolder Name"
+		);
+
+		BookmarksFolder.gotoSubfolderPG(
+			folderName = "Folder Name",
+			pageName = "Test Page",
+			siteName = "Site Name",
+			subfolderName = "Subfolder Name"
+		);
+
+		Bookmark.addPG(
+			bookmarkDescription = "Bookmark Description",
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BookmarksFolder.gotoPG(folderName = "Folder Name");
+
+		BookmarksFolder.moveSubfolderToRecycleBinPG(subfolderName = "Subfolder Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Subfolder Name",
+			assetType = "Bookmarks Folder",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "Subfolder Name",
+			assetRestoreLocation = "Folder Name",
+			assetType = "Bookmarks Folder"
+		);
+
+		BookmarksFolder.gotoSubfolderPG(
+			folderName = "Folder Name",
+			pageName = "Test Page",
+			siteName = "Site Name",
+			subfolderName = "Subfolder Name"
+		);
+
+		Bookmark.viewBookmark(
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		BookmarksFolder.gotoSubfolderPG(
+			folderName = "Folder Name",
+			pageName = "Test Page",
+			siteName = "Site Name",
+			subfolderName = "Subfolder Name"
+		);
+
+		Bookmark.moveToRecycleBinPG(bookmarkName = "Bookmark Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Bookmark Name",
+			assetType = "Bookmarks Entry",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "Bookmark Name",
+			assetRestoreLocation = "Subfolder Name",
+			assetType = "Bookmarks Entry"
+		);
+
+		BookmarksFolder.gotoSubfolderPG(
+			folderName = "Folder Name",
+			pageName = "Test Page",
+			siteName = "Site Name",
+			subfolderName = "Subfolder Name"
+		);
+
+		Bookmark.viewBookmark(
+			bookmarkName = "Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinMBAttachment {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCPWithAttachment(
+			mbAttachmentFile = "Document_1.doc",
+			threadBody = "MB Body",
+			threadSubject = "MB Subject"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.gotoCP(threadSubject = "MB Subject");
+
+		MessageboardsThread.editCP(
+			mbAttachmentFile = "Document_1.doc",
+			threadAttachmentRemove = "true",
+			threadBodyEdit = "MB Body Edit"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Body Edit",
+			threadSubject = "MB Subject",
+			userName = "Test Test"
+		);
+
+		PortletEntry.clickEditFromEllipsis();
+
+		MessageboardsThread.restoreMBAttachmentCP(mbAttachmentFile = "Document_1.doc");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			mbAttachmentFile = "Document_1.doc",
+			replyCount = "0",
+			threadBody = "MB Body Edit",
+			threadSubject = "MB Subject",
+			userName = "Test Test"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinScheduledCleanup {
+		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			customMaxAge = "1 minute",
+			deleteUser = "Test Test"
+		);
+
+		Pause(locator1 = "120000");
+
+		Refresh();
+
+		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
+	}
+
+	@priority = "3"
+	test RecycleBinSearchBlogsEntries {
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content 3",
+			entryTitle = "Blogs Entry Title 3"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content 3",
+			entryTitle = "Blogs Entry Title 3"
+		);
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2"
+		);
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		Search.searchCP(searchTerm = "1");
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title 1",
+			assetType = "Blogs Entry",
+			deleteUser = "Test Test"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		Search.searchCP(searchTerm = "2");
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title 2",
+			assetType = "Blogs Entry",
+			deleteUser = "Test Test"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		Search.searchCP(searchTerm = "3");
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title 3",
+			assetType = "Blogs Entry",
+			deleteUser = "Test Test"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinSearchDMEntriesInFolder {
+		property custom.properties = "default.layout.template.id=1_column";
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description 1",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title 1"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description 2",
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "DM Document Title 2"
+		);
+
+		Navigator.openURL();
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		DMFolder.deletePG(dmFolderName = "DM Folder Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		Search.searchCP(searchTerm = "1");
+
+		RecycleBin.viewCP(
+			assetName = "DM Document Title 1",
+			assetType = "Document",
+			deleteUser = "test test"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		Search.searchCP(searchTerm = "2");
+
+		RecycleBin.viewCP(
+			assetName = "DM Document Title 2",
+			assetType = "Document",
+			deleteUser = "test test"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinStaging {
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC Content");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			siteName = "Site Name",
+			uncheckContent = "Web Content"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC Title"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			deleteUser = "Test Test"
+		);
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "WC Title",
+			assetType = "Web Content Article",
+			deleteUser = "Test Test"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinWebContent {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "WC WebContent Title",
+			assetRestoreLocation = "Home",
+			assetType = "Web Content Article"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
+
+		DynamicDataMapping.viewField(fieldFieldLabel = "Text", fieldName = "Text");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.viewCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+	}
+
+	@priority = "3"
+	test RecycleBinWiki {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.addCP(wikiNodeName = "Wiki2 Node2 Name2");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
+		WikiNavigator.gotoAllPagesCP();
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		WikiPage.deleteCP(
+			assetType = "Wiki Page",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageTitle = "Wiki Page Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.deleteCP(assetType = "Wiki Node", wikiNodeName = "Wiki Node Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Wiki Page Title",
+			assetType = "Wiki Page",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "Wiki Node Name",
+			assetType = "Wiki Node",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "Wiki Node Name",
+			assetRestoreLocation = "Wiki",
+			assetType = "Wiki Node",
+			multipleAssets = "true"
+		);
+
+		Refresh();
+
+		RecycleBin.restoreCP(
+			assetName = "Wiki Page Title",
+			assetRestoreLocation = "Wiki Node",
+			assetType = "Wiki Page"
+		);
+
+		Refresh();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
+
+		WikiNode.viewCP(numberOfWikiPages = "2", wikiNodeName = "Wiki Node Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title"
+		);
+	}
+
+	@priority = "5"
+	test RestoreDMDocumentFromFolderCP {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description 1",
+			dmDocumentTitle = "DM Document Title 1"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description 2",
+			dmDocumentTitle = "DM Document Title 2"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description 3",
+			dmDocumentTitle = "DM Document Title 3"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.moveToRecycleBinCP(
+			assetType = "Documents Folder",
+			dmFolderName = "DM Folder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreContentFromFolderCP(
+			assetName = "DM Folder Name",
+			assetRestoreLocation = "Home",
+			assetType = "Documents Folder",
+			assetType2 = "Document",
+			documentName = "DM Document Title 2"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2");
+	}
+
+	@priority = "3"
+	test RestoreMessageboardsThreadViaRBCP {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.addCP(categoryName = "MB Category Name");
+
+		MessageboardsCategory.gotoCP(
+			categoryName = "MB Category Name",
+			siteScopeName = "Site Name"
+		);
+
+		MessageboardsThread.addCP(threadBody = "MB Body", threadSubject = "MB Subject");
+
+		MessageboardsThread.replyCP(
+			threadReplyBody = "MB Body Reply",
+			threadSubject = "MB Subject"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.deleteCP(
+			assetType = "Message Boards Category",
+			categoryName = "MB Category Name",
+			siteScopeName = "Site Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.viewCP(
+			assetName = "MB Category Name",
+			assetType = "Message Boards Category",
+			deleteUser = "Test Test"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "MB Category Name",
+			assetRestoreLocation = "Home",
+			assetType = "Message Boards Category"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.viewCP(
+			categoryName = "MB Category Name",
+			replyCount = "1",
+			subcategoriesNumber = "0",
+			threadsNumber = "1"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "1",
+			threadBody = "MB Body",
+			threadSubject = "MB Subject",
+			userName = "Test Test"
+		);
+
+		MessageboardsThread.viewReplyCP(
+			threadBody = "MB Body Reply",
+			threadSubject = "MB Subject",
+			userName = "Test Test"
+		);
+	}
+
+	@priority = "3"
+	test RestoreWebContentFromFolderCP {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreContentFromFolderCP(
+			assetName = "WC Folder Name",
+			assetRestoreLocation = "Home",
+			assetType = "Web Content Folder",
+			assetType2 = "Web Content Article",
+			documentName = "Web Content Title"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+	}
+
+	@priority = "3"
+	test RestoreWebContentWithArticleVersions {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "Web Content Content Edit 1",
+			webContentTitle = "Web Content Title",
+			webContentTitleEdit = "Web Content Title Edit 1"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
+
+		WebContent.editCP(
+			webContentContentEdit = "Web Content Content Edit 2",
+			webContentTitle = "Web Content Title Edit 1",
+			webContentTitleEdit = "Web Content Title Edit 2"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 2");
+
+		WebContent.editCP(
+			webContentContentEdit = "Web Content Content Edit 3",
+			webContentTitle = "Web Content Title Edit 2",
+			webContentTitleEdit = "Web Content Title Edit 3"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContent.expireSpecificVersionCP(
+			webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
+			webContentTitle = "Web Content Title Edit 3"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
+
+		WebContent.editCP(
+			saveAsDraft = "true",
+			webContentContentEdit = "Web Content Content Edit Draft",
+			webContentTitle = "Web Content Title Edit 3",
+			webContentTitleEdit = "Web Content Title Edit Draft"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		RecycleBin.restoreCP(
+			assetName = "WC Folder Name",
+			assetRestoreLocation = "Home",
+			assetType = "Web Content Folder"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View History",
+			rowEntry = "Web Content Title Edit Draft"
+		);
+
+		WebContent.viewSpecificVersionHistoryCP(
+			webContentStatus = "Approved",
+			webContentTitle = "Web Content Title"
+		);
+
+		WebContent.viewSpecificVersionHistoryCP(
+			webContentStatus = "Expired",
+			webContentTitle = "Web Content Title Edit 1"
+		);
+
+		WebContent.viewSpecificVersionHistoryCP(
+			webContentStatus = "Expired",
+			webContentTitle = "Web Content Title Edit 2"
+		);
+
+		WebContent.viewSpecificVersionHistoryCP(
+			webContentStatus = "Approved",
+			webContentTitle = "Web Content Title Edit 3"
+		);
+
+		WebContent.viewSpecificVersionHistoryCP(
+			webContentStatus = "Draft",
+			webContentTitle = "Web Content Title Edit Draft"
+		);
+	}
+}

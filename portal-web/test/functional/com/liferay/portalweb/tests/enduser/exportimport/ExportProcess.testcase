@@ -1,81 +1,64 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Export/Import Framework" />
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Export/Import Framework";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="DeleteCustomExportProcess" priority="4">
-		<execute macro="Navigator#openURL" />
+	@priority = "4"
+	test DeleteCustomExportProcess {
+		Navigator.openURL();
 
-		<execute macro="LAR#exportSiteCP">
-			<var name="larFileName" value="CustomExport" />
-		</execute>
+		LAR.exportSiteCP(larFileName = "CustomExport");
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Clear" />
-			<var name="rowEntry" value="CustomExport" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Clear", rowEntry = "CustomExport");
+	}
 
-	<command name="DeletePortletExportProcess" priority="4">
-		<execute macro="Navigator#openURL" />
+	@priority = "4"
+	test DeletePortletExportProcess {
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="LAR#configureExportSiteCP">
-			<var name="larFileName" value="DMExport" />
-		</execute>
+		LAR.configureExportSiteCP(larFileName = "DMExport");
 
-		<execute macro="LAR#exportSuccess" />
+		LAR.exportSuccess();
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Clear" />
-			<var name="rowEntry" value="DMExport" />
-		</execute>
-	</command>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Clear", rowEntry = "DMExport");
+	}
 
-	<command name="ViewExportProcess" priority="3">
-		<execute macro="Navigator#openURL" />
+	@priority = "3"
+	test ViewExportProcess {
+		Navigator.openURL();
 
-		<execute macro="LAR#exportSiteCP">
-			<var name="larFileName" value="CustomExport" />
-		</execute>
+		LAR.exportSiteCP(larFileName = "CustomExport");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="LexiconEntry#changeExportDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeExportDisplayStyle(displayStyle = "table");
 
-		<execute macro="ManagementBar#setFilterAndOrder">
-			<var name="filterBy" value="Completed" />
-		</execute>
+		ManagementBar.setFilterAndOrder(filterBy = "Completed");
 
-		<execute macro="ManagementBar#toggleViewOrder">
-			<var name="order" value="Descending" />
-		</execute>
-	</command>
-</definition>
+		ManagementBar.toggleViewOrder(order = "Descending");
+	}
+}

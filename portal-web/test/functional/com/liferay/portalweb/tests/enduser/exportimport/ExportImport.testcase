@@ -1,1082 +1,957 @@
-<definition component-name="portal-staging">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Export/Import Framework" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="EditExportTemplate" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#configureExportOptions">
-			<var name="checkContentNameList" value="Web Content" />
-			<var name="uncheckContentNameList" value="Blogs" />
-		</execute>
-
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#exportExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-			<var name="larFileName" value="Export.Template" />
-		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="Export.Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Export Templates" />
-		</execute>
-
-		<execute macro="LAR#editExportTemplateCP">
-			<var name="exportTemplateDescriptionEdit" value="Export Template Description Edit" />
-			<var name="exportTemplateName" value="Export Template Name" />
-			<var name="exportTemplateNameEdit" value="Export Template Name Edit" />
-		</execute>
-
-		<execute macro="LAR#configureExportOptions">
-			<var name="checkContentNameList" value="Blogs" />
-		</execute>
-
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description Edit" />
-			<var name="exportTemplateName" value="Export Template Name Edit" />
-		</execute>
-
-		<execute macro="LAR#exportExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description Edit" />
-			<var name="exportTemplateName" value="Export Template Name Edit" />
-			<var name="larFileName" value="Edited Export Template Name" />
-		</execute>
-
-		<var method="RegexUtil#replace('Edited Export Template Name', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFile" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFile}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="EditImportedContentPageViaImportedSiteTemplate" priority="3">
-		<description message="This is a use case for LPS-86501." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
-			<var name="pageName" value="Test Template Content Page" />
-			<var name="sitePageType" value="Content Page" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
-
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Content" />
-			<var name="id" value="content" />
-			<var name="text" value="Editing Finished" />
-		</execute>
-
-		<execute macro="PageEditor#viewFragmentEditableText">
-			<var name="editableText" value="Editing Finished" />
-			<var name="fragmentName" value="Content" />
-			<var name="id" value="content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="site-template-content-page.lar" />
-			<var name="portletName" value="Site Templates" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#deleteCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="site-template-content-page.lar" />
-			<var name="portletName" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="pageName" value="Test Template Content Page" />
-		</execute>
-
-		<execute macro="PageEditor#viewFragmentEditableText">
-			<var name="editableText" value="Editing Finished" />
-			<var name="fragmentName" value="Content" />
-			<var name="id" value="content" />
-		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="javax.portlet.PortletException:" />
-		<execute function="AssertConsoleTextNotPresent" value1="org.apache.jasper.JasperException:" />
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.NullPointerException" />
-	</command>
-
-	<command name="ExportImportDDLViaGlobal" priority="5">
-		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportDDLViaGlobal" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="DDL List Description" />
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="DDL Definition" />
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="DDL Definition Record" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="TextName" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="DDL.portlet.lar" />
-			<var name="siteScopeName" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="DDL.portlet.lar" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="DDL List" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="DDL Definition Record" />
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Label" />
-		</execute>
-	</command>
-
-	<command name="ExportImportDeletions" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="ExportWebContent.lar" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#deleteCP">
-			<var name="siteURLKey" value="guest" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="exportIndividualDeletions" value="true" />
-			<var name="larFileName" value="ExportWebContentDeletion.lar" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="ExportWebContent.lar" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="importDeletions" value="true" />
-			<var name="larFileName" value="ExportWebContentDeletion.lar" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewNotPresentCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="ExportImportPortletWithADT" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Application Display Templates" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addCP">
-			<var name="adtFile" value="adt_blogs_basic.ftl" />
-			<var name="adtType" value="Blogs" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="templateName" value="Blogs Test ADT" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementNotPresent" locator1="Link#EDIT" />
-		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_RECYCLING_BIN" />
-
-		<execute macro="LAR#configureExportSiteCP" />
-
-		<execute macro="LAR#exportSuccess" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementNotPresent" locator1="Link#EDIT" />
-		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_RECYCLING_BIN" />
-	</command>
-
-	<command name="ExportImportPrivatePage" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#exportSiteCP">
-			<var name="larFileName" value="ExportPrivatePage" />
-			<var name="privateLayout" value="true" />
-		</execute>
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9k)]*', '1')" name="larFileName" />
-
-		<echo message="lar file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="privateLayout" value="true" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPrivateSitePage">
-			<var name="pageName" value="Private Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="ExportImportSampleLARPortlet" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
-		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportSampleLARPortlet" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sample LAR" />
-		</execute>
-
-		<execute macro="SampleLARPortlet#addSampleBooking" />
-
-		<var method="selenium#getText('//tbody[@class=\'table-data\']/tr/td[2]')" name="bookingNumber" />
-
-		<echo message="Booking Number ${bookingNumber}" />
-
-		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
-			<var name="bookingNumber" value="${bookingNumber}" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="SampleLARPortlet.lar" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Site Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Sample LAR" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="SampleLARPortlet.lar" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Site Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
-			<var name="bookingNumber" value="${bookingNumber}" />
-		</execute>
-	</command>
-
-	<command name="ExportImportSmoke" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="LAR#exportSiteCP" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="lar file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="Site#openSitesAdmin" />
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="ExportImportThemeSettings" priority="4">
-		<property name="osgi.app.includes" value="frontend-theme-fjord" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Page#changeCurrentTheme">
-			<var name="pageName" value="Test Page" />
-			<var name="themeName" value="Fjord" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteCP">
-			<var name="uncheckLogo" value="true" />
-			<var name="uncheckSitePagesSettings" value="true" />
-			<var name="uncheckSiteTemplateSettings" value="true" />
-		</execute>
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name 2" />
-		</execute>
-
-		<execute macro="Page#viewCurrentTheme">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Test Page" />
-			<var name="themeName" value="Fjord" />
-		</execute>
-	</command>
-
-	<command name="ExportImportValidation" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportValidation" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute function="Click#pauseClickAt" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
-		</execute>
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
-
-		<execute macro="ItemSelector#selectDMImage">
-			<var name="imageFileName" value="DM Document Title" />
-			<var name="navTab" value="Documents and Media" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="LAR#configureExportSiteCP">
-			<var name="checkContentNameList" value="Blogs" />
-			<var name="mainContent" value="Blogs" />
-			<var name="uncheckContentNameList" value="Documents and Media" />
-			<var name="uncheckSubContent" value="Referenced Content" />
-		</execute>
-
-		<execute macro="LAR#exportSuccess" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="importValidationMissingItem" value="DM Document Title" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="ExportImportWithExportTemplate" priority="4">
-		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportWithExportTemplate" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#viewExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#exportExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<var method="selenium#getAttribute('//ul/li/div/h5//a@href')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var method="RegexUtil#replace('${valueName}', 'http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
-
-		<echo message="file name ${larFileName}" />
-
-		<execute macro="LAR#downloadLar" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command name="ImportCorruptedFile" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="portal.release" value="false" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Bookmarks" />
-
-		<execute macro="LAR#importPortlet">
-			<var name="cannotImport" value="true" />
-			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-staging"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Export/Import Framework";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			Page.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test EditExportTemplate {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LAR.addExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		LAR.configureExportOptions(
+			checkContentNameList = "Web Content",
+			uncheckContentNameList = "Blogs"
+		);
+
+		LAR.saveExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		LAR.exportExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name",
+			larFileName = "Export.Template"
+		);
+
+		Pause(locator1 = "3000");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(larFileName = "Export.Template", siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
+
+		LAR.editExportTemplateCP(
+			exportTemplateDescriptionEdit = "Export Template Description Edit",
+			exportTemplateName = "Export Template Name",
+			exportTemplateNameEdit = "Export Template Name Edit"
+		);
+
+		LAR.configureExportOptions(checkContentNameList = "Blogs");
+
+		LAR.saveExportTemplateCP(
+			exportTemplateDescription = "Export Template Description Edit",
+			exportTemplateName = "Export Template Name Edit"
+		);
+
+		LAR.exportExportTemplateCP(
+			exportTemplateDescription = "Export Template Description Edit",
+			exportTemplateName = "Export Template Name Edit",
+			larFileName = "Edited Export Template Name"
+		);
+
+		var larFile = RegexUtil.replace("Edited Export Template Name", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		LAR.downloadLar();
+
+		Pause(locator1 = "5000");
+
+		LAR.importSiteCP(larFileName = "${larFile}", siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@description = "This is a use case for LPS-86501."
+	@priority = "3"
+	test EditImportedContentPageViaImportedSiteTemplate {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Page Fragments"
+		);
+
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Test Template Content Page",
+			sitePageType = "Content Page",
+			siteTemplateName = "Site Template Name"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
+
+		PageEditor.editFragmentText(
+			fragmentName = "Content",
+			id = "content",
+			text = "Editing Finished"
+		);
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Editing Finished",
+			fragmentName = "Content",
+			id = "content"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LAR.exportPortlet(
+			larFileName = "site-template-content-page.lar",
+			portletName = "Site Templates"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LAR.importPortlet(
+			larFileName = "site-template-content-page.lar",
+			portletName = "Site Templates"
+		);
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+
+		Refresh();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Edit",
+			pageName = "Test Template Content Page"
+		);
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Editing Finished",
+			fragmentName = "Content",
+			id = "content"
+		);
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
+
+		AssertConsoleTextNotPresent(value1 = "org.apache.jasper.JasperException:");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+	}
+
+	@priority = "5"
+	test ExportImportDDLViaGlobal {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportDDLViaGlobal";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "DDL Definition Description",
+			ddlDataDefinitionName = "DDL Definition"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName"
+		);
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List"
+		);
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "DDL Definition");
+
+		DDLDataDefinition.save();
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "DDL Definition",
+			ddlListName = "DDL List"
+		);
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "DDL Definition Record",
+			field = "Text",
+			fieldFieldLabel = "Text Label",
+			fieldName = "TextName"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		LAR.exportPortlet(larFileName = "DDL.portlet.lar", siteScopeName = "Global");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		LAR.importPortlet(larFileName = "DDL.portlet.lar", siteName = "Site Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+
+		DDLNavigator.gotoListRecords(ddlListName = "DDL List");
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "DDL Definition Record",
+			field = "Text",
+			fieldFieldLabel = "Text Label"
+		);
+	}
+
+	@priority = "4"
+	test ExportImportDeletions {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.deleteCP(siteURLKey = "guest", webContentTitle = "Web Content Title");
+
+		LAR.exportPortlet(
+			exportIndividualDeletions = "true",
+			larFileName = "ExportWebContentDeletion.lar"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LAR.importPortlet(larFileName = "ExportWebContent.lar");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LAR.importPortlet(
+			importDeletions = "true",
+			larFileName = "ExportWebContentDeletion.lar"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
+	}
+
+	@priority = "3"
+	test ExportImportPortletWithADT {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Application Display Templates"
+		);
+
+		ApplicationDisplayTemplates.addCP(
+			adtFile = "adt_blogs_basic.ftl",
+			adtType = "Blogs"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoPage(pageName = "Test Page Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Test Page Name");
+
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "Blogs Test ADT");
+
+		Navigator.gotoPage(pageName = "Test Page Name");
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertElementNotPresent(locator1 = "Link#EDIT");
+
+		AssertElementNotPresent(locator1 = "Link#MOVE_TO_RECYCLING_BIN");
+
+		LAR.configureExportSiteCP();
+
+		LAR.exportSuccess();
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Refresh();
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name");
+
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertElementNotPresent(locator1 = "Link#EDIT");
+
+		AssertElementNotPresent(locator1 = "Link#MOVE_TO_RECYCLING_BIN");
+	}
+
+	@priority = "5"
+	test ExportImportPrivatePage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPrivatePage(pageName = "Private Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LAR.exportSiteCP(larFileName = "ExportPrivatePage", privateLayout = "true");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9k)]*", "1");
+
+		echo("lar file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Refresh();
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			privateLayout = "true",
+			siteName = "Site Name"
+		);
+
+		Navigator.gotoPrivateSitePage(pageName = "Private Page", siteName = "Site Name");
+	}
+
+	@priority = "5"
+	test ExportImportSampleLARPortlet {
+		property portal.acceptance = "false";
+		property portlet.plugins.includes = "sample-lar-portlet";
+		property test.name.skip.portal.instance = "ExportImport#ExportImportSampleLARPortlet";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoPage(pageName = "Test Page Name");
+
+		Portlet.addPG(portletName = "Sample LAR");
+
+		SampleLARPortlet.addSampleBooking();
+
+		var bookingNumber = selenium.getText("//tbody[@class='table-data']/tr/td[2]");
+
+		echo("Booking Number ${bookingNumber}");
+
+		SampleLARPortlet.viewSampleBookingNumber(bookingNumber = "${bookingNumber}");
+
+		LAR.exportPortlet(larFileName = "SampleLARPortlet.lar");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Site Page");
+
+		Navigator.gotoSitePage(pageName = "Test Site Page", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Sample LAR");
+
+		LAR.importPortlet(larFileName = "SampleLARPortlet.lar");
+
+		Navigator.gotoSitePage(pageName = "Test Site Page", siteName = "Test Site Name");
+
+		SampleLARPortlet.viewSampleBookingNumber(bookingNumber = "${bookingNumber}");
+	}
+
+	@priority = "5"
+	test ExportImportSmoke {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		User.firstLoginPG();
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("lar file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		Site.openSitesAdmin();
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name");
+	}
+
+	@priority = "4"
+	test ExportImportThemeSettings {
+		property osgi.app.includes = "frontend-theme-fjord";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		Page.changeCurrentTheme(pageName = "Test Page", themeName = "Fjord");
+
+		LAR.configureExportSiteCP(
+			uncheckLogo = "true",
+			uncheckSitePagesSettings = "true",
+			uncheckSiteTemplateSettings = "true"
+		);
+
+		AssertClick(locator1 = "SitePagesExport#EXPORT_BUTTON", value1 = "Export");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful"
+		);
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Refresh();
+
+		Site.addBlankCP(siteName = "Site Name 2");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name 2");
+
+		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name 2");
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Test Page",
+			themeName = "Fjord"
+		);
+	}
+
+	@priority = "5"
+	test ExportImportValidation {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ExportImport#ExportImportValidation";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		Click.pauseClickAt(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+
+		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
+
+		Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+
+		ItemSelector.selectDMImage(
+			imageFileName = "DM Document Title",
+			navTab = "Documents and Media"
+		);
+
+		PortletEntry.publish();
+
+		LAR.configureExportSiteCP(
+			checkContentNameList = "Blogs",
+			mainContent = "Blogs",
+			uncheckContentNameList = "Documents and Media",
+			uncheckSubContent = "Referenced Content"
+		);
+
+		LAR.exportSuccess();
+
+		var valueName = selenium.getText("//ul/li/div/h5");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		Refresh();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(
+			importValidationMissingItem = "DM Document Title",
+			larFileName = "${larFileName}",
+			siteName = "Site Name"
+		);
+	}
+
+	@priority = "4"
+	test ExportImportWithExportTemplate {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportWithExportTemplate";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LAR.addExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		LAR.saveExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		LAR.viewExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		LAR.exportExportTemplateCP(
+			exportTemplateDescription = "Export Template Description",
+			exportTemplateName = "Export Template Name"
+		);
+
+		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
+
+		echo("value name ${valueName}");
+
+		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("file name ${larFileName}");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name");
+	}
+
+	@priority = "5"
+	test ImportCorruptedFile {
+		property portal.acceptance = "true";
+		property portal.release = "false";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Bookmarks");
+
+		LAR.importPortlet(
+			cannotImport = "true",
+			larFileName = "bookmarks-corrupted.portlet.lar",
+			uploadFrom = "dependencies"
+		);
+	}
+}

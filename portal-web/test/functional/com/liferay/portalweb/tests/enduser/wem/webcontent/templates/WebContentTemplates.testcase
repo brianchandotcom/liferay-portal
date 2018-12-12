@@ -1,117 +1,97 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddTemplateWithStructure" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Web Content Administration" />
+	@priority = "5"
+	test AddTemplateWithStructure {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Administration";
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavItem#gotoStructures" />
+		NavItem.gotoStructures();
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
 
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavItem#gotoTemplates" />
+		NavItem.gotoTemplates();
 
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
-		</execute>
-	</command>
+		WebContentTemplates.viewCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name",
+			templateScript = '''${Text.getData()}'''
+		);
+	}
 
-	<command name="AddTemplateXSL" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration,XSL" />
+	@priority = "5"
+	test AddTemplateXSL {
+		property testray.component.names = "Training,Web Content Administration,XSL";
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="NavItem#gotoTemplates" />
+		NavItem.gotoTemplates();
 
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFile" value="xsl_template.xsl" />
-			<var name="templateLanguage" value="xsl" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
+		WebContentTemplates.addCP(
+			templateDescription = "WC Template Description",
+			templateFile = "xsl_template.xsl",
+			templateLanguage = "xsl",
+			templateName = "WC Template Name"
+		);
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Templates");
 
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="xsl" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='Text']"]]></var>
-		</execute>
-	</command>
-</definition>
+		WebContentTemplates.viewCP(
+			templateDescription = "WC Template Description",
+			templateLanguage = "xsl",
+			templateName = "WC Template Name",
+			templateScript = '''"/root/dynamic-element[@name='Text']"'''
+		);
+	}
+}

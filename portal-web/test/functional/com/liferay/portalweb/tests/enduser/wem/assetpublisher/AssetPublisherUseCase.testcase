@@ -1,2537 +1,2147 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Asset Publisher" />
-
-	<var name="globalSiteName" value="Global" />
-	<var name="pageName" value="Asset Publisher Page" />
-	<var name="portletName" value="Asset Publisher" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="WebContent#tearDownCP">
-					<var name="siteScopeName" value="Global" />
-				</execute>
-
-				<execute macro="DMDocumentType#tearDownCP" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Vocabulary#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
-		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com" />
-		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="Organization Name" />
-			<var name="page" value="Public Pages" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<for list="Home,Documents and Media,News" param="sitePageName">
-			<execute macro="SitePages#addPrivatePage">
-				<var name="pageName" value="${sitePageName}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="userFirstName" value="Test" />
-			<var name="userLastName" value="Test" />
-			<var name="userName" value="Test Test" />
-			<var name="userScreenName" value="test" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="publicPageVirtualHostURL" value="www.able.com" />
-			<var name="publicVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="privatePageVirtualHostURL" value="www.baker.com" />
-			<var name="privateVirtualHosts" value="true" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="samlEnabled" value="true" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
-		</execute>
-
-		<for list="Home,Documents and Media,News" param="sitePageName">
-			<execute function="AssertElementPresent" locator1="Home#PAGE">
-				<var name="key_pageName" value="${sitePageName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<for list="Documents and Media,News" param="sitePageName">
-			<execute function="AssertElementNotPresent" locator1="Home#PAGE">
-				<var name="key_pageName" value="${sitePageName}" />
-			</execute>
-		</for>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
-			<var name="assetTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="SignIn#PORTLET_TITLE" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
-			<var name="assetTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="url" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="AssertAssetListScopeViaAssetPublisher" priority="4">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="Global Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Text" />
-			<var name="dmDocumentTypeName" value="Global Document Type Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="Local Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Text" />
-			<var name="dmDocumentTypeName" value="Local Document Type Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureManualAssetSelectionPG" />
-
-		<execute macro="AssetPublisherPortlet#viewManualAssetTypesPG">
-			<var name="assetEntryTypes" value="Global Document Type Name,Local Document Type Name" />
-		</execute>
-	</command>
-
-	<command name="AssertGuestRefreshNoConsoleErrors" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC Webcontent Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute function="Refresh" />
-
-		<execute function="AssertConsoleTextNotPresent" value1="NoSuchResourceActionException" />
-	</command>
-
-	<command name="AssetPublisherCategoriesLocalization" priority="3">
-		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherCategoriesLocalization" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="locale" value="de_DE" />
-			<var name="locale2" value="fr_FR" />
-			<var name="localization2Name" value="Nom Vocabulaire" />
-			<var name="localizationName" value="Vokabular Namen" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCategoryLocalizationCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="locale" value="de_DE" />
-			<var name="locale2" value="fr_FR" />
-			<var name="localization2Name" value="Nom de la Catégorie" />
-			<var name="localizationName" value="Kategorienamen" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#viewCategoryToVocabularyCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="WebContent#selectCategory">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="de-DE" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Netz Content1 Inhalt" />
-			<var name="webContentTitle" value="Netz Content1 Titel" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="fr-FR" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Contenu de Contenu Web1" />
-			<var name="webContentTitle" value="Titre de Contenu Web1" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
-			<var name="addMetadata" value="true" />
-			<var name="metadataFieldList" value="Categories" />
-			<var name="portletName" value="Asset Publisher" />
-			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content1 Content" />
-			<var name="assetTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
-			<var name="addMetadata" value="true" />
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="de-DE" />
-			<var name="textIcon" value="Deutsch-Deutschland" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Netz Content1 Inhalt" />
-			<var name="assetTitle" value="Netz Content1 Titel" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
-			<var name="addMetadata" value="true" />
-			<var name="categoryName" value="Kategorienamen" />
-			<var name="vocabularyName" value="Vokabular Namen" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="fr_FR" />
-			<var name="textIcon" value="français-France" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Contenu de Contenu Web1" />
-			<var name="assetTitle" value="Titre de Contenu Web1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
-			<var name="addMetadata" value="true" />
-			<var name="categoryName" value="Nom de la Catégorie" />
-			<var name="vocabularyName" value="Nom Vocabulaire" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-	</command>
-
-	<command name="AssetPublisherCategoriesNavigation" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyDescription" value="This is the Vocabulary1 description" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="This is the Vocabulary1 Category description" />
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#viewCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC WebContent1 Content" />
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC WebContent2 Content" />
-			<var name="webContentTitle" value="WC WebContent2 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent2 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC WebContent3 Content" />
-			<var name="webContentTitle" value="WC WebContent3 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent3 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC WebContent4 Content" />
-			<var name="webContentTitle" value="WC WebContent4 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent4 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="WC WebContent5 Content" />
-			<var name="webContentTitle" value="WC WebContent5 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent5 Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryNameList" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Categories Navigation" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configurePaginationPG">
-			<var name="paginationNumber" value="3" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="nextPageClick" value="true" />
-			<var name="pageMod" value="1 - 3 of 5" />
-			<var name="pageNumber" value="1 of 2" />
-			<var name="paginationNumber" value="3" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="pageMod" value="4 - 5 of 5" />
-			<var name="pageNumber" value="2 of 2" />
-			<var name="paginationNumber" value="3" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
-			<var name="fieldNameOrder" value="Modified Date" />
-			<var name="sortOrder" value="Ascending" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Category#viewFilterViaCategoriesNavigationPG">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent4 Content" />
-			<var name="assetTitle" value="WC WebContent4 Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent5 Content" />
-			<var name="assetTitle" value="WC WebContent5 Title" />
-		</execute>
-
-		<execute macro="Category#viewRemoveFilterViaAP">
-			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="nextPageClick" value="true" />
-			<var name="pageMod" value="1 - 3 of 5" />
-			<var name="pageNumber" value="1 of 2" />
-			<var name="paginationNumber" value="3" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="pageMod" value="4 - 5 of 5" />
-			<var name="pageNumber" value="2 of 2" />
-			<var name="paginationNumber" value="3" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-	</command>
-
-	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-			<var name="templateFile" value="simple_all_fields_template.txt" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentInteger" value="4" />
-			<var name="webContentNumber" value="123" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="de-DE" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Netz Inhalt1 Titel" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#DDM" value1="3">
-			<var name="key_fieldName" value="Integer" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentInteger" value="1" />
-			<var name="webContentNumber" value="345" />
-			<var name="webContentTitle" value="Web Content2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content2 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="de-DE" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Netz Inhalt2 Titel" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#DDM" value1="8">
-			<var name="key_fieldName" value="Integer" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentInteger" value="5" />
-			<var name="webContentNumber" value="567" />
-			<var name="webContentTitle" value="Web Content3 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content3 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content3 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="de-DE" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Netz Inhalt3 Titel" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#DDM" value1="5">
-			<var name="key_fieldName" value="Integer" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content4 Content" />
-			<var name="webContentTitle" value="Web Content4 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content4 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureFilterByFieldPG">
-			<var name="assetSubtype" value="WC Structure Name" />
-			<var name="fieldFilter" value="Integer" />
-			<var name="selectedAsset" value="Web Content Article" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
-			<var name="fieldNameOrder" value="Integer" />
-			<var name="sortOrder" value="Ascending" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Web Content2 Title" />
-			<var name="secondAsset" value="Web Content1 Title" />
-			<var name="thirdAsset" value="Web Content3 Title" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="de-DE" />
-			<var name="textIcon" value="Deutsch-Deutschland" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Netz Inhalt1 Titel" />
-			<var name="secondAsset" value="Netz Inhalt3 Titel" />
-			<var name="thirdAsset" value="Netz Inhalt2 Titel" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure1 Description" />
-			<var name="structureName" value="WC Structure1 Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure1 Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure1 Name" />
-			<var name="templateDescription" value="WC Template11 Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template11 Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure1 Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="webContentText" value="Web Content5 Text" />
-			<var name="webContentTitle" value="Web Content5 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content5 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
-			<var name="assetSubtype" value="Any" />
-			<var name="selectedAsset" value="Web Content Article" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content5 Text" />
-			<var name="assetTitle" value="Web Content5 Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
-			<var name="selectContent" value="WC Structure1 Name" />
-			<var name="selectedAsset" value="Web Content Article" />
-			<var name="selectMoreThanOneSubtype" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Web Content1 Title" />
-			<var name="secondAsset" value="Web Content2 Title" />
-			<var name="thirdAsset" value="Web Content3 Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content4 Content" />
-			<var name="assetTitle" value="Web Content4 Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Web Content5 Text" />
-			<var name="assetTitle" value="Web Content5 Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="Marketing Banner" />
-			<var name="assetSubtypeFields" value="Select,Campaign Theme,Business Goal,Needs Legal Review,Banner Name" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="Online Training" />
-			<var name="assetSubtypeFields" value="Product,Version,Topics,Level,Lesson Title,Author" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="Sales Presentation" />
-			<var name="assetSubtypeFields" value="Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="Contract" />
-			<var name="assetSubtypeFields" value="Effective Date,Expiration Date,Contract Type,Status,Legal Reviewer,Signing Authority,Deal Name" />
-			<var name="selectedAsset" value="Document" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentNavigator#gotoEditStructure">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#editFieldIndexable">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewFilterAndFieldsPG">
-			<var name="assetSubtype" value="WC Structure Name" />
-			<var name="assetSubtypeFields" value="Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name" />
-			<var name="noneIndexable" value="true" />
-			<var name="selectedAsset" value="Web Content Article" />
-		</execute>
-	</command>
-
-	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="3">
-		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Connectors" />
-			<var name="configurationName" value="OpenOffice Integration" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="serverEnabled" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-			<var name="check" value="true" />
-			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewConversionLinksPGViaAP">
-			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-			<var name="check" value="true" />
-			<var name="documentTypes" value="doc,pdf,txt" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-			<var name="documentTypes" value="odt,rtf,sxw" />
-			<var name="uncheck" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewConversionLinksPGViaAP">
-			<var name="documentTypes" value="doc,pdf,txt" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
-			<var name="documentTypes" value="odt,rtf,sxw" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-			<var name="uncheck" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
-			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherSiteAndGlobalScopeAccessibility" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<for list="${siteName},Site Name,Global" param="siteName">
-			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="${siteName}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="${siteName} WC Content" />
-				<var name="webContentTitle" value="${siteName} WC Title" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Site Name WC Content" />
-			<var name="assetTitle" value="Site Name WC Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="globalSite" value="Global" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="${siteName},Site Name,Global" param="siteName">
-			<execute macro="AssetPublisherPortlet#viewAssetPG">
-				<var name="assetContent" value="${siteName} WC Content" />
-				<var name="assetTitle" value="${siteName} WC Title" />
-			</execute>
-		</for>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Liferay WC Content" />
-			<var name="assetTitle" value="Liferay WC Title" />
-		</execute>
-	</command>
-
-	<command name="AssetPublisherTogglingBetweenSites" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<for list="${siteName},Site Name,Global" param="siteName1">
-			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="${siteName1}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="${siteName1} WC Content" />
-				<var name="webContentTitle" value="${siteName1} WC Title" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Site Name WC Content" />
-			<var name="assetTitle" value="Site Name WC Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="globalSite" value="Global" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#removeSiteScope">
-			<var name="removeSiteScopes" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Global WC Content" />
-			<var name="assetTitle" value="Global WC Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#removeSiteScope">
-			<var name="removeSiteScopes" value="Global" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="${siteName} WC Content" />
-			<var name="assetTitle" value="${siteName} WC Title" />
-		</execute>
-	</command>
-
-	<command name="DisplayAssetsFilterByTagsOrCategoryViaAssetPublisher" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#addCP">
-			<var name="tagName" value="tagname" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-			<var name="webContentContent" value="Web Content Category Content" />
-			<var name="webContentTitle" value="Web Content Category Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="tagname" />
-			<var name="webContentContent" value="Web Content Tag Content" />
-			<var name="webContentTitle" value="Web Content Tag Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Web Content Tag Content" />
-			<var name="assetTitle" value="Web Content Tag Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content Category Content" />
-			<var name="assetTitle" value="Web Content Category Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#editConfigureTagsFilterPG">
-			<var name="tagNameList" value="tagname" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="Web Content Category Content" />
-			<var name="assetTitle" value="Web Content Category Title" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Web Content Tag Content" />
-			<var name="assetTitle" value="Web Content Tag Title" />
-		</execute>
-	</command>
-
-	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignSiteRoleCP">
-			<var name="siteRoleName" value="Site Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDynamicAssetSelectionConfigurationPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureManualAssetSelectionPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Asset Publisher Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewManualAssetSelectionConfigurationPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="ViewAssetPaginationAndShowContentAddButtonViaAP" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
-			<var name="disableConfiguration" value="Show Add Content Button" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configurePaginationPG">
-			<var name="paginationNumber" value="5" />
-			<var name="paginationType" value="Regular" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPlusIconNotPresentPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addMultipleArticlesCP">
-			<var name="articleCount" value="7" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 1" />
-			<var name="assetTitle" value="WC Title 1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 2" />
-			<var name="assetTitle" value="WC Title 2" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="nextPageClick" value="true" />
-			<var name="pageMod" value="1 - 5 of 7" />
-			<var name="pageNumber" value="1 of 2" />
-			<var name="paginationNumber" value="5" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="pageMod" value="6 - 7 of 7" />
-			<var name="pageNumber" value="2 of 2" />
-			<var name="paginationNumber" value="5" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 3" />
-			<var name="assetTitle" value="WC Title 3" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 4" />
-			<var name="assetTitle" value="WC Title 4" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 5" />
-			<var name="assetTitle" value="WC Title 5" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 6" />
-			<var name="assetTitle" value="WC Title 6" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC Content 7" />
-			<var name="assetTitle" value="WC Title 7" />
-		</execute>
-	</command>
-
-	<command name="ViewAuthorChangeViaAP" priority="3">
-		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
-			<var name="addMetadata" value="true" />
-			<var name="metadataFieldList" value="Author" />
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="WC Author" />
-			<var name="roleTitle" value="WC Author" />
-		</execute>
-
-		<for list="ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal" />
-				<var name="roleTitle" value="WC Author" />
-			</execute>
-		</for>
-
-		<for list="VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
-				<var name="roleTitle" value="WC Author" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="WC Author" />
-		</execute>
-
-		<for list="VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
-				<var name="roleTitle" value="WC Author" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<for list="author1,author2" param="userScreenName">
-			<var name="userEmailAddress" value="${userScreenName}ea@liferay.com" />
-			<var name="userFirstName" value="${userScreenName}" />
-			<var name="userLastName" value="${userScreenName}" />
-
-			<execute macro="User#addCP">
-				<var name="userEmailAddress" value="${userEmailAddress}" />
-				<var name="userFirstName" value="${userFirstName}" />
-				<var name="userLastName" value="${userLastName}" />
-				<var name="userScreenName" value="${userScreenName}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-
-			<execute macro="User#editPasswordCP">
-				<var name="userEmailAddress" value="${userEmailAddress}" />
-				<var name="userScreenName" value="${userScreenName}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Roles" />
-			</execute>
-
-			<execute macro="Role#assignRegRoleCP">
-				<var name="roleTitle" value="WC Author" />
-				<var name="userScreenName" value="${userScreenName}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Users" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
-		</for>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="author1ea@liferay.com" />
-			<var name="userLoginFullName" value="author1 author1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="author" value="author1" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="author2ea@liferay.com" />
-			<var name="userLoginFullName" value="author2 author2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="author" value="author2" />
-			<var name="webContentContent" value="WC WebContent Content Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntriesViaRelatedAssets" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Related Assets" />
-		</execute>
-
-		<execute macro="BlogsEntry#addRelatedAsset">
-			<var name="assetTitle" value="Blogs Entry1 Title" />
-			<var name="assetType" value="Blogs Entry" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_2" />
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_EDIT_2" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewRelatedAssetPG">
-			<var name="assetTitle" value="Blogs Entry1 Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_2" />
-		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_EDIT_2" />
-	</command>
-
-	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="portletName" value="Web Content Display" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#deleteCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewNoContentAsGuestPGViaWCD">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="User#loginPG" />
-	</command>
-
-	<command name="ViewRelatedAssetsViaRelatedAssetsPortlet" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Related Assets" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Related Assets" />
-		</execute>
-
-		<execute macro="BlogsEntry#addRelatedAsset">
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="assetType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewDefaultPG" />
-
-		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="WC WebContent Content" />
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="relatedAssetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewDefaultPG" />
-
-		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="relatedAssetTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewPG">
-			<var name="assetTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="ViewRelatedAssetViaDMPortlet" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.docx" />
-			<var name="dmDocumentRelatedAsset" value="true" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewPGDetails">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentRelatedAsset" value="true" />
-			<var name="dmDocumentSize" value="12KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentUploader" value="Test Test" />
-			<var name="dmDocumentVersionNumber" value="1.0" />
-			<var name="portletName" value="Documents and Media" />
-			<var name="searchTerm" value="DM Document Title" />
-			<var name="workflow" value="APPROVED" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edit" />
-			<var name="dmDocumentFileEdit" value="Document_2.docx" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewPGDetails">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="dmDocumentDescription" value="DM Document Description Edit" />
-			<var name="dmDocumentRelatedAsset" value="true" />
-			<var name="dmDocumentSize" value="12KB" />
-			<var name="dmDocumentTitle" value="DM Document Title Edit" />
-			<var name="dmDocumentUploader" value="Test Test" />
-			<var name="dmDocumentVersionNumber" value="1.1" />
-			<var name="portletName" value="Documents and Media" />
-			<var name="searchTerm" value="DM Document Title" />
-			<var name="workflow" value="APPROVED" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoRelatedAssetPG">
-			<var name="assetTitle" value="Blogs Entry Title" />
-			<var name="dmDocumentTitle" value="DM Document Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewAsRelatedAssetPG">
-			<var name="assetTitle" value="DM Document Title Edit" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Asset Publisher Page 2" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page 2" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Set as the Default Asset Publisher for This Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPagePGViaAP">
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="displayPageName" value="Asset Publisher Page 2" />
-			<var name="pageType" value="Public Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="WebContent#viewLinkedAssetPGViaAP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Publisher";
+	var globalSiteName = "Global";
+	var pageName = "Asset Publisher Page";
+	var portletName = "Asset Publisher";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
+
+			Page.tearDownCP();
+
+			WebContent.tearDownCP();
+
+			WebContent.tearDownCP(siteScopeName = "Global");
+
+			DMDocumentType.tearDownCP();
+
+			BlogsEntry.tearDownCP();
+
+			Vocabulary.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddAndEditAssetsViaVirtualHostOrganizations {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			organizationSite = "Community Site",
+			orgName = "Organization Name",
+			page = "Public Pages"
+		);
+
+		ProductMenu.gotoSite(site = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		for (var sitePageName : list "Home,Documents and Media,News") {
+			SitePages.addPrivatePage(pageName = "${sitePageName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization Name",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userName = "Test Test",
+			userScreenName = "test"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true"
+		);
+
+		Navigator.openSiteURL(siteName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings"
+		);
+
+		Site.addVirtualHostsURLCP(
+			privatePageVirtualHostURL = "www.baker.com",
+			privateVirtualHosts = "true"
+		);
+
+		User.logoutPG();
+
+		User.firstLoginPG(
+			password = "test",
+			samlEnabled = "true",
+			userEmailAddress = "test@liferay.com",
+			virtualHostsURL = "http://www.baker.com:8080"
+		);
+
+		for (var sitePageName : list "Home,Documents and Media,News") {
+			AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "${sitePageName}");
+		}
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		for (var sitePageName : list "Documents and Media,News") {
+			AssertElementNotPresent(
+				locator1 = "Home#PAGE",
+				key_pageName = "${sitePageName}"
+			);
+		}
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			virtualHostsURL = "http://www.able.com:8080"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Page");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Refresh();
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
+
+		AssertElementNotPresent(locator1 = "SignIn#PORTLET_TITLE");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+
+		Button.clickPublish();
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Web Content Page",
+			url = "http://www.able.com:8080"
+		);
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+
+		User.firstLoginPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Organization Name"
+		);
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test AssertAssetListScopeViaAssetPublisher {
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Global Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "Global Document Type Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Local Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "Local Document Type Name"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG();
+
+		AssetPublisherPortlet.viewManualAssetTypesPG(
+			assetEntryTypes = "Global Document Type Name,Local Document Type Name"
+		);
+	}
+
+	@priority = "4"
+	test AssertGuestRefreshNoConsoleErrors {
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.addPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title"
+		);
+
+		User.logoutPG();
+
+		Refresh();
+
+		AssertConsoleTextNotPresent(value1 = "NoSuchResourceActionException");
+	}
+
+	@priority = "3"
+	test AssetPublisherCategoriesLocalization {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherCategoriesLocalization";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(
+			locale = "de_DE",
+			locale2 = "fr_FR",
+			localization2Name = "Nom Vocabulaire",
+			localizationName = "Vokabular Namen",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCategoryLocalizationCP(
+			categoryName = "Vocabulary1 Category",
+			locale = "de_DE",
+			locale2 = "fr_FR",
+			localization2Name = "Nom de la Catégorie",
+			localizationName = "Kategorienamen",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.viewCategoryToVocabularyCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.addPGViaAP(
+			webContentContent = "Web Content1 Content",
+			webContentTitle = "Web Content1 Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
+
+		WebContent.selectCategory(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "de-DE");
+
+		WebContent.addCP(
+			webContentContent = "Netz Content1 Inhalt",
+			webContentTitle = "Netz Content1 Titel"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "fr-FR");
+
+		WebContent.addCP(
+			webContentContent = "Contenu de Contenu Web1",
+			webContentTitle = "Titre de Contenu Web1"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "Web Content1 Content",
+			webContentTitle = "Web Content1 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureShowMetadataFieldsPG(
+			addMetadata = "true",
+			metadataFieldList = "Categories",
+			portletName = "Asset Publisher",
+			webContentContent = "Web Content1 Content",
+			webContentTitle = "Web Content1 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content1 Content",
+			assetTitle = "Web Content1 Title"
+		);
+
+		AssetPublisherPortlet.viewAssetMetadataPG(
+			addMetadata = "true",
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "Deutsch-Deutschland"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Netz Content1 Inhalt",
+			assetTitle = "Netz Content1 Titel"
+		);
+
+		AssetPublisherPortlet.viewAssetMetadataPG(
+			addMetadata = "true",
+			categoryName = "Kategorienamen",
+			vocabularyName = "Vokabular Namen"
+		);
+
+		LanguagePortlet.selectLanguagePG(locale = "fr_FR", textIcon = "français-France");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Contenu de Contenu Web1",
+			assetTitle = "Titre de Contenu Web1"
+		);
+
+		AssetPublisherPortlet.viewAssetMetadataPG(
+			addMetadata = "true",
+			categoryName = "Nom de la Catégorie",
+			vocabularyName = "Nom Vocabulaire"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "English-United States"
+		);
+	}
+
+	@priority = "5"
+	test AssetPublisherCategoriesNavigation {
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(
+			vocabularyDescription = "This is the Vocabulary1 description",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCP(
+			categoryDescription = "This is the Vocabulary1 Category description",
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.viewCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent1 Content",
+			webContentTitle = "WC WebContent1 Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent1 Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent2 Content",
+			webContentTitle = "WC WebContent2 Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent2 Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent3 Content",
+			webContentTitle = "WC WebContent3 Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent3 Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent4 Content",
+			webContentTitle = "WC WebContent4 Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent4 Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent5 Content",
+			webContentTitle = "WC WebContent5 Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent5 Title");
+
+		WebContent.viewCategorizationCategoryCP(
+			categoryNameList = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Categories Navigation");
+
+		AssetPublisherPortlet.configurePaginationPG(
+			paginationNumber = "3",
+			paginationType = "Regular"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			nextPageClick = "true",
+			pageMod = "1 - 3 of 5",
+			pageNumber = "1 of 2",
+			paginationNumber = "3",
+			paginationType = "Regular"
+		);
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			pageMod = "4 - 5 of 5",
+			pageNumber = "2 of 2",
+			paginationNumber = "3",
+			paginationType = "Regular"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureAssetDisplayOrderPG(
+			fieldNameOrder = "Modified Date",
+			sortOrder = "Ascending"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Category.viewFilterViaCategoriesNavigationPG(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC WebContent4 Content",
+			assetTitle = "WC WebContent4 Title"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC WebContent5 Content",
+			assetTitle = "WC WebContent5 Title"
+		);
+
+		Category.viewRemoveFilterViaAP(
+			categoryName = "Vocabulary1 Category",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			nextPageClick = "true",
+			pageMod = "1 - 3 of 5",
+			pageNumber = "1 of 2",
+			paginationNumber = "3",
+			paginationType = "Regular"
+		);
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			pageMod = "4 - 5 of 5",
+			pageNumber = "2 of 2",
+			paginationNumber = "3",
+			paginationType = "Regular"
+		);
+	}
+
+	@priority = "5"
+	test AssetPublisherFilterAndOrderByFieldType {
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
+			);
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box",
+			templateFile = "simple_all_fields_template.txt",
+			templateName = "WC Template Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentInteger = "4",
+			webContentNumber = "123",
+			webContentTitle = "Web Content1 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content1 Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "de-DE");
+
+		WebContent.addCP(webContentTitle = "Netz Inhalt1 Titel");
+
+		Type(locator1 = "TextInput#DDM", value1 = "3", key_fieldName = "Integer");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentInteger = "1",
+			webContentNumber = "345",
+			webContentTitle = "Web Content2 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content2 Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content2 Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "de-DE");
+
+		WebContent.addCP(webContentTitle = "Netz Inhalt2 Titel");
+
+		Type(locator1 = "TextInput#DDM", value1 = "8", key_fieldName = "Integer");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentInteger = "5",
+			webContentNumber = "567",
+			webContentTitle = "Web Content3 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content3 Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content3 Title");
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "de-DE");
+
+		WebContent.addCP(webContentTitle = "Netz Inhalt3 Titel");
+
+		Type(locator1 = "TextInput#DDM", value1 = "5", key_fieldName = "Integer");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content4 Content",
+			webContentTitle = "Web Content4 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content4 Title");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureFilterByFieldPG(
+			assetSubtype = "WC Structure Name",
+			fieldFilter = "Integer",
+			selectedAsset = "Web Content Article"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureAssetDisplayOrderPG(
+			fieldNameOrder = "Integer",
+			sortOrder = "Ascending"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewOrderedFieldPG(
+			firstAsset = "Web Content2 Title",
+			secondAsset = "Web Content1 Title",
+			thirdAsset = "Web Content3 Title"
+		);
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "Deutsch-Deutschland"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewOrderedFieldPG(
+			firstAsset = "Netz Inhalt1 Titel",
+			secondAsset = "Netz Inhalt3 Titel",
+			thirdAsset = "Netz Inhalt2 Titel"
+		);
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "English-United States"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure1 Description",
+			structureName = "WC Structure1 Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure1 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure1 Name",
+			templateDescription = "WC Template11 Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template11 Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure1 Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "Web Content5 Text",
+			webContentTitle = "Web Content5 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content5 Title");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "Any",
+			selectedAsset = "Web Content Article"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content5 Text",
+			assetTitle = "Web Content5 Title"
+		);
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			selectContent = "WC Structure1 Name",
+			selectedAsset = "Web Content Article",
+			selectMoreThanOneSubtype = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewOrderedFieldPG(
+			firstAsset = "Web Content1 Title",
+			secondAsset = "Web Content2 Title",
+			thirdAsset = "Web Content3 Title"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content4 Content",
+			assetTitle = "Web Content4 Title"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Web Content5 Text",
+			assetTitle = "Web Content5 Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "Marketing Banner",
+			assetSubtypeFields = "Select,Campaign Theme,Business Goal,Needs Legal Review,Banner Name",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "Online Training",
+			assetSubtypeFields = "Product,Version,Topics,Level,Lesson Title,Author",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "Sales Presentation",
+			assetSubtypeFields = "Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "Contract",
+			assetSubtypeFields = "Effective Date,Expiration Date,Contract Type,Status,Legal Reviewer,Signing Authority,Deal Name",
+			selectedAsset = "Document"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box") {
+			DynamicDataMapping.editFieldIndexable(fieldFieldLabel = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "WC Structure Name",
+			assetSubtypeFields = "Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name",
+			noneIndexable = "true",
+			selectedAsset = "Web Content Article"
+		);
+	}
+
+	@priority = "3"
+	test AssetPublisherHasOpenOfficeFileTypeLinks {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Connectors",
+			configurationName = "OpenOffice Integration",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "serverEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.addPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		AssetPublisherPortlet.configureDisplayConversionsPG(
+			check = "true",
+			documentTypes = "doc,odt,pdf,rtf,sxw,txt"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewConversionLinksPGViaAP(
+			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureDisplayConversionsPG(
+			check = "true",
+			documentTypes = "doc,pdf,txt"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureDisplayConversionsPG(
+			documentTypes = "odt,rtf,sxw",
+			uncheck = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewConversionLinksPGViaAP(
+			documentTypes = "doc,pdf,txt",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewNoConversionLinksPGViaAP(
+			documentTypes = "odt,rtf,sxw",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureDisplayConversionsPG(
+			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
+			uncheck = "true"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewNoConversionLinksPGViaAP(
+			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "5"
+	test AssetPublisherSiteAndGlobalScopeAccessibility {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherSiteAndGlobalScopeAccessibility";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		for (var siteName : list "${siteName},Site Name,Global") {
+			ProductMenu.gotoSite(site = "${siteName}");
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "${siteName} WC Content",
+				webContentTitle = "${siteName} WC Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Site Name WC Content",
+			assetTitle = "Site Name WC Title"
+		);
+
+		AssetPublisherPortlet.configureAddSiteScopes(globalSite = "Global");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		for (var siteName : list "${siteName},Site Name,Global") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "${siteName} WC Content",
+				assetTitle = "${siteName} WC Title"
+			);
+		}
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Liferay WC Content",
+			assetTitle = "Liferay WC Title"
+		);
+	}
+
+	@priority = "4"
+	test AssetPublisherTogglingBetweenSites {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page");
+
+		for (var siteName1 : list "${siteName},Site Name,Global") {
+			ProductMenu.gotoSite(site = "${siteName1}");
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Web Content"
+			);
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "${siteName1} WC Content",
+				webContentTitle = "${siteName1} WC Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Site Name WC Content",
+			assetTitle = "Site Name WC Title"
+		);
+
+		AssetPublisherPortlet.configureAddSiteScopes(globalSite = "Global");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.removeSiteScope(removeSiteScopes = "Site Name");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Global WC Content",
+			assetTitle = "Global WC Title"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "${siteName}");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.removeSiteScope(removeSiteScopes = "Global");
+
+		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "${siteName} WC Content",
+			assetTitle = "${siteName} WC Title"
+		);
+	}
+
+	@priority = "4"
+	test DisplayAssetsFilterByTagsOrCategoryViaAssetPublisher {
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
+
+		Tag.addCP(tagName = "tagname");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Web Content Category Content",
+			webContentTitle = "Web Content Category Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "tagname",
+			webContentContent = "Web Content Tag Content",
+			webContentTitle = "Web Content Tag Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureCategoriesFilterPG(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Web Content Tag Content",
+			assetTitle = "Web Content Tag Title"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Category Content",
+			assetTitle = "Web Content Category Title"
+		);
+
+		AssetPublisherPortlet.editConfigureTagsFilterPG(tagNameList = "tagname");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Web Content Category Content",
+			assetTitle = "Web Content Category Title"
+		);
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Tag Content",
+			assetTitle = "Web Content Tag Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewAPPortletAsNewUserSiteAdministratorViaUserSite {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewDynamicAssetSelectionConfigurationPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name"
+		);
+
+		AssetPublisherPortlet.viewManualAssetSelectionConfigurationPG(
+			portletName = "Asset Publisher"
+		);
+
+		User.logoutPG();
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "5"
+	test ViewAssetPaginationAndShowContentAddButtonViaAP {
+		property testray.component.names = "Training";
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			disableConfiguration = "Show Add Content Button"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configurePaginationPG(
+			paginationNumber = "5",
+			paginationType = "Regular"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewPlusIconNotPresentPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.addMultipleArticlesCP(articleCount = "7");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 1",
+			assetTitle = "WC Title 1"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 2",
+			assetTitle = "WC Title 2"
+		);
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			nextPageClick = "true",
+			pageMod = "1 - 5 of 7",
+			pageNumber = "1 of 2",
+			paginationNumber = "5"
+		);
+
+		AssetPublisherPortlet.viewPaginatedAssetsPG(
+			pageMod = "6 - 7 of 7",
+			pageNumber = "2 of 2",
+			paginationNumber = "5"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 3",
+			assetTitle = "WC Title 3"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 4",
+			assetTitle = "WC Title 4"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 5",
+			assetTitle = "WC Title 5"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 6",
+			assetTitle = "WC Title 6"
+		);
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC Content 7",
+			assetTitle = "WC Title 7"
+		);
+	}
+
+	@priority = "3"
+	test ViewAuthorChangeViaAP {
+		AssetPublisherPortlet.configureShowMetadataFieldsPG(
+			addMetadata = "true",
+			metadataFieldList = "Author",
+			portletName = "Asset Publisher"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		JSONRole.addRegularRole(roleKey = "WC Author", roleTitle = "WC Author");
+
+		for (var resourceActionIndex : list "ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "WC Author"
+			);
+		}
+
+		for (var resourceActionIndex : list "VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WC Author"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "WC Author"
+		);
+
+		for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "WC Author"
+			);
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		for (var userScreenName : list "author1,author2") {
+			var userEmailAddress = "${userScreenName}ea@liferay.com";
+			var userFirstName = "${userScreenName}";
+			var userLastName = "${userScreenName}";
+
+			User.addCP(
+				userEmailAddress = "${userEmailAddress}",
+				userFirstName = "${userFirstName}",
+				userLastName = "${userLastName}",
+				userScreenName = "${userScreenName}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+
+			User.editPasswordCP(
+				userEmailAddress = "${userEmailAddress}",
+				userScreenName = "${userScreenName}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles"
+			);
+
+			Role.assignRegRoleCP(
+				roleTitle = "WC Author",
+				userScreenName = "${userScreenName}"
+			);
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations"
+			);
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "author1ea@liferay.com",
+			userLoginFullName = "author1 author1"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewPGViaAP(
+			author = "author1",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "author2ea@liferay.com",
+			userLoginFullName = "author2 author2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewPGViaAP(
+			author = "author2",
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsEntriesViaRelatedAssets {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		Panel.expandPanel(panel = "Related Assets");
+
+		BlogsEntry.addRelatedAsset(
+			assetTitle = "Blogs Entry1 Title",
+			assetType = "Blogs Entry"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title"
+		);
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_2");
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_2");
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_EDIT_2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		BlogsEntry.viewRelatedAssetPG(
+			assetTitle = "Blogs Entry1 Title",
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry2 Title"
+		);
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_2");
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_2");
+
+		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_EDIT_2");
+	}
+
+	@priority = "4"
+	test ViewDeletedWCDArticleAsAdminAndGuestCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Display Page");
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		WebContentDisplayPortlet.selectWebContent(
+			portletName = "Web Content Display",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.deleteCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		WebContentDisplayPortlet.viewDeletedArticle();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		WebContent.viewNoContentAsGuestPGViaWCD(portletName = "Web Content Display");
+
+		User.loginPG();
+	}
+
+	@priority = "3"
+	test ViewRelatedAssetsViaRelatedAssetsPortlet {
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.addPG(portletName = "Related Assets");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Display Page");
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Panel.expandPanel(panel = "Related Assets");
+
+		BlogsEntry.addRelatedAsset(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		RelatedAssets.viewDefaultPG();
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "WC WebContent Content",
+			assetTitle = "WC WebContent Title",
+			relatedAssetTitle = "Blogs Entry Title"
+		);
+
+		RelatedAssets.viewPG(assetTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		RelatedAssets.viewDefaultPG();
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Blogs Entry Content",
+			assetTitle = "Blogs Entry Title",
+			relatedAssetTitle = "WC WebContent Title"
+		);
+
+		RelatedAssets.viewPG(assetTitle = "WC WebContent Title");
+	}
+
+	@priority = "3"
+	test ViewRelatedAssetViaDMPortlet {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Documents and Media Page");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentRelatedAsset = "true",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPGDetails(
+			assetTitle = "Blogs Entry Title",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentRelatedAsset = "true",
+			dmDocumentSize = "12KB",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentUploader = "Test Test",
+			dmDocumentVersionNumber = "1.0",
+			portletName = "Documents and Media",
+			searchTerm = "DM Document Title",
+			workflow = "APPROVED"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.editPG(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_2.docx",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPGDetails(
+			assetTitle = "Blogs Entry Title",
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentRelatedAsset = "true",
+			dmDocumentSize = "12KB",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentUploader = "Test Test",
+			dmDocumentVersionNumber = "1.1",
+			portletName = "Documents and Media",
+			searchTerm = "DM Document Title",
+			workflow = "APPROVED"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRelatedAssetPG(
+			assetTitle = "Blogs Entry Title",
+			dmDocumentTitle = "DM Document Title Edit"
+		);
+
+		BlogsEntry.viewAsRelatedAssetPG(
+			assetTitle = "DM Document Title Edit",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewWebContentWithConfiguredDisplayPageViaAP {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoSite(site = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Asset Publisher Page 2");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page 2");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureDisplaySettings(
+			displaySettings = "Set as the Default Asset Publisher for This Page"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.addPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.editDisplayPagePGViaAP(
+			assetTitle = "WC WebContent Title",
+			displayPageName = "Asset Publisher Page 2",
+			pageType = "Public Pages"
+		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		WebContent.viewLinkedAssetPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+}

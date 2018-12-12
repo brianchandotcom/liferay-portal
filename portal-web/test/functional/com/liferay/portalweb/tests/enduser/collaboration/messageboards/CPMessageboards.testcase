@@ -1,525 +1,512 @@
-<definition component-name="portal-collaboration">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Message Boards" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="MessageboardsCategory#tearDownCP" />
-
-				<execute macro="MessageboardsThread#tearDownCP" />
-
-				<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddMBCategory" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addCP">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewCP">
-			<var name="categoryName" value="MB Category Name" />
-			<var name="subcategoriesNumber" value="0" />
-			<var name="threadsNumber" value="0" />
-		</execute>
-	</command>
-
-	<command name="AddMBCategorySubcategory" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addCP">
-			<var name="categoryName" value="MB Category Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addSubcategoryCP">
-			<var name="categoryName" value="MB Category Name" />
-			<var name="subCategoryDescription" value="MB Subcategory Description" />
-			<var name="subCategoryName" value="MB Subcategory Name" />
-		</execute>
-	</command>
-
-	<command name="AddMBThread" priority="5">
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="CKEditorSmoke" priority="5">
-		<property name="custom.properties" value="editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor${line.separator}editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Thread" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#SUBJECT" value1="CKEditor Entry Subject" />
-
-		<execute macro="CKEditor#assertEditorPresent" />
-
-		<execute macro="CKEditor#addContent">
-			<var name="content" value="CKEditor Entry Body" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="CKEditor Entry Body" />
-			<var name="threadSubject" value="CKEditor Entry Subject" />
-		</execute>
-	</command>
-
-	<command name="DeleteMBCategories" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<for list="MB Category1 Name,MB Category2 Name,MB Category3 Name" param="categoryName">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Message Boards" />
-			</execute>
-
-			<execute macro="MessageboardsCategory#addCP">
-				<var name="categoryName" value="${categoryName}" />
-			</execute>
-		</for>
-
-		<execute macro="MessageboardsCategory#tearDownCP">
-			<var name="assetType" value="3 items" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads or categories." />
-	</command>
-
-	<command name="DeleteMBThreadWithAttachment" priority="3">
-		<property name="custom.properties" value="trash.entry.check.interval=1${line.separator}trash.entries.max.age=1" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCPWithAttachment">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="threadBody" value="MB Body" />
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#moveToRecycleBinCP">
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute function="Pause" locator1="120000" />
-
-		<execute function="AssertConsoleTextNotPresent" value1="MessageListenerException" />
-		<execute function="AssertConsoleTextNotPresent" value1="com.liferay.portlet.documentlibrary.NoSuchFileEntryException" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
-	</command>
-
-	<command name="EditMBThreadBody" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editCP">
-			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body Edit" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="EditMBThreadSubject" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editCP">
-			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject Edit" />
-		</execute>
-	</command>
-
-	<command name="EditMBThreadSubjectAndBody" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editCP">
-			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="MB Thread Message Body Edit" />
-			<var name="threadSubject" value="MB Thread Message Subject Edit" />
-		</execute>
-	</command>
-
-	<command name="MoveToRecycleBinMBThread" priority="5">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#moveToRecycleBinCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewDefaultCP">
-			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
-	</command>
-
-	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewAnonymousPostingCheckboxCP" />
-
-		<execute macro="MessageboardsPortlet#configureAnonymousPostingCP">
-			<var name="anonymousPostingEnabled" value="false" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#viewAnonymousPostingConfigurationCP">
-			<var name="anonymousPostingEnabled" value="false" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewNoAnonymousPostingCheckboxCP" />
-	</command>
-
-	<command name="ViewBBCodeNoXSS" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsPortlet#configureGeneralCP">
-			<var name="messageFormat" value="BBCode" />
-			<var name="messageFormatBBCodeEnabled" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="source" value="true" />
-			<var name="threadBody" value="[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]" />
-			<var name="threadSubject" value="New Thread Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#assertAlertNotPresent" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="" />
-			<var name="threadSubject" value="New Thread Subject" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCP">
-			<var name="fontSize" value="24" />
-			<var name="source" value="true" />
-			<var name="threadBody" value="[size=5]Thread Body[/size]" />
-			<var name="threadSubject" value="New Thread Subject 2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="fontSize" value="24" />
-			<var name="replyCount" value="0" />
-			<var name="threadBody" value="Thread Body" />
-			<var name="threadSubject" value="New Thread Subject 2" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-collaboration"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Message Boards";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			MessageboardsPortlet.tearDownConfigurationGeneralCP();
+		}
+	}
+
+	@priority = "5"
+	test AddMBCategory {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.addCP(categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewCP(
+			categoryName = "MB Category Name",
+			subcategoriesNumber = "0",
+			threadsNumber = "0"
+		);
+	}
+
+	@priority = "4"
+	test AddMBCategorySubcategory {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.addCP(categoryName = "MB Category Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsCategory.addSubcategoryCP(
+			categoryName = "MB Category Name",
+			subCategoryDescription = "MB Subcategory Description",
+			subCategoryName = "MB Subcategory Name"
+		);
+	}
+
+	@priority = "5"
+	test AddMBThread {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "5"
+	test CKEditorSmoke {
+		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor${line.separator}editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Thread");
+
+		Type(locator1 = "TextInput#SUBJECT", value1 = "CKEditor Entry Subject");
+
+		CKEditor.assertEditorPresent();
+
+		CKEditor.addContent(content = "CKEditor Entry Body");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "CKEditor Entry Body",
+			threadSubject = "CKEditor Entry Subject"
+		);
+	}
+
+	@priority = "4"
+	test DeleteMBCategories {
+		Navigator.openURL();
+
+		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Message Boards"
+			);
+
+			MessageboardsCategory.addCP(categoryName = "${categoryName}");
+		}
+
+		MessageboardsCategory.tearDownCP(assetType = "3 items");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		AssertTextEquals.assertText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no threads or categories."
+		);
+	}
+
+	@priority = "3"
+	test DeleteMBThreadWithAttachment {
+		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCPWithAttachment(
+			mbAttachmentFile = "Document_1.doc",
+			threadBody = "MB Body",
+			threadSubject = "MB Subject"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Subject");
+
+		Pause(locator1 = "120000");
+
+		AssertConsoleTextNotPresent(value1 = "MessageListenerException");
+
+		AssertConsoleTextNotPresent(
+			value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "The Recycle Bin is empty."
+		);
+	}
+
+	@priority = "5"
+	test EditMBThreadBody {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(threadBodyEdit = "MB Thread Message Body Edit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject"
+		);
+	}
+
+	@priority = "5"
+	test EditMBThreadSubject {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(threadSubjectEdit = "MB Thread Message Subject Edit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject Edit"
+		);
+	}
+
+	@priority = "5"
+	test EditMBThreadSubjectAndBody {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubjectEdit = "MB Thread Message Subject Edit"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject Edit"
+		);
+	}
+
+	@priority = "5"
+	test MoveToRecycleBinMBThread {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.moveToRecycleBinCP(
+			threadSubject = "MB Thread Message Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "3"
+	test ViewAnonymousPostingAllowedCheckboxConfiguration {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewAnonymousPostingCheckboxCP();
+
+		MessageboardsPortlet.configureAnonymousPostingCP(
+			anonymousPostingEnabled = "false"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(
+			anonymousPostingEnabled = "false"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewNoAnonymousPostingCheckboxCP();
+	}
+
+	@priority = "4"
+	test ViewBBCodeNoXSS {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsPortlet.configureGeneralCP(
+			messageFormat = "BBCode",
+			messageFormatBBCodeEnabled = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			source = "true",
+			threadBody = "[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]",
+			threadSubject = "New Thread Subject"
+		);
+
+		MessageboardsThread.assertAlertNotPresent();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "",
+			threadSubject = "New Thread Subject"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.addCP(
+			fontSize = "24",
+			source = "true",
+			threadBody = "[size=5]Thread Body[/size]",
+			threadSubject = "New Thread Subject 2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
+
+		MessageboardsThread.viewCP(
+			fontSize = "24",
+			replyCount = "0",
+			threadBody = "Thread Body",
+			threadSubject = "New Thread Subject 2"
+		);
+	}
+}

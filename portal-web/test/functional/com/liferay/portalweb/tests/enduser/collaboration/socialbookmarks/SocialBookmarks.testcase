@@ -1,258 +1,224 @@
-<definition component-name="portal-collaboration">
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Social Bookmarks" />
+@component-name = "portal-collaboration"
+definition {
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Social Bookmarks";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="BlogsEntry#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
 
-				<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
-					<var name="pageName" value="Blogs Page" />
-					<var name="portletName" value="Blogs" />
-				</execute>
+			Blogs.tearDownConfigurationDisplaySettingsPG(
+				pageName = "Blogs Page",
+				portletName = "Blogs"
+			);
 
-				<execute macro="KBArticle#tearDownCP" />
+			KBArticle.tearDownCP();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="4">
-		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
+	@priority = "4"
+	test ChangeSocialBookmarkSitesForKBArticle {
+		property osgi.app.includes = "social-bookmarks, knowledge-base";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
+		SocialBookmarks.viewBookmarkMenuItems(
+			socialBookmarks = "Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Reddit,Slashdot" />
-		</execute>
+		KBArticle.configureKBSocialBookmarkSites(
+			disableSocialBookmarkSites = "Twitter,Reddit,Slashdot"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Facebook,Google+,AddThis,LinkedIn,Delicious,Digg,Evernote" />
-		</execute>
+		SocialBookmarks.viewBookmarkMenuItems(
+			socialBookmarks = "Facebook,Google+,AddThis,LinkedIn,Delicious,Digg,Evernote"
+		);
 
-		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Reddit,Slashdot" />
-		</execute>
-	</command>
+		SocialBookmarks.viewBookmarksNotPresent(
+			socialBookmarks = "Twitter,Reddit,Slashdot"
+		);
+	}
 
-	<command name="ViewBlogsEntryWithSocialBookmarksSites" priority="3">
-		<property name="osgi.app.includes" value="social-bookmarks" />
-		<property name="test.assert.warning.exceptions" value="true" />
+	@priority = "3"
+	test ViewBlogsEntryWithSocialBookmarksSites {
+		property osgi.app.includes = "social-bookmarks";
+		property test.assert.warning.exceptions = "true";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		Portlet.addPG(portletName = "Blogs");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
 
-		<execute macro="SocialBookmarks#viewDefaultSharableBookmarks" />
+		SocialBookmarks.viewDefaultSharableBookmarks();
 
-		<execute macro="Blogs#disableSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
+		Blogs.disableSocialBookmarkSites(
+			disableSocialBookmarkSites = "Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="SocialBookmarks#viewShareIconNotPresent" />
+		SocialBookmarks.viewShareIconNotPresent();
 
-		<execute macro="Blogs#enableSocialBookmarkSites">
-			<var name="enableSocialBookmarkSites" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
+		Blogs.enableSocialBookmarkSites(
+			enableSocialBookmarkSites = "Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
 
-		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
-	</command>
+		SocialBookmarks.viewBookmarkMenuItems(
+			socialBookmarks = "Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
+	}
 
-	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">
-		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
+	@priority = "3"
+	test ViewKBArticleWithAllSocialBookmarkSites {
+		property osgi.app.includes = "social-bookmarks, knowledge-base";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.addPublicPage(
+			pageName = "Knowledge Base Display Page",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
+		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Knowledge Base"
+		);
 
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot" />
-		</execute>
-	</command>
-</definition>
+		SocialBookmarks.viewBookmarkMenuItems(
+			socialBookmarks = "Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
+		);
+	}
+}

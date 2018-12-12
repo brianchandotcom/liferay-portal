@@ -1,123 +1,117 @@
-<definition component-name="portal-web-forms-and-data-lists">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Dynamic Data Lists" />
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Dynamic Data Lists";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<execute macro="DDLDataDefinition#addCP" />
+		DDLDataDefinition.addCP();
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Parent" />
-			<var name="fieldName" value="textParent" />
-		</execute>
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text Parent",
+			fieldName = "textParent"
+		);
 
-		<execute macro="DynamicDataMapping#addFieldNested">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text Child" />
-			<var name="fieldName" value="textChild" />
-		</execute>
+		DynamicDataMapping.addFieldNested(
+			field = "Text",
+			fieldFieldLabel = "Text Child",
+			fieldName = "textChild"
+		);
 
-		<execute macro="DDLDataDefinition#save" />
+		DDLDataDefinition.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
 
-		<execute macro="DDLList#addCP" />
+		DDLList.addCP();
 
-		<execute macro="DDLDataDefinition#selectCP" />
+		DDLDataDefinition.selectCP();
 
-		<execute macro="DDLDataDefinition#save" />
+		DDLDataDefinition.save();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Dynamic Data Lists"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="DDLList#tearDownCP" />
+			DDLList.tearDownCP();
 
-				<execute macro="DDLDataDefinition#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			DDLDataDefinition.tearDownCP();
+		}
+	}
 
-	<command name="ViewFieldTranslations" priority="4">
-		<description message="This is a use case for LPS-69335." />
+	@description = "This is a use case for LPS-69335."
+	@priority = "4"
+	test ViewFieldTranslations {
+		DDLRecord.addCP();
 
-		<execute macro="DDLRecord#addCP" />
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "en-US Parent",
+			fieldName = "textParent"
+		);
 
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="en-US Parent" />
-			<var name="fieldName" value="textParent" />
-		</execute>
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "en-US Child",
+			fieldName = "textChild"
+		);
 
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="en-US Child" />
-			<var name="fieldName" value="textChild" />
-		</execute>
+		for (var language : list "es-ES,pt-BR") {
+			PortletEntry.changeLocale(locale = "${language}");
 
-		<for list="es-ES,pt-BR" param="language">
-			<execute macro="PortletEntry#changeLocale">
-				<var name="locale" value="${language}" />
-			</execute>
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Parent",
+				fieldName = "textParent"
+			);
 
-			<execute macro="DDLRecord#populateFieldText">
-				<var name="ddlRecordFieldData" value="${language} Parent" />
-				<var name="fieldName" value="textParent" />
-			</execute>
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Child",
+				fieldName = "textChild"
+			);
+		}
 
-			<execute macro="DDLRecord#populateFieldText">
-				<var name="ddlRecordFieldData" value="${language} Child" />
-				<var name="fieldName" value="textChild" />
-			</execute>
-		</for>
+		for (var language : list "en-US,es-ES,pt-BR") {
+			PortletEntry.changeLocale(locale = "${language}");
 
-		<for list="en-US,es-ES,pt-BR" param="language">
-			<execute macro="PortletEntry#changeLocale">
-				<var name="locale" value="${language}" />
-			</execute>
+			FormFields.viewTextValue(
+				fieldName = "textParent",
+				fieldValue = "${language} Parent"
+			);
 
-			<execute macro="FormFields#viewTextValue">
-				<var name="fieldName" value="textParent" />
-				<var name="fieldValue" value="${language} Parent" />
-			</execute>
-
-			<execute macro="FormFields#viewTextValue">
-				<var name="fieldName" value="textChild" />
-				<var name="fieldValue" value="${language} Child" />
-			</execute>
-		</for>
-	</command>
-</definition>
+			FormFields.viewTextValue(
+				fieldName = "textChild",
+				fieldValue = "${language} Child"
+			);
+		}
+	}
+}

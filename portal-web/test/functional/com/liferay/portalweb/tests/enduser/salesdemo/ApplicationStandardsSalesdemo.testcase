@@ -1,70 +1,57 @@
-<definition component-name="portal-application-standards" ignore="true">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Application Standards" />
+@component-name = "portal-application-standards"
+@ignore = "true"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Application Standards";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
 
-	<command name="WebProxyDemo" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+	@priority = "4"
+	test WebProxyDemo {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Web Proxy Page" />
-		</execute>
+		SitePages.addPublicPage(columnName = "1 Column", pageName = "Web Proxy Page");
 
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Web Proxy Page" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Web Proxy Page",
+			privacy = "Public Pages"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Proxy Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Proxy Page");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Proxy" />
-		</execute>
+		Portlet.addPG(portletName = "Web Proxy");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		<execute macro="WebProxy#addCP">
-			<var name="initialURL" value="http://images.google.com/" />
-		</execute>
+		WebProxy.addCP(initialURL = "http://images.google.com/");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Proxy Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Web Proxy Page");
 
-		<execute function="AssertTextPresent" locator1="Portlet#H2_HEADER" value1="Google Images" />
+		AssertTextPresent(locator1 = "Portlet#H2_HEADER", value1 = "Google Images");
 
-		<take-screenshot />
+		takeScreenshot();
 
-		<execute function="SikuliAssertElementPresent" locator1="WebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
-	</command>
-</definition>
+		SikuliAssertElementPresent(locator1 = "WebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG");
+	}
+}

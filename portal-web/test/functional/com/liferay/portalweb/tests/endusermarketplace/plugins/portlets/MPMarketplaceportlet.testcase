@@ -1,21 +1,21 @@
-<definition component-name="portal-plugins-deployment">
-	<property name="testray.main.component.name" value="Plugin Installer" />
+@component-name = "portal-plugins-deployment"
+definition {
+	property testray.main.component.name = "Plugin Installer";
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	setUp {
+		User.firstLoginPG();
+	}
 
-	<command name="MarketplacePortletSmoke" priority="4">
-		<var name="appName" value="Marketplace" />
+	@priority = "4"
+	test MarketplacePortletSmoke {
+		var appName = "Marketplace";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="App Manager" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager"
+		);
 
-		<execute macro="AppManager#viewAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-</definition>
+		AppManager.viewAppCP(appName = "${appName}");
+	}
+}

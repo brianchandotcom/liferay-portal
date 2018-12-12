@@ -1,51 +1,43 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Page Templates" />
-	<property name="testray.main.component.name" value="Page Templates" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Page Templates";
+	property testray.main.component.name = "Page Templates";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="PageTemplatesAdminGlobalSite#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PageTemplatesAdminGlobalSite.tearDownCP();
+		}
+	}
 
-	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+	@priority = "3"
+	test ViewNoAddPageTabViaPageTemplatesCP {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
+		ProductMenu.gotoSite(site = "Global");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="PageTemplatesAdminGlobalSite#gotoPageTemplateViaEdit">
-			<var name="pageTemplateName" value="Wiki" />
-		</execute>
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Wiki");
 
-		<execute function="SelectWindow" locator1="title=Wiki - ${siteName}" />
+		SelectWindow(locator1 = "title=Wiki - ${siteName}");
 
-		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
-	</command>
-</definition>
+		Dockbar.viewAddTabsWithNoAddPagePermission();
+	}
+}

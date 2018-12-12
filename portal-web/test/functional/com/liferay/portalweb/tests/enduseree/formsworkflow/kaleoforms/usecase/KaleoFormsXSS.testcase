@@ -1,120 +1,112 @@
-<definition component-name="portal-forms-and-workflow-ee">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Kaleo Forms Admin" />
+@component-name = "portal-forms-and-workflow-ee"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_xss.xml" />
-			<var name="workflowDefinitionTitle"><![CDATA[<script>alert(123);</script>]]></var>
-		</execute>
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_xss.xml",
+			workflowDefinitionTitle = '''<script>alert(123);</script>'''
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-	</set-up>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Kaleo Forms Admin"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="KaleoFormsAdmin#tearDownProcess" />
+			KaleoFormsAdmin.tearDownProcess();
 
-				<execute macro="KaleoFormsAdmin#deleteFieldSet" />
+			KaleoFormsAdmin.deleteFieldSet();
 
-				<execute macro="Page#tearDownCP" />
+			Page.tearDownCP();
 
-				<execute macro="Workflow#tearDownWorkflowDefinitions" />
-			</else>
-		</if>
-	</tear-down>
+			Workflow.tearDownWorkflowDefinitions();
+		}
+	}
 
-	<command name="AddProcess" priority="4">
-		<execute macro="KaleoFormsAdmin#addProcess" />
+	@priority = "4"
+	test AddProcess {
+		KaleoFormsAdmin.addProcess();
 
-		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process"
+		);
 
-		<execute macro="KaleoFormsAdmin#next" />
+		KaleoFormsAdmin.next();
 
-		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="New Kaleo Field Set" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
+		KaleoFormsAdmin.addFieldSet(
+			kfFieldSetName = "New Kaleo Field Set",
+			kfProcessName = "Kaleo Forms Process"
+		);
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet" />
+		KaleoFormsAdmin.saveFieldSet();
 
-		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="New Kaleo Field Set" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "New Kaleo Field Set",
+			kfProcessName = "Kaleo Forms Process"
+		);
 
-		<execute macro="KaleoFormsAdmin#next" />
+		KaleoFormsAdmin.next();
 
-		<execute function="AssertAlertNotPresent" />
+		AssertAlertNotPresent();
 
-		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
-		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+		var actualScript = '''<script>alert(123);</script>''';
 
-		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
-		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Choose" />
-			<var name="rowEntry" value="alert" />
-		</execute>
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
-		<execute macro="KaleoFormsAdmin#next" />
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 
-		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowTask" value="StartNode" />
-		</execute>
+		LexiconEntry.gotoEntryMenuItem(menuItem = "Choose", rowEntry = "alert");
 
-		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="kfFormName" value="Created Task Form" />
-		</execute>
+		KaleoFormsAdmin.next();
 
-		<execute macro="KaleoFormsAdmin#saveForm" />
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "StartNode"
+		);
 
-		<execute macro="KaleoFormsAdmin#chooseForm">
-			<var name="kfFormName" value="Created Task Form" />
-		</execute>
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-	</command>
-</definition>
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+	}
+}

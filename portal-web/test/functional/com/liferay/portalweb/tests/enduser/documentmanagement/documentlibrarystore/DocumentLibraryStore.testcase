@@ -1,142 +1,139 @@
-<definition component-name="portal-document-library-store">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.assert.warning.exceptions" value="true" />
-	<property name="testray.main.component.name" value="Document Library Stores" />
+@component-name = "portal-document-library-store"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Document Library Stores";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
 
-				<execute macro="DMDocument#tearDownCP" />
+			DMDocument.tearDownCP();
 
-				<execute macro="DMFolder#tearDownCP" />
+			DMFolder.tearDownCP();
 
-				<execute macro="DMDocumentType#tearDownCP" />
+			DMDocumentType.tearDownCP();
 
-				<execute macro="DMMetadataSet#tearDownCP" />
+			DMMetadataSet.tearDownCP();
 
-				<execute macro="Page#tearDownPG" />
+			Page.tearDownPG();
 
-				<execute macro="User#tearDownCP" />
+			User.tearDownCP();
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="AdvancedFileSystemStoreSmoke" priority="5">
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore" />
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config" />
-		<property name="osgi.module.configurations" value="rootDir=&quot;data/document_library1&quot;" />
+	@priority = "5"
+	test AdvancedFileSystemStoreSmoke {
+		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";
+		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
+		property osgi.module.configurations = "rootDir=&quot;data/document_library1&quot;";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+		RecycleBin.emptyCP();
+	}
 
-	<command name="DBStoreSmoke" priority="5">
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
+	@priority = "5"
+	test DBStoreSmoke {
+		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute function="AssertConsoleTextNotPresent" value1="java.lang.IllegalStateException: Store is not available" />
+		AssertConsoleTextNotPresent(
+			value1 = "java.lang.IllegalStateException: Store is not available"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
+		RecycleBin.emptyCP();
+	}
 
-	<command name="FileSystemStoreSmoke" priority="5">
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore" />
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config" />
-		<property name="osgi.module.configurations" value="rootDir=&quot;data/document_library1&quot;" />
+	@priority = "5"
+	test FileSystemStoreSmoke {
+		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore";
+		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config";
+		property osgi.module.configurations = "rootDir=&quot;data/document_library1&quot;";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
 
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin"
+		);
 
-		<execute macro="RecycleBin#emptyCP" />
-	</command>
-</definition>
+		RecycleBin.emptyCP();
+	}
+}

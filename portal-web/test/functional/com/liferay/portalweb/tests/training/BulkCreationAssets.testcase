@@ -1,226 +1,235 @@
-<definition component-name="portal-training">
-	<property name="liferay.training.dependency.jars" value="tools/dummy-factory/liferay.dummy.factory-0.17.1.jar" />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="false" />
-	<property name="testray.main.component.name" value="Site Administration" />
+@component-name = "portal-training"
+definition {
+	property liferay.training.dependency.jars = "tools/dummy-factory/liferay.dummy.factory-0.17.1.jar";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property testray.main.component.name = "Site Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
 
-				<execute macro="Site#tearDownCP" />
+			Site.tearDownCP();
 
-				<execute macro="Organization#tearDownCP" />
+			Organization.tearDownCP();
 
-				<execute macro="Team#tearDownCP" />
+			Team.tearDownCP();
 
-				<execute macro="Page#tearDownPG" />
+			Page.tearDownPG();
 
-				<execute macro="UserGroup#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			UserGroup.tearDownCP();
+		}
+	}
 
-	<command name="AddBlogsWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddBlogsWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddBlogsWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddBlogsWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Blog Title" />
-			<var name="contents" value="Blog contents" />
-			<var name="dateType" value="Blogs" />
-			<var name="number" value="500" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Blog Title",
+			contents = "Blog contents",
+			dateType = "Blogs",
+			number = "500"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Blogs#ENTRY_TABLE_TITLE" value1="Blog Title">
-			<var name="key_entryTitle" value="Blog Title" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blogs#ENTRY_TABLE_TITLE",
+			value1 = "Blog Title",
+			key_entryTitle = "Blog Title"
+		);
+	}
 
-	<command name="AddCategoriesWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddCategoriesWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddCategoriesWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddCategoriesWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Liferay Category" />
-			<var name="dateType" value="Category / Vocabulary" />
-			<var name="number" value="500" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Liferay Category",
+			dateType = "Category / Vocabulary",
+			number = "500"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
 
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="Topic">
-			<var name="key_vocabularyName" value="Topic" />
-		</execute>
+		AssertClick(
+			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
+			value1 = "Topic",
+			key_vocabularyName = "Topic"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Categories#VOCABULARY_CATEGORY" value1="Liferay Category">
-			<var name="key_categoryName" value="Liferay Category" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Categories#VOCABULARY_CATEGORY",
+			value1 = "Liferay Category",
+			key_categoryName = "Liferay Category"
+		);
+	}
 
-	<command name="AddDocumentsWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddDocumentsWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddDocumentsWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddDocumentsWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Document" />
-			<var name="dateType" value="Documents" />
-			<var name="number" value="500" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Document",
+			dateType = "Documents",
+			number = "500",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Document">
-			<var name="key_dmDocumentTitle" value="Document" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
+			value1 = "Document",
+			key_dmDocumentTitle = "Document"
+		);
+	}
 
-	<command name="AddOrganizationsWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddOrganizationsWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddOrganizationsWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddOrganizationsWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Liferay Organization" />
-			<var name="dateType" value="Organizations" />
-			<var name="number" value="500" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Liferay Organization",
+			dateType = "Organizations",
+			number = "500"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="Liferay Organization">
-			<var name="key_orgName" value="Liferay Organization" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
+			value1 = "Liferay Organization",
+			key_orgName = "Liferay Organization"
+		);
+	}
 
-	<command name="AddPagesWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddPagesWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddPagesWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddPagesWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Liferay Page" />
-			<var name="dateType" value="Pages" />
-			<var name="number" value="500" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Liferay Page",
+			dateType = "Pages",
+			number = "500",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PAGE_2" value1="Liferay Page" />
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Home#PAGE_2",
+			value1 = "Liferay Page"
+		);
+	}
 
-	<command name="AddRolesWithGroovyScript" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddRolesWithGroovyScript" />
+	@priority = "5"
+	test AddRolesWithGroovyScript {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddRolesWithGroovyScript";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
 
-		<execute macro="ServerAdministration#executeScript">
-			<var name="language" value="Groovy" />
-			<var name="script"><![CDATA[
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = '''
 int numberToAdd = 10;
 
 String namePrefix = "TestRole";
@@ -245,208 +254,208 @@ for (int i = 1; i <= numberToAdd; i++) {
 
 	RoleLocalServiceUtil.addRole(userId, null, 0, name, null, null, type, null, null);
 
-}]]></var>
-		</execute>
+}'''
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Organization Roles" />
-		</execute>
+		Navigator.gotoNavItem(navItem = "Organization Roles");
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Roles#ROLE_TABLE_TITLE" value1="TestRole">
-			<var name="key_roleTitle" value="TestRole" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Roles#ROLE_TABLE_TITLE",
+			value1 = "TestRole",
+			key_roleTitle = "TestRole"
+		);
+	}
 
-	<command name="AddSitesWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddSitesWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddSitesWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddSitesWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Liferay Site" />
-			<var name="dateType" value="Sites" />
-			<var name="number" value="500" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Liferay Site",
+			dateType = "Sites",
+			number = "500"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="Liferay Site">
-			<var name="key_siteName" value="Liferay Site" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Sites#SITE_TABLE_NAME",
+			value1 = "Liferay Site",
+			key_siteName = "Liferay Site"
+		);
+	}
 
-	<command name="AddThreadsWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddThreadsWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddThreadsWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddThreadsWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="body" value="Liferay Message Board" />
-			<var name="dateType" value="Message Board" />
-			<var name="number" value="500" />
-			<var name="siteName" value="${siteName}" />
-			<var name="subject" value="Thread" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			body = "Liferay Message Board",
+			dateType = "Message Board",
+			number = "500",
+			siteName = "${siteName}",
+			subject = "Thread"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Message Boards" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Message Boards"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_THREAD" value1="Thread">
-			<var name="key_threadSubject" value="Thread" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
+			value1 = "Thread",
+			key_threadSubject = "Thread"
+		);
+	}
 
-	<command name="AddUsersWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddUsersWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddUsersWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddUsersWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="liferaytester" />
-			<var name="dateType" value="Users" />
-			<var name="number" value="500" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "liferaytester",
+			dateType = "Users",
+			number = "500"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="liferaytester">
-			<var name="key_userScreenName" value="liferaytester" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
+			value1 = "liferaytester",
+			key_userScreenName = "liferaytester"
+		);
+	}
 
-	<command name="AddWebcontentArticlesWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddWebcontentArticlesWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddWebcontentArticlesWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddWebcontentArticlesWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Web Content" />
-			<var name="dateType" value="Web Content Articles" />
-			<var name="number" value="500" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Web Content",
+			dateType = "Web Content Articles",
+			number = "500",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE" value1="Web Content">
-			<var name="key_webContentTitle" value="Web Content" />
-		</execute>
-	</command>
+		AssertTextEquals.assertPartialText(
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "Web Content",
+			key_webContentTitle = "Web Content"
+		);
+	}
 
-	<command name="AddWikisWithDummyFactory" priority="5">
-		<property name="test.name.skip.portal.instance" value="BulkCreationAssets#AddWikisWithDummyFactory" />
-		<property name="testray.component.names" value="Training" />
-		<property name="timeout.explicit.wait" value="600" />
+	@priority = "5"
+	test AddWikisWithDummyFactory {
+		property test.name.skip.portal.instance = "BulkCreationAssets#AddWikisWithDummyFactory";
+		property testray.component.names = "Training";
+		property timeout.explicit.wait = "600";
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="Navigator#openURL" />
+		Navigator.openURL();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Dummy Factory" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "Dummy Factory"
+		);
 
-		<execute macro="DummyFactory#addBulkAssets">
-			<var name="baseName" value="Wiki Node" />
-			<var name="dateType" value="Wiki" />
-			<var name="number" value="500" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		DummyFactory.addBulkAssets(
+			baseName = "Wiki Node",
+			dateType = "Wiki",
+			number = "500",
+			siteName = "${siteName}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Wiki" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Wiki"
+		);
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="Wiki Node">
-			<var name="key_wikiNodeName" value="Wiki Node" />
-		</execute>
-	</command>
-</definition>
+		AssertTextEquals.assertPartialText(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "Wiki Node",
+			key_wikiNodeName = "Wiki Node"
+		);
+	}
+}

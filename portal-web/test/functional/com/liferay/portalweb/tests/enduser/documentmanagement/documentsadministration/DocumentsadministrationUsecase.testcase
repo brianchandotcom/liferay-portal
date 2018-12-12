@@ -1,2391 +1,2086 @@
-<definition component-name="portal-document-management">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="testray.main.component.name" value="Documents Management" />
+@component-name = "portal-document-management"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Documents Management";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			DMMetadataSet.tearDownCP();
+
+			Page.tearDownCP();
+
+			User.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddAndRemoveMetadataSets {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.add(
+			dmMetadataSetFieldNames = "Text Box",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text Box",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.edit(
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name",
+			removeMetadataSet = "true"
+		);
+	}
+
+	@priority = "5"
+	test AddDocumentTypeAndMetadata {
+		property testray.component.names = "Training";
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="DMFolder#tearDownCP" />
-
-				<execute macro="DMDocumentType#tearDownCP" />
-
-				<execute macro="DMMetadataSet#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddAndRemoveMetadataSets" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoMetadataSets" />
-
-		<execute macro="DMMetadataSet#add">
-			<var name="dmMetadataSetFieldNames" value="Text Box" />
-			<var name="metadataSetName" value="DM Metadata Set Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Text Box" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="metadataSetName" value="DM Metadata Set Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="metadataSetName" value="DM Metadata Set Name" />
-			<var name="removeMetadataSet" value="true" />
-		</execute>
-	</command>
-
-	<command name="AddDocumentTypeAndMetadata" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoMetadataSets" />
-
-		<execute macro="DMMetadataSet#add">
-			<var name="dmMetadataSetFieldNames" value="Boolean" />
-			<var name="metadataSetName" value="Document Metadata Set Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Boolean" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="metadataSetName" value="Document Metadata Set Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Type Contract Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Type Contract Title" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Type Contract Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Type Contract Title" />
-		</execute>
-	</command>
-
-	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page 1" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Site Page 2" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#configureDisplaySettingsPG">
-			<var name="enableDisplaySettingsRelatedAssets" value="false" />
-			<var name="enableDisplaySettingsShowSearch" value="false" />
-			<var name="entriesToDisplayCount" value="75" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page 2" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#viewDefaultConfigurationDisplaySettingsPG" />
-	</command>
-
-	<command name="AssertFileSizeValidation" priority="4">
-		<description message="This is a use case for LPS-50760." />
-
-		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#AssertFileSizeValidation" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description1" />
-			<var name="dmDocumentFile" value="Document_1.mp3" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="4.3MB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="DM.portlet.lar" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Documents and Media" />
-			<var name="configurationName" value="Service" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="300000">
-			<var name="key_fieldLabel" value="Maximum File Size" />
-		</execute>
-
-		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoAddDocumentType">
-			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 293KB." />
-
-		<execute macro="DMDocument#editCmd">
-			<var name="dmDocumentFileEdit" value="Document_1.mp4" />
-			<var name="dmDocumentTitle" value="Document_1.mp4" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute function="AssertTextEquals" locator1="Message#MAX_FILESIZE_ALERT" value1="Please enter a file with a valid file size no larger than 300000." />
-
-		<execute macro="Button#clickCancel" />
-
-		<execute macro="LAR#_gotoExportImport" />
-
-		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
-
-		<execute macro="LAR#_export">
-			<var name="exportPermissions" value="${exportPermissions}" />
-			<var name="larFileName" value="DM.portlet.lar" />
-		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="CannotViewFolderAsSiteMember" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Site Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderDescription" value="DM Subfolder1 Description" />
-			<var name="dmSubFolderName" value="Subfolder1 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Subfolder1 Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewPG">
-			<var name="dmFolderName" value="Subfolder1 Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolderPermissions">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
-			<execute macro="Role#removePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
-				<var name="roleTitle" value="Site Member" />
-			</execute>
-		</for>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#viewDefaultPG" />
-	</command>
-
-	<command name="CannotViewMultipleDocumentsAsSiteMember" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addMultiplePG">
-			<var name="dmDocumentFileList" value="Document_1.jpeg,Document_2.docx,Document_3.mp3" />
-			<var name="viewableBy" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="dmDocumentTitle">
-			<execute macro="DMDocument#cannotViewCP">
-				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="CheckOutDocument" priority="5">
-		<description message="This test ensures that a checked out document cannot be edited by another user." />
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#checkoutPG">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="User#logoutUserPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutPG">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="status" value="Approved" />
-		</execute>
-
-		<for list="Checkout,Edit,Move,Move to Recycle Bin" param="menuItem">
-			<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
-				<var name="key_menuItem" value="${menuItem}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="CheckValidationForFileEntries" priority="5">
-		<description message="This test checks if the file extension upload restrictions in System Settings works as expected." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Documents and Media" />
-			<var name="configurationName" value="Service" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute function="ScrollWebElementIntoView" locator1="TextArea#ANY">
-			<var name="key_text" value="fileExtensions" />
-		</execute>
-
-		<execute function="Type" locator1="TextArea#ANY" value1=".doc">
-			<var name="key_text" value="fileExtensions" />
-		</execute>
-
-		<execute function="ScrollWebElementIntoView" locator1="Button#UPDATE" />
-
-		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<for list="Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx" param="dmDocumentTitle">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Documents and Media" />
-			</execute>
-
-			<execute macro="DMDocument#addCP">
-				<var name="dmDocumentFile" value="${dmDocumentTitle}" />
-				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-				<var name="validationError" value="Please enter a file with a valid extension (.doc)." />
-			</execute>
-		</for>
-	</command>
-
-	<command name="Comments" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="Description of Folder2" />
-			<var name="dmFolderName" value="Folder2" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="This is a file with zero bytes" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-			<var name="nullFile" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Activities" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="Folder1">
-			<var name="key_dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Activities#ACTIVITY_TITLE_ASSET_NAME" value1="Zero Document File">
-			<var name="key_assetName" value="Zero Document File" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTitleCmdPG">
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMDocumentComment#addPG">
-			<var name="commentBody" value="This is the first comment" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMDocumentComment#addPG">
-			<var name="commentBody" value="This is comment #2" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMDocumentComment#viewPG">
-			<var name="commentBody" value="This is the first comment" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder1" />
-		</execute>
-
-		<execute macro="DMDocumentComment#viewPG">
-			<var name="commentBody" value="This is comment #2" />
-			<var name="dmDocumentTitle" value="Zero Document File" />
-		</execute>
-	</command>
-
-	<command name="ConfigureXugglerVideoPreviewSizePG" priority="3">
-		<property name="custom.properties" value="xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
-		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#ConfigureXugglerVideoPreviewSizePG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="enableXuggler" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.mp4" />
-			<var name="dmDocumentTitle" value="Document_1.mp4" />
-		</execute>
-
-		<execute function="Pause" locator1="180000" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentPG">
-			<var name="dmDocumentTitle" value="Document_1.mp4" />
-		</execute>
-
-		<execute function="Pause" locator1="30000" />
-
-		<var name="videoGenerationTimeCounter" value="0" />
-		<var name="videoGenerationTimeMaxWaitTime" value="6" />
-
-		<while>
-			<and>
-				<not>
-					<equals arg1="${videoGenerationTimeCounter}" arg2="${videoGenerationTimeMaxWaitTime}" />
-				</not>
-				<condition function="IsElementPresent" locator1="Message#INFO" />
-			</and>
-			<then>
-				<var method="MathUtil#sum('${videoGenerationTimeCounter}', '1')" name="videoGenerationTimeCounter" />
-
-				<execute function="Pause" locator1="30000" />
-
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Documents and Media Page" />
-				</execute>
-
-				<execute macro="DMNavigator#gotoDocumentPG">
-					<var name="dmDocumentTitle" value="Document_1.mp4" />
-				</execute>
-			</then>
-		</while>
-
-		<var method="selenium#getAttribute('//video@poster')" name="videoPreviewThumbnailLink" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${videoPreviewThumbnailLink}" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION">
-			<var name="key_videoGenerationThumbnailResolution" value="640" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION">
-			<var name="key_videoGenerationThumbnailResolution" value="360" />
-		</execute>
-
-		<execute function="AssertElementPresent#assertElementPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION">
-			<var name="key_videoGenerationThumbnailResolution" value="1280" />
-		</execute>
-
-		<execute function="AssertElementPresent#assertElementPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION">
-			<var name="key_videoGenerationThumbnailResolution" value="720" />
-		</execute>
-	</command>
-
-	<command name="ImportAudioAndLimitPermissionsToSubfolder" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Moon Rocks 101" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Regular Role Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionsCP">
-			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX" />
-			<var name="roleTitle" value="Regular Role Name" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Moon Rocks 101" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="newPassword" value="test1" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Regular Role Name" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Moon Rocks 101" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
-			<var name="siteName" value="Moon Rocks 101" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="The Properties of Moon Rocks" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="The Properties of Moon Rocks" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="Audio Lectures" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Audio Lectures" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Dr. Winters Introductory Audio Lecture.ogg" />
-			<var name="dmDocumentTitle" value="Dr. Winters Introductory Audio Lecture.ogg" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="The Properties of Moon Rocks" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-
-		<execute macro="DMFolder#removePermissions">
-			<var name="dmFolder" value="Audio Lectures" />
-			<var name="permissionNameList" value="ADD_DOCUMENT,ADD_SHORTCUT,ADD_SUBFOLDER" />
-			<var name="roleTitle" value="Site Member" />
-		</execute>
-
-		<execute macro="IFrame#closeFrame" />
-
-		<execute function="Refresh" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Moon Rocks 101" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="moon-rocks-101-materials-structure.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-	</command>
-
-	<command name="ImportDocumentWithDBStore" priority="3">
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="DM_Test_DB_Store.lar" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="DM_Test_DB_Store.lar" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="RemoveCurrentDisplayStyleViews" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMPortlet#configureDisplaySettingsPG">
-			<var name="currentDisplayStyleViews" value="" />
-		</execute>
-	</command>
-
-	<command name="SelectMultipleDocumentsAndDeleteViaActionsButton" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<for list="1,2,3" param="entryCount">
-			<execute macro="DMDocument#addPG">
-				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
-				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<for list="1,2,3" param="entryCount">
-			<var name="key_dmDocumentTitle" value="Document_${entryCount}.doc" />
-
-			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
-		</for>
-
-		<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-
-		<execute macro="DMDocument#viewDefaultCP" />
-	</command>
-
-	<command name="UpdateDocumentTypeWithPermissions" priority="5">
-		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#add">
-			<var name="dmDocumentTypeDescription" value="Images" />
-			<var name="dmDocumentTypeFieldNames" value="Text Box,Date" />
-			<var name="dmDocumentTypeName" value="Photos" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#executeServerResourcesActions">
-			<var name="actionsDescription" value="Clean up permissions." />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="JSONRole#addRegularRole">
-			<var name="roleKey" value="Technical Writer" />
-			<var name="roleTitle" value="Technical Writer" />
-		</execute>
-
-		<for list="DELETE,VIEW,UPDATE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntryType" />
-				<var name="roleTitle" value="Technical Writer" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW" />
-			<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
-			<var name="roleTitle" value="Technical Writer" />
-		</execute>
-
-		<for list="VIEW,ADD_FOLDER,ADD_DOCUMENT" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.document.library" />
-				<var name="roleTitle" value="Site Member" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,DELETE" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFileEntry" />
-				<var name="roleTitle" value="Site Member" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<for list="UPDATE,ADD_SUBFOLDER,ADD_DOCUMENT" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.document.library.kernel.model.DLFolder" />
-				<var name="roleTitle" value="Site Member" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
-			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<for list="VIEW,ACCESS_IN_CONTROL_PANEL" param="resourceActionIndex">
-			<execute macro="Permissions#definePermissionViaJSONAPI">
-				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com_liferay_document_library_web_portlet_DLAdminPortlet" />
-				<var name="roleTitle" value="Site Member" />
-				<var name="roleType" value="site" />
-			</execute>
-		</for>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Technical Writer" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="password" value="password" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Portlet#HEADER" value1="Documents and Media" />
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeFieldNames" value="Radio" />
-			<var name="dmDocumentTypeName" value="Photos" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewCannotAddRepository" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocumentType#viewNoAvailableActionsViaDocumentTypesPG" />
-	</command>
-
-	<command name="ViewDateFieldRequiredInContract" priority="5">
-		<description message="This is a use case for LPS-53009" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentType" />
-
-		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeFieldRequiredEdit" value="Effective Date" />
-			<var name="dmDocumentTypeName" value="Contract" />
-		</execute>
-
-		<execute macro="DMDocumentType#edit">
-			<var name="dmDocumentTypeFieldRequiredEdit" value="Expiration Date" />
-			<var name="dmDocumentTypeName" value="Contract" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoAddDocumentType">
-			<var name="dmDocumentTypeName" value="Contract" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD">
-			<var name="key_fieldFieldLabel" value="Effective Date" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Icon#ASTERISK_DATE_FIELD">
-			<var name="key_fieldFieldLabel" value="Expiration Date" />
-		</execute>
-	</command>
-
-	<command name="ViewDocumentWithGlobalScope" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page - Global" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderDescription" value="DM SubFolder Description" />
-			<var name="dmSubFolderName" value="DM SubFolder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM SubFolder Name" />
-			<var name="specificNameFolder" value="true" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
-			<var name="dmDocumentSize" value="0KB" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="DMPortlet#configureScopetoGlobalPG">
-			<var name="currentScope" value="Liferay" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="DMPortlet#configureRootFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM SubFolder Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMPortlet#viewDefaultPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Site Templates" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Manage" />
-			<var name="rowEntry" value="Site Template Name" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="DM Site Page Name - Global" />
-			<var name="siteTemplate" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="DM Site Name" />
-			<var name="siteTemplateName" value="Site Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="DM Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="DM Site Page Name - Global" />
-			<var name="siteName" value="DM Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="DM Site Page Name - Global" />
-			<var name="siteName" value="DM Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#configureScopetoGlobalPG">
-			<var name="currentScope" value="DM Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="DM Site Page Name - Global" />
-			<var name="siteName" value="DM Site Name" />
-		</execute>
-
-		<execute macro="DMPortlet#configureRootFolderPG">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="DM Site Page Name - Global" />
-			<var name="siteName" value="DM Site Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM SubFolder Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="ViewFileCategoryAndTags" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="Category Description" />
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<var name="tagNameList" value="tag1,tag2" />
-
-		<for list="${tagNameList}" param="tagName">
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="categoryName" value="Category Name" />
-			<var name="dmDocumentDescription" value="Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document Title" />
-			<var name="tagNameList" value="tag1,tag2" />
-			<var name="vocabularyName" value="Topic" />
-		</execute>
-
-		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS">
-			<var name="key_dmDocumentTitle" value="Document Title" />
-		</execute>
-
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="Category Name">
-			<var name="key_categoryName" value="Category Name" />
-		</execute>
-
-		<for list="${tagNameList}" param="tagName">
-			<var name="key_tagName" value="${tagName}" />
-
-			<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="Category Name" />
-			<var name="dmDocumentDescription" value="Document Description" />
-			<var name="dmDocumentTitle" value="Document Title" />
-			<var name="tagNameList" value="tag1,tag2" />
-		</execute>
-	</command>
-
-	<command name="ViewFolderAsOrganizationUser" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#gotoCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="searchToken" value="Organization Name" />
-		</execute>
-
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="Organization#viewAssignMemberCP">
-			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolderPermissions">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
-			<execute macro="Role#removePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
-				<var name="roleTitle" value="Site Member" />
-			</execute>
-		</for>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="DMPortlet#viewDefaultPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolderPermissions">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<for list="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,CONTENT_PERMISSIONS_ACCESS_CHECKBOX" param="permissionsInLineUncheckListsCount">
-			<execute macro="Role#definePermissionPG">
-				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
-				<var name="roleTitle" value="Organization User" />
-			</execute>
-		</for>
-
-		<execute macro="IFrame#selectTopFrame" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-	</command>
-
-	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Documents and Media Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocument" value="Duplicate" />
-			<var name="dmDocumentDescription" value="DM Document 2 Description" />
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="DM Document 2 Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document 2 Description" />
-			<var name="dmDocumentTitle" value="DM Document 2 Title" />
-		</execute>
-	</command>
-
-	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document1 Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document1 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document2 Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Document2 Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="DM Document1 Title" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL_CHECKBOX_TICK" />
-
-		<execute macro="DMDocument#uncheckDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="DM Document1 Title" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Checkbox#SELECT_ALL_CHECKBOX_TICK" />
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="DM Document1 Title" />
-		</execute>
-
-		<execute macro="DMDocument#checkDocumentCheckboxCP">
-			<var name="dmDocumentTitle" value="DM Document2 Title" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
-		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_CHECKED" />
-	</command>
-</definition>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.add(
+			dmMetadataSetFieldNames = "Boolean",
+			metadataSetName = "Document Metadata Set Name"
+		);
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Boolean",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "Document Metadata Set Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Type Contract Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Type Contract Title",
+			dmDocumentTypeName = "DM Document Type Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Contract Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Contract Title");
+	}
+
+	@priority = "4"
+	test AllowMultiplePortletConfigurationsPerSite {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page 1", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page 1",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.addPublicPage(pageName = "Site Page 2", sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Site Page 2",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoSitePage(pageName = "Site Page 2", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
+
+		DMPortlet.configureDisplaySettingsPG(
+			enableDisplaySettingsRelatedAssets = "false",
+			enableDisplaySettingsShowSearch = "false",
+			entriesToDisplayCount = "75"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page 2", siteName = "Site Name");
+
+		DMPortlet.viewDefaultConfigurationDisplaySettingsPG();
+	}
+
+	@description = "This is a use case for LPS-50760."
+	@priority = "4"
+	test AssertFileSizeValidation {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AssertFileSizeValidation";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentFile = "Document_1.mp3",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "4.3MB",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LAR.exportPortlet(larFileName = "DM.portlet.lar");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Service",
+			configurationScope = "System Scope"
+		);
+
+		Type(
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "300000",
+			key_fieldLabel = "Maximum File Size"
+		);
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "${dmDocumentTypeName}");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Upload documents no larger than 293KB."
+		);
+
+		DMDocument.editCmd(
+			dmDocumentFileEdit = "Document_1.mp4",
+			dmDocumentTitle = "Document_1.mp4"
+		);
+
+		Button.clickPublish();
+
+		AssertTextEquals(
+			locator1 = "Message#MAX_FILESIZE_ALERT",
+			value1 = "Please enter a file with a valid file size no larger than 300000."
+		);
+
+		Button.clickCancel();
+
+		LAR._gotoExportImport();
+
+		AssertElementPresent(locator1 = "IFrame#DIALOG");
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "DM.portlet.lar"
+		);
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	@priority = "5"
+	test CannotViewFolderAsSiteMember {
+		property testray.component.names = "Training";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(siteName = "Site Name", userScreenName = "usersn");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.addSubfolderPG(
+			dmSubFolderDescription = "DM Subfolder1 Description",
+			dmSubFolderName = "Subfolder1 Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");
+
+		DMFolder.viewPG(dmFolderName = "Subfolder1 Name");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
+
+		DMFolder.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		for (var permissionsInLineUncheckListsCount : list "INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+				roleTitle = "Site Member"
+			);
+		}
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		IFrame.selectTopFrame();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		DMPortlet.viewDefaultPG();
+	}
+
+	@priority = "5"
+	test CannotViewMultipleDocumentsAsSiteMember {
+		property testray.component.names = "Training";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3",
+			viewableBy = "Owner"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name"
+		);
+
+		for (var dmDocumentTitle : list "Document_1.jpeg,Document_2.docx,Document_3.mp3") {
+			DMDocument.cannotViewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		}
+	}
+
+	@description = "This test ensures that a checked out document cannot be edited by another user."
+	@priority = "5"
+	test CheckOutDocument {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.assignRegRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Refresh();
+
+		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
+
+		User.logoutUserPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Document_1.doc",
+			status = "Approved"
+		);
+
+		for (var menuItem : list "Checkout,Edit,Move,Move to Recycle Bin") {
+			AssertElementNotPresent(
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				key_menuItem = "${menuItem}"
+			);
+		}
+	}
+
+	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."
+	@priority = "5"
+	test CheckValidationForFileEntries {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Service",
+			configurationScope = "System Scope"
+		);
+
+		ScrollWebElementIntoView(locator1 = "TextArea#ANY", key_text = "fileExtensions");
+
+		Type(locator1 = "TextArea#ANY", value1 = ".doc", key_text = "fileExtensions");
+
+		ScrollWebElementIntoView(locator1 = "Button#UPDATE");
+
+		AssertClick(locator1 = "Button#UPDATE", value1 = "Update");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Documents and Media"
+			);
+
+			DMDocument.addCP(
+				dmDocumentFile = "${dmDocumentTitle}",
+				dmDocumentTitle = "${dmDocumentTitle}",
+				validationError = "Please enter a file with a valid extension (.doc)."
+			);
+		}
+	}
+
+	@priority = "4"
+	test Comments {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(dmFolderName = "Folder1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "Description of Folder2",
+			dmFolderName = "Folder2"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "Folder1");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "This is a file with zero bytes",
+			dmDocumentTitle = "Zero Document File",
+			nullFile = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "Folder1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Zero Document File");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "Zero Document File"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Activities");
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "Folder1",
+			key_dmFolderName = "Folder1"
+		);
+
+		AssertClick(
+			locator1 = "Activities#ACTIVITY_TITLE_ASSET_NAME",
+			value1 = "Zero Document File",
+			key_assetName = "Zero Document File"
+		);
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "Zero Document File");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+		DMDocumentComment.addPG(
+			commentBody = "This is the first comment",
+			dmDocumentTitle = "Zero Document File"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+		DMDocumentComment.addPG(
+			commentBody = "This is comment #2",
+			dmDocumentTitle = "Zero Document File"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+		DMDocumentComment.viewPG(
+			commentBody = "This is the first comment",
+			dmDocumentTitle = "Zero Document File"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+		DMDocumentComment.viewPG(
+			commentBody = "This is comment #2",
+			dmDocumentTitle = "Zero Document File"
+		);
+	}
+
+	@priority = "3"
+	test ConfigureXugglerVideoPreviewSizePG {
+		property custom.properties = "xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#ConfigureXugglerVideoPreviewSizePG";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mp4",
+			dmDocumentTitle = "Document_1.mp4"
+		);
+
+		Pause(locator1 = "180000");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.mp4");
+
+		Pause(locator1 = "30000");
+
+		var videoGenerationTimeCounter = "0";
+		var videoGenerationTimeMaxWaitTime = "6";
+
+		while ((!("${videoGenerationTimeCounter}" == "${videoGenerationTimeMaxWaitTime}")) && (IsElementPresent(locator1 = "Message#INFO"))) {
+			var videoGenerationTimeCounter = MathUtil.sum("${videoGenerationTimeCounter}", "1");
+
+			Pause(locator1 = "30000");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.mp4");
+		}
+
+		var videoPreviewThumbnailLink = selenium.getAttribute("//video@poster");
+
+		Navigator.openSpecificURL(url = "${videoPreviewThumbnailLink}");
+
+		Pause(locator1 = "1000");
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION",
+			key_videoGenerationThumbnailResolution = "640"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION",
+			key_videoGenerationThumbnailResolution = "360"
+		);
+
+		AssertElementPresent.assertElementPresent(
+			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION",
+			key_videoGenerationThumbnailResolution = "1280"
+		);
+
+		AssertElementPresent.assertElementPresent(
+			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION",
+			key_videoGenerationThumbnailResolution = "720"
+		);
+	}
+
+	@priority = "5"
+	test ImportAudioAndLimitPermissionsToSubfolder {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Moon Rocks 101");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.add(roleTitle = "Regular Role Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
+
+		Role.definePermissionsCP(
+			permissionDefinitionKeys = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX",
+			roleTitle = "Regular Role Name"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Moon Rocks 101");
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships"
+		);
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			newPassword = "test1",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(
+			roleTitle = "Regular Role Name",
+			userScreenName = "usersn"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoSite(site = "Moon Rocks 101");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderName = "Unit 1 - Moon Rock Chemistry",
+			siteName = "Moon Rocks 101"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(
+			dmFolderName = "Unit 1 - Moon Rock Chemistry",
+			specificNameFolder = "true"
+		);
+
+		DMFolder.addSubfolderCP(dmSubFolderName = "The Properties of Moon Rocks");
+
+		DMFolder.viewCP(
+			dmFolderName = "The Properties of Moon Rocks",
+			specificNameFolder = "true"
+		);
+
+		DMFolder.addSubfolderCP(dmSubFolderName = "Audio Lectures");
+
+		DMFolder.viewCP(dmFolderName = "Audio Lectures");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Dr. Winters Introductory Audio Lecture.ogg",
+			dmDocumentTitle = "Dr. Winters Introductory Audio Lecture.ogg"
+		);
+
+		Refresh();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(
+			dmFolderName = "Unit 1 - Moon Rock Chemistry",
+			specificNameFolder = "true"
+		);
+
+		DMFolder.viewCP(
+			dmFolderName = "The Properties of Moon Rocks",
+			specificNameFolder = "true"
+		);
+
+		DMFolder.removePermissions(
+			dmFolder = "Audio Lectures",
+			permissionNameList = "ADD_DOCUMENT,ADD_SHORTCUT,ADD_SUBFOLDER",
+			roleTitle = "Site Member"
+		);
+
+		IFrame.closeFrame();
+
+		Refresh();
+
+		ProductMenu.gotoSite(site = "Moon Rocks 101");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LAR.importPortlet(
+			larFileName = "moon-rocks-101-materials-structure.lar",
+			uploadFrom = "dependencies"
+		);
+	}
+
+	@priority = "3"
+	test ImportDocumentWithDBStore {
+		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LAR.exportPortlet(larFileName = "DM_Test_DB_Store.lar");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		LAR.importPortlet(larFileName = "DM_Test_DB_Store.lar");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "4"
+	test RemoveCurrentDisplayStyleViews {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
+	}
+
+	@priority = "4"
+	test SelectMultipleDocumentsAndDeleteViaActionsButton {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var entryCount : list "1,2,3") {
+			DMDocument.addPG(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${entryCount}.doc",
+				dmDocumentTitle = "Document_${entryCount}.doc"
+			);
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var entryCount : list "1,2,3") {
+			var key_dmDocumentTitle = "Document_${entryCount}.doc";
+
+			Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		DMDocument.viewDefaultCP();
+	}
+
+	@priority = "5"
+	test UpdateDocumentTypeWithPermissions {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions";
+		property testray.component.names = "Training";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Images",
+			dmDocumentTypeFieldNames = "Text Box,Date",
+			dmDocumentTypeName = "Photos"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.executeServerResourcesActions(
+			actionsDescription = "Clean up permissions."
+		);
+
+		Navigator.openURL();
+
+		JSONRole.addRegularRole(
+			roleKey = "Technical Writer",
+			roleTitle = "Technical Writer"
+		);
+
+		for (var resourceActionIndex : list "DELETE,VIEW,UPDATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntryType",
+				roleTitle = "Technical Writer"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Technical Writer"
+		);
+
+		for (var resourceActionIndex : list "VIEW,ADD_FOLDER,ADD_DOCUMENT") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.document.library",
+				roleTitle = "Site Member",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "Site Member",
+				roleType = "site"
+			);
+		}
+
+		for (var resourceActionIndex : list "UPDATE,ADD_SUBFOLDER,ADD_DOCUMENT") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+				roleTitle = "Site Member",
+				roleType = "site"
+			);
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Site Member",
+			roleType = "site"
+		);
+
+		for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+				roleTitle = "Site Member",
+				roleType = "site"
+			);
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(siteName = "${siteName}", userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(
+			roleTitle = "Technical Writer",
+			userScreenName = "usersn"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Site.assignUserSitesCP(siteName = "${siteName}", userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		AssertVisible(locator1 = "Portlet#HEADER", value1 = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNames = "Radio",
+			dmDocumentTypeName = "Photos"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCannotAddRepository();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocumentType.viewNoAvailableActionsViaDocumentTypesPG();
+	}
+
+	@description = "This is a use case for LPS-53009"
+	@priority = "5"
+	test ViewDateFieldRequiredInContract {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldRequiredEdit = "Effective Date",
+			dmDocumentTypeName = "Contract"
+		);
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldRequiredEdit = "Expiration Date",
+			dmDocumentTypeName = "Contract"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Contract");
+
+		AssertElementPresent(
+			locator1 = "Icon#ASTERISK_DATE_FIELD",
+			key_fieldFieldLabel = "Effective Date"
+		);
+
+		AssertElementPresent(
+			locator1 = "Icon#ASTERISK_DATE_FIELD",
+			key_fieldFieldLabel = "Expiration Date"
+		);
+	}
+
+	@priority = "5"
+	test ViewDocumentWithGlobalScope {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page - Global",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page - Global",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.addSubfolderCP(
+			dmSubFolderDescription = "DM SubFolder Description",
+			dmSubFolderName = "DM SubFolder Name"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.viewCP(dmFolderName = "DM SubFolder Name", specificNameFolder = "true");
+
+		Refresh();
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentSize = "0KB",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMPortlet.configureScopetoGlobalPG(currentScope = "Liferay");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMPortlet.configureRootFolderPG(dmFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page - Global");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
+
+		Refresh();
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.viewDefaultPG(portletName = "Documents and Media");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
+
+		SitePages.addPrivatePage(
+			pageName = "DM Site Page Name - Global",
+			siteTemplate = "true"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addSiteTemplateCP(
+			siteName = "DM Site Name",
+			siteTemplateName = "Site Template Name"
+		);
+
+		ProductMenu.gotoSite(site = "DM Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name"
+		);
+
+		DMPortlet.configureScopetoGlobalPG(currentScope = "DM Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name"
+		);
+
+		DMPortlet.configureRootFolderPG(dmFolderName = "DM Folder Name");
+
+		Navigator.gotoSitePage(
+			pageName = "DM Site Page Name - Global",
+			siteName = "DM Site Name"
+		);
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
+
+		Refresh();
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title"
+		);
+	}
+
+	@priority = "5"
+	test ViewFileCategoryAndTags {
+		property testray.component.names = "Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories"
+		);
+
+		Category.addCP(
+			categoryDescription = "Category Description",
+			categoryName = "Category Name",
+			vocabularyName = "Topic"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags"
+		);
+
+		var tagNameList = "tag1,tag2";
+
+		for (var tagName : list "${tagNameList}") {
+			Tag.addCP(tagName = "${tagName}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			categoryName = "Category Name",
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document Title",
+			tagNameList = "tag1,tag2",
+			vocabularyName = "Topic"
+		);
+
+		Click(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS",
+			key_dmDocumentTitle = "Document Title"
+		);
+
+		MenuItem.click(menuItem = "Edit");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssertTextEquals(
+			locator1 = "AssetCategorization#CATEGORY",
+			value1 = "Category Name",
+			key_categoryName = "Category Name"
+		);
+
+		for (var tagName : list "${tagNameList}") {
+			var key_tagName = "${tagName}";
+
+			AssertTextEquals(locator1 = "AssetCategorization#TAG", value1 = "${tagName}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			categoryName = "Category Name",
+			dmDocumentDescription = "Document Description",
+			dmDocumentTitle = "Document Title",
+			tagNameList = "tag1,tag2"
+		);
+	}
+
+	@priority = "5"
+	test ViewFolderAsOrganizationUser {
+		property testray.component.names = "Training";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		Organization.addCP(orgName = "Organization Name", orgType = "Organization");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addMemberCP(
+			orgName = "Organization Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(orgName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoCP(
+			orgName = "Organization Name",
+			searchToken = "Organization Name"
+		);
+
+		User.searchCP(searchTerm = "usersn");
+
+		Organization.viewAssignMemberCP(
+			userName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoSite(site = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		for (var permissionsInLineUncheckListsCount : list "INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+				roleTitle = "Site Member"
+			);
+		}
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		IFrame.selectTopFrame();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		DMPortlet.viewDefaultPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		for (var permissionsInLineUncheckListsCount : list "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,CONTENT_PERMISSIONS_ACCESS_CHECKBOX") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+				roleTitle = "Organization User"
+			);
+		}
+
+		IFrame.selectTopFrame();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name"
+		);
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc"
+		);
+	}
+
+	@priority = "4"
+	test ViewPortletAfterRenamingDocumentWithDuplicateTitlePG {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		DMDocument.addPG(
+			dmDocument = "Duplicate",
+			dmDocumentDescription = "DM Document 2 Description",
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		PortletEntry.inputTitle(title = "DM Document 2 Title");
+
+		PortletEntry.publish();
+
+		Pause(locator1 = "1000");
+
+		AssertTextNotPresent(value1 = "Documents and Media is temporarily unavailable.");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Pause(locator1 = "1000");
+
+		AssertTextNotPresent(value1 = "Documents and Media is temporarily unavailable.");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document 2 Description",
+			dmDocumentTitle = "DM Document 2 Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document1 Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document1 Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document2 Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document2 Title"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
+
+		DMDocument.uncheckDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		AssertElementNotPresent(locator1 = "Checkbox#SELECT_ALL_CHECKBOX_TICK");
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document2 Title");
+
+		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
+
+		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CHECKED");
+	}
+}

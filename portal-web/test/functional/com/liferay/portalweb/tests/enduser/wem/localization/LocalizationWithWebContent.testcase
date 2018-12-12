@@ -1,190 +1,140 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-	</set-up>
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddWCWithMultipleTranslations" priority="4">
-		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContent#AddWCWithMultipleTranslations" />
-		<property name="testray.component.names" value="Localization,Web Content Administration" />
+	@priority = "4"
+	test AddWCWithMultipleTranslations {
+		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithMultipleTranslations";
+		property testray.component.names = "Localization,Web Content Administration";
 
-		<execute macro="JSONWebcontent#addBasicWebContentLocalized">
-			<var name="contentMap" value="en_US:WC Content,es_ES:WC Contenido,de_DE:WC Inhalt,fi_FI:WC Pitoisuus" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="titleMap" value="en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko" />
-		</execute>
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:WC Content,es_ES:WC Contenido,de_DE:WC Inhalt,fi_FI:WC Pitoisuus",
+			groupName = "Test Site Name",
+			titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+		Portlet.addPG(portletName = "Web Content Display");
 
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
+		Portlet.addPG(portletName = "Language Selector");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es_ES" />
-			<var name="textIcon" value="español-España" />
-		</execute>
+		LanguagePortlet.selectLanguagePG(locale = "es_ES", textIcon = "español-España");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC Contenido" />
-		</execute>
+		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Editar contenido web" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Editar contenido web",
+			webContentTitle = "WC Titulo"
+		);
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Título" />
-			<var name="locale" value="es-ES" />
-		</execute>
+		PortletEntry.changeLocale(fieldName = "Título", locale = "es-ES");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Contenido" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
+		WebContent.viewCP(
+			webContentContent = "WC Contenido",
+			webContentTitle = "WC Titulo"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="de-DE" />
-			<var name="textIcon" value="Deutsch-Deutschland" />
-		</execute>
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "Deutsch-Deutschland"
+		);
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC Inhalt" />
-		</execute>
+		WebContent.viewPGViaWCD(webContentContent = "WC Inhalt");
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Webcontent bearbeiten" />
-			<var name="webContentTitle" value="WC Titel" />
-		</execute>
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Webcontent bearbeiten",
+			webContentTitle = "WC Titel"
+		);
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Titel" />
-			<var name="locale" value="de-DE" />
-		</execute>
+		PortletEntry.changeLocale(fieldName = "Titel", locale = "de-DE");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Inhalt" />
-			<var name="webContentTitle" value="WC Titel" />
-		</execute>
+		WebContent.viewCP(webContentContent = "WC Inhalt", webContentTitle = "WC Titel");
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="fi-FI" />
-			<var name="textIcon" value="suomi-Suomi" />
-		</execute>
+		LanguagePortlet.selectLanguagePG(locale = "fi-FI", textIcon = "suomi-Suomi");
 
-		<execute function="Refresh" />
+		Refresh();
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC Pitoisuus" />
-		</execute>
+		WebContent.viewPGViaWCD(webContentContent = "WC Pitoisuus");
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Muokkaa web-sisältöä" />
-			<var name="webContentTitle" value="WC Otsikko" />
-		</execute>
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Muokkaa web-sisältöä",
+			webContentTitle = "WC Otsikko"
+		);
 
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Otsikko" />
-			<var name="locale" value="fi-FI" />
-		</execute>
+		PortletEntry.changeLocale(fieldName = "Otsikko", locale = "fi-FI");
 
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC Pitoisuus" />
-			<var name="webContentTitle" value="WC Otsikko" />
-		</execute>
-	</command>
+		WebContent.viewCP(
+			webContentContent = "WC Pitoisuus",
+			webContentTitle = "WC Otsikko"
+		);
+	}
 
-	<command name="ViewChangedDefaultPortalLanguageViaWebContent" priority="4">
-		<property name="test.name.skip.portal.instance" value="LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent" />
-		<property name="testray.component.names" value="Localization" />
+	@priority = "4"
+	test ViewChangedDefaultPortalLanguageViaWebContent {
+		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
+		property testray.component.names = "Localization";
 
-		<execute macro="PortalSettings#openInstanceSettingsAdmin" />
+		PortalSettings.openInstanceSettingsAdmin();
 
-		<execute macro="PortalSettings#configureCurrentLanguagesCP">
-			<var name="defaultPortalLanguage" value="Spanish (Spain)" />
-		</execute>
+		PortalSettings.configureCurrentLanguagesCP(
+			defaultPortalLanguage = "Spanish (Spain)"
+		);
 
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="PortletEntry#viewLocale">
-			<var name="locale" value="es-ES" />
-		</execute>
-	</command>
-</definition>
+		PortletEntry.viewLocale(locale = "es-ES");
+	}
+}

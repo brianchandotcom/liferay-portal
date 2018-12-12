@@ -1,274 +1,236 @@
-<definition component-name="extra-apps-content-targeting">
-	<property name="custom.properties" value="layout.parallel.render.enable=false" />
-	<property name="extraapps.plugins.includes" value="content-targeting" />
-	<property name="ignore.errors" value="IX_DC6100CC" />
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="false" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.component.names" value="Content Targeting" />
-	<property name="testray.main.component.name" value="Content Targeting" />
+@component-name = "extra-apps-content-targeting"
+definition {
+	property custom.properties = "layout.parallel.render.enable=false";
+	property extraapps.plugins.includes = "content-targeting";
+	property ignore.errors = "IX_DC6100CC";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property test.run.environment = "EE";
+	property testray.component.names = "Content Targeting";
+	property testray.main.component.name = "Content Targeting";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="Portlet#shutdownServer" />
+		Portlet.shutdownServer();
 
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		Portlet.startServer(deleteLiferayHome = "false");
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Site.addBlankCP(siteName = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-	</set-up>
+		SitePages.addPublicPage(pageName = "Test Page Name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test"
+			);
 
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Site.tearDownCP();
+		}
+	}
 
-	<command name="Smoke" priority="5">
-		<property name="content.targeting.release" value="true" />
+	@priority = "5"
+	test Smoke {
+		property content.targeting.release = "true";
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
+		ProductMenu.gotoSite(site = "Site Name");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
 
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
+		ContentTargetingUserSegment.addCP(
+			userSegmentDescription = "User Segment Description",
+			userSegmentName = "User Segment Name"
+		);
 
-		<execute macro="ContentTargetingUserSegment#addSystemAttributesBrowserRuleCP">
-			<var name="browserName" value="Firefox" />
-		</execute>
+		ContentTargetingUserSegment.addSystemAttributesBrowserRuleCP(
+			browserName = "Firefox"
+		);
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
 
-		<execute macro="ContentTargetingCampaign#addCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2099" />
-			<var name="campaignEndTime" value="12:00 PM" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2015" />
-			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name" />
-		</execute>
+		ContentTargetingCampaign.addCP(
+			campaignDescription = "Campaign Description",
+			campaignEndDate = "1/1/2099",
+			campaignEndTime = "12:00 PM",
+			campaignName = "Campaign Name",
+			campaignPriorityField = "3",
+			campaignStartDate = "1/1/2015",
+			campaignStartTime = "12:00 AM",
+			userSegmentSelect = "User Segment Name"
+		);
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
 
-		<execute macro="ContentTargetingCampaign#viewCampaignCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriority" value="3" />
-			<var name="campaignStatus" value="Started" />
-		</execute>
+		ContentTargetingCampaign.viewCampaignCP(
+			campaignDescription = "Campaign Description",
+			campaignName = "Campaign Name",
+			campaignPriority = "3",
+			campaignStatus = "Started"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="User Segment Name" />
-			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="WC User Segment Content" />
-			<var name="webContentTitle" value="WC User Segment Title" />
-		</execute>
+		WebContent.addWithCategoryCP(
+			categoryName = "User Segment Name",
+			vocabularyName = "User Segment",
+			webContentContent = "WC User Segment Content",
+			webContentTitle = "WC User Segment Title"
+		);
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC User Segment Title" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC User Segment Title");
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		WebContentNavigator.gotoAddCP();
 
-		<execute macro="WebContent#addWithCategoryCP">
-			<var name="categoryName" value="User Segment Name" />
-			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="WC Campaign Content" />
-			<var name="webContentTitle" value="WC Campaign Title" />
-		</execute>
+		WebContent.addWithCategoryCP(
+			categoryName = "User Segment Name",
+			vocabularyName = "User Segment",
+			webContentContent = "WC Campaign Content",
+			webContentTitle = "WC Campaign Title"
+		);
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC User Segment Title" />
-		</execute>
+		WebContent.viewTitle(webContentTitle = "WC User Segment Title");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Audience Targeting" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Audience Targeting"
+		);
 
-		<execute macro="ContentTargetingCampaign#gotoAddReport">
-			<var name="campaignName" value="Campaign Name" />
-		</execute>
+		ContentTargetingCampaign.gotoAddReport(campaignName = "Campaign Name");
 
-		<execute macro="ContentTargetingCampaign#addReportName">
-			<var name="reportDescription" value="Custom Report Description" />
-			<var name="reportName" value="Custom Report Name" />
-		</execute>
+		ContentTargetingCampaign.addReportName(
+			reportDescription = "Custom Report Description",
+			reportName = "Custom Report Name"
+		);
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
-			<var name="contentMetricName" value="Content Metric Name" />
-			<var name="contentTitle" value="WC Campaign Title" />
-			<var name="contentTrackingActionSelect" value="View" />
-			<var name="menulistContent" value="Basic Web Content" />
-		</execute>
+		ContentTargetingCampaign.addTrackingActionContentCP(
+			contentMetricName = "Content Metric Name",
+			contentTitle = "WC Campaign Title",
+			contentTrackingActionSelect = "View",
+			menulistContent = "Basic Web Content"
+		);
 
-		<execute macro="PortletEntry#save" />
+		PortletEntry.save();
 
-		<for list="Campaign Content Display,User Segment Content Display,Asset Publisher" param="portletName">
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Test Page Name" />
-				<var name="siteName" value="Site Name" />
-			</execute>
+		for (var portletName : list "Campaign Content Display,User Segment Content Display,Asset Publisher") {
+			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
+			Portlet.addPG(portletName = "${portletName}");
+		}
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="User Segment Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "User Segment Content Display",
+			portletOption = "Configuration"
+		);
 
-		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
-			<var name="belongs" value="true" />
-			<var name="contentTitle" value="WC User Segment Title" />
-			<var name="contentType" value="Basic Web Content" />
-			<var name="rowNumber" value="1" />
-			<var name="toAll" value="true" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
+		UserSegmentContentDisplayPortlet.configureDisplayContent(
+			belongs = "true",
+			contentTitle = "WC User Segment Title",
+			contentType = "Basic Web Content",
+			rowNumber = "1",
+			toAll = "true",
+			userSegmentName = "User Segment Name"
+		);
 
-		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
+		UserSegmentContentDisplayPortlet.savePG();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Campaign Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		Portlet.gotoPortletOptions(
+			portletName = "Campaign Content Display",
+			portletOption = "Configuration"
+		);
 
-		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
-			<var name="campaignName" value="Campaign Name" />
-			<var name="contentTitle" value="WC Campaign Title" />
-			<var name="contentType" value="Basic Web Content" />
-			<var name="rowNumber" value="1" />
-		</execute>
+		CampaignDisplayPortlet.configureCampaignRule(
+			campaignName = "Campaign Name",
+			contentTitle = "WC Campaign Title",
+			contentType = "Basic Web Content",
+			rowNumber = "1"
+		);
 
-		<execute macro="CampaignDisplayPortlet#savePG" />
+		CampaignDisplayPortlet.savePG();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#enableUserSegementFilter" />
+		AssetPublisherPortlet.enableUserSegementFilter();
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="WC Campaign Content" />
-			<var name="previewCampaignList" value="Campaign Name,default" />
-			<var name="viewCampaignSelected" value="Campaign Name" />
-			<var name="viewDontDisplay" value="true" />
-		</execute>
+		CampaignDisplayPortlet.viewPG(
+			entryContentText = "WC Campaign Content",
+			previewCampaignList = "Campaign Name,default",
+			viewCampaignSelected = "Campaign Name",
+			viewDontDisplay = "true"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC User Segment Content" />
-			<var name="previewUserSegmentList" value="User Segment Name,default" />
-			<var name="viewDontDisplay" value="true" />
-			<var name="viewUserSegmentSelected" value="User Segment Name" />
-		</execute>
+		UserSegmentContentDisplayPortlet.viewEntryPG(
+			entryContentText = "WC User Segment Content",
+			previewUserSegmentList = "User Segment Name,default",
+			viewDontDisplay = "true",
+			viewUserSegmentSelected = "User Segment Name"
+		);
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
+		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Site Name");
 
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC Campaign Content" />
-			<var name="assetTitle" value="WC Campaign Title" />
-		</execute>
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC Campaign Content",
+			assetTitle = "WC Campaign Title"
+		);
 
-		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC User Segment Content" />
-			<var name="assetTitle" value="WC User Segment Title" />
-		</execute>
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC User Segment Content",
+			assetTitle = "WC User Segment Title"
+		);
 
-		<!-- <execute macro="ProductMenu#gotoPortlet">
+		/* <execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Audience Targeting" />
@@ -282,6 +244,6 @@
 		<execute macro="ContentTargetingCampaign#viewContentReportCP">
 			<var name="reportsContentTableList" value="Content Metric Name,View,3" />
 			<var name="reportTitle" value="Content Metric Name" />
-		</execute> -->
-	</command>
-</definition>
+		</execute> */
+	}
+}

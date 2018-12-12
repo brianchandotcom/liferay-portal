@@ -1,661 +1,510 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Administration" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-
-				<execute macro="WebContentStructures#tearDownCP">
-					<var name="siteScopeName" value="Global" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddCreatedStructureForImportedTemplate" priority="5">
-		<description message="This is a use case for LPS-82492." />
-
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureName" value="Content List" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Web Content" />
-			<var name="fieldFieldLabel" value="Web Content" />
-			<var name="fieldName" value="contents" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldTip">
-			<var name="fieldFieldLabel" value="Web Content" />
-			<var name="fieldTip" value="Choose as many content pieces as you would like to feature." />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldRepeatable">
-			<var name="fieldFieldLabel" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Content List" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="content-display-templates.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
-			<execute macro="WebContentNavigator#gotoViewTemplate">
-				<var name="templateName" value="${templateName}" />
-			</execute>
-
-			<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-				<var name="structureName" value="Content List" />
-			</execute>
-
-			<execute macro="DDLDataDefinition#save" />
-		</for>
-
-		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
-			<execute macro="WebContent#openWebContentAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-
-			<execute macro="Navigator#gotoNavItem">
-				<var name="navItem" value="Templates" />
-			</execute>
-
-			<execute macro="WebContentTemplates#viewCP">
-				<var name="structureName" value="Content List" />
-				<var name="templateDescription" value="" />
-				<var name="templateName" value="${templateName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="AddWebContentFromImportedStructureAndTemplate" priority="5">
-		<description message="This is a use case for LPS-82492." />
-
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="frontPage-structures.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<for list="3 Columns with Images,Footer Content,1 Column Banner" param="structureName">
-			<execute macro="WebContentStructures#viewCP">
-				<var name="structureName" value="${structureName}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="space-templates.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<for list="3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events" param="templateName">
-			<execute macro="Navigator#gotoNavItem">
-				<var name="navItem" value="Templates" />
-			</execute>
-
-			<execute macro="WebContentTemplates#viewCP">
-				<var name="templateDescription" value="" />
-				<var name="templateName" value="${templateName}" />
-			</execute>
-
-			<execute macro="WebContent#openWebContentAdmin">
-				<var name="siteURLKey" value="test-site-name" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="1 Column Banner" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="description" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
-			<var name="fieldName" value="BannerTitle" />
-			<var name="fieldName2" value="BannerHeading" />
-			<var name="webContentImage" value="Spaceport.jpg" />
-			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
-			<var name="webContentTextBox2" value="Dare to dream out of this world" />
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="description" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
-			<var name="fieldName" value="BannerTitle" />
-			<var name="fieldName2" value="BannerHeading" />
-			<var name="webContentImage" value="Spaceport.jpg" />
-			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
-			<var name="webContentTextBox2" value="Dare to dream out of this world" />
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
-		</execute>
-	</command>
-
-	<command name="ExportLARWithNestedWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addFieldNested">
-			<var name="field" value="Web Content" />
-			<var name="fieldFieldLabel" value="Web Content" />
-			<var name="fieldName" value="webContent" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateName" value="Basic Web Content" />
-			<var name="webContentTitle" value="Basic WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="fieldName" value="webContent" />
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentSelectWCFile" value="Basic WebContent Title" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="WC WebContent Text" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="WebContent_portlet.lar" />
-		</execute>
-	</command>
-
-	<command name="ImportAndUseGlobalStructureAndTemplate" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="global" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="structure-templates.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="3 Column with Images" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="fieldName" value="title" />
-			<var name="webContentTextBox" value="Green Waste" />
-			<var name="webContentTextBoxList" value="Mowed Lawns,Mulched Branches,Compost Bin" />
-			<var name="webContentTitle" value="Agricultural Science Front Page" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Agricultural Science Front Page" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="fieldName" value="title" />
-			<var name="webContentTextBox" value="Green Waste" />
-			<var name="webContentTextBoxList" value="Mowed Lawns,Mulched Branches,Compost Bin" />
-			<var name="webContentTitle" value="Agricultural Science Front Page" />
-		</execute>
-	</command>
-
-	<command name="ImportLAR" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="WebContent_portlet2.lar" />
-		</execute>
-
-		<execute macro="JSONGroup#deleteGroupByName">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="WebContent_portlet2.lar" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-	</command>
-
-	<command name="ImportLARLinkToPageValidation" priority="4">
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Test Structure Description" />
-			<var name="structureName" value="Test Structure" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Link to Page" />
-			<var name="fieldFieldLabel" value="Link to Page" />
-			<var name="fieldName" value="LinkToPage" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="Test Structure" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Test Structure" />
-			<var name="templateDescription" value="Test Template Description" />
-			<var name="templateName" value="Test Template" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="Test Structure" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="linkedPageName" value="Test Page" />
-			<var name="structureName" value="Test Structure" />
-			<var name="templateName" value="Test Template" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="WebContent_portlet.lar" />
-		</execute>
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="importValidationMissingItem" value="Linked Page" />
-			<var name="larFileName" value="WebContent_portlet.lar" />
-			<var name="linkedPageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="ImportTrainingLAR" priority="5">
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="space-content-7.0.lar" />
-			<var name="siteName" value="Site Name" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Look and Feel Configuration" />
-		</execute>
-
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute macro="Portlet#selectApplicationDecorator">
-			<var name="decorator" value="Barebone" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewApplicationDecorator">
-			<var name="decorator" value="Barebone" />
-		</execute>
-	</command>
-
-	<command name="MoveImportedWebContentArticlesToFolders" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="News Folder Description" />
-			<var name="folderName" value="News" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="Events Folder Description" />
-			<var name="folderName" value="Events" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="space-web-content.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<for list="When It All Began...,Stravinksy in Space?,Student Spotlight,Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series" param="webContentTitle">
-			<execute macro="WebContent#viewTitle">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#moveArticlesToFolderCP">
-			<var name="folderName" value="News" />
-			<var name="webContentArticlesList" value="When It All Began...,Stravinksy in Space?,Student Spotlight" />
-		</execute>
-
-		<execute macro="WebContent#moveArticlesToFolderCP">
-			<var name="folderName" value="Events" />
-			<var name="webContentArticlesList" value="Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="News" />
-			<var name="webContentTitle" value="News" />
-		</execute>
-
-		<for list="When It All Began...,Stravinksy in Space?,Student Spotlight" param="webContentTitle">
-			<execute macro="WebContent#viewTitle">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="Events" />
-			<var name="webContentTitle" value="Events" />
-		</execute>
-
-		<for list="Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series" param="webContentTitle">
-			<execute macro="WebContent#viewTitle">
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			WebContentStructures.tearDownCP(siteScopeName = "Global");
+		}
+	}
+
+	@description = "This is a use case for LPS-82492."
+	@priority = "5"
+	test AddCreatedStructureForImportedTemplate {
+		property testray.component.names = "Training";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Content List");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "contents"
+		);
+
+		DynamicDataMapping.editFieldTip(
+			fieldFieldLabel = "Web Content",
+			fieldTip = "Choose as many content pieces as you would like to feature."
+		);
+
+		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP(structureName = "Content List");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(
+			larFileName = "content-display-templates.lar",
+			uploadFrom = "dependencies"
+		);
+
+		Refresh();
+
+		NavItem.gotoTemplates();
+
+		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
+			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
+
+			WebContentTemplates.inputTemplateAddScreenFields(structureName = "Content List");
+
+			DDLDataDefinition.save();
+		}
+
+		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavItem(navItem = "Templates");
+
+			WebContentTemplates.viewCP(
+				structureName = "Content List",
+				templateDescription = "",
+				templateName = "${templateName}"
+			);
+		}
+	}
+
+	@description = "This is a use case for LPS-82492."
+	@priority = "5"
+	test AddWebContentFromImportedStructureAndTemplate {
+		property testray.component.names = "Training";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(
+			larFileName = "frontPage-structures.lar",
+			uploadFrom = "dependencies"
+		);
+
+		Refresh();
+
+		NavItem.gotoStructures();
+
+		for (var structureName : list "3 Columns with Images,Footer Content,1 Column Banner") {
+			WebContentStructures.viewCP(structureName = "${structureName}");
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(
+			larFileName = "space-templates.lar",
+			uploadFrom = "dependencies"
+		);
+
+		for (var templateName : list "3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events") {
+			Navigator.gotoNavItem(navItem = "Templates");
+
+			WebContentTemplates.viewCP(
+				templateDescription = "",
+				templateName = "${templateName}"
+			);
+
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		}
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "1 Column Banner");
+
+		WebContent.addWithStructureCP(
+			description = "The Structured Banner for the S.P.A.C.E. FrontPage",
+			fieldName = "BannerTitle",
+			fieldName2 = "BannerHeading",
+			webContentImage = "Spaceport.jpg",
+			webContentTextBox = "Space Program Academy of Continuing Education",
+			webContentTextBox2 = "Dare to dream out of this world",
+			webContentTitle = "S.P.A.C.E. Banner"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "S.P.A.C.E. Banner");
+
+		WebContent.viewWithStructureCP(
+			description = "The Structured Banner for the S.P.A.C.E. FrontPage",
+			fieldName = "BannerTitle",
+			fieldName2 = "BannerHeading",
+			webContentImage = "Spaceport.jpg",
+			webContentTextBox = "Space Program Academy of Continuing Education",
+			webContentTextBox2 = "Dare to dream out of this world",
+			webContentTitle = "S.P.A.C.E. Banner"
+		);
+	}
+
+	@priority = "4"
+	test ExportLARWithNestedWebContent {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DynamicDataMapping.addFieldNested(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "webContent"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Basic Web Content");
+
+		WebContent.addWithStructureCP(
+			structureName = "Basic Web Content",
+			templateName = "Basic Web Content",
+			webContentTitle = "Basic WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "webContent",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentSelectWCFile = "Basic WebContent Title",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		FormFields.editText(fieldName = "Text", fieldValue = "WC WebContent Text");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+	}
+
+	@priority = "5"
+	test ImportAndUseGlobalStructureAndTemplate {
+		property testray.component.names = "Training";
+
+		WebContent.openWebContentAdmin(siteURLKey = "global");
+
+		LAR.importPortlet(
+			larFileName = "structure-templates.lar",
+			uploadFrom = "dependencies"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(
+			structureName = "3 Column with Images"
+		);
+
+		WebContent.addWithStructureCP(
+			fieldName = "title",
+			webContentTextBox = "Green Waste",
+			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentTitle = "Agricultural Science Front Page"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Agricultural Science Front Page");
+
+		WebContent.viewWithStructureCP(
+			fieldName = "title",
+			webContentTextBox = "Green Waste",
+			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentTitle = "Agricultural Science Front Page"
+		);
+	}
+
+	@priority = "4"
+	test ImportLAR {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet2.lar");
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(larFileName = "WebContent_portlet2.lar");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
+
+		DynamicDataMapping.viewField(fieldFieldLabel = "Text", fieldName = "Text");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.viewCP(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name"
+		);
+	}
+
+	@priority = "4"
+	test ImportLARLinkToPageValidation {
+		property testray.component.names = "Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Test Structure Description",
+			structureName = "Test Structure"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Link to Page",
+			fieldFieldLabel = "Link to Page",
+			fieldName = "LinkToPage"
+		);
+
+		WebContentStructures.saveCP(structureName = "Test Structure");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Test Structure",
+			templateDescription = "Test Template Description",
+			templateName = "Test Template"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+		WebContent.addWithStructureCP(
+			linkedPageName = "Test Page",
+			structureName = "Test Structure",
+			templateName = "Test Template",
+			webContentTitle = "WC Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		LAR.importPortlet(
+			importValidationMissingItem = "Linked Page",
+			larFileName = "WebContent_portlet.lar",
+			linkedPageName = "Test Page",
+			siteName = "Site Name"
+		);
+	}
+
+	@ignore = "true"
+	@priority = "5"
+	test ImportTrainingLAR {
+		property testray.component.names = "Training";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.importPortlet(
+			larFileName = "space-content-7.0.lar",
+			siteName = "Site Name",
+			uploadFrom = "dependencies"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Look and Feel Configuration"
+		);
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.selectApplicationDecorator(decorator = "Barebone");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.viewApplicationDecorator(decorator = "Barebone");
+	}
+
+	@priority = "5"
+	test MoveImportedWebContentArticlesToFolders {
+		property testray.component.names = "Training,Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.addCP(
+			folderDescription = "News Folder Description",
+			folderName = "News"
+		);
+
+		WebContentFolder.addCP(
+			folderDescription = "Events Folder Description",
+			folderName = "Events"
+		);
+
+		LAR.importPortlet(
+			larFileName = "space-web-content.lar",
+			uploadFrom = "dependencies"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight,Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+
+		WebContent.moveArticlesToFolderCP(
+			folderName = "News",
+			webContentArticlesList = "When It All Began...,Stravinksy in Space?,Student Spotlight"
+		);
+
+		WebContent.moveArticlesToFolderCP(
+			folderName = "Events",
+			webContentArticlesList = "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.gotoCP(folderName = "News", webContentTitle = "News");
+
+		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight") {
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentFolder.gotoCP(folderName = "Events", webContentTitle = "Events");
+
+		for (var webContentTitle : list "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+	}
+}

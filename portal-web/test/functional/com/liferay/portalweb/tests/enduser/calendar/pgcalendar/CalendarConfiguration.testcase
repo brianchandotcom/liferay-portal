@@ -1,544 +1,385 @@
-<definition component-name="portal-calendar">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
-	<property name="testray.main.component.name" value="Calendar" />
-
-	<var name="pageName" value="Calendar Page" />
-	<var name="portletName" value="Calendar" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="privacy" value="Public Pages" />
-			<var name="sitePageType" value="Widget Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Page" />
-			<var name="portletName" value="Calendar" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#gotoPage">
-					<var name="pageName" value="Calendar Page" />
-				</execute>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
-
-				<execute macro="Calendar#tearDown" />
+@component-name = "portal-calendar"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property testray.main.component.name = "Calendar";
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
 
-				<execute macro="CalendarConfiguration#tearDown" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+		User.firstLoginPG();
 
-	<command name="ConfigureDefaultView" priority="3">
-		<for list="Day,Week,Month,Agenda" param="defaultView">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Calendar Page" />
-			</execute>
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
 
-			<execute macro="CalendarNavigator#gotoConfiguration" />
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page"
+		);
 
-			<execute macro="CalendarConfiguration#selectDefaultView">
-				<var name="defaultView" value="${defaultView}" />
-			</execute>
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
 
-			<execute macro="CalendarConfiguration#save" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Calendar Page" />
-			</execute>
+		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+	}
 
-			<execute macro="CalendarScheduler#viewSelectedView">
-				<var name="view" value="${defaultView}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="ConfigureDisplayTimeZone" priority="5">
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#editTimeZoneUTC" />
-
-		<execute macro="CalendarConfiguration#save" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
 
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+			Calendar.tearDown();
 
-		<execute macro="CalendarEvent#setDatesToday" />
+			CalendarConfiguration.tearDown();
 
-		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="03:00 PM" />
-			<var name="startDateTime" value="02:00 PM" />
-		</execute>
+			Page.tearDownCP();
+		}
+	}
 
-		<execute macro="CalendarEvent#publish" />
+	@priority = "3"
+	test ConfigureDefaultView {
+		for (var defaultView : list "Day,Week,Month,Agenda") {
+			Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+			CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+			CalendarConfiguration.selectDefaultView(defaultView = "${defaultView}");
 
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="3:00pm" />
-			<var name="startDateTime" value="2:00pm" />
-		</execute>
+			CalendarConfiguration.save();
 
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+			Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="03:00 PM" />
-			<var name="startDateTime" value="02:00 PM" />
-		</execute>
+			CalendarScheduler.viewSelectedView(view = "${defaultView}");
+		}
+	}
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+	@priority = "5"
+	test ConfigureDisplayTimeZone {
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		CalendarConfiguration.editTimeZoneUTC();
 
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="03:00 PM" />
-			<var name="startDateTime" value="02:00 PM" />
-		</execute>
+		CalendarConfiguration.save();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		CalendarNavigator.gotoAddEvent();
 
-		<execute macro="CalendarConfiguration#enableGlobalTimeZone" />
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
-		<execute macro="CalendarConfiguration#save" />
+		CalendarEvent.setDatesToday();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarEvent.setTimes(endDateTime = "03:00 PM", startDateTime = "02:00 PM");
 
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		CalendarEvent.publish();
 
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="am" />
-			<var name="startDateTime" value="am" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="AM" />
-			<var name="startDateTime" value="AM" />
-		</execute>
-	</command>
+		CalendarScheduler.viewEventTimesViaDialogBox(
+			endDateTime = "3:00pm",
+			startDateTime = "2:00pm"
+		);
 
-	<command name="ConfigureEventsDisplaySettingsAndViewEvents" priority="4">
-		<for list="1,2,3,4,5,6" param="eventNumber">
-			<execute macro="CalendarNavigator#gotoAddEvent" />
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
-			<execute macro="CalendarEvent#add">
-				<var name="eventTitle" value="Calendar Event ${eventNumber}" />
-				<var name="eventType" value="All Day" />
-				<var name="pageName" value="Calendar Page" />
-			</execute>
-		</for>
+		CalendarEvent.viewTimesViaDetails(
+			endDateTime = "03:00 PM",
+			startDateTime = "02:00 PM"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
-		</execute>
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		<for list="1,2,3,4,5,6" param="eventNumber">
-			<execute macro="CalendarEvent#viewViaAgendaView">
-				<var name="eventNumber" value="${eventNumber}" />
-			</execute>
-		</for>
+		CalendarEvent.viewTimes(endDateTime = "03:00 PM", startDateTime = "02:00 PM");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarConfiguration#editNumberOfEventsDisplayed">
-			<var name="maxNumberOfEvents" value="5" />
-		</execute>
+		CalendarConfiguration.enableGlobalTimeZone();
 
-		<execute macro="CalendarConfiguration#save" />
+		CalendarConfiguration.save();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
-		</execute>
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		<for list="1,2,3,4,5" param="eventNumber">
-			<execute macro="CalendarEvent#viewViaAgendaView">
-				<var name="eventNumber" value="${eventNumber}" />
-			</execute>
-		</for>
+		CalendarScheduler.viewEventTimesViaDialogBox(
+			endDateTime = "am",
+			startDateTime = "am"
+		);
 
-		<execute macro="CalendarEvent#viewNotPresentViaAgendaView">
-			<var name="eventNumber" value="6" />
-		</execute>
-	</command>
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
-	<command name="View24hourTimeFormat" priority="4">
-		<execute macro="CalendarScheduler#viewFirstHour">
-			<var name="firstHour" value="12am" />
-		</execute>
+		CalendarEvent.viewTimesViaDetails(endDateTime = "AM", startDateTime = "AM");
+	}
 
-		<execute macro="CalendarScheduler#viewLastHour">
-			<var name="lastHour" value="11pm" />
-		</execute>
+	@priority = "4"
+	test ConfigureEventsDisplaySettingsAndViewEvents {
+		for (var eventNumber : list "1,2,3,4,5,6") {
+			CalendarNavigator.gotoAddEvent();
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+			CalendarEvent.add(
+				eventTitle = "Calendar Event ${eventNumber}",
+				eventType = "All Day",
+				pageName = "Calendar Page"
+			);
+		}
 
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarEvent#setDatesToday" />
+		CalendarNavigator.gotoView(viewType = "Agenda");
 
-		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="11:00 PM" />
-			<var name="startDateTime" value="09:00 PM" />
-		</execute>
+		for (var eventNumber : list "1,2,3,4,5,6") {
+			CalendarEvent.viewViaAgendaView(eventNumber = "${eventNumber}");
+		}
 
-		<execute macro="CalendarEvent#publish" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		CalendarConfiguration.editNumberOfEventsDisplayed(maxNumberOfEvents = "5");
 
-		<execute macro="CalendarConfiguration#selectTimeFormat">
-			<var name="timeFormat" value="24 Hour" />
-		</execute>
+		CalendarConfiguration.save();
 
-		<execute macro="CalendarConfiguration#save" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarNavigator.gotoView(viewType = "Agenda");
 
-		<execute macro="CalendarScheduler#viewFirstHour">
-			<var name="firstHour" value="00:00" />
-		</execute>
+		for (var eventNumber : list "1,2,3,4,5") {
+			CalendarEvent.viewViaAgendaView(eventNumber = "${eventNumber}");
+		}
 
-		<execute macro="CalendarScheduler#viewLastHour">
-			<var name="lastHour" value="23:00" />
-		</execute>
+		CalendarEvent.viewNotPresentViaAgendaView(eventNumber = "6");
+	}
 
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+	@priority = "4"
+	test View24hourTimeFormat {
+		CalendarScheduler.viewFirstHour(firstHour = "12am");
 
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="23:00" />
-			<var name="startDateTime" value="21:00" />
-		</execute>
+		CalendarScheduler.viewLastHour(lastHour = "11pm");
 
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+		CalendarNavigator.gotoAddEvent();
 
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="23:00" />
-			<var name="startDateTime" value="21:00" />
-		</execute>
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarEvent.setDatesToday();
 
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		CalendarEvent.setTimes(endDateTime = "11:00 PM", startDateTime = "09:00 PM");
 
-		<execute macro="CalendarEvent#viewTimes24Hour">
-			<var name="endDateTime" value="23:00" />
-			<var name="startDateTime" value="21:00" />
-		</execute>
+		CalendarEvent.publish();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarConfiguration#selectTimeFormat">
-			<var name="timeFormat" value="AM/PM" />
-		</execute>
+		CalendarConfiguration.selectTimeFormat(timeFormat = "24 Hour");
 
-		<execute macro="CalendarConfiguration#save" />
+		CalendarConfiguration.save();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarScheduler#viewFirstHour">
-			<var name="firstHour" value="12am" />
-		</execute>
+		CalendarScheduler.viewFirstHour(firstHour = "00:00");
 
-		<execute macro="CalendarScheduler#viewLastHour">
-			<var name="lastHour" value="11pm" />
-		</execute>
+		CalendarScheduler.viewLastHour(lastHour = "23:00");
 
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="11:00pm" />
-			<var name="startDateTime" value="9:00pm" />
-		</execute>
+		CalendarScheduler.viewEventTimesViaDialogBox(
+			endDateTime = "23:00",
+			startDateTime = "21:00"
+		);
 
-		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="11:00 PM" />
-			<var name="startDateTime" value="09:00 PM" />
-		</execute>
+		CalendarEvent.viewTimesViaDetails(
+			endDateTime = "23:00",
+			startDateTime = "21:00"
+		);
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarNavigator#gotoEditEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="11:00 PM" />
-			<var name="startDateTime" value="09:00 PM" />
-		</execute>
-	</command>
+		CalendarEvent.viewTimes24Hour(endDateTime = "23:00", startDateTime = "21:00");
 
-	<command name="ViewCalendarTimeZoneDefaults" priority="5">
-		<property name="test.name.skip.portal.instance" value="CalendarConfiguration#ViewCalendarTimeZoneDefaults" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="UserBar#gotoMyAccount" />
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
-			<var name="displaySettingsGreeting" value="Welcome Test Test!" />
-		</execute>
+		CalendarConfiguration.selectTimeFormat(timeFormat = "AM/PM");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Instance Settings" />
-		</execute>
+		CalendarConfiguration.save();
 
-		<execute macro="PortalSettings#configureTimeZone">
-			<var name="timeZone" value="(UTC +08:00) China Standard Time" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarScheduler.viewFirstHour(firstHour = "12am");
 
-		<execute macro="CalendarNavigator#gotoAddMyCalendars" />
+		CalendarScheduler.viewLastHour(lastHour = "11pm");
 
-		<execute macro="Calendar#viewSelectedTimeZone">
-			<var name="timeZone" value="(UTC -08:00) Pacific Standard Time" />
-		</execute>
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarScheduler.viewEventTimesViaDialogBox(
+			endDateTime = "11:00pm",
+			startDateTime = "9:00pm"
+		);
 
-		<execute macro="CalendarNavigator#gotoAddCurrentSiteCalendars" />
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
-		<execute macro="Calendar#viewSelectedTimeZone">
-			<var name="timeZone" value="(UTC +08:00) China Standard Time" />
-		</execute>
-	</command>
+		CalendarEvent.viewTimesViaDetails(
+			endDateTime = "11:00 PM",
+			startDateTime = "09:00 PM"
+		);
 
-	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
-		<description message="This is a use case for LPS-51783." />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
-		<execute macro="UserBar#gotoMyAccount" />
+		CalendarEvent.viewTimes(endDateTime = "11:00 PM", startDateTime = "09:00 PM");
+	}
 
-		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
-			<var name="displaySettingsGreeting" value="Welcome Test Test!" />
-		</execute>
+	@priority = "5"
+	test ViewCalendarTimeZoneDefaults {
+		property test.name.skip.portal.instance = "CalendarConfiguration#ViewCalendarTimeZoneDefaults";
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		UserBar.gotoMyAccount();
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+		User.editUserDisplaySettingsTimeZonePacific(
+			displaySettingsGreeting = "Welcome Test Test!"
+		);
 
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
 
-		<execute macro="CalendarEvent#setAllDay" />
+		PortalSettings.configureTimeZone(timeZone = "(UTC +08:00) China Standard Time");
 
-		<execute macro="CalendarEvent#publish" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarNavigator.gotoAddMyCalendars();
 
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="All Day" />
-		</execute>
+		Calendar.viewSelectedTimeZone(timeZone = "(UTC -08:00) Pacific Standard Time");
 
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="11:59 PM" />
-			<var name="startDateTime" value="12:00 AM" />
-		</execute>
-	</command>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-	<command name="ViewWeekStartMonday" priority="5">
-		<description message="This is a use case for LPS-51127." />
+		CalendarNavigator.gotoAddCurrentSiteCalendars();
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		Calendar.viewSelectedTimeZone(timeZone = "(UTC +08:00) China Standard Time");
+	}
 
-		<execute macro="CalendarConfiguration#selectWeekStartsOn">
-			<var name="weekStartDay" value="Monday" />
-		</execute>
+	@description = "This is a use case for LPS-51783."
+	@priority = "4"
+	test ViewEventDetailsAllDayWithModifiedUserTimeZone {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="CalendarConfiguration#save" />
+		UserBar.gotoMyAccount();
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		User.editUserDisplaySettingsTimeZonePacific(
+			displaySettingsGreeting = "Welcome Test Test!"
+		);
 
-		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
-			<var name="weekStartDay" value="Mon" />
-		</execute>
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Calendar#viewWeekStartDayViaMonthView">
-			<var name="weekStartDay" value="Mon" />
-		</execute>
+		CalendarNavigator.gotoAddEvent();
 
-		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
-			<var name="weekStartDay" value="Mo" />
-		</execute>
+		CalendarEvent.editTitle(eventTitle = "Calendar Event All Day Title");
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+		CalendarEvent.setAllDay();
 
-		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
-			<var name="weekStartDay" value="Mo" />
-		</execute>
+		CalendarEvent.publish();
 
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="Weekly" />
-		</execute>
+		CalendarEvent.viewDetails(
+			calendarName = "${siteName}",
+			eventTitle = "Calendar Event All Day Title",
+			eventType = "All Day"
+		);
 
-		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
-			<var name="weekStartDay" value="Monday" />
-		</execute>
-	</command>
+		CalendarEvent.viewTimesViaDetails(
+			endDateTime = "11:59 PM",
+			startDateTime = "12:00 AM"
+		);
+	}
 
-	<command name="ViewWeekStartSaturday" priority="3">
-		<description message="This is a use case for 51127." />
+	@description = "This is a use case for LPS-51127."
+	@priority = "5"
+	test ViewWeekStartMonday {
+		CalendarNavigator.gotoConfiguration();
 
-		<execute macro="CalendarNavigator#gotoConfiguration" />
+		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Monday");
 
-		<execute macro="CalendarConfiguration#selectWeekStartsOn">
-			<var name="weekStartDay" value="Saturday" />
-		</execute>
+		CalendarConfiguration.save();
 
-		<execute macro="CalendarConfiguration#save" />
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		CalendarScheduler.viewWeekStartDayViaWeekView(weekStartDay = "Mon");
 
-		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
-			<var name="weekStartDay" value="Sat" />
-		</execute>
+		Calendar.viewWeekStartDayViaMonthView(weekStartDay = "Mon");
 
-		<execute macro="Calendar#viewWeekStartDayViaMonthView">
-			<var name="weekStartDay" value="Sat" />
-		</execute>
+		Calendar.viewWeekStartDayViaSmallCalendar(weekStartDay = "Mo");
 
-		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
-			<var name="weekStartDay" value="Sa" />
-		</execute>
+		CalendarNavigator.gotoAddEvent();
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+		Calendar.viewWeekStartDayViaAddEventMiniCalendar(weekStartDay = "Mo");
 
-		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
-			<var name="weekStartDay" value="Sa" />
-		</execute>
+		CalendarEvent.gotoRepeatConfiguration();
 
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+		CalendarEvent.selectRepeatFrequency(frequency = "Weekly");
 
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="Weekly" />
-		</execute>
+		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Monday");
+	}
 
-		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
-			<var name="weekStartDay" value="Saturday" />
-		</execute>
-	</command>
-</definition>
+	@description = "This is a use case for 51127."
+	@priority = "3"
+	test ViewWeekStartSaturday {
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
+
+		CalendarConfiguration.save();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.viewWeekStartDayViaWeekView(weekStartDay = "Sat");
+
+		Calendar.viewWeekStartDayViaMonthView(weekStartDay = "Sat");
+
+		Calendar.viewWeekStartDayViaSmallCalendar(weekStartDay = "Sa");
+
+		CalendarNavigator.gotoAddEvent();
+
+		Calendar.viewWeekStartDayViaAddEventMiniCalendar(weekStartDay = "Sa");
+
+		CalendarEvent.gotoRepeatConfiguration();
+
+		CalendarEvent.selectRepeatFrequency(frequency = "Weekly");
+
+		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Saturday");
+	}
+}

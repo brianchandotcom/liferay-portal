@@ -1,134 +1,115 @@
-<definition component-name="portal-forms-and-workflow-ee">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Kaleo Designer" />
+@component-name = "portal-forms-and-workflow-ee"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Designer";
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
 
-	<var name="kfFieldSetName" value="New Kaleo Field Set" />
-	<var name="workflowAssetType" value="Process" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+		User.firstLoginPG();
 
-		<execute macro="User#firstLoginPG" />
+		Navigator.openURL();
 
-		<execute macro="Navigator#openURL" />
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+	}
 
-		<execute macro="Workflow#gotoEditWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
-	</set-up>
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-		</if>
-	</tear-down>
+	@priority = "5"
+	test DeleteTaskNode {
+		PortletEntry.inputTitle(title = "Edited Workflow Definition");
 
-	<command name="DeleteTaskNode" priority="5">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="Edited Workflow Definition" />
-		</execute>
+		KaleoDesigner.selectNode(nodeNodeLabel = "update");
 
-		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="update" />
-		</execute>
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
 
-		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="update" />
-		</execute>
+		PortletEntry.update();
 
-		<execute macro="PortletEntry#update" />
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Workflow" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Process Builder" />
-		</execute>
+		Workflow.viewDefinitionPublished(
+			workflowDefinitionName = "Single Approver",
+			workflowDefinitionTitle = "Edited Workflow Definition",
+			workflowDefinitionVersionNumber = "2"
+		);
 
-		<execute macro="Workflow#viewDefinitionPublished">
-			<var name="workflowDefinitionName" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
-			<var name="workflowDefinitionVersionNumber" value="2" />
-		</execute>
+		Workflow.gotoEditWorkflowDefinition(
+			workflowDefinitionTitle = "Edited Workflow Definition"
+		);
 
-		<execute macro="Workflow#gotoEditWorkflowDefinition">
-			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
-		</execute>
+		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "update");
+	}
 
-		<execute macro="KaleoDesigner#viewNodeNotPresent">
-			<var name="nodeNodeLabel" value="update" />
-		</execute>
-	</command>
+	@priority = "4"
+	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
+		KaleoDesigner.editSourceXML(kdSourceXML = "INVALID", line = "6");
 
-	<command name="ViewInvalidSourceXMLNotRemainsAfterTabSwitch" priority="4">
-		<execute macro="KaleoDesigner#editSourceXML">
-			<var name="kdSourceXML" value="INVALID" />
-			<var name="line" value="6" />
-		</execute>
+		KaleoDesigner.viewViewTab();
 
-		<execute macro="KaleoDesigner#viewViewTab" />
+		KaleoDesigner.viewSourceXMLLine(
+			invalid = "true",
+			kdSourceXML = "INVALID",
+			line = "6"
+		);
+	}
 
-		<execute macro="KaleoDesigner#viewSourceXMLLine">
-			<var name="invalid" value="true" />
-			<var name="kdSourceXML" value="INVALID" />
-			<var name="line" value="6" />
-		</execute>
-	</command>
+	@description = "This is a use case for LPS-46657."
+	@priority = "4"
+	test ViewNodeNotificationRecipientPersistsAfterSwitchingTabs {
+		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#ViewNodeNotificationRecipientPersistsAfterSwitchingTabs";
 
-	<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="4">
-		<description message="This is a use case for LPS-46657." />
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
 
-		<property name="test.name.skip.portal.instance" value="KaleoDesignerEditSingleApprover#ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" />
+		KaleoDesigner.editNodeNotifications(
+			nodeNotificationsDescription = "Review Notification Description",
+			nodeNotificationsName = "Review Notification",
+			nodeNotificationsRecipientType = "Role Type",
+			roleTitle = "Administrator",
+			roleType = "Regular"
+		);
 
-		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="review" />
-		</execute>
+		KaleoDesigner.viewSourceXMLTab();
 
-		<execute macro="KaleoDesigner#editNodeNotifications">
-			<var name="nodeNotificationsDescription" value="Review Notification Description" />
-			<var name="nodeNotificationsName" value="Review Notification" />
-			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
-			<var name="roleType" value="Regular" />
-		</execute>
+		KaleoDesigner.viewViewTab();
 
-		<execute macro="KaleoDesigner#viewSourceXMLTab" />
-		<execute macro="KaleoDesigner#viewViewTab" />
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
 
-		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="review" />
-		</execute>
+		KaleoDesigner.viewNodeNotifications(
+			nodeNotificationsName = "Review Notification",
+			nodeNotificationsRecipientType = "Role Type",
+			roleTitle = "Administrator",
+			roleType = "Regular"
+		);
+	}
 
-		<execute macro="KaleoDesigner#viewNodeNotifications">
-			<var name="nodeNotificationsName" value="Review Notification" />
-			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
-			<var name="roleType" value="Regular" />
-		</execute>
-	</command>
+	@description = "This is a use case for LPS-46605."
+	@priority = "3"
+	test ViewUserNotificationOption {
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
 
-	<command name="ViewUserNotificationOption" priority="3">
-		<description message="This is a use case for LPS-46605." />
-
-		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="review" />
-		</execute>
-
-		<execute macro="KaleoDesigner#viewNodeNotifications">
-			<var name="nodeNotificationsName" value="Review Notification" />
-			<var name="nodeNotificationsType" value="User Notification" />
-		</execute>
-	</command>
-</definition>
+		KaleoDesigner.viewNodeNotifications(
+			nodeNotificationsName = "Review Notification",
+			nodeNotificationsType = "User Notification"
+		);
+	}
+}

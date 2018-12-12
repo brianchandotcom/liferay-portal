@@ -1,100 +1,68 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Site Pages Administration" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-	</set-up>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="AddPageMultiplePagesToSite" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
+	@priority = "3"
+	test AddPageMultiplePagesToSite {
+		property testray.component.names = "Site Pages Administration";
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 1" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page 1");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 2" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page 2");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page 3" />
-		</execute>
+		SitePages.addPublicPage(pageName = "Site Page 3");
 
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page 1" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
+		Page.view(pageName = "Site Page 1", privacy = "Public Pages");
 
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page 2" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
+		Page.view(pageName = "Site Page 2", privacy = "Public Pages");
 
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page 3" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
+		Page.view(pageName = "Site Page 3", privacy = "Public Pages");
+	}
 
-	<command name="AddSitePrivatePage" priority="4">
-		<property name="testray.component.names" value="Site Pages Administration" />
+	@priority = "4"
+	test AddSitePrivatePage {
+		property testray.component.names = "Site Pages Administration";
+		var portalURL = PropsUtil.get("portal.url");
 
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+		SitePages.addPrivatePage(pageName = "Site Page");
 
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		Page.view(pageName = "Site Page", privacy = "Private Pages");
+	}
 
-		<execute macro="Page#view">
-			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-	</command>
+	@priority = "5"
+	test AddSitePublicChildPage {
+		property testray.component.names = "Site Pages Administration";
 
-	<command name="AddSitePublicChildPage" priority="5">
-		<property name="testray.component.names" value="Site Pages Administration" />
+		SitePages.addPublicPage(pageName = "Site Page");
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Site Page" />
-		</execute>
+		SitePages.addPublicChildPage(
+			childPageName = "Site Child Page",
+			parentPageName = "Site Page"
+		);
 
-		<execute macro="SitePages#addPublicChildPage">
-			<var name="childPageName" value="Site Child Page" />
-			<var name="parentPageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="depth" value="2" />
-			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Public Pages" />
-		</execute>
-	</command>
-</definition>
+		Page.view(depth = "2", pageName = "Site Child Page", privacy = "Public Pages");
+	}
+}

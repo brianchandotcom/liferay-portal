@@ -1,249 +1,240 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Content Pages" />
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
+		User.firstLoginPG();
 
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="ContentPages#addPage">
-			<var name="pageName" value="Test Content Page Name" />
-		</execute>
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-	</set-up>
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-	<command name="DeactivateStagingAfterPublish" priority="4">
-		<description message="Published content pages should remain if staging is deactivated." />
+	@description = "Published content pages should remain if staging is deactivated."
+	@priority = "4"
+	test DeactivateStagingAfterPublish {
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.publishCustomPublication();
 
-		<execute macro="Staging#publishCustomPublication" />
+		Staging.deactivateStagingCP(siteName = "Test Site Name");
 
-		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
+	@description = "Content pages only appear in live view after being published and should appear properly."
+	@priority = "5"
+	test PublishContentPage {
+		property portal.acceptance = "true";
 
-	<command name="PublishContentPage" priority="5">
-		<description message="Content pages only appear in live view after being published and should appear properly." />
-		<property name="portal.acceptance" value="true" />
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertTextPresent(value1 = "The requested resource could not be found.");
 
-		<execute function="AssertTextPresent" value1="The requested resource could not be found." />
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.publishCustomPublication();
 
-		<execute macro="Staging#publishCustomPublication" />
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+	}
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-	</command>
+	@description = "Edits made to existing content pages should not appear in the live site until after published."
+	@priority = "5"
+	test PublishEditedContentPage {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
-	<command name="PublishEditedContentPage" priority="5">
-		<description message="Edits made to existing content pages should not appear in the live site until after published." />
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="true" />
-		<property name="portal.acceptance" value="true" />
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.publishCustomPublication();
 
-		<execute macro="Staging#publishCustomPublication" />
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name-staging/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name-staging/test-content-page-name" />
-		</execute>
+		ContentPages.gotoEditMode();
 
-		<execute macro="ContentPages#gotoEditMode" />
+		PageEditor.expandContentPageFragmentSidebar();
 
-		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
 
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
+		PageEditor.editFragmentText(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			text = "New editable fragment text"
+		);
 
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="text" value="New editable fragment text" />
-		</execute>
+		ContentPages.gotoViewMode();
 
-		<execute macro="ContentPages#gotoViewMode" />
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "New editable fragment text",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
+		AssertElementNotPresent(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
 
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		<execute macro="Staging#openStagingAdmin">
-			<var name="siteURLKey" value="test-site-name-staging" />
-		</execute>
+		Staging.publishCustomPublication();
 
-		<execute macro="Staging#publishCustomPublication" />
+		Navigator.openWithAppendToBaseURL(
+			urlAppend = "web/test-site-name/test-content-page-name"
+		);
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "New editable fragment text",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
 
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="New editable fragment text" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-	</command>
-</definition>
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+	}
+}

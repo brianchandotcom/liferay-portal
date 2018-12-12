@@ -1,337 +1,307 @@
-<definition component-name="portal-wcm">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Display Pages" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#openFragmentsAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
-			<var name="collectionZipFile" value="fragment-collection.zip" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#add">
-			<var name="displayPageName" value="Display Page Name" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddBlankDisplayPage" priority="3">
-		<description message="User can add a display page." />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-	</command>
-
-	<command name="AddDisplayPage" priority="5">
-		<description message="User can add a display page with fragments." />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute macro="PageEditor#viewAutoSaveMessage" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-	</command>
-
-	<command name="AssertAssetTypeOnlySelectableOnce" priority="4">
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="PageEditorMapping#assertAssetTypeUnselectable" />
-	</command>
-
-	<command name="AssertDisplayPageEditorFunctionality" priority="5">
-		<description message="In the display page editor, user can add and remove fragments, user can remove sections, and user can edit text in fragment editable fields." />
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
-
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="text" value="Editing Finished" />
-		</execute>
-
-		<execute macro="PageEditor#removeFragment">
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PageEditor#viewFragmentEditableText">
-			<var name="editableText" value="Editing Finished" />
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Editing Finished" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="PageEditor#SECTION">
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Submit" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute macro="Button#viewNotPresent">
-			<var name="button" value="Submit" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="4" />
-		</execute>
-
-		<execute macro="PageEditor#removeSection">
-			<var name="position" value="3" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="3" />
-		</execute>
-	</command>
-
-	<command name="DeleteDisplayPage" priority="5">
-		<description message="User can delete display pages." />
-
-		<property name="portal.acceptance" value="true" />
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#delete">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-	</command>
-
-	<command name="EditDisplayPage" priority="5">
-		<description message="User can edit a display page. This includes adding and removing fragments and includes editing text in fragment editable fields." />
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Title" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Rich Text" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Content" />
-		</execute>
-
-		<execute macro="PageEditor#editFragmentText">
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-			<var name="text" value="Editing Finished" />
-		</execute>
-
-		<execute macro="PageEditor#removeFragment">
-			<var name="fragmentName" value="Button" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PageEditor#viewFragmentEditableText">
-			<var name="editableText" value="Editing Finished" />
-			<var name="fragmentName" value="Rich Text" />
-			<var name="id" value="rich-text" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet" />
-			<var name="key_fragmentClass" value="header" />
-			<var name="key_position" value="1" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Editing Finished" />
-			<var name="key_fragmentClass" value="rich-text" />
-			<var name="key_position" value="2" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="PageEditor#SECTION">
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Submit" />
-			<var name="key_fragmentClass" value="footer" />
-			<var name="key_position" value="3" />
-		</execute>
-
-		<execute macro="Button#viewNotPresent">
-			<var name="button" value="Submit" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Fragment#PAGE_EDITOR_FRAGMENT">
-			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
-			<var name="key_fragmentClass" value="body" />
-			<var name="key_position" value="4" />
-		</execute>
-	</command>
-
-	<command name="RenameDisplayPage" priority="4">
-		<description message="User can rename display pages." />
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="PageTemplatesAdmin#rename">
-			<var name="pageTemplateName" value="Display Page Name New" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="Display Page Name New" />
-		</execute>
-	</command>
-
-	<command name="ViewCannotDeleteActiveDisplayPage" priority="4">
-		<description message="User cannot delete a display page that is in use by an asset." />
-
-		<execute macro="PageEditorMapping#selectAssetType">
-			<var name="assetType" value="Web Content Article" />
-			<var name="subType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
-
-		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="Error:You cannot delete asset display pages that are used by one or more assets." />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdmin.importCollectionFromDependenciesFolder(
+			collectionZipFile = "fragment-collection.zip"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "User can add a display page."
+	@priority = "3"
+	test AddBlankDisplayPage {
+		PortletEntry.publish();
+
+		LexiconEntry.viewEntryName(rowEntry = "Display Page Name");
+	}
+
+	@description = "User can add a display page with fragments."
+	@priority = "5"
+	test AddDisplayPage {
+		property portal.acceptance = "true";
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		PageEditor.viewAutoSaveMessage();
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Display Page Name"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+	}
+
+	@priority = "4"
+	test AssertAssetTypeOnlySelectableOnce {
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		PageEditorMapping.assertAssetTypeUnselectable();
+	}
+
+	@description = "In the display page editor, user can add and remove fragments, user can remove sections, and user can edit text in fragment editable fields."
+	@priority = "5"
+	test AssertDisplayPageEditorFunctionality {
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Button"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
+
+		PageEditor.editFragmentText(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			text = "Editing Finished"
+		);
+
+		PageEditor.removeFragment(fragmentName = "Button");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Editing Finished",
+			fragmentName = "Rich Text",
+			id = "rich-text"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Editing Finished",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		AssertVisible(locator1 = "PageEditor#SECTION", key_position = "3");
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Submit",
+			key_fragmentClass = "footer",
+			key_position = "3"
+		);
+
+		Button.viewNotPresent(button = "Submit");
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "4"
+		);
+
+		PageEditor.removeSection(position = "3");
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "3"
+		);
+	}
+
+	@description = "User can delete display pages."
+	@priority = "5"
+	test DeleteDisplayPage {
+		property portal.acceptance = "true";
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.delete(rowEntry = "Display Page Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Display Page Name");
+	}
+
+	@description = "User can edit a display page. This includes adding and removing fragments and includes editing text in fragment editable fields."
+	@priority = "5"
+	test EditDisplayPage {
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Button"
+		);
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Display Page Name"
+		);
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content"
+		);
+
+		PageEditor.editFragmentText(
+			fragmentName = "Rich Text",
+			id = "rich-text",
+			text = "Editing Finished"
+		);
+
+		PageEditor.removeFragment(fragmentName = "Button");
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Display Page Name"
+		);
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Editing Finished",
+			fragmentName = "Rich Text",
+			id = "rich-text"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Editing Finished",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		AssertVisible(locator1 = "PageEditor#SECTION", key_position = "3");
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Submit",
+			key_fragmentClass = "footer",
+			key_position = "3"
+		);
+
+		Button.viewNotPresent(button = "Submit");
+
+		AssertVisible(
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT",
+			key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			key_fragmentClass = "body",
+			key_position = "4"
+		);
+	}
+
+	@description = "User can rename display pages."
+	@priority = "4"
+	test RenameDisplayPage {
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.rename(
+			pageTemplateName = "Display Page Name New",
+			rowEntry = "Display Page Name"
+		);
+
+		LexiconEntry.viewEntryName(rowEntry = "Display Page Name New");
+	}
+
+	@description = "User cannot delete a display page that is in use by an asset."
+	@priority = "4"
+	test ViewCannotDeleteActiveDisplayPage {
+		PageEditorMapping.selectAssetType(
+			assetType = "Web Content Article",
+			subType = "Basic Web Content"
+		);
+
+		Button.clickPublish();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.addArticleCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Pages"
+		);
+
+		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.delete(
+			failure = "Error:You cannot delete asset display pages that are used by one or more assets.",
+			rowEntry = "Display Page Name"
+		);
+	}
+}

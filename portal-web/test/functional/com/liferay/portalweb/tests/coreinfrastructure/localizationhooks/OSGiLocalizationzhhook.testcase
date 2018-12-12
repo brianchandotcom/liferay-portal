@@ -1,25 +1,21 @@
-<definition component-name="portal-plugins-osgi">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="plugins.deployment.type" value="osgi" />
-	<property name="test.run.environment" value="CE" />
-	<property name="testray.main.component.name" value="Localization Hooks" />
+@component-name = "portal-plugins-osgi"
+definition {
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property plugins.deployment.type = "osgi";
+	property test.run.environment = "CE";
+	property testray.main.component.name = "Localization Hooks";
 
-	<set-up>
-		<execute macro="User#firstLoginPG">
-			<var name="localization" value="ZH" />
-		</execute>
-	</set-up>
+	setUp {
+		User.firstLoginPG(localization = "ZH");
+	}
 
-	<command name="LocalizationZHHookSmoke" priority="4">
-		<property name="hook.plugins.includes" value="localization-zh-hook" />
+	@priority = "4"
+	test LocalizationZHHookSmoke {
+		property hook.plugins.includes = "localization-zh-hook";
+		var appName = "Chinese Localization";
+		var portletName = "localization-zh-hook";
 
-		<var name="appName" value="Chinese Localization" />
-		<var name="portletName" value="localization-zh-hook" />
-
-		<execute macro="OSGiSmoke#Smoke">
-			<var name="appName" value="${portletName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-	</command>
-</definition>
+		OSGiSmoke.Smoke(appName = "${portletName}", portletName = "${portletName}");
+	}
+}

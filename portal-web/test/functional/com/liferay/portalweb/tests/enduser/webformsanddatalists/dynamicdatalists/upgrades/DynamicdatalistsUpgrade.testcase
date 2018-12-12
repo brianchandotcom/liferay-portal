@@ -1,33 +1,34 @@
-<definition component-name="portal-upgrades">
-	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Dynamic Data Lists" />
-	<property name="testray.main.component.name" value="Upgrades Forms and Workflow" />
+@component-name = "portal-upgrades"
+definition {
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Dynamic Data Lists";
+	property testray.main.component.name = "Upgrades Forms and Workflow";
 
-	<set-up>
-		<execute macro="SignIn#signIn" />
+	setUp {
+		SignIn.signIn();
 
-		<execute macro="Smoke#viewWelcomePage" />
+		Smoke.viewWelcomePage();
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
-	</set-up>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+	}
 
-	<command name="AddDataDefinitionAfterUpgrade6130" priority="5">
-		<description message="This is a use case for LPS-52392." />
+	@description = "This is a use case for LPS-52392."
+	@priority = "5"
+	test AddDataDefinitionAfterUpgrade6130 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2";
+		property portal.version = "6.1.30";
 
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="db2" />
-		<property name="portal.version" value="6.1.30" />
-
-		<execute macro="Upgrade#addDataDefinitionWithDB2" />
-	</command>
-</definition>
+		Upgrade.addDataDefinitionWithDB2();
+	}
+}

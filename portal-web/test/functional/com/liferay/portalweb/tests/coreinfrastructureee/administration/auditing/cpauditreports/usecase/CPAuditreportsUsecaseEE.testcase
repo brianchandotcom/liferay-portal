@@ -1,269 +1,285 @@
-<definition component-name="portal-core-infrastructure-portal-services-ee">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Auditing" />
-	<property name="testray.testcase.product.edition" value="EE" />
+@component-name = "portal-core-infrastructure-portal-services-ee"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Auditing";
+	property testray.testcase.product.edition = "EE";
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+	setUp {
+		TestCase.setUpPortalInstance();
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+		User.firstLoginPG();
+	}
 
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
 
-				<execute macro="Role#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
+			Role.tearDownCP();
+		}
+	}
 
-	<command name="ViewResourceActionsCP" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPAuditreportsUsecaseEE#ViewResourceActionsCP" />
+	@priority = "4"
+	test ViewResourceActionsCP {
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#ViewResourceActionsCP";
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
 
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
 
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<var name="key_userScreenName" value="test" />
+		var key_userScreenName = "test";
 
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="test" />
+		AssertClick(
+			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
+			value1 = "test"
+		);
 
-		<execute function="Pause" locator1="5000" />
+		Pause(locator1 = "5000");
 
-		<var method="selenium#getElementValue('UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD')" name="userId" />
+		var userId = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="${userId}" />
-			<var name="userId" value="${userId}" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		Audit.searchCP(
+			searchTerm = "${userId}",
+			userId = "${userId}",
+			userName = "Test Test"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="Test Test" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		Audit.searchCP(searchTerm = "Test Test", userName = "Test Test");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<execute macro="Audit#searchCP">
-			<var name="resourceId" value="${userId}" />
-			<var name="searchTerm" value="${userId}" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		Audit.searchCP(
+			resourceId = "${userId}",
+			searchTerm = "${userId}",
+			userName = "Test Test"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<execute macro="Audit#searchCP">
-			<var name="resourceName" value="User" />
-			<var name="searchTerm" value="User" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		Audit.searchCP(
+			resourceName = "User",
+			searchTerm = "User",
+			userName = "Test Test"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<execute macro="Audit#searchCP">
-			<var name="resourceAction" value="Login" />
-			<var name="searchTerm" value="Login" />
-			<var name="userName" value="Test Test" />
-		</execute>
+		Audit.searchCP(
+			resourceAction = "Login",
+			searchTerm = "Login",
+			userName = "Test Test"
+		);
 
-		<execute macro="User#logoutPG" />
+		User.logoutPG();
 
-		<execute macro="User#loginUserInvalidPG">
-			<var name="password" value="user" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.loginUserInvalidPG(
+			password = "user",
+			userEmailAddress = "test@liferay.com"
+		);
 
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<var name="key_resourceAction" value="Login Failure" />
-		<var name="key_resourceName" value="User" />
+		var key_resourceAction = "Login Failure";
+		var key_resourceName = "User";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Login Failure" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "Login Failure"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userFirstName" value="test1" />
-			<var name="userLastName" value="test1" />
-			<var name="userScreenName" value="test1" />
-		</execute>
+		User.addCP(
+			userEmailAddress = "test1@liferay.com",
+			userFirstName = "test1",
+			userLastName = "test1",
+			userScreenName = "test1"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userScreenName" value="test1" />
-		</execute>
+		User.editPasswordCP(
+			userEmailAddress = "test1@liferay.com",
+			userScreenName = "test1"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-		<execute macro="User#impersonateCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="test1" />
-		</execute>
+		User.impersonateCP(siteName = "${siteName}", userScreenName = "test1");
 
-		<execute function="Close#closeWindow" locator1="title=Welcome - ${siteName}" />
+		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
+		SelectWindow(
+			locator1 = "title=Users and Organizations - Control Panel - ${siteName}"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<var name="key_resourceAction" value="Impersonate" />
-		<var name="key_resourceName" value="User" />
+		var key_resourceAction = "Impersonate";
+		var key_resourceName = "User";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Impersonate" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "Impersonate"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
 
-		<execute macro="Role#add">
-			<var name="roleTitle" value="Role1" />
-		</execute>
+		Role.add(roleTitle = "Role1");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles"
+		);
 
-		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="Role1" />
-			<var name="userScreenName" value="test1" />
-		</execute>
+		Role.assignRegRoleCP(roleTitle = "Role1", userScreenName = "test1");
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="User Groups" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups"
+		);
 
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="User Group1" />
-		</execute>
+		UserGroup.addCP(userGroupName = "User Group1");
 
-		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="User Group1" />
-			<var name="userScreenName" value="test1" />
-		</execute>
+		UserGroup.assignMemberCP(
+			userGroupName = "User Group1",
+			userScreenName = "test1"
+		);
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Audit" />
-		</execute>
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit"
+		);
 
-		<var name="key_resourceAction" value="Add" />
-		<var name="key_resourceName" value="Role" />
+		var key_resourceAction = "Add";
+		var key_resourceName = "Role";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="Role" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
+			value1 = "Role"
+		);
 
-		<var name="key_resourceAction" value="Add" />
-		<var name="key_resourceName" value="Role" />
+		var key_resourceAction = "Add";
+		var key_resourceName = "Role";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Add" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "Add"
+		);
 
-		<var name="key_resourceAction" value="Assign" />
-		<var name="key_resourceName" value="User" />
+		var key_resourceAction = "Assign";
+		var key_resourceName = "User";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="User" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
+			value1 = "User"
+		);
 
-		<var name="key_resourceAction" value="Assign" />
-		<var name="key_resourceName" value="User" />
+		var key_resourceAction = "Assign";
+		var key_resourceName = "User";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Assign" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "Assign"
+		);
 
-		<var name="key_resourceAction" value="Add" />
-		<var name="key_resourceName" value="User Group" />
+		var key_resourceAction = "Add";
+		var key_resourceName = "User Group";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="User Group" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME",
+			value1 = "User Group"
+		);
 
-		<var name="key_resourceAction" value="Add" />
-		<var name="key_resourceName" value="User Group" />
+		var key_resourceAction = "Add";
+		var key_resourceName = "User Group";
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Add" />
+		AssertTextEquals(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "Add"
+		);
 
-		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[4])[2]" value1="User" />
-		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[5])[2]" value1="Assign" />
-	</command>
-</definition>
+		AssertTextEquals(
+			locator1 = "xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[4])[2]",
+			value1 = "User"
+		);
+
+		AssertTextEquals(
+			locator1 = "xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[5])[2]",
+			value1 = "Assign"
+		);
+	}
+}

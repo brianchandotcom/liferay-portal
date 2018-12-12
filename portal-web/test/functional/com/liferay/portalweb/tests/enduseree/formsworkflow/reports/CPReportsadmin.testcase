@@ -1,796 +1,804 @@
-<definition component-name="portal-forms-and-workflow-ee">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="true" />
-	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Reports" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
+@component-name = "portal-forms-and-workflow-ee"
+definition {
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Reports";
 
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="ReportsAdmin#tearDownReports" />
-				<execute macro="ReportsAdmin#tearDownDefinitions" />
-				<execute macro="ReportsAdmin#tearDownSources" />
-
-				<execute macro="ServerAdministration#tearDownMailServerSettings" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddReportInvalidEmail" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<var name="key_reportsDefinitionName" value="Reports Definition Name" />
-
-		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
-
-		<execute function="Select" locator1="Select#REPORT_FORMAT" value1="csv" />
-		<execute function="Type" locator1="TextInput#EMAIL_NOTIFICATIONS" value1="InvalidEmail" />
-		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
-
-		<execute function="Type" locator1="TextInput#EMAIL_NOTIFICATIONS" value1="liferay.qa1@gmail.com" />
-		<execute function="Type" locator1="TextInput#EMAIL_RECIPIENT" value1="InvalidEmail" />
-		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
-	</command>
-
-	<command name="AddSchedule" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addScheduleEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="pdf" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewNoReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#INFO_MESSAGE" value1="Processing report. This may take several minutes." />
-		<execute function="Pause" locator1="180000" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
-			<var name="scheduled" value="true" />
-			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ChangeReportName" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="csv" />
-			<var name="reportName" value="Custom Name" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="Custom Name.csv" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewNoReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
-		</execute>
-	</command>
-
-	<command name="DeleteReportFile" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="csv" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#deleteReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewNoReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
-		</execute>
-	</command>
-
-	<command name="DeliverReportToEmail" priority="4">
-		<property name="test.assert.javascript.errors" value="false" />
-		<property name="test.smtp.server.enabled" value="true" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="pdf" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#deliverReportEntryFile">
-			<var name="emailRecipientAddress" value="user1@liferay.com" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-
-		<execute macro="MockMock#viewMail">
-			<var name="asset" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-			<var name="content" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-			<var name="recipient" value="user1@liferay.com" />
-			<var name="sender" value="Joe Bloggs" />
-			<var name="subject" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportCSV" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="csv" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportHTML" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="HTML" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.html" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.html" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportPDF" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="pdf" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportFormat" value="pdf" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportRTF" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="rtf" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.rtf" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.rtf" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportTXT" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="txt" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.txt" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.txt" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportXLS" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="xls" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xls" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xls" />
-		</execute>
-	</command>
-
-	<command name="DownloadReportXML" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="XML" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntry">
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xml" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xml" />
-		</execute>
-	</command>
-
-	<command name="TestDatabaseConnection" priority="3">
-		<description message="This is a use case for LPS-43525." />
-
-		<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
-		<var method="PropsUtil#get('database.mysql.url')" name="databaseURL" />
-		<var method="PropsUtil#get('database.mysql.username')" name="databaseUsername" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoSources" />
-
-		<execute macro="ReportsAdmin#addSource">
-			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
-			<var name="reportsDataSourceName" value="Reports Data Source Name" />
-			<var name="reportsDataSourcePassword" value="${databasePassword}" />
-			<var name="reportsDataSourceURL" value="${databaseURL}" />
-			<var name="reportsDataSourceUser" value="${databaseUsername}" />
-		</execute>
-
-		<execute macro="ReportsAdmin#testDatabaseConnection" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command ignore="true" name="ViewEmailNotificationDelivery" priority="4">
-		<property name="test.assert.javascript.errors" value="false" />
-		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailNotificationDelivery" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="TestCase#getSiteName">
-			<return name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="PropsUtil#get('email.address.1')" name="userName" />
-			<var method="PropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var method="PropsUtil#get('email.address.2')" name="emailNotificationsAddress" />
-			<var name="emailRecipientAddress" value="test@liferay.com" />
-			<var name="reportFormat" value="pdf" />
-			<var name="reportName" value="Custom Report Name" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var method="PropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="PropsUtil#get('email.password.2')" name="userPassword" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: Custom Report Name.pdf" />
-			<var name="gmailMessageBody" value="You have a new report." />
-			<var name="gmailMessageTitle" value="New Report: Custom Report Name.pdf" />
-		</execute>
-
-		<var name="key_gmailAssetType" value="New Report: Custom Report Name.pdf" />
-		<var name="key_pageNameURL" value="report" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute function="SelectWindow" locator1="title=Reports Definition Name - ${siteName}" />
-
-		<execute macro="ReportsAdmin#viewReportEntryFields">
-			<var name="dataSource" value="portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="Custom Report Name.pdf" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="New Report: Custom Report Name.pdf,Your New Account,Your New Password" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailRecipientDelivery" />
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<property name="test.assert.javascript.errors" value="false" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="PropsUtil#get('email.address.1')" name="userName" />
-			<var method="PropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="ReportsAdmin#addReportDefinition">
-			<var name="dataSource" value="Portal" />
-			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
-		</execute>
-
-		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="test@liferay.com" />
-			<var method="PropsUtil#get('email.address.4')" name="emailRecipientAddress" />
-			<var name="reportFormat" value="pdf" />
-			<var name="reportsDefinitionName" value="Reports Definition Name" />
-		</execute>
-
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var method="PropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var method="PropsUtil#get('email.password.4')" name="userPassword" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-			<var name="gmailMessageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
-			<var name="gmailMessageBody" value="You have a new report." />
-			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-
-		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
-		<var name="key_pageNameURL" value="report" />
-
-		<execute function="AssertElementNotPresent" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}" />
-		</execute>
-	</command>
-
-	<command name="ViewReportDefinitionParametersFields" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Reports Admin" />
-		</execute>
-
-		<execute macro="ReportsAdmin#gotoDefinitions" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="ReportsAdmin#viewDefinitionParameterFields" />
-	</command>
-</definition>
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ReportsAdmin.tearDownReports();
+
+			ReportsAdmin.tearDownDefinitions();
+
+			ReportsAdmin.tearDownSources();
+
+			ServerAdministration.tearDownMailServerSettings();
+		}
+	}
+
+	@priority = "4"
+	test AddReportInvalidEmail {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		var key_reportsDefinitionName = "Reports Definition Name";
+
+		Click(locator1 = "ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS");
+
+		AssertClick(
+			locator1 = "ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT",
+			value1 = "Add Report"
+		);
+
+		Select(locator1 = "Select#REPORT_FORMAT", value1 = "csv");
+
+		Type(locator1 = "TextInput#EMAIL_NOTIFICATIONS", value1 = "InvalidEmail");
+
+		AssertClick(
+			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
+			value1 = "Generate"
+		);
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+			value1 = "Please enter a valid email address."
+		);
+
+		Type(
+			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
+			value1 = "liferay.qa1@gmail.com"
+		);
+
+		Type(locator1 = "TextInput#EMAIL_RECIPIENT", value1 = "InvalidEmail");
+
+		AssertClick(
+			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
+			value1 = "Generate"
+		);
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+			value1 = "Please enter a valid email address."
+		);
+	}
+
+	@priority = "4"
+	test AddSchedule {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addScheduleEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "pdf",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewNoReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE",
+			value1 = "Processing report. This may take several minutes."
+		);
+
+		Pause(locator1 = "180000");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name",
+			scheduled = "true",
+			userName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test ChangeReportName {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "csv",
+			reportName = "Custom Name",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "Custom Name.csv",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.viewNoReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name"
+		);
+	}
+
+	@priority = "4"
+	test DeleteReportFile {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "csv",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.csv",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.deleteReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewNoReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
+		);
+	}
+
+	@priority = "4"
+	test DeliverReportToEmail {
+		property test.assert.javascript.errors = "false";
+		property test.smtp.server.enabled = "true";
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "pdf",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.deliverReportEntryFile(
+			emailRecipientAddress = "user1@liferay.com",
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf"
+		);
+
+		MockMock.viewMail(
+			asset = "New Report: reports_admin_template_source_sample_class_name.pdf",
+			content = "New Report: reports_admin_template_source_sample_class_name.pdf",
+			recipient = "user1@liferay.com",
+			sender = "Joe Bloggs",
+			subject = "New Report: reports_admin_template_source_sample_class_name.pdf"
+		);
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+	}
+
+	@priority = "4"
+	test DownloadReportCSV {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "csv",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.csv",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.csv"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportHTML {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "HTML",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.html",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.html"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportPDF {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "pdf",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportFormat = "pdf",
+			reportsFileName = "reports_admin_template_source_sample_class_name.pdf"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportRTF {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "rtf",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.rtf",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.rtf"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportTXT {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "txt",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.txt",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.txt"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportXLS {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "xls",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.xls",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.xls"
+		);
+	}
+
+	@priority = "4"
+	test DownloadReportXML {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "XML",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "reports_admin_template_source_sample_class_name.xml",
+			userName = "Test Test"
+		);
+
+		ReportsAdmin.downloadReportEntryFile(
+			reportsFileName = "reports_admin_template_source_sample_class_name.xml"
+		);
+	}
+
+	@description = "This is a use case for LPS-43525."
+	@priority = "3"
+	test TestDatabaseConnection {
+		var databasePassword = PropsUtil.get("database.mysql.password");
+		var databaseURL = PropsUtil.get("database.mysql.url");
+		var databaseUsername = PropsUtil.get("database.mysql.username");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoSources();
+
+		ReportsAdmin.addSource(
+			reportsDataSourceClass = "com.mysql.jdbc.Driver",
+			reportsDataSourceName = "Reports Data Source Name",
+			reportsDataSourcePassword = "${databasePassword}",
+			reportsDataSourceURL = "${databaseURL}",
+			reportsDataSourceUser = "${databaseUsername}"
+		);
+
+		ReportsAdmin.testDatabaseConnection();
+
+		PortletEntry.save();
+	}
+
+	@ignore = "true"
+	@priority = "4"
+	test ViewEmailNotificationDelivery {
+		property test.assert.javascript.errors = "false";
+		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
+		var portalURL = PropsUtil.get("portal.url");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureMailServerSettings(
+			userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1")
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = PropsUtil.get("email.address.2"),
+			emailRecipientAddress = "test@liferay.com",
+			reportFormat = "pdf",
+			reportName = "Custom Report Name",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		Pause(locator1 = "30000");
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "New Report: Custom Report Name.pdf",
+			gmailMessageBody = "You have a new report.",
+			gmailMessageTitle = "New Report: Custom Report Name.pdf"
+		);
+
+		var key_gmailAssetType = "New Report: Custom Report Name.pdf";
+		var key_pageNameURL = "report";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
+			value1 = "report"
+		);
+
+		Pause(locator1 = "30000");
+
+		SelectWindow(locator1 = "title=Reports Definition Name - ${siteName}");
+
+		ReportsAdmin.viewReportEntryFields(
+			dataSource = "portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			reportsFileName = "Custom Report Name.pdf",
+			userName = "Test Test"
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(
+			gmailMessageTitleList = "New Report: Custom Report Name.pdf,Your New Account,Your New Password"
+		);
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+	}
+
+	@ignore = "true"
+	@priority = "4"
+	test ViewEmailRecipientDelivery {
+		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
+		var portalURL = PropsUtil.get("portal.url");
+		property test.assert.javascript.errors = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureMailServerSettings(
+			userName = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1")
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml"
+		);
+
+		ReportsAdmin.addReportEntry(
+			emailNotificationsAddress = "test@liferay.com",
+			emailRecipientAddress = PropsUtil.get("email.address.4"),
+			reportFormat = "pdf",
+			reportsDefinitionName = "Reports Definition Name"
+		);
+
+		Pause(locator1 = "30000");
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf",
+			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
+			gmailMessageBody = "You have a new report.",
+			gmailMessageTitle = "New Report: reports_admin_template_source_sample_class_name.pdf"
+		);
+
+		var key_gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf";
+		var key_pageNameURL = "report";
+
+		AssertElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(
+			gmailMessageTitleList = "New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password"
+		);
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+	}
+
+	@priority = "3"
+	test ViewReportDefinitionParametersFields {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Reports Admin"
+		);
+
+		ReportsAdmin.gotoDefinitions();
+
+		LexiconEntry.gotoAdd();
+
+		ReportsAdmin.viewDefinitionParameterFields();
+	}
+}

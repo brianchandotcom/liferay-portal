@@ -1,1633 +1,1446 @@
-<definition component-name="portal-wcd">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Web Content Display" />
-
-	<var name="pageName" value="Web Content Display Page" />
-	<var name="portletName" value="Web Content Display" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="JSONGroup#deleteGroupByName">
-					<var name="groupName" value="Test Site Name" />
-				</execute>
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddAudioViaWebContent" priority="5">
-		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
-		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#AddAudioViaWebContent" />
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="ServerAdministration#openServerAdmin" />
-
-		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="enableXuggler" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#openDocumentsAndMediaAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.mp3" />
-			<var name="dmDocumentTitle" value="Document_1.mp3" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.mp3" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoURLDetail" />
-
-		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addViaCKEditor">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#uploadAudio">
-			<var name="dmDocumentURL" value="${dmDocumentURL}" />
-			<var name="navTab" value="URL" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewAudioViaWCD" />
-	</command>
-
-	<command name="AddDraftNotApproved" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="WebContent#addDraftPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="draft" value="true" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Set as the Default Asset Publisher for This Page" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="pageType" value="Public Pages" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaAP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="AddImageToWebContentViaItemSelector" priority="5">
-		<property name="testray.component.names" value="Training,Web Content Administration" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Image Page" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_3.png" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Image Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Image Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Image Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_INLINE_IMAGE" />
-	</command>
-
-	<command name="AddNewWebContentViaAddContentPanel" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Content#addNewPG">
-			<var name="assetType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="IFrame#selectEditAssetFrame" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#publishViaWCD" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="AddVideoViaWebContent" priority="4">
-		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
-		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#AddVideoViaWebContent" />
-		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="ServerAdministration#openServerAdmin" />
-
-		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="enableXuggler" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#openDocumentsAndMediaAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.mp4" />
-			<var name="dmDocumentTitle" value="Document_1.mp4" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.mp4" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoURLDetail" />
-
-		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addViaCKEditor">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#uploadVideo">
-			<var name="dmDocumentURL" value="${dmDocumentURL}" />
-			<var name="navTab" value="URL" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewVideoViaWCD" />
-	</command>
-
-	<command name="AddWebContent" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentPortalScopeCurrentPage" priority="3">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<for list="1,2" param="i">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Build" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Pages" />
-			</execute>
-
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Web Content Display Page${i}" />
-			</execute>
-
-			<execute macro="Navigator#gotoSitePage">
-				<var name="pageName" value="Web Content Display Page${i}" />
-				<var name="siteName" value="Test Site Name" />
-			</execute>
-
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="Web Content Display" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page1" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page1" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page2" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page2" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page1" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page2" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page2" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentViaAddContentPanel" priority="5">
-		<property name="testray.component.names" value="Web Content Display,Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Content#addPG">
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentWithPortletURL" priority="5">
-		<description message="This is a use case for LPS-70386." />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>]]></var>
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute function="Click" locator1="WCD#WEB_CONTENT_TEXT_LINK_URL">
-			<var name="key_contentText" value="text" />
-		</execute>
-
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="testportlet" />
-		</execute>
-	</command>
-
-	<command name="AddWithStructure" priority="5">
-		<description message="Add a web content article with a custom DDM structure and template and display it in the web content display widget." />
-
-		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
-		<property name="environment.acceptance" value="false" />
-		<property name="portal.acceptance" value="false" />
-		<property name="testray.component.names" value="Web Content Display,Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text Box" />
-			<var name="fieldFieldLabel" value="Text Box" />
-			<var name="fieldName" value="TextBox" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFile" value="wc_template.ftl" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addStructuredPGViaWCD">
-			<var name="structureFieldName" value="Text" />
-			<var name="structureName" value="WC Structure Name" />
-			<var name="textBoxFieldName" value="TextBox" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTextBox" value="WC WebContent TextBox" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')][contains(.,'WC WebContent Text')]" />
-
-		<execute function="AssertElementPresent" locator1="//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')][contains(.,'WC WebContent TextBox')]" />
-	</command>
-
-	<command name="AssertExpired" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#expireSpecificVersionCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="expiredContent" value="true" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="ChangeTemplate" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Web Content Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="NavItem#gotoTemplates" />
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateFieldNames" value="Content,Content,Content" />
-			<var name="templateName" value="Second Basic Template" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Content#addNewPG">
-			<var name="assetType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="IFrame#selectEditAssetFrame" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#selectTemplateCP">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateName" value="Second Basic Template" />
-		</execute>
-
-		<execute macro="WebContent#publishViaWCD" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content WC WebContent Content WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#selectTemplateCP">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="WebContent#publishViaWCD" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="EditWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#editPGViaWCD">
-			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-		</execute>
-	</command>
-
-	<command name="LocalizeWebContent" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#LocalizeWebContent" />
-		<property name="testray.component.names" value="Localization,Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language Selector" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="zh-CN" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="世界您好 Content" />
-			<var name="webContentTitle" value="世界您好 Title" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="zh-CN" />
-			<var name="textIcon" value="中文-中国" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="世界您好 Content" />
-		</execute>
-
-		<execute macro="LanguagePortlet#tearDownLanguagePG" />
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="RemoveWCDPortletSite" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Web Content Display,Training" />
-
-		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</command>
-
-	<command name="SearchWebContent" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentTitle" value="WC2 WebContent2 Title2" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentSearchValue" value="&quot;WC WebContent Title&quot;" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentSearchValue" value="&quot;WC2 WebContent2 Title2&quot;" />
-			<var name="webContentTitle" value="WC2 WebContent2 Title2" />
-		</execute>
-	</command>
-
-	<command name="SelectWebContent" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Web Content Display,Training" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="SelectWebContentScopeGlobal" priority="3">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="Global" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="Global" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="UndeployWebContentDisplayModuleViaGogoShell" priority="5">
-		<description message="This is a use case for LPS-71941." />
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell" />
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="GogoShell#openGogoShellAdmin" />
-
-		<execute macro="GogoShell#getModuleID">
-			<return name="moduleID" />
-			<var name="moduleName" value="com.liferay.journal.content.web" />
-		</execute>
-
-		<execute macro="GogoShell#stopModule">
-			<var name="moduleID" value="${moduleID}" />
-		</execute>
-
-		<execute macro="GogoShell#viewModuleStatus">
-			<var name="moduleName" value="com.liferay.journal.content.web" />
-			<var name="moduleStatus" value="Resolved" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewUndeployMessage" />
-
-		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
-		</execute>
-
-		<execute macro="GogoShell#openGogoShellAdmin" />
-
-		<execute macro="GogoShell#startModule">
-			<var name="moduleID" value="${moduleID}" />
-		</execute>
-
-		<execute macro="GogoShell#viewModuleStatus">
-			<var name="moduleName" value="com.liferay.journal.content.web" />
-			<var name="moduleStatus" value="Active" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-	</command>
-
-	<command name="ViewAllFileTypesEnabled" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#ViewAllFileTypesEnabled" />
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Connectors" />
-			<var name="configurationName" value="OpenOffice Integration" />
-			<var name="configurationScope" value="System Scope" />
-		</execute>
-
-		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="serverEnabled" />
-		</execute>
-
-		<execute macro="SystemSettings#saveConfiguration" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="userToolNameList" value="DOC,ODT,PDF,TXT" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewEnabledFileTypesPGViaWCD">
-			<var name="fileTypes" value="DOC,ODT,PDF,TXT" />
-		</execute>
-	</command>
-
-	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration" />
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content 1" />
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content 2" />
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="Web Content Title 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="WebContent#addExistingRelatedAssetCP">
-			<var name="assetTitle" value="Web Content Title 2" />
-			<var name="assetType" value="Basic Web Content" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="Web Content Title 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="enableViewCountIncrement" value="true" />
-			<var name="metadataNameList" value="Related Assets,Comment Ratings,Comments,Ratings" />
-			<var name="userToolNameList" value="Print" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewAllSettingsEnabledPG">
-			<var name="relatedAssetTitle" value="Web Content Title 2" />
-			<var name="webContentContent" value="Web Content Content 1" />
-		</execute>
-	</command>
-
-	<command name="ViewArticleWithGuestViewPermission" priority="4">
-		<property name="testray.component.names" value="Permissions,Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Role#viewPermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionFlagged" value="true" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewNoPermissionPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="IFrame#selectPermissionsFrame" />
-
-		<execute macro="Role#viewPermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionFlagged" value="true" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleTitle" value="guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewNoContentAsGuestPGViaWCD" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
-	<command name="ViewEditTemplate" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#editTemplate">
-			<var name="editTemplateButton" value="true" />
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateName" value="Template Edit" />
-			<var name="templateScript" value="Template Edited Extra Content" />
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="ViewPortletWCDShowAvailableLocales" priority="4">
-		<property name="testray.component.names" value="Localization,Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
-			<var name="menuItem" value="Edit Web Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Title" />
-			<var name="locale" value="zh-CN" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="世界您好 Content" />
-			<var name="webContentTitle" value="世界您好 Title" />
-		</execute>
-
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="userToolNameList" value="Translations" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="zh-cn" />
-			<var name="portletName" value="JournalContentPortlet" />
-			<var name="textIcon" value="中文-中国" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="世界您好 Content" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en_US" />
-			<var name="portletName" value="JournalContentPortlet" />
-			<var name="textIcon" value="English-United States" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="ViewWebContentDisplayPortletMessages" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#removeWebContent" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
-
-		<execute macro="WebContentDisplayPortlet#selectWebContent">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewRecycleBinMessage">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#undoMoveToRecycleBin" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#deleteCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
-	</command>
-
-	<command name="ViewWithPaginationScript" priority="4">
-		<property name="testray.component.names" value="Web Content Display" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Display Page" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="@page_break@ Welcome @page_break@" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewPageBreak" />
-
-		<execute macro="WebContentDisplayPortlet#viewContentPageBreak">
-			<var name="webContentContent" value="Welcome" />
-		</execute>
-	</command>
-</definition>
+@component-name = "portal-wcd"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Display";
+	var pageName = "Web Content Display Page";
+	var portletName = "Web Content Display";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "5"
+	test AddAudioViaWebContent {
+		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor";
+		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
+		property testray.component.names = "Training,Web Content Administration";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mp3",
+			dmDocumentTitle = "Document_1.mp3"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.mp3");
+
+		DMNavigator.gotoURLDetail();
+
+		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addViaCKEditor(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.uploadAudio(dmDocumentURL = "${dmDocumentURL}", navTab = "URL");
+
+		PortletEntry.publish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewAudioViaWCD();
+	}
+
+	@priority = "4"
+	test AddDraftNotApproved {
+		property testray.component.names = "Web Content Display";
+
+		WebContent.addDraftPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(draft = "true", webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "5"
+	test AddExistingPageAsDisplayPageInSiteCP {
+		property testray.component.names = "Training,Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(
+			displaySettings = "Set as the Default Asset Publisher for This Page"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Site Page Name",
+			pageType = "Public Pages",
+			webContentTitle = "Web Content Title"
+		);
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
+	}
+
+	@priority = "5"
+	test AddImageToWebContentViaItemSelector {
+		property testray.component.names = "Training,Web Content Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Image Page"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_3.png"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Image Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Image Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Image Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_INLINE_IMAGE");
+	}
+
+	@priority = "4"
+	test AddNewWebContentViaAddContentPanel {
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		Content.addNewPG(assetType = "Basic Web Content");
+
+		IFrame.selectEditAssetFrame();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.publishViaWCD();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "4"
+	test AddVideoViaWebContent {
+		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
+		property testray.component.names = "Web Content Administration";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mp4",
+			dmDocumentTitle = "Document_1.mp4"
+		);
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.mp4");
+
+		DMNavigator.gotoURLDetail();
+
+		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addViaCKEditor(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.uploadVideo(dmDocumentURL = "${dmDocumentURL}", navTab = "URL");
+
+		PortletEntry.publish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewVideoViaWCD();
+	}
+
+	@priority = "5"
+	test AddWebContent {
+		property portal.acceptance = "false";
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "3"
+	test AddWebContentPortalScopeCurrentPage {
+		property testray.component.names = "Web Content Display";
+
+		for (var i : list "1,2") {
+			ProductMenu.gotoPortlet(
+				category = "Build",
+				panel = "Site Administration",
+				portlet = "Pages"
+			);
+
+			SitePages.addPublicPage(pageName = "Web Content Display Page${i}");
+
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page${i}",
+				siteName = "Test Site Name"
+			);
+
+			Portlet.addPG(portletName = "Web Content Display");
+		}
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page1",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.configureScopePG(
+			scopeSelection = "Web Content Display Page1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page1",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewConfigureScopePG(
+			scopeSelection = "Web Content Display Page1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page2",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.configureScopePG(
+			scopeSelection = "Web Content Display Page1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page2",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewConfigureScopePG(
+			scopeSelection = "Web Content Display Page1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page1",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page2",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewDefaultMessage();
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page2",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "5"
+	test AddWebContentViaAddContentPanel {
+		property testray.component.names = "Web Content Display,Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Content.addPG(
+			assetTitle = "WC WebContent Title",
+			pageName = "Web Content Display Page",
+			webContentContent = "WC WebContent Content"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@description = "This is a use case for LPS-70386."
+	@priority = "5"
+	test AddWebContentWithPortletURL {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AlloyEditor.addSourceContent(
+			content = '''<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>'''
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
+
+		Click(locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL", key_contentText = "text");
+
+		Portlet.viewTitle(portletName = "testportlet");
+	}
+
+	@description = "Add a web content article with a custom DDM structure and template and display it in the web content display widget."
+	@priority = "5"
+	test AddWithStructure {
+		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "false";
+		property portal.acceptance = "false";
+		property testray.component.names = "Web Content Display,Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Text Box",
+			fieldName = "TextBox"
+		);
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateFile = "wc_template.ftl",
+			templateName = "WC Template Name"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addStructuredPGViaWCD(
+			structureFieldName = "Text",
+			structureName = "WC Structure Name",
+			textBoxFieldName = "TextBox",
+			webContentText = "WC WebContent Text",
+			webContentTextBox = "WC WebContent TextBox",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		AssertElementPresent(
+			locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')][contains(.,'WC WebContent Text')]"
+		);
+
+		AssertElementPresent(
+			locator1 = "//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')][contains(.,'WC WebContent TextBox')]"
+		);
+	}
+
+	@priority = "4"
+	test AssertExpired {
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(
+			expiredContent = "true",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test ChangeTemplate {
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Web Content Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Basic Web Content",
+			templateFieldNames = "Content,Content,Content",
+			templateName = "Second Basic Template"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		Content.addNewPG(assetType = "Basic Web Content");
+
+		IFrame.selectEditAssetFrame();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.selectTemplateCP(
+			structureName = "Basic Web Content",
+			templateName = "Second Basic Template"
+		);
+
+		WebContent.publishViaWCD();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(
+			webContentContent = "WC WebContent Content WC WebContent Content WC WebContent Content"
+		);
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.selectTemplateCP(
+			structureName = "Basic Web Content",
+			templateName = "Basic Web Content"
+		);
+
+		WebContent.publishViaWCD();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "4"
+	test EditWebContent {
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.editPGViaWCD(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitleEdit = "WC WebContent Title Edit"
+		);
+	}
+
+	@priority = "4"
+	test LocalizeWebContent {
+		property test.name.skip.portal.instance = "WebContentDisplay#LocalizeWebContent";
+		property testray.component.names = "Localization,Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "zh-CN");
+
+		WebContent.addCP(
+			webContentContent = "世界您好 Content",
+			webContentTitle = "世界您好 Title"
+		);
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		LanguagePortlet.selectLanguagePG(locale = "zh-CN", textIcon = "中文-中国");
+
+		WebContent.viewPGViaWCD(webContentContent = "世界您好 Content");
+
+		LanguagePortlet.tearDownLanguagePG();
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "5"
+	test RemoveWCDPortletSite {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Display,Training";
+
+		Portlet.deletePG(portletName = "Web Content Display");
+	}
+
+	@priority = "4"
+	test SearchWebContent {
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.searchWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.searchWebContentNo(
+			webContentTitle = "WC2 WebContent2 Title2"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.searchWebContent(
+			webContentSearchValue = "&quot;WC WebContent Title&quot;",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.searchWebContentNo(
+			webContentSearchValue = "&quot;WC2 WebContent2 Title2&quot;",
+			webContentTitle = "WC2 WebContent2 Title2"
+		);
+	}
+
+	@priority = "5"
+	test SelectWebContent {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Display,Training";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "3"
+	test SelectWebContentScopeGlobal {
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.configureScopePG(scopeSelection = "Global");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Global");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@description = "This is a use case for LPS-71941."
+	@priority = "5"
+	test UndeployWebContentDisplayModuleViaGogoShell {
+		property test.name.skip.portal.instance = "WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		GogoShell.openGogoShellAdmin();
+
+		var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");
+
+		GogoShell.stopModule(moduleID = "${moduleID}");
+
+		GogoShell.viewModuleStatus(
+			moduleName = "com.liferay.journal.content.web",
+			moduleStatus = "Resolved"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.viewUndeployMessage();
+
+		Portlet.deletePG(
+			portletName = "com_liferay_journal_content_web_portlet_JournalContentPortlet"
+		);
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.startModule(moduleID = "${moduleID}");
+
+		GogoShell.viewModuleStatus(
+			moduleName = "com.liferay.journal.content.web",
+			moduleStatus = "Active"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Web Content Display");
+	}
+
+	@priority = "4"
+	test ViewAllFileTypesEnabled {
+		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllFileTypesEnabled";
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Connectors",
+			configurationName = "OpenOffice Integration",
+			configurationScope = "System Scope"
+		);
+
+		FormFields.enableCheckbox(fieldName = "serverEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration"
+		);
+
+		WebContentDisplayPortlet.configureSetupPG(userToolNameList = "DOC,ODT,PDF,TXT");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewEnabledFileTypesPGViaWCD(
+			fileTypes = "DOC,ODT,PDF,TXT"
+		);
+	}
+
+	@priority = "4"
+	test ViewAllSettingsEnabledWCDConfiguration {
+		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 1",
+			webContentTitle = "Web Content Title 1"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title 1");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 2",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
+
+		WebContent.addExistingRelatedAssetCP(
+			assetTitle = "Web Content Title 2",
+			assetType = "Basic Web Content",
+			siteName = "Test Site Name"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "Web Content Title 1"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration"
+		);
+
+		WebContentDisplayPortlet.configureSetupPG(
+			enableViewCountIncrement = "true",
+			metadataNameList = "Related Assets,Comment Ratings,Comments,Ratings",
+			userToolNameList = "Print"
+		);
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewAllSettingsEnabledPG(
+			relatedAssetTitle = "Web Content Title 2",
+			webContentContent = "Web Content Content 1"
+		);
+	}
+
+	@priority = "4"
+	test ViewArticleWithGuestViewPermission {
+		property testray.component.names = "Permissions,Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
+
+		Role.viewPermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "guest"
+		);
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.viewNoPermissionPG();
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "WC WebContent Title"
+		);
+
+		IFrame.selectPermissionsFrame();
+
+		Role.viewPermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "guest"
+		);
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewNoContentAsGuestPGViaWCD();
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+	}
+
+	@priority = "4"
+	test ViewEditTemplate {
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		WebContentDisplayPortlet.editTemplate(
+			editTemplateButton = "true",
+			structureName = "Basic Web Content",
+			templateName = "Template Edit",
+			templateScript = "Template Edited Extra Content",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+	}
+
+	@priority = "4"
+	test ViewPortletWCDShowAvailableLocales {
+		property testray.component.names = "Localization,Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.changeLocale(fieldName = "Title", locale = "zh-CN");
+
+		WebContent.addCP(
+			webContentContent = "世界您好 Content",
+			webContentTitle = "世界您好 Title"
+		);
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration"
+		);
+
+		WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Translations");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "zh-cn",
+			portletName = "JournalContentPortlet",
+			textIcon = "中文-中国"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "世界您好 Content");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			portletName = "JournalContentPortlet",
+			textIcon = "English-United States"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
+	@priority = "4"
+	test ViewWebContentDisplayPortletMessages {
+		property testray.component.names = "Web Content Display";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewDefaultMessage();
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		WebContentDisplayPortlet.removeWebContent();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewDefaultMessage();
+
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewRecycleBinMessage(
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContentDisplayPortlet.undoMoveToRecycleBin();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.deleteCP(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContentDisplayPortlet.viewDeletedArticle();
+	}
+
+	@priority = "4"
+	test ViewWithPaginationScript {
+		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name"
+		);
+
+		WebContent.addPGViaWCD(
+			webContentContent = "@page_break@ Welcome @page_break@",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		WebContent.viewPageBreak();
+
+		WebContentDisplayPortlet.viewContentPageBreak(webContentContent = "Welcome");
+	}
+}

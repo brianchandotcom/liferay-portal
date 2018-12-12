@@ -1,2403 +1,2084 @@
-<definition component-name="portal-permissions">
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Roles" />
-	<property name="testray.main.component.name" value="Roles" />
-
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Role#tearDownCP" />
-
-				<execute macro="Organization#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
-		</if>
-	</tear-down>
-
-	<command name="AddBlogsEntryNoGuestRole" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-	</command>
-
-	<command name="AddBlogsEntryOrgRole" priority="5">
-		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryOrgRoleInline" priority="4">
-		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryRegRole" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryRegRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntrySiteRole" priority="5">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntrySiteRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntrySiteTeamRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteTeamRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="siteName" value="Site Name" />
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="_ACTION_ADD_ENTRY" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Team#removePermissionPG">
-			<var name="permissionDefinitionKey" value="_ACTION_ADD_ENTRY" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoAddPermissions" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryNoGuestRole" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryOrgRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryOrgRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryOrgRoleInline" priority="4">
-		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-			<var name="roleType" value="Organization" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Roles Orgrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryOwnerRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryRegRole" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntryRegRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntrySiteRole" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="DELETE" />
-			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntrySiteRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="DeleteBlogsEntrySiteTeamRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteTeamRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="siteName" value="Site Name" />
-			<var name="teamDescription" value="Site Team Description" />
-			<var name="teamName" value="Site Team Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="_ACTION_DELETE" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinPG">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Permissions#addBlogsEntryLoginUserPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Team#removePermissionPG">
-			<var name="permissionDefinitionKey" value="_ACTION_DELETE" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="EditBlogsEntryOwnerRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#editNoPermissionPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#editTitle">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#editContent">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-	</command>
-
-	<command name="SubscribeBlogsRegRole" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="SUBSCRIBE" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#subscribePG" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="SUBSCRIBE" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="SubscribeBlogsRegRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#subscribePG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="SubscribeBlogsSiteRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteMemberRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Site Member" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewSubscribePG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#subscribePG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntriesPermissionsCP" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
-			<var name="roleTitle" value="Site Member" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoSubscribePG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsEntryPermissionsOwnerRoleInline" priority="5">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="ADD_ENTRY" />
-			<var name="resourceName" value="com.liferay.blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPermissionsNoPermissionPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoBlogsEntryPermissionsPG" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Owner" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPermissionsPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsPermissionsRegRole" priority="5">
-		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="CPRolesPGBlogs#ViewBlogsPermissionsRegRole" />
-
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="CONFIGURATION" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="PERMISSIONS" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewPermissionsPG" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="CONFIGURATION" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="PERMISSIONS" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsPermissionsRegRoleInline" priority="4">
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewPermissionsPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="roleTitle" value="Regrole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsPermissionsSiteRole" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="CONFIGURATION" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="Permissions#definePermissionViaJSONAPI">
-			<var name="resourceAction" value="PERMISSIONS" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewPermissionsPG" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="PERMISSIONS" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="resourceAction" value="CONFIGURATION" />
-			<var name="resourceName" value="com_liferay_blogs_web_portlet_BlogsPortlet" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="site" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsPermissionsSiteRoleInline" priority="4">
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewPermissionsPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoConfigurationPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="ViewBlogsPortletNoGuestRole" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
-	</command>
-</definition>
+@component-name = "portal-permissions"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Roles";
+	property testray.main.component.name = "Roles";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+
+			User.tearDownCP();
+
+			Role.tearDownCP();
+
+			Organization.tearDownCP();
+
+			Site.tearDownCP();
+
+			BlogsEntry.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddBlogsEntryNoGuestRole {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoAddPermissions();
+	}
+
+	@priority = "5"
+	test AddBlogsEntryOrgRole {
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		Permissions.definePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryOrgRoleInline {
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test AddBlogsEntryRegRole {
+		property portal.acceptance = "true";
+
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		Permissions.definePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Regrole Name",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Regrole Name",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntryRegRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test AddBlogsEntrySiteRole {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		Permissions.definePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionLoginUserCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntrySiteRoleInline {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test AddBlogsEntrySiteTeamRoleInline {
+		Permissions.setUpSiteTeamRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			siteName = "Site Name",
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Team.definePermissionPG(
+			permissionDefinitionKey = "_ACTION_ADD_ENTRY",
+			teamName = "Site Team Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Team.removePermissionPG(
+			permissionDefinitionKey = "_ACTION_ADD_ENTRY",
+			teamName = "Site Team Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.viewNoAddPermissions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntryNoGuestRole {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "5"
+	test DeleteBlogsEntryOrgRoleDefaultPermission {
+		property portal.acceptance = "true";
+
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test DeleteBlogsEntryOrgRoleDefinePermission {
+		property portal.acceptance = "true";
+
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntryOrgRoleInline {
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Roles Orgrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntryOwnerRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntryRegRole {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntryRegRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntrySiteRole {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntrySiteRoleInline {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test DeleteBlogsEntrySiteTeamRoleInline {
+		Permissions.setUpSiteTeamRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			siteName = "Site Name",
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Team.definePermissionPG(
+			permissionDefinitionKey = "_ACTION_DELETE",
+			teamName = "Site Team Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Site Name",
+			siteURLTemp = "true",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Team.removePermissionPG(
+			permissionDefinitionKey = "_ACTION_DELETE",
+			teamName = "Site Team Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test EditBlogsEntryOwnerRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.editNoPermissionPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.editTitle(
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit"
+		);
+
+		BlogsEntry.editContent(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit"
+		);
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit"
+		);
+	}
+
+	@priority = "5"
+	test SubscribeBlogsRegRole {
+		property portal.acceptance = "true";
+
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "SUBSCRIBE",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.subscribePG();
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "SUBSCRIBE",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test SubscribeBlogsRegRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test SubscribeBlogsSiteRoleInline {
+		Permissions.setUpSiteMemberRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Site Member",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewSubscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		Blogs.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Site Member"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewNoSubscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "5"
+	test ViewBlogsEntryPermissionsOwnerRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
+			userScreenName = "usersn"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPermissionsNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Owner"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPermissionsPG(entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "5"
+	test ViewBlogsPermissionsRegRole {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPRolesPGBlogs#ViewBlogsPermissionsRegRole";
+
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "CONFIGURATION",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewPermissionsPG();
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "CONFIGURATION",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsPermissionsRegRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewPermissionsPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
+			roleTitle = "Regrole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsPermissionsSiteRole {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "CONFIGURATION",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewPermissionsPG();
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "CONFIGURATION",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsPermissionsSiteRoleInline {
+		Permissions.setUpSiteRoleLoginUserPG(
+			page = "Public Pages",
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			siteURL = "true",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewPermissionsPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
+			roleTitle = "Roles Siterole Name"
+		);
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln"
+		);
+
+		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+
+		BlogsConfiguration.viewAsSiteMemberPG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+	}
+
+	@priority = "4"
+	test ViewBlogsPortletNoGuestRole {
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+	}
+}

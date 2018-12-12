@@ -64,18 +64,16 @@ class FragmentStyleEditor extends State {
 	_handleButtonClick(event) {
 		const styleEditor = FragmentStyleEditors[this.type];
 
-		if (!styleEditor) {
-			return;
+		if (styleEditor) {
+			styleEditor.init(
+				event.buttonId,
+				this.node,
+				this.portletNamespace,
+				this.editorsOptions,
+				this._handleChangeStyle.bind(this),
+				this.disposeStyleTooltip.bind(this)
+			);
 		}
-
-		styleEditor.init(
-			event.buttonId,
-			this.node,
-			this.portletNamespace,
-			this.editorsOptions,
-			this._handleChangeStyle.bind(this),
-			this._handleDestroyStyleEditor.bind(this)
-		);
 	}
 
 	/**
@@ -84,7 +82,7 @@ class FragmentStyleEditor extends State {
 	 * @param {string} event.eventType
 	 */
 	_handleChangeStyle(event) {
-		if (event.eventType && event.eventType === 'map') {
+		if (event.eventType === 'map') {
 			this.store
 				.dispatchAction(
 					OPEN_MAPPING_FIELDS_DIALOG,
@@ -96,7 +94,7 @@ class FragmentStyleEditor extends State {
 					}
 				);
 
-			this._handleDestroyStyleEditor();
+			this.disposeStyleTooltip();
 		}
 		else {
 			this.emit(
@@ -107,14 +105,6 @@ class FragmentStyleEditor extends State {
 				}
 			);
 		}
-	}
-
-	/**
-	 * Handle destroy style editor event.
-	 */
-	_handleDestroyStyleEditor() {
-		this._tooltip.dispose();
-		this._tooltip = null;
 	}
 
 	/**

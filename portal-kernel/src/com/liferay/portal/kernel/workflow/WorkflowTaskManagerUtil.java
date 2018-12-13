@@ -134,6 +134,15 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, completed);
 	}
 
+	public static int getWorkflowTaskCountByUserRoles(
+			long companyId, long userId, long workflowInstanceId,
+			Boolean completed)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().getWorkflowTaskCountByUserRoles(
+			companyId, userId, workflowInstanceId, completed);
+	}
+
 	public static int getWorkflowTaskCountByWorkflowInstance(
 			long companyId, Long userId, long workflowInstanceId,
 			Boolean completed)

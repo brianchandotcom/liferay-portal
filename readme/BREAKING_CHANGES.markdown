@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `78a0d43e30b2`.*
+*This document has been reviewed through commit `583d38eadf1f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -104,15 +104,14 @@ every page that was mostly unused and redundant.
 
 ---------------------------------------
 
-### Removed Support for JSP templates in Themes
+### Removed Support for JSP Templates in Themes
 - **Date:** 2018-Nov-14
-- **JIRA Ticket:** LPS-87064
+- **JIRA Ticket:** [LPS-87064](https://issues.liferay.com/browse/LPS-87064)
 
 #### What changed?
 
-- Themes can no longer use JSP for templates.
-- Some related supporting logic have been removed from the public APIs
-`com.liferay.portal.kernel.util.ThemeHelper` and
+Themes can no longer leverage JSP templates. Also, related logic has been
+removed from the public APIs `com.liferay.portal.kernel.util.ThemeHelper` and
 `com.liferay.taglib.util.ThemeUtil`.
 
 #### Who is affected?
@@ -126,8 +125,8 @@ If you have a theme using JSP templates, consider migrating it to FreeMarker.
 
 #### Why was this change made?
 
-JSP is not a real template engine. JSP templates in themes are rarely used and
-the recommendation is to use FreeMarker.
+JSP is not a real template engine and is rarely used. FreeMarker is the
+recommended template engine moving forward.
 
 The removal of JSP templates allows for an increased focus on existing and new
 template engines.

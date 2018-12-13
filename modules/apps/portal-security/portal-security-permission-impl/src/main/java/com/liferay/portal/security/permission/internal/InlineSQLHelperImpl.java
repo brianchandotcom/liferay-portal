@@ -472,15 +472,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String userIdField, String groupIdField, long[] groupIds,
 		String permissionSQL) {
 
-		String permissionSQLContributorsSQL = null;
-
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_permissionSQLContributors.getService(className);
+
+		StringBundler permissionSQLContributorsSQLSB = null;
 
 		if ((permissionSQLContributors != null) &&
 			!permissionSQLContributors.isEmpty()) {
 
-			StringBundler permissionSQLContributorsSQLSB = new StringBundler(
+			permissionSQLContributorsSQLSB = new StringBundler(
 				permissionSQLContributors.size() * 3);
 
 			for (PermissionSQLContributor permissionSQLContributor :
@@ -499,17 +499,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionSQLContributorsSQLSB.append(contributorPermissionSQL);
 				permissionSQLContributorsSQLSB.append(") ");
 			}
-
-			permissionSQLContributorsSQL =
-				permissionSQLContributorsSQLSB.toString();
 		}
 
-		StringBundler groupAdminResourcePermissionSB = new StringBundler(
-			groupIds.length * 2 - 1);
+		StringBundler groupAdminResourcePermissionSB = null;
 
 		for (long groupId : groupIds) {
 			if (!isEnabled(groupId)) {
-				if (groupAdminResourcePermissionSB.length() > 0) {
+				if (groupAdminResourcePermissionSB == null) {
+					groupAdminResourcePermissionSB = new StringBundler(
+						groupIds.length * 2 - 1);
+				}
+				else {
 					groupAdminResourcePermissionSB.append(", ");
 				}
 
@@ -517,22 +517,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String groupAdminSQL = null;
-
-		if (groupAdminResourcePermissionSB.length() > 0) {
-			StringBundler groupAdminSQLSB = new StringBundler(5);
-
-			groupAdminSQLSB.append(" OR (");
-			groupAdminSQLSB.append(groupIdField);
-			groupAdminSQLSB.append(" IN (");
-			groupAdminSQLSB.append(groupAdminResourcePermissionSB);
-			groupAdminSQLSB.append(")) ");
-
-			groupAdminSQL = groupAdminSQLSB.toString();
-		}
-
-		if (Validator.isNotNull(permissionSQLContributorsSQL) ||
-			Validator.isNotNull(groupAdminSQL)) {
+		if ((permissionSQLContributorsSQLSB != null) ||
+			(groupAdminResourcePermissionSB != null)) {
 
 			sb.append("(");
 		}
@@ -543,16 +529,20 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append(permissionSQL);
 		sb.append(")) ");
 
-		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
-			sb.append(permissionSQLContributorsSQL);
+		if (permissionSQLContributorsSQLSB != null) {
+			sb.append(permissionSQLContributorsSQLSB);
 		}
 
-		if (Validator.isNotNull(groupAdminSQL)) {
-			sb.append(groupAdminSQL);
+		if (groupAdminResourcePermissionSB != null) {
+			sb.append(" OR (");
+			sb.append(groupIdField);
+			sb.append(" IN (");
+			sb.append(groupAdminResourcePermissionSB);
+			sb.append(")) ");
 		}
 
-		if (Validator.isNotNull(permissionSQLContributorsSQL) ||
-			Validator.isNotNull(groupAdminSQL)) {
+		if ((permissionSQLContributorsSQLSB != null) ||
+			(groupAdminResourcePermissionSB != null)) {
 
 			sb.append(") ");
 		}

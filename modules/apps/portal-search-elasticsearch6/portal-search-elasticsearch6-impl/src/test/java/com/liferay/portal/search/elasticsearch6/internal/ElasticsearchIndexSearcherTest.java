@@ -38,6 +38,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
 import com.vividsolutions.jts.util.Assert;
@@ -60,14 +62,7 @@ public class ElasticsearchIndexSearcherTest {
 
 		_testSearchEngineAdapter = new TestSearchEngineAdapter();
 
-		_elasticsearchIndexSearcher = new ElasticsearchIndexSearcher() {
-			{
-				indexNameBuilder = String::valueOf;
-				props = createProps();
-
-				searchEngineAdapter = _testSearchEngineAdapter;
-			}
-		};
+		_elasticsearchIndexSearcher = createElasticsearchIndexSearcher();
 	}
 
 	@After
@@ -100,6 +95,21 @@ public class ElasticsearchIndexSearcherTest {
 		String preference = searchSearchRequest.getPreference();
 
 		Assert.equals("testValue", preference);
+	}
+
+	protected ElasticsearchIndexSearcher createElasticsearchIndexSearcher() {
+		return new ElasticsearchIndexSearcher() {
+			{
+				indexNameBuilder = String::valueOf;
+				props = createProps();
+
+				searchEngineAdapter = _testSearchEngineAdapter;
+				searchRequestBuilderFactory =
+					new SearchRequestBuilderFactoryImpl();
+				searchResponseBuilderFactory =
+					new SearchResponseBuilderFactoryImpl();
+			}
+		};
 	}
 
 	protected Props createProps() {

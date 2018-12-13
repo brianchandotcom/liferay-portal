@@ -32,4 +32,9 @@ public class QueryStringTest extends BaseQueryStringTestCase {
 			BaseIndexingTestCase.COMPANY_ID);
 	}
 
+	@Override
+	protected String getExpectedPartOfResponseString() {
+		return "\"hits\":{\"total\":1,";
+	}
+
 }

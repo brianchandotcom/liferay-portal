@@ -33,6 +33,8 @@ import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSu
 import com.liferay.portal.search.elasticsearch6.internal.suggest.PhraseSuggesterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.TermSuggesterTranslatorImpl;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.LocalizationImpl;
@@ -173,6 +175,10 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				indexNameBuilder = indexNameBuilder1;
 				props = createProps();
 				searchEngineAdapter = searchEngineAdapter1;
+				searchRequestBuilderFactory =
+					new SearchRequestBuilderFactoryImpl();
+				searchResponseBuilderFactory =
+					new SearchResponseBuilderFactoryImpl();
 
 				setQuerySuggester(
 					createElasticsearchQuerySuggester(

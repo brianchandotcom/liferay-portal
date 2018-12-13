@@ -17,13 +17,21 @@ package com.liferay.asset.display.page.service.impl;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -60,6 +68,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
+		assetDisplayPageEntry.setPlid(
+			_createLayout(
+				userId, groupId, classNameId, classPK, serviceContext));
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 
@@ -131,5 +142,36 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		return assetDisplayPageEntry;
 	}
+
+	private long _createLayout(
+			long userId, long groupId, long classNameId, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			_portal.getClassName(classNameId), classPK);
+
+		Layout layout = layoutLocalService.addLayout(
+			userId, groupId, false, 0, assetEntry.getTitleMap(),
+			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
+			null, "asset_display", typeSettingsProperties.toString(), true,
+			new HashMap<>(), serviceContext);
+
+		return layout.getPlid();
+	}
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 }

@@ -31,6 +31,11 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
+import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
@@ -250,6 +255,9 @@ public abstract class BaseIndexingTestCase {
 
 		public IndexingTestHelper() {
 			_searchContext = createSearchContext();
+
+			_searchRequestBuilder = new SearchRequestBuilderImpl(
+				_searchContext);
 		}
 
 		public void assertResultCount(int expected) {
@@ -273,6 +281,10 @@ public abstract class BaseIndexingTestCase {
 			consumer.accept(_searchContext);
 		}
 
+		public void defineRequest(Consumer<SearchRequestBuilder> consumer) {
+			consumer.accept(_searchRequestBuilder);
+		}
+
 		public String getQueryString() {
 			return (String)_searchContext.getAttribute("queryString");
 		}
@@ -284,11 +296,23 @@ public abstract class BaseIndexingTestCase {
 		public void search() {
 			_hits = BaseIndexingTestCase.this.search(
 				_searchContext, getQuery());
+
+			SearchResponseBuilder searchResponseBuilder =
+				new SearchResponseBuilderImpl(_searchContext);
+
+			_searchResponse = searchResponseBuilder.build();
 		}
 
 		public long searchCount() {
-			return BaseIndexingTestCase.this.searchCount(
+			long count = BaseIndexingTestCase.this.searchCount(
 				_searchContext, getQuery());
+
+			SearchResponseBuilder searchResponseBuilder =
+				new SearchResponseBuilderImpl(_searchContext);
+
+			_searchResponse = searchResponseBuilder.build();
+
+			return count;
 		}
 
 		public void setFilter(Filter filter) {
@@ -313,6 +337,14 @@ public abstract class BaseIndexingTestCase {
 
 		public void verify(Consumer<Hits> consumer) {
 			consumer.accept(_hits);
+		}
+
+		public void verifyContext(Consumer<SearchContext> consumer) {
+			consumer.accept(_searchContext);
+		}
+
+		public void verifyResponse(Consumer<SearchResponse> consumer) {
+			consumer.accept(_searchResponse);
 		}
 
 		protected Query getQuery() {
@@ -343,6 +375,8 @@ public abstract class BaseIndexingTestCase {
 		private Query _query;
 		private QueryContributor _queryContributor;
 		private final SearchContext _searchContext;
+		private final SearchRequestBuilder _searchRequestBuilder;
+		private SearchResponse _searchResponse;
 
 	}
 

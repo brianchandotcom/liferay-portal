@@ -229,7 +229,7 @@ class FragmentEntryLinkContent extends Component {
 		for (let styleIndex = 0; styleIndex < document.styleSheets.length; styleIndex++) {
 			const cssStyle = document.styleSheets[styleIndex];
 
-			if (contains(this.refs.content, cssStyle.ownerNode)) {
+			if (contains(this.refs.content, cssStyle.ownerNode) && cssStyle.rules) {
 				for (let ruleIndex = 0; ruleIndex < cssStyle.rules.length; ruleIndex++) {
 					const cssRule = cssStyle.rules[ruleIndex];
 

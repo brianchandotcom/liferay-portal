@@ -175,6 +175,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 			if ((x != -1) &&
 				((getLineLength(previousLine) + x) < getMaxLineLength()) &&
+				!trimmedLine.startsWith("new ") &&
 				(trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 				 (trimmedLine.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS))) {
 

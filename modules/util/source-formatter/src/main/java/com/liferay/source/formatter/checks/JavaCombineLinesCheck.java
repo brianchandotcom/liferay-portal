@@ -534,34 +534,23 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					 previousLine.endsWith(" ->")) &&
 					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
+					int level = getLevel(line);
+
 					for (int i = 0;; i++) {
 						String nextLine = getLine(content, lineNumber + i + 1);
 
 						if (Validator.isNull(nextLine) ||
+							nextLine.endsWith(") +") ||
 							nextLine.endsWith(") {")) {
 
-							if (trimmedPreviousLine.startsWith("try (") &&
-								trimmedLine.startsWith("new ") &&
-								(getLevel(nextLine) == -1)) {
-
-								return null;
-							}
-
-							addMessage(
-								fileName,
-								StringBundler.concat(
-									"'", trimmedLine, "' should be added to ",
-									"previous line"),
-								lineNumber);
-
 							return null;
 						}
 
-						if (nextLine.endsWith(") +")) {
-							return null;
-						}
+						level += getLevel(nextLine);
 
-						if (nextLine.endsWith(StringPool.SEMICOLON)) {
+						if ((level == 0) &&
+							nextLine.endsWith(StringPool.SEMICOLON)) {
+
 							return _getCombinedLinesContent(
 								content, line, trimmedLine, lineLength,
 								lineNumber, previousLine, null, false, true,

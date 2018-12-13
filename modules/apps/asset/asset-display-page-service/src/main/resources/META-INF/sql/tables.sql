@@ -10,5 +10,6 @@ create table AssetDisplayPageEntry (
 	classNameId LONG,
 	classPK LONG,
 	layoutPageTemplateEntryId LONG,
-	type_ INTEGER
+	type_ INTEGER,
+	plid LONG
 );

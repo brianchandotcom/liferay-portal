@@ -146,6 +146,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		newAssetDisplayPageEntry.setType(RandomTestUtil.nextInt());
 
+		newAssetDisplayPageEntry.setPlid(RandomTestUtil.nextLong());
+
 		_assetDisplayPageEntries.add(_persistence.update(
 				newAssetDisplayPageEntry));
 
@@ -177,6 +179,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 			newAssetDisplayPageEntry.getLayoutPageTemplateEntryId());
 		Assert.assertEquals(existingAssetDisplayPageEntry.getType(),
 			newAssetDisplayPageEntry.getType());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getPlid(),
+			newAssetDisplayPageEntry.getPlid());
 	}
 
 	@Test
@@ -257,7 +261,7 @@ public class AssetDisplayPageEntryPersistenceTest {
 			"uuid", true, "assetDisplayPageEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"layoutPageTemplateEntryId", true, "type", true);
+			"layoutPageTemplateEntryId", true, "type", true, "plid", true);
 	}
 
 	@Test
@@ -520,6 +524,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		assetDisplayPageEntry.setType(RandomTestUtil.nextInt());
+
+		assetDisplayPageEntry.setPlid(RandomTestUtil.nextLong());
 
 		_assetDisplayPageEntries.add(_persistence.update(assetDisplayPageEntry));
 

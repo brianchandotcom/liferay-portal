@@ -46,6 +46,7 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
 		soapModel.setType(model.getType());
+		soapModel.setPlid(model.getPlid());
 
 		return soapModel;
 	}
@@ -197,6 +198,14 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 		_type = type;
 	}
 
+	public long getPlid() {
+		return _plid;
+	}
+
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
 	private String _uuid;
 	private long _assetDisplayPageEntryId;
 	private long _groupId;
@@ -209,4 +218,5 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 	private long _classPK;
 	private long _layoutPageTemplateEntryId;
 	private int _type;
+	private long _plid;
 }

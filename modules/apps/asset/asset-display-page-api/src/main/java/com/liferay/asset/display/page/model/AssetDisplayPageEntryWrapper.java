@@ -74,6 +74,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
 		attributes.put("type", getType());
+		attributes.put("plid", getPlid());
 
 		return attributes;
 	}
@@ -152,6 +153,12 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
 		}
 	}
 
@@ -258,6 +265,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public Date getModifiedDate() {
 		return _assetDisplayPageEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the plid of this asset display page entry.
+	*
+	* @return the plid of this asset display page entry
+	*/
+	@Override
+	public long getPlid() {
+		return _assetDisplayPageEntry.getPlid();
 	}
 
 	/**
@@ -459,6 +476,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public void setNew(boolean n) {
 		_assetDisplayPageEntry.setNew(n);
+	}
+
+	/**
+	* Sets the plid of this asset display page entry.
+	*
+	* @param plid the plid of this asset display page entry
+	*/
+	@Override
+	public void setPlid(long plid) {
+		_assetDisplayPageEntry.setPlid(plid);
 	}
 
 	/**

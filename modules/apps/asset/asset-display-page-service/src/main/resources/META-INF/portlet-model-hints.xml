@@ -14,5 +14,6 @@
 		<field name="classPK" type="long" />
 		<field name="layoutPageTemplateEntryId" type="long" />
 		<field name="type" type="int" />
+		<field name="plid" type="long" />
 	</model>
 </model-hints>

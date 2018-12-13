@@ -81,7 +81,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "layoutPageTemplateEntryId", Types.BIGINT },
-			{ "type_", Types.INTEGER }
+			{ "type_", Types.INTEGER },
+			{ "plid", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -98,9 +99,10 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetDisplayPageEntry (uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetDisplayPageEntry (uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER,plid LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetDisplayPageEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetDisplayPageEntry.assetDisplayPageEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetDisplayPageEntry.assetDisplayPageEntryId ASC";
@@ -176,6 +178,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
 		attributes.put("type", getType());
+		attributes.put("plid", getPlid());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -257,6 +260,12 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
 		}
 	}
 
@@ -501,6 +510,16 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	}
 
 	@Override
+	public long getPlid() {
+		return _plid;
+	}
+
+	@Override
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				AssetDisplayPageEntry.class.getName()), getClassNameId());
@@ -549,6 +568,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		assetDisplayPageEntryImpl.setClassPK(getClassPK());
 		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(getLayoutPageTemplateEntryId());
 		assetDisplayPageEntryImpl.setType(getType());
+		assetDisplayPageEntryImpl.setPlid(getPlid());
 
 		assetDisplayPageEntryImpl.resetOriginalValues();
 
@@ -692,12 +712,14 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		assetDisplayPageEntryCacheModel.type = getType();
 
+		assetDisplayPageEntryCacheModel.plid = getPlid();
+
 		return assetDisplayPageEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -723,6 +745,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		sb.append(getLayoutPageTemplateEntryId());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", plid=");
+		sb.append(getPlid());
 		sb.append("}");
 
 		return sb.toString();
@@ -730,7 +754,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.asset.display.page.model.AssetDisplayPageEntry");
@@ -784,6 +808,10 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>plid</column-name><column-value><![CDATA[");
+		sb.append(getPlid());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -818,6 +846,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	private long _originalLayoutPageTemplateEntryId;
 	private boolean _setOriginalLayoutPageTemplateEntryId;
 	private int _type;
+	private long _plid;
 	private long _columnBitmask;
 	private AssetDisplayPageEntry _escapedModel;
 }

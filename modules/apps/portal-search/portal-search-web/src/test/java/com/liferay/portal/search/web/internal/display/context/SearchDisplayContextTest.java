@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.context.SearchResponseBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.internal.facet.SearchFacetTracker;
@@ -68,6 +71,7 @@ public class SearchDisplayContextTest {
 		setUpHttpServletRequest();
 		setUpPortletURLFactory();
 		setUpRenderRequest();
+		setUpSearchResponseBuilderFactory();
 	}
 
 	@Test
@@ -222,7 +226,7 @@ public class SearchDisplayContextTest {
 			Mockito.mock(Language.class), facetedSearcherManager,
 			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
 			Mockito.mock(SummaryBuilderFactory.class),
-			new SearchFacetTracker());
+			searchResponseBuilderFactory, new SearchFacetTracker());
 	}
 
 	protected ThemeDisplay createThemeDisplay() throws Exception {
@@ -296,6 +300,22 @@ public class SearchDisplayContextTest {
 		);
 	}
 
+	protected void setUpSearchResponseBuilderFactory() {
+		Mockito.doReturn(
+			searchResponseBuilder
+		).when(
+			searchResponseBuilderFactory
+		).getSearchResponseBuilder(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			searchResponse
+		).when(
+			searchResponseBuilder
+		).build();
+	}
+
 	@Mock
 	protected FacetedSearcher facetedSearcher;
 
@@ -313,6 +333,15 @@ public class SearchDisplayContextTest {
 
 	@Mock
 	protected RenderRequest renderRequest;
+
+	@Mock
+	protected SearchResponse searchResponse;
+
+	@Mock
+	protected SearchResponseBuilder searchResponseBuilder;
+
+	@Mock
+	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
 
 	protected ThemeDisplay themeDisplay;
 

@@ -62,8 +62,12 @@ public class AopMethod {
 		return false;
 	}
 
-	public ChainableMethodAdvice[] getChainableMethodAdvices() {
-		return _chainableMethodAdvices;
+	public ChainableMethodAdvice getChainableMethodAdvice(int index) {
+		if (index < _chainableMethodAdvices.length) {
+			return _chainableMethodAdvices[index];
+		}
+
+		return null;
 	}
 
 	public Method getMethod() {
@@ -135,8 +139,12 @@ public class AopMethod {
 		return _toString;
 	}
 
-	protected Object[] getAdviceMethodContexts() {
-		return _adviceMethodContexts;
+	protected Object getAdviceMethodContext(int index) {
+		if ((index >= 0) && (index < _adviceMethodContexts.length)) {
+			return _adviceMethodContexts[index];
+		}
+
+		return null;
 	}
 
 	private final Object[] _adviceMethodContexts;

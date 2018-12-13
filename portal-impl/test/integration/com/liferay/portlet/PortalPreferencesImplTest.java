@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopMethod;
-import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
@@ -92,11 +91,8 @@ public class PortalPreferencesImplTest {
 			serviceBeanAopInvocationHandler.getTarget(),
 			_updatePreferencesMethod);
 
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			aopMethod.getChainableMethodAdvices();
-
 		_transactionInterceptor =
-			(TransactionInterceptor)chainableMethodAdvices[1];
+			(TransactionInterceptor)aopMethod.getChainableMethodAdvice(1);
 
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
 			_transactionInterceptor, "transactionExecutor");

@@ -89,8 +89,6 @@ public class RetryAdvice extends ChainableMethodAdvice {
 			retries++;
 		}
 
-		int index = serviceBeanMethodInvocation.getIndex();
-
 		Object returnValue = null;
 		Throwable throwable = null;
 
@@ -140,8 +138,6 @@ public class RetryAdvice extends ChainableMethodAdvice {
 						throwable);
 				}
 			}
-
-			serviceBeanMethodInvocation.setIndex(index);
 		}
 
 		if (throwable != null) {

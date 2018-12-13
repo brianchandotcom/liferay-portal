@@ -14,7 +14,6 @@
 
 package com.liferay.content.space.apio.internal.architect.resource.test;
 
-import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.CollectionResource;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -65,7 +63,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(50, 1), company, _acceptLanguage);
+				PaginationRequest.of(50, 1), company);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 
@@ -103,7 +101,7 @@ public class ContentSpaceCollectionResourceTest {
 				group.getCompanyId());
 
 			PageItems<Group> groupPageItems = _getPageItems(
-				PaginationRequest.of(50, 1), company, _acceptLanguage);
+				PaginationRequest.of(50, 1), company);
 
 			List<Group> groups = (List<Group>)groupPageItems.getItems();
 
@@ -135,25 +133,20 @@ public class ContentSpaceCollectionResourceTest {
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, Company company,
-			AcceptLanguage acceptLanguage)
+			Pagination pagination, Company company)
 		throws Exception {
 
 		Class<? extends CollectionResource> clazz =
 			_collectionResource.getClass();
 
 		Method method = clazz.getDeclaredMethod(
-			"_getPageItems", Pagination.class, Company.class,
-			AcceptLanguage.class);
+			"_getPageItems", Pagination.class, Company.class);
 
 		method.setAccessible(true);
 
 		return (PageItems)method.invoke(
-			_collectionResource, pagination, company, acceptLanguage);
+			_collectionResource, pagination, company);
 	}
-
-	private static final AcceptLanguage _acceptLanguage =
-		() -> LocaleUtil.getDefault();
 
 	@Inject(
 		filter = "component.name=com.liferay.content.space.apio.internal.architect.resource.ContentSpaceCollectionResource"

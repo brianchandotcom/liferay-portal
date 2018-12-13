@@ -14,7 +14,6 @@
 
 package com.liferay.content.space.apio.internal.architect.resource;
 
-import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -54,7 +53,7 @@ public class ContentSpaceCollectionResource
 		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class, AcceptLanguage.class
+			this::_getPageItems, Company.class
 		).build();
 	}
 
@@ -102,7 +101,7 @@ public class ContentSpaceCollectionResource
 	}
 
 	private PageItems<Group> _getPageItems(
-		Pagination pagination, Company company, AcceptLanguage acceptLanguage) {
+		Pagination pagination, Company company) {
 
 		List<Group> groups = _groupLocalService.getActiveGroups(
 			company.getCompanyId(), true, true, pagination.getStartPosition(),

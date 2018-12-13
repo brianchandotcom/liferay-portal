@@ -654,8 +654,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if ((previousLine.endsWith(StringPool.EQUAL) ||
-			 previousLine.endsWith("->")) &&
+		if ((previousLine.endsWith(" =") || previousLine.endsWith("->")) &&
 			line.endsWith(StringPool.SEMICOLON) && !line.endsWith("];")) {
 
 			String tempLine = trimmedLine;

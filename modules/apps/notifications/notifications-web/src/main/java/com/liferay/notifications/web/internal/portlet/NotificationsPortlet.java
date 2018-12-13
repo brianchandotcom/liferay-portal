@@ -252,6 +252,10 @@ public class NotificationsPortlet extends MVCPortlet {
 				updateArchived(userNotificationEventId, true);
 			}
 		}
+
+		_addSuccessMessage(
+			actionRequest,
+			"you-have-unsubscribed-from-this-asset-successfully");
 	}
 
 	public void updateUserNotificationDelivery(

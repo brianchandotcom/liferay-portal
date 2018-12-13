@@ -610,33 +610,20 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 	@Override
 	public int searchCount(
-		String keywords, Boolean completed, Boolean searchByUserRoles,
+		long kaleoInstanceId, Boolean completed, Boolean searchByUserRoles,
 		ServiceContext serviceContext) {
 
 		return searchCount(
-			keywords, keywords, null, null, null, completed, searchByUserRoles,
-			false, serviceContext);
+			kaleoInstanceId, null, null, null, null, null, null, completed,
+			searchByUserRoles, false, serviceContext);
 	}
 
 	@Override
 	public int searchCount(
-		String taskName, String assetType, Long[] assetPrimaryKeys,
-		Date dueDateGT, Date dueDateLT, Boolean completed,
-		Boolean searchByUserRoles, boolean andOperator,
-		ServiceContext serviceContext) {
-
-		return searchCount(
-			null, taskName, getAssetTypes(assetType), assetPrimaryKeys,
-			dueDateGT, dueDateLT, completed, searchByUserRoles, andOperator,
-			serviceContext);
-	}
-
-	@Override
-	public int searchCount(
-		String assetTitle, String taskName, String[] assetTypes,
-		Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
-		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
-		ServiceContext serviceContext) {
+		Long kaleoInstanceId, String assetTitle, String taskName,
+		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		boolean andOperator, ServiceContext serviceContext) {
 
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
 			new KaleoTaskInstanceTokenQuery(serviceContext);
@@ -648,6 +635,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskInstanceTokenQuery.setCompleted(completed);
 		kaleoTaskInstanceTokenQuery.setDueDateGT(dueDateGT);
 		kaleoTaskInstanceTokenQuery.setDueDateLT(dueDateLT);
+		kaleoTaskInstanceTokenQuery.setKaleoInstanceId(kaleoInstanceId);
 		kaleoTaskInstanceTokenQuery.setSearchByUserRoles(searchByUserRoles);
 		kaleoTaskInstanceTokenQuery.setTaskName(taskName);
 
@@ -673,11 +661,34 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 	@Override
 	public int searchCount(
+		String keywords, Boolean completed, Boolean searchByUserRoles,
+		ServiceContext serviceContext) {
+
+		return searchCount(
+			keywords, keywords, null, null, null, completed, searchByUserRoles,
+			false, serviceContext);
+	}
+
+	@Override
+	public int searchCount(
+		String taskName, String assetType, Long[] assetPrimaryKeys,
+		Date dueDateGT, Date dueDateLT, Boolean completed,
+		Boolean searchByUserRoles, boolean andOperator,
+		ServiceContext serviceContext) {
+
+		return searchCount(
+			null, null, taskName, getAssetTypes(assetType), assetPrimaryKeys,
+			dueDateGT, dueDateLT, completed, searchByUserRoles, andOperator,
+			serviceContext);
+	}
+
+	@Override
+	public int searchCount(
 		String keywords, String[] assetTypes, Boolean completed,
 		Boolean searchByUserRoles, ServiceContext serviceContext) {
 
 		return searchCount(
-			keywords, keywords, assetTypes, null, null, null, completed,
+			null, keywords, keywords, assetTypes, null, null, null, completed,
 			searchByUserRoles, false, serviceContext);
 	}
 

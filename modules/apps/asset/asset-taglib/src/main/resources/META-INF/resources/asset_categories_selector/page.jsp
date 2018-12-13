@@ -41,7 +41,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 		%>
 
 			<span class="field-content">
-				<label id="<portlet:namespace />assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
+				<label id="<%= randomNamespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 					<%= vocabulary.getTitle(locale) %>
 
 					<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
@@ -60,7 +60,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 					</c:if>
 				</label>
 
-				<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
+				<div class="lfr-tags-selector-content" id="<%= randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
 					<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
 				</div>
 			</span>
@@ -74,11 +74,11 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 					{
 						categoryIds: '<%= categoryIdsTitle[0] %>',
 						categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-						contentBox: '#<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
+						contentBox: '#<%= randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
 						eventName: '<%= eventName %>',
 						hiddenInput: '#<portlet:namespace /><%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 						instanceVar: '<portlet:namespace />',
-						labelNode: '#<portlet:namespace />assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
+						labelNode: '#<%= randomNamespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 						maxEntries: <%= maxEntries %>,
 						moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
 

@@ -115,6 +115,7 @@ definition {
 
 	@priority = "5"
 	test MySQLtoMySQLLportal1SampleDataDisabled {
+		property custom.properties = "setup.wizard.add.sample.data=true";
 		property databases.size = "1";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLLportal1SampleDataDisabled";

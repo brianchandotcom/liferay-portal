@@ -32,6 +32,7 @@ definition {
 
 	@priority = "4"
 	test HSQLtoDB2SampleDataDisabled {
+		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "db2";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2SampleDataDisabled";
 
@@ -75,6 +76,7 @@ definition {
 
 	@priority = "4"
 	test HSQLtoOracleSampleDataDisabled {
+		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "oracle";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracleSampleDataDisabled";
 
@@ -118,6 +120,7 @@ definition {
 
 	@priority = "4"
 	test HSQLtoSybaseSampleDataDisabled {
+		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "sybase";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataDisabled";
 

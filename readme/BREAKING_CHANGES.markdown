@@ -73,6 +73,35 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
+### Removed Support for JSP Templates in Themes
+- **Date:** 2018-Nov-14
+- **JIRA Ticket:** [LPS-87064](https://issues.liferay.com/browse/LPS-87064)
+
+#### What changed?
+
+Themes can no longer leverage JSP templates. Also, related logic has been
+removed from the public APIs `com.liferay.portal.kernel.util.ThemeHelper` and
+`com.liferay.taglib.util.ThemeUtil`.
+
+#### Who is affected?
+
+This affects anyone who has themes using JSP templates or is using the removed
+methods.
+
+#### How should I update my code?
+
+If you have a theme using JSP templates, consider migrating it to FreeMarker.
+
+#### Why was this change made?
+
+JSP is not a real template engine and is rarely used. FreeMarker is the
+recommended template engine moving forward.
+
+The removal of JSP templates allows for an increased focus on existing and new
+template engines.
+
+---------------------------------------
+
 ### Lodash Is No Longer Included by Default
 - **Date:** 2018-Nov-27
 - **JIRA Ticket:** [LPS-87677](https://issues.liferay.com/browse/LPS-87677)
@@ -101,34 +130,5 @@ As a temporary measure, you can bring back the old behavior by setting the
 
 This change was made to avoid bundling and serving additional library code on
 every page that was mostly unused and redundant.
-
----------------------------------------
-
-### Removed Support for JSP Templates in Themes
-- **Date:** 2018-Nov-14
-- **JIRA Ticket:** [LPS-87064](https://issues.liferay.com/browse/LPS-87064)
-
-#### What changed?
-
-Themes can no longer leverage JSP templates. Also, related logic has been
-removed from the public APIs `com.liferay.portal.kernel.util.ThemeHelper` and
-`com.liferay.taglib.util.ThemeUtil`.
-
-#### Who is affected?
-
-This affects anyone who has themes using JSP templates or is using the removed
-methods.
-
-#### How should I update my code?
-
-If you have a theme using JSP templates, consider migrating it to FreeMarker.
-
-#### Why was this change made?
-
-JSP is not a real template engine and is rarely used. FreeMarker is the
-recommended template engine moving forward.
-
-The removal of JSP templates allows for an increased focus on existing and new
-template engines.
 
 ---------------------------------------

@@ -48,8 +48,7 @@ public class XStreamConverterRegistryUtilTest {
 		String testClassName = TestXStreamConverter.class.getName();
 
 		Assert.assertTrue(
-			testClassName + " not found in " +
-				xStreamConverters,
+			testClassName + " not found in " + xStreamConverters,
 			xStreamConverters.removeIf(
 				xStreamConverter -> {
 					Class<?> clazz = xStreamConverter.getClass();

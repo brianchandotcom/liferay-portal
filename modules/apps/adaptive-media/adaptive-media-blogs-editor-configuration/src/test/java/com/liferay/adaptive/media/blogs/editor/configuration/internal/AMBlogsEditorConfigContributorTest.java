@@ -330,9 +330,8 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 
 			Assert.assertTrue(
 				itemSelectorReturnTypeStream.allMatch(
-					itemSelectorReturnType ->
-						itemSelectorReturnType instanceof
-							AMImageFileEntryItemSelectorReturnType));
+					itemSelectorReturnType -> itemSelectorReturnType instanceof
+						AMImageFileEntryItemSelectorReturnType));
 		}
 	}
 

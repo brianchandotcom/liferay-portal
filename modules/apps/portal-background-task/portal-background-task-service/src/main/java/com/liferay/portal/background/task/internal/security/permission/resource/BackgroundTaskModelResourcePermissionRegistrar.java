@@ -56,8 +56,8 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 			ModelResourcePermissionFactory.create(
 				BackgroundTask.class, BackgroundTask::getBackgroundTaskId,
 				_backgroundTaskLocalService::getBackgroundTask, null,
-				(modelResourcePermission, consumer) ->
-					consumer.accept(new BackgroundTaskPermissionLogic())),
+				(modelResourcePermission, consumer) -> consumer.accept(
+					new BackgroundTaskPermissionLogic())),
 			properties);
 	}
 

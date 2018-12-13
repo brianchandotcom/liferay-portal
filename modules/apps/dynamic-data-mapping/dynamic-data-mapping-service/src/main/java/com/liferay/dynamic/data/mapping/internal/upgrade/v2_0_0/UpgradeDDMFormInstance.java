@@ -261,8 +261,7 @@ public class UpgradeDDMFormInstance extends UpgradeProcess {
 		Map<String, Long> map = resourceActionStream.collect(
 			Collectors.toMap(
 				resourceAction -> resourceAction.getActionId(),
-				resourceAction -> resourceAction.getBitwiseValue())
-		);
+				resourceAction -> resourceAction.getBitwiseValue()));
 
 		Stream<String> actionsIdsStream = actionsIdsList.stream();
 

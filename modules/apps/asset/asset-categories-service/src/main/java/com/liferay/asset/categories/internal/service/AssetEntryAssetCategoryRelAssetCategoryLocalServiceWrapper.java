@@ -254,9 +254,10 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			categories.forEach(
-				category -> _assetEntryAssetCategoryRelLocalService.
-					addAssetEntryAssetCategoryRel(
-						assetEntryId, category.getCategoryId()));
+				category ->
+					_assetEntryAssetCategoryRelLocalService.
+						addAssetEntryAssetCategoryRel(
+							assetEntryId, category.getCategoryId()));
 		}
 
 		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :

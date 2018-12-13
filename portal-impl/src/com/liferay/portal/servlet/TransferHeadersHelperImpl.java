@@ -109,8 +109,7 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 
 	private static final ThreadLocal<Boolean> _transferringHeaders =
 		new CentralizedThreadLocal<>(
-			TransferHeadersHelperImpl.class +
-				"._transferringHeaders",
+			TransferHeadersHelperImpl.class + "._transferringHeaders",
 			() -> false);
 
 	private class HeaderAction<T> {

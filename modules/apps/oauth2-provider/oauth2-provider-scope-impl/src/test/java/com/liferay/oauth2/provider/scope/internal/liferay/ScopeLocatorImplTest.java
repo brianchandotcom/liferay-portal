@@ -209,10 +209,10 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			Assert.assertThat(application2ScopeAliases, hasItem(scope));
 		}
 
-		ScopeMapper appScopeMapper =
-			scope -> Collections.singleton("app/" + scope);
-		ScopeMapper companyScopeMapper =
-			scope -> Collections.singleton("company/" + scope);
+		ScopeMapper appScopeMapper = scope -> Collections.singleton(
+			"app/" + scope);
+		ScopeMapper companyScopeMapper = scope -> Collections.singleton(
+			"company/" + scope);
 
 		builder = new Builder();
 
@@ -256,10 +256,8 @@ public class ScopeLocatorImplTest extends PowerMockito {
 
 		Set<String> matchScopes = Collections.singleton("everything.readonly");
 
-		ScopeMatcherFactory explicitScopeMatcherFactory =
-			scopeAlias ->
-				scope ->
-					scope.equals(scopeAlias) && matchScopes.contains(scope);
+		ScopeMatcherFactory explicitScopeMatcherFactory = scopeAlias ->
+			scope -> scope.equals(scopeAlias) && matchScopes.contains(scope);
 
 		Builder builder = new Builder();
 
@@ -385,8 +383,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 
 			if (!_prefixHandlerFactoriesInitialized) {
 				withPrefixHandlerFactories(
-					propertyAccessor ->
-						PrefixHandler.PASSTHROUGH_PREFIXHANDLER,
+					propertyAccessor -> PrefixHandler.PASSTHROUGH_PREFIXHANDLER,
 					registrator -> {
 					});
 			}

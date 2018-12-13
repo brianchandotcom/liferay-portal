@@ -61,8 +61,7 @@ public class StagedModelDataHandlerRegistryUtilTest {
 		String testClassName = TestStagedModelDataHandler.class.getName();
 
 		Assert.assertTrue(
-			testClassName + " not found in " +
-				stagedModelDataHandlers,
+			testClassName + " not found in " + stagedModelDataHandlers,
 			stagedModelDataHandlers.removeIf(
 				stagedModelDataHandler -> {
 					Class<?> clazz = stagedModelDataHandler.getClass();

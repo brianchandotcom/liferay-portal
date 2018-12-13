@@ -59,14 +59,13 @@ public class SharingEntryInterpreterProviderImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap =
 			(ServiceTrackerMap<Long, SharingEntryInterpreter>)
-				(ServiceTrackerMap)
-					ServiceTrackerMapFactory.openSingleValueMap(
-						bundleContext, SharingEntryInterpreter.class,
-						"(model.class.name=*)",
-						(serviceReference, emitter) -> emitter.emit(
-							_classNameLocalService.getClassNameId(
-								(String)serviceReference.getProperty(
-									"model.class.name"))));
+				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
+					bundleContext, SharingEntryInterpreter.class,
+					"(model.class.name=*)",
+					(serviceReference, emitter) -> emitter.emit(
+						_classNameLocalService.getClassNameId(
+							(String)serviceReference.getProperty(
+								"model.class.name"))));
 	}
 
 	@Deactivate

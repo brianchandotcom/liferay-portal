@@ -59,8 +59,8 @@ public class DefaultDDMExpressionParameterAccessor
 
 	private Supplier<Long> _getCompanyIdSupplier = () -> 0L;
 	private Supplier<Long> _getGroupIdSupplier = () -> 0L;
-	private final Supplier<Locale> _getLocaleSupplier =
-		() -> new Locale("pt", "BR");
+	private final Supplier<Locale> _getLocaleSupplier = () -> new Locale(
+		"pt", "BR");
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 
 }

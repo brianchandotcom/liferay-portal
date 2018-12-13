@@ -75,8 +75,7 @@ public class WorkflowHandlerRegistryUtilTest {
 		String testClassName = TestWorkflowHandler.class.getName();
 
 		Assert.assertTrue(
-			testClassName + " not found in " +
-				workflowHandlers,
+			testClassName + " not found in " + workflowHandlers,
 			workflowHandlers.removeIf(
 				workflowHandler -> {
 					Class<?> clazz = workflowHandler.getClass();

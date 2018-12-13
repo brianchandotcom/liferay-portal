@@ -408,8 +408,9 @@ public class DummyStagedModelRepository
 
 		public Predicate<? super Dummy> getPredicate(String expression) {
 			if (expression.contains("groupId=")) {
-				return d -> d.getGroupId() == Long.valueOf(
-					expression.substring("groupId=".length()));
+				return d ->
+					d.getGroupId() ==
+						Long.valueOf(expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {

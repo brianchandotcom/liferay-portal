@@ -1366,8 +1366,8 @@ public class LocalProcessExecutorTest {
 				return sb.toString();
 			};
 
-		public static final ProcessCallable<Boolean> IS_ATTACHED = () ->
-			LocalProcessLauncher.ProcessContext.isAttached();
+		public static final ProcessCallable<Boolean> IS_ATTACHED =
+			() -> LocalProcessLauncher.ProcessContext.isAttached();
 
 		public static final ProcessCallable<String> LEADING_LOG = () -> {
 			try {

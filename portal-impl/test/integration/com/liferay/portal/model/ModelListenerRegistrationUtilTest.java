@@ -53,8 +53,7 @@ public class ModelListenerRegistrationUtilTest {
 		String testClassName = TestModelListener.class.getName();
 
 		Assert.assertTrue(
-			testClassName + " not found in " +
-				modelListeners,
+			testClassName + " not found in " + modelListeners,
 			modelListeners.removeIf(
 				modelListener -> {
 					Class<?> clazz = modelListener.getClass();

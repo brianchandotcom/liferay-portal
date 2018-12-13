@@ -45,8 +45,8 @@ public class DynamicSectionUtil {
 		_dynamicSectionServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, DynamicSection.class, "(name=*)",
-				(serviceReference, emitter) ->
-					emitter.emit((String)serviceReference.getProperty("name")),
+				(serviceReference, emitter) -> emitter.emit(
+					(String)serviceReference.getProperty("name")),
 				ServiceReference::compareTo);
 
 		_dynamicSectionReplaceServiceTrackerMap =

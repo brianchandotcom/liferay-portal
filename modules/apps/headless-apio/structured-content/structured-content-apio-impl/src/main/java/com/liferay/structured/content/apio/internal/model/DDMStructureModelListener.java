@@ -178,8 +178,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 							ddmStructure, ddmFormField.getName()),
 					locale -> encodeName(
 						ddmStructure.getStructureId(), ddmFormField.getName(),
-						locale, "String"))
-			);
+						locale, "String")));
 		}
 		else if (Objects.equals(
 					ddmFormField.getDataType(), FieldConstants.DATE)) {
@@ -195,8 +194,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 					locale -> encodeName(
 						ddmStructure.getStructureId(), ddmFormField.getName(),
 						locale, "String"),
-					this::_getDDMDateFieldValue)
-			);
+					this::_getDDMDateFieldValue));
 		}
 		else if (Objects.equals(
 					ddmFormField.getDataType(), FieldConstants.DOUBLE) ||
@@ -210,8 +208,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 							ddmStructure, ddmFormField.getName()),
 					locale -> encodeName(
 						ddmStructure.getStructureId(), ddmFormField.getName(),
-						locale, "Number"))
-			);
+						locale, "Number")));
 		}
 		else if (Objects.equals(
 					ddmFormField.getDataType(), FieldConstants.LONG) ||
@@ -225,8 +222,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 							ddmStructure, ddmFormField.getName()),
 					locale -> encodeName(
 						ddmStructure.getStructureId(), ddmFormField.getName(),
-						locale, "Number"))
-			);
+						locale, "Number")));
 		}
 		else if (Objects.equals(
 					ddmFormField.getDataType(), DDMFormFieldType.RADIO) ||
@@ -241,8 +237,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 							ddmStructure, ddmFormField.getName()),
 					locale -> encodeName(
 						ddmStructure.getStructureId(), ddmFormField.getName(),
-						locale, "String"))
-			);
+						locale, "String")));
 		}
 
 		return Optional.empty();

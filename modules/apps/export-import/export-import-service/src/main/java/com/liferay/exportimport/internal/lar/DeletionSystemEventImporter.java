@@ -141,11 +141,10 @@ public class DeletionSystemEventImporter {
 			smt -> StagedModelType.REFERRER_CLASS_NAME_ALL.equals(
 				smt.getReferrerClassName());
 
-		Predicate<StagedModelType> anyReferrerClassNamePredicate =
-			smt -> Validator.isNotNull(
-				stagedModelType.getReferrerClassName()) &&
-				   StagedModelType.REFERRER_CLASS_NAME_ANY.equals(
-					smt.getReferrerClassName());
+		Predicate<StagedModelType> anyReferrerClassNamePredicate = smt ->
+			Validator.isNotNull(stagedModelType.getReferrerClassName()) &&
+			StagedModelType.REFERRER_CLASS_NAME_ANY.equals(
+				smt.getReferrerClassName());
 
 		boolean hasSimilar = stream.anyMatch(
 			classNameIdPredicate.and(

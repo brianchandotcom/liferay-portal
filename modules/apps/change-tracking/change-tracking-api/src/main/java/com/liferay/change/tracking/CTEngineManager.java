@@ -31,7 +31,7 @@ import java.util.Optional;
  * @review
  */
 @ProviderType
-public interface CTManager {
+public interface CTEngineManager {
 
 	/**
 	 * Changes the selected change tracking collection for the given user.

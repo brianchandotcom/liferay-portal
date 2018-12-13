@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal;
 
-import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = CTManager.class)
-public class CTManagerImpl implements CTManager {
+@Component(immediate = true, service = CTEngineManager.class)
+public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public void checkoutCTCollection(long userId, long ctCollectionId) {
@@ -456,7 +456,7 @@ public class CTManagerImpl implements CTManager {
 	private static final String _RECENT_CT_COLLECTION_ID =
 		"recentCTCollectionId";
 
-	private static final Log _log = LogFactoryUtil.getLog(CTManagerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(CTEngineManagerImpl.class);
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

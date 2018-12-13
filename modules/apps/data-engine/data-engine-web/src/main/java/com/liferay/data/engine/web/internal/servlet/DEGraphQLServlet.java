@@ -83,10 +83,17 @@ public class DEGraphQLServlet extends HttpServlet {
 	public static Map<String, Object> mapGraphQLError(GraphQLError error) {
 		Map<String, Object> errorMap = new LinkedHashMap<>();
 
-		String[] strings = StringUtil.split(
-			error.getMessage(), StringPool.DOUBLE_DOLLAR);
+		String errorMessage = error.getMessage();
 
-		errorMap.put("message", strings[1]);
+		if (errorMessage.contains(StringPool.DOUBLE_DOLLAR)) {
+			String[] strings = StringUtil.split(
+				error.getMessage(), StringPool.DOUBLE_DOLLAR);
+
+			errorMap.put("message", strings[1]);
+		}
+		else {
+			errorMap.put("message", errorMessage);
+		}
 
 		return errorMap;
 	}
@@ -111,11 +118,13 @@ public class DEGraphQLServlet extends HttpServlet {
 
 		Map<String, Object> result = new HashMap<>();
 
-		Collection<Object> values = data.values();
+		if ((data != null) && !data.isEmpty()) {
+			Collection<Object> values = data.values();
 
-		Object[] objects = values.toArray();
+			Object[] objects = values.toArray();
 
-		result.put("data", objects[0]);
+			result.put("data", objects[0]);
+		}
 
 		if ((errors != null) && !errors.isEmpty()) {
 			Stream<GraphQLError> errorStream = errors.stream();

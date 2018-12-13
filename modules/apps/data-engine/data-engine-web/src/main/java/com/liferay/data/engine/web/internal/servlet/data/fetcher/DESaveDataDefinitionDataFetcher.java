@@ -51,22 +51,22 @@ public class DESaveDataDefinitionDataFetcher
 		long userId = GetterUtil.getLong(environment.getArgument("userId"));
 		long groupId = GetterUtil.getLong(environment.getArgument("groupId"));
 
-		Map<String, Object> dataDefinitionInput = environment.getArgument(
-			"dataDefinitionInput");
+		Map<String, Object> dataDefinition = environment.getArgument(
+			"dataDefinition");
 
 		String languageId = environment.getArgument("languageId");
 
 		List<DEDataDefinitionField> deDataDefinitionFields =
 			createDEDataDefinitionFields(
-				(List<Map<String, Object>>)dataDefinitionInput.get("fields"));
+				(List<Map<String, Object>>)dataDefinition.get("fields"));
 		long dataDefinitionId = GetterUtil.getLong(
-			dataDefinitionInput.get("dataDefinitionId"));
+			dataDefinition.get("dataDefinitionId"));
 		Map<String, String> descriptions = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinitionInput.get("descriptions"));
+			(List<Map<String, Object>>)dataDefinition.get("descriptions"));
 		Map<String, String> names = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinitionInput.get("names"));
+			(List<Map<String, Object>>)dataDefinition.get("names"));
 		String storageType = GetterUtil.getString(
-			dataDefinitionInput.get("storageType"), "json");
+			dataDefinition.get("storageType"), "json");
 
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			deDataDefinitionFields);

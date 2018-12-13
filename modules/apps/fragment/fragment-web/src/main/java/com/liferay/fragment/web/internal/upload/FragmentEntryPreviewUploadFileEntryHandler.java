@@ -59,8 +59,8 @@ public class FragmentEntryPreviewUploadFileEntryHandler
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				_PARAMETER_NAME)) {
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				fileName, curFileName -> _exists(themeDisplay, curFileName));

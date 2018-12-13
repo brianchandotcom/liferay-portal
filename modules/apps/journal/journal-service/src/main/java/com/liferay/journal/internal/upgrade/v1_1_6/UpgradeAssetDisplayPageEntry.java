@@ -69,8 +69,8 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			JournalArticle.class);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 =
-				connection.prepareStatement(sb.toString());) {
+			PreparedStatement ps1 = connection.prepareStatement(
+				sb.toString())) {
 
 			ps1.setLong(1, journalArticleClassNameId);
 

@@ -104,8 +104,8 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
 
 			Assertions.assertThatThrownBy(
 				() -> getJournalArticleWrapper(

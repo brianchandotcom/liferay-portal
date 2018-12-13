@@ -72,8 +72,7 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(
-				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2)
-			);
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
 
 		DEDataDefinitionFieldsJSONSerializer
 			deDataDefinitionFieldsJSONSerializer =
@@ -102,8 +101,7 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(
-				Arrays.asList(deDataDefinitionField1)
-			);
+				Arrays.asList(deDataDefinitionField1));
 
 		DEDataDefinitionFieldsJSONSerializer
 			deDataDefinitionFieldsJSONSerializer =
@@ -124,8 +122,7 @@ public class DEDataDefinitionFieldsJSONSerializerTest extends BaseTestCase {
 
 		DEDataDefinitionFieldsSerializerApplyRequest.Builder builder =
 			DEDataDefinitionFieldsSerializerApplyRequest.Builder.newBuilder(
-				Arrays.asList(deDataDefinitionField1)
-			);
+				Arrays.asList(deDataDefinitionField1));
 
 		DEDataDefinitionFieldsJSONSerializer
 			deDataDefinitionFieldsJSONSerializer =

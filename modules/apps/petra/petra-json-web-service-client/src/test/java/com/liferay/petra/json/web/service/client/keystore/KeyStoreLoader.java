@@ -29,8 +29,8 @@ public class KeyStoreLoader {
 
 	public KeyStore getKeystore(
 			String keyStoreFileName, String keyStorePassword)
-		throws CertificateException,
-			   IOException, KeyStoreException, NoSuchAlgorithmException {
+		throws CertificateException, IOException, KeyStoreException,
+			   NoSuchAlgorithmException {
 
 		InputStream inputStream = null;
 

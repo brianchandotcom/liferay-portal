@@ -94,8 +94,7 @@ public class AutoCloseUtil {
 		sb.append("engineering/wiki/-/wiki/Quality+Assurance+Main/Test");
 		sb.append("+Batch+Automatic+Close+List\">article</a>.</p><p");
 
-		boolean sourceFormatBuild =
-			build instanceof SourceFormatBuild;
+		boolean sourceFormatBuild = build instanceof SourceFormatBuild;
 
 		if (sourceFormatBuild) {
 			sb.append("><strong><em>*");

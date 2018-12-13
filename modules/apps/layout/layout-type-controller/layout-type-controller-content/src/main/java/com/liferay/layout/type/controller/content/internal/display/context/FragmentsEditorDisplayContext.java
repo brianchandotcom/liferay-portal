@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,6 +58,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -441,11 +443,14 @@ public class FragmentsEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _request.getLocale(), getClass());
+
 		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
 		availableSoyContext.put("icon", "cards");
 		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "elements"));
+			"label", LanguageUtil.get(resourceBundle, "section-builder"));
 		availableSoyContext.put("panelId", "elements");
 
 		soyContexts.add(availableSoyContext);

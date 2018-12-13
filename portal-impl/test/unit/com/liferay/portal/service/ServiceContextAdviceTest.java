@@ -77,7 +77,8 @@ public class ServiceContextAdviceTest {
 			new TestInterceptedClass(), method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
-			aopMethod.getChainableMethodAdvices();
+			ReflectionTestUtil.getFieldValue(
+				aopMethod, "_chainableMethodAdvices");
 
 		Assert.assertEquals(
 			Arrays.toString(chainableMethodAdvices), 0,
@@ -113,7 +114,8 @@ public class ServiceContextAdviceTest {
 			new TestInterceptedClass(), method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
-			aopMethod.getChainableMethodAdvices();
+			ReflectionTestUtil.getFieldValue(
+				aopMethod, "_chainableMethodAdvices");
 
 		Assert.assertEquals(
 			Arrays.toString(chainableMethodAdvices), 0,

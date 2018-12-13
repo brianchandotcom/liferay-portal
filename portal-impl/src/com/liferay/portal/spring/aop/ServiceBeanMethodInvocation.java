@@ -26,8 +26,7 @@ public class ServiceBeanMethodInvocation {
 	public ServiceBeanMethodInvocation(
 		AopMethod aopMethod, Object[] arguments) {
 
-		_aopMethod = aopMethod;
-		_arguments = arguments;
+		this(aopMethod, arguments, -1);
 	}
 
 	@Override
@@ -52,12 +51,13 @@ public class ServiceBeanMethodInvocation {
 		return false;
 	}
 
-	public Object[] getArguments() {
-		return _arguments;
+	@SuppressWarnings("unchecked")
+	public <T> T getAdviceMethodContext() {
+		return (T)_aopMethod.getAdviceMethodContext(_index);
 	}
 
-	public int getIndex() {
-		return _index;
+	public Object[] getArguments() {
+		return _arguments;
 	}
 
 	public Method getMethod() {
@@ -74,18 +74,17 @@ public class ServiceBeanMethodInvocation {
 	}
 
 	public Object proceed() throws Throwable {
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_aopMethod.getChainableMethodAdvices();
+		int nextIndex = _index + 1;
 
-		if (_index < chainableMethodAdvices.length) {
-			return chainableMethodAdvices[_index++].invoke(this);
+		ChainableMethodAdvice chainableMethodAdvice =
+			_aopMethod.getChainableMethodAdvice(nextIndex);
+
+		if (chainableMethodAdvice == null) {
+			return _aopMethod.invoke(_arguments);
 		}
 
-		return _aopMethod.invoke(_arguments);
-	}
-
-	public void setIndex(int index) {
-		_index = index;
+		return chainableMethodAdvice.invoke(
+			new ServiceBeanMethodInvocation(_aopMethod, _arguments, nextIndex));
 	}
 
 	@Override
@@ -93,8 +92,16 @@ public class ServiceBeanMethodInvocation {
 		return _aopMethod.toString();
 	}
 
+	private ServiceBeanMethodInvocation(
+		AopMethod aopMethod, Object[] arguments, int index) {
+
+		_aopMethod = aopMethod;
+		_arguments = arguments;
+		_index = index;
+	}
+
 	private final AopMethod _aopMethod;
 	private final Object[] _arguments;
-	private int _index;
+	private final int _index;
 
 }

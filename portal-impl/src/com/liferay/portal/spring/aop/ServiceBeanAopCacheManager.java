@@ -22,109 +22,56 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.DisposableBean;
+
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanAopCacheManager {
 
+	public static DisposableBean register(
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+
+		return () -> {
+			_serviceBeanAopCacheManagers.remove(serviceBeanAopCacheManager);
+		};
+	}
+
+	public static void reset() {
+		for (ServiceBeanAopCacheManager serviceBeanAopCacheManager :
+				_serviceBeanAopCacheManagers) {
+
+			Map<CacheKey, AopMethod> aopMethods =
+				serviceBeanAopCacheManager._aopMethods;
+
+			aopMethods.clear();
+		}
+	}
+
 	public ServiceBeanAopCacheManager(
 		List<ChainableMethodAdvice> chainableMethodAdvices) {
-
-		for (ChainableMethodAdvice chainableMethodAdvice :
-				chainableMethodAdvices) {
-
-			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
-
-			if (chainableMethodAdvice instanceof
-					AnnotationChainableMethodAdvice) {
-
-				AnnotationChainableMethodAdvice<?>
-					annotationChainableMethodAdvice =
-						(AnnotationChainableMethodAdvice<?>)
-							chainableMethodAdvice;
-
-				Class<? extends Annotation> annotationClass =
-					annotationChainableMethodAdvice.getAnnotationClass();
-
-				_annotationClasses.add(annotationClass);
-			}
-		}
 
 		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
 			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 	}
 
-	public <T> T findAnnotation(
-		Class<?> targetClass, Method method,
-		Class<? extends Annotation> annotationType) {
-
-		Annotation[] annotationArray = _methodAnnotations.get(method);
-
-		if (annotationArray == _nullAnnotations) {
-			return null;
-		}
-
-		T annotation = null;
-
-		if (annotationArray == null) {
-			List<Annotation> annotations = AnnotationLocator.locate(
-				method, targetClass);
-
-			Iterator<Annotation> iterator = annotations.iterator();
-
-			while (iterator.hasNext()) {
-				Annotation curAnnotation = iterator.next();
-
-				Class<? extends Annotation> curAnnotationType =
-					curAnnotation.annotationType();
-
-				if (!_annotationClasses.contains(curAnnotationType)) {
-					iterator.remove();
-				}
-				else if (annotationType == curAnnotationType) {
-					annotation = (T)curAnnotation;
-				}
-			}
-
-			if (annotations.isEmpty()) {
-				_methodAnnotations.put(method, _nullAnnotations);
-			}
-			else {
-				_methodAnnotations.put(
-					method,
-					annotations.toArray(new Annotation[annotations.size()]));
-			}
-		}
-		else {
-			for (Annotation curAnnotation : annotationArray) {
-				if (curAnnotation.annotationType() == annotationType) {
-					return (T)curAnnotation;
-				}
-			}
-		}
-
-		return annotation;
-	}
-
 	public AopMethod getAopMethod(Object target, Method method) {
 		if (!TransactionsUtil.isEnabled()) {
-			return new AopMethod(target, method, _emptyChainableMethodAdvices);
+			return new AopMethod(
+				target, method, _emptyChainableMethodAdvices, null);
 		}
 
 		return _aopMethods.computeIfAbsent(
 			new CacheKey(target, method), this::_createAopMethod);
-	}
-
-	public void reset() {
-		_aopMethods.clear();
 	}
 
 	private AopMethod _createAopMethod(CacheKey cacheKey) {
@@ -136,38 +83,50 @@ public class ServiceBeanAopCacheManager {
 
 		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
 			new ArrayList<>();
+		List<Object> filteredAdviceMethodContexts = new ArrayList<>();
+
+		Map<Class<? extends Annotation>, Annotation> annotations =
+			AnnotationLocator.index(method, targetClass);
 
 		for (ChainableMethodAdvice chainableMethodAdvice :
 				_fullChainableMethodAdvices) {
 
-			if (chainableMethodAdvice.isEnabled(targetClass, method)) {
+			Object methodContext = chainableMethodAdvice.createMethodContext(
+				targetClass, method, annotations);
+
+			if (methodContext != null) {
 				filteredChainableMethodAdvices.add(chainableMethodAdvice);
+
+				filteredAdviceMethodContexts.add(methodContext);
 			}
 		}
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			_emptyChainableMethodAdvices;
+		Object[] adviceMethodContexts = null;
 
 		if (!filteredChainableMethodAdvices.isEmpty()) {
 			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
 				new ChainableMethodAdvice
 					[filteredChainableMethodAdvices.size()]);
+
+			adviceMethodContexts = filteredAdviceMethodContexts.toArray(
+				new Object[filteredAdviceMethodContexts.size()]);
 		}
 
-		return new AopMethod(target, method, chainableMethodAdvices);
+		return new AopMethod(
+			target, method, chainableMethodAdvices, adviceMethodContexts);
 	}
 
 	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
 		new ChainableMethodAdvice[0];
-	private static final Annotation[] _nullAnnotations = new Annotation[0];
+	private static final Set<ServiceBeanAopCacheManager>
+		_serviceBeanAopCacheManagers = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
-	private final Set<Class<? extends Annotation>> _annotationClasses =
-		new HashSet<>();
 	private final Map<CacheKey, AopMethod> _aopMethods =
 		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;
-	private final Map<Method, Annotation[]> _methodAnnotations =
-		new ConcurrentHashMap<>();
 
 	private static class CacheKey {
 

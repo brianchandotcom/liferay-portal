@@ -24,20 +24,18 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  */
-public class IndexableAdvice
-	extends AnnotationChainableMethodAdvice<Indexable> {
-
-	public IndexableAdvice() {
-		super(Indexable.class);
-	}
+public class IndexableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
@@ -65,12 +63,12 @@ public class IndexableAdvice
 			return;
 		}
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		IndexableContext indexableContext =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
-		Class<?> returnType = method.getReturnType();
+		String name = indexableContext._name;
 
-		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
-			returnType.getName());
+		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(name);
 
 		if (indexer == null) {
 			return;
@@ -86,23 +84,22 @@ public class IndexableAdvice
 			return;
 		}
 
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
+		int serviceContextIndex = indexableContext._serviceContextIndex;
 
-		for (int i = arguments.length - 1; i >= 0; i--) {
-			if (arguments[i] instanceof ServiceContext) {
-				ServiceContext serviceContext = (ServiceContext)arguments[i];
+		if (serviceContextIndex >= 0) {
+			Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
-				if (serviceContext.isIndexingEnabled()) {
-					break;
-				}
+			ServiceContext serviceContext =
+				(ServiceContext)arguments[serviceContextIndex];
+
+			if ((serviceContext != null) &&
+				!serviceContext.isIndexingEnabled()) {
 
 				return;
 			}
 		}
 
-		Indexable indexable = findAnnotation(serviceBeanMethodInvocation);
-
-		if (indexable.type() == IndexableType.DELETE) {
+		if (indexableContext._indexableType == IndexableType.DELETE) {
 			indexer.delete(result);
 		}
 		else {
@@ -111,9 +108,14 @@ public class IndexableAdvice
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		if (!super.isEnabled(targetClass, method)) {
-			return false;
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		Indexable indexable = (Indexable)annotations.get(Indexable.class);
+
+		if (indexable == null) {
+			return null;
 		}
 
 		Class<?> returnType = method.getReturnType();
@@ -123,13 +125,43 @@ public class IndexableAdvice
 				_log.warn(method + " does not have a valid return type");
 			}
 
-			return false;
+			return null;
 		}
 
-		return true;
+		return new IndexableContext(
+			returnType.getName(), indexable.type(),
+			_getServiceContextParameterIndex(method));
+	}
+
+	private int _getServiceContextParameterIndex(Method method) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
+		for (int i = parameterTypes.length - 1; i >= 0; i--) {
+			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexableAdvice.class);
+
+	private static class IndexableContext {
+
+		private IndexableContext(
+			String name, IndexableType indexableType, int serviceContextIndex) {
+
+			_name = name;
+			_indexableType = indexableType;
+			_serviceContextIndex = serviceContextIndex;
+		}
+
+		private final IndexableType _indexableType;
+		private final String _name;
+		private final int _serviceContextIndex;
+
+	}
 
 }

@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -108,6 +111,18 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		if (_monitorServiceRequest) {
+			return nullResult;
+		}
+
+		return null;
+	}
+
+	@Override
 	public void duringFinally(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
@@ -131,11 +146,6 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		return _monitorServiceRequest;
-	}
-
-	@Override
 	public boolean isInclusiveMode() {
 		return _inclusiveMode;
 	}
@@ -153,7 +163,7 @@ public class ServiceMonitorAdvice
 	@Override
 	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
 		if (monitorServiceRequest && !_monitorServiceRequest) {
-			serviceBeanAopCacheManager.reset();
+			ServiceBeanAopCacheManager.reset();
 		}
 
 		_monitorServiceRequest = monitorServiceRequest;

@@ -60,6 +60,7 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
@@ -99,45 +100,46 @@ public class AopConfigurableApplicationContextConfigurator
 				new BeanReferenceAnnotationBeanPostProcessor(
 					configurableListableBeanFactory));
 
+			DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
+				(DefaultSingletonBeanRegistry)configurableListableBeanFactory;
+
 			// Counter AOP for portal Spring context only
 
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
-				ServiceBeanAutoProxyCreator counterServiceBeanAutoProxyCreator =
-					new ServiceBeanAutoProxyCreator();
+				ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+					new ServiceBeanAopCacheManager(
+						Collections.singletonList(
+							configurableListableBeanFactory.getBean(
+								"counterTransactionAdvice",
+								ChainableMethodAdvice.class)));
 
-				counterServiceBeanAutoProxyCreator.setBeanMatcher(
-					new ServiceBeanMatcher(true));
-				counterServiceBeanAutoProxyCreator.setChainableMethodAdvices(
-					Collections.singletonList(
-						configurableListableBeanFactory.getBean(
-							"counterTransactionAdvice",
-							ChainableMethodAdvice.class)));
-
-				counterServiceBeanAutoProxyCreator.setBeanClassLoader(
-					_classLoader);
-
-				counterServiceBeanAutoProxyCreator.afterPropertiesSet();
+				defaultSingletonBeanRegistry.registerDisposableBean(
+					"counterServiceBeanAopCacheManagerDestroyer",
+					ServiceBeanAopCacheManager.register(
+						serviceBeanAopCacheManager));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
-					counterServiceBeanAutoProxyCreator);
+					new ServiceBeanAutoProxyCreator(
+						new ServiceBeanMatcher(true), _classLoader,
+						serviceBeanAopCacheManager));
 			}
 
 			// Service AOP
 
-			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
-				new ServiceBeanAutoProxyCreator();
+			ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+				new ServiceBeanAopCacheManager(
+					_createChainableMethodAdvices(
+						configurableListableBeanFactory));
 
-			serviceBeanAutoProxyCreator.setBeanMatcher(
-				new ServiceBeanMatcher());
-			serviceBeanAutoProxyCreator.setChainableMethodAdvices(
-				_createChainableMethodAdvices(configurableListableBeanFactory));
-
-			serviceBeanAutoProxyCreator.setBeanClassLoader(_classLoader);
-
-			serviceBeanAutoProxyCreator.afterPropertiesSet();
+			defaultSingletonBeanRegistry.registerDisposableBean(
+				"serviceBeanAopCacheManagerDestroyer",
+				ServiceBeanAopCacheManager.register(
+					serviceBeanAopCacheManager));
 
 			configurableListableBeanFactory.addBeanPostProcessor(
-				serviceBeanAutoProxyCreator);
+				new ServiceBeanAutoProxyCreator(
+					new ServiceBeanMatcher(), _classLoader,
+					serviceBeanAopCacheManager));
 		}
 
 		private AopBeanFactoryPostProcessor(ClassLoader classLoader) {
@@ -226,8 +228,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 				dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 					dynamicDataSourceTargetSource);
-				dynamicDataSourceAdvice.setTransactionInterceptor(
-					transactionInterceptor);
 
 				chainableMethodAdvices.add(dynamicDataSourceAdvice);
 			}

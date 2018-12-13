@@ -18,20 +18,18 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterableAdvice
-	extends AnnotationChainableMethodAdvice<Clusterable> {
-
-	public ClusterableAdvice() {
-		super(Clusterable.class);
-	}
+public class ClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
@@ -43,7 +41,8 @@ public class ClusterableAdvice
 			return;
 		}
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		ClusterableInvokerUtil.invokeOnCluster(
 			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
@@ -60,7 +59,8 @@ public class ClusterableAdvice
 			return null;
 		}
 
-		Clusterable clusterable = findAnnotation(serviceBeanMethodInvocation);
+		Clusterable clusterable =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;
@@ -87,6 +87,14 @@ public class ClusterableAdvice
 		}
 
 		return result;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(Clusterable.class);
 	}
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.spring.aop;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -39,6 +42,13 @@ public abstract class ChainableMethodAdvice {
 		throws Throwable {
 
 		return null;
+	}
+
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return nullResult;
 	}
 
 	public void duringFinally(
@@ -76,21 +86,6 @@ public abstract class ChainableMethodAdvice {
 		return returnValue;
 	}
 
-	public boolean isEnabled(Class<?> targetClass, Method method) {
-		return true;
-	}
-
-	protected void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		if (this.serviceBeanAopCacheManager != null) {
-			return;
-		}
-
-		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-	}
-
-	protected Object nullResult = new Object();
-	protected ServiceBeanAopCacheManager serviceBeanAopCacheManager;
+	protected static Object nullResult = new Object();
 
 }

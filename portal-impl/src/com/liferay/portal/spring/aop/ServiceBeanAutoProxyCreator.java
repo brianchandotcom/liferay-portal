@@ -23,31 +23,26 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.PropertyValues;
-import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanAutoProxyCreator
-	implements BeanClassLoaderAware, SmartInstantiationAwareBeanPostProcessor {
+	implements SmartInstantiationAwareBeanPostProcessor {
 
-	public void afterPropertiesSet() {
+	public ServiceBeanAutoProxyCreator(
+		BeanMatcher beanMatcher, ClassLoader classLoader,
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
-		// Backwards compatibility
-
-		if (_beanMatcher == null) {
-			_beanMatcher = new ServiceBeanMatcher();
-		}
-
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
-			_chainableMethodAdvices);
+		_beanMatcher = beanMatcher;
+		_classLoader = classLoader;
+		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
 	@Override
@@ -121,27 +116,11 @@ public class ServiceBeanAutoProxyCreator
 		return null;
 	}
 
-	@Override
-	public void setBeanClassLoader(ClassLoader classLoader) {
-		_classLoader = classLoader;
-	}
-
-	public void setBeanMatcher(BeanMatcher beanMatcher) {
-		_beanMatcher = beanMatcher;
-	}
-
-	public void setChainableMethodAdvices(
-		List<ChainableMethodAdvice> chainableMethodAdvices) {
-
-		_chainableMethodAdvices = chainableMethodAdvices;
-	}
-
-	private BeanMatcher _beanMatcher;
-	private List<ChainableMethodAdvice> _chainableMethodAdvices;
-	private ClassLoader _classLoader;
+	private final BeanMatcher _beanMatcher;
+	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 	private static class CacheKey {
 

@@ -29,22 +29,20 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.util.Map;
 
 /**
  * @author Zsolt Berentey
  */
-public class SystemEventAdvice
-	extends AnnotationChainableMethodAdvice<SystemEvent> {
-
-	public SystemEventAdvice() {
-		super(SystemEvent.class);
-	}
+public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
@@ -52,7 +50,8 @@ public class SystemEventAdvice
 			Object result)
 		throws Throwable {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!systemEvent.send()) {
 			return;
@@ -120,7 +119,8 @@ public class SystemEventAdvice
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
 			if (!isValid(serviceBeanMethodInvocation, _PHASE_BEFORE)) {
@@ -145,10 +145,19 @@ public class SystemEventAdvice
 	}
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(SystemEvent.class);
+	}
+
+	@Override
 	public void duringFinally(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		SystemEvent systemEvent = findAnnotation(serviceBeanMethodInvocation);
+		SystemEvent systemEvent =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!isValid(serviceBeanMethodInvocation, _PHASE_DURING_FINALLY)) {
 			return;

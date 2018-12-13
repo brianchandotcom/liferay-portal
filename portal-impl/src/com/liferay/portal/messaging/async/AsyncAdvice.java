@@ -21,23 +21,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
-
-	public AsyncAdvice() {
-		super(Async.class);
-	}
+public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
@@ -48,7 +44,31 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			return null;
 		}
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		String callbackDestinationName =
+			serviceBeanMethodInvocation.getAdviceMethodContext();
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				MessageBusUtil.sendMessage(
+					callbackDestinationName,
+					new AsyncProcessCallable(serviceBeanMethodInvocation));
+
+				return null;
+			});
+
+		return nullResult;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		Annotation annotation = annotations.get(Async.class);
+
+		if (annotation == null) {
+			return null;
+		}
 
 		if (method.getReturnType() != void.class) {
 			if (_log.isWarnEnabled()) {
@@ -63,32 +83,14 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		String destinationName = null;
 
 		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
-			Object thisObject = serviceBeanMethodInvocation.getThis();
-
-			destinationName = _destinationNames.get(thisObject.getClass());
+			destinationName = _destinationNames.get(targetClass);
 		}
 
 		if (destinationName == null) {
 			destinationName = _defaultDestinationName;
 		}
 
-		final String callbackDestinationName = destinationName;
-
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					MessageBusUtil.sendMessage(
-						callbackDestinationName,
-						new AsyncProcessCallable(serviceBeanMethodInvocation));
-
-					return null;
-				}
-
-			});
-
-		return nullResult;
+		return destinationName;
 	}
 
 	public String getDefaultDestinationName() {

@@ -68,9 +68,11 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
-		assetDisplayPageEntry.setPlid(
-			_createLayout(
-				userId, groupId, classNameId, classPK, serviceContext));
+
+		Layout layout = _createLayout(
+			userId, groupId, classNameId, classPK, serviceContext);
+
+		assetDisplayPageEntry.setPlid(layout.getPlid());
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 
@@ -143,17 +145,10 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		return assetDisplayPageEntry;
 	}
 
-	private long _createLayout(
+	private Layout _createLayout(
 			long userId, long groupId, long classNameId, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -162,13 +157,18 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			_portal.getClassName(classNameId), classPK);
 
-		Layout layout = layoutLocalService.addLayout(
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		return layoutLocalService.addLayout(
 			userId, groupId, false, 0, assetEntry.getTitleMap(),
 			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
 			null, "asset_display", typeSettingsProperties.toString(), true,
 			new HashMap<>(), serviceContext);
-
-		return layout.getPlid();
 	}
 
 	@ServiceReference(type = Portal.class)

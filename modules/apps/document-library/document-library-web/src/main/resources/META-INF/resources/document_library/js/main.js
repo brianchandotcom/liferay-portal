@@ -196,6 +196,16 @@ AUI.add(
 						}
 					},
 
+					onSelectPageCheckboxChanged: function(event) {
+						var instance = this;
+
+						var checked = event.data.checked;
+
+						var form = instance.get('form').node;
+
+						form.get(instance.NS + 'actionMode').val(checked ? `all:${instance.getFolderId()}` : `multiple`);
+					},
+
 					_moveToFolder: function(obj) {
 						var instance = this;
 

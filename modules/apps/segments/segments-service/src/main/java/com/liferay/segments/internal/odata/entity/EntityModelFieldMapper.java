@@ -146,7 +146,8 @@ public class EntityModelFieldMapper {
 
 				complexFields.add(
 					new Field(
-						entityFieldName, label, type, Collections.emptyList()));
+						"customField/" + entityFieldName, label, type,
+						Collections.emptyList()));
 			});
 
 		return complexFields;

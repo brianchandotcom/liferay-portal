@@ -753,7 +753,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Blogs#ENTRY_TABLE_CREATE_DATE");
 
-		AssertTextEquals(locator1 = "Blogs#ENTRY_TABLE_STATUS", value1 = "Approved");
+		AssertTextEquals(locator1 = "Blogs#ENTRY_TABLE_STATUS", value1 = "APPROVED");
 	}
 
 	macro viewEntryViaAPPG {
@@ -1171,7 +1171,7 @@ definition {
 
 		AssertTextEquals(locator1 = "Blogs#ENTRY_TABLE_TITLE", value1 = "${entryTitle}");
 
-		AssertTextEquals(locator1 = "Blogs#ENTRY_TABLE_STATUS", value1 = "Pending");
+		AssertTextEquals(locator1 = "Blogs#ENTRY_TABLE_STATUS", value1 = "PENDING");
 	}
 
 	macro viewWithWorkflowPGViaAP {

@@ -664,7 +664,7 @@ definition {
 		if (isSet(workflowStatus)) {
 			AssertTextEquals(
 				locator1 = "DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS",
-				value1 = "Pending"
+				value1 = "PENDING"
 			);
 		}
 

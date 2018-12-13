@@ -1378,7 +1378,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WC#ENTRY_TABLE_WORKFLOW_STATUS",
-			value1 = "Approved"
+			value1 = "APPROVED"
 		);
 	}
 

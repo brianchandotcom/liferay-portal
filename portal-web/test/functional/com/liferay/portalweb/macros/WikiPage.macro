@@ -1202,7 +1202,7 @@ definition {
 			value1 = "${wikiPageTitle}"
 		);
 
-		AssertTextEquals(locator1 = "WikiTable#ALL_PAGES_STATUS", value1 = "Approved");
+		AssertTextEquals(locator1 = "WikiTable#ALL_PAGES_STATUS", value1 = "APPROVED");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_REVISION",

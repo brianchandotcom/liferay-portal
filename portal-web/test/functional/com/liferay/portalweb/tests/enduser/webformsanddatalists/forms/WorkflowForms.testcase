@@ -97,7 +97,7 @@ definition {
 		WorkflowAsset.viewFormEntryTable(
 			fieldLabel = "Text Field",
 			fieldValue = "Text Field Value",
-			workflowStatus = "Pending"
+			workflowStatus = "PENDING"
 		);
 
 		Navigator.openURL();

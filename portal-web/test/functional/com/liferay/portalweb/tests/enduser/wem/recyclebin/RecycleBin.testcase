@@ -1334,27 +1334,27 @@ definition {
 		);
 
 		WebContent.viewSpecificVersionHistoryCP(
-			webContentStatus = "Approved",
+			webContentStatus = "APPROVED",
 			webContentTitle = "Web Content Title"
 		);
 
 		WebContent.viewSpecificVersionHistoryCP(
-			webContentStatus = "Expired",
+			webContentStatus = "EXPIRED",
 			webContentTitle = "Web Content Title Edit 1"
 		);
 
 		WebContent.viewSpecificVersionHistoryCP(
-			webContentStatus = "Expired",
+			webContentStatus = "EXPIRED",
 			webContentTitle = "Web Content Title Edit 2"
 		);
 
 		WebContent.viewSpecificVersionHistoryCP(
-			webContentStatus = "Approved",
+			webContentStatus = "APPROVED",
 			webContentTitle = "Web Content Title Edit 3"
 		);
 
 		WebContent.viewSpecificVersionHistoryCP(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "Web Content Title Edit Draft"
 		);
 	}

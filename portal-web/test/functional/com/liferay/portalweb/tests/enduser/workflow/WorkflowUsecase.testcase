@@ -869,7 +869,7 @@ definition {
 		WikiNavigator.gotoDraftPagesPG();
 
 		WikiPage.viewPageWithWorkflowPG(
-			wikiPageStatus = "Pending",
+			wikiPageStatus = "PENDING",
 			wikiPageTitle = "Wiki Page Title",
 			wikiPageUsername = "userfn userln"
 		);

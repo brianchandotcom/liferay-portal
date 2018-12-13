@@ -159,7 +159,7 @@ definition {
 
 		DDLRecord.viewStatusViaDDLDisplayTable(
 			fieldFieldLabel = "Status",
-			workflowStatus = "Approved"
+			workflowStatus = "APPROVED"
 		);
 
 		DDLRecord.viewViaDDLDisplayTable(

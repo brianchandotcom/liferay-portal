@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="IndentationCheck" files="modules/apps/user-associated-data/user-associated-data-web/src/main/java/com/liferay/user/associated/data/web/internal/display/context/UADExportProcessDisplayContext\.java" />
+	</checkstyle>
+</suppressions>

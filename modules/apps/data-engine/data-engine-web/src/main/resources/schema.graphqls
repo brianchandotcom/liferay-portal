@@ -71,5 +71,5 @@ type QueryType {
 
 type MutationType {
 	deleteDataDefinition(dataDefinitionId: ID!, languageId: String!): DeleteDataDefinitionType
-	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinitionInput: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
+	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
 }

@@ -69,20 +69,17 @@ public class DEGetDataDefinitionDataFetcher
 
 			getDataDefinitionType.setDataDefinition(dataDefinitionType);
 		}
-		catch (DEDataDefinitionException.MustHavePermission mhp)
-		{
+		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(
 				languageId, "the-user-must-have-data-definition-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
-		catch (DEDataDefinitionException.NoSuchDataDefinition nsdd)
-		{
+		catch (DEDataDefinitionException.NoSuchDataDefinition nsdd) {
 			errorMessage = getMessage(
 				languageId, "no-such-data-definition-with-id",
-				nsdd.getDataDefinitionId());
+				nsdd.getDEDataDefinitionId());
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			errorMessage = getMessage(
 				languageId, "unable-to-retrive-data-definition");
 		}

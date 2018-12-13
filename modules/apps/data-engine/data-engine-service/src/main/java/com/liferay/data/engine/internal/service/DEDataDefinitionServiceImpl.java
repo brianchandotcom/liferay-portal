@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.internal.service;
 
-import com.liferay.data.engine.constants.DEDataDefinitionConstants;
+import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.executor.DEDeleteRequestExecutor;
 import com.liferay.data.engine.executor.DEGetRequestExecutor;
@@ -68,8 +68,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 			throw dedde;
 		}
-		catch (NoSuchStructureException nsse)
-		{
+		catch (NoSuchStructureException nsse) {
 			_log.error(nsse, nsse);
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
@@ -101,8 +100,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 			throw dedde;
 		}
-		catch (NoSuchStructureException nsse)
-		{
+		catch (NoSuchStructureException nsse) {
 			_log.error(nsse, nsse);
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
@@ -148,15 +146,13 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 			throw dedde;
 		}
-		catch (NoSuchStructureException nsse)
-		{
+		catch (NoSuchStructureException nsse) {
 			_log.error(nsse, nsse);
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinition.getDEDataDefinitionId(), nsse);
 		}
-		catch (PrincipalException.MustHavePermission mhp)
-		{
+		catch (PrincipalException.MustHavePermission mhp) {
 			throw new DEDataDefinitionException.MustHavePermission(
 				mhp.actionId, mhp);
 		}
@@ -172,7 +168,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		throws PortalException {
 
 		String resourceName = DEDataEnginePermissionSupport.RESOURCE_NAME;
-		String action = DEDataDefinitionConstants.ADD_DATA_DEFINITION_ACTION;
+		String action = DEActionKeys.ADD_DATA_DEFINITION_ACTION;
 
 		if (!deDataEnginePermissionSupport.contains(
 				permissionChecker, resourceName, groupId, action)) {

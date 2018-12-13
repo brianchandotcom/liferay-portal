@@ -54,17 +54,17 @@ public class DEDataDefinitionException extends PortalException {
 
 	public static class NoSuchDataDefinition extends DEDataDefinitionException {
 
-		public NoSuchDataDefinition(long dataDefinitionId, Throwable cause) {
+		public NoSuchDataDefinition(long deDataDefinitionId, Throwable cause) {
 			super(cause);
 
-			_dataDefinitionId = dataDefinitionId;
+			_deDataDefinitionId = deDataDefinitionId;
 		}
 
-		public long getDataDefinitionId() {
-			return _dataDefinitionId;
+		public long getDEDataDefinitionId() {
+			return _deDataDefinitionId;
 		}
 
-		private final long _dataDefinitionId;
+		private final long _deDataDefinitionId;
 
 	}
 

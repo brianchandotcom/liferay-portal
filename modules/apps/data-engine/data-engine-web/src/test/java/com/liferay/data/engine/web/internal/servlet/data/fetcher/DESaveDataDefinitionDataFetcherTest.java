@@ -39,13 +39,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-public class DESaveDataDefinitionDataFetcherTest extends PowerMockito {
+public class DESaveDataDefinitionDataFetcherTest {
 
 	@Test
 	public void testCreateDataDefinitionFields() {
@@ -451,16 +450,16 @@ public class DESaveDataDefinitionDataFetcherTest extends PowerMockito {
 
 	@Test
 	public void testGet() throws Exception {
-		DataFetchingEnvironment dataFetchingEnvironment = mock(
+		DataFetchingEnvironment dataFetchingEnvironment = Mockito.mock(
 			DataFetchingEnvironment.class);
 
-		when(
+		Mockito.when(
 			dataFetchingEnvironment.getArgument("userId")
 		).thenReturn(
 			"2"
 		);
 
-		when(
+		Mockito.when(
 			dataFetchingEnvironment.getArgument("groupId")
 		).thenReturn(
 			"1"
@@ -626,13 +625,13 @@ public class DESaveDataDefinitionDataFetcherTest extends PowerMockito {
 			}
 		};
 
-		when(
-			dataFetchingEnvironment.getArgument("dataDefinitionInput")
+		Mockito.when(
+			dataFetchingEnvironment.getArgument("dataDefinition")
 		).thenReturn(
 			dataDefinition
 		);
 
-		DEDataDefinitionService deDataDefinitionService = mock(
+		DEDataDefinitionService deDataDefinitionService = Mockito.mock(
 			DEDataDefinitionService.class);
 
 		DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
@@ -640,7 +639,7 @@ public class DESaveDataDefinitionDataFetcherTest extends PowerMockito {
 				1
 			).build();
 
-		when(
+		Mockito.when(
 			deDataDefinitionService.execute(
 				Matchers.any(DEDataDefinitionSaveRequest.class))
 		).thenReturn(

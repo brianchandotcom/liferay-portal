@@ -55,8 +55,7 @@ public class DEDataDefinitionGetRequestExecutorImpl
 
 			return DEDataDefinitionGetResponse.Builder.of(map(ddmStructure));
 		}
-		catch (NoSuchStructureException nsse)
-		{
+		catch (NoSuchStructureException nsse) {
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinitionGetRequest.getDEDataDefinitionId(), nsse);
 		}

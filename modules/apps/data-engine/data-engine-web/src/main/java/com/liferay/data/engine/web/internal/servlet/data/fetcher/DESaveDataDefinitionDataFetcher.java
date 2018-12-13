@@ -51,22 +51,22 @@ public class DESaveDataDefinitionDataFetcher
 		long userId = GetterUtil.getLong(environment.getArgument("userId"));
 		long groupId = GetterUtil.getLong(environment.getArgument("groupId"));
 
-		Map<String, Object> dataDefinitionInput = environment.getArgument(
-			"dataDefinitionInput");
+		Map<String, Object> dataDefinition = environment.getArgument(
+			"dataDefinition");
 
 		String languageId = environment.getArgument("languageId");
 
 		List<DEDataDefinitionField> deDataDefinitionFields =
 			createDEDataDefinitionFields(
-				(List<Map<String, Object>>)dataDefinitionInput.get("fields"));
+				(List<Map<String, Object>>)dataDefinition.get("fields"));
 		long dataDefinitionId = GetterUtil.getLong(
-			dataDefinitionInput.get("dataDefinitionId"));
+			dataDefinition.get("dataDefinitionId"));
 		Map<String, String> descriptions = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinitionInput.get("descriptions"));
+			(List<Map<String, Object>>)dataDefinition.get("descriptions"));
 		Map<String, String> names = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinitionInput.get("names"));
+			(List<Map<String, Object>>)dataDefinition.get("names"));
 		String storageType = GetterUtil.getString(
-			dataDefinitionInput.get("storageType"), "json");
+			dataDefinition.get("storageType"), "json");
 
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			deDataDefinitionFields);
@@ -100,20 +100,17 @@ public class DESaveDataDefinitionDataFetcher
 
 			saveDataDefinitionType.setDataDefinition(dataDefinitionType);
 		}
-		catch (DEDataDefinitionException.MustHavePermission mhp)
-		{
+		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(
 				languageId, "the-user-must-have-data-definition-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
-		catch (DEDataDefinitionException.NoSuchDataDefinition nsdd)
-		{
+		catch (DEDataDefinitionException.NoSuchDataDefinition nsdd) {
 			errorMessage = getMessage(
 				languageId, "no-such-data-definition-with-id",
-				nsdd.getDataDefinitionId());
+				nsdd.getDEDataDefinitionId());
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			errorMessage = getMessage(
 				languageId, "unable-to-save-data-definition");
 		}

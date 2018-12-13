@@ -54,8 +54,7 @@ public class DEDataDefinitionDeleteRequestExecutorImpl
 			return DEDataDefinitionDeleteResponse.Builder.of(
 				deDataDefinitionId);
 		}
-		catch (NoSuchStructureException nsse)
-		{
+		catch (NoSuchStructureException nsse) {
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinitionDeleteRequest.getDEDataDefinitionId(), nsse);
 		}

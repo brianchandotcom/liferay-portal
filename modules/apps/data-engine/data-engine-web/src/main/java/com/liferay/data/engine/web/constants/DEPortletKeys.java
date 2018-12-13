@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.data.engine.constants;
+package com.liferay.data.engine.web.constants;
 
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
-public class DEDataDefinitionConstants {
+public class DEPortletKeys {
 
-	public static final String MODEL_RESOURCE_NAME =
-		"com.liferay.data.engine.model.DEDataDefinition";
+	public static final String DE_DATA_DEFINITION =
+		"com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet";
 
 }

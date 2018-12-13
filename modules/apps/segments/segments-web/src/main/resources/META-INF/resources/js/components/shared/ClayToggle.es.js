@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import ClayIcon from './ClayIcon.es';
+import getCN from 'classnames';
 
 class ClayToggle extends Component {
 	static propTypes = {
@@ -19,6 +20,7 @@ class ClayToggle extends Component {
 	render() {
 		const {
 			checked,
+			className,
 			iconOff,
 			iconOn,
 			label,
@@ -26,8 +28,13 @@ class ClayToggle extends Component {
 			...otherProps
 		} = this.props;
 
+		const classes = getCN(
+			'toggle-switch',
+			className
+		);
+
 		return (
-			<label className="toggle-switch" {...otherProps}>
+			<label className={classes} {...otherProps}>
 				<input
 					checked={checked}
 					className="toggle-switch-check"

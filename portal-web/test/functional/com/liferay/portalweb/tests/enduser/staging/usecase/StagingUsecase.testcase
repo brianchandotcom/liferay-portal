@@ -859,6 +859,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
+			selectTag = "true",
 			tagNameList = "tag1",
 			webContentContent = "Web Content With Tag1",
 			webContentTitle = "Web Content Title 1"
@@ -902,6 +903,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
+			selectTag = "true",
 			tagNameList = "tag1,tag2",
 			webContentContent = "Web Content With Tag1 and Tag2",
 			webContentTitle = "Web Content Title 2"

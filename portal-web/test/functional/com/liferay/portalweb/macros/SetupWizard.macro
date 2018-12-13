@@ -144,6 +144,17 @@ definition {
 	}
 
 	macro configureSampleDataPG {
+		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
+			AssertClick(
+				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
+				value1 ="(Change)"
+			);
+		}
+
+		if ("${addSampleData}" == "true") {
+			Check(locator1 = "Checkbox#ADD_SAMPLE_DATA");
+		}
+
 		if ("${addSampleData}" == "false") {
 			Uncheck(locator1 = "Checkbox#ADD_SAMPLE_DATA");
 		}

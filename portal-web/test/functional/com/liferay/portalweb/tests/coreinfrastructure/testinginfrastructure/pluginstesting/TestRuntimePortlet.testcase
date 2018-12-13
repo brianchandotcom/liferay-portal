@@ -24,7 +24,7 @@ definition {
 	@description = "This is a test case for LPS-56769."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Navigator.gotoPage(pageName = "Test Runtime Page");
 

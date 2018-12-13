@@ -22,8 +22,10 @@ import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
 import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
+import com.liferay.portal.monitoring.statistics.service.ServiceMonitoringControlImpl;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
@@ -105,6 +108,8 @@ public class AopConfigurableApplicationContextConfigurator
 
 			// Counter AOP for portal Spring context only
 
+			ServiceMonitoringControl serviceMonitoringControl = null;
+
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				ServiceBeanAopCacheManager serviceBeanAopCacheManager =
 					new ServiceBeanAopCacheManager(
@@ -122,6 +127,16 @@ public class AopConfigurableApplicationContextConfigurator
 					new ServiceBeanAutoProxyCreator(
 						new ServiceBeanMatcher(true), _classLoader,
 						serviceBeanAopCacheManager));
+
+				serviceMonitoringControl = new ServiceMonitoringControlImpl();
+
+				configurableListableBeanFactory.registerSingleton(
+					"serviceMonitoringControl", serviceMonitoringControl);
+			}
+			else {
+				serviceMonitoringControl =
+					(ServiceMonitoringControl)PortalBeanLocatorUtil.locate(
+						"serviceMonitoringControl");
 			}
 
 			// Service AOP
@@ -129,7 +144,8 @@ public class AopConfigurableApplicationContextConfigurator
 			ServiceBeanAopCacheManager serviceBeanAopCacheManager =
 				new ServiceBeanAopCacheManager(
 					_createChainableMethodAdvices(
-						configurableListableBeanFactory));
+						configurableListableBeanFactory,
+						serviceMonitoringControl));
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAopCacheManagerDestroyer",
@@ -147,7 +163,8 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private List<ChainableMethodAdvice> _createChainableMethodAdvices(
-			ConfigurableListableBeanFactory configurableListableBeanFactory) {
+			ConfigurableListableBeanFactory configurableListableBeanFactory,
+			ServiceMonitoringControl serviceMonitoringControl) {
 
 			List<ChainableMethodAdvice> chainableMethodAdvices =
 				new ArrayList<>(14);
@@ -164,13 +181,8 @@ public class AopConfigurableApplicationContextConfigurator
 
 			chainableMethodAdvices.add(new PortalResiliencyAdvice());
 
-			ServiceMonitorAdvice serviceMonitorAdvice =
-				new ServiceMonitorAdvice();
-
-			chainableMethodAdvices.add(serviceMonitorAdvice);
-
-			configurableListableBeanFactory.registerSingleton(
-				"serviceMonitoringControl", serviceMonitorAdvice);
+			chainableMethodAdvices.add(
+				new ServiceMonitorAdvice(serviceMonitoringControl));
 
 			AsyncAdvice asyncAdvice = new AsyncAdvice();
 

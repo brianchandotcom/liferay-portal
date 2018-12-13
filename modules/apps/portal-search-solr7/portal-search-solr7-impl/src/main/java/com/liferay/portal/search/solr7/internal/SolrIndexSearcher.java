@@ -58,6 +58,11 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.solr7.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr7.internal.facet.CompositeFacetProcessor;
@@ -471,6 +476,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		SolrQuery solrQuery = new SolrQuery();
 
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
+			searchContext);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		if (searchRequest.isExplain()) {
+			solrQuery.setShowDebugInfo(true);
+		}
+
 		addStats(solrQuery, searchContext);
 
 		if (!count) {
@@ -508,12 +522,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			}
 		}
 
-		String solrQueryString = solrQuery.toString();
-
-		searchContext.setAttribute("queryString", solrQueryString);
+		String requestString = solrQuery.toString();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + solrQueryString);
+			_log.debug("Search query " + requestString);
 		}
 
 		QueryResponse queryResponse = executeSearchRequest(solrQuery);
@@ -521,9 +533,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"The search engine processed ", solrQueryString, " in ",
+					"The search engine processed ", requestString, " in ",
 					queryResponse.getElapsedTime(), " ms"));
 		}
+
+		String responseString = getResponseString(queryResponse, searchContext);
+
+		populateResponse(requestString, responseString, searchContext);
 
 		return queryResponse;
 	}
@@ -620,6 +636,21 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return jsonString;
 	}
 
+	protected String getResponseString(
+		QueryResponse queryResponse, SearchContext searchContext) {
+
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
+			searchContext);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		if (searchRequest.isIncludeResponseString()) {
+			return queryResponse.toString();
+		}
+
+		return null;
+	}
+
 	protected String getSortFieldName(Sort sort, String scoreFieldName) {
 		String sortFieldName = sort.getFieldName();
 
@@ -628,6 +659,20 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 
 		return Field.getSortFieldName(sort, scoreFieldName);
+	}
+
+	protected void populateResponse(
+		String requestString, String responseString,
+		SearchContext searchContext) {
+
+		SearchResponseBuilder searchResponseBuilder = _getSearchResponseBuilder(
+			searchContext);
+
+		searchResponseBuilder.requestString(
+			requestString
+		).responseString(
+			responseString
+		);
 	}
 
 	protected Hits processResponse(
@@ -853,6 +898,12 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	@Reference
 	protected Props props;
 
+	@Reference
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Reference
+	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
+
 	private void _add(
 		Collection<String> filterQueries, Filter filter,
 		SearchContext searchContext) {
@@ -869,6 +920,20 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		if (!ArrayUtil.isEmpty(facetPostFilterQueries)) {
 			Collections.addAll(filterQueries, facetPostFilterQueries);
 		}
+	}
+
+	private SearchRequestBuilder _getSearchRequestBuilder(
+		SearchContext searchContext) {
+
+		return searchRequestBuilderFactory.getSearchRequestBuilder(
+			searchContext);
+	}
+
+	private SearchResponseBuilder _getSearchResponseBuilder(
+		SearchContext searchContext) {
+
+		return searchResponseBuilderFactory.getSearchResponseBuilder(
+			searchContext);
 	}
 
 	private static final String _VERSION_FIELD = "_version_";

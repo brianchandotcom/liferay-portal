@@ -26,26 +26,25 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-public class DEDeleteDataDefinitionDataFetcherTest extends PowerMockito {
+public class DEDeleteDataDefinitionDataFetcherTest {
 
 	@Test
 	public void testGet() throws Exception {
-		DataFetchingEnvironment dataFetchingEnvironment = mock(
+		DataFetchingEnvironment dataFetchingEnvironment = Mockito.mock(
 			DataFetchingEnvironment.class);
 
-		when(
+		Mockito.when(
 			dataFetchingEnvironment.getArgument("dataDefinitionId")
 		).thenReturn(
 			"1"
 		);
 
-		DEDataDefinitionService deDataDefinitionService = mock(
+		DEDataDefinitionService deDataDefinitionService = Mockito.mock(
 			DEDataDefinitionService.class);
 
 		DEDataDefinitionDeleteResponse deDataDefinitionDeleteResponse =
@@ -53,7 +52,7 @@ public class DEDeleteDataDefinitionDataFetcherTest extends PowerMockito {
 				1
 			).build();
 
-		when(
+		Mockito.when(
 			deDataDefinitionService.execute(
 				Matchers.any(DEDataDefinitionDeleteRequest.class))
 		).thenReturn(

@@ -15,11 +15,11 @@
 package com.liferay.data.engine.constants;
 
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
-public class DEDataDefinitionConstants {
+public class DEActionKeys {
 
-	public static final String MODEL_RESOURCE_NAME =
-		"com.liferay.data.engine.model.DEDataDefinition";
+	public static final String ADD_DATA_DEFINITION_ACTION =
+		"ADD_DATA_DEFINITION";
 
 }

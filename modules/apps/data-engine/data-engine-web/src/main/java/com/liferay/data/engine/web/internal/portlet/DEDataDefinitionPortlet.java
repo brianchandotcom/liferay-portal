@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.web.internal.portlet;
 
-import com.liferay.data.engine.constants.DEDataDefinitionConstants;
+import com.liferay.data.engine.web.constants.DEPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + DEDataDefinitionConstants.DATA_DEFINITION_PORTLET,
+		"javax.portlet.name=" + DEPortletKeys.DE_DATA_DEFINITION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

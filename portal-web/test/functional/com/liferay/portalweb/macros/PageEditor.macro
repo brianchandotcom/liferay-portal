@@ -1,7 +1,5 @@
 definition {
 	macro addFragment {
-		PageEditor.gotoTab(tabName = "Available");
-
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		Click(

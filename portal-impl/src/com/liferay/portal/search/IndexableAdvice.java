@@ -64,7 +64,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 
 		IndexableContext indexableContext =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		String name = indexableContext._name;
 

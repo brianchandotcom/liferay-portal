@@ -42,7 +42,7 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		Clusterable clusterable =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		SPI spi = SPIUtil.getSPI();
 
@@ -62,7 +62,7 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		Clusterable clusterable =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;

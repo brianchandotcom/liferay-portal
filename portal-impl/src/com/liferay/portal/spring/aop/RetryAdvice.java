@@ -76,7 +76,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		RetryContext retryContext =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		RetryAcceptor retryAcceptor = retryContext._retryAcceptor;
 		Map<String, String> properties = retryContext._properties;

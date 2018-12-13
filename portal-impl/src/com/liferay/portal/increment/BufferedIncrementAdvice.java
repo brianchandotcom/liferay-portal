@@ -48,7 +48,7 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		BufferedIncrementContext bufferedIncrementContext =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		BufferedIncrementProcessor bufferedIncrementProcessor =
 			bufferedIncrementContext._bufferedIncrementProcessor;

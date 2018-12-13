@@ -48,7 +48,7 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		ThreadLocalCachable threadLocalCachable =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(

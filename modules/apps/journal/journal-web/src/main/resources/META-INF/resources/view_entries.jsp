@@ -135,9 +135,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h6>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-jsp
-							path="/article_action.jsp"
-						/>
+						<liferay-ui:search-container-column-text>
+							<clay:dropdown-actions
+								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -255,9 +257,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							value="<%= HtmlUtil.escape(title) %>"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/article_action.jsp"
-						/>
+						<liferay-ui:search-container-column-text>
+							<clay:dropdown-actions
+								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -314,9 +318,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h6>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-jsp
-							path="/folder_action.jsp"
-						/>
+						<liferay-ui:search-container-column-text>
+							<clay:dropdown-actions
+								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -392,9 +398,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							value='<%= LanguageUtil.get(request, "folder") %>'
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/folder_action.jsp"
-						/>
+						<liferay-ui:search-container-column-text>
+							<clay:dropdown-actions
+								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

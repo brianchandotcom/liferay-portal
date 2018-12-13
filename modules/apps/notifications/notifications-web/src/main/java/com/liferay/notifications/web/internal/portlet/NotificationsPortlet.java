@@ -70,12 +70,23 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long[] userNotificationEventIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
 			_deleteUserNotificationEvent(userNotificationEventId);
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle, "all-notifications-were-deleted-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -84,10 +95,21 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long userNotificationEventId = ParamUtil.getLong(
 			actionRequest, "userNotificationEventId");
 
 		_deleteUserNotificationEvent(userNotificationEventId);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle, "notification-was-deleted-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -122,10 +144,22 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long userNotificationEventId = ParamUtil.getLong(
 			actionRequest, "userNotificationEventId");
 
 		updateArchived(userNotificationEventId, true);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"notification-was-marked-as-read-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -134,10 +168,22 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long userNotificationEventId = ParamUtil.getLong(
 			actionRequest, "userNotificationEventId");
 
 		updateArchived(userNotificationEventId, false);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"notification-was-marked-as-unread-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -146,12 +192,24 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long[] userNotificationEventIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
 			updateArchived(userNotificationEventId, true);
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"notifications-were-marked-as-read-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -160,12 +218,24 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long[] userNotificationEventIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
 			updateArchived(userNotificationEventId, false);
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"notifications-were-marked-as-unread-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}

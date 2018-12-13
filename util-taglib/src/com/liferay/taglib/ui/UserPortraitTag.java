@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -47,46 +47,21 @@ import javax.servlet.jsp.JspWriter;
  */
 public class UserPortraitTag extends IncludeTag {
 
-	public static String getUserPortraitHTML(
-		User user, String cssClass, Supplier<String> userInitialsSupplier,
+	public static String getUserPortraitHTML(String cssClass,
 		Supplier<String> userPortraitURLSupplier) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("<div class=\"");
-
-		boolean imageDefaultUseInitials =
-			_userFileUploadsSettings.isImageDefaultUseInitials();
-		long userPortraitId = 0;
-
-		if (user != null) {
-			userPortraitId = user.getPortraitId();
-
-			if (LanguageConstants.VALUE_IMAGE.equals(
-					LanguageUtil.get(
-						user.getLocale(),
-						LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
-						LanguageConstants.VALUE_INITIALS))) {
-
-				imageDefaultUseInitials = false;
-			}
-		}
-
-		if (imageDefaultUseInitials && (userPortraitId == 0)) {
-			sb.append(LexiconUtil.getUserColorCssClass(user));
-			sb.append(" ");
-			sb.append(cssClass);
-			sb.append(" user-icon user-icon-default\"><span>");
-			sb.append(userInitialsSupplier.get());
-			sb.append("</span></div>");
-		}
-		else {
-			sb.append(cssClass);
-			sb.append(" aspect-ratio-bg-cover user-icon\" ");
-			sb.append("style=\"background-image:url(");
-			sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
-			sb.append(")\"></div>");
-		}
+		sb.append("<span class=\"sticker sticker-circle sticker-light");
+		sb.append(" ");
+		sb.append(cssClass);
+		sb.append("\">");
+		sb.append("<span class=\"sticker-overlay\">");
+		sb.append("<img alt=\"\" class=\"sticker-img\" src=\"");
+		sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
+		sb.append("\">");
+		sb.append("</span>");
+		sb.append("</span>");
 
 		return sb.toString();
 	}
@@ -97,8 +72,7 @@ public class UserPortraitTag extends IncludeTag {
 
 		User user = getUser();
 
-		String userPortraitHTML = getUserPortraitHTML(
-			user, _cssClass, () -> getUserInitials(user),
+		String userPortraitHTML = getUserPortraitHTML(_cssClass,
 			() -> getPortraitURL(user));
 
 		jspWriter.write(userPortraitHTML);

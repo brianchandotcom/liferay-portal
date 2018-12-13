@@ -166,7 +166,7 @@ public class MentionsPortlet extends MVCPortlet {
 		throws PortalException {
 
 		return UserPortraitTag.getUserPortraitHTML(
-			user, StringPool.BLANK, () -> user.getInitials(),
+			StringPool.BLANK,
 			() -> {
 				try {
 					return user.getPortraitURL(themeDisplay);

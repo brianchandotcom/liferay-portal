@@ -841,15 +841,16 @@ public class BeanPortletExtension implements Extension {
 		Map<String, Set<String>> liferayConfiguration = new HashMap<>();
 
 		if ((propertyNames != null) && (propertyNames.length > 0)) {
-			for (String propertyName : propertyNames) {
+			for (String propertyString : propertyNames) {
+				String propertyName = null;
 				String propertyValue = null;
 
-				int equalsPos = propertyName.indexOf(CharPool.EQUAL);
+				int equalsPos = propertyString.indexOf(CharPool.EQUAL);
 
 				if (equalsPos > 0) {
-					propertyName = propertyName.substring(0, equalsPos);
+					propertyName = propertyString.substring(0, equalsPos);
 
-					propertyValue = propertyName.substring(equalsPos + 1);
+					propertyValue = propertyString.substring(equalsPos + 1);
 
 					if (Validator.isNull(displayCategory) &&
 						propertyName.equals(

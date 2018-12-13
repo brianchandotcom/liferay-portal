@@ -21,16 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-JournalArticle article = null;
-
-if (row != null) {
-	article = (JournalArticle)row.getObject();
-}
-else {
-	article = (JournalArticle)request.getAttribute("info_panel.jsp-entry");
-}
+JournalArticle article = (JournalArticle)request.getAttribute("info_panel.jsp-entry");
 %>
 
 <liferay-ui:icon-menu

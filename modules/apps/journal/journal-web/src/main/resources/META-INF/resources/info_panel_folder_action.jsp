@@ -17,16 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-JournalFolder folder = null;
-
-if (row != null) {
-	folder = (JournalFolder)row.getObject();
-}
-else {
-	folder = (JournalFolder)request.getAttribute("info_panel.jsp-folder");
-}
+JournalFolder folder = (JournalFolder)request.getAttribute("info_panel.jsp-folder");
 
 String modelResource = null;
 String modelResourceDescription = null;

@@ -67,7 +67,7 @@ public class IndividualJSONObjectMapperTest {
 		Results<Individual> results = _individualJSONObjectMapper.mapToResults(
 			_read("get-individuals.json"));
 
-		Assert.assertEquals(2, results.getTotal());
+		Assert.assertEquals(1, results.getTotal());
 
 		List<Individual> individuals = results.getItems();
 
@@ -101,7 +101,6 @@ public class IndividualJSONObjectMapperTest {
 	}
 
 	private static final IndividualJSONObjectMapper
-		_individualJSONObjectMapper =
-		new IndividualJSONObjectMapper();
+		_individualJSONObjectMapper = new IndividualJSONObjectMapper();
 
 }

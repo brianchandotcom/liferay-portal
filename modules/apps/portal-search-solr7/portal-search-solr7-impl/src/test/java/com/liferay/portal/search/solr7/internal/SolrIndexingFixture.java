@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr7.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr7.internal.document.DefaultSolrDocumentFactory;
@@ -203,6 +205,10 @@ public class SolrIndexingFixture implements IndexingFixture {
 			{
 				jsonFactory = _jsonFactory;
 				props = createProps();
+				searchRequestBuilderFactory =
+					new SearchRequestBuilderFactoryImpl();
+				searchResponseBuilderFactory =
+					new SearchResponseBuilderFactoryImpl();
 
 				setFacetProcessor(_facetProcessor);
 				setFilterTranslator(createSolrFilterTranslator());

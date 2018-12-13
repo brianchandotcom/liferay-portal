@@ -28,4 +28,9 @@ public class QueryStringTest extends BaseQueryStringTestCase {
 		return new SolrIndexingFixture();
 	}
 
+	@Override
+	protected String getExpectedPartOfResponseString() {
+		return "response={numFound=1,";
+	}
+
 }

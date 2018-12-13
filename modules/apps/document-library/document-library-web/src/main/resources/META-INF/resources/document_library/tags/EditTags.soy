@@ -3,6 +3,8 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? commonTags: string}
+	{@param? description: string}
+	{@param? multiple: bool}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
@@ -10,6 +12,8 @@
 			{if $commonTags}
 				{call .tags}
 					{param commonTags: $commonTags /}
+					{param description: $description /}
+					{param multiple: $multiple /}
 				{/call}
 			{else}
 				{call .loading /}
@@ -43,7 +47,24 @@
 
 {template .tags}
 	{@param? commonTags: string}
+	{@param? description: string}
+	{@param? multiple: bool}
 
-	<h4>Modal Body</h4>
+	<p>{$description}</p>
+
+	{if $multiple}
+		{call ClayRadio.render}
+			{param checked: true /}
+			{param label: 'Add' /}
+			{param name: 'add-replace' /}
+		{/call}
+
+		{call ClayRadio.render}
+			{param label: 'Replace' /}
+			{param name: 'add-replace' /}
+		{/call}
+	{/if}
+
+	<strong>{msg desc=""}Tags{/msg}</strong>
 	<p>Common Tags: {$commonTags}</p>
 {/template}

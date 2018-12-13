@@ -87,6 +87,9 @@ public class FolderNestedCollectionResource
 			"Folder"
 		).identifier(
 			Folder::getFolderId
+		).addBidirectionalModel(
+			"documentsRepository", "folders", RootFolderIdentifier.class,
+			Folder::getGroupId
 		).addDate(
 			"dateCreated", Folder::getCreateDate
 		).addDate(

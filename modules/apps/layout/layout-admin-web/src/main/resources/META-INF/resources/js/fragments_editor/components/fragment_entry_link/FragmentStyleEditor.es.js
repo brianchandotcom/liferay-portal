@@ -15,11 +15,15 @@ class FragmentStyleEditor extends State {
 	 * @inheritDoc
 	 * @review
 	 */
-	created() {
+	constructor(...args) {
+		super(...args);
+
 		this.disposeStyleTooltip = this.disposeStyleTooltip.bind(this);
 		this._handleButtonClick = this._handleButtonClick.bind(this);
 		this._handleChangeStyle = this._handleChangeStyle.bind(this);
 		this._handleNodeClick = this._handleNodeClick.bind(this);
+
+		this.syncType();
 
 		this._onNodeClickHandler = dom.on(this.node, 'click', this._handleNodeClick);
 	}

@@ -105,9 +105,7 @@ class CriteriaGroup extends Component {
 		onChange(
 			{
 				...criteria,
-				...{
-					conjunctionName: conjunctionSelected
-				}
+				conjunctionName: conjunctionSelected
 			}
 		);
 	}
@@ -123,14 +121,14 @@ class CriteriaGroup extends Component {
 	_handleCriterionAdd = (index, criterion) => {
 		const {criteria, onChange, root, supportedOperators} = this.props;
 
-		const {operatorName, propertyName, value} = criterion;
+		const {operatorName, propertyName, value = ''} = criterion;
 
 		const newCriterion = {
 			operatorName: operatorName ?
 				operatorName :
 				supportedOperators[0].name,
 			propertyName,
-			value: value ? value : ''
+			value
 		};
 
 		if (root && !criteria) {
@@ -146,13 +144,11 @@ class CriteriaGroup extends Component {
 			onChange(
 				{
 					...criteria,
-					...{
-						items: insertAtIndex(
-							newCriterion,
-							criteria.items,
-							index
-						)
-					}
+					items: insertAtIndex(
+						newCriterion,
+						criteria.items,
+						index
+					)
 				}
 			);
 		}
@@ -164,9 +160,7 @@ class CriteriaGroup extends Component {
 		onChange(
 			{
 				...criteria,
-				...{
-					items: replaceAtIndex(newCriterion, criteria.items, index)
-				}
+				items: replaceAtIndex(newCriterion, criteria.items, index)
 			}
 		);
 	}
@@ -177,11 +171,9 @@ class CriteriaGroup extends Component {
 		onChange(
 			{
 				...criteria,
-				...{
-					items: criteria.items.filter(
-						(fItem, fIndex) => fIndex !== index
-					)
-				}
+				items: criteria.items.filter(
+					(fItem, fIndex) => fIndex !== index
+				)
 			}
 		);
 	}
@@ -193,13 +185,19 @@ class CriteriaGroup extends Component {
 	}
 
 	_renderConjunction = index => {
-		const {criteria, editing, groupId, onMove, supportedConjunctions} = this.props;
+		const {
+			criteria,
+			editing,
+			groupId,
+			onMove,
+			supportedConjunctions
+		} = this.props;
 
 		return (
 			<Fragment>
 				<DropZone
+					dropIndex={index}
 					groupId={groupId}
-					index={index}
 					onCriterionAdd={this._handleCriterionAdd}
 					onMove={onMove}
 				/>
@@ -223,8 +221,8 @@ class CriteriaGroup extends Component {
 
 				<DropZone
 					before
+					dropIndex={index}
 					groupId={groupId}
-					index={index}
 					onCriterionAdd={this._handleCriterionAdd}
 					onMove={onMove}
 				/>
@@ -289,8 +287,8 @@ class CriteriaGroup extends Component {
 				)}
 
 				<DropZone
+					dropIndex={index + 1}
 					groupId={groupId}
-					index={index + 1}
 					onCriterionAdd={this._handleCriterionAdd}
 					onMove={onMove}
 				/>
@@ -312,9 +310,8 @@ class CriteriaGroup extends Component {
 
 		const classes = getCN(
 			'criteria-group-root',
+			`criteria-group-item${root ? '-root' : ''}`,
 			{
-				'criteria-group-item': !root,
-				'criteria-group-item-root': root,
 				'dnd-drag': dragging
 			}
 		);
@@ -325,14 +322,14 @@ class CriteriaGroup extends Component {
 			>
 				{this._isCriteriaEmpty() ?
 					<EmptyDropZone
-						index={0}
+						dropIndex={0}
 						onCriterionAdd={this._handleCriterionAdd}
 					/> :
 					<Fragment>
 						<DropZone
 							before
+							dropIndex={0}
 							groupId={groupId}
-							index={0}
 							onCriterionAdd={this._handleCriterionAdd}
 							onMove={onMove}
 						/>

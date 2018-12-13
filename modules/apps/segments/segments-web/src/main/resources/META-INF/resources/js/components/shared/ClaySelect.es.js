@@ -14,9 +14,7 @@ class ClaySelect extends Component {
 
 		const classes = getCN(
 			'form-control',
-			{
-				[className]: className
-			}
+			className
 		);
 
 		return (

@@ -33,17 +33,11 @@ class CriteriaSidebarSearchBar extends Component {
 					/>
 
 					<div className="input-group-inset-item input-group-inset-item-after">
-						{searchValue ?
-							<ClayButton
-								iconName="times"
-								onClick={this._handleClear}
-								style="unstyled"
-							/> :
-							<ClayButton
-								iconName="search"
-								style="unstyled"
-							/>
-						}
+						<ClayButton
+							iconName={searchValue ? 'times' : 'search'}
+							onClick={searchValue ? this._handleClear : undefined}
+							style="unstyled"
+						/>
 					</div>
 				</div>
 			</div>

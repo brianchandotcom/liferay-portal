@@ -180,7 +180,9 @@ function isValueType(types, value) {
 function isRedundantGroup({lastNodeWasGroup, oDataASTNode, prevConjunction}) {
 	const nextNodeExpressionName = getNextNonGroupExpressionName(oDataASTNode);
 
-	return lastNodeWasGroup || oDataV4ParserNameMap[prevConjunction] === nextNodeExpressionName || !isValueType(CONJUNCTIONS, nextNodeExpressionName);
+	return lastNodeWasGroup ||
+		oDataV4ParserNameMap[prevConjunction] === nextNodeExpressionName ||
+		!isValueType(CONJUNCTIONS, nextNodeExpressionName);
 }
 
 /**
@@ -300,13 +302,13 @@ function transformGroupNode(context) {
 		[{
 			conjunctionName: getConjunctionForGroup(oDataASTNode),
 			groupId: generateGroupId(),
-			items: [...toCriteria(
+			items: toCriteria(
 				{
 					lastNodeWasGroup: true,
 					oDataASTNode: oDataASTNode.value,
 					prevConjunction
 				}
-			)]
+			)
 		}];
 }
 

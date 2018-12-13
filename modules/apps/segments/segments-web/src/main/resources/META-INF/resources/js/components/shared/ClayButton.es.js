@@ -67,7 +67,7 @@ class ClayButton extends Component {
 
 				{iconName && (
 					<ClayIcon
-						className={`${label ? 'text-icon' : 'icon'}`}
+						className={label ? 'text-icon' : 'icon'}
 						iconName={iconName}
 					/>
 				)}

@@ -51,14 +51,14 @@ function drop(props, monitor) {
 		index: startIndex
 	} = monitor.getItem();
 
-	const {operatorName, propertyName, value} = droppedCriterion;
+	const {operatorName, propertyName, value = ''} = droppedCriterion;
 
 	const newCriterion = {
 		operatorName: operatorName ?
 			operatorName :
 			supportedOperators[0].name,
 		propertyName,
-		value: value ? value : ''
+		value
 	};
 
 	const newGroup = {
@@ -121,8 +121,13 @@ class CriteriaRow extends Component {
 		editing: true
 	};
 
-	_getReadableCriteriaString(modelLabel, propertyLabel, operatorLabel, value) {
-		return sub(
+	_getReadableCriteriaString = (
+		modelLabel,
+		propertyLabel,
+		operatorLabel,
+		value
+	) =>
+		sub(
 			Liferay.Language.get('x-with-property-x-x-x'),
 			[
 				<span key="model-name">
@@ -140,7 +145,6 @@ class CriteriaRow extends Component {
 			],
 			false
 		);
-	}
 
 	_getSelectedItem = (list, idSelected) =>
 		list.find(item => item.name === idSelected);
@@ -261,7 +265,6 @@ class CriteriaRow extends Component {
 
 							<input
 								className="criterion-input form-control"
-								id="queryRowValue"
 								onChange={this._handleInputChange('value')}
 								type="text"
 								value={value}

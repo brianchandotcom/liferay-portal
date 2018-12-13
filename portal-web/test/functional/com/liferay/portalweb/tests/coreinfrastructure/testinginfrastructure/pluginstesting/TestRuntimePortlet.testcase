@@ -2,7 +2,7 @@
 definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Security";
+	property testray.main.component.name = "Test Plugins";
 	property portlet.plugins.includes = "test-runtime-action-portlet,test-runtime-parent-portlet";
 
 	setUp {

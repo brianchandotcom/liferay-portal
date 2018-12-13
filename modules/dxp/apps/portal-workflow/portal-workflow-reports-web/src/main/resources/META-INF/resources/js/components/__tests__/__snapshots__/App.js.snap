@@ -1,0 +1,391 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link changes the class when hovered 1`] = `
+<div
+  className="portal-workflow-reports-app container-fluid"
+>
+  <div
+    className="col-12"
+  >
+    <div
+      className="row card-panel"
+    >
+      <div
+        className="col-9"
+      >
+        <div
+          className="card"
+        >
+          <div
+            className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold"
+          >
+            Open Processes Summary
+          </div>
+          <div
+            className="card-body"
+          >
+            <div
+              className="row d-flex justify-content-start"
+              style={
+                Object {
+                  "marginTop": "8px",
+                }
+              }
+            >
+              <div
+                className="summary-card border col-2"
+                style={
+                  Object {
+                    "marginLeft": "16px",
+                  }
+                }
+              >
+                <span
+                  className="regular-text semi-bold text-secondary"
+                >
+                  Total Open
+                </span>
+                <div
+                  className=""
+                >
+                  <span
+                    className="font-weight-normal"
+                    style={
+                      Object {
+                        "fontSize": "2.5rem",
+                      }
+                    }
+                  >
+                    15
+                  </span>
+                  <span
+                    className="regular-text text-secondary"
+                  >
+                     
+                    items
+                  </span>
+                </div>
+              </div>
+              <div
+                className="summary-card border col-2"
+                style={
+                  Object {
+                    "marginLeft": "16px",
+                  }
+                }
+              >
+                <span
+                  className="regular-text semi-bold text-secondary"
+                >
+                  On time
+                </span>
+                <div
+                  className=""
+                >
+                  <span
+                    className="font-weight-normal"
+                    style={
+                      Object {
+                        "fontSize": "2.5rem",
+                      }
+                    }
+                  >
+                    82
+                  </span>
+                  <span
+                    className="regular-text text-secondary"
+                  >
+                     
+                    items
+                  </span>
+                </div>
+              </div>
+              <div
+                className="summary-card border col-2"
+                style={
+                  Object {
+                    "marginLeft": "16px",
+                  }
+                }
+              >
+                <span
+                  className="regular-text semi-bold text-secondary"
+                >
+                  Overdue
+                </span>
+                <div
+                  className=""
+                >
+                  <span
+                    className="font-weight-normal"
+                    style={
+                      Object {
+                        "fontSize": "2.5rem",
+                      }
+                    }
+                  >
+                    33
+                  </span>
+                  <span
+                    className="regular-text text-secondary"
+                  >
+                     
+                    items
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="col-12"
+              style={
+                Object {
+                  "paddingTop": "30px",
+                }
+              }
+            >
+              <div />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12"
+      >
+        <div>
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
+          >
+            <div
+              className="container"
+            >
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="dropdown nav-item"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="dropdown-toggle nav-link navbar-breakpoint-down-d-none"
+                    data-toggle="dropdown"
+                    href="#1"
+                    role="button"
+                  >
+                    <span
+                      className="navbar-text-truncate"
+                    >
+                      Filter and Order2
+                    </span>
+                    <svg
+                      className="lexicon-icon lexicon-icon-caret-bottom"
+                      focusable="false"
+                      role="presentation"
+                    >
+                      <use
+                        href="/images/icons/icons.svg#caret-bottom"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="nav-link nav-link-monospaced dropdown-toggle navbar-breakpoint-d-none"
+                    data-toggle="dropdown"
+                    href="#1"
+                    role="button"
+                  >
+                    <svg
+                      className="lexicon-icon lexicon-icon-filter"
+                      focusable="false"
+                      role="presentation"
+                    >
+                      <use
+                        href="/images/icons/icons.svg#filter"
+                      />
+                    </svg>
+                  </a>
+                  <div
+                    className="dropdown-menu"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#1"
+                          role="button"
+                        >
+                          Filter Action 1
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#1"
+                          role="button"
+                        >
+                          Filter Action 2
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#1"
+                          role="button"
+                        >
+                          Filter Action 3
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div
+                className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down"
+              >
+                <div
+                  className="container"
+                >
+                  <form
+                    role="search"
+                  >
+                    <div
+                      className="input-group"
+                    >
+                      <div
+                        className="input-group-item"
+                      >
+                        <input
+                          className="form-control input-group-inset input-group-inset-after"
+                          placeholder="Search for..."
+                          type="text"
+                        />
+                        <span
+                          className="input-group-inset-item input-group-inset-item-after"
+                        >
+                          <button
+                            className="btn btn-unstyled navbar-breakpoint-d-none"
+                            type="button"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-times"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="/images/icons/icons.svg#times"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            className="btn btn-unstyled navbar-breakpoint-d-block"
+                            type="button"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-search"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="/images/icons/icons.svg#search"
+                              />
+                            </svg>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div
+          className="table-responsive"
+        >
+          <table
+            className="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  className="table-cell-expand table-head-title"
+                  style={
+                    Object {
+                      "width": "70%",
+                    }
+                  }
+                >
+                  Process Name
+                </th>
+                <th
+                  className="table-cell-expand table-head-title"
+                  style={
+                    Object {
+                      "width": "15%",
+                    }
+                  }
+                >
+                  On Time
+                </th>
+                <th
+                  className="text-body table-cell-expand table-head-title"
+                  style={
+                    Object {
+                      "width": "15%",
+                    }
+                  }
+                >
+                  Overdue
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Sales Quoting
+                </td>
+                <td>
+                  82 items
+                </td>
+                <td>
+                  33 items
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Refund Request
+                </td>
+                <td>
+                  12 items
+                </td>
+                <td>
+                  25 items
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Travel Reimbursement
+                </td>
+                <td>
+                  5 items
+                </td>
+                <td>
+                  23 items
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

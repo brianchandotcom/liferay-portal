@@ -9,16 +9,20 @@
 	"description": "",
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
+		"babel-jest": "^23.6.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.24.1",
 		"check-source-formatting": "^2.0.13",
 		"copyfiles": "^2.1.0",
+		"cross-env": "^5.2.0",
 		"eslint": "^5.10.0",
 		"eslint-config-liferay": "^2.0.18",
 		"eslint-plugin-react": "^7.11.1",
+		"jest": "^23.6.0",
 		"liferay-npm-bundler": "^2.5.1",
 		"liferay-npm-bundler-preset-react": "^1.8.0",
-		"prettier-eslint-cli": "^4.7.1"
+		"prettier-eslint-cli": "^4.7.1",
+		"react-test-renderer": "^16.6.3"
 	},
 	"license": "ISC",
 	"main": "js/index.js",
@@ -27,7 +31,8 @@
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
 		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",
-		"lint": "eslint src/main/resources/META-INF/resources/js/"
+		"lint": "eslint src/main/resources/META-INF/resources/js/",
+		"test": "cross-env TZ=Etc/GMT jest --coverage --config .jest.json"
 	},
 	"version": "1.0.0"
 }

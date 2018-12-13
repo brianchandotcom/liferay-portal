@@ -1,9 +1,10 @@
 import React from 'react';
+import ProcessListManagementBar from './ProcessListManagementBar';
 
 export default class ProcessListCard extends React.Component {
 	render() {
 		return (
-			<div className="row card-panel">
+			<div className="row">
 				<div className="col-12">
 					<div className="card">
 						<div className="card-body">

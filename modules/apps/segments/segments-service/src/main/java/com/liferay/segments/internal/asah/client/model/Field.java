@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.segments.internal.asah.client.model;
@@ -125,29 +125,29 @@ public class Field {
 		final StringBuilder sb = new StringBuilder(26);
 
 		sb.append("Field{");
-		sb.append("_context='");
+		sb.append("context='");
 		sb.append(_context);
-		sb.append("', _dataSourceId='");
+		sb.append("', dataSourceId='");
 		sb.append(_dataSourceId);
-		sb.append("', _dataSourceName='");
+		sb.append("', dataSourceName='");
 		sb.append(_dataSourceName);
-		sb.append("', _dateModified='");
+		sb.append("', dateModified='");
 		sb.append(_dateModified);
-		sb.append("', _fieldType='");
+		sb.append("', fieldType='");
 		sb.append(_fieldType);
-		sb.append("', _id='");
+		sb.append("', id='");
 		sb.append(_id);
-		sb.append("', _label='");
+		sb.append("', label='");
 		sb.append(_label);
-		sb.append("', _name='");
+		sb.append("', name='");
 		sb.append(_name);
-		sb.append("', _ownerId='");
+		sb.append("', ownerId='");
 		sb.append(_ownerId);
-		sb.append("', _ownerType='");
+		sb.append("', ownerType='");
 		sb.append(_ownerType);
-		sb.append("', _sourceName='");
+		sb.append("', sourceName='");
 		sb.append(_sourceName);
-		sb.append("', _value='");
+		sb.append("', value='");
 		sb.append(_value);
 		sb.append("}");
 

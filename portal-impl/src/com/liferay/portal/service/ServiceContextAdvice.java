@@ -33,7 +33,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
 
-		int index = serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+		int index = serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 

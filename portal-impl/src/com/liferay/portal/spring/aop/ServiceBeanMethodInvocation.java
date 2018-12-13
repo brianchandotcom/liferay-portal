@@ -51,13 +51,13 @@ public class ServiceBeanMethodInvocation {
 		return false;
 	}
 
-	public Object[] getArguments() {
-		return _arguments;
+	@SuppressWarnings("unchecked")
+	public <T> T getAdviceMethodContext() {
+		return (T)_aopMethod.getAdviceMethodContext(_index);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T> T getCurrentAdviceMethodContext() {
-		return (T)_aopMethod.getAdviceMethodContext(_index);
+	public Object[] getArguments() {
+		return _arguments;
 	}
 
 	public Method getMethod() {

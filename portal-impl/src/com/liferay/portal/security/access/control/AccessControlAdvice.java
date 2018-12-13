@@ -42,7 +42,7 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 		incrementServiceDepth();
 
 		AccessControlled accessControlled =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		_accessControlAdvisor.accept(
 			serviceBeanMethodInvocation, accessControlled);

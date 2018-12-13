@@ -51,7 +51,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!systemEvent.send()) {
 			return;
@@ -120,7 +120,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
 			if (!isValid(serviceBeanMethodInvocation, _PHASE_BEFORE)) {
@@ -157,7 +157,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!isValid(serviceBeanMethodInvocation, _PHASE_DURING_FINALLY)) {
 			return;

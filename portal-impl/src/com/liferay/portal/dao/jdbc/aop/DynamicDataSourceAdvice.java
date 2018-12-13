@@ -41,7 +41,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		throws Throwable {
 
 		Operation operation =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		_dynamicDataSourceTargetSource.pushOperation(operation);
 

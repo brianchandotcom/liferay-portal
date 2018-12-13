@@ -42,7 +42,7 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 		}
 
 		Clusterable clusterable =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		ClusterableInvokerUtil.invokeOnCluster(
 			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
@@ -60,7 +60,7 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 		}
 
 		Clusterable clusterable =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;

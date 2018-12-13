@@ -45,7 +45,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 		}
 
 		String callbackDestinationName =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

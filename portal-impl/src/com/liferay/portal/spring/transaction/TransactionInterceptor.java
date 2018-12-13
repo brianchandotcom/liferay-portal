@@ -54,7 +54,7 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 		throws Throwable {
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		return transactionExecutor.execute(
 			transactionAttributeAdapter, serviceBeanMethodInvocation);

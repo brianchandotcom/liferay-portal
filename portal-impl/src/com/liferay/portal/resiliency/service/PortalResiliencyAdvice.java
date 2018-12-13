@@ -50,7 +50,7 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		SPI spi = serviceBeanMethodInvocation.getCurrentAdviceMethodContext();
+		SPI spi = serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(

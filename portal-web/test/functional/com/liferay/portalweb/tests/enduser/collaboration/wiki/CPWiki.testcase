@@ -443,9 +443,9 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page 1");
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 2");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page 2");
 
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
 
@@ -580,12 +580,12 @@ definition {
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
 		WikiTable.viewEntry(
-			draftStatus = "Approved",
+			draftStatus = "APPROVED",
 			wikiPageTitle = "Wiki Page 1 Restored"
 		);
 
 		WikiTable.viewEntry(
-			draftStatus = "Approved",
+			draftStatus = "APPROVED",
 			wikiPageTitle = "Wiki Page 1 Original"
 		);
 

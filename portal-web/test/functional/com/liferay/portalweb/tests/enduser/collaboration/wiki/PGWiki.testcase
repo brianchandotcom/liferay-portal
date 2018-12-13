@@ -819,7 +819,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page Title");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page Title");
 
 		WikiTable.viewEntry(
 			draftStatus = "Approved",
@@ -907,7 +907,7 @@ definition {
 
 		WikiNavigator.gotoAllPagesPG();
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page Title");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Title");
 
@@ -1233,7 +1233,7 @@ definition {
 
 		WikiNavigator.gotoDraftPagesPG();
 
-		WikiTable.viewEntry(draftStatus = "Draft", wikiPageTitle = "Wiki Page Title");
+		WikiTable.viewEntry(draftStatus = "DRAFT", wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.gotoAllPagesPG();
 

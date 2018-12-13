@@ -4,7 +4,7 @@ definition {
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		MenuItem.click(menuItem = "Pending");
+		MenuItem.click(menuItem = "PENDING");
 	}
 
 	macro _tearDownWorkflow {

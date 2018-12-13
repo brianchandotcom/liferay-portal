@@ -3126,7 +3126,7 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries();
 
-		FormsAdmin.viewFormTableEntry(fieldLabel = "Status", fieldValue = "Approved");
+		FormsAdmin.viewFormTableEntry(fieldLabel = "Status", fieldValue = "APPROVED");
 
 		FormsAdminNavigator.gotoView();
 

@@ -316,7 +316,7 @@ definition {
 
 		WikiNavigator.gotoAllPagesPG();
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page 1");
 
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
 
@@ -366,7 +366,7 @@ definition {
 
 		WikiNavigator.gotoAllPagesPG();
 
-		WikiTable.viewEntry(draftStatus = "Approved", wikiPageTitle = "Wiki Page 1");
+		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page 1");
 
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
 

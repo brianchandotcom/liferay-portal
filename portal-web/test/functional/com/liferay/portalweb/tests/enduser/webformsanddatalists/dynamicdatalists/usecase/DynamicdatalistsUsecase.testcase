@@ -1894,7 +1894,7 @@ definition {
 
 		DDLNavigator.gotoDDLRecordEditViaWorkflow(
 			userName = "userfn userln",
-			workflowStatus = "Pending (Update)"
+			workflowStatus = "PENDING (UPDATE)"
 		);
 
 		User.logoutPG();

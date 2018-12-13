@@ -260,7 +260,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 		else {
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				query.append(primaryKey);
+				query.append((long)primaryKey);
 
 				query.append(",");
 			}

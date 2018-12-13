@@ -56,6 +56,9 @@ public class XMLUtil {
 	}
 
 	public static String formatXML(String xml) {
+		xml = StringUtil.replace(xml, "]]><", "[$SPECIAL_CHARACTER$]");
+		xml = StringUtil.replace(xml, "]]>", "]]]]><![CDATA[>");
+		xml = StringUtil.replace(xml, "[$SPECIAL_CHARACTER$]", "]]><");
 
 		// This is only supposed to format your xml, however, it will also
 		// unwantingly change &#169; and other characters like it into their

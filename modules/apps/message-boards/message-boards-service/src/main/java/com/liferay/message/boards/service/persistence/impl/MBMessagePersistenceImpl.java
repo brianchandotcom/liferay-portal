@@ -63,9 +63,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19949,6 +19946,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		setModelClass(MBMessage.class);
 
 		setModelImplClass(MBMessageImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBMessageModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -21148,100 +21146,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return fetchByPrimaryKey((Serializable)messageId);
 	}
 
-	@Override
-	public Map<Serializable, MBMessage> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBMessage> map = new HashMap<Serializable, MBMessage>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBMessage mbMessage = fetchByPrimaryKey(primaryKey);
-
-			if (mbMessage != null) {
-				map.put(primaryKey, mbMessage);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-					MBMessageImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBMessage)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBMESSAGE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBMessage mbMessage : (List<MBMessage>)q.list()) {
-				map.put(mbMessage.getPrimaryKeyObj(), mbMessage);
-
-				cacheResult(mbMessage);
-
-				uncachedPrimaryKeys.remove(mbMessage.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-					MBMessageImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message-boards messages.
 	 *
@@ -21444,6 +21348,16 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "messageId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBMESSAGE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBMessageModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -21468,7 +21382,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBMESSAGE = "SELECT mbMessage FROM MBMessage mbMessage";
-	private static final String _SQL_SELECT_MBMESSAGE_WHERE_PKS_IN = "SELECT mbMessage FROM MBMessage mbMessage WHERE messageId IN (";
 	private static final String _SQL_SELECT_MBMESSAGE_WHERE = "SELECT mbMessage FROM MBMessage mbMessage WHERE ";
 	private static final String _SQL_COUNT_MBMESSAGE = "SELECT COUNT(mbMessage) FROM MBMessage mbMessage";
 	private static final String _SQL_COUNT_MBMESSAGE_WHERE = "SELECT COUNT(mbMessage) FROM MBMessage mbMessage WHERE ";

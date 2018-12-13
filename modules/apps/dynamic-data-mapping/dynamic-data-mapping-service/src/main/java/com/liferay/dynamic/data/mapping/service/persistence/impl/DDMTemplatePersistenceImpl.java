@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11800,6 +11797,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		setModelClass(DDMTemplate.class);
 
 		setModelImplClass(DDMTemplateImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -12608,100 +12606,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return fetchByPrimaryKey((Serializable)templateId);
 	}
 
-	@Override
-	public Map<Serializable, DDMTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMTemplate> map = new HashMap<Serializable, DDMTemplate>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMTemplate ddmTemplate = fetchByPrimaryKey(primaryKey);
-
-			if (ddmTemplate != null) {
-				map.put(primaryKey, ddmTemplate);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMTemplate)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMTemplate ddmTemplate : (List<DDMTemplate>)q.list()) {
-				map.put(ddmTemplate.getPrimaryKeyObj(), ddmTemplate);
-
-				cacheResult(ddmTemplate);
-
-				uncachedPrimaryKeys.remove(ddmTemplate.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm templates.
 	 *
@@ -12904,6 +12808,16 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "templateId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMTEMPLATE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMTemplateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -12928,7 +12842,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMTEMPLATE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate";
-	private static final String _SQL_SELECT_DDMTEMPLATE_WHERE_PKS_IN = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE templateId IN (";
 	private static final String _SQL_SELECT_DDMTEMPLATE_WHERE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE ";
 	private static final String _SQL_COUNT_DDMTEMPLATE = "SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate";
 	private static final String _SQL_COUNT_DDMTEMPLATE_WHERE = "SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate WHERE ";

@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3035,6 +3032,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		setModelClass(DDLRecordSet.class);
 
 		setModelImplClass(DDLRecordSetImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3520,100 +3518,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		return fetchByPrimaryKey((Serializable)recordSetId);
 	}
 
-	@Override
-	public Map<Serializable, DDLRecordSet> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDLRecordSet> map = new HashMap<Serializable, DDLRecordSet>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDLRecordSet ddlRecordSet = fetchByPrimaryKey(primaryKey);
-
-			if (ddlRecordSet != null) {
-				map.put(primaryKey, ddlRecordSet);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDLRecordSet)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDLRECORDSET_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDLRecordSet ddlRecordSet : (List<DDLRecordSet>)q.list()) {
-				map.put(ddlRecordSet.getPrimaryKeyObj(), ddlRecordSet);
-
-				cacheResult(ddlRecordSet);
-
-				uncachedPrimaryKeys.remove(ddlRecordSet.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddl record sets.
 	 *
@@ -3816,6 +3720,16 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "recordSetId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDLRECORDSET;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDLRecordSetModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3840,7 +3754,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDLRECORDSET = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet";
-	private static final String _SQL_SELECT_DDLRECORDSET_WHERE_PKS_IN = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet WHERE recordSetId IN (";
 	private static final String _SQL_SELECT_DDLRECORDSET_WHERE = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet WHERE ";
 	private static final String _SQL_COUNT_DDLRECORDSET = "SELECT COUNT(ddlRecordSet) FROM DDLRecordSet ddlRecordSet";
 	private static final String _SQL_COUNT_DDLRECORDSET_WHERE = "SELECT COUNT(ddlRecordSet) FROM DDLRecordSet ddlRecordSet WHERE ";

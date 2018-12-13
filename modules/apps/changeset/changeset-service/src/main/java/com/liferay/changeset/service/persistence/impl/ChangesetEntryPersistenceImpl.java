@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the changeset entry service.
@@ -2979,6 +2975,7 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 		setModelClass(ChangesetEntry.class);
 
 		setModelImplClass(ChangesetEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3486,100 +3483,6 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 		return fetchByPrimaryKey((Serializable)changesetEntryId);
 	}
 
-	@Override
-	public Map<Serializable, ChangesetEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ChangesetEntry> map = new HashMap<Serializable, ChangesetEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ChangesetEntry changesetEntry = fetchByPrimaryKey(primaryKey);
-
-			if (changesetEntry != null) {
-				map.put(primaryKey, changesetEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-					ChangesetEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ChangesetEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CHANGESETENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ChangesetEntry changesetEntry : (List<ChangesetEntry>)q.list()) {
-				map.put(changesetEntry.getPrimaryKeyObj(), changesetEntry);
-
-				cacheResult(changesetEntry);
-
-				uncachedPrimaryKeys.remove(changesetEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(ChangesetEntryModelImpl.ENTITY_CACHE_ENABLED,
-					ChangesetEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the changeset entries.
 	 *
@@ -3777,6 +3680,16 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "changesetEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CHANGESETENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ChangesetEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3801,7 +3714,6 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CHANGESETENTRY = "SELECT changesetEntry FROM ChangesetEntry changesetEntry";
-	private static final String _SQL_SELECT_CHANGESETENTRY_WHERE_PKS_IN = "SELECT changesetEntry FROM ChangesetEntry changesetEntry WHERE changesetEntryId IN (";
 	private static final String _SQL_SELECT_CHANGESETENTRY_WHERE = "SELECT changesetEntry FROM ChangesetEntry changesetEntry WHERE ";
 	private static final String _SQL_COUNT_CHANGESETENTRY = "SELECT COUNT(changesetEntry) FROM ChangesetEntry changesetEntry";
 	private static final String _SQL_COUNT_CHANGESETENTRY_WHERE = "SELECT COUNT(changesetEntry) FROM ChangesetEntry changesetEntry WHERE ";

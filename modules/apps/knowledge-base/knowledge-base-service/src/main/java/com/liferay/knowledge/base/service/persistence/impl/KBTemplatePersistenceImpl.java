@@ -60,9 +60,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2332,6 +2329,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 		setModelClass(KBTemplate.class);
 
 		setModelImplClass(KBTemplateImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KBTemplateModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2802,100 +2800,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 		return fetchByPrimaryKey((Serializable)kbTemplateId);
 	}
 
-	@Override
-	public Map<Serializable, KBTemplate> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBTemplate> map = new HashMap<Serializable, KBTemplate>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBTemplate kbTemplate = fetchByPrimaryKey(primaryKey);
-
-			if (kbTemplate != null) {
-				map.put(primaryKey, kbTemplate);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					KBTemplateImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KBTemplate)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KBTEMPLATE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KBTemplate kbTemplate : (List<KBTemplate>)q.list()) {
-				map.put(kbTemplate.getPrimaryKeyObj(), kbTemplate);
-
-				cacheResult(kbTemplate);
-
-				uncachedPrimaryKeys.remove(kbTemplate.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					KBTemplateImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kb templates.
 	 *
@@ -3098,6 +3002,16 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kbTemplateId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KBTEMPLATE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KBTemplateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3122,7 +3036,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KBTEMPLATE = "SELECT kbTemplate FROM KBTemplate kbTemplate";
-	private static final String _SQL_SELECT_KBTEMPLATE_WHERE_PKS_IN = "SELECT kbTemplate FROM KBTemplate kbTemplate WHERE kbTemplateId IN (";
 	private static final String _SQL_SELECT_KBTEMPLATE_WHERE = "SELECT kbTemplate FROM KBTemplate kbTemplate WHERE ";
 	private static final String _SQL_COUNT_KBTEMPLATE = "SELECT COUNT(kbTemplate) FROM KBTemplate kbTemplate";
 	private static final String _SQL_COUNT_KBTEMPLATE_WHERE = "SELECT COUNT(kbTemplate) FROM KBTemplate kbTemplate WHERE ";

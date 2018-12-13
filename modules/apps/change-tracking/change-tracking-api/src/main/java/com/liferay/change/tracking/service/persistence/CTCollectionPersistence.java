@@ -21,6 +21,11 @@ import com.liferay.change.tracking.model.CTCollection;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ct collection service.
  *
@@ -40,6 +45,9 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTCollectionUtil} to access the ct collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, CTCollection> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ct collections where companyId = &#63;.
@@ -274,10 +282,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	* @return the ct collection, or <code>null</code> if a ct collection with the primary key could not be found
 	*/
 	public CTCollection fetchByPrimaryKey(long ctCollectionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, CTCollection> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ct collections.

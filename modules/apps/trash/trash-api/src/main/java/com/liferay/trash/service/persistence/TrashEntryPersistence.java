@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.trash.exception.NoSuchEntryException;
 import com.liferay.trash.model.TrashEntry;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the trash entry service.
@@ -42,6 +46,9 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TrashEntryUtil} to access the trash entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, TrashEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the trash entries where groupId = &#63;.
@@ -692,10 +699,6 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	* @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
 	*/
 	public TrashEntry fetchByPrimaryKey(long entryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, TrashEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the trash entries.

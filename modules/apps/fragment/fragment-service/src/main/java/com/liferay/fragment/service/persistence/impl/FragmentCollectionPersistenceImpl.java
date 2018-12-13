@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2807,6 +2804,7 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		setModelClass(FragmentCollection.class);
 
 		setModelImplClass(FragmentCollectionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3302,101 +3300,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		return fetchByPrimaryKey((Serializable)fragmentCollectionId);
 	}
 
-	@Override
-	public Map<Serializable, FragmentCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FragmentCollection> map = new HashMap<Serializable, FragmentCollection>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FragmentCollection fragmentCollection = fetchByPrimaryKey(primaryKey);
-
-			if (fragmentCollection != null) {
-				map.put(primaryKey, fragmentCollection);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentCollectionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FragmentCollection)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRAGMENTCOLLECTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FragmentCollection fragmentCollection : (List<FragmentCollection>)q.list()) {
-				map.put(fragmentCollection.getPrimaryKeyObj(),
-					fragmentCollection);
-
-				cacheResult(fragmentCollection);
-
-				uncachedPrimaryKeys.remove(fragmentCollection.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FragmentCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentCollectionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the fragment collections.
 	 *
@@ -3599,6 +3502,16 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fragmentCollectionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRAGMENTCOLLECTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FragmentCollectionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3623,7 +3536,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRAGMENTCOLLECTION = "SELECT fragmentCollection FROM FragmentCollection fragmentCollection";
-	private static final String _SQL_SELECT_FRAGMENTCOLLECTION_WHERE_PKS_IN = "SELECT fragmentCollection FROM FragmentCollection fragmentCollection WHERE fragmentCollectionId IN (";
 	private static final String _SQL_SELECT_FRAGMENTCOLLECTION_WHERE = "SELECT fragmentCollection FROM FragmentCollection fragmentCollection WHERE ";
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION = "SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection";
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION_WHERE = "SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection WHERE ";

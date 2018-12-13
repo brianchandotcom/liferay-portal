@@ -21,6 +21,11 @@ import com.liferay.asset.kernel.model.AssetLink;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset link service.
  *
@@ -40,6 +45,9 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetLinkUtil} to access the asset link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetLink> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset links where entryId1 = &#63;.
@@ -835,10 +843,6 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	*/
 	public AssetLink fetchByPrimaryKey(long linkId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, AssetLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the asset links.
 	*
@@ -904,5 +908,5 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

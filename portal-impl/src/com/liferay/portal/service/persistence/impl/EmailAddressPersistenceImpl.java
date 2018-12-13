@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3992,6 +3989,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		setModelClass(EmailAddress.class);
 
 		setModelImplClass(EmailAddressImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(EmailAddressModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4518,100 +4516,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return fetchByPrimaryKey((Serializable)emailAddressId);
 	}
 
-	@Override
-	public Map<Serializable, EmailAddress> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, EmailAddress> map = new HashMap<Serializable, EmailAddress>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			EmailAddress emailAddress = fetchByPrimaryKey(primaryKey);
-
-			if (emailAddress != null) {
-				map.put(primaryKey, emailAddress);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-					EmailAddressImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (EmailAddress)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_EMAILADDRESS_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (EmailAddress emailAddress : (List<EmailAddress>)q.list()) {
-				map.put(emailAddress.getPrimaryKeyObj(), emailAddress);
-
-				cacheResult(emailAddress);
-
-				uncachedPrimaryKeys.remove(emailAddress.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-					EmailAddressImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the email addresses.
 	 *
@@ -4814,6 +4718,16 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "emailAddressId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_EMAILADDRESS;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return EmailAddressModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4834,7 +4748,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_EMAILADDRESS = "SELECT emailAddress FROM EmailAddress emailAddress";
-	private static final String _SQL_SELECT_EMAILADDRESS_WHERE_PKS_IN = "SELECT emailAddress FROM EmailAddress emailAddress WHERE emailAddressId IN (";
 	private static final String _SQL_SELECT_EMAILADDRESS_WHERE = "SELECT emailAddress FROM EmailAddress emailAddress WHERE ";
 	private static final String _SQL_COUNT_EMAILADDRESS = "SELECT COUNT(emailAddress) FROM EmailAddress emailAddress";
 	private static final String _SQL_COUNT_EMAILADDRESS_WHERE = "SELECT COUNT(emailAddress) FROM EmailAddress emailAddress WHERE ";

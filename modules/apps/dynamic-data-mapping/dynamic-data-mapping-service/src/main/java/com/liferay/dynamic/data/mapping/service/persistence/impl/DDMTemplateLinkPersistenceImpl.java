@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the ddm template link service.
@@ -1328,6 +1324,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		setModelClass(DDMTemplateLink.class);
 
 		setModelImplClass(DDMTemplateLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1721,100 +1718,6 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		return fetchByPrimaryKey((Serializable)templateLinkId);
 	}
 
-	@Override
-	public Map<Serializable, DDMTemplateLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMTemplateLink> map = new HashMap<Serializable, DDMTemplateLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMTemplateLink ddmTemplateLink = fetchByPrimaryKey(primaryKey);
-
-			if (ddmTemplateLink != null) {
-				map.put(primaryKey, ddmTemplateLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMTemplateLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMTEMPLATELINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMTemplateLink ddmTemplateLink : (List<DDMTemplateLink>)q.list()) {
-				map.put(ddmTemplateLink.getPrimaryKeyObj(), ddmTemplateLink);
-
-				cacheResult(ddmTemplateLink);
-
-				uncachedPrimaryKeys.remove(ddmTemplateLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm template links.
 	 *
@@ -2012,6 +1915,16 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "templateLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMTEMPLATELINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMTemplateLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2036,7 +1949,6 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMTEMPLATELINK = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink";
-	private static final String _SQL_SELECT_DDMTEMPLATELINK_WHERE_PKS_IN = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink WHERE templateLinkId IN (";
 	private static final String _SQL_SELECT_DDMTEMPLATELINK_WHERE = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink WHERE ";
 	private static final String _SQL_COUNT_DDMTEMPLATELINK = "SELECT COUNT(ddmTemplateLink) FROM DDMTemplateLink ddmTemplateLink";
 	private static final String _SQL_COUNT_DDMTEMPLATELINK_WHERE = "SELECT COUNT(ddmTemplateLink) FROM DDMTemplateLink ddmTemplateLink WHERE ";

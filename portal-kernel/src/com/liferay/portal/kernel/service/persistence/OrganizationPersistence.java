@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.model.Organization;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the organization service.
  *
@@ -38,6 +43,9 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrganizationUtil} to access the organization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Organization> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the organizations where uuid = &#63;.
@@ -2064,10 +2072,6 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization fetchByPrimaryKey(long organizationId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Organization> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the organizations.
 	*
@@ -2461,5 +2465,5 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		java.util.List<com.liferay.portal.kernel.model.User> users);
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

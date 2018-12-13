@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm template link service.
  *
@@ -40,6 +45,9 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkUtil} to access the ddm template link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMTemplateLink> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm template links where classNameId = &#63;.
@@ -406,10 +414,6 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	* @return the ddm template link, or <code>null</code> if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink fetchByPrimaryKey(long templateLinkId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, DDMTemplateLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm template links.

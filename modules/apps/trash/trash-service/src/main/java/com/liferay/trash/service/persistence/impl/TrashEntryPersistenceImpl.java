@@ -48,12 +48,8 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the trash entry service.
@@ -2422,6 +2418,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		setModelClass(TrashEntry.class);
 
 		setModelImplClass(TrashEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(TrashEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2837,100 +2834,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
-	@Override
-	public Map<Serializable, TrashEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, TrashEntry> map = new HashMap<Serializable, TrashEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			TrashEntry trashEntry = fetchByPrimaryKey(primaryKey);
-
-			if (trashEntry != null) {
-				map.put(primaryKey, trashEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TrashEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (TrashEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_TRASHENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (TrashEntry trashEntry : (List<TrashEntry>)q.list()) {
-				map.put(trashEntry.getPrimaryKeyObj(), trashEntry);
-
-				cacheResult(trashEntry);
-
-				uncachedPrimaryKeys.remove(trashEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TrashEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the trash entries.
 	 *
@@ -3128,6 +3031,16 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "entryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_TRASHENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TrashEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3161,7 +3074,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	}
 
 	private static final String _SQL_SELECT_TRASHENTRY = "SELECT trashEntry FROM TrashEntry trashEntry";
-	private static final String _SQL_SELECT_TRASHENTRY_WHERE_PKS_IN = "SELECT trashEntry FROM TrashEntry trashEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE = "SELECT trashEntry FROM TrashEntry trashEntry WHERE ";
 	private static final String _SQL_COUNT_TRASHENTRY = "SELECT COUNT(trashEntry) FROM TrashEntry trashEntry";
 	private static final String _SQL_COUNT_TRASHENTRY_WHERE = "SELECT COUNT(trashEntry) FROM TrashEntry trashEntry WHERE ";

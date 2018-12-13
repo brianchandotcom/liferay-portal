@@ -61,9 +61,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5913,6 +5911,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		setModelClass(UserGroup.class);
 
 		setModelImplClass(UserGroupImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserGroupModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6432,100 +6431,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public UserGroup fetchByPrimaryKey(long userGroupId) {
 		return fetchByPrimaryKey((Serializable)userGroupId);
-	}
-
-	@Override
-	public Map<Serializable, UserGroup> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserGroup> map = new HashMap<Serializable, UserGroup>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			UserGroup userGroup = fetchByPrimaryKey(primaryKey);
-
-			if (userGroup != null) {
-				map.put(primaryKey, userGroup);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-					UserGroupImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (UserGroup)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_USERGROUP_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (UserGroup userGroup : (List<UserGroup>)q.list()) {
-				map.put(userGroup.getPrimaryKeyObj(), userGroup);
-
-				cacheResult(userGroup);
-
-				uncachedPrimaryKeys.remove(userGroup.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-					UserGroupImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -7624,6 +7529,16 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "userGroupId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERGROUP;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserGroupModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7665,7 +7580,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	protected UserPersistence userPersistence;
 	protected TableMapper<UserGroup, com.liferay.portal.kernel.model.User> userGroupToUserTableMapper;
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
-	private static final String _SQL_SELECT_USERGROUP_WHERE_PKS_IN = "SELECT userGroup FROM UserGroup userGroup WHERE userGroupId IN (";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";
 	private static final String _SQL_COUNT_USERGROUP = "SELECT COUNT(userGroup) FROM UserGroup userGroup";
 	private static final String _SQL_COUNT_USERGROUP_WHERE = "SELECT COUNT(userGroup) FROM UserGroup userGroup WHERE ";

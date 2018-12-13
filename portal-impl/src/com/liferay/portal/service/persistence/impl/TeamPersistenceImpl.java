@@ -59,9 +59,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2562,6 +2560,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		setModelClass(Team.class);
 
 		setModelImplClass(TeamImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(TeamModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3027,100 +3026,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Team fetchByPrimaryKey(long teamId) {
 		return fetchByPrimaryKey((Serializable)teamId);
-	}
-
-	@Override
-	public Map<Serializable, Team> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Team> map = new HashMap<Serializable, Team>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Team team = fetchByPrimaryKey(primaryKey);
-
-			if (team != null) {
-				map.put(primaryKey, team);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-					TeamImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Team)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_TEAM_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Team team : (List<Team>)q.list()) {
-				map.put(team.getPrimaryKeyObj(), team);
-
-				cacheResult(team);
-
-				uncachedPrimaryKeys.remove(team.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-					TeamImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3924,6 +3829,16 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "teamId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_TEAM;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TeamModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3958,7 +3873,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected UserGroupPersistence userGroupPersistence;
 	protected TableMapper<Team, com.liferay.portal.kernel.model.UserGroup> teamToUserGroupTableMapper;
 	private static final String _SQL_SELECT_TEAM = "SELECT team FROM Team team";
-	private static final String _SQL_SELECT_TEAM_WHERE_PKS_IN = "SELECT team FROM Team team WHERE teamId IN (";
 	private static final String _SQL_SELECT_TEAM_WHERE = "SELECT team FROM Team team WHERE ";
 	private static final String _SQL_COUNT_TEAM = "SELECT COUNT(team) FROM Team team";
 	private static final String _SQL_COUNT_TEAM_WHERE = "SELECT COUNT(team) FROM Team team WHERE ";

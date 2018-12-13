@@ -60,9 +60,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4193,6 +4191,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		setModelClass(AssetTag.class);
 
 		setModelImplClass(AssetTagImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetTagModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4686,100 +4685,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public AssetTag fetchByPrimaryKey(long tagId) {
 		return fetchByPrimaryKey((Serializable)tagId);
-	}
-
-	@Override
-	public Map<Serializable, AssetTag> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetTag> map = new HashMap<Serializable, AssetTag>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetTag assetTag = fetchByPrimaryKey(primaryKey);
-
-			if (assetTag != null) {
-				map.put(primaryKey, assetTag);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetTag)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETTAG_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetTag assetTag : (List<AssetTag>)q.list()) {
-				map.put(assetTag.getPrimaryKeyObj(), assetTag);
-
-				cacheResult(assetTag);
-
-				uncachedPrimaryKeys.remove(assetTag.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -5287,6 +5192,16 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "tagId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETTAG;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetTagModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5314,7 +5229,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected AssetEntryPersistence assetEntryPersistence;
 	protected TableMapper<AssetTag, com.liferay.asset.kernel.model.AssetEntry> assetTagToAssetEntryTableMapper;
 	private static final String _SQL_SELECT_ASSETTAG = "SELECT assetTag FROM AssetTag assetTag";
-	private static final String _SQL_SELECT_ASSETTAG_WHERE_PKS_IN = "SELECT assetTag FROM AssetTag assetTag WHERE tagId IN (";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE = "SELECT assetTag FROM AssetTag assetTag WHERE ";
 	private static final String _SQL_COUNT_ASSETTAG = "SELECT COUNT(assetTag) FROM AssetTag assetTag";
 	private static final String _SQL_COUNT_ASSETTAG_WHERE = "SELECT COUNT(assetTag) FROM AssetTag assetTag WHERE ";

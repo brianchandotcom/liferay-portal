@@ -48,9 +48,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3458,6 +3455,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		setModelClass(KaleoLog.class);
 
 		setModelImplClass(KaleoLogImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoLogModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3940,100 +3938,6 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		return fetchByPrimaryKey((Serializable)kaleoLogId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoLog> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoLog> map = new HashMap<Serializable, KaleoLog>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoLog kaleoLog = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoLog != null) {
-				map.put(primaryKey, kaleoLog);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoLogModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoLogImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoLog)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOLOG_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoLog kaleoLog : (List<KaleoLog>)q.list()) {
-				map.put(kaleoLog.getPrimaryKeyObj(), kaleoLog);
-
-				cacheResult(kaleoLog);
-
-				uncachedPrimaryKeys.remove(kaleoLog.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoLogModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoLogImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo logs.
 	 *
@@ -4235,6 +4139,16 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoLogId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOLOG;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoLogModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4259,7 +4173,6 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOLOG = "SELECT kaleoLog FROM KaleoLog kaleoLog";
-	private static final String _SQL_SELECT_KALEOLOG_WHERE_PKS_IN = "SELECT kaleoLog FROM KaleoLog kaleoLog WHERE kaleoLogId IN (";
 	private static final String _SQL_SELECT_KALEOLOG_WHERE = "SELECT kaleoLog FROM KaleoLog kaleoLog WHERE ";
 	private static final String _SQL_COUNT_KALEOLOG = "SELECT COUNT(kaleoLog) FROM KaleoLog kaleoLog";
 	private static final String _SQL_COUNT_KALEOLOG_WHERE = "SELECT COUNT(kaleoLog) FROM KaleoLog kaleoLog WHERE ";

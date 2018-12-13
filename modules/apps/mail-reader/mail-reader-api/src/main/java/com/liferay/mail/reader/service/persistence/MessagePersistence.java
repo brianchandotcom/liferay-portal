@@ -21,6 +21,11 @@ import com.liferay.mail.reader.model.Message;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message service.
  *
@@ -40,6 +45,9 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MessageUtil} to access the message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Message> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the messages where companyId = &#63;.
@@ -405,10 +413,6 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	*/
 	public Message fetchByPrimaryKey(long messageId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Message> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the messages.
 	*
@@ -474,5 +478,5 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

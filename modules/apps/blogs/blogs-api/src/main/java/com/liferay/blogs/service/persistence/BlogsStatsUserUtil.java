@@ -27,8 +27,12 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the blogs stats user service. This utility wraps {@link com.liferay.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -69,6 +73,14 @@ public class BlogsStatsUserUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, BlogsStatsUser> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -1075,11 +1087,6 @@ public class BlogsStatsUserUtil {
 	*/
 	public static BlogsStatsUser fetchByPrimaryKey(long statsUserId) {
 		return getPersistence().fetchByPrimaryKey(statsUserId);
-	}
-
-	public static java.util.Map<java.io.Serializable, BlogsStatsUser> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

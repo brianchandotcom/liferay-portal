@@ -21,6 +21,11 @@ import com.liferay.changeset.model.ChangesetEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the changeset entry service.
  *
@@ -40,6 +45,9 @@ public interface ChangesetEntryPersistence extends BasePersistence<ChangesetEntr
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChangesetEntryUtil} to access the changeset entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ChangesetEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the changeset entries where groupId = &#63;.
@@ -842,10 +850,6 @@ public interface ChangesetEntryPersistence extends BasePersistence<ChangesetEntr
 	* @return the changeset entry, or <code>null</code> if a changeset entry with the primary key could not be found
 	*/
 	public ChangesetEntry fetchByPrimaryKey(long changesetEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, ChangesetEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the changeset entries.

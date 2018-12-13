@@ -21,6 +21,11 @@ import com.liferay.message.boards.model.MBThreadFlag;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message boards thread flag service.
  *
@@ -40,6 +45,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBThreadFlagUtil} to access the message boards thread flag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBThreadFlag> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards thread flags where uuid = &#63;.
@@ -732,10 +740,6 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag fetchByPrimaryKey(long threadFlagId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, MBThreadFlag> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the message boards thread flags.
 	*
@@ -801,5 +805,5 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

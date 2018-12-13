@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6412,6 +6409,7 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		setModelClass(FragmentEntry.class);
 
 		setModelImplClass(FragmentEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -7059,100 +7057,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		return fetchByPrimaryKey((Serializable)fragmentEntryId);
 	}
 
-	@Override
-	public Map<Serializable, FragmentEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FragmentEntry> map = new HashMap<Serializable, FragmentEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FragmentEntry fragmentEntry = fetchByPrimaryKey(primaryKey);
-
-			if (fragmentEntry != null) {
-				map.put(primaryKey, fragmentEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FragmentEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRAGMENTENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FragmentEntry fragmentEntry : (List<FragmentEntry>)q.list()) {
-				map.put(fragmentEntry.getPrimaryKeyObj(), fragmentEntry);
-
-				cacheResult(fragmentEntry);
-
-				uncachedPrimaryKeys.remove(fragmentEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FragmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the fragment entries.
 	 *
@@ -7355,6 +7259,16 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fragmentEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRAGMENTENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FragmentEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7379,7 +7293,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRAGMENTENTRY = "SELECT fragmentEntry FROM FragmentEntry fragmentEntry";
-	private static final String _SQL_SELECT_FRAGMENTENTRY_WHERE_PKS_IN = "SELECT fragmentEntry FROM FragmentEntry fragmentEntry WHERE fragmentEntryId IN (";
 	private static final String _SQL_SELECT_FRAGMENTENTRY_WHERE = "SELECT fragmentEntry FROM FragmentEntry fragmentEntry WHERE ";
 	private static final String _SQL_COUNT_FRAGMENTENTRY = "SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry";
 	private static final String _SQL_COUNT_FRAGMENTENTRY_WHERE = "SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry WHERE ";

@@ -21,6 +21,11 @@ import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the dl opener file entry reference service.
  *
@@ -40,6 +45,9 @@ public interface DLOpenerFileEntryReferencePersistence extends BasePersistence<D
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLOpenerFileEntryReferenceUtil} to access the dl opener file entry reference persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DLOpenerFileEntryReference> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the dl opener file entry reference where fileEntryId = &#63; or throws a {@link NoSuchFileEntryReferenceException} if it could not be found.
@@ -143,10 +151,6 @@ public interface DLOpenerFileEntryReferencePersistence extends BasePersistence<D
 	public DLOpenerFileEntryReference fetchByPrimaryKey(
 		long dlOpenerFileEntryReferenceId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DLOpenerFileEntryReference> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the dl opener file entry references.
 	*
@@ -214,5 +218,5 @@ public interface DLOpenerFileEntryReferencePersistence extends BasePersistence<D
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

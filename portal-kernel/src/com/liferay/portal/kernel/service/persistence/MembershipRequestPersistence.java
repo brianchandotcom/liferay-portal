@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchMembershipRequestException;
 import com.liferay.portal.kernel.model.MembershipRequest;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the membership request service.
  *
@@ -38,6 +43,9 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestUtil} to access the membership request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MembershipRequest> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the membership requests where groupId = &#63;.
@@ -658,10 +666,6 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
 	*/
 	public MembershipRequest fetchByPrimaryKey(long membershipRequestId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, MembershipRequest> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the membership requests.

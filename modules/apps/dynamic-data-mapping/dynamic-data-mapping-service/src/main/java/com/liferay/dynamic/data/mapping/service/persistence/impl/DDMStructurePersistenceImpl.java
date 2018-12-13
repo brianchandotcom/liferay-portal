@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10536,6 +10533,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		setModelClass(DDMStructure.class);
 
 		setModelImplClass(DDMStructureImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMStructureModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -11256,100 +11254,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		return fetchByPrimaryKey((Serializable)structureId);
 	}
 
-	@Override
-	public Map<Serializable, DDMStructure> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMStructure> map = new HashMap<Serializable, DDMStructure>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMStructure ddmStructure = fetchByPrimaryKey(primaryKey);
-
-			if (ddmStructure != null) {
-				map.put(primaryKey, ddmStructure);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMStructure)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMStructure ddmStructure : (List<DDMStructure>)q.list()) {
-				map.put(ddmStructure.getPrimaryKeyObj(), ddmStructure);
-
-				cacheResult(ddmStructure);
-
-				uncachedPrimaryKeys.remove(ddmStructure.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm structures.
 	 *
@@ -11552,6 +11456,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "structureId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMSTRUCTURE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMStructureModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -11576,7 +11490,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMSTRUCTURE = "SELECT ddmStructure FROM DDMStructure ddmStructure";
-	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE_PKS_IN = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE structureId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE ";
 	private static final String _SQL_COUNT_DDMSTRUCTURE = "SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure";
 	private static final String _SQL_COUNT_DDMSTRUCTURE_WHERE = "SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure WHERE ";

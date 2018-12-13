@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the asset auto tagger entry service.
@@ -1349,6 +1345,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		setModelClass(AssetAutoTaggerEntry.class);
 
 		setModelImplClass(AssetAutoTaggerEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1776,101 +1773,6 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		return fetchByPrimaryKey((Serializable)assetAutoTaggerEntryId);
 	}
 
-	@Override
-	public Map<Serializable, AssetAutoTaggerEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetAutoTaggerEntry> map = new HashMap<Serializable, AssetAutoTaggerEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByPrimaryKey(primaryKey);
-
-			if (assetAutoTaggerEntry != null) {
-				map.put(primaryKey, assetAutoTaggerEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetAutoTaggerEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetAutoTaggerEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetAutoTaggerEntry assetAutoTaggerEntry : (List<AssetAutoTaggerEntry>)q.list()) {
-				map.put(assetAutoTaggerEntry.getPrimaryKeyObj(),
-					assetAutoTaggerEntry);
-
-				cacheResult(assetAutoTaggerEntry);
-
-				uncachedPrimaryKeys.remove(assetAutoTaggerEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetAutoTaggerEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset auto tagger entries.
 	 *
@@ -2068,6 +1970,16 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "assetAutoTaggerEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETAUTOTAGGERENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetAutoTaggerEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2092,7 +2004,6 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETAUTOTAGGERENTRY = "SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry";
-	private static final String _SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE_PKS_IN = "SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE assetAutoTaggerEntryId IN (";
 	private static final String _SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE = "SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";
 	private static final String _SQL_COUNT_ASSETAUTOTAGGERENTRY = "SELECT COUNT(assetAutoTaggerEntry) FROM AssetAutoTaggerEntry assetAutoTaggerEntry";
 	private static final String _SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE = "SELECT COUNT(assetAutoTaggerEntry) FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";

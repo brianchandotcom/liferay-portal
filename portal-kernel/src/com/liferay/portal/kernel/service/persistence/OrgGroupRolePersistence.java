@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchOrgGroupRoleException;
 import com.liferay.portal.kernel.model.OrgGroupRole;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the org group role service.
  *
@@ -38,6 +43,9 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrgGroupRoleUtil} to access the org group role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the org group roles where groupId = &#63;.
@@ -355,10 +363,6 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public OrgGroupRole fetchByPrimaryKey(OrgGroupRolePK orgGroupRolePK);
 
-	@Override
-	public java.util.Map<java.io.Serializable, OrgGroupRole> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the org group roles.
 	*
@@ -423,5 +427,5 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public int countAll();
 
-	public java.util.Set<String> getCompoundPKColumnNames();
+	public Set<String> getCompoundPKColumnNames();
 }

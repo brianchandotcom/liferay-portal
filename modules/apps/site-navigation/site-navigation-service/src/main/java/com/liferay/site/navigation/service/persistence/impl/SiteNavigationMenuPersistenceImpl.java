@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5435,6 +5432,7 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		setModelClass(SiteNavigationMenu.class);
 
 		setModelImplClass(SiteNavigationMenuImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -5989,101 +5987,6 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		return fetchByPrimaryKey((Serializable)siteNavigationMenuId);
 	}
 
-	@Override
-	public Map<Serializable, SiteNavigationMenu> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SiteNavigationMenu> map = new HashMap<Serializable, SiteNavigationMenu>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SiteNavigationMenu siteNavigationMenu = fetchByPrimaryKey(primaryKey);
-
-			if (siteNavigationMenu != null) {
-				map.put(primaryKey, siteNavigationMenu);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
-					SiteNavigationMenuImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SiteNavigationMenu)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SITENAVIGATIONMENU_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SiteNavigationMenu siteNavigationMenu : (List<SiteNavigationMenu>)q.list()) {
-				map.put(siteNavigationMenu.getPrimaryKeyObj(),
-					siteNavigationMenu);
-
-				cacheResult(siteNavigationMenu);
-
-				uncachedPrimaryKeys.remove(siteNavigationMenu.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
-					SiteNavigationMenuImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the site navigation menus.
 	 *
@@ -6286,6 +6189,16 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "siteNavigationMenuId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SITENAVIGATIONMENU;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SiteNavigationMenuModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6310,7 +6223,6 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SITENAVIGATIONMENU = "SELECT siteNavigationMenu FROM SiteNavigationMenu siteNavigationMenu";
-	private static final String _SQL_SELECT_SITENAVIGATIONMENU_WHERE_PKS_IN = "SELECT siteNavigationMenu FROM SiteNavigationMenu siteNavigationMenu WHERE siteNavigationMenuId IN (";
 	private static final String _SQL_SELECT_SITENAVIGATIONMENU_WHERE = "SELECT siteNavigationMenu FROM SiteNavigationMenu siteNavigationMenu WHERE ";
 	private static final String _SQL_COUNT_SITENAVIGATIONMENU = "SELECT COUNT(siteNavigationMenu) FROM SiteNavigationMenu siteNavigationMenu";
 	private static final String _SQL_COUNT_SITENAVIGATIONMENU_WHERE = "SELECT COUNT(siteNavigationMenu) FROM SiteNavigationMenu siteNavigationMenu WHERE ";

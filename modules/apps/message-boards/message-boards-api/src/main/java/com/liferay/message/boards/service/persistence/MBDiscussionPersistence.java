@@ -21,6 +21,11 @@ import com.liferay.message.boards.model.MBDiscussion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message boards discussion service.
  *
@@ -40,6 +45,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBDiscussionUtil} to access the message boards discussion persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBDiscussion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards discussions where uuid = &#63;.
@@ -644,10 +652,6 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public MBDiscussion fetchByPrimaryKey(long discussionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, MBDiscussion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the message boards discussions.
 	*
@@ -713,5 +717,5 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

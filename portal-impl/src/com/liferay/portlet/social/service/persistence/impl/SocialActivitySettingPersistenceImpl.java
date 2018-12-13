@@ -48,13 +48,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the social activity setting service.
@@ -2616,6 +2612,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		setModelClass(SocialActivitySetting.class);
 
 		setModelImplClass(SocialActivitySettingImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3095,101 +3092,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		return fetchByPrimaryKey((Serializable)activitySettingId);
 	}
 
-	@Override
-	public Map<Serializable, SocialActivitySetting> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SocialActivitySetting> map = new HashMap<Serializable, SocialActivitySetting>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(primaryKey);
-
-			if (socialActivitySetting != null) {
-				map.put(primaryKey, socialActivitySetting);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivitySettingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SocialActivitySetting)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SocialActivitySetting socialActivitySetting : (List<SocialActivitySetting>)q.list()) {
-				map.put(socialActivitySetting.getPrimaryKeyObj(),
-					socialActivitySetting);
-
-				cacheResult(socialActivitySetting);
-
-				uncachedPrimaryKeys.remove(socialActivitySetting.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivitySettingImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the social activity settings.
 	 *
@@ -3387,6 +3289,16 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "activitySettingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SOCIALACTIVITYSETTING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivitySettingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3407,7 +3319,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting";
-	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING_WHERE_PKS_IN = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting WHERE activitySettingId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING_WHERE = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITYSETTING = "SELECT COUNT(socialActivitySetting) FROM SocialActivitySetting socialActivitySetting";
 	private static final String _SQL_COUNT_SOCIALACTIVITYSETTING_WHERE = "SELECT COUNT(socialActivitySetting) FROM SocialActivitySetting socialActivitySetting WHERE ";

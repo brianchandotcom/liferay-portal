@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo task assignment instance service.
  *
@@ -39,6 +44,9 @@ public interface KaleoTaskAssignmentInstancePersistence extends BasePersistence<
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskAssignmentInstanceUtil} to access the kaleo task assignment instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoTaskAssignmentInstance> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo task assignment instances where companyId = &#63;.
@@ -1076,10 +1084,6 @@ public interface KaleoTaskAssignmentInstancePersistence extends BasePersistence<
 	*/
 	public KaleoTaskAssignmentInstance fetchByPrimaryKey(
 		long kaleoTaskAssignmentInstanceId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoTaskAssignmentInstance> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo task assignment instances.

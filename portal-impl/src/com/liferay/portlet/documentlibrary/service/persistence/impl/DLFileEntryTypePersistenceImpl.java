@@ -62,9 +62,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3065,6 +3063,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		setModelClass(DLFileEntryType.class);
 
 		setModelImplClass(DLFileEntryTypeImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3556,100 +3555,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId) {
 		return fetchByPrimaryKey((Serializable)fileEntryTypeId);
-	}
-
-	@Override
-	public Map<Serializable, DLFileEntryType> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLFileEntryType> map = new HashMap<Serializable, DLFileEntryType>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLFileEntryType dlFileEntryType = fetchByPrimaryKey(primaryKey);
-
-			if (dlFileEntryType != null) {
-				map.put(primaryKey, dlFileEntryType);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryTypeImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLFileEntryType)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLFILEENTRYTYPE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLFileEntryType dlFileEntryType : (List<DLFileEntryType>)q.list()) {
-				map.put(dlFileEntryType.getPrimaryKeyObj(), dlFileEntryType);
-
-				cacheResult(dlFileEntryType);
-
-				uncachedPrimaryKeys.remove(dlFileEntryType.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryTypeImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4158,6 +4063,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fileEntryTypeId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLFILEENTRYTYPE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLFileEntryTypeModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4186,7 +4101,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	protected DLFolderPersistence dlFolderPersistence;
 	protected TableMapper<DLFileEntryType, com.liferay.document.library.kernel.model.DLFolder> dlFileEntryTypeToDLFolderTableMapper;
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType";
-	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE_PKS_IN = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE fileEntryTypeId IN (";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE ";
 	private static final String _SQL_COUNT_DLFILEENTRYTYPE = "SELECT COUNT(dlFileEntryType) FROM DLFileEntryType dlFileEntryType";
 	private static final String _SQL_COUNT_DLFILEENTRYTYPE_WHERE = "SELECT COUNT(dlFileEntryType) FROM DLFileEntryType dlFileEntryType WHERE ";

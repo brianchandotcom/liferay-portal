@@ -43,13 +43,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the entry service.
@@ -4399,6 +4395,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		setModelClass(Entry.class);
 
 		setModelImplClass(EntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(EntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4905,100 +4902,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
-	@Override
-	public Map<Serializable, Entry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Entry> map = new HashMap<Serializable, Entry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Entry entry = fetchByPrimaryKey(primaryKey);
-
-			if (entry != null) {
-				map.put(primaryKey, entry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-					EntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Entry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Entry entry : (List<Entry>)q.list()) {
-				map.put(entry.getPrimaryKeyObj(), entry);
-
-				cacheResult(entry);
-
-				uncachedPrimaryKeys.remove(entry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-					EntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the entries.
 	 *
@@ -5195,6 +5098,16 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "entryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return EntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5217,7 +5130,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ENTRY = "SELECT entry FROM Entry entry";
-	private static final String _SQL_SELECT_ENTRY_WHERE_PKS_IN = "SELECT entry FROM Entry entry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ENTRY_WHERE = "SELECT entry FROM Entry entry WHERE ";
 	private static final String _SQL_COUNT_ENTRY = "SELECT COUNT(entry) FROM Entry entry";
 	private static final String _SQL_COUNT_ENTRY_WHERE = "SELECT COUNT(entry) FROM Entry entry WHERE ";

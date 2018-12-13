@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the layout branch service.
@@ -2007,6 +2003,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		setModelClass(LayoutBranch.class);
 
 		setModelImplClass(LayoutBranchImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2444,100 +2441,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		return fetchByPrimaryKey((Serializable)layoutBranchId);
 	}
 
-	@Override
-	public Map<Serializable, LayoutBranch> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutBranch> map = new HashMap<Serializable, LayoutBranch>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutBranch layoutBranch = fetchByPrimaryKey(primaryKey);
-
-			if (layoutBranch != null) {
-				map.put(primaryKey, layoutBranch);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutBranchImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LayoutBranch)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LayoutBranch layoutBranch : (List<LayoutBranch>)q.list()) {
-				map.put(layoutBranch.getPrimaryKeyObj(), layoutBranch);
-
-				cacheResult(layoutBranch);
-
-				uncachedPrimaryKeys.remove(layoutBranch.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutBranchImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layout branchs.
 	 *
@@ -2735,6 +2638,16 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "layoutBranchId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUTBRANCH;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutBranchModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2755,7 +2668,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_LAYOUTBRANCH = "SELECT layoutBranch FROM LayoutBranch layoutBranch";
-	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE layoutBranchId IN (";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE ";
 	private static final String _SQL_COUNT_LAYOUTBRANCH = "SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch";
 	private static final String _SQL_COUNT_LAYOUTBRANCH_WHERE = "SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch WHERE ";

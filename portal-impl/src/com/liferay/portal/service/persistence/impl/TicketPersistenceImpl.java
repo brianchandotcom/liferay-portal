@@ -47,9 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1530,6 +1527,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		setModelClass(Ticket.class);
 
 		setModelImplClass(TicketImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(TicketModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1921,100 +1919,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		return fetchByPrimaryKey((Serializable)ticketId);
 	}
 
-	@Override
-	public Map<Serializable, Ticket> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Ticket> map = new HashMap<Serializable, Ticket>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Ticket ticket = fetchByPrimaryKey(primaryKey);
-
-			if (ticket != null) {
-				map.put(primaryKey, ticket);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-					TicketImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Ticket)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_TICKET_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Ticket ticket : (List<Ticket>)q.list()) {
-				map.put(ticket.getPrimaryKeyObj(), ticket);
-
-				cacheResult(ticket);
-
-				uncachedPrimaryKeys.remove(ticket.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-					TicketImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the tickets.
 	 *
@@ -2216,6 +2120,16 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "ticketId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_TICKET;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TicketModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2236,7 +2150,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_TICKET = "SELECT ticket FROM Ticket ticket";
-	private static final String _SQL_SELECT_TICKET_WHERE_PKS_IN = "SELECT ticket FROM Ticket ticket WHERE ticketId IN (";
 	private static final String _SQL_SELECT_TICKET_WHERE = "SELECT ticket FROM Ticket ticket WHERE ";
 	private static final String _SQL_COUNT_TICKET = "SELECT COUNT(ticket) FROM Ticket ticket";
 	private static final String _SQL_COUNT_TICKET_WHERE = "SELECT COUNT(ticket) FROM Ticket ticket WHERE ";

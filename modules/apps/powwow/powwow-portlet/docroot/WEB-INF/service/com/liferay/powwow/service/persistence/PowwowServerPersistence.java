@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.powwow.exception.NoSuchServerException;
 import com.liferay.powwow.model.PowwowServer;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the powwow server service.
  *
@@ -40,6 +45,9 @@ public interface PowwowServerPersistence extends BasePersistence<PowwowServer> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowServerUtil} to access the powwow server persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PowwowServer> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the powwow servers where providerType = &#63; and active = &#63;.
@@ -237,10 +245,6 @@ public interface PowwowServerPersistence extends BasePersistence<PowwowServer> {
 	*/
 	public PowwowServer fetchByPrimaryKey(long powwowServerId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, PowwowServer> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the powwow servers.
 	*
@@ -306,5 +310,5 @@ public interface PowwowServerPersistence extends BasePersistence<PowwowServer> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

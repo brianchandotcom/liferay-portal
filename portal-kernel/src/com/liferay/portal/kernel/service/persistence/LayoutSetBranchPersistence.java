@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the layout set branch service.
  *
@@ -38,6 +43,9 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetBranchUtil} to access the layout set branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LayoutSetBranch> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout set branchs where groupId = &#63;.
@@ -789,10 +797,6 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch fetchByPrimaryKey(long layoutSetBranchId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, LayoutSetBranch> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the layout set branchs.
 	*
@@ -858,5 +862,5 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

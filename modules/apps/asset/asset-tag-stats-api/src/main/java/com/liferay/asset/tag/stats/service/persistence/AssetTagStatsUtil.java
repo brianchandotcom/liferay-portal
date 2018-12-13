@@ -27,7 +27,11 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the asset tag stats service. This utility wraps {@link com.liferay.asset.tag.stats.service.persistence.impl.AssetTagStatsPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -68,6 +72,14 @@ public class AssetTagStatsUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, AssetTagStats> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -550,11 +562,6 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats fetchByPrimaryKey(long tagStatsId) {
 		return getPersistence().fetchByPrimaryKey(tagStatsId);
-	}
-
-	public static java.util.Map<java.io.Serializable, AssetTagStats> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

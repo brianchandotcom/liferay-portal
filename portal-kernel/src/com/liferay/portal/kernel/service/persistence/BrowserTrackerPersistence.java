@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.model.BrowserTracker;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the browser tracker service.
  *
@@ -38,6 +43,9 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BrowserTrackerUtil} to access the browser tracker persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, BrowserTracker> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the browser tracker where userId = &#63; or throws a {@link NoSuchBrowserTrackerException} if it could not be found.
@@ -134,10 +142,6 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
 	*/
 	public BrowserTracker fetchByPrimaryKey(long browserTrackerId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, BrowserTracker> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the browser trackers.

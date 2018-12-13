@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm structure version service.
  *
@@ -40,6 +45,9 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureVersionUtil} to access the ddm structure version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMStructureVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm structure versions where structureId = &#63;.
@@ -422,10 +430,6 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	*/
 	public DDMStructureVersion fetchByPrimaryKey(long structureVersionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DDMStructureVersion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the ddm structure versions.
 	*
@@ -491,5 +495,5 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

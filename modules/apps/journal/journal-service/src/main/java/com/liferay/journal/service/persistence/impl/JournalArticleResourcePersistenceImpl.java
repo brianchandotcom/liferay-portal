@@ -48,9 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2239,6 +2236,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		setModelClass(JournalArticleResource.class);
 
 		setModelImplClass(JournalArticleResourceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2718,101 +2716,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return fetchByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
-	@Override
-	public Map<Serializable, JournalArticleResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticleResource> map = new HashMap<Serializable, JournalArticleResource>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticleResource journalArticleResource = fetchByPrimaryKey(primaryKey);
-
-			if (journalArticleResource != null) {
-				map.put(primaryKey, journalArticleResource);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleResourceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (JournalArticleResource)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (JournalArticleResource journalArticleResource : (List<JournalArticleResource>)q.list()) {
-				map.put(journalArticleResource.getPrimaryKeyObj(),
-					journalArticleResource);
-
-				cacheResult(journalArticleResource);
-
-				uncachedPrimaryKeys.remove(journalArticleResource.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleResourceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the journal article resources.
 	 *
@@ -3015,6 +2918,16 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "resourcePrimKey";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_JOURNALARTICLERESOURCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalArticleResourceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3039,7 +2952,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource";
-	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE_WHERE_PKS_IN = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE resourcePrimKey IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE_WHERE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLERESOURCE = "SELECT COUNT(journalArticleResource) FROM JournalArticleResource journalArticleResource";
 	private static final String _SQL_COUNT_JOURNALARTICLERESOURCE_WHERE = "SELECT COUNT(journalArticleResource) FROM JournalArticleResource journalArticleResource WHERE ";

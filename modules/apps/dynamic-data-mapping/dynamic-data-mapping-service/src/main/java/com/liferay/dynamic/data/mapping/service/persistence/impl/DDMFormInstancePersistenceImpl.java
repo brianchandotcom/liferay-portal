@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2807,6 +2804,7 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		setModelClass(DDMFormInstance.class);
 
 		setModelImplClass(DDMFormInstanceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMFormInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3260,100 +3258,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		return fetchByPrimaryKey((Serializable)formInstanceId);
 	}
 
-	@Override
-	public Map<Serializable, DDMFormInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMFormInstance> map = new HashMap<Serializable, DDMFormInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMFormInstance ddmFormInstance = fetchByPrimaryKey(primaryKey);
-
-			if (ddmFormInstance != null) {
-				map.put(primaryKey, ddmFormInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMFormInstanceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMFormInstance)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMFORMINSTANCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMFormInstance ddmFormInstance : (List<DDMFormInstance>)q.list()) {
-				map.put(ddmFormInstance.getPrimaryKeyObj(), ddmFormInstance);
-
-				cacheResult(ddmFormInstance);
-
-				uncachedPrimaryKeys.remove(ddmFormInstance.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMFormInstanceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm form instances.
 	 *
@@ -3556,6 +3460,16 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "formInstanceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMFORMINSTANCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMFormInstanceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3580,7 +3494,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMFORMINSTANCE = "SELECT ddmFormInstance FROM DDMFormInstance ddmFormInstance";
-	private static final String _SQL_SELECT_DDMFORMINSTANCE_WHERE_PKS_IN = "SELECT ddmFormInstance FROM DDMFormInstance ddmFormInstance WHERE formInstanceId IN (";
 	private static final String _SQL_SELECT_DDMFORMINSTANCE_WHERE = "SELECT ddmFormInstance FROM DDMFormInstance ddmFormInstance WHERE ";
 	private static final String _SQL_COUNT_DDMFORMINSTANCE = "SELECT COUNT(ddmFormInstance) FROM DDMFormInstance ddmFormInstance";
 	private static final String _SQL_COUNT_DDMFORMINSTANCE_WHERE = "SELECT COUNT(ddmFormInstance) FROM DDMFormInstance ddmFormInstance WHERE ";

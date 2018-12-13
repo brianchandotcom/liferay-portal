@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the reading time entry service.
  *
@@ -40,6 +45,9 @@ public interface ReadingTimeEntryPersistence extends BasePersistence<ReadingTime
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReadingTimeEntryUtil} to access the reading time entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ReadingTimeEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the reading time entries where uuid = &#63;.
@@ -475,10 +483,6 @@ public interface ReadingTimeEntryPersistence extends BasePersistence<ReadingTime
 	*/
 	public ReadingTimeEntry fetchByPrimaryKey(long readingTimeEntryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, ReadingTimeEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the reading time entries.
 	*
@@ -544,5 +548,5 @@ public interface ReadingTimeEntryPersistence extends BasePersistence<ReadingTime
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4361,6 +4358,7 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		setModelClass(FragmentEntryLink.class);
 
 		setModelImplClass(FragmentEntryLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4950,100 +4948,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		return fetchByPrimaryKey((Serializable)fragmentEntryLinkId);
 	}
 
-	@Override
-	public Map<Serializable, FragmentEntryLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FragmentEntryLink> map = new HashMap<Serializable, FragmentEntryLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FragmentEntryLink fragmentEntryLink = fetchByPrimaryKey(primaryKey);
-
-			if (fragmentEntryLink != null) {
-				map.put(primaryKey, fragmentEntryLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentEntryLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FragmentEntryLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRAGMENTENTRYLINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FragmentEntryLink fragmentEntryLink : (List<FragmentEntryLink>)q.list()) {
-				map.put(fragmentEntryLink.getPrimaryKeyObj(), fragmentEntryLink);
-
-				cacheResult(fragmentEntryLink);
-
-				uncachedPrimaryKeys.remove(fragmentEntryLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
-					FragmentEntryLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the fragment entry links.
 	 *
@@ -5246,6 +5150,16 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fragmentEntryLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRAGMENTENTRYLINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FragmentEntryLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5270,7 +5184,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRAGMENTENTRYLINK = "SELECT fragmentEntryLink FROM FragmentEntryLink fragmentEntryLink";
-	private static final String _SQL_SELECT_FRAGMENTENTRYLINK_WHERE_PKS_IN = "SELECT fragmentEntryLink FROM FragmentEntryLink fragmentEntryLink WHERE fragmentEntryLinkId IN (";
 	private static final String _SQL_SELECT_FRAGMENTENTRYLINK_WHERE = "SELECT fragmentEntryLink FROM FragmentEntryLink fragmentEntryLink WHERE ";
 	private static final String _SQL_COUNT_FRAGMENTENTRYLINK = "SELECT COUNT(fragmentEntryLink) FROM FragmentEntryLink fragmentEntryLink";
 	private static final String _SQL_COUNT_FRAGMENTENTRYLINK_WHERE = "SELECT COUNT(fragmentEntryLink) FROM FragmentEntryLink fragmentEntryLink WHERE ";

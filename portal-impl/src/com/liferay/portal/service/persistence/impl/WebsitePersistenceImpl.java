@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3976,6 +3973,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		setModelClass(Website.class);
 
 		setModelImplClass(WebsiteImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(WebsiteModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4495,100 +4493,6 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		return fetchByPrimaryKey((Serializable)websiteId);
 	}
 
-	@Override
-	public Map<Serializable, Website> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Website> map = new HashMap<Serializable, Website>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Website website = fetchByPrimaryKey(primaryKey);
-
-			if (website != null) {
-				map.put(primaryKey, website);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
-					WebsiteImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Website)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_WEBSITE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Website website : (List<Website>)q.list()) {
-				map.put(website.getPrimaryKeyObj(), website);
-
-				cacheResult(website);
-
-				uncachedPrimaryKeys.remove(website.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
-					WebsiteImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the websites.
 	 *
@@ -4790,6 +4694,16 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "websiteId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_WEBSITE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WebsiteModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4810,7 +4724,6 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_WEBSITE = "SELECT website FROM Website website";
-	private static final String _SQL_SELECT_WEBSITE_WHERE_PKS_IN = "SELECT website FROM Website website WHERE websiteId IN (";
 	private static final String _SQL_SELECT_WEBSITE_WHERE = "SELECT website FROM Website website WHERE ";
 	private static final String _SQL_COUNT_WEBSITE = "SELECT COUNT(website) FROM Website website";
 	private static final String _SQL_COUNT_WEBSITE_WHERE = "SELECT COUNT(website) FROM Website website WHERE ";

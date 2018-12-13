@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4519,6 +4516,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		setModelClass(WikiNode.class);
 
 		setModelImplClass(WikiNodeImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(WikiNodeModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -5072,100 +5070,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return fetchByPrimaryKey((Serializable)nodeId);
 	}
 
-	@Override
-	public Map<Serializable, WikiNode> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, WikiNode> map = new HashMap<Serializable, WikiNode>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			WikiNode wikiNode = fetchByPrimaryKey(primaryKey);
-
-			if (wikiNode != null) {
-				map.put(primaryKey, wikiNode);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-					WikiNodeImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (WikiNode)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_WIKINODE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (WikiNode wikiNode : (List<WikiNode>)q.list()) {
-				map.put(wikiNode.getPrimaryKeyObj(), wikiNode);
-
-				cacheResult(wikiNode);
-
-				uncachedPrimaryKeys.remove(wikiNode.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-					WikiNodeImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the wiki nodes.
 	 *
@@ -5367,6 +5271,16 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "nodeId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_WIKINODE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WikiNodeModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5391,7 +5305,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_WIKINODE = "SELECT wikiNode FROM WikiNode wikiNode";
-	private static final String _SQL_SELECT_WIKINODE_WHERE_PKS_IN = "SELECT wikiNode FROM WikiNode wikiNode WHERE nodeId IN (";
 	private static final String _SQL_SELECT_WIKINODE_WHERE = "SELECT wikiNode FROM WikiNode wikiNode WHERE ";
 	private static final String _SQL_COUNT_WIKINODE = "SELECT COUNT(wikiNode) FROM WikiNode wikiNode";
 	private static final String _SQL_COUNT_WIKINODE_WHERE = "SELECT COUNT(wikiNode) FROM WikiNode wikiNode WHERE ";

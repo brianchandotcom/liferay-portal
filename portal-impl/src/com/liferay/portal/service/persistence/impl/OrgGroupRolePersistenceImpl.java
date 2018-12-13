@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1098,6 +1097,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		setModelClass(OrgGroupRole.class);
 
 		setModelImplClass(OrgGroupRoleImpl.class);
+		setModelPKClass(OrgGroupRolePK.class);
 		setEntityCacheEnabled(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1438,26 +1438,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		return fetchByPrimaryKey((Serializable)orgGroupRolePK);
 	}
 
-	@Override
-	public Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, OrgGroupRole> map = new HashMap<Serializable, OrgGroupRole>();
-
-		for (Serializable primaryKey : primaryKeys) {
-			OrgGroupRole orgGroupRole = fetchByPrimaryKey(primaryKey);
-
-			if (orgGroupRole != null) {
-				map.put(primaryKey, orgGroupRole);
-			}
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the org group roles.
 	 *
@@ -1657,6 +1637,16 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "orgGroupRolePK";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ORGGROUPROLE;
 	}
 
 	@Override

@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityLimitException;
 import com.liferay.social.kernel.model.SocialActivityLimit;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the social activity limit service.
  *
@@ -40,6 +45,9 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLimitUtil} to access the social activity limit persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SocialActivityLimit> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity limits where groupId = &#63;.
@@ -578,10 +586,6 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	* @return the social activity limit, or <code>null</code> if a social activity limit with the primary key could not be found
 	*/
 	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SocialActivityLimit> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity limits.

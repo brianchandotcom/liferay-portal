@@ -47,13 +47,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo action service.
@@ -2398,6 +2394,7 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		setModelClass(KaleoAction.class);
 
 		setModelImplClass(KaleoActionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoActionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2828,100 +2825,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		return fetchByPrimaryKey((Serializable)kaleoActionId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoAction> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoAction> map = new HashMap<Serializable, KaleoAction>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoAction kaleoAction = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoAction != null) {
-				map.put(primaryKey, kaleoAction);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoActionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoActionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoAction)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOACTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoAction kaleoAction : (List<KaleoAction>)q.list()) {
-				map.put(kaleoAction.getPrimaryKeyObj(), kaleoAction);
-
-				cacheResult(kaleoAction);
-
-				uncachedPrimaryKeys.remove(kaleoAction.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoActionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoActionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo actions.
 	 *
@@ -3119,6 +3022,16 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoActionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOACTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoActionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3143,7 +3056,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOACTION = "SELECT kaleoAction FROM KaleoAction kaleoAction";
-	private static final String _SQL_SELECT_KALEOACTION_WHERE_PKS_IN = "SELECT kaleoAction FROM KaleoAction kaleoAction WHERE kaleoActionId IN (";
 	private static final String _SQL_SELECT_KALEOACTION_WHERE = "SELECT kaleoAction FROM KaleoAction kaleoAction WHERE ";
 	private static final String _SQL_COUNT_KALEOACTION = "SELECT COUNT(kaleoAction) FROM KaleoAction kaleoAction";
 	private static final String _SQL_COUNT_KALEOACTION_WHERE = "SELECT COUNT(kaleoAction) FROM KaleoAction kaleoAction WHERE ";

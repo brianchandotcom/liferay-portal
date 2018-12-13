@@ -50,9 +50,6 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2008,6 +2005,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		setModelClass(Lock.class);
 
 		setModelImplClass(LockImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LockModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2397,100 +2395,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return fetchByPrimaryKey((Serializable)lockId);
 	}
 
-	@Override
-	public Map<Serializable, Lock> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Lock> map = new HashMap<Serializable, Lock>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Lock lock = fetchByPrimaryKey(primaryKey);
-
-			if (lock != null) {
-				map.put(primaryKey, lock);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-					LockImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Lock)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LOCK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Lock lock : (List<Lock>)q.list()) {
-				map.put(lock.getPrimaryKeyObj(), lock);
-
-				cacheResult(lock);
-
-				uncachedPrimaryKeys.remove(lock.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-					LockImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the locks.
 	 *
@@ -2692,6 +2596,16 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "lockId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LOCK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LockModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2725,7 +2639,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	private static final String _SQL_SELECT_LOCK = "SELECT lock FROM Lock lock";
-	private static final String _SQL_SELECT_LOCK_WHERE_PKS_IN = "SELECT lock FROM Lock lock WHERE lockId IN (";
 	private static final String _SQL_SELECT_LOCK_WHERE = "SELECT lock FROM Lock lock WHERE ";
 	private static final String _SQL_COUNT_LOCK = "SELECT COUNT(lock) FROM Lock lock";
 	private static final String _SQL_COUNT_LOCK_WHERE = "SELECT COUNT(lock) FROM Lock lock WHERE ";

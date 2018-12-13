@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.model.LayoutRevision;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the layout revision service.
  *
@@ -38,6 +43,9 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutRevisionUtil} to access the layout revision persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LayoutRevision> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout revisions where layoutSetBranchId = &#63;.
@@ -2130,10 +2138,6 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
 	*/
 	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, LayoutRevision> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout revisions.

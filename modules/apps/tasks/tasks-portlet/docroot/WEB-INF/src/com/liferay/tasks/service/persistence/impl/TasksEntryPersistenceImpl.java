@@ -54,12 +54,8 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the tasks entry service.
@@ -9955,6 +9951,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		setModelClass(TasksEntry.class);
 
 		setModelImplClass(TasksEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(TasksEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -10584,100 +10581,6 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		return fetchByPrimaryKey((Serializable)tasksEntryId);
 	}
 
-	@Override
-	public Map<Serializable, TasksEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, TasksEntry> map = new HashMap<Serializable, TasksEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			TasksEntry tasksEntry = fetchByPrimaryKey(primaryKey);
-
-			if (tasksEntry != null) {
-				map.put(primaryKey, tasksEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TasksEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (TasksEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_TASKSENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (TasksEntry tasksEntry : (List<TasksEntry>)q.list()) {
-				map.put(tasksEntry.getPrimaryKeyObj(), tasksEntry);
-
-				cacheResult(tasksEntry);
-
-				uncachedPrimaryKeys.remove(tasksEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TasksEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the tasks entries.
 	 *
@@ -10875,6 +10778,16 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "tasksEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_TASKSENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TasksEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -10895,7 +10808,6 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_TASKSENTRY = "SELECT tasksEntry FROM TasksEntry tasksEntry";
-	private static final String _SQL_SELECT_TASKSENTRY_WHERE_PKS_IN = "SELECT tasksEntry FROM TasksEntry tasksEntry WHERE tasksEntryId IN (";
 	private static final String _SQL_SELECT_TASKSENTRY_WHERE = "SELECT tasksEntry FROM TasksEntry tasksEntry WHERE ";
 	private static final String _SQL_COUNT_TASKSENTRY = "SELECT COUNT(tasksEntry) FROM TasksEntry tasksEntry";
 	private static final String _SQL_COUNT_TASKSENTRY_WHERE = "SELECT COUNT(tasksEntry) FROM TasksEntry tasksEntry WHERE ";

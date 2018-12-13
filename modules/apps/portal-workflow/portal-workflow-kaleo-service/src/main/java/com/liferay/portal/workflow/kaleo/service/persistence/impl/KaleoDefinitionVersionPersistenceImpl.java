@@ -47,13 +47,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo definition version service.
@@ -1494,6 +1490,7 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 		setModelClass(KaleoDefinitionVersion.class);
 
 		setModelImplClass(KaleoDefinitionVersionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoDefinitionVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1934,101 +1931,6 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 		return fetchByPrimaryKey((Serializable)kaleoDefinitionVersionId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoDefinitionVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoDefinitionVersion> map = new HashMap<Serializable, KaleoDefinitionVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoDefinitionVersion kaleoDefinitionVersion = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoDefinitionVersion != null) {
-				map.put(primaryKey, kaleoDefinitionVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoDefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoDefinitionVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoDefinitionVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoDefinitionVersion kaleoDefinitionVersion : (List<KaleoDefinitionVersion>)q.list()) {
-				map.put(kaleoDefinitionVersion.getPrimaryKeyObj(),
-					kaleoDefinitionVersion);
-
-				cacheResult(kaleoDefinitionVersion);
-
-				uncachedPrimaryKeys.remove(kaleoDefinitionVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoDefinitionVersionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoDefinitionVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo definition versions.
 	 *
@@ -2226,6 +2128,16 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoDefinitionVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEODEFINITIONVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoDefinitionVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2250,7 +2162,6 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEODEFINITIONVERSION = "SELECT kaleoDefinitionVersion FROM KaleoDefinitionVersion kaleoDefinitionVersion";
-	private static final String _SQL_SELECT_KALEODEFINITIONVERSION_WHERE_PKS_IN = "SELECT kaleoDefinitionVersion FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE kaleoDefinitionVersionId IN (";
 	private static final String _SQL_SELECT_KALEODEFINITIONVERSION_WHERE = "SELECT kaleoDefinitionVersion FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE ";
 	private static final String _SQL_COUNT_KALEODEFINITIONVERSION = "SELECT COUNT(kaleoDefinitionVersion) FROM KaleoDefinitionVersion kaleoDefinitionVersion";
 	private static final String _SQL_COUNT_KALEODEFINITIONVERSION_WHERE = "SELECT COUNT(kaleoDefinitionVersion) FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE ";

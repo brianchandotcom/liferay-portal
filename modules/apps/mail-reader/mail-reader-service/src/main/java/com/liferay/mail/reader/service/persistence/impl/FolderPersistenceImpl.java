@@ -49,13 +49,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the folder service.
@@ -853,6 +849,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		setModelClass(Folder.class);
 
 		setModelImplClass(FolderImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FolderModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1230,100 +1227,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
-	@Override
-	public Map<Serializable, Folder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Folder> map = new HashMap<Serializable, Folder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Folder folder = fetchByPrimaryKey(primaryKey);
-
-			if (folder != null) {
-				map.put(primaryKey, folder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-					FolderImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Folder)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FOLDER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Folder folder : (List<Folder>)q.list()) {
-				map.put(folder.getPrimaryKeyObj(), folder);
-
-				cacheResult(folder);
-
-				uncachedPrimaryKeys.remove(folder.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-					FolderImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the folders.
 	 *
@@ -1520,6 +1423,16 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "folderId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FOLDER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FolderModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1544,7 +1457,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FOLDER = "SELECT folder FROM Folder folder";
-	private static final String _SQL_SELECT_FOLDER_WHERE_PKS_IN = "SELECT folder FROM Folder folder WHERE folderId IN (";
 	private static final String _SQL_SELECT_FOLDER_WHERE = "SELECT folder FROM Folder folder WHERE ";
 	private static final String _SQL_COUNT_FOLDER = "SELECT COUNT(folder) FROM Folder folder";
 	private static final String _SQL_COUNT_FOLDER_WHERE = "SELECT COUNT(folder) FROM Folder folder WHERE ";

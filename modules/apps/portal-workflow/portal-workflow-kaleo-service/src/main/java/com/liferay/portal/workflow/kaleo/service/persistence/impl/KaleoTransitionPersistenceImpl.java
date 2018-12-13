@@ -48,13 +48,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo transition service.
@@ -2134,6 +2130,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		setModelClass(KaleoTransition.class);
 
 		setModelImplClass(KaleoTransitionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTransitionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2615,100 +2612,6 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		return fetchByPrimaryKey((Serializable)kaleoTransitionId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTransition> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTransition> map = new HashMap<Serializable, KaleoTransition>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTransition kaleoTransition = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTransition != null) {
-				map.put(primaryKey, kaleoTransition);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTransitionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTransitionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoTransition)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTRANSITION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTransition kaleoTransition : (List<KaleoTransition>)q.list()) {
-				map.put(kaleoTransition.getPrimaryKeyObj(), kaleoTransition);
-
-				cacheResult(kaleoTransition);
-
-				uncachedPrimaryKeys.remove(kaleoTransition.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTransitionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTransitionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo transitions.
 	 *
@@ -2906,6 +2809,16 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTransitionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTRANSITION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTransitionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2930,7 +2843,6 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTRANSITION = "SELECT kaleoTransition FROM KaleoTransition kaleoTransition";
-	private static final String _SQL_SELECT_KALEOTRANSITION_WHERE_PKS_IN = "SELECT kaleoTransition FROM KaleoTransition kaleoTransition WHERE kaleoTransitionId IN (";
 	private static final String _SQL_SELECT_KALEOTRANSITION_WHERE = "SELECT kaleoTransition FROM KaleoTransition kaleoTransition WHERE ";
 	private static final String _SQL_COUNT_KALEOTRANSITION = "SELECT COUNT(kaleoTransition) FROM KaleoTransition kaleoTransition";
 	private static final String _SQL_COUNT_KALEOTRANSITION_WHERE = "SELECT COUNT(kaleoTransition) FROM KaleoTransition kaleoTransition WHERE ";

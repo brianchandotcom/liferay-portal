@@ -50,9 +50,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5674,6 +5671,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		setModelClass(SocialRelation.class);
 
 		setModelImplClass(SocialRelationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialRelationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6300,100 +6298,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		return fetchByPrimaryKey((Serializable)relationId);
 	}
 
-	@Override
-	public Map<Serializable, SocialRelation> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SocialRelation> map = new HashMap<Serializable, SocialRelation>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SocialRelation socialRelation = fetchByPrimaryKey(primaryKey);
-
-			if (socialRelation != null) {
-				map.put(primaryKey, socialRelation);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRelationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SocialRelation)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SOCIALRELATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SocialRelation socialRelation : (List<SocialRelation>)q.list()) {
-				map.put(socialRelation.getPrimaryKeyObj(), socialRelation);
-
-				cacheResult(socialRelation);
-
-				uncachedPrimaryKeys.remove(socialRelation.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRelationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the social relations.
 	 *
@@ -6596,6 +6500,16 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "relationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SOCIALRELATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialRelationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6616,7 +6530,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SOCIALRELATION = "SELECT socialRelation FROM SocialRelation socialRelation";
-	private static final String _SQL_SELECT_SOCIALRELATION_WHERE_PKS_IN = "SELECT socialRelation FROM SocialRelation socialRelation WHERE relationId IN (";
 	private static final String _SQL_SELECT_SOCIALRELATION_WHERE = "SELECT socialRelation FROM SocialRelation socialRelation WHERE ";
 	private static final String _SQL_COUNT_SOCIALRELATION = "SELECT COUNT(socialRelation) FROM SocialRelation socialRelation";
 	private static final String _SQL_COUNT_SOCIALRELATION_WHERE = "SELECT COUNT(socialRelation) FROM SocialRelation socialRelation WHERE ";

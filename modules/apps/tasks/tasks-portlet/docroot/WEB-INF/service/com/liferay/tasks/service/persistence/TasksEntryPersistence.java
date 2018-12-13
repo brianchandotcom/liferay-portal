@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.tasks.exception.NoSuchTasksEntryException;
 import com.liferay.tasks.model.TasksEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the tasks entry service.
  *
@@ -40,6 +45,9 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TasksEntryUtil} to access the tasks entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, TasksEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the tasks entries where groupId = &#63;.
@@ -2494,10 +2502,6 @@ public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 	* @return the tasks entry, or <code>null</code> if a tasks entry with the primary key could not be found
 	*/
 	public TasksEntry fetchByPrimaryKey(long tasksEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, TasksEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the tasks entries.

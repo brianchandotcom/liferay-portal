@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the sharing entry service.
@@ -42,6 +46,9 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryUtil} to access the sharing entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SharingEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sharing entries where uuid = &#63;.
@@ -1615,10 +1622,6 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	*/
 	public SharingEntry fetchByPrimaryKey(long sharingEntryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SharingEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the sharing entries.
 	*
@@ -1684,5 +1687,5 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

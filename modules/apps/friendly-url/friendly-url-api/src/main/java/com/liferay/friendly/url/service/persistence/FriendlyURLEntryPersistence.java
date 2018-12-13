@@ -21,6 +21,11 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the friendly url entry service.
  *
@@ -40,6 +45,9 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryUtil} to access the friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, FriendlyURLEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the friendly url entries where uuid = &#63;.
@@ -578,10 +586,6 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	*/
 	public FriendlyURLEntry fetchByPrimaryKey(long friendlyURLEntryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, FriendlyURLEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the friendly url entries.
 	*
@@ -647,5 +651,5 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

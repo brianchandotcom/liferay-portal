@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the user notification delivery service.
@@ -930,6 +926,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		setModelClass(UserNotificationDelivery.class);
 
 		setModelImplClass(UserNotificationDeliveryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1327,101 +1324,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		return fetchByPrimaryKey((Serializable)userNotificationDeliveryId);
 	}
 
-	@Override
-	public Map<Serializable, UserNotificationDelivery> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserNotificationDelivery> map = new HashMap<Serializable, UserNotificationDelivery>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			UserNotificationDelivery userNotificationDelivery = fetchByPrimaryKey(primaryKey);
-
-			if (userNotificationDelivery != null) {
-				map.put(primaryKey, userNotificationDelivery);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationDeliveryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (UserNotificationDelivery)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (UserNotificationDelivery userNotificationDelivery : (List<UserNotificationDelivery>)q.list()) {
-				map.put(userNotificationDelivery.getPrimaryKeyObj(),
-					userNotificationDelivery);
-
-				cacheResult(userNotificationDelivery);
-
-				uncachedPrimaryKeys.remove(userNotificationDelivery.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationDeliveryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the user notification deliveries.
 	 *
@@ -1619,6 +1521,16 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "userNotificationDeliveryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERNOTIFICATIONDELIVERY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserNotificationDeliveryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1639,8 +1551,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY = "SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery";
-	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE_PKS_IN =
-		"SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery WHERE userNotificationDeliveryId IN (";
 	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE = "SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery WHERE ";
 	private static final String _SQL_COUNT_USERNOTIFICATIONDELIVERY = "SELECT COUNT(userNotificationDelivery) FROM UserNotificationDelivery userNotificationDelivery";
 	private static final String _SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE = "SELECT COUNT(userNotificationDelivery) FROM UserNotificationDelivery userNotificationDelivery WHERE ";

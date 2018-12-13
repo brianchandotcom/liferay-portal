@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo task service.
@@ -1335,6 +1331,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		setModelClass(KaleoTask.class);
 
 		setModelImplClass(KaleoTaskImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTaskModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1737,100 +1734,6 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		return fetchByPrimaryKey((Serializable)kaleoTaskId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTask> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTask> map = new HashMap<Serializable, KaleoTask>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTask kaleoTask = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTask != null) {
-				map.put(primaryKey, kaleoTask);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTaskModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoTask)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTASK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTask kaleoTask : (List<KaleoTask>)q.list()) {
-				map.put(kaleoTask.getPrimaryKeyObj(), kaleoTask);
-
-				cacheResult(kaleoTask);
-
-				uncachedPrimaryKeys.remove(kaleoTask.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTaskModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo tasks.
 	 *
@@ -2028,6 +1931,16 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTaskId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTASK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2052,7 +1965,6 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTASK = "SELECT kaleoTask FROM KaleoTask kaleoTask";
-	private static final String _SQL_SELECT_KALEOTASK_WHERE_PKS_IN = "SELECT kaleoTask FROM KaleoTask kaleoTask WHERE kaleoTaskId IN (";
 	private static final String _SQL_SELECT_KALEOTASK_WHERE = "SELECT kaleoTask FROM KaleoTask kaleoTask WHERE ";
 	private static final String _SQL_COUNT_KALEOTASK = "SELECT COUNT(kaleoTask) FROM KaleoTask kaleoTask";
 	private static final String _SQL_COUNT_KALEOTASK_WHERE = "SELECT COUNT(kaleoTask) FROM KaleoTask kaleoTask WHERE ";

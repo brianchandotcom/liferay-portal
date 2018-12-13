@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Ticket;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ticket service.
  *
@@ -38,6 +43,9 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketUtil} to access the ticket persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Ticket> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the ticket where key = &#63; or throws a {@link NoSuchTicketException} if it could not be found.
@@ -458,10 +466,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*/
 	public Ticket fetchByPrimaryKey(long ticketId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Ticket> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the tickets.
 	*
@@ -527,5 +531,5 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

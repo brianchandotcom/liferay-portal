@@ -51,12 +51,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the powwow meeting service.
@@ -3076,6 +3072,7 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 		setModelClass(PowwowMeeting.class);
 
 		setModelImplClass(PowwowMeetingImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PowwowMeetingModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3526,100 +3523,6 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 		return fetchByPrimaryKey((Serializable)powwowMeetingId);
 	}
 
-	@Override
-	public Map<Serializable, PowwowMeeting> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PowwowMeeting> map = new HashMap<Serializable, PowwowMeeting>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PowwowMeeting powwowMeeting = fetchByPrimaryKey(primaryKey);
-
-			if (powwowMeeting != null) {
-				map.put(primaryKey, powwowMeeting);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PowwowMeetingModelImpl.ENTITY_CACHE_ENABLED,
-					PowwowMeetingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PowwowMeeting)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_POWWOWMEETING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PowwowMeeting powwowMeeting : (List<PowwowMeeting>)q.list()) {
-				map.put(powwowMeeting.getPrimaryKeyObj(), powwowMeeting);
-
-				cacheResult(powwowMeeting);
-
-				uncachedPrimaryKeys.remove(powwowMeeting.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PowwowMeetingModelImpl.ENTITY_CACHE_ENABLED,
-					PowwowMeetingImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the powwow meetings.
 	 *
@@ -3817,6 +3720,16 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "powwowMeetingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_POWWOWMEETING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PowwowMeetingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3837,7 +3750,6 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_POWWOWMEETING = "SELECT powwowMeeting FROM PowwowMeeting powwowMeeting";
-	private static final String _SQL_SELECT_POWWOWMEETING_WHERE_PKS_IN = "SELECT powwowMeeting FROM PowwowMeeting powwowMeeting WHERE powwowMeetingId IN (";
 	private static final String _SQL_SELECT_POWWOWMEETING_WHERE = "SELECT powwowMeeting FROM PowwowMeeting powwowMeeting WHERE ";
 	private static final String _SQL_COUNT_POWWOWMEETING = "SELECT COUNT(powwowMeeting) FROM PowwowMeeting powwowMeeting";
 	private static final String _SQL_COUNT_POWWOWMEETING_WHERE = "SELECT COUNT(powwowMeeting) FROM PowwowMeeting powwowMeeting WHERE ";

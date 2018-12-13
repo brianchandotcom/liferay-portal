@@ -52,12 +52,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the subscription service.
@@ -2897,6 +2893,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		setModelClass(Subscription.class);
 
 		setModelImplClass(SubscriptionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SubscriptionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3421,100 +3418,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		return fetchByPrimaryKey((Serializable)subscriptionId);
 	}
 
-	@Override
-	public Map<Serializable, Subscription> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Subscription> map = new HashMap<Serializable, Subscription>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Subscription subscription = fetchByPrimaryKey(primaryKey);
-
-			if (subscription != null) {
-				map.put(primaryKey, subscription);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-					SubscriptionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Subscription)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SUBSCRIPTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Subscription subscription : (List<Subscription>)q.list()) {
-				map.put(subscription.getPrimaryKeyObj(), subscription);
-
-				cacheResult(subscription);
-
-				uncachedPrimaryKeys.remove(subscription.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-					SubscriptionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the subscriptions.
 	 *
@@ -3712,6 +3615,16 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "subscriptionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SUBSCRIPTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SubscriptionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3732,7 +3645,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SUBSCRIPTION = "SELECT subscription FROM Subscription subscription";
-	private static final String _SQL_SELECT_SUBSCRIPTION_WHERE_PKS_IN = "SELECT subscription FROM Subscription subscription WHERE subscriptionId IN (";
 	private static final String _SQL_SELECT_SUBSCRIPTION_WHERE = "SELECT subscription FROM Subscription subscription WHERE ";
 	private static final String _SQL_COUNT_SUBSCRIPTION = "SELECT COUNT(subscription) FROM Subscription subscription";
 	private static final String _SQL_COUNT_SUBSCRIPTION_WHERE = "SELECT COUNT(subscription) FROM Subscription subscription WHERE ";

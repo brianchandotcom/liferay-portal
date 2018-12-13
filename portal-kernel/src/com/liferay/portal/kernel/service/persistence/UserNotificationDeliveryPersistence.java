@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the user notification delivery service.
  *
@@ -38,6 +43,9 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationDeliveryUtil} to access the user notification delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, UserNotificationDelivery> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user notification deliveries where userId = &#63;.
@@ -297,10 +305,6 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery fetchByPrimaryKey(
 		long userNotificationDeliveryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, UserNotificationDelivery> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the user notification deliveries.

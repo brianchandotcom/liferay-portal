@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the kaleo instance token service.
@@ -41,6 +45,9 @@ public interface KaleoInstanceTokenPersistence extends BasePersistence<KaleoInst
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoInstanceTokenUtil} to access the kaleo instance token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoInstanceToken> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo instance tokens where companyId = &#63;.
@@ -812,10 +819,6 @@ public interface KaleoInstanceTokenPersistence extends BasePersistence<KaleoInst
 	* @return the kaleo instance token, or <code>null</code> if a kaleo instance token with the primary key could not be found
 	*/
 	public KaleoInstanceToken fetchByPrimaryKey(long kaleoInstanceTokenId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoInstanceToken> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo instance tokens.

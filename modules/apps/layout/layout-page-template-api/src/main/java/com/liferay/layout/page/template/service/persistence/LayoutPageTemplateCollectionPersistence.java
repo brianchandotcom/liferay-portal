@@ -21,6 +21,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the layout page template collection service.
  *
@@ -40,6 +45,9 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateCollectionUtil} to access the layout page template collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LayoutPageTemplateCollection> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout page template collections where uuid = &#63;.
@@ -892,10 +900,6 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	public LayoutPageTemplateCollection fetchByPrimaryKey(
 		long layoutPageTemplateCollectionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, LayoutPageTemplateCollection> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the layout page template collections.
 	*
@@ -964,5 +968,5 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

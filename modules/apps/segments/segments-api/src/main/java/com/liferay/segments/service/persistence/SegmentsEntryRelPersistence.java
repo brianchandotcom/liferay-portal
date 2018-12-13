@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.segments.exception.NoSuchEntryRelException;
 import com.liferay.segments.model.SegmentsEntryRel;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the segments entry rel service.
  *
@@ -40,6 +45,9 @@ public interface SegmentsEntryRelPersistence extends BasePersistence<SegmentsEnt
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRelUtil} to access the segments entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SegmentsEntryRel> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the segments entry rels where segmentsEntryId = &#63;.
@@ -585,10 +593,6 @@ public interface SegmentsEntryRelPersistence extends BasePersistence<SegmentsEnt
 	* @return the segments entry rel, or <code>null</code> if a segments entry rel with the primary key could not be found
 	*/
 	public SegmentsEntryRel fetchByPrimaryKey(long segmentsEntryRelId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SegmentsEntryRel> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the segments entry rels.

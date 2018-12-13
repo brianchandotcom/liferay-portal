@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.model.Country;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the country service.
  *
@@ -38,6 +43,9 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CountryUtil} to access the country persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Country> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the country where name = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
@@ -347,10 +355,6 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public Country fetchByPrimaryKey(long countryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Country> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the countries.
 	*
@@ -416,5 +420,5 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

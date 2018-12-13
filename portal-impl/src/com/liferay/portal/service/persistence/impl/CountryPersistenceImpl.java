@@ -43,9 +43,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1261,6 +1258,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		setModelClass(Country.class);
 
 		setModelImplClass(CountryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CountryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1660,100 +1658,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return fetchByPrimaryKey((Serializable)countryId);
 	}
 
-	@Override
-	public Map<Serializable, Country> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Country> map = new HashMap<Serializable, Country>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Country country = fetchByPrimaryKey(primaryKey);
-
-			if (country != null) {
-				map.put(primaryKey, country);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-					CountryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Country)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_COUNTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Country country : (List<Country>)q.list()) {
-				map.put(country.getPrimaryKeyObj(), country);
-
-				cacheResult(country);
-
-				uncachedPrimaryKeys.remove(country.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-					CountryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the countries.
 	 *
@@ -1955,6 +1859,16 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "countryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COUNTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CountryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1973,7 +1887,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	private static final String _SQL_SELECT_COUNTRY = "SELECT country FROM Country country";
-	private static final String _SQL_SELECT_COUNTRY_WHERE_PKS_IN = "SELECT country FROM Country country WHERE countryId IN (";
 	private static final String _SQL_SELECT_COUNTRY_WHERE = "SELECT country FROM Country country WHERE ";
 	private static final String _SQL_COUNT_COUNTRY = "SELECT COUNT(country) FROM Country country";
 	private static final String _SQL_COUNT_COUNTRY_WHERE = "SELECT COUNT(country) FROM Country country WHERE ";

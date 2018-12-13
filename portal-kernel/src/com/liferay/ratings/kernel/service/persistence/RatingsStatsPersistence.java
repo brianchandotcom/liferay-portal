@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ratings stats service.
  *
@@ -40,6 +45,9 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RatingsStatsUtil} to access the ratings stats persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, RatingsStats> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ratings statses where classNameId = &#63; and classPK = any &#63;.
@@ -218,10 +226,6 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	* @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
 	*/
 	public RatingsStats fetchByPrimaryKey(long statsId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, RatingsStats> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ratings statses.

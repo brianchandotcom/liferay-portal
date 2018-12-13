@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sync.exception.NoSuchDLFileVersionDiffException;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the sync dl file version diff service.
@@ -42,6 +46,9 @@ public interface SyncDLFileVersionDiffPersistence extends BasePersistence<SyncDL
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLFileVersionDiffUtil} to access the sync dl file version diff persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SyncDLFileVersionDiff> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sync dl file version diffs where fileEntryId = &#63;.
@@ -427,10 +434,6 @@ public interface SyncDLFileVersionDiffPersistence extends BasePersistence<SyncDL
 	*/
 	public SyncDLFileVersionDiff fetchByPrimaryKey(long syncDLFileVersionDiffId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SyncDLFileVersionDiff> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the sync dl file version diffs.
 	*
@@ -496,5 +499,5 @@ public interface SyncDLFileVersionDiffPersistence extends BasePersistence<SyncDL
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

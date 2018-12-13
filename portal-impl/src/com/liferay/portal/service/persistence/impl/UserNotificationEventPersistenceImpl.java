@@ -48,9 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -8297,6 +8294,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		setModelClass(UserNotificationEvent.class);
 
 		setModelImplClass(UserNotificationEventImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -9038,101 +9036,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return fetchByPrimaryKey((Serializable)userNotificationEventId);
 	}
 
-	@Override
-	public Map<Serializable, UserNotificationEvent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserNotificationEvent> map = new HashMap<Serializable, UserNotificationEvent>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(primaryKey);
-
-			if (userNotificationEvent != null) {
-				map.put(primaryKey, userNotificationEvent);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationEventImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (UserNotificationEvent)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (UserNotificationEvent userNotificationEvent : (List<UserNotificationEvent>)q.list()) {
-				map.put(userNotificationEvent.getPrimaryKeyObj(),
-					userNotificationEvent);
-
-				cacheResult(userNotificationEvent);
-
-				uncachedPrimaryKeys.remove(userNotificationEvent.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationEventImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the user notification events.
 	 *
@@ -9335,6 +9238,16 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "userNotificationEventId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERNOTIFICATIONEVENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserNotificationEventModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -9355,7 +9268,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent";
-	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE_PKS_IN = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE userNotificationEventId IN (";
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE ";
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT = "SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent";
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT_WHERE = "SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent WHERE ";

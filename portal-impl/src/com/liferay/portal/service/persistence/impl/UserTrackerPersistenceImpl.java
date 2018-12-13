@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the user tracker service.
@@ -1646,6 +1642,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		setModelClass(UserTracker.class);
 
 		setModelImplClass(UserTrackerImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserTrackerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2013,100 +2010,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		return fetchByPrimaryKey((Serializable)userTrackerId);
 	}
 
-	@Override
-	public Map<Serializable, UserTracker> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserTracker> map = new HashMap<Serializable, UserTracker>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			UserTracker userTracker = fetchByPrimaryKey(primaryKey);
-
-			if (userTracker != null) {
-				map.put(primaryKey, userTracker);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					UserTrackerImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (UserTracker)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_USERTRACKER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (UserTracker userTracker : (List<UserTracker>)q.list()) {
-				map.put(userTracker.getPrimaryKeyObj(), userTracker);
-
-				cacheResult(userTracker);
-
-				uncachedPrimaryKeys.remove(userTracker.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					UserTrackerImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the user trackers.
 	 *
@@ -2304,6 +2207,16 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "userTrackerId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERTRACKER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserTrackerModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2324,7 +2237,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_USERTRACKER = "SELECT userTracker FROM UserTracker userTracker";
-	private static final String _SQL_SELECT_USERTRACKER_WHERE_PKS_IN = "SELECT userTracker FROM UserTracker userTracker WHERE userTrackerId IN (";
 	private static final String _SQL_SELECT_USERTRACKER_WHERE = "SELECT userTracker FROM UserTracker userTracker WHERE ";
 	private static final String _SQL_COUNT_USERTRACKER = "SELECT COUNT(userTracker) FROM UserTracker userTracker";
 	private static final String _SQL_COUNT_USERTRACKER_WHERE = "SELECT COUNT(userTracker) FROM UserTracker userTracker WHERE ";

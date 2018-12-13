@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the ddl record version service.
@@ -2658,6 +2654,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		setModelClass(DDLRecordVersion.class);
 
 		setModelImplClass(DDLRecordVersionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3124,100 +3121,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		return fetchByPrimaryKey((Serializable)recordVersionId);
 	}
 
-	@Override
-	public Map<Serializable, DDLRecordVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDLRecordVersion> map = new HashMap<Serializable, DDLRecordVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDLRecordVersion ddlRecordVersion = fetchByPrimaryKey(primaryKey);
-
-			if (ddlRecordVersion != null) {
-				map.put(primaryKey, ddlRecordVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDLRecordVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDLRECORDVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDLRecordVersion ddlRecordVersion : (List<DDLRecordVersion>)q.list()) {
-				map.put(ddlRecordVersion.getPrimaryKeyObj(), ddlRecordVersion);
-
-				cacheResult(ddlRecordVersion);
-
-				uncachedPrimaryKeys.remove(ddlRecordVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddl record versions.
 	 *
@@ -3415,6 +3318,16 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "recordVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDLRECORDVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDLRecordVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3439,7 +3352,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDLRECORDVERSION = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion";
-	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE_PKS_IN = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE recordVersionId IN (";
 	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE ";
 	private static final String _SQL_COUNT_DDLRECORDVERSION = "SELECT COUNT(ddlRecordVersion) FROM DDLRecordVersion ddlRecordVersion";
 	private static final String _SQL_COUNT_DDLRECORDVERSION_WHERE = "SELECT COUNT(ddlRecordVersion) FROM DDLRecordVersion ddlRecordVersion WHERE ";

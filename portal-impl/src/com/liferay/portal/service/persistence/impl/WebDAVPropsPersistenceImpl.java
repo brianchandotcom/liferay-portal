@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the web dav props service.
@@ -313,6 +309,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		setModelClass(WebDAVProps.class);
 
 		setModelImplClass(WebDAVPropsImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -675,100 +672,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		return fetchByPrimaryKey((Serializable)webDavPropsId);
 	}
 
-	@Override
-	public Map<Serializable, WebDAVProps> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, WebDAVProps> map = new HashMap<Serializable, WebDAVProps>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			WebDAVProps webDAVProps = fetchByPrimaryKey(primaryKey);
-
-			if (webDAVProps != null) {
-				map.put(primaryKey, webDAVProps);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-					WebDAVPropsImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (WebDAVProps)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_WEBDAVPROPS_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (WebDAVProps webDAVProps : (List<WebDAVProps>)q.list()) {
-				map.put(webDAVProps.getPrimaryKeyObj(), webDAVProps);
-
-				cacheResult(webDAVProps);
-
-				uncachedPrimaryKeys.remove(webDAVProps.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-					WebDAVPropsImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the web dav propses.
 	 *
@@ -966,6 +869,16 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "webDavPropsId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_WEBDAVPROPS;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WebDAVPropsModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -986,7 +899,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_WEBDAVPROPS = "SELECT webDAVProps FROM WebDAVProps webDAVProps";
-	private static final String _SQL_SELECT_WEBDAVPROPS_WHERE_PKS_IN = "SELECT webDAVProps FROM WebDAVProps webDAVProps WHERE webDavPropsId IN (";
 	private static final String _SQL_SELECT_WEBDAVPROPS_WHERE = "SELECT webDAVProps FROM WebDAVProps webDAVProps WHERE ";
 	private static final String _SQL_COUNT_WEBDAVPROPS = "SELECT COUNT(webDAVProps) FROM WebDAVProps webDAVProps";
 	private static final String _SQL_COUNT_WEBDAVPROPS_WHERE = "SELECT COUNT(webDAVProps) FROM WebDAVProps webDAVProps WHERE ";

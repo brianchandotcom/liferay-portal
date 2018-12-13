@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2769,6 +2766,7 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		setModelClass(AssetDisplayPageEntry.class);
 
 		setModelImplClass(AssetDisplayPageEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3304,101 +3302,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		return fetchByPrimaryKey((Serializable)assetDisplayPageEntryId);
 	}
 
-	@Override
-	public Map<Serializable, AssetDisplayPageEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetDisplayPageEntry> map = new HashMap<Serializable, AssetDisplayPageEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetDisplayPageEntry assetDisplayPageEntry = fetchByPrimaryKey(primaryKey);
-
-			if (assetDisplayPageEntry != null) {
-				map.put(primaryKey, assetDisplayPageEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetDisplayPageEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetDisplayPageEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetDisplayPageEntry assetDisplayPageEntry : (List<AssetDisplayPageEntry>)q.list()) {
-				map.put(assetDisplayPageEntry.getPrimaryKeyObj(),
-					assetDisplayPageEntry);
-
-				cacheResult(assetDisplayPageEntry);
-
-				uncachedPrimaryKeys.remove(assetDisplayPageEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetDisplayPageEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset display page entries.
 	 *
@@ -3601,6 +3504,16 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "assetDisplayPageEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETDISPLAYPAGEENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetDisplayPageEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3625,7 +3538,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETDISPLAYPAGEENTRY = "SELECT assetDisplayPageEntry FROM AssetDisplayPageEntry assetDisplayPageEntry";
-	private static final String _SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE_PKS_IN = "SELECT assetDisplayPageEntry FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE assetDisplayPageEntryId IN (";
 	private static final String _SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE = "SELECT assetDisplayPageEntry FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE ";
 	private static final String _SQL_COUNT_ASSETDISPLAYPAGEENTRY = "SELECT COUNT(assetDisplayPageEntry) FROM AssetDisplayPageEntry assetDisplayPageEntry";
 	private static final String _SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE = "SELECT COUNT(assetDisplayPageEntry) FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE ";

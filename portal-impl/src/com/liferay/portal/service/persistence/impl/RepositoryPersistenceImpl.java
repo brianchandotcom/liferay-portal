@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2264,6 +2261,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		setModelClass(Repository.class);
 
 		setModelImplClass(RepositoryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RepositoryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2751,100 +2749,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		return fetchByPrimaryKey((Serializable)repositoryId);
 	}
 
-	@Override
-	public Map<Serializable, Repository> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Repository> map = new HashMap<Serializable, Repository>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Repository repository = fetchByPrimaryKey(primaryKey);
-
-			if (repository != null) {
-				map.put(primaryKey, repository);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Repository)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_REPOSITORY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Repository repository : (List<Repository>)q.list()) {
-				map.put(repository.getPrimaryKeyObj(), repository);
-
-				cacheResult(repository);
-
-				uncachedPrimaryKeys.remove(repository.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the repositories.
 	 *
@@ -3047,6 +2951,16 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "repositoryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_REPOSITORY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RepositoryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3067,7 +2981,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_REPOSITORY = "SELECT repository FROM Repository repository";
-	private static final String _SQL_SELECT_REPOSITORY_WHERE_PKS_IN = "SELECT repository FROM Repository repository WHERE repositoryId IN (";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE = "SELECT repository FROM Repository repository WHERE ";
 	private static final String _SQL_COUNT_REPOSITORY = "SELECT COUNT(repository) FROM Repository repository";
 	private static final String _SQL_COUNT_REPOSITORY_WHERE = "SELECT COUNT(repository) FROM Repository repository WHERE ";

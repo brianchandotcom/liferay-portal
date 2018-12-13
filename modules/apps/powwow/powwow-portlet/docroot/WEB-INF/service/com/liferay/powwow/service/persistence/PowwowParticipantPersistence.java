@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.powwow.exception.NoSuchParticipantException;
 import com.liferay.powwow.model.PowwowParticipant;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the powwow participant service.
  *
@@ -40,6 +45,9 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowParticipantUtil} to access the powwow participant persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PowwowParticipant> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the powwow participants where powwowMeetingId = &#63;.
@@ -474,10 +482,6 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	*/
 	public PowwowParticipant fetchByPrimaryKey(long powwowParticipantId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, PowwowParticipant> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the powwow participants.
 	*
@@ -543,5 +547,5 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

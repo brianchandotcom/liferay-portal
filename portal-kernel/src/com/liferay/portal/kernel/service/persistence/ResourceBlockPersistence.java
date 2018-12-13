@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchResourceBlockException;
 import com.liferay.portal.kernel.model.ResourceBlock;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the resource block service.
  *
@@ -40,6 +45,9 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockUtil} to access the resource block persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ResourceBlock> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource blocks where companyId = &#63; and name = &#63;.
@@ -458,10 +466,6 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	* @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
 	*/
 	public ResourceBlock fetchByPrimaryKey(long resourceBlockId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, ResourceBlock> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource blocks.

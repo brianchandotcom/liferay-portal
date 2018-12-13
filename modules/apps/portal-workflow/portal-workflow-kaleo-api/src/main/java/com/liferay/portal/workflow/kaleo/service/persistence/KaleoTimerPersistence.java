@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo timer service.
  *
@@ -39,6 +44,9 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerUtil} to access the kaleo timer persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoTimer> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -402,10 +410,6 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* @return the kaleo timer, or <code>null</code> if a kaleo timer with the primary key could not be found
 	*/
 	public KaleoTimer fetchByPrimaryKey(long kaleoTimerId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoTimer> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo timers.

@@ -21,6 +21,11 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the announcements entry service.
  *
@@ -40,6 +45,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsEntryUtil} to access the announcements entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AnnouncementsEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the announcements entries where uuid = &#63;.
@@ -1622,10 +1630,6 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry fetchByPrimaryKey(long entryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, AnnouncementsEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the announcements entries.
 	*
@@ -1691,5 +1695,5 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

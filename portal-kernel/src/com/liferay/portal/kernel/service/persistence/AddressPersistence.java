@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.model.Address;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the address service.
  *
@@ -38,6 +43,9 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressUtil} to access the address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Address> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the addresses where uuid = &#63;.
@@ -1269,10 +1277,6 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address fetchByPrimaryKey(long addressId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Address> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the addresses.
 	*
@@ -1338,5 +1342,5 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

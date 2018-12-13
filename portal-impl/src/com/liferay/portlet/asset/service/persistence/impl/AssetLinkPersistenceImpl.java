@@ -48,9 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2964,6 +2961,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		setModelClass(AssetLink.class);
 
 		setModelImplClass(AssetLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3442,100 +3440,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		return fetchByPrimaryKey((Serializable)linkId);
 	}
 
-	@Override
-	public Map<Serializable, AssetLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetLink> map = new HashMap<Serializable, AssetLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetLink assetLink = fetchByPrimaryKey(primaryKey);
-
-			if (assetLink != null) {
-				map.put(primaryKey, assetLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-					AssetLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETLINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetLink assetLink : (List<AssetLink>)q.list()) {
-				map.put(assetLink.getPrimaryKeyObj(), assetLink);
-
-				cacheResult(assetLink);
-
-				uncachedPrimaryKeys.remove(assetLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-					AssetLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset links.
 	 *
@@ -3738,6 +3642,16 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "linkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETLINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3758,7 +3672,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_ASSETLINK = "SELECT assetLink FROM AssetLink assetLink";
-	private static final String _SQL_SELECT_ASSETLINK_WHERE_PKS_IN = "SELECT assetLink FROM AssetLink assetLink WHERE linkId IN (";
 	private static final String _SQL_SELECT_ASSETLINK_WHERE = "SELECT assetLink FROM AssetLink assetLink WHERE ";
 	private static final String _SQL_COUNT_ASSETLINK = "SELECT COUNT(assetLink) FROM AssetLink assetLink";
 	private static final String _SQL_COUNT_ASSETLINK_WHERE = "SELECT COUNT(assetLink) FROM AssetLink assetLink WHERE ";

@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the versioned entry service.
  *
@@ -39,6 +44,9 @@ public interface VersionedEntryPersistence extends BasePersistence<VersionedEntr
 	 *
 	 * Never modify or reference this interface directly. Always use {@link VersionedEntryUtil} to access the versioned entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, VersionedEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the versioned entries where groupId = &#63;.
@@ -267,10 +275,6 @@ public interface VersionedEntryPersistence extends BasePersistence<VersionedEntr
 	* @return the versioned entry, or <code>null</code> if a versioned entry with the primary key could not be found
 	*/
 	public VersionedEntry fetchByPrimaryKey(long versionedEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, VersionedEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the versioned entries.

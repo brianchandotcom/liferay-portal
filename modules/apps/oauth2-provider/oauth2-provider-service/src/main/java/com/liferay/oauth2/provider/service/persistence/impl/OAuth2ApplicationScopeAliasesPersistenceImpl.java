@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1696,6 +1693,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		setModelClass(OAuth2ApplicationScopeAliases.class);
 
 		setModelImplClass(OAuth2ApplicationScopeAliasesImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2094,103 +2092,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		return fetchByPrimaryKey((Serializable)oAuth2ApplicationScopeAliasesId);
 	}
 
-	@Override
-	public Map<Serializable, OAuth2ApplicationScopeAliases> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, OAuth2ApplicationScopeAliases> map = new HashMap<Serializable, OAuth2ApplicationScopeAliases>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = fetchByPrimaryKey(primaryKey);
-
-			if (oAuth2ApplicationScopeAliases != null) {
-				map.put(primaryKey, oAuth2ApplicationScopeAliases);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationScopeAliasesImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(OAuth2ApplicationScopeAliases)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases : (List<OAuth2ApplicationScopeAliases>)q.list()) {
-				map.put(oAuth2ApplicationScopeAliases.getPrimaryKeyObj(),
-					oAuth2ApplicationScopeAliases);
-
-				cacheResult(oAuth2ApplicationScopeAliases);
-
-				uncachedPrimaryKeys.remove(oAuth2ApplicationScopeAliases.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationScopeAliasesImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the o auth2 application scope aliaseses.
 	 *
@@ -2393,6 +2294,16 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "oA2AScopeAliasesId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OAuth2ApplicationScopeAliasesModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2417,8 +2328,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES = "SELECT oAuth2ApplicationScopeAliases FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases";
-	private static final String _SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE_PKS_IN =
-		"SELECT oAuth2ApplicationScopeAliases FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE oA2AScopeAliasesId IN (";
 	private static final String _SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE = "SELECT oAuth2ApplicationScopeAliases FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";
 	private static final String _SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES = "SELECT COUNT(oAuth2ApplicationScopeAliases) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases";
 	private static final String _SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE = "SELECT COUNT(oAuth2ApplicationScopeAliases) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";

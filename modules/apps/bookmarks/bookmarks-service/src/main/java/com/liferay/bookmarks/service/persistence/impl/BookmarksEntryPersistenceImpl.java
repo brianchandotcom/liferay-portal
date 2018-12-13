@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -12371,6 +12368,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		setModelClass(BookmarksEntry.class);
 
 		setModelImplClass(BookmarksEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -12984,100 +12982,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
-	@Override
-	public Map<Serializable, BookmarksEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, BookmarksEntry> map = new HashMap<Serializable, BookmarksEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			BookmarksEntry bookmarksEntry = fetchByPrimaryKey(primaryKey);
-
-			if (bookmarksEntry != null) {
-				map.put(primaryKey, bookmarksEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BookmarksEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (BookmarksEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (BookmarksEntry bookmarksEntry : (List<BookmarksEntry>)q.list()) {
-				map.put(bookmarksEntry.getPrimaryKeyObj(), bookmarksEntry);
-
-				cacheResult(bookmarksEntry);
-
-				uncachedPrimaryKeys.remove(bookmarksEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BookmarksEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the bookmarks entries.
 	 *
@@ -13280,6 +13184,16 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "entryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_BOOKMARKSENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BookmarksEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -13304,7 +13218,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_BOOKMARKSENTRY = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry";
-	private static final String _SQL_SELECT_BOOKMARKSENTRY_WHERE_PKS_IN = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_BOOKMARKSENTRY_WHERE = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry WHERE ";
 	private static final String _SQL_COUNT_BOOKMARKSENTRY = "SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry";
 	private static final String _SQL_COUNT_BOOKMARKSENTRY_WHERE = "SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry WHERE ";

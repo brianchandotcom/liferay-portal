@@ -48,9 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4372,6 +4369,7 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		setModelClass(AMImageEntry.class);
 
 		setModelImplClass(AMImageEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4940,100 +4938,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		return fetchByPrimaryKey((Serializable)amImageEntryId);
 	}
 
-	@Override
-	public Map<Serializable, AMImageEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AMImageEntry> map = new HashMap<Serializable, AMImageEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AMImageEntry amImageEntry = fetchByPrimaryKey(primaryKey);
-
-			if (amImageEntry != null) {
-				map.put(primaryKey, amImageEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AMImageEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AMImageEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_AMIMAGEENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AMImageEntry amImageEntry : (List<AMImageEntry>)q.list()) {
-				map.put(amImageEntry.getPrimaryKeyObj(), amImageEntry);
-
-				cacheResult(amImageEntry);
-
-				uncachedPrimaryKeys.remove(amImageEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AMImageEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the am image entries.
 	 *
@@ -5236,6 +5140,16 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "amImageEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_AMIMAGEENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AMImageEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5260,7 +5174,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_AMIMAGEENTRY = "SELECT amImageEntry FROM AMImageEntry amImageEntry";
-	private static final String _SQL_SELECT_AMIMAGEENTRY_WHERE_PKS_IN = "SELECT amImageEntry FROM AMImageEntry amImageEntry WHERE amImageEntryId IN (";
 	private static final String _SQL_SELECT_AMIMAGEENTRY_WHERE = "SELECT amImageEntry FROM AMImageEntry amImageEntry WHERE ";
 	private static final String _SQL_COUNT_AMIMAGEENTRY = "SELECT COUNT(amImageEntry) FROM AMImageEntry amImageEntry";
 	private static final String _SQL_COUNT_AMIMAGEENTRY_WHERE = "SELECT COUNT(amImageEntry) FROM AMImageEntry amImageEntry WHERE ";

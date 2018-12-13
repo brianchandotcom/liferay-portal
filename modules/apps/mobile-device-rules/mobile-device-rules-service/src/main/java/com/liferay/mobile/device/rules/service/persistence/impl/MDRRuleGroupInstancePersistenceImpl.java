@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4648,6 +4645,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		setModelClass(MDRRuleGroupInstance.class);
 
 		setModelImplClass(MDRRuleGroupInstanceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -5238,101 +5236,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		return fetchByPrimaryKey((Serializable)ruleGroupInstanceId);
 	}
 
-	@Override
-	public Map<Serializable, MDRRuleGroupInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MDRRuleGroupInstance> map = new HashMap<Serializable, MDRRuleGroupInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MDRRuleGroupInstance mdrRuleGroupInstance = fetchByPrimaryKey(primaryKey);
-
-			if (mdrRuleGroupInstance != null) {
-				map.put(primaryKey, mdrRuleGroupInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleGroupInstanceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MDRRuleGroupInstance)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : (List<MDRRuleGroupInstance>)q.list()) {
-				map.put(mdrRuleGroupInstance.getPrimaryKeyObj(),
-					mdrRuleGroupInstance);
-
-				cacheResult(mdrRuleGroupInstance);
-
-				uncachedPrimaryKeys.remove(mdrRuleGroupInstance.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleGroupInstanceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the mdr rule group instances.
 	 *
@@ -5535,6 +5438,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "ruleGroupInstanceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MDRRULEGROUPINSTANCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MDRRuleGroupInstanceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5559,7 +5472,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance";
-	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE_PKS_IN = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ruleGroupInstanceId IN (";
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE = "SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance";
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE_WHERE = "SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";

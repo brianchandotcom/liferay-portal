@@ -49,9 +49,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3377,6 +3374,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		setModelClass(Module.class);
 
 		setModelImplClass(ModuleImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ModuleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3878,100 +3876,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		return fetchByPrimaryKey((Serializable)moduleId);
 	}
 
-	@Override
-	public Map<Serializable, Module> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Module> map = new HashMap<Serializable, Module>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Module module = fetchByPrimaryKey(primaryKey);
-
-			if (module != null) {
-				map.put(primaryKey, module);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-					ModuleImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Module)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MODULE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Module module : (List<Module>)q.list()) {
-				map.put(module.getPrimaryKeyObj(), module);
-
-				cacheResult(module);
-
-				uncachedPrimaryKeys.remove(module.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(ModuleModelImpl.ENTITY_CACHE_ENABLED,
-					ModuleImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the modules.
 	 *
@@ -4173,6 +4077,16 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "moduleId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MODULE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ModuleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4197,7 +4111,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MODULE = "SELECT module FROM Module module";
-	private static final String _SQL_SELECT_MODULE_WHERE_PKS_IN = "SELECT module FROM Module module WHERE moduleId IN (";
 	private static final String _SQL_SELECT_MODULE_WHERE = "SELECT module FROM Module module WHERE ";
 	private static final String _SQL_COUNT_MODULE = "SELECT COUNT(module) FROM Module module";
 	private static final String _SQL_COUNT_MODULE_WHERE = "SELECT COUNT(module) FROM Module module WHERE ";

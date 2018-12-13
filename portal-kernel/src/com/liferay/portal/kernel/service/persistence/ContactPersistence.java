@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.model.Contact;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the contact service.
  *
@@ -38,6 +43,9 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactUtil} to access the contact persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Contact> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the contacts where companyId = &#63;.
@@ -496,10 +504,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	* @return the contact, or <code>null</code> if a contact with the primary key could not be found
 	*/
 	public Contact fetchByPrimaryKey(long contactId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, Contact> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the contacts.

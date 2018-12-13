@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo task service.
  *
@@ -39,6 +44,9 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskUtil} to access the kaleo task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoTask> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo tasks where companyId = &#63;.
@@ -404,10 +412,6 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	* @return the kaleo task, or <code>null</code> if a kaleo task with the primary key could not be found
 	*/
 	public KaleoTask fetchByPrimaryKey(long kaleoTaskId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoTask> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo tasks.

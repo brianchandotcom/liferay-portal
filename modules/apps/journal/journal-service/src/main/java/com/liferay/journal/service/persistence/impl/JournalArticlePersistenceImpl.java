@@ -58,9 +58,6 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31993,6 +31990,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		setModelClass(JournalArticle.class);
 
 		setModelImplClass(JournalArticleImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(JournalArticleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -33390,100 +33388,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		return fetchByPrimaryKey((Serializable)id);
 	}
 
-	@Override
-	public Map<Serializable, JournalArticle> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticle> map = new HashMap<Serializable, JournalArticle>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
-
-			if (journalArticle != null) {
-				map.put(primaryKey, journalArticle);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (JournalArticle)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_JOURNALARTICLE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (JournalArticle journalArticle : (List<JournalArticle>)q.list()) {
-				map.put(journalArticle.getPrimaryKeyObj(), journalArticle);
-
-				cacheResult(journalArticle);
-
-				uncachedPrimaryKeys.remove(journalArticle.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the journal articles.
 	 *
@@ -33686,6 +33590,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "id_";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_JOURNALARTICLE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalArticleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -33719,7 +33633,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	}
 
 	private static final String _SQL_SELECT_JOURNALARTICLE = "SELECT journalArticle FROM JournalArticle journalArticle";
-	private static final String _SQL_SELECT_JOURNALARTICLE_WHERE_PKS_IN = "SELECT journalArticle FROM JournalArticle journalArticle WHERE id_ IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT journalArticle FROM JournalArticle journalArticle WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLE = "SELECT COUNT(journalArticle) FROM JournalArticle journalArticle";
 	private static final String _SQL_COUNT_JOURNALARTICLE_WHERE = "SELECT COUNT(journalArticle) FROM JournalArticle journalArticle WHERE ";

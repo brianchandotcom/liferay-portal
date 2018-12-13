@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm structure service.
  *
@@ -40,6 +45,9 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureUtil} to access the ddm structure persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMStructure> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm structures where uuid = &#63;.
@@ -2513,10 +2521,6 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public DDMStructure fetchByPrimaryKey(long structureId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DDMStructure> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the ddm structures.
 	*
@@ -2582,5 +2586,5 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

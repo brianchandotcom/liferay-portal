@@ -21,6 +21,11 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the o auth2 application service.
  *
@@ -40,6 +45,9 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationUtil} to access the o auth2 application persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OAuth2Application> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth2 applications where companyId = &#63;.
@@ -338,10 +346,6 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	*/
 	public OAuth2Application fetchByPrimaryKey(long oAuth2ApplicationId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, OAuth2Application> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the o auth2 applications.
 	*
@@ -407,5 +411,5 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

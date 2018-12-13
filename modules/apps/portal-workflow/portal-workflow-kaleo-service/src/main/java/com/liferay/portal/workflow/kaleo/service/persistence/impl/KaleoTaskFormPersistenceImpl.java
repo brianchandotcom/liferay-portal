@@ -48,13 +48,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo task form service.
@@ -2410,6 +2406,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		setModelClass(KaleoTaskForm.class);
 
 		setModelImplClass(KaleoTaskFormImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2875,100 +2872,6 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		return fetchByPrimaryKey((Serializable)kaleoTaskFormId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTaskForm> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTaskForm> map = new HashMap<Serializable, KaleoTaskForm>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTaskForm kaleoTaskForm = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTaskForm != null) {
-				map.put(primaryKey, kaleoTaskForm);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskFormImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoTaskForm)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTASKFORM_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTaskForm kaleoTaskForm : (List<KaleoTaskForm>)q.list()) {
-				map.put(kaleoTaskForm.getPrimaryKeyObj(), kaleoTaskForm);
-
-				cacheResult(kaleoTaskForm);
-
-				uncachedPrimaryKeys.remove(kaleoTaskForm.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskFormImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo task forms.
 	 *
@@ -3166,6 +3069,16 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTaskFormId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTASKFORM;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskFormModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3190,7 +3103,6 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTASKFORM = "SELECT kaleoTaskForm FROM KaleoTaskForm kaleoTaskForm";
-	private static final String _SQL_SELECT_KALEOTASKFORM_WHERE_PKS_IN = "SELECT kaleoTaskForm FROM KaleoTaskForm kaleoTaskForm WHERE kaleoTaskFormId IN (";
 	private static final String _SQL_SELECT_KALEOTASKFORM_WHERE = "SELECT kaleoTaskForm FROM KaleoTaskForm kaleoTaskForm WHERE ";
 	private static final String _SQL_COUNT_KALEOTASKFORM = "SELECT COUNT(kaleoTaskForm) FROM KaleoTaskForm kaleoTaskForm";
 	private static final String _SQL_COUNT_KALEOTASKFORM_WHERE = "SELECT COUNT(kaleoTaskForm) FROM KaleoTaskForm kaleoTaskForm WHERE ";

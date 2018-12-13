@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2832,6 +2829,7 @@ public class AssetListEntryUsagePersistenceImpl extends BasePersistenceImpl<Asse
 		setModelClass(AssetListEntryUsage.class);
 
 		setModelImplClass(AssetListEntryUsageImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetListEntryUsageModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3369,101 +3367,6 @@ public class AssetListEntryUsagePersistenceImpl extends BasePersistenceImpl<Asse
 		return fetchByPrimaryKey((Serializable)assetListEntryUsageId);
 	}
 
-	@Override
-	public Map<Serializable, AssetListEntryUsage> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetListEntryUsage> map = new HashMap<Serializable, AssetListEntryUsage>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetListEntryUsage assetListEntryUsage = fetchByPrimaryKey(primaryKey);
-
-			if (assetListEntryUsage != null) {
-				map.put(primaryKey, assetListEntryUsage);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AssetListEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryUsageImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetListEntryUsage)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetListEntryUsage assetListEntryUsage : (List<AssetListEntryUsage>)q.list()) {
-				map.put(assetListEntryUsage.getPrimaryKeyObj(),
-					assetListEntryUsage);
-
-				cacheResult(assetListEntryUsage);
-
-				uncachedPrimaryKeys.remove(assetListEntryUsage.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AssetListEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryUsageImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset list entry usages.
 	 *
@@ -3666,6 +3569,16 @@ public class AssetListEntryUsagePersistenceImpl extends BasePersistenceImpl<Asse
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "assetListEntryUsageId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETLISTENTRYUSAGE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetListEntryUsageModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3690,7 +3603,6 @@ public class AssetListEntryUsagePersistenceImpl extends BasePersistenceImpl<Asse
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETLISTENTRYUSAGE = "SELECT assetListEntryUsage FROM AssetListEntryUsage assetListEntryUsage";
-	private static final String _SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE_PKS_IN = "SELECT assetListEntryUsage FROM AssetListEntryUsage assetListEntryUsage WHERE assetListEntryUsageId IN (";
 	private static final String _SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE = "SELECT assetListEntryUsage FROM AssetListEntryUsage assetListEntryUsage WHERE ";
 	private static final String _SQL_COUNT_ASSETLISTENTRYUSAGE = "SELECT COUNT(assetListEntryUsage) FROM AssetListEntryUsage assetListEntryUsage";
 	private static final String _SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE = "SELECT COUNT(assetListEntryUsage) FROM AssetListEntryUsage assetListEntryUsage WHERE ";

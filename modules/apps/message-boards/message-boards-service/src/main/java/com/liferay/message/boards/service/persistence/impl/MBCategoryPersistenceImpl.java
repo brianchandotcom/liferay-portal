@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11305,6 +11302,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		setModelClass(MBCategory.class);
 
 		setModelImplClass(MBCategoryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBCategoryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -11897,100 +11895,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
-	@Override
-	public Map<Serializable, MBCategory> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBCategory> map = new HashMap<Serializable, MBCategory>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBCategory mbCategory = fetchByPrimaryKey(primaryKey);
-
-			if (mbCategory != null) {
-				map.put(primaryKey, mbCategory);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					MBCategoryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBCategory)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBCATEGORY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBCategory mbCategory : (List<MBCategory>)q.list()) {
-				map.put(mbCategory.getPrimaryKeyObj(), mbCategory);
-
-				cacheResult(mbCategory);
-
-				uncachedPrimaryKeys.remove(mbCategory.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					MBCategoryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message boards categories.
 	 *
@@ -12193,6 +12097,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "categoryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBCATEGORY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBCategoryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -12217,7 +12131,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBCATEGORY = "SELECT mbCategory FROM MBCategory mbCategory";
-	private static final String _SQL_SELECT_MBCATEGORY_WHERE_PKS_IN = "SELECT mbCategory FROM MBCategory mbCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_MBCATEGORY_WHERE = "SELECT mbCategory FROM MBCategory mbCategory WHERE ";
 	private static final String _SQL_COUNT_MBCATEGORY = "SELECT COUNT(mbCategory) FROM MBCategory mbCategory";
 	private static final String _SQL_COUNT_MBCATEGORY_WHERE = "SELECT COUNT(mbCategory) FROM MBCategory mbCategory WHERE ";

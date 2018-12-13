@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1417,6 +1414,7 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 		setModelClass(DDMFormInstanceVersion.class);
 
 		setModelImplClass(DDMFormInstanceVersionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMFormInstanceVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1830,101 +1828,6 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 		return fetchByPrimaryKey((Serializable)formInstanceVersionId);
 	}
 
-	@Override
-	public Map<Serializable, DDMFormInstanceVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMFormInstanceVersion> map = new HashMap<Serializable, DDMFormInstanceVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMFormInstanceVersion ddmFormInstanceVersion = fetchByPrimaryKey(primaryKey);
-
-			if (ddmFormInstanceVersion != null) {
-				map.put(primaryKey, ddmFormInstanceVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMFormInstanceVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDMFormInstanceVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMFormInstanceVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMFormInstanceVersion ddmFormInstanceVersion : (List<DDMFormInstanceVersion>)q.list()) {
-				map.put(ddmFormInstanceVersion.getPrimaryKeyObj(),
-					ddmFormInstanceVersion);
-
-				cacheResult(ddmFormInstanceVersion);
-
-				uncachedPrimaryKeys.remove(ddmFormInstanceVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMFormInstanceVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDMFormInstanceVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm form instance versions.
 	 *
@@ -2127,6 +2030,16 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "formInstanceVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMFORMINSTANCEVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMFormInstanceVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2151,7 +2064,6 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMFORMINSTANCEVERSION = "SELECT ddmFormInstanceVersion FROM DDMFormInstanceVersion ddmFormInstanceVersion";
-	private static final String _SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE_PKS_IN = "SELECT ddmFormInstanceVersion FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE formInstanceVersionId IN (";
 	private static final String _SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE = "SELECT ddmFormInstanceVersion FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE ";
 	private static final String _SQL_COUNT_DDMFORMINSTANCEVERSION = "SELECT COUNT(ddmFormInstanceVersion) FROM DDMFormInstanceVersion ddmFormInstanceVersion";
 	private static final String _SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE = "SELECT COUNT(ddmFormInstanceVersion) FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE ";

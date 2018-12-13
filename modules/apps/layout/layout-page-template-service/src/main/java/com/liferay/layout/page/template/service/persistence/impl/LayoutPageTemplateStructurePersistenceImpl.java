@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2257,6 +2254,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		setModelClass(LayoutPageTemplateStructure.class);
 
 		setModelImplClass(LayoutPageTemplateStructureImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2779,102 +2777,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		return fetchByPrimaryKey((Serializable)layoutPageTemplateStructureId);
 	}
 
-	@Override
-	public Map<Serializable, LayoutPageTemplateStructure> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutPageTemplateStructure> map = new HashMap<Serializable, LayoutPageTemplateStructure>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure = fetchByPrimaryKey(primaryKey);
-
-			if (layoutPageTemplateStructure != null) {
-				map.put(primaryKey, layoutPageTemplateStructure);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPageTemplateStructureImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(LayoutPageTemplateStructure)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LayoutPageTemplateStructure layoutPageTemplateStructure : (List<LayoutPageTemplateStructure>)q.list()) {
-				map.put(layoutPageTemplateStructure.getPrimaryKeyObj(),
-					layoutPageTemplateStructure);
-
-				cacheResult(layoutPageTemplateStructure);
-
-				uncachedPrimaryKeys.remove(layoutPageTemplateStructure.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(LayoutPageTemplateStructureModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPageTemplateStructureImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layout page template structures.
 	 *
@@ -3077,6 +2979,16 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "layoutPageTemplateStructureId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutPageTemplateStructureModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3101,8 +3013,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE = "SELECT layoutPageTemplateStructure FROM LayoutPageTemplateStructure layoutPageTemplateStructure";
-	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE_PKS_IN =
-		"SELECT layoutPageTemplateStructure FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE layoutPageTemplateStructureId IN (";
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE = "SELECT layoutPageTemplateStructure FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE ";
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE = "SELECT COUNT(layoutPageTemplateStructure) FROM LayoutPageTemplateStructure layoutPageTemplateStructure";
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE = "SELECT COUNT(layoutPageTemplateStructure) FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE ";

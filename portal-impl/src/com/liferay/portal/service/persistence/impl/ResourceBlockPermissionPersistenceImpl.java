@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the resource block permission service.
@@ -1353,6 +1349,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		setModelClass(ResourceBlockPermission.class);
 
 		setModelImplClass(ResourceBlockPermissionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1764,101 +1761,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		return fetchByPrimaryKey((Serializable)resourceBlockPermissionId);
 	}
 
-	@Override
-	public Map<Serializable, ResourceBlockPermission> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ResourceBlockPermission> map = new HashMap<Serializable, ResourceBlockPermission>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(primaryKey);
-
-			if (resourceBlockPermission != null) {
-				map.put(primaryKey, resourceBlockPermission);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockPermissionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ResourceBlockPermission)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ResourceBlockPermission resourceBlockPermission : (List<ResourceBlockPermission>)q.list()) {
-				map.put(resourceBlockPermission.getPrimaryKeyObj(),
-					resourceBlockPermission);
-
-				cacheResult(resourceBlockPermission);
-
-				uncachedPrimaryKeys.remove(resourceBlockPermission.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockPermissionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the resource block permissions.
 	 *
@@ -2056,6 +1958,16 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "resourceBlockPermissionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RESOURCEBLOCKPERMISSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceBlockPermissionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2076,8 +1988,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission";
-	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE_PKS_IN =
-		"SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE resourceBlockPermissionId IN (";
 	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";

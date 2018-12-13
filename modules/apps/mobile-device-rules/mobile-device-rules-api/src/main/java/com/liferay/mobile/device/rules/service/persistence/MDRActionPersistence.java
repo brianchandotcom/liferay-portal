@@ -21,6 +21,11 @@ import com.liferay.mobile.device.rules.model.MDRAction;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the mdr action service.
  *
@@ -40,6 +45,9 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRActionUtil} to access the mdr action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MDRAction> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the mdr actions where uuid = &#63;.
@@ -549,10 +557,6 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction fetchByPrimaryKey(long actionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, MDRAction> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the mdr actions.
 	*
@@ -618,5 +622,5 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

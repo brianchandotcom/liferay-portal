@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the we deploy auth app service.
  *
@@ -39,6 +44,9 @@ public interface WeDeployAuthAppPersistence extends BasePersistence<WeDeployAuth
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppUtil} to access the we deploy auth app persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WeDeployAuthApp> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a {@link NoSuchAppException} if it could not be found.
@@ -191,10 +199,6 @@ public interface WeDeployAuthAppPersistence extends BasePersistence<WeDeployAuth
 	* @return the we deploy auth app, or <code>null</code> if a we deploy auth app with the primary key could not be found
 	*/
 	public WeDeployAuthApp fetchByPrimaryKey(long weDeployAuthAppId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, WeDeployAuthApp> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the we deploy auth apps.

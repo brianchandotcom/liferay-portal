@@ -50,9 +50,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1615,6 +1612,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		setModelClass(LayoutSet.class);
 
 		setModelImplClass(LayoutSetImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutSetModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2063,100 +2061,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		return fetchByPrimaryKey((Serializable)layoutSetId);
 	}
 
-	@Override
-	public Map<Serializable, LayoutSet> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutSet> map = new HashMap<Serializable, LayoutSet>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutSet layoutSet = fetchByPrimaryKey(primaryKey);
-
-			if (layoutSet != null) {
-				map.put(primaryKey, layoutSet);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutSetImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LayoutSet)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUTSET_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LayoutSet layoutSet : (List<LayoutSet>)q.list()) {
-				map.put(layoutSet.getPrimaryKeyObj(), layoutSet);
-
-				cacheResult(layoutSet);
-
-				uncachedPrimaryKeys.remove(layoutSet.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutSetImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layout sets.
 	 *
@@ -2359,6 +2263,16 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "layoutSetId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUTSET;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutSetModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2379,7 +2293,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_LAYOUTSET = "SELECT layoutSet FROM LayoutSet layoutSet";
-	private static final String _SQL_SELECT_LAYOUTSET_WHERE_PKS_IN = "SELECT layoutSet FROM LayoutSet layoutSet WHERE layoutSetId IN (";
 	private static final String _SQL_SELECT_LAYOUTSET_WHERE = "SELECT layoutSet FROM LayoutSet layoutSet WHERE ";
 	private static final String _SQL_COUNT_LAYOUTSET = "SELECT COUNT(layoutSet) FROM LayoutSet layoutSet";
 	private static final String _SQL_COUNT_LAYOUTSET_WHERE = "SELECT COUNT(layoutSet) FROM LayoutSet layoutSet WHERE ";

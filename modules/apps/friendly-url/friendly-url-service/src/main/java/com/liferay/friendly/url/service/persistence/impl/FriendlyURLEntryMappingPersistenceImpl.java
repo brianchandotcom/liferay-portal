@@ -43,12 +43,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the friendly url entry mapping service.
@@ -311,6 +307,7 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		setModelClass(FriendlyURLEntryMapping.class);
 
 		setModelImplClass(FriendlyURLEntryMappingImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -664,101 +661,6 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		return fetchByPrimaryKey((Serializable)friendlyURLEntryMappingId);
 	}
 
-	@Override
-	public Map<Serializable, FriendlyURLEntryMapping> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FriendlyURLEntryMapping> map = new HashMap<Serializable, FriendlyURLEntryMapping>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FriendlyURLEntryMapping friendlyURLEntryMapping = fetchByPrimaryKey(primaryKey);
-
-			if (friendlyURLEntryMapping != null) {
-				map.put(primaryKey, friendlyURLEntryMapping);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryMappingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FriendlyURLEntryMapping)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FriendlyURLEntryMapping friendlyURLEntryMapping : (List<FriendlyURLEntryMapping>)q.list()) {
-				map.put(friendlyURLEntryMapping.getPrimaryKeyObj(),
-					friendlyURLEntryMapping);
-
-				cacheResult(friendlyURLEntryMapping);
-
-				uncachedPrimaryKeys.remove(friendlyURLEntryMapping.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FriendlyURLEntryMappingModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryMappingImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the friendly url entry mappings.
 	 *
@@ -956,6 +858,16 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "friendlyURLEntryMappingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRIENDLYURLENTRYMAPPING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FriendlyURLEntryMappingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -978,8 +890,6 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYMAPPING = "SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping";
-	private static final String _SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE_PKS_IN =
-		"SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE friendlyURLEntryMappingId IN (";
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE = "SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYMAPPING = "SELECT COUNT(friendlyURLEntryMapping) FROM FriendlyURLEntryMapping friendlyURLEntryMapping";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYMAPPING_WHERE = "SELECT COUNT(friendlyURLEntryMapping) FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";

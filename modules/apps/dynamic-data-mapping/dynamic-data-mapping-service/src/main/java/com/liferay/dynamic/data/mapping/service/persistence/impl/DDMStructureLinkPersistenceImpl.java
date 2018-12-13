@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the ddm structure link service.
@@ -1907,6 +1903,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		setModelClass(DDMStructureLink.class);
 
 		setModelImplClass(DDMStructureLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2336,100 +2333,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		return fetchByPrimaryKey((Serializable)structureLinkId);
 	}
 
-	@Override
-	public Map<Serializable, DDMStructureLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMStructureLink> map = new HashMap<Serializable, DDMStructureLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMStructureLink ddmStructureLink = fetchByPrimaryKey(primaryKey);
-
-			if (ddmStructureLink != null) {
-				map.put(primaryKey, ddmStructureLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMStructureLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMStructureLink ddmStructureLink : (List<DDMStructureLink>)q.list()) {
-				map.put(ddmStructureLink.getPrimaryKeyObj(), ddmStructureLink);
-
-				cacheResult(ddmStructureLink);
-
-				uncachedPrimaryKeys.remove(ddmStructureLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm structure links.
 	 *
@@ -2627,6 +2530,16 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "structureLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMSTRUCTURELINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMStructureLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2651,7 +2564,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink";
-	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE_PKS_IN = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE structureLinkId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE ";
 	private static final String _SQL_COUNT_DDMSTRUCTURELINK = "SELECT COUNT(ddmStructureLink) FROM DDMStructureLink ddmStructureLink";
 	private static final String _SQL_COUNT_DDMSTRUCTURELINK_WHERE = "SELECT COUNT(ddmStructureLink) FROM DDMStructureLink ddmStructureLink WHERE ";

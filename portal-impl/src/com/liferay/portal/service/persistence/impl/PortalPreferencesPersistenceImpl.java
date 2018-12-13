@@ -43,12 +43,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the portal preferences service.
@@ -322,6 +318,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		setModelClass(PortalPreferences.class);
 
 		setModelImplClass(PortalPreferencesImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -666,100 +663,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		return fetchByPrimaryKey((Serializable)portalPreferencesId);
 	}
 
-	@Override
-	public Map<Serializable, PortalPreferences> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PortalPreferences> map = new HashMap<Serializable, PortalPreferences>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PortalPreferences portalPreferences = fetchByPrimaryKey(primaryKey);
-
-			if (portalPreferences != null) {
-				map.put(primaryKey, portalPreferences);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortalPreferencesImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PortalPreferences)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PORTALPREFERENCES_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PortalPreferences portalPreferences : (List<PortalPreferences>)q.list()) {
-				map.put(portalPreferences.getPrimaryKeyObj(), portalPreferences);
-
-				cacheResult(portalPreferences);
-
-				uncachedPrimaryKeys.remove(portalPreferences.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortalPreferencesImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the portal preferenceses.
 	 *
@@ -957,6 +860,16 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "portalPreferencesId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PORTALPREFERENCES;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortalPreferencesModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -975,7 +888,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	}
 
 	private static final String _SQL_SELECT_PORTALPREFERENCES = "SELECT portalPreferences FROM PortalPreferences portalPreferences";
-	private static final String _SQL_SELECT_PORTALPREFERENCES_WHERE_PKS_IN = "SELECT portalPreferences FROM PortalPreferences portalPreferences WHERE portalPreferencesId IN (";
 	private static final String _SQL_SELECT_PORTALPREFERENCES_WHERE = "SELECT portalPreferences FROM PortalPreferences portalPreferences WHERE ";
 	private static final String _SQL_COUNT_PORTALPREFERENCES = "SELECT COUNT(portalPreferences) FROM PortalPreferences portalPreferences";
 	private static final String _SQL_COUNT_PORTALPREFERENCES_WHERE = "SELECT COUNT(portalPreferences) FROM PortalPreferences portalPreferences WHERE ";

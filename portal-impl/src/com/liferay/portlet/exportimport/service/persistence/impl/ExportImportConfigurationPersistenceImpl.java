@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2829,6 +2826,7 @@ public class ExportImportConfigurationPersistenceImpl
 		setModelClass(ExportImportConfiguration.class);
 
 		setModelImplClass(ExportImportConfigurationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3306,101 +3304,6 @@ public class ExportImportConfigurationPersistenceImpl
 		return fetchByPrimaryKey((Serializable)exportImportConfigurationId);
 	}
 
-	@Override
-	public Map<Serializable, ExportImportConfiguration> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ExportImportConfiguration> map = new HashMap<Serializable, ExportImportConfiguration>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ExportImportConfiguration exportImportConfiguration = fetchByPrimaryKey(primaryKey);
-
-			if (exportImportConfiguration != null) {
-				map.put(primaryKey, exportImportConfiguration);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-					ExportImportConfigurationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ExportImportConfiguration)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ExportImportConfiguration exportImportConfiguration : (List<ExportImportConfiguration>)q.list()) {
-				map.put(exportImportConfiguration.getPrimaryKeyObj(),
-					exportImportConfiguration);
-
-				cacheResult(exportImportConfiguration);
-
-				uncachedPrimaryKeys.remove(exportImportConfiguration.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-					ExportImportConfigurationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the export import configurations.
 	 *
@@ -3603,6 +3506,16 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "exportImportConfigurationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_EXPORTIMPORTCONFIGURATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ExportImportConfigurationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3623,8 +3536,6 @@ public class ExportImportConfigurationPersistenceImpl
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION = "SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration";
-	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE_PKS_IN =
-		"SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration WHERE exportImportConfigurationId IN (";
 	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE = "SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration WHERE ";
 	private static final String _SQL_COUNT_EXPORTIMPORTCONFIGURATION = "SELECT COUNT(exportImportConfiguration) FROM ExportImportConfiguration exportImportConfiguration";
 	private static final String _SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE = "SELECT COUNT(exportImportConfiguration) FROM ExportImportConfiguration exportImportConfiguration WHERE ";

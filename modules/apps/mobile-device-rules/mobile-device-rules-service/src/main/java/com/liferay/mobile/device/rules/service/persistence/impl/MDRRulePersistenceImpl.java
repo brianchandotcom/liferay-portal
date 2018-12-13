@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1967,6 +1964,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		setModelClass(MDRRule.class);
 
 		setModelImplClass(MDRRuleImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MDRRuleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2403,100 +2401,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		return fetchByPrimaryKey((Serializable)ruleId);
 	}
 
-	@Override
-	public Map<Serializable, MDRRule> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MDRRule> map = new HashMap<Serializable, MDRRule>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MDRRule mdrRule = fetchByPrimaryKey(primaryKey);
-
-			if (mdrRule != null) {
-				map.put(primaryKey, mdrRule);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MDRRule)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MDRRULE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MDRRule mdrRule : (List<MDRRule>)q.list()) {
-				map.put(mdrRule.getPrimaryKeyObj(), mdrRule);
-
-				cacheResult(mdrRule);
-
-				uncachedPrimaryKeys.remove(mdrRule.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the mdr rules.
 	 *
@@ -2698,6 +2602,16 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "ruleId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MDRRULE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MDRRuleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2722,7 +2636,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MDRRULE = "SELECT mdrRule FROM MDRRule mdrRule";
-	private static final String _SQL_SELECT_MDRRULE_WHERE_PKS_IN = "SELECT mdrRule FROM MDRRule mdrRule WHERE ruleId IN (";
 	private static final String _SQL_SELECT_MDRRULE_WHERE = "SELECT mdrRule FROM MDRRule mdrRule WHERE ";
 	private static final String _SQL_COUNT_MDRRULE = "SELECT COUNT(mdrRule) FROM MDRRule mdrRule";
 	private static final String _SQL_COUNT_MDRRULE_WHERE = "SELECT COUNT(mdrRule) FROM MDRRule mdrRule WHERE ";

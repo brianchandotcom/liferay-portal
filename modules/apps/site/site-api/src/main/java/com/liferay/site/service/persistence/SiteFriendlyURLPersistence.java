@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.site.exception.NoSuchFriendlyURLException;
 import com.liferay.site.model.SiteFriendlyURL;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the site friendly url service.
  *
@@ -40,6 +45,9 @@ public interface SiteFriendlyURLPersistence extends BasePersistence<SiteFriendly
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLUtil} to access the site friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SiteFriendlyURL> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the site friendly urls where uuid = &#63;.
@@ -726,10 +734,6 @@ public interface SiteFriendlyURLPersistence extends BasePersistence<SiteFriendly
 	*/
 	public SiteFriendlyURL fetchByPrimaryKey(long siteFriendlyURLId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SiteFriendlyURL> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the site friendly urls.
 	*
@@ -795,5 +799,5 @@ public interface SiteFriendlyURLPersistence extends BasePersistence<SiteFriendly
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

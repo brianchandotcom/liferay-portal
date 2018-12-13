@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2290,6 +2287,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		setModelClass(SyncDevice.class);
 
 		setModelImplClass(SyncDeviceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2689,100 +2687,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		return fetchByPrimaryKey((Serializable)syncDeviceId);
 	}
 
-	@Override
-	public Map<Serializable, SyncDevice> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SyncDevice> map = new HashMap<Serializable, SyncDevice>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SyncDevice syncDevice = fetchByPrimaryKey(primaryKey);
-
-			if (syncDevice != null) {
-				map.put(primaryKey, syncDevice);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDeviceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SyncDevice)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SYNCDEVICE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SyncDevice syncDevice : (List<SyncDevice>)q.list()) {
-				map.put(syncDevice.getPrimaryKeyObj(), syncDevice);
-
-				cacheResult(syncDevice);
-
-				uncachedPrimaryKeys.remove(syncDevice.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDeviceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the sync devices.
 	 *
@@ -2985,6 +2889,16 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "syncDeviceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SYNCDEVICE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SyncDeviceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3009,7 +2923,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SYNCDEVICE = "SELECT syncDevice FROM SyncDevice syncDevice";
-	private static final String _SQL_SELECT_SYNCDEVICE_WHERE_PKS_IN = "SELECT syncDevice FROM SyncDevice syncDevice WHERE syncDeviceId IN (";
 	private static final String _SQL_SELECT_SYNCDEVICE_WHERE = "SELECT syncDevice FROM SyncDevice syncDevice WHERE ";
 	private static final String _SQL_COUNT_SYNCDEVICE = "SELECT COUNT(syncDevice) FROM SyncDevice syncDevice";
 	private static final String _SQL_COUNT_SYNCDEVICE_WHERE = "SELECT COUNT(syncDevice) FROM SyncDevice syncDevice WHERE ";

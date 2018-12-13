@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1975,6 +1972,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		setModelClass(MDRAction.class);
 
 		setModelImplClass(MDRActionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MDRActionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2423,100 +2421,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		return fetchByPrimaryKey((Serializable)actionId);
 	}
 
-	@Override
-	public Map<Serializable, MDRAction> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MDRAction> map = new HashMap<Serializable, MDRAction>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MDRAction mdrAction = fetchByPrimaryKey(primaryKey);
-
-			if (mdrAction != null) {
-				map.put(primaryKey, mdrAction);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-					MDRActionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MDRAction)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MDRACTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MDRAction mdrAction : (List<MDRAction>)q.list()) {
-				map.put(mdrAction.getPrimaryKeyObj(), mdrAction);
-
-				cacheResult(mdrAction);
-
-				uncachedPrimaryKeys.remove(mdrAction.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-					MDRActionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the mdr actions.
 	 *
@@ -2719,6 +2623,16 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "actionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MDRACTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MDRActionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2743,7 +2657,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MDRACTION = "SELECT mdrAction FROM MDRAction mdrAction";
-	private static final String _SQL_SELECT_MDRACTION_WHERE_PKS_IN = "SELECT mdrAction FROM MDRAction mdrAction WHERE actionId IN (";
 	private static final String _SQL_SELECT_MDRACTION_WHERE = "SELECT mdrAction FROM MDRAction mdrAction WHERE ";
 	private static final String _SQL_COUNT_MDRACTION = "SELECT COUNT(mdrAction) FROM MDRAction mdrAction";
 	private static final String _SQL_COUNT_MDRACTION_WHERE = "SELECT COUNT(mdrAction) FROM MDRAction mdrAction WHERE ";

@@ -49,12 +49,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the html preview entry service.
@@ -352,6 +348,7 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		setModelClass(HtmlPreviewEntry.class);
 
 		setModelImplClass(HtmlPreviewEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -724,100 +721,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		return fetchByPrimaryKey((Serializable)htmlPreviewEntryId);
 	}
 
-	@Override
-	public Map<Serializable, HtmlPreviewEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, HtmlPreviewEntry> map = new HashMap<Serializable, HtmlPreviewEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			HtmlPreviewEntry htmlPreviewEntry = fetchByPrimaryKey(primaryKey);
-
-			if (htmlPreviewEntry != null) {
-				map.put(primaryKey, htmlPreviewEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-					HtmlPreviewEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (HtmlPreviewEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_HTMLPREVIEWENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (HtmlPreviewEntry htmlPreviewEntry : (List<HtmlPreviewEntry>)q.list()) {
-				map.put(htmlPreviewEntry.getPrimaryKeyObj(), htmlPreviewEntry);
-
-				cacheResult(htmlPreviewEntry);
-
-				uncachedPrimaryKeys.remove(htmlPreviewEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(HtmlPreviewEntryModelImpl.ENTITY_CACHE_ENABLED,
-					HtmlPreviewEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the html preview entries.
 	 *
@@ -1015,6 +918,16 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "htmlPreviewEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_HTMLPREVIEWENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return HtmlPreviewEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1039,7 +952,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_HTMLPREVIEWENTRY = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry";
-	private static final String _SQL_SELECT_HTMLPREVIEWENTRY_WHERE_PKS_IN = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry WHERE htmlPreviewEntryId IN (";
 	private static final String _SQL_SELECT_HTMLPREVIEWENTRY_WHERE = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";
 	private static final String _SQL_COUNT_HTMLPREVIEWENTRY = "SELECT COUNT(htmlPreviewEntry) FROM HtmlPreviewEntry htmlPreviewEntry";
 	private static final String _SQL_COUNT_HTMLPREVIEWENTRY_WHERE = "SELECT COUNT(htmlPreviewEntry) FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";

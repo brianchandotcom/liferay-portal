@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the localized entry service.
  *
@@ -39,6 +44,9 @@ public interface LocalizedEntryPersistence extends BasePersistence<LocalizedEntr
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LocalizedEntryUtil} to access the localized entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LocalizedEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Caches the localized entry in the entity cache if it is enabled.
@@ -91,10 +99,6 @@ public interface LocalizedEntryPersistence extends BasePersistence<LocalizedEntr
 	* @return the localized entry, or <code>null</code> if a localized entry with the primary key could not be found
 	*/
 	public LocalizedEntry fetchByPrimaryKey(long localizedEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, LocalizedEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the localized entries.

@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2058,6 +2055,7 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 		setModelClass(FriendlyURLEntry.class);
 
 		setModelImplClass(FriendlyURLEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2524,100 +2522,6 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 		return fetchByPrimaryKey((Serializable)friendlyURLEntryId);
 	}
 
-	@Override
-	public Map<Serializable, FriendlyURLEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FriendlyURLEntry> map = new HashMap<Serializable, FriendlyURLEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FriendlyURLEntry friendlyURLEntry = fetchByPrimaryKey(primaryKey);
-
-			if (friendlyURLEntry != null) {
-				map.put(primaryKey, friendlyURLEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (FriendlyURLEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRIENDLYURLENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FriendlyURLEntry friendlyURLEntry : (List<FriendlyURLEntry>)q.list()) {
-				map.put(friendlyURLEntry.getPrimaryKeyObj(), friendlyURLEntry);
-
-				cacheResult(friendlyURLEntry);
-
-				uncachedPrimaryKeys.remove(friendlyURLEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the friendly url entries.
 	 *
@@ -2820,6 +2724,16 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "friendlyURLEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRIENDLYURLENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FriendlyURLEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2844,7 +2758,6 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRIENDLYURLENTRY = "SELECT friendlyURLEntry FROM FriendlyURLEntry friendlyURLEntry";
-	private static final String _SQL_SELECT_FRIENDLYURLENTRY_WHERE_PKS_IN = "SELECT friendlyURLEntry FROM FriendlyURLEntry friendlyURLEntry WHERE friendlyURLEntryId IN (";
 	private static final String _SQL_SELECT_FRIENDLYURLENTRY_WHERE = "SELECT friendlyURLEntry FROM FriendlyURLEntry friendlyURLEntry WHERE ";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRY = "SELECT COUNT(friendlyURLEntry) FROM FriendlyURLEntry friendlyURLEntry";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRY_WHERE = "SELECT COUNT(friendlyURLEntry) FROM FriendlyURLEntry friendlyURLEntry WHERE ";

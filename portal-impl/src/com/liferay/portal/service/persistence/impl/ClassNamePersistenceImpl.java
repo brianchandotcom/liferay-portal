@@ -42,13 +42,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the class name service.
@@ -314,6 +310,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		setModelClass(ClassName.class);
 
 		setModelImplClass(ClassNameImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ClassNameModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -640,100 +637,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		return fetchByPrimaryKey((Serializable)classNameId);
 	}
 
-	@Override
-	public Map<Serializable, ClassName> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ClassName> map = new HashMap<Serializable, ClassName>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ClassName className = fetchByPrimaryKey(primaryKey);
-
-			if (className != null) {
-				map.put(primaryKey, className);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-					ClassNameImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ClassName)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CLASSNAME_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ClassName className : (List<ClassName>)q.list()) {
-				map.put(className.getPrimaryKeyObj(), className);
-
-				cacheResult(className);
-
-				uncachedPrimaryKeys.remove(className.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-					ClassNameImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the class names.
 	 *
@@ -931,6 +834,16 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "classNameId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CLASSNAME;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ClassNameModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -949,7 +862,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	private static final String _SQL_SELECT_CLASSNAME = "SELECT className FROM ClassName className";
-	private static final String _SQL_SELECT_CLASSNAME_WHERE_PKS_IN = "SELECT className FROM ClassName className WHERE classNameId IN (";
 	private static final String _SQL_SELECT_CLASSNAME_WHERE = "SELECT className FROM ClassName className WHERE ";
 	private static final String _SQL_COUNT_CLASSNAME = "SELECT COUNT(className) FROM ClassName className";
 	private static final String _SQL_COUNT_CLASSNAME_WHERE = "SELECT COUNT(className) FROM ClassName className WHERE ";

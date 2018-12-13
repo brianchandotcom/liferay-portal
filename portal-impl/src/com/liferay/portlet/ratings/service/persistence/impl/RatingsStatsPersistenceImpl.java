@@ -51,12 +51,8 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the ratings stats service.
@@ -684,6 +680,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		setModelClass(RatingsStats.class);
 
 		setModelImplClass(RatingsStatsImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1056,100 +1053,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		return fetchByPrimaryKey((Serializable)statsId);
 	}
 
-	@Override
-	public Map<Serializable, RatingsStats> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, RatingsStats> map = new HashMap<Serializable, RatingsStats>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			RatingsStats ratingsStats = fetchByPrimaryKey(primaryKey);
-
-			if (ratingsStats != null) {
-				map.put(primaryKey, ratingsStats);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-					RatingsStatsImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (RatingsStats)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RATINGSSTATS_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (RatingsStats ratingsStats : (List<RatingsStats>)q.list()) {
-				map.put(ratingsStats.getPrimaryKeyObj(), ratingsStats);
-
-				cacheResult(ratingsStats);
-
-				uncachedPrimaryKeys.remove(ratingsStats.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-					RatingsStatsImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ratings statses.
 	 *
@@ -1347,6 +1250,16 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "statsId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RATINGSSTATS;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RatingsStatsModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1367,7 +1280,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_RATINGSSTATS = "SELECT ratingsStats FROM RatingsStats ratingsStats";
-	private static final String _SQL_SELECT_RATINGSSTATS_WHERE_PKS_IN = "SELECT ratingsStats FROM RatingsStats ratingsStats WHERE statsId IN (";
 	private static final String _SQL_SELECT_RATINGSSTATS_WHERE = "SELECT ratingsStats FROM RatingsStats ratingsStats WHERE ";
 	private static final String _SQL_COUNT_RATINGSSTATS = "SELECT COUNT(ratingsStats) FROM RatingsStats ratingsStats";
 	private static final String _SQL_COUNT_RATINGSSTATS_WHERE = "SELECT COUNT(ratingsStats) FROM RatingsStats ratingsStats WHERE ";

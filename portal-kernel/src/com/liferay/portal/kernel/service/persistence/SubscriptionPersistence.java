@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.model.Subscription;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the subscription service.
  *
@@ -40,6 +45,9 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SubscriptionUtil} to access the subscription persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Subscription> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the subscriptions where userId = &#63;.
@@ -819,10 +827,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	* @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
 	*/
 	public Subscription fetchByPrimaryKey(long subscriptionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, Subscription> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the subscriptions.

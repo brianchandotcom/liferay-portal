@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.model.Role;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the role service.
  *
@@ -38,6 +43,9 @@ public interface RolePersistence extends BasePersistence<Role> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RoleUtil} to access the role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Role> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the roles where uuid = &#63;.
@@ -2000,10 +2008,6 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role fetchByPrimaryKey(long roleId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Role> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the roles.
 	*
@@ -2397,5 +2401,5 @@ public interface RolePersistence extends BasePersistence<Role> {
 		java.util.List<com.liferay.portal.kernel.model.User> users);
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -48,13 +48,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the changeset collection service.
@@ -2492,6 +2488,7 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 		setModelClass(ChangesetCollection.class);
 
 		setModelImplClass(ChangesetCollectionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ChangesetCollectionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2974,101 +2971,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 		return fetchByPrimaryKey((Serializable)changesetCollectionId);
 	}
 
-	@Override
-	public Map<Serializable, ChangesetCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ChangesetCollection> map = new HashMap<Serializable, ChangesetCollection>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ChangesetCollection changesetCollection = fetchByPrimaryKey(primaryKey);
-
-			if (changesetCollection != null) {
-				map.put(primaryKey, changesetCollection);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(ChangesetCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					ChangesetCollectionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ChangesetCollection)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ChangesetCollection changesetCollection : (List<ChangesetCollection>)q.list()) {
-				map.put(changesetCollection.getPrimaryKeyObj(),
-					changesetCollection);
-
-				cacheResult(changesetCollection);
-
-				uncachedPrimaryKeys.remove(changesetCollection.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(ChangesetCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					ChangesetCollectionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the changeset collections.
 	 *
@@ -3266,6 +3168,16 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "changesetCollectionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CHANGESETCOLLECTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ChangesetCollectionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3290,7 +3202,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CHANGESETCOLLECTION = "SELECT changesetCollection FROM ChangesetCollection changesetCollection";
-	private static final String _SQL_SELECT_CHANGESETCOLLECTION_WHERE_PKS_IN = "SELECT changesetCollection FROM ChangesetCollection changesetCollection WHERE changesetCollectionId IN (";
 	private static final String _SQL_SELECT_CHANGESETCOLLECTION_WHERE = "SELECT changesetCollection FROM ChangesetCollection changesetCollection WHERE ";
 	private static final String _SQL_COUNT_CHANGESETCOLLECTION = "SELECT COUNT(changesetCollection) FROM ChangesetCollection changesetCollection";
 	private static final String _SQL_COUNT_CHANGESETCOLLECTION_WHERE = "SELECT COUNT(changesetCollection) FROM ChangesetCollection changesetCollection WHERE ";

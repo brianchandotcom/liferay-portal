@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo action service.
  *
@@ -39,6 +44,9 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoActionUtil} to access the kaleo action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoAction> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo actions where companyId = &#63;.
@@ -671,10 +679,6 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the kaleo action, or <code>null</code> if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction fetchByPrimaryKey(long kaleoActionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoAction> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo actions.

@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3699,6 +3696,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		setModelClass(SiteNavigationMenuItem.class);
 
 		setModelImplClass(SiteNavigationMenuItemImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4233,101 +4231,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		return fetchByPrimaryKey((Serializable)siteNavigationMenuItemId);
 	}
 
-	@Override
-	public Map<Serializable, SiteNavigationMenuItem> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SiteNavigationMenuItem> map = new HashMap<Serializable, SiteNavigationMenuItem>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SiteNavigationMenuItem siteNavigationMenuItem = fetchByPrimaryKey(primaryKey);
-
-			if (siteNavigationMenuItem != null) {
-				map.put(primaryKey, siteNavigationMenuItem);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
-					SiteNavigationMenuItemImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SiteNavigationMenuItem)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SiteNavigationMenuItem siteNavigationMenuItem : (List<SiteNavigationMenuItem>)q.list()) {
-				map.put(siteNavigationMenuItem.getPrimaryKeyObj(),
-					siteNavigationMenuItem);
-
-				cacheResult(siteNavigationMenuItem);
-
-				uncachedPrimaryKeys.remove(siteNavigationMenuItem.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
-					SiteNavigationMenuItemImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the site navigation menu items.
 	 *
@@ -4530,6 +4433,16 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "siteNavigationMenuItemId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SITENAVIGATIONMENUITEM;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SiteNavigationMenuItemModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4554,7 +4467,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SITENAVIGATIONMENUITEM = "SELECT siteNavigationMenuItem FROM SiteNavigationMenuItem siteNavigationMenuItem";
-	private static final String _SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE_PKS_IN = "SELECT siteNavigationMenuItem FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE siteNavigationMenuItemId IN (";
 	private static final String _SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE = "SELECT siteNavigationMenuItem FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE ";
 	private static final String _SQL_COUNT_SITENAVIGATIONMENUITEM = "SELECT COUNT(siteNavigationMenuItem) FROM SiteNavigationMenuItem siteNavigationMenuItem";
 	private static final String _SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE = "SELECT COUNT(siteNavigationMenuItem) FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE ";

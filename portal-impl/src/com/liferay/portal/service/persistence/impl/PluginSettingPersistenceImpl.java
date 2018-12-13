@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -902,6 +899,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		setModelClass(PluginSetting.class);
 
 		setModelImplClass(PluginSettingImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PluginSettingModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1275,100 +1273,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		return fetchByPrimaryKey((Serializable)pluginSettingId);
 	}
 
-	@Override
-	public Map<Serializable, PluginSetting> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PluginSetting> map = new HashMap<Serializable, PluginSetting>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PluginSetting pluginSetting = fetchByPrimaryKey(primaryKey);
-
-			if (pluginSetting != null) {
-				map.put(primaryKey, pluginSetting);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-					PluginSettingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PluginSetting)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PLUGINSETTING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PluginSetting pluginSetting : (List<PluginSetting>)q.list()) {
-				map.put(pluginSetting.getPrimaryKeyObj(), pluginSetting);
-
-				cacheResult(pluginSetting);
-
-				uncachedPrimaryKeys.remove(pluginSetting.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-					PluginSettingImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the plugin settings.
 	 *
@@ -1571,6 +1475,16 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "pluginSettingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PLUGINSETTING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PluginSettingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1591,7 +1505,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PLUGINSETTING = "SELECT pluginSetting FROM PluginSetting pluginSetting";
-	private static final String _SQL_SELECT_PLUGINSETTING_WHERE_PKS_IN = "SELECT pluginSetting FROM PluginSetting pluginSetting WHERE pluginSettingId IN (";
 	private static final String _SQL_SELECT_PLUGINSETTING_WHERE = "SELECT pluginSetting FROM PluginSetting pluginSetting WHERE ";
 	private static final String _SQL_COUNT_PLUGINSETTING = "SELECT COUNT(pluginSetting) FROM PluginSetting pluginSetting";
 	private static final String _SQL_COUNT_PLUGINSETTING_WHERE = "SELECT COUNT(pluginSetting) FROM PluginSetting pluginSetting WHERE ";

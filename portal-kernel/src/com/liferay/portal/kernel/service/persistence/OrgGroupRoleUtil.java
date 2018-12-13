@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the org group role service. This utility wraps {@link com.liferay.portal.service.persistence.impl.OrgGroupRolePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -64,6 +68,14 @@ public class OrgGroupRoleUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -488,11 +500,6 @@ public class OrgGroupRoleUtil {
 		return getPersistence().fetchByPrimaryKey(orgGroupRolePK);
 	}
 
-	public static java.util.Map<java.io.Serializable, OrgGroupRole> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
 	/**
 	* Returns all the org group roles.
 	*
@@ -570,7 +577,7 @@ public class OrgGroupRoleUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<String> getCompoundPKColumnNames() {
+	public static Set<String> getCompoundPKColumnNames() {
 		return getPersistence().getCompoundPKColumnNames();
 	}
 

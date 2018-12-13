@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the lv entry localization version service.
  *
@@ -39,6 +44,9 @@ public interface LVEntryLocalizationVersionPersistence extends BasePersistence<L
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LVEntryLocalizationVersionUtil} to access the lv entry localization version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LVEntryLocalizationVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the lv entry localization versions where lvEntryLocalizationId = &#63;.
@@ -776,10 +784,6 @@ public interface LVEntryLocalizationVersionPersistence extends BasePersistence<L
 	*/
 	public LVEntryLocalizationVersion fetchByPrimaryKey(
 		long lvEntryLocalizationVersionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, LVEntryLocalizationVersion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the lv entry localization versions.

@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3596,6 +3593,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		setModelClass(DDLRecord.class);
 
 		setModelImplClass(DDLRecordImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDLRecordModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4124,100 +4122,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		return fetchByPrimaryKey((Serializable)recordId);
 	}
 
-	@Override
-	public Map<Serializable, DDLRecord> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDLRecord> map = new HashMap<Serializable, DDLRecord>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDLRecord ddlRecord = fetchByPrimaryKey(primaryKey);
-
-			if (ddlRecord != null) {
-				map.put(primaryKey, ddlRecord);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDLRecord)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDLRECORD_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDLRecord ddlRecord : (List<DDLRecord>)q.list()) {
-				map.put(ddlRecord.getPrimaryKeyObj(), ddlRecord);
-
-				cacheResult(ddlRecord);
-
-				uncachedPrimaryKeys.remove(ddlRecord.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddl records.
 	 *
@@ -4420,6 +4324,16 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "recordId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDLRECORD;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDLRecordModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4444,7 +4358,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDLRECORD = "SELECT ddlRecord FROM DDLRecord ddlRecord";
-	private static final String _SQL_SELECT_DDLRECORD_WHERE_PKS_IN = "SELECT ddlRecord FROM DDLRecord ddlRecord WHERE recordId IN (";
 	private static final String _SQL_SELECT_DDLRECORD_WHERE = "SELECT ddlRecord FROM DDLRecord ddlRecord WHERE ";
 	private static final String _SQL_COUNT_DDLRECORD = "SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord";
 	private static final String _SQL_COUNT_DDLRECORD_WHERE = "SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord WHERE ";

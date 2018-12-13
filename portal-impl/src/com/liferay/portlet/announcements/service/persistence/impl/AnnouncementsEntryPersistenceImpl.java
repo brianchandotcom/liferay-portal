@@ -62,9 +62,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6909,6 +6906,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		setModelClass(AnnouncementsEntry.class);
 
 		setModelImplClass(AnnouncementsEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -7472,101 +7470,6 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
-	@Override
-	public Map<Serializable, AnnouncementsEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AnnouncementsEntry> map = new HashMap<Serializable, AnnouncementsEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(primaryKey);
-
-			if (announcementsEntry != null) {
-				map.put(primaryKey, announcementsEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AnnouncementsEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AnnouncementsEntry announcementsEntry : (List<AnnouncementsEntry>)q.list()) {
-				map.put(announcementsEntry.getPrimaryKeyObj(),
-					announcementsEntry);
-
-				cacheResult(announcementsEntry);
-
-				uncachedPrimaryKeys.remove(announcementsEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the announcements entries.
 	 *
@@ -7769,6 +7672,16 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "entryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ANNOUNCEMENTSENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AnnouncementsEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7789,7 +7702,6 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry";
-	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE_PKS_IN = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE ";
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY = "SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry";
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE = "SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry WHERE ";

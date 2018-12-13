@@ -60,9 +60,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13000,6 +12997,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		setModelClass(Layout.class);
 
 		setModelImplClass(LayoutImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -13912,100 +13910,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return fetchByPrimaryKey((Serializable)plid);
 	}
 
-	@Override
-	public Map<Serializable, Layout> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Layout> map = new HashMap<Serializable, Layout>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Layout layout = fetchByPrimaryKey(primaryKey);
-
-			if (layout != null) {
-				map.put(primaryKey, layout);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Layout)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Layout layout : (List<Layout>)q.list()) {
-				map.put(layout.getPrimaryKeyObj(), layout);
-
-				cacheResult(layout);
-
-				uncachedPrimaryKeys.remove(layout.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layouts.
 	 *
@@ -14204,6 +14108,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "plid";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUT;
 	}
 
 	@Override
@@ -14473,7 +14387,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			"leftPlid", "rightPlid");
 	protected boolean rebuildTreeEnabled = true;
 	private static final String _SQL_SELECT_LAYOUT = "SELECT layout FROM Layout layout";
-	private static final String _SQL_SELECT_LAYOUT_WHERE_PKS_IN = "SELECT layout FROM Layout layout WHERE plid IN (";
 	private static final String _SQL_SELECT_LAYOUT_WHERE = "SELECT layout FROM Layout layout WHERE ";
 	private static final String _SQL_COUNT_LAYOUT = "SELECT COUNT(layout) FROM Layout layout";
 	private static final String _SQL_COUNT_LAYOUT_WHERE = "SELECT COUNT(layout) FROM Layout layout WHERE ";

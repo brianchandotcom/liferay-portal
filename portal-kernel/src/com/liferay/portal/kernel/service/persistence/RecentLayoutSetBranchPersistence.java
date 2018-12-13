@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the recent layout set branch service.
  *
@@ -38,6 +43,9 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutSetBranchUtil} to access the recent layout set branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, RecentLayoutSetBranch> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the recent layout set branchs where groupId = &#63;.
@@ -543,10 +551,6 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	* @return the recent layout set branch, or <code>null</code> if a recent layout set branch with the primary key could not be found
 	*/
 	public RecentLayoutSetBranch fetchByPrimaryKey(long recentLayoutSetBranchId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, RecentLayoutSetBranch> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the recent layout set branchs.

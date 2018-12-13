@@ -44,9 +44,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1257,6 +1254,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		setModelClass(Company.class);
 
 		setModelImplClass(CompanyImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CompanyModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1656,100 +1654,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		return fetchByPrimaryKey((Serializable)companyId);
 	}
 
-	@Override
-	public Map<Serializable, Company> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Company> map = new HashMap<Serializable, Company>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Company company = fetchByPrimaryKey(primaryKey);
-
-			if (company != null) {
-				map.put(primaryKey, company);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
-					CompanyImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Company)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_COMPANY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Company company : (List<Company>)q.list()) {
-				map.put(company.getPrimaryKeyObj(), company);
-
-				cacheResult(company);
-
-				uncachedPrimaryKeys.remove(company.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
-					CompanyImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the companies.
 	 *
@@ -1951,6 +1855,16 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "companyId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMPANY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CompanyModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1969,7 +1883,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	private static final String _SQL_SELECT_COMPANY = "SELECT company FROM Company company";
-	private static final String _SQL_SELECT_COMPANY_WHERE_PKS_IN = "SELECT company FROM Company company WHERE companyId IN (";
 	private static final String _SQL_SELECT_COMPANY_WHERE = "SELECT company FROM Company company WHERE ";
 	private static final String _SQL_COUNT_COMPANY = "SELECT COUNT(company) FROM Company company";
 	private static final String _SQL_COUNT_COMPANY_WHERE = "SELECT COUNT(company) FROM Company company WHERE ";

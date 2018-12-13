@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo condition service.
  *
@@ -39,6 +44,9 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoConditionUtil} to access the kaleo condition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoCondition> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo conditions where companyId = &#63;.
@@ -405,10 +413,6 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	* @return the kaleo condition, or <code>null</code> if a kaleo condition with the primary key could not be found
 	*/
 	public KaleoCondition fetchByPrimaryKey(long kaleoConditionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoCondition> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo conditions.

@@ -49,13 +49,9 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo instance service.
@@ -3546,6 +3542,7 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		setModelClass(KaleoInstance.class);
 
 		setModelImplClass(KaleoInstanceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4042,100 +4039,6 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		return fetchByPrimaryKey((Serializable)kaleoInstanceId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoInstance> map = new HashMap<Serializable, KaleoInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoInstance kaleoInstance = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoInstance != null) {
-				map.put(primaryKey, kaleoInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoInstanceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoInstance)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOINSTANCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoInstance kaleoInstance : (List<KaleoInstance>)q.list()) {
-				map.put(kaleoInstance.getPrimaryKeyObj(), kaleoInstance);
-
-				cacheResult(kaleoInstance);
-
-				uncachedPrimaryKeys.remove(kaleoInstance.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoInstanceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo instances.
 	 *
@@ -4333,6 +4236,16 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoInstanceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOINSTANCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoInstanceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4366,7 +4279,6 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 	}
 
 	private static final String _SQL_SELECT_KALEOINSTANCE = "SELECT kaleoInstance FROM KaleoInstance kaleoInstance";
-	private static final String _SQL_SELECT_KALEOINSTANCE_WHERE_PKS_IN = "SELECT kaleoInstance FROM KaleoInstance kaleoInstance WHERE kaleoInstanceId IN (";
 	private static final String _SQL_SELECT_KALEOINSTANCE_WHERE = "SELECT kaleoInstance FROM KaleoInstance kaleoInstance WHERE ";
 	private static final String _SQL_COUNT_KALEOINSTANCE = "SELECT COUNT(kaleoInstance) FROM KaleoInstance kaleoInstance";
 	private static final String _SQL_COUNT_KALEOINSTANCE_WHERE = "SELECT COUNT(kaleoInstance) FROM KaleoInstance kaleoInstance WHERE ";

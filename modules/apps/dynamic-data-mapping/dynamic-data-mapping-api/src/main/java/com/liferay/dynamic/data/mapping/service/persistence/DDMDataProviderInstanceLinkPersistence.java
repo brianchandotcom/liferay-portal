@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm data provider instance link service.
  *
@@ -40,6 +45,9 @@ public interface DDMDataProviderInstanceLinkPersistence extends BasePersistence<
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceLinkUtil} to access the ddm data provider instance link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMDataProviderInstanceLink> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
@@ -423,10 +431,6 @@ public interface DDMDataProviderInstanceLinkPersistence extends BasePersistence<
 	*/
 	public DDMDataProviderInstanceLink fetchByPrimaryKey(
 		long dataProviderInstanceLinkId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, DDMDataProviderInstanceLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm data provider instance links.

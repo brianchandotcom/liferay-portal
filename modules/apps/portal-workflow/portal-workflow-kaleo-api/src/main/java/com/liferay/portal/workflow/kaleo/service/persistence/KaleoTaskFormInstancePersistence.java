@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo task form instance service.
  *
@@ -39,6 +44,9 @@ public interface KaleoTaskFormInstancePersistence extends BasePersistence<KaleoT
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskFormInstanceUtil} to access the kaleo task form instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoTaskFormInstance> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo task form instances where companyId = &#63;.
@@ -814,10 +822,6 @@ public interface KaleoTaskFormInstancePersistence extends BasePersistence<KaleoT
 	* @return the kaleo task form instance, or <code>null</code> if a kaleo task form instance with the primary key could not be found
 	*/
 	public KaleoTaskFormInstance fetchByPrimaryKey(long kaleoTaskFormInstanceId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoTaskFormInstance> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo task form instances.

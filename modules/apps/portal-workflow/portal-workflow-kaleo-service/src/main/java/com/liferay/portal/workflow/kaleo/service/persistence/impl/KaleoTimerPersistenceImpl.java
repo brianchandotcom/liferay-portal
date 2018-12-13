@@ -47,13 +47,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo timer service.
@@ -1324,6 +1320,7 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		setModelClass(KaleoTimer.class);
 
 		setModelImplClass(KaleoTimerImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTimerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1703,100 +1700,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		return fetchByPrimaryKey((Serializable)kaleoTimerId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTimer> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTimer> map = new HashMap<Serializable, KaleoTimer>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTimer kaleoTimer = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTimer != null) {
-				map.put(primaryKey, kaleoTimer);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTimerModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTimerImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoTimer)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTIMER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTimer kaleoTimer : (List<KaleoTimer>)q.list()) {
-				map.put(kaleoTimer.getPrimaryKeyObj(), kaleoTimer);
-
-				cacheResult(kaleoTimer);
-
-				uncachedPrimaryKeys.remove(kaleoTimer.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTimerModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTimerImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo timers.
 	 *
@@ -1994,6 +1897,16 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTimerId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTIMER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTimerModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2018,7 +1931,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTIMER = "SELECT kaleoTimer FROM KaleoTimer kaleoTimer";
-	private static final String _SQL_SELECT_KALEOTIMER_WHERE_PKS_IN = "SELECT kaleoTimer FROM KaleoTimer kaleoTimer WHERE kaleoTimerId IN (";
 	private static final String _SQL_SELECT_KALEOTIMER_WHERE = "SELECT kaleoTimer FROM KaleoTimer kaleoTimer WHERE ";
 	private static final String _SQL_COUNT_KALEOTIMER = "SELECT COUNT(kaleoTimer) FROM KaleoTimer kaleoTimer";
 	private static final String _SQL_COUNT_KALEOTIMER_WHERE = "SELECT COUNT(kaleoTimer) FROM KaleoTimer kaleoTimer WHERE ";

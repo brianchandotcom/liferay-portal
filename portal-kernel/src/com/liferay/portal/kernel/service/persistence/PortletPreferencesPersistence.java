@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.model.PortletPreferences;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the portlet preferences service.
  *
@@ -38,6 +43,9 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesUtil} to access the portlet preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the portlet preferenceses where ownerId = &#63;.
@@ -1491,10 +1499,6 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, PortletPreferences> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the portlet preferenceses.

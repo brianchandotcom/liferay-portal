@@ -47,13 +47,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo notification service.
@@ -2415,6 +2411,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		setModelClass(KaleoNotification.class);
 
 		setModelImplClass(KaleoNotificationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2852,100 +2849,6 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		return fetchByPrimaryKey((Serializable)kaleoNotificationId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoNotification> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoNotification> map = new HashMap<Serializable, KaleoNotification>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoNotification kaleoNotification = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoNotification != null) {
-				map.put(primaryKey, kaleoNotification);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoNotificationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoNotification)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEONOTIFICATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoNotification kaleoNotification : (List<KaleoNotification>)q.list()) {
-				map.put(kaleoNotification.getPrimaryKeyObj(), kaleoNotification);
-
-				cacheResult(kaleoNotification);
-
-				uncachedPrimaryKeys.remove(kaleoNotification.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoNotificationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo notifications.
 	 *
@@ -3143,6 +3046,16 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoNotificationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEONOTIFICATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoNotificationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3167,7 +3080,6 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEONOTIFICATION = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification";
-	private static final String _SQL_SELECT_KALEONOTIFICATION_WHERE_PKS_IN = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification WHERE kaleoNotificationId IN (";
 	private static final String _SQL_SELECT_KALEONOTIFICATION_WHERE = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification WHERE ";
 	private static final String _SQL_COUNT_KALEONOTIFICATION = "SELECT COUNT(kaleoNotification) FROM KaleoNotification kaleoNotification";
 	private static final String _SQL_COUNT_KALEONOTIFICATION_WHERE = "SELECT COUNT(kaleoNotification) FROM KaleoNotification kaleoNotification WHERE ";

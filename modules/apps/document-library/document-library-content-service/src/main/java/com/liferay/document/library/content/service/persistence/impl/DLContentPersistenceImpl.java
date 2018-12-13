@@ -47,9 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2192,6 +2189,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		setModelClass(DLContent.class);
 
 		setModelImplClass(DLContentImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLContentModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2604,100 +2602,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
-	@Override
-	public Map<Serializable, DLContent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLContent> map = new HashMap<Serializable, DLContent>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLContent dlContent = fetchByPrimaryKey(primaryKey);
-
-			if (dlContent != null) {
-				map.put(primaryKey, dlContent);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-					DLContentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLContent)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLCONTENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLContent dlContent : (List<DLContent>)q.list()) {
-				map.put(dlContent.getPrimaryKeyObj(), dlContent);
-
-				cacheResult(dlContent);
-
-				uncachedPrimaryKeys.remove(dlContent.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-					DLContentImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the document library contents.
 	 *
@@ -2900,6 +2804,16 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "contentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLCONTENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLContentModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2924,7 +2838,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DLCONTENT = "SELECT dlContent FROM DLContent dlContent";
-	private static final String _SQL_SELECT_DLCONTENT_WHERE_PKS_IN = "SELECT dlContent FROM DLContent dlContent WHERE contentId IN (";
 	private static final String _SQL_SELECT_DLCONTENT_WHERE = "SELECT dlContent FROM DLContent dlContent WHERE ";
 	private static final String _SQL_COUNT_DLCONTENT = "SELECT COUNT(dlContent) FROM DLContent dlContent";
 	private static final String _SQL_COUNT_DLCONTENT_WHERE = "SELECT COUNT(dlContent) FROM DLContent dlContent WHERE ";

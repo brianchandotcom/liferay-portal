@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the membership request service.
@@ -2243,6 +2239,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		setModelClass(MembershipRequest.class);
 
 		setModelImplClass(MembershipRequestImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2648,100 +2645,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		return fetchByPrimaryKey((Serializable)membershipRequestId);
 	}
 
-	@Override
-	public Map<Serializable, MembershipRequest> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MembershipRequest> map = new HashMap<Serializable, MembershipRequest>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MembershipRequest membershipRequest = fetchByPrimaryKey(primaryKey);
-
-			if (membershipRequest != null) {
-				map.put(primaryKey, membershipRequest);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-					MembershipRequestImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MembershipRequest)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MEMBERSHIPREQUEST_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MembershipRequest membershipRequest : (List<MembershipRequest>)q.list()) {
-				map.put(membershipRequest.getPrimaryKeyObj(), membershipRequest);
-
-				cacheResult(membershipRequest);
-
-				uncachedPrimaryKeys.remove(membershipRequest.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-					MembershipRequestImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the membership requests.
 	 *
@@ -2939,6 +2842,16 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "membershipRequestId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MEMBERSHIPREQUEST;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MembershipRequestModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2959,7 +2872,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST = "SELECT membershipRequest FROM MembershipRequest membershipRequest";
-	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE_PKS_IN = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE membershipRequestId IN (";
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE ";
 	private static final String _SQL_COUNT_MEMBERSHIPREQUEST = "SELECT COUNT(membershipRequest) FROM MembershipRequest membershipRequest";
 	private static final String _SQL_COUNT_MEMBERSHIPREQUEST_WHERE = "SELECT COUNT(membershipRequest) FROM MembershipRequest membershipRequest WHERE ";

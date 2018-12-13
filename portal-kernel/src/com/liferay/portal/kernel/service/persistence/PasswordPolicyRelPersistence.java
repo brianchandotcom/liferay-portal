@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the password policy rel service.
  *
@@ -38,6 +43,9 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyRelUtil} to access the password policy rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PasswordPolicyRel> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the password policy rels where passwordPolicyId = &#63;.
@@ -278,10 +286,6 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
 	*/
 	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, PasswordPolicyRel> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the password policy rels.

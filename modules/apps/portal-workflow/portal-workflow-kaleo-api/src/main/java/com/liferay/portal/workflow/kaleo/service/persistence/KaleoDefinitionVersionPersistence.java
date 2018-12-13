@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo definition version service.
  *
@@ -39,6 +44,9 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoDefinitionVersionUtil} to access the kaleo definition version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoDefinitionVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo definition versions where companyId = &#63;.
@@ -427,10 +435,6 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	*/
 	public KaleoDefinitionVersion fetchByPrimaryKey(
 		long kaleoDefinitionVersionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoDefinitionVersion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo definition versions.

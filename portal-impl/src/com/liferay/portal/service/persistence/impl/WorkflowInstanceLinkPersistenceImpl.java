@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the workflow instance link service.
@@ -732,6 +728,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		setModelClass(WorkflowInstanceLink.class);
 
 		setModelImplClass(WorkflowInstanceLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1091,101 +1088,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		return fetchByPrimaryKey((Serializable)workflowInstanceLinkId);
 	}
 
-	@Override
-	public Map<Serializable, WorkflowInstanceLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, WorkflowInstanceLink> map = new HashMap<Serializable, WorkflowInstanceLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(primaryKey);
-
-			if (workflowInstanceLink != null) {
-				map.put(primaryKey, workflowInstanceLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowInstanceLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (WorkflowInstanceLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (WorkflowInstanceLink workflowInstanceLink : (List<WorkflowInstanceLink>)q.list()) {
-				map.put(workflowInstanceLink.getPrimaryKeyObj(),
-					workflowInstanceLink);
-
-				cacheResult(workflowInstanceLink);
-
-				uncachedPrimaryKeys.remove(workflowInstanceLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowInstanceLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the workflow instance links.
 	 *
@@ -1383,6 +1285,16 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "workflowInstanceLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_WORKFLOWINSTANCELINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WorkflowInstanceLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1403,7 +1315,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink";
-	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK_WHERE_PKS_IN = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink WHERE workflowInstanceLinkId IN (";
 	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK_WHERE = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink WHERE ";
 	private static final String _SQL_COUNT_WORKFLOWINSTANCELINK = "SELECT COUNT(workflowInstanceLink) FROM WorkflowInstanceLink workflowInstanceLink";
 	private static final String _SQL_COUNT_WORKFLOWINSTANCELINK_WHERE = "SELECT COUNT(workflowInstanceLink) FROM WorkflowInstanceLink workflowInstanceLink WHERE ";

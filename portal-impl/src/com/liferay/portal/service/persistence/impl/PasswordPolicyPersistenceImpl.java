@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3394,6 +3391,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		setModelClass(PasswordPolicy.class);
 
 		setModelImplClass(PasswordPolicyImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3885,100 +3883,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		return fetchByPrimaryKey((Serializable)passwordPolicyId);
 	}
 
-	@Override
-	public Map<Serializable, PasswordPolicy> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PasswordPolicy> map = new HashMap<Serializable, PasswordPolicy>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PasswordPolicy passwordPolicy = fetchByPrimaryKey(primaryKey);
-
-			if (passwordPolicy != null) {
-				map.put(primaryKey, passwordPolicy);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordPolicyImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PasswordPolicy)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PASSWORDPOLICY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PasswordPolicy passwordPolicy : (List<PasswordPolicy>)q.list()) {
-				map.put(passwordPolicy.getPrimaryKeyObj(), passwordPolicy);
-
-				cacheResult(passwordPolicy);
-
-				uncachedPrimaryKeys.remove(passwordPolicy.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordPolicyImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the password policies.
 	 *
@@ -4181,6 +4085,16 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "passwordPolicyId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PASSWORDPOLICY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PasswordPolicyModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4201,7 +4115,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PASSWORDPOLICY = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy";
-	private static final String _SQL_SELECT_PASSWORDPOLICY_WHERE_PKS_IN = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy WHERE passwordPolicyId IN (";
 	private static final String _SQL_SELECT_PASSWORDPOLICY_WHERE = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy WHERE ";
 	private static final String _SQL_COUNT_PASSWORDPOLICY = "SELECT COUNT(passwordPolicy) FROM PasswordPolicy passwordPolicy";
 	private static final String _SQL_COUNT_PASSWORDPOLICY_WHERE = "SELECT COUNT(passwordPolicy) FROM PasswordPolicy passwordPolicy WHERE ";

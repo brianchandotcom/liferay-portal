@@ -21,6 +21,11 @@ import com.liferay.mail.reader.model.Attachment;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the attachment service.
  *
@@ -40,6 +45,9 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AttachmentUtil} to access the attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Attachment> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the attachments where messageId = &#63;.
@@ -225,10 +233,6 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	*/
 	public Attachment fetchByPrimaryKey(long attachmentId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Attachment> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the attachments.
 	*
@@ -294,5 +298,5 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -21,6 +21,11 @@ import com.liferay.asset.kernel.model.AssetTagStats;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset tag stats service.
  *
@@ -43,6 +48,9 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetTagStatsUtil} to access the asset tag stats persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetTagStats> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset tag statses where tagId = &#63;.
@@ -407,10 +415,6 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	* @return the asset tag stats, or <code>null</code> if a asset tag stats with the primary key could not be found
 	*/
 	public AssetTagStats fetchByPrimaryKey(long tagStatsId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, AssetTagStats> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset tag statses.

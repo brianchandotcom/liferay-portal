@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the trash version service.
@@ -1351,6 +1347,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		setModelClass(TrashVersion.class);
 
 		setModelImplClass(TrashVersionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(TrashVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1745,100 +1742,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		return fetchByPrimaryKey((Serializable)versionId);
 	}
 
-	@Override
-	public Map<Serializable, TrashVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, TrashVersion> map = new HashMap<Serializable, TrashVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			TrashVersion trashVersion = fetchByPrimaryKey(primaryKey);
-
-			if (trashVersion != null) {
-				map.put(primaryKey, trashVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-					TrashVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (TrashVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_TRASHVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (TrashVersion trashVersion : (List<TrashVersion>)q.list()) {
-				map.put(trashVersion.getPrimaryKeyObj(), trashVersion);
-
-				cacheResult(trashVersion);
-
-				uncachedPrimaryKeys.remove(trashVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-					TrashVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the trash versions.
 	 *
@@ -2036,6 +1939,16 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "versionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_TRASHVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TrashVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2060,7 +1973,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_TRASHVERSION = "SELECT trashVersion FROM TrashVersion trashVersion";
-	private static final String _SQL_SELECT_TRASHVERSION_WHERE_PKS_IN = "SELECT trashVersion FROM TrashVersion trashVersion WHERE versionId IN (";
 	private static final String _SQL_SELECT_TRASHVERSION_WHERE = "SELECT trashVersion FROM TrashVersion trashVersion WHERE ";
 	private static final String _SQL_COUNT_TRASHVERSION = "SELECT COUNT(trashVersion) FROM TrashVersion trashVersion";
 	private static final String _SQL_COUNT_TRASHVERSION_WHERE = "SELECT COUNT(trashVersion) FROM TrashVersion trashVersion WHERE ";

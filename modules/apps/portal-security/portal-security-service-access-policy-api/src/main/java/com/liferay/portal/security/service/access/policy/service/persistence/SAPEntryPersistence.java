@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the sap entry service.
  *
@@ -39,6 +44,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryUtil} to access the sap entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SAPEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the sap entries where uuid = &#63;.
@@ -948,10 +956,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry fetchByPrimaryKey(long sapEntryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SAPEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the sap entries.
 	*
@@ -1017,5 +1021,5 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

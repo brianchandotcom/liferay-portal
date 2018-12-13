@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm storage link service.
  *
@@ -40,6 +45,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStorageLinkUtil} to access the ddm storage link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMStorageLink> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm storage links where uuid = &#63;.
@@ -754,10 +762,6 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	*/
 	public DDMStorageLink fetchByPrimaryKey(long storageLinkId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DDMStorageLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the ddm storage links.
 	*
@@ -823,5 +827,5 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

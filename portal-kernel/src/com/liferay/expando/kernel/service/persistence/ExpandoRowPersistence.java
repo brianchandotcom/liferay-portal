@@ -21,6 +21,11 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the expando row service.
  *
@@ -40,6 +45,9 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoRowUtil} to access the expando row persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ExpandoRow> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the expando rows where tableId = &#63;.
@@ -403,10 +411,6 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 	*/
 	public ExpandoRow fetchByPrimaryKey(long rowId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, ExpandoRow> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the expando rows.
 	*
@@ -472,5 +476,5 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

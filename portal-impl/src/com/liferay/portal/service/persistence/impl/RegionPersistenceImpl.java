@@ -43,9 +43,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1879,6 +1876,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		setModelClass(Region.class);
 
 		setModelImplClass(RegionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RegionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2287,100 +2285,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		return fetchByPrimaryKey((Serializable)regionId);
 	}
 
-	@Override
-	public Map<Serializable, Region> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Region> map = new HashMap<Serializable, Region>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Region region = fetchByPrimaryKey(primaryKey);
-
-			if (region != null) {
-				map.put(primaryKey, region);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-					RegionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Region)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_REGION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Region region : (List<Region>)q.list()) {
-				map.put(region.getPrimaryKeyObj(), region);
-
-				cacheResult(region);
-
-				uncachedPrimaryKeys.remove(region.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-					RegionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the regions.
 	 *
@@ -2582,6 +2486,16 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "regionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_REGION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RegionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2600,7 +2514,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	private static final String _SQL_SELECT_REGION = "SELECT region FROM Region region";
-	private static final String _SQL_SELECT_REGION_WHERE_PKS_IN = "SELECT region FROM Region region WHERE regionId IN (";
 	private static final String _SQL_SELECT_REGION_WHERE = "SELECT region FROM Region region WHERE ";
 	private static final String _SQL_COUNT_REGION = "SELECT COUNT(region) FROM Region region";
 	private static final String _SQL_COUNT_REGION_WHERE = "SELECT COUNT(region) FROM Region region WHERE ";

@@ -21,6 +21,11 @@ import com.liferay.html.preview.model.HtmlPreviewEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the html preview entry service.
  *
@@ -40,6 +45,9 @@ public interface HtmlPreviewEntryPersistence extends BasePersistence<HtmlPreview
 	 *
 	 * Never modify or reference this interface directly. Always use {@link HtmlPreviewEntryUtil} to access the html preview entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, HtmlPreviewEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchHtmlPreviewEntryException} if it could not be found.
@@ -148,10 +156,6 @@ public interface HtmlPreviewEntryPersistence extends BasePersistence<HtmlPreview
 	* @return the html preview entry, or <code>null</code> if a html preview entry with the primary key could not be found
 	*/
 	public HtmlPreviewEntry fetchByPrimaryKey(long htmlPreviewEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, HtmlPreviewEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the html preview entries.

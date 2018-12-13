@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3378,6 +3375,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		setModelClass(Calendar.class);
 
 		setModelImplClass(CalendarImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CalendarModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3858,100 +3856,6 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		return fetchByPrimaryKey((Serializable)calendarId);
 	}
 
-	@Override
-	public Map<Serializable, Calendar> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Calendar> map = new HashMap<Serializable, Calendar>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Calendar calendar = fetchByPrimaryKey(primaryKey);
-
-			if (calendar != null) {
-				map.put(primaryKey, calendar);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Calendar)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CALENDAR_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Calendar calendar : (List<Calendar>)q.list()) {
-				map.put(calendar.getPrimaryKeyObj(), calendar);
-
-				cacheResult(calendar);
-
-				uncachedPrimaryKeys.remove(calendar.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the calendars.
 	 *
@@ -4153,6 +4057,16 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "calendarId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CALENDAR;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4177,7 +4091,6 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CALENDAR = "SELECT calendar FROM Calendar calendar";
-	private static final String _SQL_SELECT_CALENDAR_WHERE_PKS_IN = "SELECT calendar FROM Calendar calendar WHERE calendarId IN (";
 	private static final String _SQL_SELECT_CALENDAR_WHERE = "SELECT calendar FROM Calendar calendar WHERE ";
 	private static final String _SQL_COUNT_CALENDAR = "SELECT COUNT(calendar) FROM Calendar calendar";
 	private static final String _SQL_COUNT_CALENDAR_WHERE = "SELECT COUNT(calendar) FROM Calendar calendar WHERE ";

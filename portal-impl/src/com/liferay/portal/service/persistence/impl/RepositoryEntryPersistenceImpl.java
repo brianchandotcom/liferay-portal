@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2239,6 +2236,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		setModelClass(RepositoryEntry.class);
 
 		setModelImplClass(RepositoryEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2731,100 +2729,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		return fetchByPrimaryKey((Serializable)repositoryEntryId);
 	}
 
-	@Override
-	public Map<Serializable, RepositoryEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, RepositoryEntry> map = new HashMap<Serializable, RepositoryEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			RepositoryEntry repositoryEntry = fetchByPrimaryKey(primaryKey);
-
-			if (repositoryEntry != null) {
-				map.put(primaryKey, repositoryEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (RepositoryEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_REPOSITORYENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (RepositoryEntry repositoryEntry : (List<RepositoryEntry>)q.list()) {
-				map.put(repositoryEntry.getPrimaryKeyObj(), repositoryEntry);
-
-				cacheResult(repositoryEntry);
-
-				uncachedPrimaryKeys.remove(repositoryEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the repository entries.
 	 *
@@ -3027,6 +2931,16 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "repositoryEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_REPOSITORYENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RepositoryEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3047,7 +2961,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_REPOSITORYENTRY = "SELECT repositoryEntry FROM RepositoryEntry repositoryEntry";
-	private static final String _SQL_SELECT_REPOSITORYENTRY_WHERE_PKS_IN = "SELECT repositoryEntry FROM RepositoryEntry repositoryEntry WHERE repositoryEntryId IN (";
 	private static final String _SQL_SELECT_REPOSITORYENTRY_WHERE = "SELECT repositoryEntry FROM RepositoryEntry repositoryEntry WHERE ";
 	private static final String _SQL_COUNT_REPOSITORYENTRY = "SELECT COUNT(repositoryEntry) FROM RepositoryEntry repositoryEntry";
 	private static final String _SQL_COUNT_REPOSITORYENTRY_WHERE = "SELECT COUNT(repositoryEntry) FROM RepositoryEntry repositoryEntry WHERE ";

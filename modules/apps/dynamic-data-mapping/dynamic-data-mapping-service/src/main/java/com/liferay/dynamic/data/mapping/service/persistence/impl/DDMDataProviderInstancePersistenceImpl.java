@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3350,6 +3347,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		setModelClass(DDMDataProviderInstance.class);
 
 		setModelImplClass(DDMDataProviderInstanceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3845,101 +3843,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		return fetchByPrimaryKey((Serializable)dataProviderInstanceId);
 	}
 
-	@Override
-	public Map<Serializable, DDMDataProviderInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMDataProviderInstance> map = new HashMap<Serializable, DDMDataProviderInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMDataProviderInstance ddmDataProviderInstance = fetchByPrimaryKey(primaryKey);
-
-			if (ddmDataProviderInstance != null) {
-				map.put(primaryKey, ddmDataProviderInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMDataProviderInstance)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMDataProviderInstance ddmDataProviderInstance : (List<DDMDataProviderInstance>)q.list()) {
-				map.put(ddmDataProviderInstance.getPrimaryKeyObj(),
-					ddmDataProviderInstance);
-
-				cacheResult(ddmDataProviderInstance);
-
-				uncachedPrimaryKeys.remove(ddmDataProviderInstance.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm data provider instances.
 	 *
@@ -4142,6 +4045,16 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "dataProviderInstanceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMDATAPROVIDERINSTANCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMDataProviderInstanceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4166,8 +4079,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCE = "SELECT ddmDataProviderInstance FROM DDMDataProviderInstance ddmDataProviderInstance";
-	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE_PKS_IN =
-		"SELECT ddmDataProviderInstance FROM DDMDataProviderInstance ddmDataProviderInstance WHERE dataProviderInstanceId IN (";
 	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE = "SELECT ddmDataProviderInstance FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ";
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCE = "SELECT COUNT(ddmDataProviderInstance) FROM DDMDataProviderInstance ddmDataProviderInstance";
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE = "SELECT COUNT(ddmDataProviderInstance) FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ";

@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the ddm data provider instance link service.
@@ -1371,6 +1367,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		setModelClass(DDMDataProviderInstanceLink.class);
 
 		setModelImplClass(DDMDataProviderInstanceLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1789,102 +1786,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		return fetchByPrimaryKey((Serializable)dataProviderInstanceLinkId);
 	}
 
-	@Override
-	public Map<Serializable, DDMDataProviderInstanceLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMDataProviderInstanceLink> map = new HashMap<Serializable, DDMDataProviderInstanceLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMDataProviderInstanceLink ddmDataProviderInstanceLink = fetchByPrimaryKey(primaryKey);
-
-			if (ddmDataProviderInstanceLink != null) {
-				map.put(primaryKey, ddmDataProviderInstanceLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(DDMDataProviderInstanceLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink : (List<DDMDataProviderInstanceLink>)q.list()) {
-				map.put(ddmDataProviderInstanceLink.getPrimaryKeyObj(),
-					ddmDataProviderInstanceLink);
-
-				cacheResult(ddmDataProviderInstanceLink);
-
-				uncachedPrimaryKeys.remove(ddmDataProviderInstanceLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMDataProviderInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm data provider instance links.
 	 *
@@ -2082,6 +1983,16 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "dataProviderInstanceLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMDATAPROVIDERINSTANCELINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMDataProviderInstanceLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2106,8 +2017,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCELINK = "SELECT ddmDataProviderInstanceLink FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink";
-	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE_PKS_IN =
-		"SELECT ddmDataProviderInstanceLink FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE dataProviderInstanceLinkId IN (";
 	private static final String _SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE = "SELECT ddmDataProviderInstanceLink FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE ";
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCELINK = "SELECT COUNT(ddmDataProviderInstanceLink) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink";
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE = "SELECT COUNT(ddmDataProviderInstanceLink) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE ";

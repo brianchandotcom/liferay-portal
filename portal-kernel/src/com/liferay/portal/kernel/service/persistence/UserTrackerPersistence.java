@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerException;
 import com.liferay.portal.kernel.model.UserTracker;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the user tracker service.
  *
@@ -38,6 +43,9 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerUtil} to access the user tracker persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, UserTracker> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user trackers where companyId = &#63;.
@@ -486,10 +494,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	* @return the user tracker, or <code>null</code> if a user tracker with the primary key could not be found
 	*/
 	public UserTracker fetchByPrimaryKey(long userTrackerId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, UserTracker> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the user trackers.

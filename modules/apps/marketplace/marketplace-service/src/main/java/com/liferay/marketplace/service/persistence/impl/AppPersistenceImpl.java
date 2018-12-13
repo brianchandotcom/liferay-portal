@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2442,6 +2439,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		setModelClass(App.class);
 
 		setModelImplClass(AppImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AppModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2888,100 +2886,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		return fetchByPrimaryKey((Serializable)appId);
 	}
 
-	@Override
-	public Map<Serializable, App> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, App> map = new HashMap<Serializable, App>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			App app = fetchByPrimaryKey(primaryKey);
-
-			if (app != null) {
-				map.put(primaryKey, app);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AppModelImpl.ENTITY_CACHE_ENABLED,
-					AppImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (App)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_APP_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (App app : (List<App>)q.list()) {
-				map.put(app.getPrimaryKeyObj(), app);
-
-				cacheResult(app);
-
-				uncachedPrimaryKeys.remove(app.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AppModelImpl.ENTITY_CACHE_ENABLED,
-					AppImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the apps.
 	 *
@@ -3181,6 +3085,16 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "appId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_APP;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AppModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3205,7 +3119,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_APP = "SELECT app FROM App app";
-	private static final String _SQL_SELECT_APP_WHERE_PKS_IN = "SELECT app FROM App app WHERE appId IN (";
 	private static final String _SQL_SELECT_APP_WHERE = "SELECT app FROM App app WHERE ";
 	private static final String _SQL_COUNT_APP = "SELECT COUNT(app) FROM App app";
 	private static final String _SQL_COUNT_APP_WHERE = "SELECT COUNT(app) FROM App app WHERE ";

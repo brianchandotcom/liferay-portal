@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException;
 import com.liferay.portal.kernel.model.ResourceTypePermission;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the resource type permission service.
  *
@@ -40,6 +45,9 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceTypePermissionUtil} to access the resource type permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ResourceTypePermission> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource type permissions where roleId = &#63;.
@@ -450,10 +458,6 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission fetchByPrimaryKey(
 		long resourceTypePermissionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, ResourceTypePermission> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource type permissions.

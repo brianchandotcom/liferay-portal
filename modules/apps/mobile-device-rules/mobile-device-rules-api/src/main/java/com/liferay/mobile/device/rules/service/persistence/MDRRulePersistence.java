@@ -21,6 +21,11 @@ import com.liferay.mobile.device.rules.model.MDRRule;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the mdr rule service.
  *
@@ -40,6 +45,9 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleUtil} to access the mdr rule persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MDRRule> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the mdr rules where uuid = &#63;.
@@ -544,10 +552,6 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public MDRRule fetchByPrimaryKey(long ruleId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, MDRRule> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the mdr rules.
 	*
@@ -613,5 +617,5 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

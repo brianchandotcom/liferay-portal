@@ -21,6 +21,11 @@ import com.liferay.change.tracking.model.CTEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ct entry service.
  *
@@ -40,6 +45,9 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTEntryUtil} to access the ct entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, CTEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ct entries where resourcePrimKey = &#63;.
@@ -365,10 +373,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	* @return the ct entry, or <code>null</code> if a ct entry with the primary key could not be found
 	*/
 	public CTEntry fetchByPrimaryKey(long ctEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, CTEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ct entries.

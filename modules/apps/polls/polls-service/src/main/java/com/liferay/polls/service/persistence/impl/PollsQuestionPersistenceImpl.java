@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2336,6 +2333,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		setModelClass(PollsQuestion.class);
 
 		setModelImplClass(PollsQuestionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2786,100 +2784,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		return fetchByPrimaryKey((Serializable)questionId);
 	}
 
-	@Override
-	public Map<Serializable, PollsQuestion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PollsQuestion> map = new HashMap<Serializable, PollsQuestion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PollsQuestion pollsQuestion = fetchByPrimaryKey(primaryKey);
-
-			if (pollsQuestion != null) {
-				map.put(primaryKey, pollsQuestion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-					PollsQuestionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PollsQuestion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_POLLSQUESTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PollsQuestion pollsQuestion : (List<PollsQuestion>)q.list()) {
-				map.put(pollsQuestion.getPrimaryKeyObj(), pollsQuestion);
-
-				cacheResult(pollsQuestion);
-
-				uncachedPrimaryKeys.remove(pollsQuestion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-					PollsQuestionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the polls questions.
 	 *
@@ -3082,6 +2986,16 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "questionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_POLLSQUESTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PollsQuestionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3106,7 +3020,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_POLLSQUESTION = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion";
-	private static final String _SQL_SELECT_POLLSQUESTION_WHERE_PKS_IN = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion WHERE questionId IN (";
 	private static final String _SQL_SELECT_POLLSQUESTION_WHERE = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion WHERE ";
 	private static final String _SQL_COUNT_POLLSQUESTION = "SELECT COUNT(pollsQuestion) FROM PollsQuestion pollsQuestion";
 	private static final String _SQL_COUNT_POLLSQUESTION_WHERE = "SELECT COUNT(pollsQuestion) FROM PollsQuestion pollsQuestion WHERE ";

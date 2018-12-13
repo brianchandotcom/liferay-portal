@@ -42,13 +42,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the resource action service.
@@ -906,6 +902,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		setModelClass(ResourceAction.class);
 
 		setModelImplClass(ResourceActionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ResourceActionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1271,100 +1268,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		return fetchByPrimaryKey((Serializable)resourceActionId);
 	}
 
-	@Override
-	public Map<Serializable, ResourceAction> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ResourceAction> map = new HashMap<Serializable, ResourceAction>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ResourceAction resourceAction = fetchByPrimaryKey(primaryKey);
-
-			if (resourceAction != null) {
-				map.put(primaryKey, resourceAction);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceActionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ResourceAction)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RESOURCEACTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ResourceAction resourceAction : (List<ResourceAction>)q.list()) {
-				map.put(resourceAction.getPrimaryKeyObj(), resourceAction);
-
-				cacheResult(resourceAction);
-
-				uncachedPrimaryKeys.remove(resourceAction.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceActionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the resource actions.
 	 *
@@ -1562,6 +1465,16 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "resourceActionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RESOURCEACTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceActionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1580,7 +1493,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	private static final String _SQL_SELECT_RESOURCEACTION = "SELECT resourceAction FROM ResourceAction resourceAction";
-	private static final String _SQL_SELECT_RESOURCEACTION_WHERE_PKS_IN = "SELECT resourceAction FROM ResourceAction resourceAction WHERE resourceActionId IN (";
 	private static final String _SQL_SELECT_RESOURCEACTION_WHERE = "SELECT resourceAction FROM ResourceAction resourceAction WHERE ";
 	private static final String _SQL_COUNT_RESOURCEACTION = "SELECT COUNT(resourceAction) FROM ResourceAction resourceAction";
 	private static final String _SQL_COUNT_RESOURCEACTION_WHERE = "SELECT COUNT(resourceAction) FROM ResourceAction resourceAction WHERE ";

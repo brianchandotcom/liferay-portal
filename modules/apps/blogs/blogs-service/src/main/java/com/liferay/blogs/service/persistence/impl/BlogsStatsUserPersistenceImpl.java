@@ -48,13 +48,9 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the blogs stats user service.
@@ -2966,6 +2962,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		setModelClass(BlogsStatsUser.class);
 
 		setModelImplClass(BlogsStatsUserImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3385,100 +3382,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
-	@Override
-	public Map<Serializable, BlogsStatsUser> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, BlogsStatsUser> map = new HashMap<Serializable, BlogsStatsUser>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			BlogsStatsUser blogsStatsUser = fetchByPrimaryKey(primaryKey);
-
-			if (blogsStatsUser != null) {
-				map.put(primaryKey, blogsStatsUser);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsStatsUserImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (BlogsStatsUser)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (BlogsStatsUser blogsStatsUser : (List<BlogsStatsUser>)q.list()) {
-				map.put(blogsStatsUser.getPrimaryKeyObj(), blogsStatsUser);
-
-				cacheResult(blogsStatsUser);
-
-				uncachedPrimaryKeys.remove(blogsStatsUser.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsStatsUserImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the blogs stats users.
 	 *
@@ -3676,6 +3579,16 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "statsUserId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_BLOGSSTATSUSER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BlogsStatsUserModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3709,7 +3622,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	}
 
 	private static final String _SQL_SELECT_BLOGSSTATSUSER = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser";
-	private static final String _SQL_SELECT_BLOGSSTATSUSER_WHERE_PKS_IN = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser WHERE statsUserId IN (";
 	private static final String _SQL_SELECT_BLOGSSTATSUSER_WHERE = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser WHERE ";
 	private static final String _SQL_COUNT_BLOGSSTATSUSER = "SELECT COUNT(blogsStatsUser) FROM BlogsStatsUser blogsStatsUser";
 	private static final String _SQL_COUNT_BLOGSSTATSUSER_WHERE = "SELECT COUNT(blogsStatsUser) FROM BlogsStatsUser blogsStatsUser WHERE ";

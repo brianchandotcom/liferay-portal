@@ -21,6 +21,11 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the expando column service.
  *
@@ -40,6 +45,9 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnUtil} to access the expando column persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ExpandoColumn> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the expando columns where tableId = &#63;.
@@ -430,10 +438,6 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public ExpandoColumn fetchByPrimaryKey(long columnId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, ExpandoColumn> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the expando columns.
 	*
@@ -499,5 +503,5 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchSystemEventException;
 import com.liferay.portal.kernel.model.SystemEvent;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the system event service.
  *
@@ -38,6 +43,9 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SystemEventUtil} to access the system event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SystemEvent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the system events where groupId = &#63;.
@@ -698,10 +706,6 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*/
 	public SystemEvent fetchByPrimaryKey(long systemEventId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SystemEvent> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the system events.
 	*
@@ -767,5 +771,5 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

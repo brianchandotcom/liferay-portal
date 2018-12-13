@@ -50,9 +50,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1327,6 +1324,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		setModelClass(Message.class);
 
 		setModelImplClass(MessageImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MessageModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1731,100 +1729,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		return fetchByPrimaryKey((Serializable)messageId);
 	}
 
-	@Override
-	public Map<Serializable, Message> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Message> map = new HashMap<Serializable, Message>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Message message = fetchByPrimaryKey(primaryKey);
-
-			if (message != null) {
-				map.put(primaryKey, message);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
-					MessageImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Message)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MESSAGE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Message message : (List<Message>)q.list()) {
-				map.put(message.getPrimaryKeyObj(), message);
-
-				cacheResult(message);
-
-				uncachedPrimaryKeys.remove(message.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
-					MessageImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the messages.
 	 *
@@ -2026,6 +1930,16 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "messageId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MESSAGE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MessageModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2050,7 +1964,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MESSAGE = "SELECT message FROM Message message";
-	private static final String _SQL_SELECT_MESSAGE_WHERE_PKS_IN = "SELECT message FROM Message message WHERE messageId IN (";
 	private static final String _SQL_SELECT_MESSAGE_WHERE = "SELECT message FROM Message message WHERE ";
 	private static final String _SQL_COUNT_MESSAGE = "SELECT COUNT(message) FROM Message message";
 	private static final String _SQL_COUNT_MESSAGE_WHERE = "SELECT COUNT(message) FROM Message message WHERE ";

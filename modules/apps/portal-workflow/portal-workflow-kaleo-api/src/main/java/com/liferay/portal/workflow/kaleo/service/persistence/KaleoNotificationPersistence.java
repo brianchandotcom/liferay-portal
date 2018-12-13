@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo notification service.
  *
@@ -39,6 +44,9 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationUtil} to access the kaleo notification persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoNotification> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo notifications where companyId = &#63;.
@@ -674,10 +682,6 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the kaleo notification, or <code>null</code> if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification fetchByPrimaryKey(long kaleoNotificationId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoNotification> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo notifications.

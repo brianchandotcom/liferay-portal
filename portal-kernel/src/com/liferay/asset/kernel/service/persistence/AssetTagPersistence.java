@@ -21,6 +21,11 @@ import com.liferay.asset.kernel.model.AssetTag;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the asset tag service.
  *
@@ -40,6 +45,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetTagUtil} to access the asset tag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AssetTag> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset tags where uuid = &#63;.
@@ -1082,10 +1090,6 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag fetchByPrimaryKey(long tagId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, AssetTag> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the asset tags.
 	*
@@ -1317,5 +1321,5 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries);
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

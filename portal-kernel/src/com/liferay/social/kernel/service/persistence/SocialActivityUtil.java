@@ -24,7 +24,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import com.liferay.social.kernel.model.SocialActivity;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the social activity service. This utility wraps {@link com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -65,6 +69,14 @@ public class SocialActivityUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, SocialActivity> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -2115,11 +2127,6 @@ public class SocialActivityUtil {
 		return getPersistence().fetchByPrimaryKey(activityId);
 	}
 
-	public static java.util.Map<java.io.Serializable, SocialActivity> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
 	/**
 	* Returns all the social activities.
 	*
@@ -2197,7 +2204,7 @@ public class SocialActivityUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<String> getBadColumnNames() {
+	public static Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

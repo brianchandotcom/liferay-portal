@@ -56,9 +56,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6173,6 +6170,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		setModelClass(CalendarResource.class);
 
 		setModelImplClass(CalendarResourceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6748,100 +6746,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		return fetchByPrimaryKey((Serializable)calendarResourceId);
 	}
 
-	@Override
-	public Map<Serializable, CalendarResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CalendarResource> map = new HashMap<Serializable, CalendarResource>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CalendarResource calendarResource = fetchByPrimaryKey(primaryKey);
-
-			if (calendarResource != null) {
-				map.put(primaryKey, calendarResource);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarResourceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CalendarResource)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CALENDARRESOURCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (CalendarResource calendarResource : (List<CalendarResource>)q.list()) {
-				map.put(calendarResource.getPrimaryKeyObj(), calendarResource);
-
-				cacheResult(calendarResource);
-
-				uncachedPrimaryKeys.remove(calendarResource.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarResourceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the calendar resources.
 	 *
@@ -7044,6 +6948,16 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "calendarResourceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CALENDARRESOURCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarResourceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7068,7 +6982,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CALENDARRESOURCE = "SELECT calendarResource FROM CalendarResource calendarResource";
-	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE_PKS_IN = "SELECT calendarResource FROM CalendarResource calendarResource WHERE calendarResourceId IN (";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE = "SELECT calendarResource FROM CalendarResource calendarResource WHERE ";
 	private static final String _SQL_COUNT_CALENDARRESOURCE = "SELECT COUNT(calendarResource) FROM CalendarResource calendarResource";
 	private static final String _SQL_COUNT_CALENDARRESOURCE_WHERE = "SELECT COUNT(calendarResource) FROM CalendarResource calendarResource WHERE ";

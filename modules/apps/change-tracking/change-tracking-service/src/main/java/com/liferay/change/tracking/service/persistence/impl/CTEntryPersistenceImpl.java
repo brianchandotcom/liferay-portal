@@ -55,9 +55,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1154,6 +1152,7 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 		setModelClass(CTEntry.class);
 
 		setModelImplClass(CTEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CTEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1518,100 +1517,6 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	@Override
 	public CTEntry fetchByPrimaryKey(long ctEntryId) {
 		return fetchByPrimaryKey((Serializable)ctEntryId);
-	}
-
-	@Override
-	public Map<Serializable, CTEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CTEntry> map = new HashMap<Serializable, CTEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CTEntry ctEntry = fetchByPrimaryKey(primaryKey);
-
-			if (ctEntry != null) {
-				map.put(primaryKey, ctEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CTEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CTEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CTENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (CTEntry ctEntry : (List<CTEntry>)q.list()) {
-				map.put(ctEntry.getPrimaryKeyObj(), ctEntry);
-
-				cacheResult(ctEntry);
-
-				uncachedPrimaryKeys.remove(ctEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CTEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CTEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2114,6 +2019,16 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "ctEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CTENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CTEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2146,7 +2061,6 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	protected CTCollectionPersistence ctCollectionPersistence;
 	protected TableMapper<CTEntry, com.liferay.change.tracking.model.CTCollection> ctEntryToCTCollectionTableMapper;
 	private static final String _SQL_SELECT_CTENTRY = "SELECT ctEntry FROM CTEntry ctEntry";
-	private static final String _SQL_SELECT_CTENTRY_WHERE_PKS_IN = "SELECT ctEntry FROM CTEntry ctEntry WHERE ctEntryId IN (";
 	private static final String _SQL_SELECT_CTENTRY_WHERE = "SELECT ctEntry FROM CTEntry ctEntry WHERE ";
 	private static final String _SQL_COUNT_CTENTRY = "SELECT COUNT(ctEntry) FROM CTEntry ctEntry";
 	private static final String _SQL_COUNT_CTENTRY_WHERE = "SELECT COUNT(ctEntry) FROM CTEntry ctEntry WHERE ";

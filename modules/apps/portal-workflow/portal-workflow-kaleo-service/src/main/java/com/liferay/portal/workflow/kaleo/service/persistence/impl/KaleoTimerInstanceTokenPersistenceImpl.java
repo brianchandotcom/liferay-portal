@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo timer instance token service.
@@ -2018,6 +2014,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		setModelClass(KaleoTimerInstanceToken.class);
 
 		setModelImplClass(KaleoTimerInstanceTokenImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2491,101 +2488,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		return fetchByPrimaryKey((Serializable)kaleoTimerInstanceTokenId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTimerInstanceToken> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTimerInstanceToken> map = new HashMap<Serializable, KaleoTimerInstanceToken>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTimerInstanceToken kaleoTimerInstanceToken = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTimerInstanceToken != null) {
-				map.put(primaryKey, kaleoTimerInstanceToken);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTimerInstanceTokenImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoTimerInstanceToken)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTimerInstanceToken kaleoTimerInstanceToken : (List<KaleoTimerInstanceToken>)q.list()) {
-				map.put(kaleoTimerInstanceToken.getPrimaryKeyObj(),
-					kaleoTimerInstanceToken);
-
-				cacheResult(kaleoTimerInstanceToken);
-
-				uncachedPrimaryKeys.remove(kaleoTimerInstanceToken.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTimerInstanceTokenImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo timer instance tokens.
 	 *
@@ -2783,6 +2685,16 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTimerInstanceTokenId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTIMERINSTANCETOKEN;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTimerInstanceTokenModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2807,8 +2719,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTIMERINSTANCETOKEN = "SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken";
-	private static final String _SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE_PKS_IN =
-		"SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE kaleoTimerInstanceTokenId IN (";
 	private static final String _SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE = "SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE ";
 	private static final String _SQL_COUNT_KALEOTIMERINSTANCETOKEN = "SELECT COUNT(kaleoTimerInstanceToken) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken";
 	private static final String _SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE = "SELECT COUNT(kaleoTimerInstanceToken) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE ";

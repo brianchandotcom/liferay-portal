@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the recent layout branch service.
@@ -1876,6 +1872,7 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 		setModelClass(RecentLayoutBranch.class);
 
 		setModelImplClass(RecentLayoutBranchImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2306,101 +2303,6 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 		return fetchByPrimaryKey((Serializable)recentLayoutBranchId);
 	}
 
-	@Override
-	public Map<Serializable, RecentLayoutBranch> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, RecentLayoutBranch> map = new HashMap<Serializable, RecentLayoutBranch>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			RecentLayoutBranch recentLayoutBranch = fetchByPrimaryKey(primaryKey);
-
-			if (recentLayoutBranch != null) {
-				map.put(primaryKey, recentLayoutBranch);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutBranchImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (RecentLayoutBranch)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RECENTLAYOUTBRANCH_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (RecentLayoutBranch recentLayoutBranch : (List<RecentLayoutBranch>)q.list()) {
-				map.put(recentLayoutBranch.getPrimaryKeyObj(),
-					recentLayoutBranch);
-
-				cacheResult(recentLayoutBranch);
-
-				uncachedPrimaryKeys.remove(recentLayoutBranch.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutBranchImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the recent layout branchs.
 	 *
@@ -2598,6 +2500,16 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "recentLayoutBranchId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RECENTLAYOUTBRANCH;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RecentLayoutBranchModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2618,7 +2530,6 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch";
-	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE_PKS_IN = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch WHERE recentLayoutBranchId IN (";
 	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch WHERE ";
 	private static final String _SQL_COUNT_RECENTLAYOUTBRANCH = "SELECT COUNT(recentLayoutBranch) FROM RecentLayoutBranch recentLayoutBranch";
 	private static final String _SQL_COUNT_RECENTLAYOUTBRANCH_WHERE = "SELECT COUNT(recentLayoutBranch) FROM RecentLayoutBranch recentLayoutBranch WHERE ";

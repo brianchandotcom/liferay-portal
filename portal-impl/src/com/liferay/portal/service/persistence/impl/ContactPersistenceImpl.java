@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the contact service.
@@ -1640,6 +1636,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		setModelClass(Contact.class);
 
 		setModelImplClass(ContactImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ContactModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2033,100 +2030,6 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		return fetchByPrimaryKey((Serializable)contactId);
 	}
 
-	@Override
-	public Map<Serializable, Contact> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Contact> map = new HashMap<Serializable, Contact>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Contact contact = fetchByPrimaryKey(primaryKey);
-
-			if (contact != null) {
-				map.put(primaryKey, contact);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-					ContactImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Contact)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CONTACT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Contact contact : (List<Contact>)q.list()) {
-				map.put(contact.getPrimaryKeyObj(), contact);
-
-				cacheResult(contact);
-
-				uncachedPrimaryKeys.remove(contact.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-					ContactImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the contacts.
 	 *
@@ -2323,6 +2226,16 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "contactId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CONTACT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ContactModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2343,7 +2256,6 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_CONTACT = "SELECT contact FROM Contact contact";
-	private static final String _SQL_SELECT_CONTACT_WHERE_PKS_IN = "SELECT contact FROM Contact contact WHERE contactId IN (";
 	private static final String _SQL_SELECT_CONTACT_WHERE = "SELECT contact FROM Contact contact WHERE ";
 	private static final String _SQL_COUNT_CONTACT = "SELECT COUNT(contact) FROM Contact contact";
 	private static final String _SQL_COUNT_CONTACT_WHERE = "SELECT COUNT(contact) FROM Contact contact WHERE ";

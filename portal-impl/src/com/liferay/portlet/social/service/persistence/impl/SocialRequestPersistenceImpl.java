@@ -50,9 +50,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6261,6 +6258,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		setModelClass(SocialRequest.class);
 
 		setModelImplClass(SocialRequestImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialRequestModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6959,100 +6957,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return fetchByPrimaryKey((Serializable)requestId);
 	}
 
-	@Override
-	public Map<Serializable, SocialRequest> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SocialRequest> map = new HashMap<Serializable, SocialRequest>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
-
-			if (socialRequest != null) {
-				map.put(primaryKey, socialRequest);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRequestImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SocialRequest)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SOCIALREQUEST_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SocialRequest socialRequest : (List<SocialRequest>)q.list()) {
-				map.put(socialRequest.getPrimaryKeyObj(), socialRequest);
-
-				cacheResult(socialRequest);
-
-				uncachedPrimaryKeys.remove(socialRequest.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRequestImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the social requests.
 	 *
@@ -7255,6 +7159,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "requestId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SOCIALREQUEST;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialRequestModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7275,7 +7189,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SOCIALREQUEST = "SELECT socialRequest FROM SocialRequest socialRequest";
-	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE_PKS_IN = "SELECT socialRequest FROM SocialRequest socialRequest WHERE requestId IN (";
 	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE = "SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
 	private static final String _SQL_COUNT_SOCIALREQUEST = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
 	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";

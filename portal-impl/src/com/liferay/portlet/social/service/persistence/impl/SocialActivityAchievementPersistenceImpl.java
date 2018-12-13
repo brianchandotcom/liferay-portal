@@ -47,13 +47,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the social activity achievement service.
@@ -3180,6 +3176,7 @@ public class SocialActivityAchievementPersistenceImpl
 		setModelClass(SocialActivityAchievement.class);
 
 		setModelImplClass(SocialActivityAchievementImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3691,101 +3688,6 @@ public class SocialActivityAchievementPersistenceImpl
 		return fetchByPrimaryKey((Serializable)activityAchievementId);
 	}
 
-	@Override
-	public Map<Serializable, SocialActivityAchievement> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SocialActivityAchievement> map = new HashMap<Serializable, SocialActivityAchievement>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(primaryKey);
-
-			if (socialActivityAchievement != null) {
-				map.put(primaryKey, socialActivityAchievement);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityAchievementImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SocialActivityAchievement)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SocialActivityAchievement socialActivityAchievement : (List<SocialActivityAchievement>)q.list()) {
-				map.put(socialActivityAchievement.getPrimaryKeyObj(),
-					socialActivityAchievement);
-
-				cacheResult(socialActivityAchievement);
-
-				uncachedPrimaryKeys.remove(socialActivityAchievement.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityAchievementImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the social activity achievements.
 	 *
@@ -3983,6 +3885,16 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "activityAchievementId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivityAchievementModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4003,8 +3915,6 @@ public class SocialActivityAchievementPersistenceImpl
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT = "SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement";
-	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE_PKS_IN =
-		"SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement WHERE activityAchievementId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE = "SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITYACHIEVEMENT = "SELECT COUNT(socialActivityAchievement) FROM SocialActivityAchievement socialActivityAchievement";
 	private static final String _SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE = "SELECT COUNT(socialActivityAchievement) FROM SocialActivityAchievement socialActivityAchievement WHERE ";

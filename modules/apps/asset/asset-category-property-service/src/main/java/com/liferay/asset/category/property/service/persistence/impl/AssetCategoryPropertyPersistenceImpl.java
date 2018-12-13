@@ -49,9 +49,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1958,6 +1955,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		setModelClass(AssetCategoryProperty.class);
 
 		setModelImplClass(AssetCategoryPropertyImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2416,101 +2414,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		return fetchByPrimaryKey((Serializable)categoryPropertyId);
 	}
 
-	@Override
-	public Map<Serializable, AssetCategoryProperty> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetCategoryProperty> map = new HashMap<Serializable, AssetCategoryProperty>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetCategoryProperty assetCategoryProperty = fetchByPrimaryKey(primaryKey);
-
-			if (assetCategoryProperty != null) {
-				map.put(primaryKey, assetCategoryProperty);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryPropertyImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetCategoryProperty)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetCategoryProperty assetCategoryProperty : (List<AssetCategoryProperty>)q.list()) {
-				map.put(assetCategoryProperty.getPrimaryKeyObj(),
-					assetCategoryProperty);
-
-				cacheResult(assetCategoryProperty);
-
-				uncachedPrimaryKeys.remove(assetCategoryProperty.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryPropertyImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset category properties.
 	 *
@@ -2713,6 +2616,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "categoryPropertyId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETCATEGORYPROPERTY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetCategoryPropertyModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2737,7 +2650,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty";
-	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE_PKS_IN = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE categoryPropertyId IN (";
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY = "SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty";
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE = "SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty WHERE ";

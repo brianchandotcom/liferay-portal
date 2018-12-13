@@ -21,6 +21,11 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the o auth2 application scope aliases service.
  *
@@ -41,6 +46,9 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesUtil} to access the o auth2 application scope aliases persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OAuth2ApplicationScopeAliases> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -519,10 +527,6 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public OAuth2ApplicationScopeAliases fetchByPrimaryKey(
 		long oAuth2ApplicationScopeAliasesId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, OAuth2ApplicationScopeAliases> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the o auth2 application scope aliaseses.
 	*
@@ -591,5 +595,5 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

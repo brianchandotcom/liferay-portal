@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.powwow.exception.NoSuchMeetingException;
 import com.liferay.powwow.model.PowwowMeeting;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the powwow meeting service.
  *
@@ -40,6 +45,9 @@ public interface PowwowMeetingPersistence extends BasePersistence<PowwowMeeting>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingUtil} to access the powwow meeting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PowwowMeeting> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the powwow meetings where groupId = &#63;.
@@ -838,10 +846,6 @@ public interface PowwowMeetingPersistence extends BasePersistence<PowwowMeeting>
 	* @return the powwow meeting, or <code>null</code> if a powwow meeting with the primary key could not be found
 	*/
 	public PowwowMeeting fetchByPrimaryKey(long powwowMeetingId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, PowwowMeeting> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the powwow meetings.

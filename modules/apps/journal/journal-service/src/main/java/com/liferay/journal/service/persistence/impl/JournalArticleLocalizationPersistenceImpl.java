@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the journal article localization service.
@@ -861,6 +857,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		setModelClass(JournalArticleLocalization.class);
 
 		setModelImplClass(JournalArticleLocalizationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1247,101 +1244,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		return fetchByPrimaryKey((Serializable)articleLocalizationId);
 	}
 
-	@Override
-	public Map<Serializable, JournalArticleLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticleLocalization> map = new HashMap<Serializable, JournalArticleLocalization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticleLocalization journalArticleLocalization = fetchByPrimaryKey(primaryKey);
-
-			if (journalArticleLocalization != null) {
-				map.put(primaryKey, journalArticleLocalization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleLocalizationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (JournalArticleLocalization)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (JournalArticleLocalization journalArticleLocalization : (List<JournalArticleLocalization>)q.list()) {
-				map.put(journalArticleLocalization.getPrimaryKeyObj(),
-					journalArticleLocalization);
-
-				cacheResult(journalArticleLocalization);
-
-				uncachedPrimaryKeys.remove(journalArticleLocalization.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleLocalizationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the journal article localizations.
 	 *
@@ -1539,6 +1441,16 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "articleLocalizationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_JOURNALARTICLELOCALIZATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalArticleLocalizationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1563,8 +1475,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_JOURNALARTICLELOCALIZATION = "SELECT journalArticleLocalization FROM JournalArticleLocalization journalArticleLocalization";
-	private static final String _SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE_PKS_IN =
-		"SELECT journalArticleLocalization FROM JournalArticleLocalization journalArticleLocalization WHERE articleLocalizationId IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE = "SELECT journalArticleLocalization FROM JournalArticleLocalization journalArticleLocalization WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLELOCALIZATION = "SELECT COUNT(journalArticleLocalization) FROM JournalArticleLocalization journalArticleLocalization";
 	private static final String _SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE = "SELECT COUNT(journalArticleLocalization) FROM JournalArticleLocalization journalArticleLocalization WHERE ";

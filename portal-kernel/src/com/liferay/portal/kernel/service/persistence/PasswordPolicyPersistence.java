@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the password policy service.
  *
@@ -38,6 +43,9 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyUtil} to access the password policy persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PasswordPolicy> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the password policies where uuid = &#63;.
@@ -791,10 +799,6 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*/
 	public PasswordPolicy fetchByPrimaryKey(long passwordPolicyId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, PasswordPolicy> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the password policies.
 	*
@@ -860,5 +864,5 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

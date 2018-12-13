@@ -48,13 +48,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the we deploy auth app service.
@@ -660,6 +656,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		setModelClass(WeDeployAuthApp.class);
 
 		setModelImplClass(WeDeployAuthAppImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1062,100 +1059,6 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		return fetchByPrimaryKey((Serializable)weDeployAuthAppId);
 	}
 
-	@Override
-	public Map<Serializable, WeDeployAuthApp> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, WeDeployAuthApp> map = new HashMap<Serializable, WeDeployAuthApp>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			WeDeployAuthApp weDeployAuthApp = fetchByPrimaryKey(primaryKey);
-
-			if (weDeployAuthApp != null) {
-				map.put(primaryKey, weDeployAuthApp);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-					WeDeployAuthAppImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (WeDeployAuthApp)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_WEDEPLOYAUTHAPP_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (WeDeployAuthApp weDeployAuthApp : (List<WeDeployAuthApp>)q.list()) {
-				map.put(weDeployAuthApp.getPrimaryKeyObj(), weDeployAuthApp);
-
-				cacheResult(weDeployAuthApp);
-
-				uncachedPrimaryKeys.remove(weDeployAuthApp.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
-					WeDeployAuthAppImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the we deploy auth apps.
 	 *
@@ -1353,6 +1256,16 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "weDeployAuthAppId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_WEDEPLOYAUTHAPP;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WeDeployAuthAppModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1377,7 +1290,6 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_WEDEPLOYAUTHAPP = "SELECT weDeployAuthApp FROM WeDeployAuthApp weDeployAuthApp";
-	private static final String _SQL_SELECT_WEDEPLOYAUTHAPP_WHERE_PKS_IN = "SELECT weDeployAuthApp FROM WeDeployAuthApp weDeployAuthApp WHERE weDeployAuthAppId IN (";
 	private static final String _SQL_SELECT_WEDEPLOYAUTHAPP_WHERE = "SELECT weDeployAuthApp FROM WeDeployAuthApp weDeployAuthApp WHERE ";
 	private static final String _SQL_COUNT_WEDEPLOYAUTHAPP = "SELECT COUNT(weDeployAuthApp) FROM WeDeployAuthApp weDeployAuthApp";
 	private static final String _SQL_COUNT_WEDEPLOYAUTHAPP_WHERE = "SELECT COUNT(weDeployAuthApp) FROM WeDeployAuthApp weDeployAuthApp WHERE ";

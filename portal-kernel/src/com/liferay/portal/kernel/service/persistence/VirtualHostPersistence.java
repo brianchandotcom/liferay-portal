@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.model.VirtualHost;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the virtual host service.
  *
@@ -38,6 +43,9 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link VirtualHostUtil} to access the virtual host persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, VirtualHost> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the virtual host where hostname = &#63; or throws a {@link NoSuchVirtualHostException} if it could not be found.
@@ -185,10 +193,6 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
 	*/
 	public VirtualHost fetchByPrimaryKey(long virtualHostId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, VirtualHost> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the virtual hosts.

@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the user group service. This utility wraps {@link com.liferay.portal.service.persistence.impl.UserGroupPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -64,6 +68,14 @@ public class UserGroupUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, UserGroup> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -1781,11 +1793,6 @@ public class UserGroupUtil {
 		return getPersistence().fetchByPrimaryKey(userGroupId);
 	}
 
-	public static java.util.Map<java.io.Serializable, UserGroup> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
 	/**
 	* Returns all the user groups.
 	*
@@ -2466,7 +2473,7 @@ public class UserGroupUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
-	public static java.util.Set<String> getBadColumnNames() {
+	public static Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddm form instance record service.
  *
@@ -40,6 +45,9 @@ public interface DDMFormInstanceRecordPersistence extends BasePersistence<DDMFor
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordUtil} to access the ddm form instance record persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDMFormInstanceRecord> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddm form instance records where uuid = &#63;.
@@ -990,10 +998,6 @@ public interface DDMFormInstanceRecordPersistence extends BasePersistence<DDMFor
 	*/
 	public DDMFormInstanceRecord fetchByPrimaryKey(long formInstanceRecordId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DDMFormInstanceRecord> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the ddm form instance records.
 	*
@@ -1059,5 +1063,5 @@ public interface DDMFormInstanceRecordPersistence extends BasePersistence<DDMFor
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

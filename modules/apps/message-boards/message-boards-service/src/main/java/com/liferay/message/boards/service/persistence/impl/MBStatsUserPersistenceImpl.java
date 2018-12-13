@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the message boards stats user service.
@@ -1879,6 +1875,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		setModelClass(MBStatsUser.class);
 
 		setModelImplClass(MBStatsUserImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2265,100 +2262,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
-	@Override
-	public Map<Serializable, MBStatsUser> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBStatsUser> map = new HashMap<Serializable, MBStatsUser>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBStatsUser mbStatsUser = fetchByPrimaryKey(primaryKey);
-
-			if (mbStatsUser != null) {
-				map.put(primaryKey, mbStatsUser);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					MBStatsUserImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBStatsUser)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBSTATSUSER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBStatsUser mbStatsUser : (List<MBStatsUser>)q.list()) {
-				map.put(mbStatsUser.getPrimaryKeyObj(), mbStatsUser);
-
-				cacheResult(mbStatsUser);
-
-				uncachedPrimaryKeys.remove(mbStatsUser.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					MBStatsUserImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message boards stats users.
 	 *
@@ -2556,6 +2459,16 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "statsUserId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBSTATSUSER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBStatsUserModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2580,7 +2493,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBSTATSUSER = "SELECT mbStatsUser FROM MBStatsUser mbStatsUser";
-	private static final String _SQL_SELECT_MBSTATSUSER_WHERE_PKS_IN = "SELECT mbStatsUser FROM MBStatsUser mbStatsUser WHERE statsUserId IN (";
 	private static final String _SQL_SELECT_MBSTATSUSER_WHERE = "SELECT mbStatsUser FROM MBStatsUser mbStatsUser WHERE ";
 	private static final String _SQL_COUNT_MBSTATSUSER = "SELECT COUNT(mbStatsUser) FROM MBStatsUser mbStatsUser";
 	private static final String _SQL_COUNT_MBSTATSUSER_WHERE = "SELECT COUNT(mbStatsUser) FROM MBStatsUser mbStatsUser WHERE ";

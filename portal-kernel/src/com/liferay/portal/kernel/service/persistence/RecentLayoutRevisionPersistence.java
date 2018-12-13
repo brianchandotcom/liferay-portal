@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutRevisionException;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the recent layout revision service.
  *
@@ -38,6 +43,9 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutRevisionUtil} to access the recent layout revision persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, RecentLayoutRevision> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the recent layout revisions where groupId = &#63;.
@@ -551,10 +559,6 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	* @return the recent layout revision, or <code>null</code> if a recent layout revision with the primary key could not be found
 	*/
 	public RecentLayoutRevision fetchByPrimaryKey(long recentLayoutRevisionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, RecentLayoutRevision> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the recent layout revisions.

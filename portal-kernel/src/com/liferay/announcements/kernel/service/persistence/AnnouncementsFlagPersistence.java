@@ -21,6 +21,11 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the announcements flag service.
  *
@@ -40,6 +45,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsFlagUtil} to access the announcements flag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, AnnouncementsFlag> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the announcements flags where entryId = &#63;.
@@ -279,10 +287,6 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
 	*/
 	public AnnouncementsFlag fetchByPrimaryKey(long flagId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, AnnouncementsFlag> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the announcements flags.

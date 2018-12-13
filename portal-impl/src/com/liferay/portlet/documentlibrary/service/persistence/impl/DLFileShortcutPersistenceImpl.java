@@ -55,9 +55,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5990,6 +5987,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		setModelClass(DLFileShortcut.class);
 
 		setModelImplClass(DLFileShortcutImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6570,100 +6568,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		return fetchByPrimaryKey((Serializable)fileShortcutId);
 	}
 
-	@Override
-	public Map<Serializable, DLFileShortcut> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLFileShortcut> map = new HashMap<Serializable, DLFileShortcut>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLFileShortcut dlFileShortcut = fetchByPrimaryKey(primaryKey);
-
-			if (dlFileShortcut != null) {
-				map.put(primaryKey, dlFileShortcut);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileShortcutImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLFileShortcut)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLFILESHORTCUT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLFileShortcut dlFileShortcut : (List<DLFileShortcut>)q.list()) {
-				map.put(dlFileShortcut.getPrimaryKeyObj(), dlFileShortcut);
-
-				cacheResult(dlFileShortcut);
-
-				uncachedPrimaryKeys.remove(dlFileShortcut.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileShortcutImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the document library file shortcuts.
 	 *
@@ -6866,6 +6770,16 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fileShortcutId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLFILESHORTCUT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLFileShortcutModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6886,7 +6800,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_DLFILESHORTCUT = "SELECT dlFileShortcut FROM DLFileShortcut dlFileShortcut";
-	private static final String _SQL_SELECT_DLFILESHORTCUT_WHERE_PKS_IN = "SELECT dlFileShortcut FROM DLFileShortcut dlFileShortcut WHERE fileShortcutId IN (";
 	private static final String _SQL_SELECT_DLFILESHORTCUT_WHERE = "SELECT dlFileShortcut FROM DLFileShortcut dlFileShortcut WHERE ";
 	private static final String _SQL_COUNT_DLFILESHORTCUT = "SELECT COUNT(dlFileShortcut) FROM DLFileShortcut dlFileShortcut";
 	private static final String _SQL_COUNT_DLFILESHORTCUT_WHERE = "SELECT COUNT(dlFileShortcut) FROM DLFileShortcut dlFileShortcut WHERE ";

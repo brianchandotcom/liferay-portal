@@ -50,9 +50,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2491,6 +2488,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		setModelClass(DLFileEntryMetadata.class);
 
 		setModelImplClass(DLFileEntryMetadataImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2961,101 +2959,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		return fetchByPrimaryKey((Serializable)fileEntryMetadataId);
 	}
 
-	@Override
-	public Map<Serializable, DLFileEntryMetadata> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLFileEntryMetadata> map = new HashMap<Serializable, DLFileEntryMetadata>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(primaryKey);
-
-			if (dlFileEntryMetadata != null) {
-				map.put(primaryKey, dlFileEntryMetadata);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryMetadataImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLFileEntryMetadata)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLFILEENTRYMETADATA_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLFileEntryMetadata dlFileEntryMetadata : (List<DLFileEntryMetadata>)q.list()) {
-				map.put(dlFileEntryMetadata.getPrimaryKeyObj(),
-					dlFileEntryMetadata);
-
-				cacheResult(dlFileEntryMetadata);
-
-				uncachedPrimaryKeys.remove(dlFileEntryMetadata.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryMetadataImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the document library file entry metadatas.
 	 *
@@ -3258,6 +3161,16 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fileEntryMetadataId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLFILEENTRYMETADATA;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLFileEntryMetadataModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3278,7 +3191,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_DLFILEENTRYMETADATA = "SELECT dlFileEntryMetadata FROM DLFileEntryMetadata dlFileEntryMetadata";
-	private static final String _SQL_SELECT_DLFILEENTRYMETADATA_WHERE_PKS_IN = "SELECT dlFileEntryMetadata FROM DLFileEntryMetadata dlFileEntryMetadata WHERE fileEntryMetadataId IN (";
 	private static final String _SQL_SELECT_DLFILEENTRYMETADATA_WHERE = "SELECT dlFileEntryMetadata FROM DLFileEntryMetadata dlFileEntryMetadata WHERE ";
 	private static final String _SQL_COUNT_DLFILEENTRYMETADATA = "SELECT COUNT(dlFileEntryMetadata) FROM DLFileEntryMetadata dlFileEntryMetadata";
 	private static final String _SQL_COUNT_DLFILEENTRYMETADATA_WHERE = "SELECT COUNT(dlFileEntryMetadata) FROM DLFileEntryMetadata dlFileEntryMetadata WHERE ";

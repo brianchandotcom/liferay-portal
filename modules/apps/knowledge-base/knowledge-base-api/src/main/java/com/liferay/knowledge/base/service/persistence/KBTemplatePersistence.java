@@ -21,6 +21,11 @@ import com.liferay.knowledge.base.model.KBTemplate;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kb template service.
  *
@@ -40,6 +45,9 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBTemplateUtil} to access the kb template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KBTemplate> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kb templates where uuid = &#63;.
@@ -609,10 +617,6 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	*/
 	public KBTemplate fetchByPrimaryKey(long kbTemplateId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, KBTemplate> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the kb templates.
 	*
@@ -678,5 +682,5 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

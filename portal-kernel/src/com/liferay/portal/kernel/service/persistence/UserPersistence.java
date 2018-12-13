@@ -19,7 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the user service.
@@ -40,6 +44,9 @@ public interface UserPersistence extends BasePersistence<User> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserUtil} to access the user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, User> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the users where uuid = &#63;.
@@ -1985,10 +1992,6 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public User fetchByPrimaryKey(long userId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, User> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the users.
 	*
@@ -2878,5 +2881,5 @@ public interface UserPersistence extends BasePersistence<User> {
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

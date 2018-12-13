@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchLogException;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo log service.
  *
@@ -39,6 +44,9 @@ public interface KaleoLogPersistence extends BasePersistence<KaleoLog> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoLogUtil} to access the kaleo log persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoLog> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo logs where companyId = &#63;.
@@ -949,10 +957,6 @@ public interface KaleoLogPersistence extends BasePersistence<KaleoLog> {
 	*/
 	public KaleoLog fetchByPrimaryKey(long kaleoLogId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoLog> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the kaleo logs.
 	*
@@ -1018,5 +1022,5 @@ public interface KaleoLogPersistence extends BasePersistence<KaleoLog> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -21,6 +21,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the document library file entry metadata service.
  *
@@ -40,6 +45,9 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryMetadataUtil} to access the document library file entry metadata persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DLFileEntryMetadata> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library file entry metadatas where uuid = &#63;.
@@ -688,10 +696,6 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	*/
 	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, DLFileEntryMetadata> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the document library file entry metadatas.
 	*
@@ -757,5 +761,5 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

@@ -55,9 +55,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5209,6 +5206,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		setModelClass(LayoutFriendlyURL.class);
 
 		setModelImplClass(LayoutFriendlyURLImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -5889,100 +5887,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return fetchByPrimaryKey((Serializable)layoutFriendlyURLId);
 	}
 
-	@Override
-	public Map<Serializable, LayoutFriendlyURL> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutFriendlyURL> map = new HashMap<Serializable, LayoutFriendlyURL>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutFriendlyURL layoutFriendlyURL = fetchByPrimaryKey(primaryKey);
-
-			if (layoutFriendlyURL != null) {
-				map.put(primaryKey, layoutFriendlyURL);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutFriendlyURLImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LayoutFriendlyURL)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LayoutFriendlyURL layoutFriendlyURL : (List<LayoutFriendlyURL>)q.list()) {
-				map.put(layoutFriendlyURL.getPrimaryKeyObj(), layoutFriendlyURL);
-
-				cacheResult(layoutFriendlyURL);
-
-				uncachedPrimaryKeys.remove(layoutFriendlyURL.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutFriendlyURLImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layout friendly urls.
 	 *
@@ -6185,6 +6089,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "layoutFriendlyURLId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUTFRIENDLYURL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutFriendlyURLModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6205,7 +6119,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_LAYOUTFRIENDLYURL = "SELECT layoutFriendlyURL FROM LayoutFriendlyURL layoutFriendlyURL";
-	private static final String _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE_PKS_IN = "SELECT layoutFriendlyURL FROM LayoutFriendlyURL layoutFriendlyURL WHERE layoutFriendlyURLId IN (";
 	private static final String _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE = "SELECT layoutFriendlyURL FROM LayoutFriendlyURL layoutFriendlyURL WHERE ";
 	private static final String _SQL_COUNT_LAYOUTFRIENDLYURL = "SELECT COUNT(layoutFriendlyURL) FROM LayoutFriendlyURL layoutFriendlyURL";
 	private static final String _SQL_COUNT_LAYOUTFRIENDLYURL_WHERE = "SELECT COUNT(layoutFriendlyURL) FROM LayoutFriendlyURL layoutFriendlyURL WHERE ";

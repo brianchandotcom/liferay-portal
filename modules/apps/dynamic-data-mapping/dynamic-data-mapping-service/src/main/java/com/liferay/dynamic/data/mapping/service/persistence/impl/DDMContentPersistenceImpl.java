@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2467,6 +2464,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		setModelClass(DDMContent.class);
 
 		setModelImplClass(DDMContentImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMContentModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2936,100 +2934,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
-	@Override
-	public Map<Serializable, DDMContent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMContent> map = new HashMap<Serializable, DDMContent>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMContent ddmContent = fetchByPrimaryKey(primaryKey);
-
-			if (ddmContent != null) {
-				map.put(primaryKey, ddmContent);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-					DDMContentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMContent)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMCONTENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMContent ddmContent : (List<DDMContent>)q.list()) {
-				map.put(ddmContent.getPrimaryKeyObj(), ddmContent);
-
-				cacheResult(ddmContent);
-
-				uncachedPrimaryKeys.remove(ddmContent.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-					DDMContentImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm contents.
 	 *
@@ -3232,6 +3136,16 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "contentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMCONTENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMContentModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3256,7 +3170,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMCONTENT = "SELECT ddmContent FROM DDMContent ddmContent";
-	private static final String _SQL_SELECT_DDMCONTENT_WHERE_PKS_IN = "SELECT ddmContent FROM DDMContent ddmContent WHERE contentId IN (";
 	private static final String _SQL_SELECT_DDMCONTENT_WHERE = "SELECT ddmContent FROM DDMContent ddmContent WHERE ";
 	private static final String _SQL_COUNT_DDMCONTENT = "SELECT COUNT(ddmContent) FROM DDMContent ddmContent";
 	private static final String _SQL_COUNT_DDMCONTENT_WHERE = "SELECT COUNT(ddmContent) FROM DDMContent ddmContent WHERE ";

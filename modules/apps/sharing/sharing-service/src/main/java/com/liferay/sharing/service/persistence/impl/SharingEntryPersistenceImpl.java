@@ -53,9 +53,6 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6031,6 +6028,7 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		setModelClass(SharingEntry.class);
 
 		setModelImplClass(SharingEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SharingEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6694,100 +6692,6 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		return fetchByPrimaryKey((Serializable)sharingEntryId);
 	}
 
-	@Override
-	public Map<Serializable, SharingEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SharingEntry> map = new HashMap<Serializable, SharingEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SharingEntry sharingEntry = fetchByPrimaryKey(primaryKey);
-
-			if (sharingEntry != null) {
-				map.put(primaryKey, sharingEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SharingEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SharingEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SharingEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SHARINGENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SharingEntry sharingEntry : (List<SharingEntry>)q.list()) {
-				map.put(sharingEntry.getPrimaryKeyObj(), sharingEntry);
-
-				cacheResult(sharingEntry);
-
-				uncachedPrimaryKeys.remove(sharingEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SharingEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SharingEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the sharing entries.
 	 *
@@ -6990,6 +6894,16 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "sharingEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SHARINGENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SharingEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -7023,7 +6937,6 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 	}
 
 	private static final String _SQL_SELECT_SHARINGENTRY = "SELECT sharingEntry FROM SharingEntry sharingEntry";
-	private static final String _SQL_SELECT_SHARINGENTRY_WHERE_PKS_IN = "SELECT sharingEntry FROM SharingEntry sharingEntry WHERE sharingEntryId IN (";
 	private static final String _SQL_SELECT_SHARINGENTRY_WHERE = "SELECT sharingEntry FROM SharingEntry sharingEntry WHERE ";
 	private static final String _SQL_COUNT_SHARINGENTRY = "SELECT COUNT(sharingEntry) FROM SharingEntry sharingEntry";
 	private static final String _SQL_COUNT_SHARINGENTRY_WHERE = "SELECT COUNT(sharingEntry) FROM SharingEntry sharingEntry WHERE ";

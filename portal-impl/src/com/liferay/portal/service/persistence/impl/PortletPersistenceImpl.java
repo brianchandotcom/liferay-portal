@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -841,6 +838,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		setModelClass(Portlet.class);
 
 		setModelImplClass(PortletImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortletModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1202,100 +1200,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		return fetchByPrimaryKey((Serializable)id);
 	}
 
-	@Override
-	public Map<Serializable, Portlet> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Portlet> map = new HashMap<Serializable, Portlet>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Portlet portlet = fetchByPrimaryKey(primaryKey);
-
-			if (portlet != null) {
-				map.put(primaryKey, portlet);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
-					PortletImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Portlet)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PORTLET_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Portlet portlet : (List<Portlet>)q.list()) {
-				map.put(portlet.getPrimaryKeyObj(), portlet);
-
-				cacheResult(portlet);
-
-				uncachedPrimaryKeys.remove(portlet.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
-					PortletImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the portlets.
 	 *
@@ -1497,6 +1401,16 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "id_";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PORTLET;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortletModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1517,7 +1431,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PORTLET = "SELECT portlet FROM Portlet portlet";
-	private static final String _SQL_SELECT_PORTLET_WHERE_PKS_IN = "SELECT portlet FROM Portlet portlet WHERE id_ IN (";
 	private static final String _SQL_SELECT_PORTLET_WHERE = "SELECT portlet FROM Portlet portlet WHERE ";
 	private static final String _SQL_COUNT_PORTLET = "SELECT COUNT(portlet) FROM Portlet portlet";
 	private static final String _SQL_COUNT_PORTLET_WHERE = "SELECT COUNT(portlet) FROM Portlet portlet WHERE ";

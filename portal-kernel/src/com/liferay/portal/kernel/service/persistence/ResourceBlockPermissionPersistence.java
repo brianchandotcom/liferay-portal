@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchResourceBlockPermissionException;
 import com.liferay.portal.kernel.model.ResourceBlockPermission;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the resource block permission service.
  *
@@ -40,6 +45,9 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockPermissionUtil} to access the resource block permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, ResourceBlockPermission> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource block permissions where resourceBlockId = &#63;.
@@ -415,10 +423,6 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public ResourceBlockPermission fetchByPrimaryKey(
 		long resourceBlockPermissionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, ResourceBlockPermission> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource block permissions.

@@ -21,6 +21,11 @@ import com.liferay.mail.reader.model.Folder;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the folder service.
  *
@@ -40,6 +45,9 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FolderUtil} to access the folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Folder> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the folders where accountId = &#63;.
@@ -271,10 +279,6 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @return the folder, or <code>null</code> if a folder with the primary key could not be found
 	*/
 	public Folder fetchByPrimaryKey(long folderId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, Folder> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the folders.

@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the user group group role service.
  *
@@ -38,6 +43,9 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupGroupRoleUtil} to access the user group group role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, UserGroupGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user group group roles where userGroupId = &#63;.
@@ -780,10 +788,6 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	public UserGroupGroupRole fetchByPrimaryKey(
 		UserGroupGroupRolePK userGroupGroupRolePK);
 
-	@Override
-	public java.util.Map<java.io.Serializable, UserGroupGroupRole> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the user group group roles.
 	*
@@ -848,5 +852,5 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public int countAll();
 
-	public java.util.Set<String> getCompoundPKColumnNames();
+	public Set<String> getCompoundPKColumnNames();
 }

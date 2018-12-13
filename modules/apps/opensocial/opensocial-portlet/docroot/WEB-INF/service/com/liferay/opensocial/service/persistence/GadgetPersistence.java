@@ -21,6 +21,11 @@ import com.liferay.opensocial.model.Gadget;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the gadget service.
  *
@@ -40,6 +45,9 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link GadgetUtil} to access the gadget persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Gadget> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the gadgets where uuid = &#63;.
@@ -733,10 +741,6 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	*/
 	public Gadget fetchByPrimaryKey(long gadgetId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Gadget> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the gadgets.
 	*
@@ -802,5 +806,5 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

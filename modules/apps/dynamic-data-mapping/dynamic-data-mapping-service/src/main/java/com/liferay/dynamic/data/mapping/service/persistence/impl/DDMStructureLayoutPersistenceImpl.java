@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1676,6 +1673,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		setModelClass(DDMStructureLayout.class);
 
 		setModelImplClass(DDMStructureLayoutImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2145,101 +2143,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		return fetchByPrimaryKey((Serializable)structureLayoutId);
 	}
 
-	@Override
-	public Map<Serializable, DDMStructureLayout> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMStructureLayout> map = new HashMap<Serializable, DDMStructureLayout>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMStructureLayout ddmStructureLayout = fetchByPrimaryKey(primaryKey);
-
-			if (ddmStructureLayout != null) {
-				map.put(primaryKey, ddmStructureLayout);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLayoutImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMStructureLayout)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMStructureLayout ddmStructureLayout : (List<DDMStructureLayout>)q.list()) {
-				map.put(ddmStructureLayout.getPrimaryKeyObj(),
-					ddmStructureLayout);
-
-				cacheResult(ddmStructureLayout);
-
-				uncachedPrimaryKeys.remove(ddmStructureLayout.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLayoutImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm structure layouts.
 	 *
@@ -2442,6 +2345,16 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "structureLayoutId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMSTRUCTURELAYOUT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMStructureLayoutModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2466,7 +2379,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMSTRUCTURELAYOUT = "SELECT ddmStructureLayout FROM DDMStructureLayout ddmStructureLayout";
-	private static final String _SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE_PKS_IN = "SELECT ddmStructureLayout FROM DDMStructureLayout ddmStructureLayout WHERE structureLayoutId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE = "SELECT ddmStructureLayout FROM DDMStructureLayout ddmStructureLayout WHERE ";
 	private static final String _SQL_COUNT_DDMSTRUCTURELAYOUT = "SELECT COUNT(ddmStructureLayout) FROM DDMStructureLayout ddmStructureLayout";
 	private static final String _SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE = "SELECT COUNT(ddmStructureLayout) FROM DDMStructureLayout ddmStructureLayout WHERE ";

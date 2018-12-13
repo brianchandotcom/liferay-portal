@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.model.PortalPreferences;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the portal preferences service.
  *
@@ -38,6 +43,9 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferencesUtil} to access the portal preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PortalPreferences> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a {@link NoSuchPreferencesException} if it could not be found.
@@ -141,10 +149,6 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
 	*/
 	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, PortalPreferences> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the portal preferenceses.

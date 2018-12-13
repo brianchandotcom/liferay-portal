@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the web dav props service. This utility wraps {@link com.liferay.portal.service.persistence.impl.WebDAVPropsPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -64,6 +68,14 @@ public class WebDAVPropsUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, WebDAVProps> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -233,11 +245,6 @@ public class WebDAVPropsUtil {
 	*/
 	public static WebDAVProps fetchByPrimaryKey(long webDavPropsId) {
 		return getPersistence().fetchByPrimaryKey(webDavPropsId);
-	}
-
-	public static java.util.Map<java.io.Serializable, WebDAVProps> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

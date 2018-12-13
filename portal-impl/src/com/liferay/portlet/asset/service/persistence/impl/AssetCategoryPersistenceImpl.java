@@ -65,9 +65,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11787,6 +11785,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		setModelClass(AssetCategory.class);
 
 		setModelImplClass(AssetCategoryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -12620,100 +12619,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
-	@Override
-	public Map<Serializable, AssetCategory> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetCategory> map = new HashMap<Serializable, AssetCategory>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetCategory assetCategory = fetchByPrimaryKey(primaryKey);
-
-			if (assetCategory != null) {
-				map.put(primaryKey, assetCategory);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AssetCategory)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETCATEGORY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetCategory assetCategory : (List<AssetCategory>)q.list()) {
-				map.put(assetCategory.getPrimaryKeyObj(), assetCategory);
-
-				cacheResult(assetCategory);
-
-				uncachedPrimaryKeys.remove(assetCategory.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset categories.
 	 *
@@ -13221,6 +13126,16 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "categoryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETCATEGORY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetCategoryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -13500,7 +13415,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			"categoryId", "groupId", "leftCategoryId", "rightCategoryId");
 	protected boolean rebuildTreeEnabled = true;
 	private static final String _SQL_SELECT_ASSETCATEGORY = "SELECT assetCategory FROM AssetCategory assetCategory";
-	private static final String _SQL_SELECT_ASSETCATEGORY_WHERE_PKS_IN = "SELECT assetCategory FROM AssetCategory assetCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_ASSETCATEGORY_WHERE = "SELECT assetCategory FROM AssetCategory assetCategory WHERE ";
 	private static final String _SQL_COUNT_ASSETCATEGORY = "SELECT COUNT(assetCategory) FROM AssetCategory assetCategory";
 	private static final String _SQL_COUNT_ASSETCATEGORY_WHERE = "SELECT COUNT(assetCategory) FROM AssetCategory assetCategory WHERE ";

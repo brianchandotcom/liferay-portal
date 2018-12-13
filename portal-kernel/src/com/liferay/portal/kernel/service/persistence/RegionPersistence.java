@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.model.Region;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the region service.
  *
@@ -38,6 +43,9 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionUtil} to access the region persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Region> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the regions where countryId = &#63;.
@@ -544,10 +552,6 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region fetchByPrimaryKey(long regionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Region> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the regions.
 	*
@@ -613,5 +617,5 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

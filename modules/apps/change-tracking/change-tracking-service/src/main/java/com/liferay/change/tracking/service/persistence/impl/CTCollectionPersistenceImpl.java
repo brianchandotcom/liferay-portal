@@ -55,9 +55,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -852,6 +850,7 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 		setModelClass(CTCollection.class);
 
 		setModelImplClass(CTCollectionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CTCollectionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1238,100 +1237,6 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 	@Override
 	public CTCollection fetchByPrimaryKey(long ctCollectionId) {
 		return fetchByPrimaryKey((Serializable)ctCollectionId);
-	}
-
-	@Override
-	public Map<Serializable, CTCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CTCollection> map = new HashMap<Serializable, CTCollection>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CTCollection ctCollection = fetchByPrimaryKey(primaryKey);
-
-			if (ctCollection != null) {
-				map.put(primaryKey, ctCollection);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					CTCollectionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CTCollection)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CTCOLLECTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (CTCollection ctCollection : (List<CTCollection>)q.list()) {
-				map.put(ctCollection.getPrimaryKeyObj(), ctCollection);
-
-				cacheResult(ctCollection);
-
-				uncachedPrimaryKeys.remove(ctCollection.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					CTCollectionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1834,6 +1739,16 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "ctCollectionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CTCOLLECTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CTCollectionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1866,7 +1781,6 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 	protected CTEntryPersistence ctEntryPersistence;
 	protected TableMapper<CTCollection, com.liferay.change.tracking.model.CTEntry> ctCollectionToCTEntryTableMapper;
 	private static final String _SQL_SELECT_CTCOLLECTION = "SELECT ctCollection FROM CTCollection ctCollection";
-	private static final String _SQL_SELECT_CTCOLLECTION_WHERE_PKS_IN = "SELECT ctCollection FROM CTCollection ctCollection WHERE ctCollectionId IN (";
 	private static final String _SQL_SELECT_CTCOLLECTION_WHERE = "SELECT ctCollection FROM CTCollection ctCollection WHERE ";
 	private static final String _SQL_COUNT_CTCOLLECTION = "SELECT COUNT(ctCollection) FROM CTCollection ctCollection";
 	private static final String _SQL_COUNT_CTCOLLECTION_WHERE = "SELECT COUNT(ctCollection) FROM CTCollection ctCollection WHERE ";

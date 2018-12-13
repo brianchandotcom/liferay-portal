@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kaleo transition service.
  *
@@ -39,6 +44,9 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTransitionUtil} to access the kaleo transition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoTransition> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo transitions where companyId = &#63;.
@@ -593,10 +601,6 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @return the kaleo transition, or <code>null</code> if a kaleo transition with the primary key could not be found
 	*/
 	public KaleoTransition fetchByPrimaryKey(long kaleoTransitionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoTransition> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo transitions.

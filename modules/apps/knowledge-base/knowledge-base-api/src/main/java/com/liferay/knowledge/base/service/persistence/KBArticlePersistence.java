@@ -21,6 +21,11 @@ import com.liferay.knowledge.base.model.KBArticle;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kb article service.
  *
@@ -40,6 +45,9 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBArticleUtil} to access the kb article persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KBArticle> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kb articles where resourcePrimKey = &#63;.
@@ -8127,10 +8135,6 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	*/
 	public KBArticle fetchByPrimaryKey(long kbArticleId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, KBArticle> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the kb articles.
 	*
@@ -8196,5 +8200,5 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

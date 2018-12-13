@@ -44,12 +44,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the audit event service.
@@ -596,6 +592,7 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		setModelClass(AuditEvent.class);
 
 		setModelImplClass(AuditEventImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AuditEventModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -910,100 +907,6 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		return fetchByPrimaryKey((Serializable)auditEventId);
 	}
 
-	@Override
-	public Map<Serializable, AuditEvent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AuditEvent> map = new HashMap<Serializable, AuditEvent>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AuditEvent auditEvent = fetchByPrimaryKey(primaryKey);
-
-			if (auditEvent != null) {
-				map.put(primaryKey, auditEvent);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-					AuditEventImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (AuditEvent)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_AUDITEVENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AuditEvent auditEvent : (List<AuditEvent>)q.list()) {
-				map.put(auditEvent.getPrimaryKeyObj(), auditEvent);
-
-				cacheResult(auditEvent);
-
-				uncachedPrimaryKeys.remove(auditEvent.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-					AuditEventImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the audit events.
 	 *
@@ -1201,6 +1104,16 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "auditEventId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_AUDITEVENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AuditEventModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1225,7 +1138,6 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_AUDITEVENT = "SELECT auditEvent FROM AuditEvent auditEvent";
-	private static final String _SQL_SELECT_AUDITEVENT_WHERE_PKS_IN = "SELECT auditEvent FROM AuditEvent auditEvent WHERE auditEventId IN (";
 	private static final String _SQL_SELECT_AUDITEVENT_WHERE = "SELECT auditEvent FROM AuditEvent auditEvent WHERE ";
 	private static final String _SQL_COUNT_AUDITEVENT = "SELECT COUNT(auditEvent) FROM AuditEvent auditEvent";
 	private static final String _SQL_COUNT_AUDITEVENT_WHERE = "SELECT COUNT(auditEvent) FROM AuditEvent auditEvent WHERE ";

@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityAchievementException;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the social activity achievement service.
  *
@@ -40,6 +45,9 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityAchievementUtil} to access the social activity achievement persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SocialActivityAchievement> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity achievements where groupId = &#63;.
@@ -881,10 +889,6 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	*/
 	public SocialActivityAchievement fetchByPrimaryKey(
 		long activityAchievementId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SocialActivityAchievement> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity achievements.

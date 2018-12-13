@@ -46,13 +46,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the portlet preferences service.
@@ -5647,6 +5643,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		setModelClass(PortletPreferences.class);
 
 		setModelImplClass(PortletPreferencesImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6236,101 +6233,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		return fetchByPrimaryKey((Serializable)portletPreferencesId);
 	}
 
-	@Override
-	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PortletPreferences> map = new HashMap<Serializable, PortletPreferences>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PortletPreferences portletPreferences = fetchByPrimaryKey(primaryKey);
-
-			if (portletPreferences != null) {
-				map.put(primaryKey, portletPreferences);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortletPreferencesImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PortletPreferences)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PortletPreferences portletPreferences : (List<PortletPreferences>)q.list()) {
-				map.put(portletPreferences.getPrimaryKeyObj(),
-					portletPreferences);
-
-				cacheResult(portletPreferences);
-
-				uncachedPrimaryKeys.remove(portletPreferences.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortletPreferencesImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the portlet preferenceses.
 	 *
@@ -6528,6 +6430,16 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "portletPreferencesId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PORTLETPREFERENCES;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortletPreferencesModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6548,7 +6460,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PORTLETPREFERENCES = "SELECT portletPreferences FROM PortletPreferences portletPreferences";
-	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE portletPreferencesId IN (";
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";

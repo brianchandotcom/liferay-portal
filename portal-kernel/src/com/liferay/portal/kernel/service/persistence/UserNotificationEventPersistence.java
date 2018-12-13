@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationEventException;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the user notification event service.
  *
@@ -38,6 +43,9 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationEventUtil} to access the user notification event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, UserNotificationEvent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the user notification events where uuid = &#63;.
@@ -2244,10 +2252,6 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, UserNotificationEvent> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the user notification events.
 	*
@@ -2313,5 +2317,5 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

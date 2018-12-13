@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2685,6 +2682,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		setModelClass(MBThreadFlag.class);
 
 		setModelImplClass(MBThreadFlagImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3192,100 +3190,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		return fetchByPrimaryKey((Serializable)threadFlagId);
 	}
 
-	@Override
-	public Map<Serializable, MBThreadFlag> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBThreadFlag> map = new HashMap<Serializable, MBThreadFlag>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBThreadFlag mbThreadFlag = fetchByPrimaryKey(primaryKey);
-
-			if (mbThreadFlag != null) {
-				map.put(primaryKey, mbThreadFlag);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-					MBThreadFlagImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBThreadFlag)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBThreadFlag mbThreadFlag : (List<MBThreadFlag>)q.list()) {
-				map.put(mbThreadFlag.getPrimaryKeyObj(), mbThreadFlag);
-
-				cacheResult(mbThreadFlag);
-
-				uncachedPrimaryKeys.remove(mbThreadFlag.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-					MBThreadFlagImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message boards thread flags.
 	 *
@@ -3488,6 +3392,16 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "threadFlagId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBTHREADFLAG;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBThreadFlagModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3512,7 +3426,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBTHREADFLAG = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag";
-	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE threadFlagId IN (";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE ";
 	private static final String _SQL_COUNT_MBTHREADFLAG = "SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag";
 	private static final String _SQL_COUNT_MBTHREADFLAG_WHERE = "SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag WHERE ";

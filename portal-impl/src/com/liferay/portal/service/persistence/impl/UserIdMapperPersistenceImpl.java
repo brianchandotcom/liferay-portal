@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1113,6 +1110,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		setModelClass(UserIdMapper.class);
 
 		setModelImplClass(UserIdMapperImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1514,100 +1512,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		return fetchByPrimaryKey((Serializable)userIdMapperId);
 	}
 
-	@Override
-	public Map<Serializable, UserIdMapper> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserIdMapper> map = new HashMap<Serializable, UserIdMapper>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			UserIdMapper userIdMapper = fetchByPrimaryKey(primaryKey);
-
-			if (userIdMapper != null) {
-				map.put(primaryKey, userIdMapper);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-					UserIdMapperImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (UserIdMapper)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_USERIDMAPPER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (UserIdMapper userIdMapper : (List<UserIdMapper>)q.list()) {
-				map.put(userIdMapper.getPrimaryKeyObj(), userIdMapper);
-
-				cacheResult(userIdMapper);
-
-				uncachedPrimaryKeys.remove(userIdMapper.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-					UserIdMapperImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the user ID mappers.
 	 *
@@ -1810,6 +1714,16 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "userIdMapperId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERIDMAPPER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserIdMapperModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1830,7 +1744,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_USERIDMAPPER = "SELECT userIdMapper FROM UserIdMapper userIdMapper";
-	private static final String _SQL_SELECT_USERIDMAPPER_WHERE_PKS_IN = "SELECT userIdMapper FROM UserIdMapper userIdMapper WHERE userIdMapperId IN (";
 	private static final String _SQL_SELECT_USERIDMAPPER_WHERE = "SELECT userIdMapper FROM UserIdMapper userIdMapper WHERE ";
 	private static final String _SQL_COUNT_USERIDMAPPER = "SELECT COUNT(userIdMapper) FROM UserIdMapper userIdMapper";
 	private static final String _SQL_COUNT_USERIDMAPPER_WHERE = "SELECT COUNT(userIdMapper) FROM UserIdMapper userIdMapper WHERE ";

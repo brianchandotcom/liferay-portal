@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the site navigation menu item service.
  *
@@ -40,6 +45,9 @@ public interface SiteNavigationMenuItemPersistence extends BasePersistence<SiteN
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuItemUtil} to access the site navigation menu item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SiteNavigationMenuItem> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the site navigation menu items where uuid = &#63;.
@@ -1004,10 +1012,6 @@ public interface SiteNavigationMenuItemPersistence extends BasePersistence<SiteN
 	public SiteNavigationMenuItem fetchByPrimaryKey(
 		long siteNavigationMenuItemId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SiteNavigationMenuItem> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the site navigation menu items.
 	*
@@ -1073,5 +1077,5 @@ public interface SiteNavigationMenuItemPersistence extends BasePersistence<SiteN
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

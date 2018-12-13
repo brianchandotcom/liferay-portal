@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.model.LayoutSet;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the layout set service.
  *
@@ -38,6 +43,9 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetUtil} to access the layout set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, LayoutSet> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout sets where groupId = &#63;.
@@ -459,10 +467,6 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	*/
 	public LayoutSet fetchByPrimaryKey(long layoutSetId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, LayoutSet> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the layout sets.
 	*
@@ -528,5 +532,5 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

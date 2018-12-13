@@ -48,12 +48,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the segments entry rel service.
@@ -1995,6 +1991,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		setModelClass(SegmentsEntryRel.class);
 
 		setModelImplClass(SegmentsEntryRelImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2461,100 +2458,6 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		return fetchByPrimaryKey((Serializable)segmentsEntryRelId);
 	}
 
-	@Override
-	public Map<Serializable, SegmentsEntryRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SegmentsEntryRel> map = new HashMap<Serializable, SegmentsEntryRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SegmentsEntryRel segmentsEntryRel = fetchByPrimaryKey(primaryKey);
-
-			if (segmentsEntryRel != null) {
-				map.put(primaryKey, segmentsEntryRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					SegmentsEntryRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SegmentsEntryRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SEGMENTSENTRYREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SegmentsEntryRel segmentsEntryRel : (List<SegmentsEntryRel>)q.list()) {
-				map.put(segmentsEntryRel.getPrimaryKeyObj(), segmentsEntryRel);
-
-				cacheResult(segmentsEntryRel);
-
-				uncachedPrimaryKeys.remove(segmentsEntryRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					SegmentsEntryRelImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the segments entry rels.
 	 *
@@ -2752,6 +2655,16 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "segmentsEntryRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SEGMENTSENTRYREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SegmentsEntryRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2776,7 +2689,6 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SEGMENTSENTRYREL = "SELECT segmentsEntryRel FROM SegmentsEntryRel segmentsEntryRel";
-	private static final String _SQL_SELECT_SEGMENTSENTRYREL_WHERE_PKS_IN = "SELECT segmentsEntryRel FROM SegmentsEntryRel segmentsEntryRel WHERE segmentsEntryRelId IN (";
 	private static final String _SQL_SELECT_SEGMENTSENTRYREL_WHERE = "SELECT segmentsEntryRel FROM SegmentsEntryRel segmentsEntryRel WHERE ";
 	private static final String _SQL_COUNT_SEGMENTSENTRYREL = "SELECT COUNT(segmentsEntryRel) FROM SegmentsEntryRel segmentsEntryRel";
 	private static final String _SQL_COUNT_SEGMENTSENTRYREL_WHERE = "SELECT COUNT(segmentsEntryRel) FROM SegmentsEntryRel segmentsEntryRel WHERE ";

@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the resource block service.
@@ -1634,6 +1630,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		setModelClass(ResourceBlock.class);
 
 		setModelImplClass(ResourceBlockImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2048,100 +2045,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		return fetchByPrimaryKey((Serializable)resourceBlockId);
 	}
 
-	@Override
-	public Map<Serializable, ResourceBlock> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ResourceBlock> map = new HashMap<Serializable, ResourceBlock>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ResourceBlock resourceBlock = fetchByPrimaryKey(primaryKey);
-
-			if (resourceBlock != null) {
-				map.put(primaryKey, resourceBlock);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ResourceBlock)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RESOURCEBLOCK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ResourceBlock resourceBlock : (List<ResourceBlock>)q.list()) {
-				map.put(resourceBlock.getPrimaryKeyObj(), resourceBlock);
-
-				cacheResult(resourceBlock);
-
-				uncachedPrimaryKeys.remove(resourceBlock.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the resource blocks.
 	 *
@@ -2339,6 +2242,16 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "resourceBlockId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RESOURCEBLOCK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceBlockModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2359,7 +2272,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_RESOURCEBLOCK = "SELECT resourceBlock FROM ResourceBlock resourceBlock";
-	private static final String _SQL_SELECT_RESOURCEBLOCK_WHERE_PKS_IN = "SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE resourceBlockId IN (";
 	private static final String _SQL_SELECT_RESOURCEBLOCK_WHERE = "SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE ";
 	private static final String _SQL_COUNT_RESOURCEBLOCK = "SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock";
 	private static final String _SQL_COUNT_RESOURCEBLOCK_WHERE = "SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock WHERE ";

@@ -24,7 +24,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import com.liferay.ratings.kernel.model.RatingsStats;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the ratings stats service. This utility wraps {@link com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -65,6 +69,14 @@ public class RatingsStatsUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, RatingsStats> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -324,11 +336,6 @@ public class RatingsStatsUtil {
 	*/
 	public static RatingsStats fetchByPrimaryKey(long statsId) {
 		return getPersistence().fetchByPrimaryKey(statsId);
-	}
-
-	public static java.util.Map<java.io.Serializable, RatingsStats> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

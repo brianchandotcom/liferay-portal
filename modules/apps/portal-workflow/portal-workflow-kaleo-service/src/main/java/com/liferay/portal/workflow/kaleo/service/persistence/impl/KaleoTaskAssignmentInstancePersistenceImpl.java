@@ -47,13 +47,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the kaleo task assignment instance service.
@@ -3937,6 +3933,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		setModelClass(KaleoTaskAssignmentInstance.class);
 
 		setModelImplClass(KaleoTaskAssignmentInstanceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoTaskAssignmentInstanceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4477,102 +4474,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		return fetchByPrimaryKey((Serializable)kaleoTaskAssignmentInstanceId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoTaskAssignmentInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTaskAssignmentInstance> map = new HashMap<Serializable, KaleoTaskAssignmentInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoTaskAssignmentInstance != null) {
-				map.put(primaryKey, kaleoTaskAssignmentInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoTaskAssignmentInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskAssignmentInstanceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(KaleoTaskAssignmentInstance)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance : (List<KaleoTaskAssignmentInstance>)q.list()) {
-				map.put(kaleoTaskAssignmentInstance.getPrimaryKeyObj(),
-					kaleoTaskAssignmentInstance);
-
-				cacheResult(kaleoTaskAssignmentInstance);
-
-				uncachedPrimaryKeys.remove(kaleoTaskAssignmentInstance.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoTaskAssignmentInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTaskAssignmentInstanceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo task assignment instances.
 	 *
@@ -4770,6 +4671,16 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoTaskAssignmentInstanceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskAssignmentInstanceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4794,8 +4705,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE = "SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance";
-	private static final String _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE_PKS_IN =
-		"SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE kaleoTaskAssignmentInstanceId IN (";
 	private static final String _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE = "SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE = "SELECT COUNT(kaleoTaskAssignmentInstance) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance";
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE = "SELECT COUNT(kaleoTaskAssignmentInstance) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";

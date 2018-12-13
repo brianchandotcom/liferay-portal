@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2727,6 +2724,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		setModelClass(DDMStorageLink.class);
 
 		setModelImplClass(DDMStorageLinkImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3176,100 +3174,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		return fetchByPrimaryKey((Serializable)storageLinkId);
 	}
 
-	@Override
-	public Map<Serializable, DDMStorageLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMStorageLink> map = new HashMap<Serializable, DDMStorageLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMStorageLink ddmStorageLink = fetchByPrimaryKey(primaryKey);
-
-			if (ddmStorageLink != null) {
-				map.put(primaryKey, ddmStorageLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStorageLinkImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DDMStorageLink)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DDMSTORAGELINK_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DDMStorageLink ddmStorageLink : (List<DDMStorageLink>)q.list()) {
-				map.put(ddmStorageLink.getPrimaryKeyObj(), ddmStorageLink);
-
-				cacheResult(ddmStorageLink);
-
-				uncachedPrimaryKeys.remove(ddmStorageLink.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStorageLinkImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the ddm storage links.
 	 *
@@ -3472,6 +3376,16 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "storageLinkId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DDMSTORAGELINK;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMStorageLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3496,7 +3410,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMSTORAGELINK = "SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink";
-	private static final String _SQL_SELECT_DDMSTORAGELINK_WHERE_PKS_IN = "SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink WHERE storageLinkId IN (";
 	private static final String _SQL_SELECT_DDMSTORAGELINK_WHERE = "SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink WHERE ";
 	private static final String _SQL_COUNT_DDMSTORAGELINK = "SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink";
 	private static final String _SQL_COUNT_DDMSTORAGELINK_WHERE = "SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink WHERE ";

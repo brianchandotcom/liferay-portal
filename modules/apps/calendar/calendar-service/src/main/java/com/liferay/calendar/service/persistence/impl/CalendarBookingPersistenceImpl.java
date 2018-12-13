@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5429,6 +5426,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		setModelClass(CalendarBooking.class);
 
 		setModelImplClass(CalendarBookingImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(CalendarBookingModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6103,100 +6101,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		return fetchByPrimaryKey((Serializable)calendarBookingId);
 	}
 
-	@Override
-	public Map<Serializable, CalendarBooking> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CalendarBooking> map = new HashMap<Serializable, CalendarBooking>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CalendarBooking calendarBooking = fetchByPrimaryKey(primaryKey);
-
-			if (calendarBooking != null) {
-				map.put(primaryKey, calendarBooking);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CalendarBookingModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarBookingImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (CalendarBooking)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_CALENDARBOOKING_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (CalendarBooking calendarBooking : (List<CalendarBooking>)q.list()) {
-				map.put(calendarBooking.getPrimaryKeyObj(), calendarBooking);
-
-				cacheResult(calendarBooking);
-
-				uncachedPrimaryKeys.remove(calendarBooking.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CalendarBookingModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarBookingImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the calendar bookings.
 	 *
@@ -6399,6 +6303,16 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "calendarBookingId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_CALENDARBOOKING;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarBookingModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6423,7 +6337,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CALENDARBOOKING = "SELECT calendarBooking FROM CalendarBooking calendarBooking";
-	private static final String _SQL_SELECT_CALENDARBOOKING_WHERE_PKS_IN = "SELECT calendarBooking FROM CalendarBooking calendarBooking WHERE calendarBookingId IN (";
 	private static final String _SQL_SELECT_CALENDARBOOKING_WHERE = "SELECT calendarBooking FROM CalendarBooking calendarBooking WHERE ";
 	private static final String _SQL_COUNT_CALENDARBOOKING = "SELECT COUNT(calendarBooking) FROM CalendarBooking calendarBooking";
 	private static final String _SQL_COUNT_CALENDARBOOKING_WHERE = "SELECT COUNT(calendarBooking) FROM CalendarBooking calendarBooking WHERE ";

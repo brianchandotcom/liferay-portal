@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3159,6 +3156,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		setModelClass(MBBan.class);
 
 		setModelImplClass(MBBanImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBBanModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3668,100 +3666,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		return fetchByPrimaryKey((Serializable)banId);
 	}
 
-	@Override
-	public Map<Serializable, MBBan> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBBan> map = new HashMap<Serializable, MBBan>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBBan mbBan = fetchByPrimaryKey(primaryKey);
-
-			if (mbBan != null) {
-				map.put(primaryKey, mbBan);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-					MBBanImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBBan)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBBAN_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBBan mbBan : (List<MBBan>)q.list()) {
-				map.put(mbBan.getPrimaryKeyObj(), mbBan);
-
-				cacheResult(mbBan);
-
-				uncachedPrimaryKeys.remove(mbBan.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-					MBBanImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message boards bans.
 	 *
@@ -3963,6 +3867,16 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "banId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBBAN;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBBanModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3987,7 +3901,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBBAN = "SELECT mbBan FROM MBBan mbBan";
-	private static final String _SQL_SELECT_MBBAN_WHERE_PKS_IN = "SELECT mbBan FROM MBBan mbBan WHERE banId IN (";
 	private static final String _SQL_SELECT_MBBAN_WHERE = "SELECT mbBan FROM MBBan mbBan WHERE ";
 	private static final String _SQL_COUNT_MBBAN = "SELECT COUNT(mbBan) FROM MBBan mbBan";
 	private static final String _SQL_COUNT_MBBAN_WHERE = "SELECT COUNT(mbBan) FROM MBBan mbBan WHERE ";

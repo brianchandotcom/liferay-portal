@@ -63,9 +63,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33371,6 +33368,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		setModelClass(KBArticle.class);
 
 		setModelImplClass(KBArticleImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KBArticleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -34673,100 +34671,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		return fetchByPrimaryKey((Serializable)kbArticleId);
 	}
 
-	@Override
-	public Map<Serializable, KBArticle> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBArticle> map = new HashMap<Serializable, KBArticle>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBArticle kbArticle = fetchByPrimaryKey(primaryKey);
-
-			if (kbArticle != null) {
-				map.put(primaryKey, kbArticle);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
-					KBArticleImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KBArticle)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KBARTICLE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KBArticle kbArticle : (List<KBArticle>)q.list()) {
-				map.put(kbArticle.getPrimaryKeyObj(), kbArticle);
-
-				cacheResult(kbArticle);
-
-				uncachedPrimaryKeys.remove(kbArticle.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
-					KBArticleImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kb articles.
 	 *
@@ -34969,6 +34873,16 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kbArticleId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KBARTICLE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KBArticleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -34993,7 +34907,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KBARTICLE = "SELECT kbArticle FROM KBArticle kbArticle";
-	private static final String _SQL_SELECT_KBARTICLE_WHERE_PKS_IN = "SELECT kbArticle FROM KBArticle kbArticle WHERE kbArticleId IN (";
 	private static final String _SQL_SELECT_KBARTICLE_WHERE = "SELECT kbArticle FROM KBArticle kbArticle WHERE ";
 	private static final String _SQL_COUNT_KBARTICLE = "SELECT COUNT(kbArticle) FROM KBArticle kbArticle";
 	private static final String _SQL_COUNT_KBARTICLE_WHERE = "SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";

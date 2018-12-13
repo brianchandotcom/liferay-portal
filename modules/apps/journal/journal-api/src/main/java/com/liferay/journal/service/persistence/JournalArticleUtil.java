@@ -27,8 +27,12 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the journal article service. This utility wraps {@link com.liferay.journal.service.persistence.impl.JournalArticlePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -69,6 +73,14 @@ public class JournalArticleUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, JournalArticle> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -9303,11 +9315,6 @@ public class JournalArticleUtil {
 		return getPersistence().fetchByPrimaryKey(id);
 	}
 
-	public static java.util.Map<java.io.Serializable, JournalArticle> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
 	/**
 	* Returns all the journal articles.
 	*
@@ -9385,7 +9392,7 @@ public class JournalArticleUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<String> getBadColumnNames() {
+	public static Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

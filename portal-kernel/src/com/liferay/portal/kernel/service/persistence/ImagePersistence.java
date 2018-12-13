@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.model.Image;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the image service.
  *
@@ -38,6 +43,9 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ImageUtil} to access the image persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Image> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the images where size &lt; &#63;.
@@ -217,10 +225,6 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image fetchByPrimaryKey(long imageId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Image> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the images.
 	*
@@ -286,5 +290,5 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

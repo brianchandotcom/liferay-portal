@@ -21,6 +21,11 @@ import com.liferay.knowledge.base.model.KBComment;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the kb comment service.
  *
@@ -40,6 +45,9 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBCommentUtil} to access the kb comment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KBComment> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kb comments where uuid = &#63;.
@@ -1376,10 +1384,6 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	*/
 	public KBComment fetchByPrimaryKey(long kbCommentId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, KBComment> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the kb comments.
 	*
@@ -1445,5 +1449,5 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

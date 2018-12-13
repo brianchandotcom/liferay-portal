@@ -48,9 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2478,6 +2475,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		setModelClass(SocialActivityCounter.class);
 
 		setModelImplClass(SocialActivityCounterImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2991,101 +2989,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		return fetchByPrimaryKey((Serializable)activityCounterId);
 	}
 
-	@Override
-	public Map<Serializable, SocialActivityCounter> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SocialActivityCounter> map = new HashMap<Serializable, SocialActivityCounter>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SocialActivityCounter socialActivityCounter = fetchByPrimaryKey(primaryKey);
-
-			if (socialActivityCounter != null) {
-				map.put(primaryKey, socialActivityCounter);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityCounterImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SocialActivityCounter)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SocialActivityCounter socialActivityCounter : (List<SocialActivityCounter>)q.list()) {
-				map.put(socialActivityCounter.getPrimaryKeyObj(),
-					socialActivityCounter);
-
-				cacheResult(socialActivityCounter);
-
-				uncachedPrimaryKeys.remove(socialActivityCounter.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityCounterImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the social activity counters.
 	 *
@@ -3288,6 +3191,16 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "activityCounterId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SOCIALACTIVITYCOUNTER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivityCounterModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3308,7 +3221,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter";
-	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE_PKS_IN = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter WHERE activityCounterId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITYCOUNTER = "SELECT COUNT(socialActivityCounter) FROM SocialActivityCounter socialActivityCounter";
 	private static final String _SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE = "SELECT COUNT(socialActivityCounter) FROM SocialActivityCounter socialActivityCounter WHERE ";

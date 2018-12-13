@@ -21,6 +21,11 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the friendly url entry localization service.
  *
@@ -40,6 +45,9 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryLocalizationUtil} to access the friendly url entry localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, FriendlyURLEntryLocalization> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the friendly url entry localizations where friendlyURLEntryId = &#63;.
@@ -348,10 +356,6 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	*/
 	public FriendlyURLEntryLocalization fetchByPrimaryKey(
 		long friendlyURLEntryLocalizationId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, FriendlyURLEntryLocalization> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the friendly url entry localizations.

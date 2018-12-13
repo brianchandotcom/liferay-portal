@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2945,6 +2942,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		setModelClass(KBFolder.class);
 
 		setModelImplClass(KBFolderImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KBFolderModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3472,100 +3470,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		return fetchByPrimaryKey((Serializable)kbFolderId);
 	}
 
-	@Override
-	public Map<Serializable, KBFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBFolder> map = new HashMap<Serializable, KBFolder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBFolder kbFolder = fetchByPrimaryKey(primaryKey);
-
-			if (kbFolder != null) {
-				map.put(primaryKey, kbFolder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-					KBFolderImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KBFolder)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KBFOLDER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KBFolder kbFolder : (List<KBFolder>)q.list()) {
-				map.put(kbFolder.getPrimaryKeyObj(), kbFolder);
-
-				cacheResult(kbFolder);
-
-				uncachedPrimaryKeys.remove(kbFolder.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-					KBFolderImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kb folders.
 	 *
@@ -3767,6 +3671,16 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kbFolderId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KBFOLDER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KBFolderModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3791,7 +3705,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KBFOLDER = "SELECT kbFolder FROM KBFolder kbFolder";
-	private static final String _SQL_SELECT_KBFOLDER_WHERE_PKS_IN = "SELECT kbFolder FROM KBFolder kbFolder WHERE kbFolderId IN (";
 	private static final String _SQL_SELECT_KBFOLDER_WHERE = "SELECT kbFolder FROM KBFolder kbFolder WHERE ";
 	private static final String _SQL_COUNT_KBFOLDER = "SELECT COUNT(kbFolder) FROM KBFolder kbFolder";
 	private static final String _SQL_COUNT_KBFOLDER_WHERE = "SELECT COUNT(kbFolder) FROM KBFolder kbFolder WHERE ";

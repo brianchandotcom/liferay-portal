@@ -20,6 +20,11 @@ import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskExceptio
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the background task service.
  *
@@ -39,6 +44,9 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BackgroundTaskUtil} to access the background task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, BackgroundTask> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the background tasks where groupId = &#63;.
@@ -2211,10 +2219,6 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the background task, or <code>null</code> if a background task with the primary key could not be found
 	*/
 	public BackgroundTask fetchByPrimaryKey(long backgroundTaskId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, BackgroundTask> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the background tasks.

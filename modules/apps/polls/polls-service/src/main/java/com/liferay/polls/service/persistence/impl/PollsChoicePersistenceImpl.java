@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2217,6 +2214,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		setModelClass(PollsChoice.class);
 
 		setModelImplClass(PollsChoiceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2700,100 +2698,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return fetchByPrimaryKey((Serializable)choiceId);
 	}
 
-	@Override
-	public Map<Serializable, PollsChoice> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PollsChoice> map = new HashMap<Serializable, PollsChoice>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PollsChoice pollsChoice = fetchByPrimaryKey(primaryKey);
-
-			if (pollsChoice != null) {
-				map.put(primaryKey, pollsChoice);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PollsChoice)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PollsChoice pollsChoice : (List<PollsChoice>)q.list()) {
-				map.put(pollsChoice.getPrimaryKeyObj(), pollsChoice);
-
-				cacheResult(pollsChoice);
-
-				uncachedPrimaryKeys.remove(pollsChoice.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the polls choices.
 	 *
@@ -2996,6 +2900,16 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "choiceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_POLLSCHOICE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PollsChoiceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3020,7 +2934,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_POLLSCHOICE = "SELECT pollsChoice FROM PollsChoice pollsChoice";
-	private static final String _SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE choiceId IN (";
 	private static final String _SQL_SELECT_POLLSCHOICE_WHERE = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE ";
 	private static final String _SQL_COUNT_POLLSCHOICE = "SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice";
 	private static final String _SQL_COUNT_POLLSCHOICE_WHERE = "SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice WHERE ";

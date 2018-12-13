@@ -46,9 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -601,6 +598,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		setModelClass(PasswordTracker.class);
 
 		setModelImplClass(PasswordTrackerImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -920,100 +918,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		return fetchByPrimaryKey((Serializable)passwordTrackerId);
 	}
 
-	@Override
-	public Map<Serializable, PasswordTracker> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PasswordTracker> map = new HashMap<Serializable, PasswordTracker>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PasswordTracker passwordTracker = fetchByPrimaryKey(primaryKey);
-
-			if (passwordTracker != null) {
-				map.put(primaryKey, passwordTracker);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordTrackerImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PasswordTracker)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PASSWORDTRACKER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PasswordTracker passwordTracker : (List<PasswordTracker>)q.list()) {
-				map.put(passwordTracker.getPrimaryKeyObj(), passwordTracker);
-
-				cacheResult(passwordTracker);
-
-				uncachedPrimaryKeys.remove(passwordTracker.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordTrackerImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the password trackers.
 	 *
@@ -1216,6 +1120,16 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "passwordTrackerId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PASSWORDTRACKER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PasswordTrackerModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1236,7 +1150,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PASSWORDTRACKER = "SELECT passwordTracker FROM PasswordTracker passwordTracker";
-	private static final String _SQL_SELECT_PASSWORDTRACKER_WHERE_PKS_IN = "SELECT passwordTracker FROM PasswordTracker passwordTracker WHERE passwordTrackerId IN (";
 	private static final String _SQL_SELECT_PASSWORDTRACKER_WHERE = "SELECT passwordTracker FROM PasswordTracker passwordTracker WHERE ";
 	private static final String _SQL_COUNT_PASSWORDTRACKER = "SELECT COUNT(passwordTracker) FROM PasswordTracker passwordTracker";
 	private static final String _SQL_COUNT_PASSWORDTRACKER_WHERE = "SELECT COUNT(passwordTracker) FROM PasswordTracker passwordTracker WHERE ";

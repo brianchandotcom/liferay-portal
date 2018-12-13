@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the push notifications device service.
  *
@@ -40,6 +45,9 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceUtil} to access the push notifications device persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PushNotificationsDevice> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the push notifications device where token = &#63; or throws a {@link NoSuchDeviceException} if it could not be found.
@@ -364,10 +372,6 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	*/
 	public PushNotificationsDevice fetchByPrimaryKey(
 		long pushNotificationsDeviceId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, PushNotificationsDevice> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the push notifications devices.

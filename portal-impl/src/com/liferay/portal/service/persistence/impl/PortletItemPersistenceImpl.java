@@ -49,13 +49,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the portlet item service.
@@ -1595,6 +1591,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		setModelClass(PortletItem.class);
 
 		setModelImplClass(PortletItemImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortletItemModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2030,100 +2027,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		return fetchByPrimaryKey((Serializable)portletItemId);
 	}
 
-	@Override
-	public Map<Serializable, PortletItem> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PortletItem> map = new HashMap<Serializable, PortletItem>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PortletItem portletItem = fetchByPrimaryKey(primaryKey);
-
-			if (portletItem != null) {
-				map.put(primaryKey, portletItem);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-					PortletItemImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PortletItem)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_PORTLETITEM_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PortletItem portletItem : (List<PortletItem>)q.list()) {
-				map.put(portletItem.getPrimaryKeyObj(), portletItem);
-
-				cacheResult(portletItem);
-
-				uncachedPrimaryKeys.remove(portletItem.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-					PortletItemImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the portlet items.
 	 *
@@ -2321,6 +2224,16 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "portletItemId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_PORTLETITEM;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortletItemModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2341,7 +2254,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_PORTLETITEM = "SELECT portletItem FROM PortletItem portletItem";
-	private static final String _SQL_SELECT_PORTLETITEM_WHERE_PKS_IN = "SELECT portletItem FROM PortletItem portletItem WHERE portletItemId IN (";
 	private static final String _SQL_SELECT_PORTLETITEM_WHERE = "SELECT portletItem FROM PortletItem portletItem WHERE ";
 	private static final String _SQL_COUNT_PORTLETITEM = "SELECT COUNT(portletItem) FROM PortletItem portletItem";
 	private static final String _SQL_COUNT_PORTLETITEM_WHERE = "SELECT COUNT(portletItem) FROM PortletItem portletItem WHERE ";

@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2719,6 +2718,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		setModelClass(UserGroupGroupRole.class);
 
 		setModelImplClass(UserGroupGroupRoleImpl.class);
+		setModelPKClass(UserGroupGroupRolePK.class);
 		setEntityCacheEnabled(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3151,26 +3151,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		return fetchByPrimaryKey((Serializable)userGroupGroupRolePK);
 	}
 
-	@Override
-	public Map<Serializable, UserGroupGroupRole> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, UserGroupGroupRole> map = new HashMap<Serializable, UserGroupGroupRole>();
-
-		for (Serializable primaryKey : primaryKeys) {
-			UserGroupGroupRole userGroupGroupRole = fetchByPrimaryKey(primaryKey);
-
-			if (userGroupGroupRole != null) {
-				map.put(primaryKey, userGroupGroupRole);
-			}
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the user group group roles.
 	 *
@@ -3370,6 +3350,16 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "userGroupGroupRolePK";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_USERGROUPGROUPROLE;
 	}
 
 	@Override

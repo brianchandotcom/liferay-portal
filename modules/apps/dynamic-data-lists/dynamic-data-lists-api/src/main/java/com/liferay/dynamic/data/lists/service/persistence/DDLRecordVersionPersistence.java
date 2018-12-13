@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the ddl record version service.
  *
@@ -40,6 +45,9 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordVersionUtil} to access the ddl record version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, DDLRecordVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddl record versions where recordId = &#63;.
@@ -740,10 +748,6 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the ddl record version, or <code>null</code> if a ddl record version with the primary key could not be found
 	*/
 	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, DDLRecordVersion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the ddl record versions.

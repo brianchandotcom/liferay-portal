@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchWebDAVPropsException;
 import com.liferay.portal.kernel.model.WebDAVProps;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the web dav props service.
  *
@@ -38,6 +43,9 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebDAVPropsUtil} to access the web dav props persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WebDAVProps> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the web dav props where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchWebDAVPropsException} if it could not be found.
@@ -140,10 +148,6 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* @return the web dav props, or <code>null</code> if a web dav props with the primary key could not be found
 	*/
 	public WebDAVProps fetchByPrimaryKey(long webDavPropsId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, WebDAVProps> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the web dav propses.

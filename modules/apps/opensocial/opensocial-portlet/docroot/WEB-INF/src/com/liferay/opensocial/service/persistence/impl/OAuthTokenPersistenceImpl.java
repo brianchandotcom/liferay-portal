@@ -50,13 +50,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the o auth token service.
@@ -1101,6 +1097,7 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		setModelClass(OAuthToken.class);
 
 		setModelImplClass(OAuthTokenImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(OAuthTokenModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1506,100 +1503,6 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		return fetchByPrimaryKey((Serializable)oAuthTokenId);
 	}
 
-	@Override
-	public Map<Serializable, OAuthToken> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, OAuthToken> map = new HashMap<Serializable, OAuthToken>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			OAuthToken oAuthToken = fetchByPrimaryKey(primaryKey);
-
-			if (oAuthToken != null) {
-				map.put(primaryKey, oAuthToken);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(OAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthTokenImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (OAuthToken)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_OAUTHTOKEN_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (OAuthToken oAuthToken : (List<OAuthToken>)q.list()) {
-				map.put(oAuthToken.getPrimaryKeyObj(), oAuthToken);
-
-				cacheResult(oAuthToken);
-
-				uncachedPrimaryKeys.remove(oAuthToken.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(OAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthTokenImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the o auth tokens.
 	 *
@@ -1797,6 +1700,16 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "oAuthTokenId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_OAUTHTOKEN;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OAuthTokenModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1817,7 +1730,6 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_OAUTHTOKEN = "SELECT oAuthToken FROM OAuthToken oAuthToken";
-	private static final String _SQL_SELECT_OAUTHTOKEN_WHERE_PKS_IN = "SELECT oAuthToken FROM OAuthToken oAuthToken WHERE oAuthTokenId IN (";
 	private static final String _SQL_SELECT_OAUTHTOKEN_WHERE = "SELECT oAuthToken FROM OAuthToken oAuthToken WHERE ";
 	private static final String _SQL_COUNT_OAUTHTOKEN = "SELECT COUNT(oAuthToken) FROM OAuthToken oAuthToken";
 	private static final String _SQL_COUNT_OAUTHTOKEN_WHERE = "SELECT COUNT(oAuthToken) FROM OAuthToken oAuthToken WHERE ";

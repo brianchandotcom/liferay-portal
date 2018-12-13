@@ -48,9 +48,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -94,6 +91,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		setModelClass(Account.class);
 
 		setModelImplClass(AccountImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AccountModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -401,100 +399,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		return fetchByPrimaryKey((Serializable)accountId);
 	}
 
-	@Override
-	public Map<Serializable, Account> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Account> map = new HashMap<Serializable, Account>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Account account = fetchByPrimaryKey(primaryKey);
-
-			if (account != null) {
-				map.put(primaryKey, account);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-					AccountImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Account)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ACCOUNT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Account account : (List<Account>)q.list()) {
-				map.put(account.getPrimaryKeyObj(), account);
-
-				cacheResult(account);
-
-				uncachedPrimaryKeys.remove(account.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-					AccountImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the accounts.
 	 *
@@ -696,6 +600,16 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "accountId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ACCOUNT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AccountModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -716,7 +630,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_ACCOUNT = "SELECT account FROM Account account";
-	private static final String _SQL_SELECT_ACCOUNT_WHERE_PKS_IN = "SELECT account FROM Account account WHERE accountId IN (";
 	private static final String _SQL_COUNT_ACCOUNT = "SELECT COUNT(account) FROM Account account";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "account.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Account exists with the primary key ";

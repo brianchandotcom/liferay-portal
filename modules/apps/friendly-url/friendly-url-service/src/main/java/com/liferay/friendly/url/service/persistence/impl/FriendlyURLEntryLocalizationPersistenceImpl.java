@@ -45,13 +45,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the friendly url entry localization service.
@@ -1160,6 +1156,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		setModelClass(FriendlyURLEntryLocalization.class);
 
 		setModelImplClass(FriendlyURLEntryLocalizationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1599,103 +1596,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		return fetchByPrimaryKey((Serializable)friendlyURLEntryLocalizationId);
 	}
 
-	@Override
-	public Map<Serializable, FriendlyURLEntryLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FriendlyURLEntryLocalization> map = new HashMap<Serializable, FriendlyURLEntryLocalization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization = fetchByPrimaryKey(primaryKey);
-
-			if (friendlyURLEntryLocalization != null) {
-				map.put(primaryKey, friendlyURLEntryLocalization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryLocalizationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(FriendlyURLEntryLocalization)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization : (List<FriendlyURLEntryLocalization>)q.list()) {
-				map.put(friendlyURLEntryLocalization.getPrimaryKeyObj(),
-					friendlyURLEntryLocalization);
-
-				cacheResult(friendlyURLEntryLocalization);
-
-				uncachedPrimaryKeys.remove(friendlyURLEntryLocalization.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					FriendlyURLEntryLocalizationImpl.class, primaryKey,
-					nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the friendly url entry localizations.
 	 *
@@ -1893,6 +1793,16 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "friendlyURLEntryLocalizationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return FriendlyURLEntryLocalizationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1917,8 +1827,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION = "SELECT friendlyURLEntryLocalization FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization";
-	private static final String _SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE_PKS_IN =
-		"SELECT friendlyURLEntryLocalization FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE friendlyURLEntryLocalizationId IN (";
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE = "SELECT friendlyURLEntryLocalization FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE ";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION = "SELECT COUNT(friendlyURLEntryLocalization) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization";
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE = "SELECT COUNT(friendlyURLEntryLocalization) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE ";

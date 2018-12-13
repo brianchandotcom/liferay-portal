@@ -21,7 +21,11 @@ import com.liferay.blogs.model.BlogsEntry;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the blogs entry service.
@@ -42,6 +46,9 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryUtil} to access the blogs entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, BlogsEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the blogs entries where uuid = &#63;.
@@ -5037,10 +5044,6 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	*/
 	public BlogsEntry fetchByPrimaryKey(long entryId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, BlogsEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the blogs entries.
 	*
@@ -5106,5 +5109,5 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

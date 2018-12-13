@@ -57,9 +57,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -12230,6 +12228,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		setModelClass(Group.class);
 
 		setModelImplClass(GroupImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(GroupModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -13163,100 +13162,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	@Override
 	public Group fetchByPrimaryKey(long groupId) {
 		return fetchByPrimaryKey((Serializable)groupId);
-	}
-
-	@Override
-	public Map<Serializable, Group> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Group> map = new HashMap<Serializable, Group>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Group group = fetchByPrimaryKey(primaryKey);
-
-			if (group != null) {
-				map.put(primaryKey, group);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-					GroupImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Group)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_GROUP__WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Group group : (List<Group>)q.list()) {
-				map.put(group.getPrimaryKeyObj(), group);
-
-				cacheResult(group);
-
-				uncachedPrimaryKeys.remove(group.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-					GroupImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -14662,6 +14567,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "groupId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_GROUP_;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return GroupModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -14712,7 +14627,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected UserPersistence userPersistence;
 	protected TableMapper<Group, com.liferay.portal.kernel.model.User> groupToUserTableMapper;
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";
-	private static final String _SQL_SELECT_GROUP__WHERE_PKS_IN = "SELECT group_ FROM Group group_ WHERE groupId IN (";
 	private static final String _SQL_SELECT_GROUP__WHERE = "SELECT group_ FROM Group group_ WHERE ";
 	private static final String _SQL_COUNT_GROUP_ = "SELECT COUNT(group_) FROM Group group_";
 	private static final String _SQL_COUNT_GROUP__WHERE = "SELECT COUNT(group_) FROM Group group_ WHERE ";

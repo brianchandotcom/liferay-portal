@@ -47,9 +47,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -324,6 +321,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		setModelClass(Release.class);
 
 		setModelImplClass(ReleaseImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ReleaseModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -678,100 +676,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		return fetchByPrimaryKey((Serializable)releaseId);
 	}
 
-	@Override
-	public Map<Serializable, Release> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Release> map = new HashMap<Serializable, Release>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Release release = fetchByPrimaryKey(primaryKey);
-
-			if (release != null) {
-				map.put(primaryKey, release);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-					ReleaseImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Release)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RELEASE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Release release : (List<Release>)q.list()) {
-				map.put(release.getPrimaryKeyObj(), release);
-
-				cacheResult(release);
-
-				uncachedPrimaryKeys.remove(release.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-					ReleaseImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the releases.
 	 *
@@ -973,6 +877,16 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "releaseId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RELEASE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ReleaseModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -991,7 +905,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	private static final String _SQL_SELECT_RELEASE = "SELECT release FROM Release release";
-	private static final String _SQL_SELECT_RELEASE_WHERE_PKS_IN = "SELECT release FROM Release release WHERE releaseId IN (";
 	private static final String _SQL_SELECT_RELEASE_WHERE = "SELECT release FROM Release release WHERE ";
 	private static final String _SQL_COUNT_RELEASE = "SELECT COUNT(release) FROM Release release";
 	private static final String _SQL_COUNT_RELEASE_WHERE = "SELECT COUNT(release) FROM Release release WHERE ";

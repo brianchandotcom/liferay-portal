@@ -44,9 +44,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -913,6 +910,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		setModelClass(ListType.class);
 
 		setModelImplClass(ListTypeImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ListTypeModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1268,100 +1266,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return fetchByPrimaryKey((Serializable)listTypeId);
 	}
 
-	@Override
-	public Map<Serializable, ListType> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ListType> map = new HashMap<Serializable, ListType>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ListType listType = fetchByPrimaryKey(primaryKey);
-
-			if (listType != null) {
-				map.put(primaryKey, listType);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-					ListTypeImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ListType)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LISTTYPE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ListType listType : (List<ListType>)q.list()) {
-				map.put(listType.getPrimaryKeyObj(), listType);
-
-				cacheResult(listType);
-
-				uncachedPrimaryKeys.remove(listType.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-					ListTypeImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the list types.
 	 *
@@ -1563,6 +1467,16 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "listTypeId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LISTTYPE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ListTypeModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1581,7 +1495,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	}
 
 	private static final String _SQL_SELECT_LISTTYPE = "SELECT listType FROM ListType listType";
-	private static final String _SQL_SELECT_LISTTYPE_WHERE_PKS_IN = "SELECT listType FROM ListType listType WHERE listTypeId IN (";
 	private static final String _SQL_SELECT_LISTTYPE_WHERE = "SELECT listType FROM ListType listType WHERE ";
 	private static final String _SQL_COUNT_LISTTYPE = "SELECT COUNT(listType) FROM ListType listType";
 	private static final String _SQL_COUNT_LISTTYPE_WHERE = "SELECT COUNT(listType) FROM ListType listType WHERE ";

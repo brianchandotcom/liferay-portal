@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1221,6 +1218,7 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 		setModelClass(OAuth2Application.class);
 
 		setModelImplClass(OAuth2ApplicationImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1618,100 +1616,6 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 		return fetchByPrimaryKey((Serializable)oAuth2ApplicationId);
 	}
 
-	@Override
-	public Map<Serializable, OAuth2Application> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, OAuth2Application> map = new HashMap<Serializable, OAuth2Application>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			OAuth2Application oAuth2Application = fetchByPrimaryKey(primaryKey);
-
-			if (oAuth2Application != null) {
-				map.put(primaryKey, oAuth2Application);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (OAuth2Application)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_OAUTH2APPLICATION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (OAuth2Application oAuth2Application : (List<OAuth2Application>)q.list()) {
-				map.put(oAuth2Application.getPrimaryKeyObj(), oAuth2Application);
-
-				cacheResult(oAuth2Application);
-
-				uncachedPrimaryKeys.remove(oAuth2Application.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(OAuth2ApplicationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ApplicationImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the o auth2 applications.
 	 *
@@ -1914,6 +1818,16 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "oAuth2ApplicationId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_OAUTH2APPLICATION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OAuth2ApplicationModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1938,7 +1852,6 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_OAUTH2APPLICATION = "SELECT oAuth2Application FROM OAuth2Application oAuth2Application";
-	private static final String _SQL_SELECT_OAUTH2APPLICATION_WHERE_PKS_IN = "SELECT oAuth2Application FROM OAuth2Application oAuth2Application WHERE oAuth2ApplicationId IN (";
 	private static final String _SQL_SELECT_OAUTH2APPLICATION_WHERE = "SELECT oAuth2Application FROM OAuth2Application oAuth2Application WHERE ";
 	private static final String _SQL_COUNT_OAUTH2APPLICATION = "SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application";
 	private static final String _SQL_COUNT_OAUTH2APPLICATION_WHERE = "SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application WHERE ";

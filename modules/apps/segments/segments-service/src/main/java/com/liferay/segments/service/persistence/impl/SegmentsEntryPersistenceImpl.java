@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4322,6 +4319,7 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 		setModelClass(SegmentsEntry.class);
 
 		setModelImplClass(SegmentsEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -4826,100 +4824,6 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 		return fetchByPrimaryKey((Serializable)segmentsEntryId);
 	}
 
-	@Override
-	public Map<Serializable, SegmentsEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SegmentsEntry> map = new HashMap<Serializable, SegmentsEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SegmentsEntry segmentsEntry = fetchByPrimaryKey(primaryKey);
-
-			if (segmentsEntry != null) {
-				map.put(primaryKey, segmentsEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SegmentsEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SegmentsEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SEGMENTSENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SegmentsEntry segmentsEntry : (List<SegmentsEntry>)q.list()) {
-				map.put(segmentsEntry.getPrimaryKeyObj(), segmentsEntry);
-
-				cacheResult(segmentsEntry);
-
-				uncachedPrimaryKeys.remove(segmentsEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SegmentsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SegmentsEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the segments entries.
 	 *
@@ -5122,6 +5026,16 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "segmentsEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SEGMENTSENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SegmentsEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5146,7 +5060,6 @@ public class SegmentsEntryPersistenceImpl extends BasePersistenceImpl<SegmentsEn
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SEGMENTSENTRY = "SELECT segmentsEntry FROM SegmentsEntry segmentsEntry";
-	private static final String _SQL_SELECT_SEGMENTSENTRY_WHERE_PKS_IN = "SELECT segmentsEntry FROM SegmentsEntry segmentsEntry WHERE segmentsEntryId IN (";
 	private static final String _SQL_SELECT_SEGMENTSENTRY_WHERE = "SELECT segmentsEntry FROM SegmentsEntry segmentsEntry WHERE ";
 	private static final String _SQL_COUNT_SEGMENTSENTRY = "SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry";
 	private static final String _SQL_COUNT_SEGMENTSENTRY_WHERE = "SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry WHERE ";

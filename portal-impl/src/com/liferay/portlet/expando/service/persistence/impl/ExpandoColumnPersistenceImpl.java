@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1717,6 +1714,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		setModelClass(ExpandoColumn.class);
 
 		setModelImplClass(ExpandoColumnImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2112,100 +2110,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		return fetchByPrimaryKey((Serializable)columnId);
 	}
 
-	@Override
-	public Map<Serializable, ExpandoColumn> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ExpandoColumn> map = new HashMap<Serializable, ExpandoColumn>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ExpandoColumn expandoColumn = fetchByPrimaryKey(primaryKey);
-
-			if (expandoColumn != null) {
-				map.put(primaryKey, expandoColumn);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoColumnImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (ExpandoColumn)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_EXPANDOCOLUMN_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)q.list()) {
-				map.put(expandoColumn.getPrimaryKeyObj(), expandoColumn);
-
-				cacheResult(expandoColumn);
-
-				uncachedPrimaryKeys.remove(expandoColumn.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoColumnImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the expando columns.
 	 *
@@ -2408,6 +2312,16 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "columnId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_EXPANDOCOLUMN;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ExpandoColumnModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2428,7 +2342,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_EXPANDOCOLUMN = "SELECT expandoColumn FROM ExpandoColumn expandoColumn";
-	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE_PKS_IN = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE columnId IN (";
 	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE ";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN_WHERE = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn WHERE ";

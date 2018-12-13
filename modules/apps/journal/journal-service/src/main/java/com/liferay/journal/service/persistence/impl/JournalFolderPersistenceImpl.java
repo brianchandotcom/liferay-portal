@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -7234,6 +7231,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		setModelClass(JournalFolder.class);
 
 		setModelImplClass(JournalFolderImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(JournalFolderModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -7845,100 +7843,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
-	@Override
-	public Map<Serializable, JournalFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalFolder> map = new HashMap<Serializable, JournalFolder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalFolder journalFolder = fetchByPrimaryKey(primaryKey);
-
-			if (journalFolder != null) {
-				map.put(primaryKey, journalFolder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
-					JournalFolderImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (JournalFolder)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (JournalFolder journalFolder : (List<JournalFolder>)q.list()) {
-				map.put(journalFolder.getPrimaryKeyObj(), journalFolder);
-
-				cacheResult(journalFolder);
-
-				uncachedPrimaryKeys.remove(journalFolder.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
-					JournalFolderImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the journal folders.
 	 *
@@ -8141,6 +8045,16 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "folderId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_JOURNALFOLDER;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalFolderModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -8165,7 +8079,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_JOURNALFOLDER = "SELECT journalFolder FROM JournalFolder journalFolder";
-	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN = "SELECT journalFolder FROM JournalFolder journalFolder WHERE folderId IN (";
 	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE = "SELECT journalFolder FROM JournalFolder journalFolder WHERE ";
 	private static final String _SQL_COUNT_JOURNALFOLDER = "SELECT COUNT(journalFolder) FROM JournalFolder journalFolder";
 	private static final String _SQL_COUNT_JOURNALFOLDER_WHERE = "SELECT COUNT(journalFolder) FROM JournalFolder journalFolder WHERE ";

@@ -45,12 +45,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the recent layout revision service.
@@ -1886,6 +1882,7 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 		setModelClass(RecentLayoutRevision.class);
 
 		setModelImplClass(RecentLayoutRevisionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(RecentLayoutRevisionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2320,101 +2317,6 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 		return fetchByPrimaryKey((Serializable)recentLayoutRevisionId);
 	}
 
-	@Override
-	public Map<Serializable, RecentLayoutRevision> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, RecentLayoutRevision> map = new HashMap<Serializable, RecentLayoutRevision>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			RecentLayoutRevision recentLayoutRevision = fetchByPrimaryKey(primaryKey);
-
-			if (recentLayoutRevision != null) {
-				map.put(primaryKey, recentLayoutRevision);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RecentLayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutRevisionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (RecentLayoutRevision)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_RECENTLAYOUTREVISION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (RecentLayoutRevision recentLayoutRevision : (List<RecentLayoutRevision>)q.list()) {
-				map.put(recentLayoutRevision.getPrimaryKeyObj(),
-					recentLayoutRevision);
-
-				cacheResult(recentLayoutRevision);
-
-				uncachedPrimaryKeys.remove(recentLayoutRevision.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RecentLayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutRevisionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the recent layout revisions.
 	 *
@@ -2612,6 +2514,16 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "recentLayoutRevisionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_RECENTLAYOUTREVISION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RecentLayoutRevisionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2632,7 +2544,6 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_RECENTLAYOUTREVISION = "SELECT recentLayoutRevision FROM RecentLayoutRevision recentLayoutRevision";
-	private static final String _SQL_SELECT_RECENTLAYOUTREVISION_WHERE_PKS_IN = "SELECT recentLayoutRevision FROM RecentLayoutRevision recentLayoutRevision WHERE recentLayoutRevisionId IN (";
 	private static final String _SQL_SELECT_RECENTLAYOUTREVISION_WHERE = "SELECT recentLayoutRevision FROM RecentLayoutRevision recentLayoutRevision WHERE ";
 	private static final String _SQL_COUNT_RECENTLAYOUTREVISION = "SELECT COUNT(recentLayoutRevision) FROM RecentLayoutRevision recentLayoutRevision";
 	private static final String _SQL_COUNT_RECENTLAYOUTREVISION_WHERE = "SELECT COUNT(recentLayoutRevision) FROM RecentLayoutRevision recentLayoutRevision WHERE ";

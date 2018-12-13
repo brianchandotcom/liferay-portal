@@ -54,9 +54,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5066,6 +5063,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		setModelClass(KBComment.class);
 
 		setModelImplClass(KBCommentImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KBCommentModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -5667,100 +5665,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		return fetchByPrimaryKey((Serializable)kbCommentId);
 	}
 
-	@Override
-	public Map<Serializable, KBComment> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBComment> map = new HashMap<Serializable, KBComment>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBComment kbComment = fetchByPrimaryKey(primaryKey);
-
-			if (kbComment != null) {
-				map.put(primaryKey, kbComment);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-					KBCommentImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KBComment)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KBCOMMENT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KBComment kbComment : (List<KBComment>)q.list()) {
-				map.put(kbComment.getPrimaryKeyObj(), kbComment);
-
-				cacheResult(kbComment);
-
-				uncachedPrimaryKeys.remove(kbComment.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-					KBCommentImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kb comments.
 	 *
@@ -5963,6 +5867,16 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kbCommentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KBCOMMENT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KBCommentModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -5987,7 +5901,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KBCOMMENT = "SELECT kbComment FROM KBComment kbComment";
-	private static final String _SQL_SELECT_KBCOMMENT_WHERE_PKS_IN = "SELECT kbComment FROM KBComment kbComment WHERE kbCommentId IN (";
 	private static final String _SQL_SELECT_KBCOMMENT_WHERE = "SELECT kbComment FROM KBComment kbComment WHERE ";
 	private static final String _SQL_COUNT_KBCOMMENT = "SELECT COUNT(kbComment) FROM KBComment kbComment";
 	private static final String _SQL_COUNT_KBCOMMENT_WHERE = "SELECT COUNT(kbComment) FROM KBComment kbComment WHERE ";

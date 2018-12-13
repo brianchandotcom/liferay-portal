@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3008,6 +3005,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		setModelClass(PollsVote.class);
 
 		setModelImplClass(PollsVoteImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(PollsVoteModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3504,100 +3502,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		return fetchByPrimaryKey((Serializable)voteId);
 	}
 
-	@Override
-	public Map<Serializable, PollsVote> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PollsVote> map = new HashMap<Serializable, PollsVote>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PollsVote pollsVote = fetchByPrimaryKey(primaryKey);
-
-			if (pollsVote != null) {
-				map.put(primaryKey, pollsVote);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-					PollsVoteImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (PollsVote)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_POLLSVOTE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (PollsVote pollsVote : (List<PollsVote>)q.list()) {
-				map.put(pollsVote.getPrimaryKeyObj(), pollsVote);
-
-				cacheResult(pollsVote);
-
-				uncachedPrimaryKeys.remove(pollsVote.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-					PollsVoteImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the polls votes.
 	 *
@@ -3800,6 +3704,16 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "voteId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_POLLSVOTE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PollsVoteModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3824,7 +3738,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_POLLSVOTE = "SELECT pollsVote FROM PollsVote pollsVote";
-	private static final String _SQL_SELECT_POLLSVOTE_WHERE_PKS_IN = "SELECT pollsVote FROM PollsVote pollsVote WHERE voteId IN (";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE = "SELECT pollsVote FROM PollsVote pollsVote WHERE ";
 	private static final String _SQL_COUNT_POLLSVOTE = "SELECT COUNT(pollsVote) FROM PollsVote pollsVote";
 	private static final String _SQL_COUNT_POLLSVOTE_WHERE = "SELECT COUNT(pollsVote) FROM PollsVote pollsVote WHERE ";

@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchActivitySetException;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the social activity set service.
  *
@@ -40,6 +45,9 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivitySetUtil} to access the social activity set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SocialActivitySet> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity sets where groupId = &#63;.
@@ -1020,10 +1028,6 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public SocialActivitySet fetchByPrimaryKey(long activitySetId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SocialActivitySet> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the social activity sets.
 	*
@@ -1089,5 +1093,5 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

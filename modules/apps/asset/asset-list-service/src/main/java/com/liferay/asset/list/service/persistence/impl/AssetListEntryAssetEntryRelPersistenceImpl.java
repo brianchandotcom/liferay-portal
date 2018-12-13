@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2792,6 +2789,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		setModelClass(AssetListEntryAssetEntryRel.class);
 
 		setModelImplClass(AssetListEntryAssetEntryRelImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3312,102 +3310,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		return fetchByPrimaryKey((Serializable)assetListEntryAssetEntryRelId);
 	}
 
-	@Override
-	public Map<Serializable, AssetListEntryAssetEntryRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetListEntryAssetEntryRel> map = new HashMap<Serializable, AssetListEntryAssetEntryRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = fetchByPrimaryKey(primaryKey);
-
-			if (assetListEntryAssetEntryRel != null) {
-				map.put(primaryKey, assetListEntryAssetEntryRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryAssetEntryRelImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey,
-						(AssetListEntryAssetEntryRel)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel : (List<AssetListEntryAssetEntryRel>)q.list()) {
-				map.put(assetListEntryAssetEntryRel.getPrimaryKeyObj(),
-					assetListEntryAssetEntryRel);
-
-				cacheResult(assetListEntryAssetEntryRel);
-
-				uncachedPrimaryKeys.remove(assetListEntryAssetEntryRel.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(AssetListEntryAssetEntryRelModelImpl.ENTITY_CACHE_ENABLED,
-					AssetListEntryAssetEntryRelImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the asset list entry asset entry rels.
 	 *
@@ -3610,6 +3512,16 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "assetListEntryAssetEntryRelId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_ASSETLISTENTRYASSETENTRYREL;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetListEntryAssetEntryRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3634,8 +3546,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETLISTENTRYASSETENTRYREL = "SELECT assetListEntryAssetEntryRel FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel";
-	private static final String _SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE_PKS_IN =
-		"SELECT assetListEntryAssetEntryRel FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel WHERE assetListEntryAssetEntryRelId IN (";
 	private static final String _SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE = "SELECT assetListEntryAssetEntryRel FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel WHERE ";
 	private static final String _SQL_COUNT_ASSETLISTENTRYASSETENTRYREL = "SELECT COUNT(assetListEntryAssetEntryRel) FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel";
 	private static final String _SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE = "SELECT COUNT(assetListEntryAssetEntryRel) FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel WHERE ";

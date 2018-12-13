@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchPluginSettingException;
 import com.liferay.portal.kernel.model.PluginSetting;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the plugin setting service.
  *
@@ -38,6 +43,9 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PluginSettingUtil} to access the plugin setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, PluginSetting> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the plugin settings where companyId = &#63;.
@@ -279,10 +287,6 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public PluginSetting fetchByPrimaryKey(long pluginSettingId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, PluginSetting> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the plugin settings.
 	*
@@ -348,5 +352,5 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

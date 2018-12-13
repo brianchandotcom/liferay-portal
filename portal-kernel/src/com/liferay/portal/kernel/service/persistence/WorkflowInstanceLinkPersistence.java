@@ -19,6 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the workflow instance link service.
  *
@@ -38,6 +43,9 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowInstanceLinkUtil} to access the workflow instance link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, WorkflowInstanceLink> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -265,10 +273,6 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
 	*/
 	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, WorkflowInstanceLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the workflow instance links.

@@ -21,6 +21,11 @@ import com.liferay.message.boards.model.MBStatsUser;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the message boards stats user service.
  *
@@ -40,6 +45,9 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBStatsUserUtil} to access the message boards stats user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, MBStatsUser> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards stats users where groupId = &#63;.
@@ -564,10 +572,6 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	* @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
 	*/
 	public MBStatsUser fetchByPrimaryKey(long statsUserId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, MBStatsUser> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards stats users.

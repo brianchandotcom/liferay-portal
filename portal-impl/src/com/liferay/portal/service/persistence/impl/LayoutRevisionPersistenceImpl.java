@@ -49,12 +49,8 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the layout revision service.
@@ -7863,6 +7859,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		setModelClass(LayoutRevision.class);
 
 		setModelImplClass(LayoutRevisionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -8643,100 +8640,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		return fetchByPrimaryKey((Serializable)layoutRevisionId);
 	}
 
-	@Override
-	public Map<Serializable, LayoutRevision> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutRevision> map = new HashMap<Serializable, LayoutRevision>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutRevision layoutRevision = fetchByPrimaryKey(primaryKey);
-
-			if (layoutRevision != null) {
-				map.put(primaryKey, layoutRevision);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutRevisionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (LayoutRevision)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_LAYOUTREVISION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (LayoutRevision layoutRevision : (List<LayoutRevision>)q.list()) {
-				map.put(layoutRevision.getPrimaryKeyObj(), layoutRevision);
-
-				cacheResult(layoutRevision);
-
-				uncachedPrimaryKeys.remove(layoutRevision.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutRevisionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the layout revisions.
 	 *
@@ -8934,6 +8837,16 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "layoutRevisionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_LAYOUTREVISION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutRevisionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -8954,7 +8867,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_LAYOUTREVISION = "SELECT layoutRevision FROM LayoutRevision layoutRevision";
-	private static final String _SQL_SELECT_LAYOUTREVISION_WHERE_PKS_IN = "SELECT layoutRevision FROM LayoutRevision layoutRevision WHERE layoutRevisionId IN (";
 	private static final String _SQL_SELECT_LAYOUTREVISION_WHERE = "SELECT layoutRevision FROM LayoutRevision layoutRevision WHERE ";
 	private static final String _SQL_COUNT_LAYOUTREVISION = "SELECT COUNT(layoutRevision) FROM LayoutRevision layoutRevision";
 	private static final String _SQL_COUNT_LAYOUTREVISION_WHERE = "SELECT COUNT(layoutRevision) FROM LayoutRevision layoutRevision WHERE ";

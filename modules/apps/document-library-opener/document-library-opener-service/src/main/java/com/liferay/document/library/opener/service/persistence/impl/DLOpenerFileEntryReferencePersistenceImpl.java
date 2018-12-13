@@ -49,9 +49,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -298,6 +295,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		setModelClass(DLOpenerFileEntryReference.class);
 
 		setModelImplClass(DLOpenerFileEntryReferenceImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -675,101 +673,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		return fetchByPrimaryKey((Serializable)dlOpenerFileEntryReferenceId);
 	}
 
-	@Override
-	public Map<Serializable, DLOpenerFileEntryReference> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLOpenerFileEntryReference> map = new HashMap<Serializable, DLOpenerFileEntryReference>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLOpenerFileEntryReference dlOpenerFileEntryReference = fetchByPrimaryKey(primaryKey);
-
-			if (dlOpenerFileEntryReference != null) {
-				map.put(primaryKey, dlOpenerFileEntryReference);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-					DLOpenerFileEntryReferenceImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLOpenerFileEntryReference)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLOpenerFileEntryReference dlOpenerFileEntryReference : (List<DLOpenerFileEntryReference>)q.list()) {
-				map.put(dlOpenerFileEntryReference.getPrimaryKeyObj(),
-					dlOpenerFileEntryReference);
-
-				cacheResult(dlOpenerFileEntryReference);
-
-				uncachedPrimaryKeys.remove(dlOpenerFileEntryReference.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DLOpenerFileEntryReferenceModelImpl.ENTITY_CACHE_ENABLED,
-					DLOpenerFileEntryReferenceImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the dl opener file entry references.
 	 *
@@ -972,6 +875,16 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "dlOpenerFileEntryReferenceId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLOPENERFILEENTRYREFERENCE;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLOpenerFileEntryReferenceModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -996,8 +909,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DLOPENERFILEENTRYREFERENCE = "SELECT dlOpenerFileEntryReference FROM DLOpenerFileEntryReference dlOpenerFileEntryReference";
-	private static final String _SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE_PKS_IN =
-		"SELECT dlOpenerFileEntryReference FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE dlOpenerFileEntryReferenceId IN (";
 	private static final String _SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE = "SELECT dlOpenerFileEntryReference FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE ";
 	private static final String _SQL_COUNT_DLOPENERFILEENTRYREFERENCE = "SELECT COUNT(dlOpenerFileEntryReference) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference";
 	private static final String _SQL_COUNT_DLOPENERFILEENTRYREFERENCE_WHERE = "SELECT COUNT(dlOpenerFileEntryReference) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE ";

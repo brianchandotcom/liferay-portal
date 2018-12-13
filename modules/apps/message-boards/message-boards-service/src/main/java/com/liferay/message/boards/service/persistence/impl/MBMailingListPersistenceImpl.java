@@ -51,9 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2188,6 +2185,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		setModelClass(MBMailingList.class);
 
 		setModelImplClass(MBMailingListImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBMailingListModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2675,100 +2673,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		return fetchByPrimaryKey((Serializable)mailingListId);
 	}
 
-	@Override
-	public Map<Serializable, MBMailingList> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBMailingList> map = new HashMap<Serializable, MBMailingList>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBMailingList mbMailingList = fetchByPrimaryKey(primaryKey);
-
-			if (mbMailingList != null) {
-				map.put(primaryKey, mbMailingList);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-					MBMailingListImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (MBMailingList)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (MBMailingList mbMailingList : (List<MBMailingList>)q.list()) {
-				map.put(mbMailingList.getPrimaryKeyObj(), mbMailingList);
-
-				cacheResult(mbMailingList);
-
-				uncachedPrimaryKeys.remove(mbMailingList.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-					MBMailingListImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the message boards mailing lists.
 	 *
@@ -2971,6 +2875,16 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "mailingListId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_MBMAILINGLIST;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBMailingListModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2995,7 +2909,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBMAILINGLIST = "SELECT mbMailingList FROM MBMailingList mbMailingList";
-	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE mailingListId IN (";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";
 	private static final String _SQL_COUNT_MBMAILINGLIST = "SELECT COUNT(mbMailingList) FROM MBMailingList mbMailingList";
 	private static final String _SQL_COUNT_MBMAILINGLIST_WHERE = "SELECT COUNT(mbMailingList) FROM MBMailingList mbMailingList WHERE ";

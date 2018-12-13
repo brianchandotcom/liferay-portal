@@ -53,9 +53,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1029,6 +1027,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		setModelClass(OAuth2ScopeGrant.class);
 
 		setModelImplClass(OAuth2ScopeGrantImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1419,100 +1418,6 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	@Override
 	public OAuth2ScopeGrant fetchByPrimaryKey(long oAuth2ScopeGrantId) {
 		return fetchByPrimaryKey((Serializable)oAuth2ScopeGrantId);
-	}
-
-	@Override
-	public Map<Serializable, OAuth2ScopeGrant> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, OAuth2ScopeGrant> map = new HashMap<Serializable, OAuth2ScopeGrant>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(primaryKey);
-
-			if (oAuth2ScopeGrant != null) {
-				map.put(primaryKey, oAuth2ScopeGrant);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ScopeGrantImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (OAuth2ScopeGrant)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (OAuth2ScopeGrant oAuth2ScopeGrant : (List<OAuth2ScopeGrant>)q.list()) {
-				map.put(oAuth2ScopeGrant.getPrimaryKeyObj(), oAuth2ScopeGrant);
-
-				cacheResult(oAuth2ScopeGrant);
-
-				uncachedPrimaryKeys.remove(oAuth2ScopeGrant.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-					OAuth2ScopeGrantImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2026,6 +1931,16 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "oAuth2ScopeGrantId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_OAUTH2SCOPEGRANT;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OAuth2ScopeGrantModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2058,7 +1973,6 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
 	protected TableMapper<OAuth2ScopeGrant, com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2ScopeGrantToOAuth2AuthorizationTableMapper;
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant";
-	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT_WHERE_PKS_IN = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE oAuth2ScopeGrantId IN (";
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT_WHERE = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT = "SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant";
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT_WHERE = "SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";

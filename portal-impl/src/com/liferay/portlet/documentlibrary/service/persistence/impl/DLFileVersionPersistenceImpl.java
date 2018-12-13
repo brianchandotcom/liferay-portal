@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -5664,6 +5661,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		setModelClass(DLFileVersion.class);
 
 		setModelImplClass(DLFileVersionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -6301,100 +6299,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return fetchByPrimaryKey((Serializable)fileVersionId);
 	}
 
-	@Override
-	public Map<Serializable, DLFileVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLFileVersion> map = new HashMap<Serializable, DLFileVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLFileVersion dlFileVersion = fetchByPrimaryKey(primaryKey);
-
-			if (dlFileVersion != null) {
-				map.put(primaryKey, dlFileVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileVersionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (DLFileVersion)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DLFILEVERSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (DLFileVersion dlFileVersion : (List<DLFileVersion>)q.list()) {
-				map.put(dlFileVersion.getPrimaryKeyObj(), dlFileVersion);
-
-				cacheResult(dlFileVersion);
-
-				uncachedPrimaryKeys.remove(dlFileVersion.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileVersionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the document library file versions.
 	 *
@@ -6597,6 +6501,16 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "fileVersionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DLFILEVERSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DLFileVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6617,7 +6531,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 	private static final String _SQL_SELECT_DLFILEVERSION = "SELECT dlFileVersion FROM DLFileVersion dlFileVersion";
-	private static final String _SQL_SELECT_DLFILEVERSION_WHERE_PKS_IN = "SELECT dlFileVersion FROM DLFileVersion dlFileVersion WHERE fileVersionId IN (";
 	private static final String _SQL_SELECT_DLFILEVERSION_WHERE = "SELECT dlFileVersion FROM DLFileVersion dlFileVersion WHERE ";
 	private static final String _SQL_COUNT_DLFILEVERSION = "SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion";
 	private static final String _SQL_COUNT_DLFILEVERSION_WHERE = "SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion WHERE ";

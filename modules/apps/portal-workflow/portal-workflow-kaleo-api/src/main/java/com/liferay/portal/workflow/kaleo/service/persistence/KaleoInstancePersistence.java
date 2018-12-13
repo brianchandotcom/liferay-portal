@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the kaleo instance service.
@@ -41,6 +45,9 @@ public interface KaleoInstancePersistence extends BasePersistence<KaleoInstance>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoInstanceUtil} to access the kaleo instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, KaleoInstance> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo instances where companyId = &#63;.
@@ -979,10 +986,6 @@ public interface KaleoInstancePersistence extends BasePersistence<KaleoInstance>
 	* @return the kaleo instance, or <code>null</code> if a kaleo instance with the primary key could not be found
 	*/
 	public KaleoInstance fetchByPrimaryKey(long kaleoInstanceId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, KaleoInstance> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the kaleo instances.

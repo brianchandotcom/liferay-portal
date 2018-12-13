@@ -53,6 +53,28 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		if (_monitorServiceRequest) {
+			return nullResult;
+		}
+
+		return null;
+	}
+
+	@Override
+	public Set<String> getServiceClasses() {
+		return Collections.unmodifiableSet(_serviceClasses);
+	}
+
+	@Override
+	public Set<MethodSignature> getServiceClassMethods() {
+		return Collections.unmodifiableSet(_serviceClassMethods);
+	}
+
+	@Override
 	public Object invoke(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
 		throws Throwable {
@@ -102,28 +124,6 @@ public class ServiceMonitorAdvice
 		finally {
 			DataSampleThreadLocal.addDataSample(dataSample);
 		}
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		if (_monitorServiceRequest) {
-			return nullResult;
-		}
-
-		return null;
-	}
-
-	@Override
-	public Set<String> getServiceClasses() {
-		return Collections.unmodifiableSet(_serviceClasses);
-	}
-
-	@Override
-	public Set<MethodSignature> getServiceClassMethods() {
-		return Collections.unmodifiableSet(_serviceClassMethods);
 	}
 
 	@Override
